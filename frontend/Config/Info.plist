@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleDisplayName</key>
+    <string>拾年</string>
+    <key>CFBundleName</key>
+    <string>拾年</string>
+    <key>AI_MEMORIES_API_URL</key>
+    <string>https://aimemory.47-82-83-74.nip.io</string>
+    <key>UIAppFonts</key>
+    <array><string>NotoSerifSC.ttf</string></array>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsLocalNetworking</key>
+		<true/>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>localhost</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+		</dict>
+	</dict>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>录音以填写回忆内容</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>将您讲述的回忆转换成文字</string>
+</dict>
+</plist>

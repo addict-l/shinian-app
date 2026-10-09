@@ -1,0 +1,15 @@
+.DS_Store
+build/
+DerivedData/
+xcuserdata/
+*.xcuserstate
+.env
+.env.*
+!.env.example
+!.env.production.example
+.venv/
+.runtime/
+__pycache__/
+.pytest_cache/
+*.pyc
+docs/fullstack-baseline/
