@@ -30,6 +30,6 @@
 
 ## 运行与验证
 
-正常联调使用 `AIMemoirs` Scheme；`AIMemoirs-DesignPreview` 使用离线样例。前端目录变更记录和验证结果已移至桌面的 `ai memory-supporting-materials/`。
+正常联调使用 `AIMemoirs` Scheme；`AIMemoirs-DesignPreview` 使用离线样例。测试源码、验证脚本与构建结果位于主工程同级的 `shinian-validation/`。
 
-单元测试位于 `AIMemoirsTests`；页面回归测试位于 `AIMemoirsUITests/JournalUIFlowTests.swift`。该 UI 测试使用离线数据，覆盖九个页面、人物创建到保存的流程，以及键盘和导航栏下的输入框可见性。
+单元测试位于 `shinian-validation/tests/ios/AIMemoirsTests`；页面回归测试位于同目录下的 `AIMemoirsUITests/JournalUIFlowTests.swift`。该 UI 测试使用离线数据，覆盖九个页面、人物创建到保存的流程，以及键盘和导航栏下的输入框可见性。验证入口为 `shinian-validation/scripts/ios/check.sh`，运行 App 无需验证目录。

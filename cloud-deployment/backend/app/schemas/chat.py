@@ -2,6 +2,8 @@ from datetime import datetime
 from uuid import UUID
 
 from pydantic import BaseModel, Field
+from app.schemas.story_information import StoryInformation
+from app.schemas.media import MessageAttachment
 
 
 class ChatSessionCreate(BaseModel):
@@ -18,6 +20,8 @@ class ChatSessionCreate(BaseModel):
 
 
 class ChatSession(BaseModel):
+    version: int = Field(default=1, ge=1)
+    information: StoryInformation = Field(default_factory=StoryInformation)
 
     id: UUID
 
@@ -47,6 +51,7 @@ class ChatMessageCreate(BaseModel):
 
 
 class ChatMessage(BaseModel):
+    attachments: list[MessageAttachment] = Field(default_factory=list)
 
     id: UUID
 

@@ -8,15 +8,16 @@ private struct MemberDTO: Decodable {
     let relationship: String
     let birth_date: String?
 }
-private struct SessionDTO: Decodable { let id: UUID }
-private struct MessageDTO: Decodable { let id: UUID; let role: String; let content: String }
+private struct SessionDTO: Decodable { let id: UUID; var version: Int?; var information: StoryInformation? }
+private struct MessageDTO: Decodable { let id: UUID; let role: String; let content: String; var attachments: [ChatAttachment]? }
 private struct ChatDTO: Decodable {
     let session: SessionDTO
     let messages: [MessageDTO]
     let can_generate: Bool
     var snapshot: ChatSnapshot {
         ChatSnapshot(sessionID: session.id, messages: messages.filter { ["user", "assistant"].contains($0.role) }
-            .map { ChatMessage(id: $0.id, sender: $0.role == "user" ? .user : .ai, text: $0.content) }, canGenerate: can_generate)
+            .map { ChatMessage(id: $0.id, sender: $0.role == "user" ? .user : .ai, text: $0.content, attachments: $0.attachments ?? []) }, canGenerate: can_generate,
+            version: session.version ?? 1, information: session.information ?? StoryInformation())
     }
 }
 private struct MemoryDTO: Decodable {
@@ -29,6 +30,9 @@ private struct MemoryDTO: Decodable {
     let location: String?
     var created_at: String?
     var media_urls: [String]?
+    var primary_person_id: UUID?
+    var version: Int?
+    var information: StoryInformation?
 }
 private struct DraftDTO: Decodable { let id: UUID; let revision: UUID; let memory: MemoryDTO }
 
@@ -82,10 +86,14 @@ enum APIDate {
     private func memory(_ value: MemoryDTO, draftID: UUID? = nil, image: Data? = nil) throws -> MemoryEvent {
         guard let id = value.id ?? draftID else { throw APIError.decoding }
         let names = value.person_ids.map { id in knownMembers.first { $0.id == id }?.name ?? "家庭成员" }
-        return MemoryEvent(id: id, personName: names.joined(separator: "、"), personIDs: value.person_ids,
+        var result = MemoryEvent(id: id, personName: names.joined(separator: "、"), personIDs: value.person_ids,
                            date: APIDate.parseDay(value.memory_date), content: value.summary ?? value.raw_content,
                            title: value.title, imageData: image,
-                           createdAt: APIDate.timestamp(value.created_at) ?? .distantPast, location: value.location)
+                           createdAt: APIDate.timestamp(value.created_at) ?? .distantPast,
+                           dateDescription: value.information?.time.value, location: value.information?.place.value ?? value.location)
+        result.primaryPersonID = value.primary_person_id; result.version = value.version ?? 1
+        result.information = value.information ?? StoryInformation()
+        return result
     }
     func members() async throws -> [FamilyMember] {
         let id = try await bootstrap()

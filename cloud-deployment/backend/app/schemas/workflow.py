@@ -3,6 +3,7 @@ from uuid import UUID
 from pydantic import BaseModel, Field
 from app.schemas.chat import ChatMessage, ChatSession
 from app.schemas.memory import MemoryCreate
+from app.schemas.media import MediaResponse
 
 class ChatState(BaseModel):
     session: ChatSession
@@ -18,13 +19,6 @@ class DraftResponse(BaseModel):
 
 class DraftConfirmation(BaseModel):
     revision: UUID
-
-class MediaResponse(BaseModel):
-    id: UUID
-    session_id: UUID | None
-    memory_id: UUID | None
-    url: str
-    mime_type: str
 
 class HealthResponse(BaseModel):
     status: str

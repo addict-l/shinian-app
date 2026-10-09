@@ -4,6 +4,8 @@ struct ChatSnapshot {
     let sessionID: UUID
     let messages: [ChatMessage]
     let canGenerate: Bool
+    var version: Int = 1
+    var information = StoryInformation()
 }
 struct GeneratedMemory {
     let draftID: UUID

@@ -8,7 +8,7 @@ from sqlalchemy import (
     Text,
 )
 from sqlalchemy.dialects.mysql import DATETIME
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base
 
@@ -16,6 +16,7 @@ from app.db.base import Base
 class ChatMessageModel(Base):
 
     __tablename__ = "chat_messages"
+    attachments: Mapped[list['MediaAssetModel']] = relationship(order_by='MediaAssetModel.position')
 
     id: Mapped[str] = mapped_column(
         String(36),

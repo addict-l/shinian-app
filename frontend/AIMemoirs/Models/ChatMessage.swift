@@ -8,6 +8,7 @@ struct ChatMessage: Identifiable {
     var id = UUID()
     let sender: Sender
     let text: String
+    var attachments: [ChatAttachment] = []
 }
 
 // MARK: - 分离子视图组件

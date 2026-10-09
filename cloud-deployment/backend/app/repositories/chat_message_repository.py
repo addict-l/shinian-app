@@ -16,6 +16,7 @@ class ChatMessageRepository:
     ) -> ChatMessage:
 
         return ChatMessage(
+            attachments=[{'id': asset.id, 'url': asset.file_url, 'position': asset.position} for asset in model.attachments],
             id=model.id,
             session_id=model.session_id,
             role=model.role,

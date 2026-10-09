@@ -90,6 +90,8 @@ class MemoryService:
     ) -> None:
         # 1) 家庭是否存在（不存在会抛 FamilyNotFoundError）
         self.family_service.get_family(memory.family_id)
+        if memory.primary_person_id is not None and memory.primary_person_id not in memory.person_ids:
+            raise InvalidFamilyMemberError('记录对象必须属于回忆关联人物')
 
         # 2) person_ids 不能重复
         if len(memory.person_ids) != len(set(memory.person_ids)):
@@ -211,6 +213,7 @@ class MemoryService:
 
         # 6. 构造 MemoryCreate
         memory_create = MemoryCreate(
+            primary_person_id=chat_session.primary_person_id,
             family_id=chat_session.family_id,
             person_ids=person_ids,
             title=extraction.title,

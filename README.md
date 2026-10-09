@@ -9,15 +9,10 @@ shinian/
 ├── frontend/                    iOS 前端工程
 │   ├── AIMemoirs.xcodeproj      Xcode 工程入口
 │   ├── AIMemoirs/               SwiftUI 应用源码与资源
-│   ├── AIMemoirsTests/          单元与集成测试
-│   ├── AIMemoirsUITests/        UI 自动化测试
 │   ├── Config/Info.plist        应用名称、权限和 API 地址
-│   └── scripts/                 前端检查脚本
 ├── cloud-deployment/            云端 API、数据库迁移与部署资料
-│   ├── backend/                 FastAPI 后端、Docker 配置和测试
+│   ├── backend/                 FastAPI 后端、Docker 配置与迁移
 │   ├── contracts/openapi.json   前后端接口契约
-│   ├── 阿里云部署操作记录.md      服务器部署过程与维护说明
-│   └── ai-memories-backend-deploy.tar.gz
 └── README.md
 ```
 
@@ -93,7 +88,13 @@ https://aimemory.47-82-83-74.nip.io/health
 
 - 前端目录职责和开发约定：`frontend/AIMemoirs/README.md`
 - 后端服务说明：`cloud-deployment/backend/README.md`
-- 阿里云部署与维护记录：`cloud-deployment/阿里云部署操作记录.md`
+- 阿里云部署说明：`cloud-deployment/backend/DEPLOY_ALIYUN.md`
 - OpenAPI 契约：`cloud-deployment/contracts/openapi.json`
 
 如只需运行 iOS 客户端，按照“启动前端”操作即可，无需执行 `cloud-deployment` 中的命令。
+
+## 开发验证文件
+
+测试源码与验证脚本存放在同级 `shinian-validation` 文件夹，不属于本仓库。测试日志、截图和构建缓存也输出到该文件夹。仅构建和运行 App 无需这些文件；运行 Xcode 单元与 UI 测试时需要同级验证目录，目录名称保持 `shinian-validation`。路径采用相对路径，可整体迁移到其他 Mac。
+
+第一阶段计划见 `docs/phase-1-plan.md`。新接口仅在对应云端代码部署后可用；Git 推送不会自动更新现有服务器。

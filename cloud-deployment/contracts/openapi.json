@@ -1,8 +1,8 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "AI Memories Local Server",
-    "version": "0.2.0"
+    "title": "AI Memories API",
+    "version": "0.3.0"
   },
   "paths": {
     "/api/v1/families/": {
@@ -211,6 +211,40 @@
                 }
               }
             }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "family-members"
+        ],
+        "summary": "Delete Family Member",
+        "operationId": "delete_family_member_api_v1_family_members__family_member_id__delete",
+        "parameters": [
+          {
+            "name": "family_member_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Family Member Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
           },
           "422": {
             "description": "Validation Error",
@@ -887,6 +921,13 @@
       },
       "ChatMessage": {
         "properties": {
+          "attachments": {
+            "items": {
+              "$ref": "#/components/schemas/MessageAttachment"
+            },
+            "type": "array",
+            "title": "Attachments"
+          },
           "id": {
             "type": "string",
             "format": "uuid",
@@ -955,6 +996,15 @@
       },
       "ChatSession": {
         "properties": {
+          "version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Version",
+            "default": 1
+          },
+          "information": {
+            "$ref": "#/components/schemas/StoryInformation"
+          },
           "id": {
             "type": "string",
             "format": "uuid",
@@ -1331,12 +1381,63 @@
         ],
         "title": "HealthResponse"
       },
+      "InformationDimension": {
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/InformationStatus",
+            "default": "missing"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Value"
+          },
+          "source_message_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "title": "Source Message Ids"
+          }
+        },
+        "type": "object",
+        "title": "InformationDimension"
+      },
+      "InformationStatus": {
+        "type": "string",
+        "enum": [
+          "missing",
+          "known",
+          "approximate",
+          "unknown",
+          "withheld"
+        ],
+        "title": "InformationStatus"
+      },
       "MediaResponse": {
         "properties": {
           "id": {
             "type": "string",
             "format": "uuid",
             "title": "Id"
+          },
+          "url": {
+            "type": "string",
+            "title": "Url"
+          },
+          "position": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Position",
+            "default": 0
           },
           "session_id": {
             "anyOf": [
@@ -1362,9 +1463,17 @@
             ],
             "title": "Memory Id"
           },
-          "url": {
-            "type": "string",
-            "title": "Url"
+          "message_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message Id"
           },
           "mime_type": {
             "type": "string",
@@ -1374,15 +1483,36 @@
         "type": "object",
         "required": [
           "id",
+          "url",
           "session_id",
           "memory_id",
-          "url",
           "mime_type"
         ],
         "title": "MediaResponse"
       },
       "Memory": {
         "properties": {
+          "primary_person_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Primary Person Id"
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Version",
+            "default": 1
+          },
+          "information": {
+            "$ref": "#/components/schemas/StoryInformation"
+          },
           "media_urls": {
             "items": {
               "type": "string"
@@ -1491,6 +1621,21 @@
       },
       "MemoryCreate": {
         "properties": {
+          "primary_person_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Primary Person Id"
+          },
+          "information": {
+            "$ref": "#/components/schemas/StoryInformation"
+          },
           "family_id": {
             "type": "string",
             "format": "uuid",
@@ -1559,6 +1704,55 @@
           "raw_content"
         ],
         "title": "MemoryCreate"
+      },
+      "MessageAttachment": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "url": {
+            "type": "string",
+            "title": "Url"
+          },
+          "position": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Position",
+            "default": 0
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "url"
+        ],
+        "title": "MessageAttachment"
+      },
+      "StoryInformation": {
+        "properties": {
+          "people": {
+            "$ref": "#/components/schemas/InformationDimension"
+          },
+          "event": {
+            "$ref": "#/components/schemas/InformationDimension"
+          },
+          "time": {
+            "$ref": "#/components/schemas/InformationDimension"
+          },
+          "place": {
+            "$ref": "#/components/schemas/InformationDimension"
+          },
+          "feeling": {
+            "$ref": "#/components/schemas/InformationDimension"
+          },
+          "detail": {
+            "$ref": "#/components/schemas/InformationDimension"
+          }
+        },
+        "type": "object",
+        "title": "StoryInformation"
       },
       "ValidationError": {
         "properties": {

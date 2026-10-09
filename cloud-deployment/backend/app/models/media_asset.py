@@ -1,7 +1,7 @@
 from datetime import datetime, timezone
 from uuid import uuid4
 
-from sqlalchemy import DateTime, ForeignKey, String
+from sqlalchemy import DateTime, ForeignKey, String, Integer
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base
@@ -10,6 +10,9 @@ from app.db.base import Base
 class MediaAssetModel(Base):
 
     __tablename__ = "media_assets"
+    message_id: Mapped[str | None] = mapped_column(String(36), ForeignKey('chat_messages.id', ondelete='SET NULL'), nullable=True, index=True)
+    position: Mapped[int] = mapped_column(Integer, nullable=False, default=0, server_default='0')
+    content_hash: Mapped[str | None] = mapped_column(String(64), nullable=True)
 
     id: Mapped[str] = mapped_column(
         String(36),

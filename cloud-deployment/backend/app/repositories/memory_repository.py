@@ -22,7 +22,10 @@ class MemoryRepository:
             person_ids.append(UUID(str(person.id)))
 
         return Memory(
-            media_urls=[asset.file_url for asset in model.media_assets],
+            primary_person_id=model.primary_person_id,
+            version=model.version,
+            information=model.information or {},
+            media_urls=[asset.file_url for asset in sorted(model.media_assets, key=lambda a: (a.created_at, a.position, a.id))],
             id=model.id,
             family_id=model.family_id,
             person_ids=person_ids,
@@ -50,6 +53,8 @@ class MemoryRepository:
 
         # person_ids 不是 memories 表的列，这里不能写进 MemoryModel
         memory_model = MemoryModel(
+            primary_person_id=str(data.primary_person_id) if data.primary_person_id else None,
+            information=data.information.model_dump(mode='json'),
             family_id=str(data.family_id),
             source_session_id=str(source_session_id) if source_session_id is not None else None,
             title=data.title,

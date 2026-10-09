@@ -2,9 +2,12 @@ from datetime import date, datetime
 from uuid import UUID
 
 from pydantic import BaseModel, Field
+from app.schemas.story_information import StoryInformation
 
 
 class MemoryCreate(BaseModel):
+    primary_person_id: UUID | None = None
+    information: StoryInformation = Field(default_factory=StoryInformation)
 
     family_id: UUID
 
@@ -28,6 +31,9 @@ class MemoryCreate(BaseModel):
 
 
 class Memory(BaseModel):
+    primary_person_id: UUID | None = None
+    version: int = Field(default=1, ge=1)
+    information: StoryInformation = Field(default_factory=StoryInformation)
     media_urls: list[str] = Field(default_factory=list)
     family_id: UUID
 

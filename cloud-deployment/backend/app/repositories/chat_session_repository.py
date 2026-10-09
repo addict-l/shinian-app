@@ -20,6 +20,8 @@ class ChatSessionRepository:
             primary_person_id = UUID(str(model.primary_person_id))
 
         return ChatSession(
+            version=model.version,
+            information=model.information or {},
             id=model.id,
             family_id=model.family_id,
             primary_person_id=primary_person_id,
@@ -78,6 +80,7 @@ class ChatSessionRepository:
                 return
 
             model.updated_at = datetime.now(timezone.utc)
+            model.version += 1
             session.commit()
 
     def get(

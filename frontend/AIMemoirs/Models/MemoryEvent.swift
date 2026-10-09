@@ -12,6 +12,9 @@ struct MemoryEvent: Identifiable, Codable {
     let createdAt: Date
     let dateDescription: String?
     let location: String?
+    var primaryPersonID: UUID? = nil
+    var version: Int = 1
+    var information = StoryInformation()
     var dateLabel: String { dateDescription ?? date?.formatted(.dateTime.year().month().day().locale(Locale(identifier: "zh_CN"))) ?? "时间待补充" }
 
     init(id: UUID = UUID(), personName: String, personIDs: [UUID] = [], date: Date?, content: String,
@@ -22,7 +25,9 @@ struct MemoryEvent: Identifiable, Codable {
         self.dateDescription = dateDescription; self.location = location
     }
     func copy(imageData: Data?) -> MemoryEvent {
-        MemoryEvent(id: id, personName: personName, personIDs: personIDs, date: date, content: content,
+        var result = MemoryEvent(id: id, personName: personName, personIDs: personIDs, date: date, content: content,
                     title: title, imageName: imageName, imageData: imageData, createdAt: createdAt, dateDescription: dateDescription, location: location)
+        result.primaryPersonID = primaryPersonID; result.version = version; result.information = information
+        return result
     }
 }

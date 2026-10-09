@@ -7,6 +7,7 @@ from sqlalchemy import (
     ForeignKey,
     String,
     Text,
+    Integer, JSON,
 )
 from sqlalchemy.orm import (
     Mapped,
@@ -20,6 +21,9 @@ from app.db.base import Base
 class MemoryModel(Base):
 
     __tablename__ = "memories"
+    version: Mapped[int] = mapped_column(Integer, nullable=False, default=1, server_default='1')
+    information: Mapped[dict | None] = mapped_column(JSON, nullable=True)
+    primary_person_id: Mapped[str | None] = mapped_column(String(36), ForeignKey('family_members.id', ondelete='SET NULL'), nullable=True)
 
     id: Mapped[str] = mapped_column(
         String(36),

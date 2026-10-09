@@ -37,12 +37,12 @@
 		};
 		7195EDFA2E03E940008FCA27 /* AIMemoirsTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = AIMemoirsTests;
+			path = "../../shinian-validation/tests/ios/AIMemoirsTests";
 			sourceTree = "<group>";
 		};
 		7195EE042E03E940008FCA27 /* AIMemoirsUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = AIMemoirsUITests;
+			path = "../../shinian-validation/tests/ios/AIMemoirsUITests";
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */

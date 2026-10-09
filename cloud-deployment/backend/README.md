@@ -45,12 +45,14 @@ mkdir -p .runtime/mysql .runtime/logs
 ## 验证
 
 ```sh
-# 18 项既有测试 + 6 项 FastAPI/MySQL 异常注入测试（AI 被测试替身替换）
-.venv/bin/pytest -q tests/test_chat_prompt.py tests/test_chat_send_message.py tests/test_memory_service.py tests/test_workflow_integration.py
+# 在同级 shinian-validation 目录运行测试，DATABASE_URL 必须指向独立测试库
+# AI 使用测试替身；日志和媒体输出到 validation/artifacts
+cd ../../../shinian-validation
+PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m pytest tests/backend -q
 # 真正调用配置的 AI，会消耗接口额度；创建带“自动联调测试家庭”标识的独立数据
-.venv/bin/python scripts/smoke_fullstack.py
+.venv/bin/python scripts/backend/smoke_fullstack.py
 # 先执行上一条，再验证两个服务重启及并发读取
-.venv/bin/python scripts/verify_restart.py
+.venv/bin/python scripts/backend/verify_restart.py
 ```
 
 照片当前每段回忆最多一张、上限 8 MB；服务端解码、校验并重新编码为 JPEG 后存入 `.runtime/media`，数据库保存关联和路径。AI 当前只处理文字，照片作为回忆附件，不进行视觉识别。提交相同请求 UUID 可安全重试。并发锁用于单进程，所以本机启动脚本固定 `--workers 1`，请勿直接扩成多 worker。

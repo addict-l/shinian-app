@@ -117,6 +117,7 @@ class WorkflowService:
             extraction = self.memories._get_llm_client().extract_memory(raw)
             people = self.memories._match_people_to_member_ids(session.family_id, extraction.people, session.primary_person_id)
             payload = MemoryCreate(family_id=session.family_id, person_ids=people, title=extraction.title,
+                                   primary_person_id=session.primary_person_id,
                                    raw_content=raw, summary=extraction.summary, memory_date=extraction.memory_date, location=extraction.location)
             self.memories._validate_create(payload)
             with SessionLocal.begin() as db:
@@ -156,6 +157,8 @@ class WorkflowService:
                     else:
                         now = datetime.now(timezone.utc)
                         model = MemoryModel(family_id=str(data.family_id), source_session_id=str(session_id),
+                            primary_person_id=str(data.primary_person_id) if data.primary_person_id else None,
+                            information=data.information.model_dump(mode='json'),
                             title=data.title, raw_content=data.raw_content, summary=data.summary,
                             memory_date=data.memory_date, location=data.location, created_at=now, updated_at=now)
                         db.add(model)
