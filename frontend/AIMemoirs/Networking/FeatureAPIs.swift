@@ -21,8 +21,23 @@ struct GeneratedMemory {
 @MainActor protocol ChatAPI {
     func start(person: FamilyMember, requestID: UUID) async throws -> ChatSnapshot
     func send(sessionID: UUID, text: String, requestID: UUID) async throws -> ChatSnapshot
+    func send(sessionID: UUID, text: String, attachmentIDs: [UUID], requestID: UUID) async throws -> ChatSnapshot
+    func uploadPhoto(sessionID: UUID, image: Data, requestID: UUID) async throws -> ChatAttachment
+    func removePhoto(sessionID: UUID, id: UUID) async throws
+    func loadPhoto(_ attachment: ChatAttachment) async throws -> Data
+    func state(sessionID: UUID) async throws -> ChatSnapshot
     func generate(sessionID: UUID) async throws -> GeneratedMemory
     func upload(sessionID: UUID, image: Data?, requestID: UUID) async throws
+}
+extension ChatAPI {
+    func send(sessionID: UUID, text: String, attachmentIDs: [UUID], requestID: UUID) async throws -> ChatSnapshot {
+        guard attachmentIDs.isEmpty else { throw APIError.contractUnavailable }
+        return try await send(sessionID: sessionID, text: text, requestID: requestID)
+    }
+    func uploadPhoto(sessionID: UUID, image: Data, requestID: UUID) async throws -> ChatAttachment { throw APIError.contractUnavailable }
+    func removePhoto(sessionID: UUID, id: UUID) async throws { throw APIError.contractUnavailable }
+    func loadPhoto(_ attachment: ChatAttachment) async throws -> Data { throw APIError.contractUnavailable }
+    func state(sessionID: UUID) async throws -> ChatSnapshot { throw APIError.contractUnavailable }
 }
 @MainActor protocol MemoryAPI {
     func list() async throws -> [MemoryEvent]

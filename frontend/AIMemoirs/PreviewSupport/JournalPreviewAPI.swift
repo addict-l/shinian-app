@@ -9,6 +9,7 @@ import SwiftUI
     private var activePerson: FamilyMember?
     private let session = UUID()
     private var conversation: [ChatMessage] = []
+    private var photos: [UUID: Data] = [:]
     private var savedDrafts: Set<UUID> = []
     init(familyFilm: Bool = false, emptyState: String? = nil) {
         let values = [("陈建国", "爷爷", "1948-05-16", Gender.male), ("林秀兰", "奶奶", "1950-02-09", Gender.female), ("陈明远", "爸爸", "1976-09-22", Gender.male), ("周静", "妈妈", "1978-03-18", Gender.female)]
@@ -53,9 +54,26 @@ import SwiftUI
         return ChatSnapshot(sessionID: session, messages: conversation, canGenerate: true)
     }
     func send(sessionID: UUID, text: String, requestID: UUID) async throws -> ChatSnapshot {
-        conversation.append(ChatMessage(id: requestID, sender: .user, text: text))
-        conversation.append(ChatMessage(sender: .ai, text: "这段记忆很清晰。还想补充什么细节吗？"))
+        try await send(sessionID: sessionID, text: text, attachmentIDs: [], requestID: requestID)
+    }
+    func send(sessionID: UUID, text: String, attachmentIDs: [UUID], requestID: UUID) async throws -> ChatSnapshot {
+        if conversation.contains(where: { $0.id == requestID }) { return try await state(sessionID: sessionID) }
+        let attachments = attachmentIDs.enumerated().map { position, id in ChatAttachment(id: id, url: "/api/v1/media/\(id)", position: position) }
+        conversation.append(ChatMessage(id: requestID, sender: .user, text: text, attachments: attachments))
+        conversation.append(ChatMessage(sender: .ai, text: text.isEmpty ? "照片已保存，你可以继续讲讲与这些照片有关的故事。" : "这段记忆很清晰。还想补充什么细节吗？"))
         return ChatSnapshot(sessionID: session, messages: conversation, canGenerate: true)
+    }
+    func uploadPhoto(sessionID: UUID, image: Data, requestID: UUID) async throws -> ChatAttachment {
+        photos[requestID] = image
+        return ChatAttachment(id: requestID, url: "/api/v1/media/\(requestID)")
+    }
+    func removePhoto(sessionID: UUID, id: UUID) async throws { photos[id] = nil }
+    func loadPhoto(_ attachment: ChatAttachment) async throws -> Data {
+        guard let data = photos[attachment.id] else { throw APIError.httpStatus(404) }
+        return data
+    }
+    func state(sessionID: UUID) async throws -> ChatSnapshot {
+        ChatSnapshot(sessionID: session, messages: conversation, canGenerate: conversation.contains { $0.sender == .user && !$0.text.isEmpty })
     }
     func generate(sessionID: UUID) async throws -> GeneratedMemory {
         let event = events[0]

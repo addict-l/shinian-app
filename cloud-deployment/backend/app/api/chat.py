@@ -7,6 +7,10 @@ from app.services.workflow_service import WorkflowService
 router = APIRouter(prefix='/api/v1/chat', tags=['chat'])
 workflow = WorkflowService()
 
+@router.get('/sessions/{session_id}/state', response_model=ChatState)
+def get_state(session_id: UUID):
+    return workflow.state(session_id)
+
 @router.post('/sessions', response_model=ChatSession, status_code=201)
 def create_session(body: ChatSessionCreate):
     return workflow.create_session(body)

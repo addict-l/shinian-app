@@ -5,13 +5,20 @@ struct ContentView: View {
 
     var body: some View {
         Group {
-            if authentication.isAuthenticated {
+            #if DEBUG
+            if ProcessInfo.processInfo.environment["AI_MEMORIES_DESIGN_SCREEN"] != nil {
+                // This entry assembles only JournalPreviewAPI fixtures, never the live backend.
                 JournalAppView()
-            } else {
-                JournalLoginView(authentication: authentication)
-            }
+            } else { authenticatedContent }
+            #else
+            authenticatedContent
+            #endif
         }
         .environmentObject(authentication)
+    }
+    @ViewBuilder private var authenticatedContent: some View {
+        if authentication.isAuthenticated { JournalAppView() }
+        else { JournalLoginView(authentication: authentication) }
     }
 }
 

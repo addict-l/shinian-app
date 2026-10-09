@@ -1,58 +1,36 @@
-# AI Memories 本机后端
+# 拾年云端后端
 
-本目录是从用户提供的 backend.zip 解压后完成融合的服务端。SwiftUI 客户端调用 FastAPI，服务端连接独立 MySQL，并在服务端调用配置的 AI。接口契约见上级 `contracts/openapi.json`；变更报告和验证记录已移至桌面的 `ai memory-supporting-materials/`。
+正式后端运行在阿里云服务器，使用 FastAPI、MySQL、Docker Compose 与 Nginx HTTPS。老师在 Mac 上只需按项目根 README 启动 iOS 前端并登录现有家庭账号，无需部署本机数据库或后端。
 
-## 本机已配置的服务
+## 职责与目录
 
-- API：`http://127.0.0.1:8000`；接口页面：`http://127.0.0.1:8000/docs`；健康检查：`http://127.0.0.1:8000/health`。
-- MySQL：`127.0.0.1:3307`，独立数据库 `ai_memories_local`，数据目录 `.runtime/mysql`。
-- API 与数据库由当前用户的 macOS LaunchAgents 保持运行；登录后自动启动。电脑睡眠、关机或退出登录期间不提供服务。
-- 当前是本机、单家庭开发模式；绑定回环地址，没有账号登录与多用户权限系统。
+- `app/api/`：家庭人物、对话、回忆和照片 HTTP 接口。
+- `app/services/`：对话重试、草稿确认与照片保存规则。
+- `app/models/`、`repositories/`：数据库模型和数据读取。
+- `app/schemas/`：前后端契约及输入校验。
+- `alembic/`：兼容数据库迁移。
+- `docker-compose.demo.yml`：MySQL 和单 worker API；API 端口仅绑定服务器回环地址。
 
-在此目录执行：
+照片保存在 Docker 媒体数据卷中，数据库保存其会话、消息及回忆关联。客户端通过带家庭认证的 API 请求加载照片。
 
-```sh
-.venv/bin/python scripts/manage_local.py status
-.venv/bin/python scripts/manage_local.py start
-.venv/bin/python scripts/manage_local.py restart api
-.venv/bin/python scripts/manage_local.py stop
-```
+## 多图消息
 
-`stop` 卸载当前登录会话中的服务，保留数据和 plist；下次登录仍会自动加载。要取消登录自动启动，在停止后将 `~/Library/LaunchAgents/com.aimemories.local.api.plist` 和 `com.aimemories.local.mysql.plist` 移出 LaunchAgents 目录。
+1. 每张照片先上传到 `POST /api/v1/chat/sessions/{session_id}/media?client_request_id={uuid}`。上传是追加操作，重试保留相同 UUID 与相同图片数据；不同内容复用同一 UUID 返回冲突。
+2. 全部照片上传成功后，向消息接口提交 `content`、有序的 `attachment_ids` 和稳定的 `client_request_id`。每条最多 9 张，文字与照片至少有一项。照片在数据库事务中关联到该消息。
+3. 纯照片消息返回固定提示，不调用 AI，也不改变信息完整度。文字加照片时只把文字交给 AI，照片和纯照片提示不进入模型输入。
+4. 上传或模型失败时保留已有内容；同一请求重试不会重复创建消息和照片。消息状态可以通过 `GET /api/v1/chat/sessions/{session_id}/state` 读取。
+5. 已发送照片不从输入区删除。单张未发送照片可通过 `DELETE /api/v1/chat/sessions/{session_id}/media/{media_id}` 移除；旧版批量移除接口只清理未关联消息的附件。
 
-## 在另一台 Mac 初始化
+单张上传不超过 8 MB。服务器校验图片格式、像素量并重新编码为 JPEG，处理方向、限制尺寸、去掉元数据。App 上传前压缩副本，相册原图不改动。第一阶段不做图片识别。
 
-需要 Python 3.12、MySQL 8 和 Xcode。`manage_local.py` 默认 MySQL 安装于 `/usr/local/mysql`，仅管理本项目自己的 3307 端口实例。以下初始化命令仅适用于尚无 `.runtime/mysql` 数据的全新副本，已有数据库不要重新初始化。
+## 部署与版本维护
 
-```sh
-python3.12 -m venv .venv
-.venv/bin/pip install -r requirements.txt
-cp .env.example .env
-# 编辑 .env，填写自己的 AI 密钥、模型和兼容接口地址。
-mkdir -p .runtime/mysql .runtime/logs
-/usr/local/mysql/bin/mysqld --no-defaults --initialize-insecure --basedir=/usr/local/mysql --datadir="$PWD/.runtime/mysql"
-.venv/bin/python scripts/manage_local.py start mysql
-# 等待 MySQL 初始化完成，可查看 .runtime/logs/mysql-error.log。
-.venv/bin/python scripts/bootstrap_database.py
-.venv/bin/alembic upgrade head
-.venv/bin/python scripts/manage_local.py start api
-```
+参考 [阿里云部署说明](DEPLOY_ALIYUN.md) 和 [部署记录](../../docs/cloud-deployment-record.md)。生产 `.env.production`、家庭认证文件及密钥只保存在服务器，不能加入 Git 或镜像。部署前备份数据库和照片；每次云端运行验证通过后，在服务器本地 Git 中提交，再提交与推送 Mac 工程。Git 回退代码不等于回退数据库或正在运行的镜像。
 
-已存在的 MySQL 可自行创建数据库，在 `.env.local` 设置 DATABASE_URL，再运行 Alembic 和 API；无需运行本地 MySQL 初始化脚本。生产环境需自行配置 HTTPS、认证授权、访问控制、备份和监控。
+当前工作流依赖进程内会话锁，因此 API 固定 `--workers 1`。多进程或多实例需要先改用跨进程锁及对应验证。
 
-`.env` 的 AI 配置和 `.env.local` 的本机数据库密码只在当前机器，均未打包进交付源码。启动配置中没有密钥。迁移工具使用同一套环境变量。`requirements.txt` 是本次实际安装成功的版本锁定文件。
+## 开发验证
 
-## 验证
+测试源码、验证脚本和产物保存在主工程同级的 `shinian-validation`。云端使用独立候选镜像、随机测试库及测试模型；正式家庭数据库不执行测试清理，真实照片与业务备份不放进主工程。测试通过后，再更新正式容器并检查健康、迁移、对应接口和 HTTPS。
 
-```sh
-# 在同级 shinian-validation 目录运行测试，DATABASE_URL 必须指向独立测试库
-# AI 使用测试替身；日志和媒体输出到 validation/artifacts
-cd ../../../shinian-validation
-PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m pytest tests/backend -q
-# 真正调用配置的 AI，会消耗接口额度；创建带“自动联调测试家庭”标识的独立数据
-.venv/bin/python scripts/backend/smoke_fullstack.py
-# 先执行上一条，再验证两个服务重启及并发读取
-.venv/bin/python scripts/backend/verify_restart.py
-```
-
-照片当前每段回忆最多一张、上限 8 MB；服务端解码、校验并重新编码为 JPEG 后存入 `.runtime/media`，数据库保存关联和路径。AI 当前只处理文字，照片作为回忆附件，不进行视觉识别。提交相同请求 UUID 可安全重试。并发锁用于单进程，所以本机启动脚本固定 `--workers 1`，请勿直接扩成多 worker。
+`manage_local.py` 与 `bootstrap_database.py` 是保留的旧本机开发工具，不属于老师启动 App 的步骤；当前正式后端全部在云端运行。

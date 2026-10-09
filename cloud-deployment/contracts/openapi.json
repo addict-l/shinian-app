@@ -395,6 +395,49 @@
         }
       }
     },
+    "/api/v1/chat/sessions/{session_id}/state": {
+      "get": {
+        "tags": [
+          "chat"
+        ],
+        "summary": "Get State",
+        "operationId": "get_state_api_v1_chat_sessions__session_id__state_get",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Session Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChatState"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/chat/sessions": {
       "post": {
         "tags": [
@@ -843,6 +886,52 @@
         }
       }
     },
+    "/api/v1/chat/sessions/{session_id}/media/{media_id}": {
+      "delete": {
+        "tags": [
+          "workflow"
+        ],
+        "summary": "Remove Pending Photo",
+        "operationId": "remove_pending_photo_api_v1_chat_sessions__session_id__media__media_id__delete",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Session Id"
+            }
+          },
+          {
+            "name": "media_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Media Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/media/{media_id}": {
       "get": {
         "tags": [
@@ -984,14 +1073,20 @@
           "content": {
             "type": "string",
             "maxLength": 12000,
-            "minLength": 1,
-            "title": "Content"
+            "title": "Content",
+            "default": ""
+          },
+          "attachment_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "maxItems": 9,
+            "title": "Attachment Ids"
           }
         },
         "type": "object",
-        "required": [
-          "content"
-        ],
         "title": "ChatMessageCreate"
       },
       "ChatSession": {

@@ -7,7 +7,7 @@ from datetime import datetime, timezone
 from uuid import UUID, uuid4, uuid5, NAMESPACE_URL
 
 from fastapi import HTTPException
-from sqlalchemy import select
+from sqlalchemy import or_, select
 from app.db.database import SessionLocal
 from app.models.chat_message import ChatMessageModel
 from app.models.chat_session import ChatSessionModel
@@ -70,13 +70,13 @@ class WorkflowService:
         request_id = body.client_request_id or uuid4()
         assistant_id = uuid5(NAMESPACE_URL, 'ai-memories:reply:' + str(request_id))
         content = body.content.strip()
-        if not content:
-            raise HTTPException(422, '消息不能为空')
+        attachment_ids = [str(value) for value in body.attachment_ids]
         with serialized(session_id):
             session = self.chat.get_session(session_id)
             with SessionLocal() as db:
                 previous = db.get(ChatMessageModel, str(request_id))
-                if previous and (previous.session_id != str(session_id) or previous.role != 'user' or previous.content != content):
+                if previous and (previous.session_id != str(session_id) or previous.role != 'user' or previous.content != content
+                                 or [asset.id for asset in previous.attachments] != attachment_ids):
                     raise HTTPException(409, '请求标识与已有消息不一致')
                 # Check completed reply before session status, so a late retry replays correctly.
                 if previous and db.get(ChatMessageModel, str(assistant_id)):
@@ -84,12 +84,31 @@ class WorkflowService:
             if session.status == 'completed':
                 raise HTTPException(409, '这段回忆已保存，请开始新的对话')
             if previous is None:
-                self.chat.message_repository.create(session_id, 'user', content, message_id=request_id)
+                with SessionLocal.begin() as db:
+                    assets = [db.get(MediaAssetModel, media_id) for media_id in attachment_ids]
+                    if any(asset is None or asset.session_id != str(session_id) or asset.message_id is not None for asset in assets):
+                        raise HTTPException(409, '照片不存在、属于其他故事或已经发送，请重新加载')
+                    db.add(ChatMessageModel(id=str(request_id), session_id=str(session_id), role='user',
+                                            type='text' if content else 'media', content=content,
+                                            created_at=datetime.now(timezone.utc)))
+                    db.flush()
+                    for position, asset in enumerate(assets):
+                        asset.message_id = str(request_id)
+                        asset.position = position
+                    saved_session = db.get(ChatSessionModel, str(session_id))
+                    saved_session.updated_at = datetime.now(timezone.utc)
+                    saved_session.version += 1
+            if not content:
+                self.chat.message_repository.create(session_id, 'assistant',
+                    '照片已保存，你可以继续讲讲与这些照片有关的故事。', message_id=assistant_id, message_type='notice')
+                self.chat.session_repository.touch_updated_at(session_id)
+                return self.state(session_id)
             messages = self.chat.message_repository.list_by_session(session_id)
             prompt = self.chat._build_system_prompt(session)
             prompt += '\n图片目前仅作为附件保存；你不能声称看见照片中的内容。用户可随时选择生成回忆，无须固定问满几轮。'
             response = self.chat._get_llm_client().chat(
-                [{'role':'system','content':prompt}] + [{'role':m.role,'content':m.content} for m in messages])
+                [{'role':'system','content':prompt}] + [{'role':m.role,'content':m.content} for m in messages
+                                                     if m.content.strip() and m.type != 'notice'])
             self.chat.message_repository.create(session_id, 'assistant', response, message_id=assistant_id)
             self.chat.session_repository.touch_updated_at(session_id)
             return self.state(session_id)
@@ -166,7 +185,11 @@ class WorkflowService:
                         memory_id = model.id
                         for person_id in data.person_ids:
                             db.add(MemoryPersonModel(memory_id=memory_id, family_member_id=str(person_id)))
-                    for media in db.scalars(select(MediaAssetModel).where(MediaAssetModel.session_id == str(session_id))):
+                    # New uploads join a saved story only after the user sends their message.
+                    # Preserve legacy session photos created before message attachment identities.
+                    for media in db.scalars(select(MediaAssetModel).where(
+                            MediaAssetModel.session_id == str(session_id),
+                            or_(MediaAssetModel.message_id.is_not(None), MediaAssetModel.content_hash.is_(None)))):
                         media.memory_id = memory_id
                     draft.saved_memory_id = memory_id
                     session = db.get(ChatSessionModel, str(session_id))

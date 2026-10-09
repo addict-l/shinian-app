@@ -4,6 +4,7 @@ enum APIError: LocalizedError {
     case contractUnavailable, insecureURL, invalidResponse, decoding, timeout, network, authenticationRequired
     case httpStatus(Int)
     case server(String)
+    case rejected(Int, String)
     var errorDescription: String? {
         switch self {
         case .contractUnavailable: return "此功能尚未接入后端。"
@@ -11,9 +12,10 @@ enum APIError: LocalizedError {
         case .invalidResponse: return "服务器响应无效。"
         case .httpStatus(let code): return "请求失败（HTTP \(code)）。"
         case .server(let message): return message
+        case .rejected(_, let message): return message
         case .decoding: return "服务器返回的数据格式不匹配。"
         case .timeout: return "请求超时，请重试；重复提交不会重复保存。"
-        case .network: return "无法连接本机服务器，请确认后端正在运行。"
+        case .network: return "无法连接服务器，请检查网络后重试。"
         case .authenticationRequired: return "登录已失效，请重新登录。"
         }
     }
@@ -22,6 +24,7 @@ enum APIError: LocalizedError {
 struct APIClient {
     let baseURL: URL
     var session: URLSession = .shared
+    var authorizationProvider: () -> String? = { BasicCredentialStore.shared.authorizationHeader }
 
     static var local: APIClient {
         #if DEBUG
@@ -55,7 +58,7 @@ struct APIClient {
         request.httpMethod = method
         request.httpBody = body
         request.setValue("application/json", forHTTPHeaderField: "Accept")
-        if let authorization = BasicCredentialStore.shared.authorizationHeader {
+        if let authorization = authorizationProvider() {
             request.setValue(authorization, forHTTPHeaderField: "Authorization")
         }
         if body != nil { request.setValue(contentType, forHTTPHeaderField: "Content-Type") }
@@ -65,8 +68,11 @@ struct APIClient {
             if http.statusCode == 401 { throw APIError.authenticationRequired }
             guard (200..<300).contains(http.statusCode) else {
                 if let detail = (try? JSONSerialization.jsonObject(with: data)) as? [String: Any],
-                   let message = detail["detail"] as? String { throw APIError.server(message) }
-                if http.statusCode == 422 { throw APIError.server("填写的信息不符合要求，请检查姓名、身份和生日。") }
+                   let message = detail["detail"] as? String {
+                    if (400..<500).contains(http.statusCode) { throw APIError.rejected(http.statusCode, message) }
+                    throw APIError.server(message)
+                }
+                if http.statusCode == 422 { throw APIError.rejected(422, "提交的内容不符合要求，请检查填写的信息和照片。") }
                 throw APIError.httpStatus(http.statusCode)
             }
             return data

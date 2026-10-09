@@ -31,13 +31,14 @@ class ChatMessageRepository:
         role: str,
         content: str,
         message_id: UUID | None = None,
+        message_type: str = 'text',
     ) -> ChatMessage:
 
         model = ChatMessageModel(
             id=str(message_id) if message_id else None,
             session_id=str(session_id),
             role=role,
-            type="text",
+            type=message_type,
             content=content,
             created_at=datetime.now(timezone.utc),
         )

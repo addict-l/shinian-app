@@ -129,8 +129,21 @@ enum APIDate {
         return try await client.send(path: "api/v1/chat/sessions/\(session.id)/start", method: "POST", as: ChatDTO.self).snapshot
     }
     func send(sessionID: UUID, text: String, requestID: UUID) async throws -> ChatSnapshot {
+        try await send(sessionID: sessionID, text: text, attachmentIDs: [], requestID: requestID)
+    }
+    func send(sessionID: UUID, text: String, attachmentIDs: [UUID], requestID: UUID) async throws -> ChatSnapshot {
         try await client.send(path: "api/v1/chat/sessions/\(sessionID)/messages", method: "POST",
-            body: json(["content": text, "client_request_id": requestID.uuidString]), as: ChatDTO.self).snapshot
+            body: json(["content": text, "attachment_ids": attachmentIDs.map(\.uuidString), "client_request_id": requestID.uuidString]), as: ChatDTO.self).snapshot
+    }
+    func state(sessionID: UUID) async throws -> ChatSnapshot {
+        try await client.send(path: "api/v1/chat/sessions/\(sessionID)/state", method: "GET", as: ChatDTO.self).snapshot
+    }
+    func loadPhoto(_ attachment: ChatAttachment) async throws -> Data {
+        guard attachment.url == "/api/v1/media/\(attachment.id.uuidString.lowercased())" || attachment.url == "/api/v1/media/\(attachment.id.uuidString)" else { throw APIError.invalidResponse }
+        return try await client.request(path: String(attachment.url.dropFirst()), method: "GET")
+    }
+    func removePhoto(sessionID: UUID, id: UUID) async throws {
+        _ = try await client.request(path: "api/v1/chat/sessions/\(sessionID)/media/\(id)", method: "DELETE")
     }
     func generate(sessionID: UUID) async throws -> GeneratedMemory {
         let draft = try await client.send(path: "api/v1/chat/sessions/\(sessionID)/draft", method: "POST", as: DraftDTO.self)
@@ -145,15 +158,17 @@ enum APIDate {
             _ = try await client.request(path: "api/v1/chat/sessions/\(sessionID)/media", method: "DELETE")
             return
         }
-        guard let decoded = UIImage(data: image), let jpeg = decoded.jpegData(compressionQuality: 0.8) else {
-            throw APIError.server("图片无法读取，请重新选择。")
-        }
-        guard jpeg.count <= 8 * 1024 * 1024 else { throw APIError.server("图片超过 8 MB，请选择较小的图片。") }
+        _ = try await uploadPhoto(sessionID: sessionID, image: PhotoCompression.compress(image), requestID: requestID)
+    }
+    func uploadPhoto(sessionID: UUID, image: Data, requestID: UUID) async throws -> ChatAttachment {
+        guard image.count <= 8 * 1024 * 1024 else { throw APIError.server("图片超过 8 MB，请选择较小的图片。") }
         let boundary = "AI-Memories-\(requestID)"
         var body = Data("--\(boundary)\r\nContent-Disposition: form-data; name=\"file\"; filename=\"memory.jpg\"\r\nContent-Type: image/jpeg\r\n\r\n".utf8)
-        body.append(jpeg); body.append(Data("\r\n--\(boundary)--\r\n".utf8))
-        _ = try await client.request(path: "api/v1/chat/sessions/\(sessionID)/media", method: "POST", body: body,
+        body.append(image); body.append(Data("\r\n--\(boundary)--\r\n".utf8))
+        let data = try await client.request(path: "api/v1/chat/sessions/\(sessionID)/media", method: "POST", body: body,
             query: [.init(name: "client_request_id", value: requestID.uuidString)], contentType: "multipart/form-data; boundary=\(boundary)")
+        guard let result = try? JSONDecoder().decode(ChatAttachment.self, from: data), result.id == requestID else { throw APIError.invalidResponse }
+        return result
     }
     func save(_ draft: GeneratedMemory) async throws -> MemoryEvent {
         let result = try await client.send(path: "api/v1/memory-drafts/\(draft.draftID)/confirm", method: "POST",
