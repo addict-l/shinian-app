@@ -48,3 +48,16 @@
 证据：验证目录 `artifacts/logs/t02-cloud-delivery.log`、`t02-ios-delivery.log`、`t02-ios-and-ui-final.log`、`t02-standalone-build-final.log`；服务器 `/opt/shinian-validation/releases/t02-20261010/logs/`。
 
 未执行：真实模型输出、真机语音、带家庭密码的公网登录以及老师另一台 Mac 的完整流程。当前待发送输入与照片只保留在本次页面中，重启恢复属于 T04。T03–T07 尚未实施，不将第一阶段整体标记完成。
+
+## T02 照片界面修订：验证通过，用户审查已认可
+
+日期：2026-10-10。基于主工程 `30f86c0`；用户认可 v2 原型后实施。使用 `ui-ux-pro-max` 的 SwiftUI 交互与可访问性建议，参考 `design-taste-frontend` 的品牌保留原则；原生控件遵循 iOS 规则。
+
+- 有照片有文字：右对齐照片网格，下方独立文字气泡；纯照片不生成空文字气泡。单图放大、两图并列、三至九图使用三列，点击照片可查看大图。
+- 待发送照片位于白色输入容器，支持移除、可选文字、语音和发送；横屏及辅助功能字号使用照片管理入口。移除和发送的触控区域至少 44pt。
+- 前端最终单元回归：24 项测试及网络边界检查通过。
+- 界面：只使用已有 iPhone 17 Pro（iOS 26.5）。4 项回归测试及 1 项大字号测试通过，覆盖照片加文字、纯照片、移除、1/2/6/9 张边界、网格无重叠、横屏、照片预览和大字号下管理及发送。实际系统选择器搭配 DEBUG 预览 API；不使用生产家庭数据。
+- 云端：现有部署镜像中 34 项测试通过，使用独立测试库；生产健康与现有会话、路由只读检查通过，未写入正式业务数据。后端源码未变更，保持云端 Git `3719461`；本次无需重建后端。
+- 截图与测试产物留在同级验证目录：`artifacts/design/t02-photo-message-v2/implementation/`。前端最终日志 `artifacts/logs/t02-photo-ui-unit-final.log`，界面证据 `artifacts/photo-ui-v2-regression.xcresult` 与 `artifacts/photo-ui-v2-accessibility-retry.xcresult`，云端日志 `artifacts/logs/t02-photo-ui-cloud-unit.log` 与 `artifacts/logs/t02-photo-ui-cloud-smoke.log`。
+
+用户已审查实际界面并认可，授权以“优化上传多张照片ui界面”创建新提交。独立验证目录提交：`1e65b838a7a39b92fe39185ee78effc64327a6f4`，仅本地维护。既有提交保留用于回退；本次不改写已发布提交。尚未执行带家庭密码的公网 App 联调、真实模型及真机语音验证。

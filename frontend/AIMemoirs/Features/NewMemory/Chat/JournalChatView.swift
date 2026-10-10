@@ -92,8 +92,8 @@ struct JournalChatView: View {
         }
         .sheet(item: $previewPhoto) { attachment in
             NavigationStack {
-                JournalMessagePhoto(attachment: attachment, api: chatAPI, height: 400, fit: true)
-                    .padding().navigationTitle("讲述照片")
+                JournalMessagePhoto(attachment: attachment, api: chatAPI, fit: true)
+                    .frame(height: 400).padding().navigationTitle("讲述照片")
                     .toolbar { ToolbarItem(placement: .confirmationAction) { Button("关闭") { previewPhoto = nil } } }
             }
         }
@@ -125,23 +125,16 @@ struct JournalChatView: View {
     }
     @ViewBuilder private func messageView(_ message: ChatMessage) -> some View {
         if message.sender == .user {
-            HStack {
-                Spacer(minLength: 31)
-                VStack(alignment: .leading, spacing: 12) {
-                    if !message.text.isEmpty { Text(message.text).font(JournalTheme.font(15)).lineSpacing(8) }
-                    if !message.attachments.isEmpty {
-                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 80))], spacing: 8) {
-                            ForEach(message.attachments) { attachment in
-                                VStack(spacing: 0) {
-                                    JournalMessagePhoto(attachment: attachment, api: chatAPI, height: 90)
-                                    Button("查看照片") { previewPhoto = attachment }.font(JournalTheme.font(13))
-                                        .frame(minHeight: 44).accessibilityLabel("查看讲述照片")
-                                }
-                            }
-                        }
-                    }
-                }.padding(18).frame(maxWidth: .infinity, alignment: .leading)
-                    .background(JournalTheme.soft, in: RoundedRectangle(cornerRadius: 18))
+            if message.attachments.isEmpty {
+                HStack {
+                    Spacer(minLength: 31)
+                    Text(message.text).font(JournalTheme.font(15)).lineSpacing(8)
+                        .padding(18).frame(maxWidth: .infinity, alignment: .leading)
+                        .background(JournalTheme.soft, in: RoundedRectangle(cornerRadius: 18))
+                        .accessibilityIdentifier("chat.message.text.\(message.id)")
+                }
+            } else {
+                JournalUserMessage(message: message, api: chatAPI) { previewPhoto = $0 }
             }
         } else {
             VStack(alignment: .leading, spacing: 16) {
@@ -152,62 +145,85 @@ struct JournalChatView: View {
     }
     private var composer: some View {
         VStack(spacing: 10) {
-            if !model.photos.isEmpty {
-                if verticalSizeClass == .compact || dynamicTypeSize.isAccessibilitySize {
-                    Button("管理已选照片") { managingPhotos = true }.frame(minHeight: 44)
-                } else { selectedPhotoStrip }
-
-                Text(dynamicTypeSize.isAccessibilitySize ? "已选 \(model.photos.count)/9 张" : "已选 \(model.photos.count)/9 张，可只发送照片")
-                    .font(JournalTheme.font(13)).foregroundStyle(JournalTheme.muted)
-            }
             if readingPhotos { ProgressView("正在读取与压缩照片…") }
-            HStack(spacing: 8) {
-                PhotosPicker(selection: $photoItems, maxSelectionCount: max(1, 9 - model.photos.count), selectionBehavior: .ordered, matching: .images) {
-                    Image(systemName: "plus").font(.system(size: 20)).frame(width: 44, height: 44)
-                }.disabled(model.photos.count >= 9 || readingPhotos || model.isLoading || model.hasPendingSend)
-                    .foregroundStyle(JournalTheme.muted).accessibilityLabel("添加照片")
-                    .accessibilityHint("每条消息最多九张照片").accessibilityIdentifier("chat.addPhotos")
-                TextField("继续讲讲那一天…", text: $input, axis: .vertical).font(JournalTheme.font(14)).lineLimit(1...4)
-                    .disabled(model.isLoading || model.hasPendingSend).focused($inputFocused).submitLabel(.send).accessibilityIdentifier("chat.input")
-                if dictation.isRecording || (input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && model.photos.isEmpty) {
-                    Button { inputFocused = false; if dictation.isRecording { dictation.stop() } else { Task { await dictation.start() } } } label: {
-                        Image(systemName: dictation.isRecording ? "stop.circle.fill" : "mic").font(.system(size: 20)).frame(width: 44, height: 44)
-                    }.disabled(model.isLoading || model.hasPendingSend).accessibilityLabel(dictation.isRecording ? "停止语音输入" : "语音输入")
-                } else {
-                    Button { Task { await send() } } label: { Image(systemName: "arrow.up.circle.fill").font(.system(size: 26)).frame(width: 44, height: 44) }
-                        .disabled(model.isLoading || readingPhotos).accessibilityLabel(model.hasPendingSend ? "重试发送" : "发送").accessibilityIdentifier("chat.send")
+            VStack(spacing: 4) {
+                if !model.photos.isEmpty {
+                    if verticalSizeClass == .compact || dynamicTypeSize.isAccessibilitySize {
+                        Button("管理已选照片（\(model.photos.count)/9）") { managingPhotos = true }
+                            .font(JournalTheme.font(14)).frame(minHeight: 44)
+                            .accessibilityIdentifier("chat.managePhotos")
+                    } else {
+                        selectedPhotoStrip.padding(.top, 8)
+                    }
                 }
-            }.padding(.horizontal, 14).frame(minHeight: 49).background(JournalTheme.surface, in: RoundedRectangle(cornerRadius: 16))
-                .padding(.horizontal, 24)
+                if dynamicTypeSize.isAccessibilitySize {
+                    inputField.padding(.horizontal, 16).padding(.top, 8)
+                    HStack(spacing: 8) { photoPicker; Spacer(); dictationButton; if hasSendContent { sendButton } }
+                } else {
+                    HStack(spacing: 8) { photoPicker; inputField; dictationButton; if hasSendContent { sendButton } }
+                }
+            }
+            .padding(.horizontal, 8).padding(.vertical, 6)
+            .background(JournalTheme.surface, in: RoundedRectangle(cornerRadius: 20))
+            .padding(.horizontal, 24)
         }.padding(.top, 12).padding(.bottom, 12).background(JournalTheme.paper)
     }
+
+    private var hasSendContent: Bool {
+        !input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || !model.photos.isEmpty || model.hasPendingSend
+    }
+
+    private var inputField: some View {
+        TextField(model.photos.isEmpty ? "继续讲讲那一天…" : "也可以写几句话…", text: $input, axis: .vertical)
+            .font(JournalTheme.font(16)).lineLimit(1...4)
+            .disabled(model.isLoading || model.hasPendingSend).focused($inputFocused).submitLabel(.send)
+            .accessibilityLabel("讲述文字").accessibilityIdentifier("chat.input")
+    }
+
+    private var photoPicker: some View {
+        PhotosPicker(selection: $photoItems, maxSelectionCount: max(1, 9 - model.photos.count), selectionBehavior: .ordered, matching: .images) {
+            Image(systemName: "plus").font(.system(size: 20)).frame(width: 44, height: 44)
+        }
+        .disabled(model.photos.count >= 9 || readingPhotos || model.isLoading || model.hasPendingSend)
+        .foregroundStyle(JournalTheme.muted).accessibilityLabel("添加照片")
+        .accessibilityHint("每条消息最多九张照片，已选 \(model.photos.count) 张")
+        .accessibilityIdentifier("chat.addPhotos")
+    }
+
+    private var dictationButton: some View {
+        Button {
+            inputFocused = false
+            if dictation.isRecording { dictation.stop() } else { Task { await dictation.start() } }
+        } label: {
+            Image(systemName: dictation.isRecording ? "stop.circle.fill" : "mic")
+                .font(.system(size: 20)).frame(width: 44, height: 44)
+        }
+        .foregroundStyle(JournalTheme.ink).disabled(model.isLoading || model.hasPendingSend)
+        .accessibilityLabel(dictation.isRecording ? "停止语音输入" : "语音输入")
+    }
+
+    private var sendButton: some View {
+        Button { Task { await send() } } label: {
+            Image(systemName: "arrow.up").font(.system(size: 19, weight: .medium))
+                .foregroundStyle(JournalTheme.surface).frame(width: 36, height: 36)
+                .background(JournalTheme.accent, in: Circle()).frame(width: 44, height: 44)
+                .contentShape(Rectangle())
+        }
+        .disabled(model.isLoading || readingPhotos).opacity(model.isLoading || readingPhotos ? 0.45 : 1)
+        .accessibilityLabel(model.hasPendingSend ? "重试发送" : "发送").accessibilityIdentifier("chat.send")
+    }
+
     private var selectedPhotoStrip: some View {
         ScrollView(.horizontal) {
-                    HStack(spacing: 12) {
-                        ForEach(Array(model.photos.enumerated()), id: \.element.id) { index, photo in
-                            VStack(spacing: 2) {
-                                if let image = photo.thumbnail {
-                                    Image(uiImage: image).resizable().scaledToFill().frame(width: 72, height: 60)
-                                        .clipped().clipShape(RoundedRectangle(cornerRadius: 8))
-                                        .accessibilityLabel("待发送照片 \(index + 1)")
-                                }
-                                Text(photoStatus(photo)).font(JournalTheme.font(12))
-                                Button("移除") { Task { await model.removePhoto(id: photo.id) } }
-                                    .font(JournalTheme.font(13)).frame(minWidth: 44, minHeight: 44)
-                                    .disabled(model.isLoading || model.hasPendingSend)
-                                    .accessibilityLabel("移除照片 \(index + 1)")
-                            }
-                        }
-                    }.padding(.horizontal, 24)
-                }.scrollIndicators(.hidden)
-    }
-    private func photoStatus(_ photo: MessagePhoto) -> String {
-        switch photo.status {
-        case .selected: return "待发送"
-        case .uploading: return "上传中"
-        case .uploaded: return "已上传，待发送"
-        case .failed: return "上传失败，可重试"
+            HStack(alignment: .top, spacing: 8) {
+                ForEach(Array(model.photos.enumerated()), id: \.element.id) { index, photo in
+                    JournalSelectedPhoto(photo: photo, index: index, disabled: model.isLoading || model.hasPendingSend) {
+                        Task { await model.removePhoto(id: photo.id) }
+                    }
+                }
+            }.padding(.horizontal, 8)
         }
+        .scrollIndicators(.hidden).accessibilityIdentifier("chat.selectedPhotos")
     }
     /// 复用当前会话重新生成草稿，更新失败时保留编辑内容供用户重试。
     private func updateDraft() async {
