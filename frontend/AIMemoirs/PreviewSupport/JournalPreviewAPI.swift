@@ -4,14 +4,20 @@ import SwiftUI
 /// Explicit launch-only fixture. Never selected in normal launches or Release builds.
 /// No API calls and no writes to the user's database.
 @MainActor final class JournalPreviewAPI: FamilyAPI, ChatAPI, MemoryAPI {
+    private let slowOpening: Bool
+    private let slowReply: Bool
     private var people: [FamilyMember]
     private var events: [MemoryEvent]
     private var activePerson: FamilyMember?
     private let session = UUID()
     private var conversation: [ChatMessage] = []
+    private var offerMessageID: UUID?
+    private var automaticOfferUsed = false
     private var photos: [UUID: Data] = [:]
     private var savedDrafts: Set<UUID> = []
     init(familyFilm: Bool = false, emptyState: String? = nil) {
+        slowOpening = emptyState == "chat-opening"
+        slowReply = emptyState == "chat-slow"
         let values = [("陈建国", "爷爷", "1948-05-16", Gender.male), ("林秀兰", "奶奶", "1950-02-09", Gender.female), ("陈明远", "爸爸", "1976-09-22", Gender.male), ("周静", "妈妈", "1978-03-18", Gender.female)]
         people = values.enumerated().map { index, row in
             FamilyMember(id: UUID(uuidString: String(format: "00000000-0000-0000-0000-%012d", index + 1))!, name: row.0, gender: row.3,
@@ -50,8 +56,13 @@ import SwiftUI
     func list() async throws -> [MemoryEvent] { events }
     func start(person: FamilyMember, requestID: UUID) async throws -> ChatSnapshot {
         activePerson = person
-        conversation = [ChatMessage(sender: .ai, text: "想到\(person.relationship)时，最先浮现在你脑海里的，是怎样的一个画面？"), ChatMessage(sender: .user, text: "小时候爷爷教我骑自行车。他扶着后座，后来偷偷松开手，我居然自己骑到了巷口。"), ChatMessage(sender: .ai, text: "你回头看他的时候，还记得他的表情吗？那天的光线、声音，也可以慢慢说给我听。")]
-        return ChatSnapshot(sessionID: session, messages: conversation, canGenerate: true)
+        if slowOpening {
+            try await Task.sleep(for: .seconds(8))
+            conversation = [ChatMessage(sender: .ai, text: "您想从哪件记得的事开始讲？")]
+            return try await state(sessionID: session)
+        }
+        conversation = [ChatMessage(sender: .ai, text: "您想从哪件记得的事开始讲？"), ChatMessage(sender: .user, text: "小时候我教孙子骑自行车。我扶着后座，后来松开手，他自己骑到了巷口。"), ChatMessage(sender: .ai, text: "您扶着他骑，后来他自己骑到了巷口。您还记得他回头看您时，说了什么吗？")]
+        return try await state(sessionID: session)
     }
     func send(sessionID: UUID, text: String, requestID: UUID) async throws -> ChatSnapshot {
         try await send(sessionID: sessionID, text: text, attachmentIDs: [], requestID: requestID)
@@ -60,8 +71,14 @@ import SwiftUI
         if conversation.contains(where: { $0.id == requestID }) { return try await state(sessionID: sessionID) }
         let attachments = attachmentIDs.enumerated().map { position, id in ChatAttachment(id: id, url: "/api/v1/media/\(id)", position: position) }
         conversation.append(ChatMessage(id: requestID, sender: .user, text: text, attachments: attachments))
-        conversation.append(ChatMessage(sender: .ai, text: text.isEmpty ? "照片已保存，你可以继续讲讲与这些照片有关的故事。" : "这段记忆很清晰。还想补充什么细节吗？"))
-        return ChatSnapshot(sessionID: session, messages: conversation, canGenerate: true)
+        if slowReply { try await Task.sleep(for: .seconds(8)) }
+        offerMessageID = nil
+        let explicit = text.contains("保存") || text.contains("整理")
+        let automatic = text.contains("讲完") && !automaticOfferUsed
+        let reply = ChatMessage(sender: .ai, text: text.isEmpty ? "照片已保存，您可以继续讲讲与这些照片有关的故事。" : explicit || automatic ? "好的，我们可以先把您讲过的内容整理成草稿，您看过、确认后再保存。" : "您可以慢慢讲，我在听。")
+        conversation.append(reply)
+        if !text.isEmpty && (explicit || automatic) { offerMessageID = reply.id; automaticOfferUsed = true }
+        return try await state(sessionID: sessionID)
     }
     func uploadPhoto(sessionID: UUID, image: Data, requestID: UUID) async throws -> ChatAttachment {
         photos[requestID] = image
@@ -73,7 +90,7 @@ import SwiftUI
         return data
     }
     func state(sessionID: UUID) async throws -> ChatSnapshot {
-        ChatSnapshot(sessionID: session, messages: conversation, canGenerate: conversation.contains { $0.sender == .user && !$0.text.isEmpty })
+        ChatSnapshot(sessionID: session, messages: conversation, canGenerate: conversation.contains { $0.sender == .user && !$0.text.isEmpty }, generationOffer: offerMessageID.map { GenerationOffer(message_id: $0) })
     }
     func generate(sessionID: UUID) async throws -> GeneratedMemory {
         let event = events[0]

@@ -1223,6 +1223,19 @@
           "can_generate": {
             "type": "boolean",
             "title": "Can Generate"
+          },
+          "generation_offer": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/GenerationOffer"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "readiness": {
+            "$ref": "#/components/schemas/StoryReadiness"
           }
         },
         "type": "object",
@@ -1232,6 +1245,41 @@
           "can_generate"
         ],
         "title": "ChatState"
+      },
+      "ConversationProgress": {
+        "properties": {
+          "automatic_offer_used": {
+            "type": "boolean",
+            "title": "Automatic Offer Used",
+            "default": false
+          },
+          "offer_message_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Offer Message Id"
+          },
+          "replied_user_message_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Replied User Message Id"
+          }
+        },
+        "type": "object",
+        "title": "ConversationProgress"
       },
       "DraftConfirmation": {
         "properties": {
@@ -1278,6 +1326,16 @@
               }
             ],
             "title": "Saved Memory Id"
+          },
+          "evidence": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/GroundedDraft"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "type": "object",
@@ -1440,6 +1498,95 @@
         ],
         "title": "FamilyMemberCreate"
       },
+      "GenerationOffer": {
+        "properties": {
+          "message_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Message Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "message_id"
+        ],
+        "title": "GenerationOffer"
+      },
+      "GroundedDraft": {
+        "properties": {
+          "title": {
+            "$ref": "#/components/schemas/GroundedTitle"
+          },
+          "paragraphs": {
+            "items": {
+              "$ref": "#/components/schemas/GroundedPassage"
+            },
+            "type": "array",
+            "maxItems": 30,
+            "minItems": 1,
+            "title": "Paragraphs"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "title",
+          "paragraphs"
+        ],
+        "title": "GroundedDraft"
+      },
+      "GroundedPassage": {
+        "properties": {
+          "text": {
+            "type": "string",
+            "maxLength": 12000,
+            "minLength": 1,
+            "title": "Text"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/SourceQuote"
+            },
+            "type": "array",
+            "maxItems": 30,
+            "minItems": 1,
+            "title": "Sources"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "text",
+          "sources"
+        ],
+        "title": "GroundedPassage"
+      },
+      "GroundedTitle": {
+        "properties": {
+          "text": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Text"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/SourceQuote"
+            },
+            "type": "array",
+            "maxItems": 30,
+            "minItems": 1,
+            "title": "Sources"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "text",
+          "sources"
+        ],
+        "title": "GroundedTitle"
+      },
       "HTTPValidationError": {
         "properties": {
           "detail": {
@@ -1475,6 +1622,37 @@
           "llm_configured"
         ],
         "title": "HealthResponse"
+      },
+      "InformationConflict": {
+        "properties": {
+          "dimension": {
+            "type": "string",
+            "enum": [
+              "people",
+              "event",
+              "time",
+              "place",
+              "feeling",
+              "detail"
+            ],
+            "title": "Dimension"
+          },
+          "alternatives": {
+            "items": {
+              "$ref": "#/components/schemas/InformationDimension"
+            },
+            "type": "array",
+            "maxItems": 4,
+            "minItems": 2,
+            "title": "Alternatives"
+          }
+        },
+        "type": "object",
+        "required": [
+          "dimension",
+          "alternatives"
+        ],
+        "title": "InformationConflict"
       },
       "InformationDimension": {
         "properties": {
@@ -1825,6 +2003,29 @@
         ],
         "title": "MessageAttachment"
       },
+      "SourceQuote": {
+        "properties": {
+          "message_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Message Id"
+          },
+          "quote": {
+            "type": "string",
+            "maxLength": 12000,
+            "minLength": 1,
+            "title": "Quote",
+            "description": "逐字复制提供的 content 中连续片段；不改人称，不拼接，不改标点"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "message_id",
+          "quote"
+        ],
+        "title": "SourceQuote"
+      },
       "StoryInformation": {
         "properties": {
           "people": {
@@ -1844,10 +2045,71 @@
           },
           "detail": {
             "$ref": "#/components/schemas/InformationDimension"
+          },
+          "conflicts": {
+            "items": {
+              "$ref": "#/components/schemas/InformationConflict"
+            },
+            "type": "array",
+            "maxItems": 6,
+            "title": "Conflicts"
+          },
+          "conversation": {
+            "$ref": "#/components/schemas/ConversationProgress"
+          },
+          "analyzed_message_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "title": "Analyzed Message Ids"
+          },
+          "excluded_values": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Excluded Values"
           }
         },
         "type": "object",
         "title": "StoryInformation"
+      },
+      "StoryReadiness": {
+        "properties": {
+          "ready": {
+            "type": "boolean",
+            "title": "Ready",
+            "default": false
+          },
+          "missing_dimensions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Missing Dimensions"
+          },
+          "conflicting_dimensions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Conflicting Dimensions"
+          },
+          "needs_analysis": {
+            "type": "boolean",
+            "title": "Needs Analysis",
+            "default": false
+          },
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "title": "StoryReadiness"
       },
       "ValidationError": {
         "properties": {

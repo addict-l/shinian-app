@@ -18,8 +18,12 @@ from app.models.media_asset import MediaAssetModel
 from app.schemas.chat import ChatSessionCreate
 from app.schemas.memory import MemoryCreate
 from app.schemas.workflow import ChatState, DraftResponse
+from app.schemas.story_guidance import GenerationOffer
 from app.services.chat_service import ChatService
 from app.services.memory_service import MemoryService
+from app.schemas.story_information import InformationStatus, StoryInformation
+from app.services.story_guidance import (user_texts, validate_information, readiness, conversation_history, validate_analysis, validate_reply, reply_policy,
+                                        draft_evidence, validate_draft, exact_date)
 
 _lock_guard = threading.Lock()
 _locks = weakref.WeakValueDictionary()
@@ -53,17 +57,68 @@ class WorkflowService:
     def state(self, session_id):
         session = self.chat.get_session(session_id)
         messages = self.chat.message_repository.list_by_session(session_id)
-        return ChatState(session=session, messages=messages,
-                         can_generate=session.status != 'completed' and any(m.role == 'user' and m.content.strip() for m in messages))
+        result = readiness(session.information, messages, session.primary_person_id, session.status == 'completed')
+        latest_user = next((m for m in reversed(messages) if m.role == 'user'), None)
+        progress = session.information.conversation
+        # A failed reply never exposes an older offer or an apparently completed turn.
+        replied = latest_user is None or (messages[-1].role == 'assistant')
+        if not replied:
+            result.ready = False
+            result.needs_analysis = True
+            result.message = '刚才的讲述已保留，请重试完成这一轮对话。'
+        offer = progress.offer_message_id
+        show_offer = (result.ready and replied and offer is not None and messages[-1].id == offer
+                      and latest_user is not None and progress.replied_user_message_id == latest_user.id)
+        return ChatState(session=session, messages=messages, can_generate=result.ready, readiness=result,
+                         generation_offer=GenerationOffer(message_id=offer) if show_offer else None)
+
+    def _record_subject(self, session):
+        if session.primary_person_id is None:
+            return {'name': '尚未选择', 'relationship': ''}
+        person = self.chat.family_member_service.get_family_member(session.primary_person_id)
+        return {'name': person.name, 'relationship': person.relationship}
+
+    def _analyze(self, session, messages):
+        question = ''
+        transcript = []
+        texts = user_texts(messages)
+        for message in messages:
+            if message.role == 'assistant' and message.type != 'notice':
+                question = message.content
+            elif message.id in texts:
+                transcript.append({'id': str(message.id), 'content': message.content, 'question': question})
+        analysis = self.chat._get_llm_client().analyze_story(
+            transcript, self._record_subject(session), session.information)
+        validate_analysis(analysis, [m for m in messages if m.id in texts])
+        information = StoryInformation.model_validate(analysis.model_dump())
+        information.conversation = session.information.conversation.model_copy(deep=True)
+        information = validate_information(information, messages, session.information)
+        return information, readiness(information, messages, session.primary_person_id), analysis
+
+    def _ensure_analysis(self, session, messages):
+        if set(user_texts(messages)) != set(session.information.analyzed_message_ids):
+            information, _, _ = self._analyze(session, messages)
+            with SessionLocal.begin() as db:
+                model = db.get(ChatSessionModel, str(session.id))
+                model.information = information.model_dump(mode='json')
+                model.version += 1
+                model.updated_at = datetime.now(timezone.utc)
+            return self.chat.get_session(session.id)
+        return session
+
+    @staticmethod
+    def _source_digest(raw, information):
+        return hashlib.sha256((raw + '\n' + information.model_dump_json(exclude={'conversation'})).encode()).hexdigest()
 
     def start(self, session_id):
         with serialized(session_id):
             state = self.state(session_id)
             if not state.messages:
-                content = self.chat._get_llm_client().chat([
-                    {'role':'system','content':self.chat._build_system_prompt(state.session)},
-                    {'role':'user','content':'请提出一个简短、自然的开场问题，引导我讲述关于这位家人的真实回忆。不要代替我回答。'}])
-                self.chat.message_repository.create(session_id, 'assistant', content)
+                subject = self._record_subject(state.session)
+                reply = self.chat._get_llm_client().converse([], subject, state.session.information, state.readiness)
+                policy = {'allowed': False, 'explicit_request': False}
+                validate_reply(reply, [], policy)
+                self.chat.message_repository.create(session_id, 'assistant', reply.text)
             return self.state(session_id)
 
     def send(self, session_id, body):
@@ -96,48 +151,88 @@ class WorkflowService:
                         asset.message_id = str(request_id)
                         asset.position = position
                     saved_session = db.get(ChatSessionModel, str(session_id))
+                    saved_information = StoryInformation.model_validate(saved_session.information or {})
+                    saved_information.conversation.offer_message_id = None
+                    saved_session.information = saved_information.model_dump(mode='json')
                     saved_session.updated_at = datetime.now(timezone.utc)
                     saved_session.version += 1
             if not content:
                 self.chat.message_repository.create(session_id, 'assistant',
-                    '照片已保存，你可以继续讲讲与这些照片有关的故事。', message_id=assistant_id, message_type='notice')
+                    '照片已保存，您可以继续讲讲与这些照片有关的故事。', message_id=assistant_id, message_type='notice')
                 self.chat.session_repository.touch_updated_at(session_id)
                 return self.state(session_id)
             messages = self.chat.message_repository.list_by_session(session_id)
-            prompt = self.chat._build_system_prompt(session)
-            prompt += '\n图片目前仅作为附件保存；你不能声称看见照片中的内容。用户可随时选择生成回忆，无须固定问满几轮。'
-            response = self.chat._get_llm_client().chat(
-                [{'role':'system','content':prompt}] + [{'role':m.role,'content':m.content} for m in messages
-                                                     if m.content.strip() and m.type != 'notice'])
-            self.chat.message_repository.create(session_id, 'assistant', response, message_id=assistant_id)
-            self.chat.session_repository.touch_updated_at(session_id)
+            latest_user = next((m for m in reversed(messages) if m.role == 'user'), None)
+            if latest_user is None or latest_user.id != request_id:
+                raise HTTPException(409, '这条讲述后已有新内容，请以当前对话为准。')
+            # A failed model call leaves the durable user message and the prior evidence intact.
+            information, result, analysis = self._analyze(session, messages)
+            explicit_request = getattr(analysis, 'generation_request', None) is not None
+            history = conversation_history(messages)
+            policy = reply_policy(information, result, history, explicit_request)
+            reply = self.chat._get_llm_client().converse(history, self._record_subject(session), information, result,
+                getattr(analysis, 'guidance_hint', ''), explicit_request)
+            validate_reply(reply, history, policy)
+            progress = information.conversation
+            progress.replied_user_message_id = request_id
+            progress.offer_message_id = assistant_id if reply.action == 'offer_generation' else None
+            if reply.action == 'offer_generation':
+                # A requested first offer also ends future unsolicited reminders.
+                progress.automatic_offer_used = True
+            with SessionLocal.begin() as db:
+                model = db.get(ChatSessionModel, str(session_id))
+                model.information = information.model_dump(mode='json')
+                model.updated_at = datetime.now(timezone.utc)
+                model.version += 1
+                db.add(ChatMessageModel(id=str(assistant_id), session_id=str(session_id), role='assistant',
+                                        type='text', content=reply.text, created_at=datetime.now(timezone.utc)))
             return self.state(session_id)
 
     @staticmethod
     def _draft_response(model):
         return DraftResponse(id=model.id, session_id=model.session_id, revision=model.revision,
-                             memory=MemoryCreate.model_validate(model.payload), saved_memory_id=model.saved_memory_id)
+                             memory=MemoryCreate.model_validate(model.payload), saved_memory_id=model.saved_memory_id,
+                             evidence=model.payload.get('_evidence'))
 
     def generate(self, session_id):
         with serialized(session_id):
             session = self.chat.get_session(session_id)
+            if session.status == 'completed':
+                raise HTTPException(409, '这段回忆已保存')
             if session.primary_person_id is None:
                 raise HTTPException(400, '请先选择家庭人物')
             raw = self.memories._build_raw_content(session_id)
             if not raw:
                 raise HTTPException(400, '请先讲述一段回忆')
-            digest = hashlib.sha256(raw.encode()).hexdigest()
+            messages = self.chat.message_repository.list_by_session(session_id)
+            if messages[-1].role == 'user':
+                raise HTTPException(409, '刚才的讲述已保留，请先重试完成对话。')
+            session = self._ensure_analysis(session, messages)
+            result = readiness(session.information, messages, session.primary_person_id)
+            if not result.ready:
+                raise HTTPException(409, result.message)
+            digest = self._source_digest(raw, session.information)
             with SessionLocal() as db:
                 old = db.scalar(select(MemoryDraftModel).where(MemoryDraftModel.session_id == str(session_id)))
                 if old and old.source_hash == digest:
                     return self._draft_response(old)
                 if session.status == 'completed':
                     raise HTTPException(409, '这段回忆已保存')
-            extraction = self.memories._get_llm_client().extract_memory(raw)
-            people = self.memories._match_people_to_member_ids(session.family_id, extraction.people, session.primary_person_id)
-            payload = MemoryCreate(family_id=session.family_id, person_ids=people, title=extraction.title,
+            evidence = draft_evidence(session.information, messages)
+            composition = validate_draft(self.memories._get_llm_client().compose_story(
+                evidence, self._record_subject(session), session.information), evidence, self._record_subject(session), session.information)
+            # Link only family names/relationships that occur in accepted user excerpts.
+            accepted = '\n'.join(item['content'] for item in evidence)
+            members = self.memories.family_member_service.list_family_members(session.family_id)
+            names = [name for member in members for name in (member.name, member.relationship) if name and name in accepted]
+            people = self.memories._match_people_to_member_ids(session.family_id, names, session.primary_person_id)
+            payload = MemoryCreate(family_id=session.family_id, person_ids=people, title=composition.title.text,
                                    primary_person_id=session.primary_person_id,
-                                   raw_content=raw, summary=extraction.summary, memory_date=extraction.memory_date, location=extraction.location)
+                                   information=session.information, raw_content=raw,
+                                   summary='\n\n'.join(paragraph.text for paragraph in composition.paragraphs),
+                                   memory_date=exact_date(session.information),
+                                   location=session.information.place.value if session.information.place.status in
+                                       (InformationStatus.known, InformationStatus.approximate) else None)
             self.memories._validate_create(payload)
             with SessionLocal.begin() as db:
                 draft = db.scalar(select(MemoryDraftModel).where(MemoryDraftModel.session_id == str(session_id)))
@@ -146,7 +241,7 @@ class WorkflowService:
                     db.add(draft)
                 draft.revision = str(uuid4())
                 draft.source_hash = digest
-                draft.payload = payload.model_dump(mode='json')
+                draft.payload = {**payload.model_dump(mode='json'), '_evidence': composition.model_dump(mode='json')}
                 db.flush()
                 result = self._draft_response(draft)
             return result
@@ -159,6 +254,7 @@ class WorkflowService:
             session_id = UUID(draft.session_id)
         with serialized(session_id):
             raw = self.memories._build_raw_content(session_id)
+            current = self.chat.get_session(session_id)
             with SessionLocal.begin() as db:
                 draft = db.get(MemoryDraftModel, str(draft_id), with_for_update=True)
                 if draft.revision != str(revision):
@@ -166,7 +262,7 @@ class WorkflowService:
                 if draft.saved_memory_id:
                     memory_id = draft.saved_memory_id
                 else:
-                    if draft.source_hash != hashlib.sha256(raw.encode()).hexdigest():
+                    if draft.source_hash != self._source_digest(raw, current.information):
                         raise HTTPException(409, '对话已有新内容，请重新生成回忆')
                     data = MemoryCreate.model_validate(draft.payload)
                     self.memories._validate_create(data)

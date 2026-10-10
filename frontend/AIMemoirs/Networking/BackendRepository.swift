@@ -14,10 +14,12 @@ private struct ChatDTO: Decodable {
     let session: SessionDTO
     let messages: [MessageDTO]
     let can_generate: Bool
+    var generation_offer: GenerationOffer?
+    var readiness: StoryReadiness?
     var snapshot: ChatSnapshot {
         ChatSnapshot(sessionID: session.id, messages: messages.filter { ["user", "assistant"].contains($0.role) }
             .map { ChatMessage(id: $0.id, sender: $0.role == "user" ? .user : .ai, text: $0.content, attachments: $0.attachments ?? []) }, canGenerate: can_generate,
-            version: session.version ?? 1, information: session.information ?? StoryInformation())
+            version: session.version ?? 1, information: session.information ?? StoryInformation(), readiness: readiness, generationOffer: generation_offer)
     }
 }
 private struct MemoryDTO: Decodable {
@@ -150,8 +152,9 @@ enum APIDate {
         let value = try memory(draft.memory, draftID: draft.id)
         return GeneratedMemory(draftID: draft.id, revision: draft.revision, memory: value,
             preview: EventData(person: value.personName, date: value.dateLabel, title: value.title,
-                               content: value.content, location: draft.memory.location ?? "未提及",
-                               participants: draft.memory.person_ids.compactMap { id in knownMembers.first { $0.id == id }?.name }, emotion: ""))
+                               content: value.content, location: draft.memory.information?.place.value ?? draft.memory.location ?? "待补充",
+                               participants: draft.memory.person_ids.compactMap { id in knownMembers.first { $0.id == id }?.name },
+                               emotion: draft.memory.information?.feeling.value ?? "待补充"))
     }
     func upload(sessionID: UUID, image: Data?, requestID: UUID) async throws {
         guard let image else {

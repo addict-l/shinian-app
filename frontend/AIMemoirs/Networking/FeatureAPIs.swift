@@ -6,6 +6,8 @@ struct ChatSnapshot {
     let canGenerate: Bool
     var version: Int = 1
     var information = StoryInformation()
+    var readiness: StoryReadiness? = nil
+    var generationOffer: GenerationOffer? = nil
 }
 struct GeneratedMemory {
     let draftID: UUID

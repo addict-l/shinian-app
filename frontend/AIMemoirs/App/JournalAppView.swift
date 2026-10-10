@@ -49,7 +49,7 @@ struct JournalAppView: View {
                 case "profile": navigation.tab = .profile
                 case "add": navigation.compose()
                 case "select": navigation.compose(step: .select)
-                case "chat", "review": navigation.compose(with: members.members.first)
+                case "chat", "chat-slow", "chat-opening", "review": navigation.compose(with: members.members.first)
                 case "memories": navigation.path = [.memories]
                 case "person": if let person = members.members.first { navigation.path = [.person(person.id)] }
                 default: break

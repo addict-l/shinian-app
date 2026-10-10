@@ -14,21 +14,35 @@ struct MessagePhoto: Identifiable {
 @MainActor final class ChatViewModel: ObservableObject {
     @Published private(set) var isLoading = false
     @Published private(set) var canGenerate = false
+    @Published private(set) var generationOfferMessageID: UUID?
     @Published private(set) var photos: [MessagePhoto] = []
     @Published private(set) var hasPendingSend = false
     @Published private(set) var progressText = "正在倾听与整理…"
     @Published private(set) var latestSnapshot: ChatSnapshot?
+    @Published private(set) var pendingUserMessage: ChatMessage?
     @Published var errorMessage: String?
     private let api: any ChatAPI
     private var sessionID: UUID?
     private var startID = UUID()
     private var pendingMessage: (text: String, id: UUID, attachments: [UUID])?
+    let openingNotice = ChatMessage(sender: .ai, text: "您可以从一件记得的事开始讲，我会陪您慢慢回想。")
 
     init(api: (any ChatAPI)? = nil) { self.api = api ?? BackendRepository.shared }
 
+    /// The server uses the client request ID as the user message ID. A recovered
+    /// snapshot replaces the local echo, including when only the reply was lost.
+    var messages: [ChatMessage] {
+        // This is an immediate page welcome, not a generated or saved AI reply.
+        // The model-generated opening replaces it when the session is ready.
+        let saved = latestSnapshot?.messages ?? [openingNotice]
+        guard let pendingUserMessage, !saved.contains(where: { $0.id == pendingUserMessage.id }) else { return saved }
+        return saved + [pendingUserMessage]
+    }
+    var pendingText: String? { pendingMessage?.text }
+
     func reset() {
-        sessionID = nil; startID = UUID(); pendingMessage = nil; photos = []
-        canGenerate = false; hasPendingSend = false; latestSnapshot = nil
+        sessionID = nil; startID = UUID(); pendingMessage = nil; pendingUserMessage = nil; photos = []
+        canGenerate = false; generationOfferMessageID = nil; hasPendingSend = false; latestSnapshot = nil
     }
     func appendPhotos(_ data: [Data]) throws {
         guard !isLoading, !hasPendingSend else { throw APIError.server("请先完成当前消息的发送或重试。") }
@@ -47,6 +61,8 @@ struct MessagePhoto: Identifiable {
     }
     private func accept(_ value: ChatSnapshot) -> ChatSnapshot {
         sessionID = value.sessionID; canGenerate = value.canGenerate; latestSnapshot = value
+        let offerID = value.generationOffer?.message_id
+        generationOfferMessageID = value.canGenerate && value.messages.last?.sender == .ai && value.messages.last?.id == offerID ? offerID : nil
         return value
     }
     func start(person: FamilyMember) async -> ChatSnapshot? {
@@ -61,12 +77,19 @@ struct MessagePhoto: Identifiable {
         let text = text.trimmingCharacters(in: .whitespacesAndNewlines)
         guard text.count <= 12000 else { errorMessage = "单条文字最多 12000 字，请分多条发送。"; return nil }
         guard !text.isEmpty || !photos.isEmpty else { errorMessage = "请先写下文字或选择照片。"; return nil }
-        if sessionID == nil, await start(person: person) == nil { return nil }
-        guard !isLoading, let sessionID else { return nil }
+        guard !isLoading else { return nil }
         if let pendingMessage, pendingMessage.text != text {
             errorMessage = "上一条消息尚未完成，请先重试。"; return nil
         }
-        isLoading = true; errorMessage = nil
+        if pendingMessage == nil {
+            let id = UUID()
+            pendingMessage = (text, id, [])
+            pendingUserMessage = ChatMessage(id: id, sender: .user, text: text)
+        }
+        hasPendingSend = true; generationOfferMessageID = nil
+        if sessionID == nil, await start(person: person) == nil { return nil }
+        guard let sessionID else { return nil }
+        isLoading = true; errorMessage = nil; generationOfferMessageID = nil
         defer { isLoading = false }
         do {
             for index in photos.indices where photos[index].attachment == nil {
@@ -78,19 +101,19 @@ struct MessagePhoto: Identifiable {
                     photos[index].attachment = result; photos[index].status = .uploaded
                 } catch { photos[index].status = .failed; throw error }
             }
-            if pendingMessage == nil { pendingMessage = (text, UUID(), photos.compactMap { $0.attachment?.id }) }
+            pendingMessage?.attachments = photos.compactMap { $0.attachment?.id }
             guard let request = pendingMessage else { return nil }
             hasPendingSend = true
             progressText = text.isEmpty ? "正在保存照片消息…" : "正在倾听与整理…"
             let value = try await api.send(sessionID: sessionID, text: request.text,
                                           attachmentIDs: request.attachments, requestID: request.id)
-            pendingMessage = nil; hasPendingSend = false; photos = []
+            pendingMessage = nil; pendingUserMessage = nil; hasPendingSend = false; photos = []
             return accept(value)
         } catch is CancellationError { return nil }
         catch {
             errorMessage = error.localizedDescription
-            if case APIError.rejected = error { pendingMessage = nil; hasPendingSend = false }
-            if case APIError.httpStatus(let status) = error, (400..<500).contains(status) { pendingMessage = nil; hasPendingSend = false }
+            if case APIError.rejected = error { pendingMessage = nil; pendingUserMessage = nil; hasPendingSend = false }
+            if case APIError.httpStatus(let status) = error, (400..<500).contains(status) { pendingMessage = nil; pendingUserMessage = nil; hasPendingSend = false }
             if hasPendingSend, let value = try? await api.state(sessionID: sessionID) { _ = accept(value) }
             return nil
         }

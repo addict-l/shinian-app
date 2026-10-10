@@ -4,11 +4,14 @@ from pydantic import BaseModel, Field
 from app.schemas.chat import ChatMessage, ChatSession
 from app.schemas.memory import MemoryCreate
 from app.schemas.media import MediaResponse
+from app.schemas.story_guidance import StoryReadiness, GroundedDraft, GenerationOffer
 
 class ChatState(BaseModel):
     session: ChatSession
     messages: list[ChatMessage]
     can_generate: bool
+    generation_offer: GenerationOffer | None = None
+    readiness: StoryReadiness = Field(default_factory=StoryReadiness)
 
 class DraftResponse(BaseModel):
     id: UUID
@@ -16,6 +19,7 @@ class DraftResponse(BaseModel):
     revision: UUID
     memory: MemoryCreate
     saved_memory_id: UUID | None = None
+    evidence: GroundedDraft | None = None
 
 class DraftConfirmation(BaseModel):
     revision: UUID
