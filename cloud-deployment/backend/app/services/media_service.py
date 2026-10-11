@@ -28,15 +28,19 @@ def receipt(asset):
                          url=asset.file_url, mime_type=asset.mime_type)
 
 
-def upload(session_id, request_id, file, editing_memory_id=None, family_id=None):
+def upload(session_id, request_id, file, editing_memory_id=None, family_id=None, memoir_person_id=None):
     data = file.read(MAX_BYTES + 1)
     if len(data) > MAX_BYTES:
         raise HTTPException(413, '图片不能超过 8 MB')
     digest = hashlib.sha256(data).hexdigest()
-    with serialized('memory:' + str(editing_memory_id) if editing_memory_id else session_id), serialized('media:' + str(request_id)):
+    owner_key = 'memoir:' + str(memoir_person_id) if memoir_person_id else ('memory:' + str(editing_memory_id) if editing_memory_id else session_id)
+    with serialized(owner_key), serialized('media:' + str(request_id)):
         with SessionLocal() as db:
             session = None
-            if editing_memory_id:
+            if memoir_person_id:
+                from app.services.memoir_service import owned_person
+                owned_person(db, family_id, memoir_person_id)
+            elif editing_memory_id:
                 from app.services.memory_maintenance import owned
                 owned(db, editing_memory_id, family_id)
             else:
@@ -45,7 +49,9 @@ def upload(session_id, request_id, file, editing_memory_id=None, family_id=None)
                     raise HTTPException(404, '会话不存在')
             existing = db.get(MediaAssetModel, str(request_id))
             if existing:
-                if (existing.editing_memory_id != str(editing_memory_id) and existing.memory_id != str(editing_memory_id) if editing_memory_id else existing.session_id != str(session_id)) or (existing.content_hash and existing.content_hash != digest):
+                owner_matches = existing.memoir_person_id == str(memoir_person_id) if memoir_person_id else (
+                    existing.editing_memory_id == str(editing_memory_id) or existing.memory_id == str(editing_memory_id) if editing_memory_id else existing.session_id == str(session_id))
+                if not owner_matches or (existing.content_hash and existing.content_hash != digest):
                     raise HTTPException(409, '同一个照片请求标识不能上传不同内容')
                 return receipt(existing)
             if session and session.status == 'completed':
@@ -72,6 +78,7 @@ def upload(session_id, request_id, file, editing_memory_id=None, family_id=None)
                 with SessionLocal.begin() as db:
                     asset = MediaAssetModel(id=str(request_id), memory_id=None, session_id=str(session_id) if session_id else None,
                                             editing_memory_id=str(editing_memory_id) if editing_memory_id else None,
+                                            memoir_person_id=str(memoir_person_id) if memoir_person_id else None,
                                             type='image', file_url='/api/v1/media/' + str(request_id),
                                             original_filename=None, mime_type='image/jpeg', content_hash=digest)
                     db.add(asset)

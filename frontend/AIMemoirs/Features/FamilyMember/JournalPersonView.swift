@@ -7,6 +7,7 @@ struct JournalPersonView: View {
     @EnvironmentObject private var navigation: JournalNavigation
     @State private var showingInfo = false
     private var events: [MemoryEvent] { memories.getMemoryEvents(for: person.id) }
+    private var hasOwnStories: Bool { events.contains { $0.primaryPersonID == person.id } }
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
@@ -15,6 +16,9 @@ struct JournalPersonView: View {
                 Text(person.journalIdentity).font(JournalTheme.font(13)).foregroundStyle(JournalTheme.muted).padding(.top, 12)
                 JournalButton(title: "＋  记录与\(person.relationship.isEmpty ? person.name : person.relationship)的故事") { navigation.compose(with: person) }
                     .padding(.top, 33)
+                JournalButton(title: "制作／继续制作回忆录", secondary: true, disabled: !hasOwnStories) { navigation.path.append(.memoir(person.id)) }
+                    .padding(.top, 12).accessibilityIdentifier("person-memoir")
+                if !hasOwnStories { Text("保存第一段回忆后，就可以制作回忆录。").font(JournalTheme.font(12)).foregroundStyle(JournalTheme.muted).padding(.top, 10) }
                 HStack {
                     Text("关于\(person.gender == .female ? "她" : "他")的回忆").font(JournalTheme.font(18, medium: true)); Spacer()
                     Text("\(events.count) 段").font(JournalTheme.font(12)).foregroundStyle(JournalTheme.muted)

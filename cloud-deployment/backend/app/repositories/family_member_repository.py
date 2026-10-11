@@ -127,6 +127,13 @@ class FamilyMemberRepository:
             model = session.get(FamilyMemberModel, str(member_id))
             if model is None:
                 return False
+            from app.models.media_asset import MediaAssetModel
+            from app.services.memory_maintenance import queue
+            for asset in session.scalars(select(MediaAssetModel).where(MediaAssetModel.memoir_person_id == str(member_id))):
+                queue(session, asset, model.family_id)
+            session.flush()
             session.delete(model)
             session.commit()
-            return True
+        from app.services.memory_maintenance import drain_cleanup
+        drain_cleanup()
+        return True

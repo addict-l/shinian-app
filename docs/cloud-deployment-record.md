@@ -1,5 +1,13 @@
 # 第一阶段云端部署记录
 
+## T06 最终人工审查与版本归档（2026-10-12）
+
+用户认可 T06 并授权标记完成与上传；下文待审查、未提交状态保留为历史。云端本地 Git 已提交 `aba016e144ca142eef6fef4e5495d5231c015501`；独立验证目录已提交 `a2a25c01ac6f59577f3b42d72f0a2e4e827006b4`，主工程随后提交并推送 origin/main。完整版本在推送后由 finalize_t06.py 写入本机 artifacts/t06-final-revisions.json 与云端 /opt/shinian-validation/releases/inline-photo-fix-20261012/t06-final-revisions.json，并记录对应后端和客户端版本。
+
+正式镜像保持 sha256:0912af60793bb2cf544367afe38f0045eae60cf9c0ea3b0b8622f34b844cff5d，后端源码包 SHA256 为 7efa43e9d059f4e98137a8f7cc6911529498c8c16a4d94294f3c6fbad9a74da2，迁移 f10100000001。提交前再次只读核对 54 份运行 Python 源文件、云端后端工作源码和 150 份最终客户端清单；正常 Release 已安装原 iPhone 17 Pro，正式 9 页预览已检查。归档不重启服务、不运行迁移、不修改账号配置或业务数据，沿用已部署备份和回退镜像。
+
+最终本机／云端各 205 项后端检查、最新 12 项 MemoirTests 和 4 项 UI 通过。T06 完成不代表 T07 或第一阶段整体验收完成；真机语音、实际跨设备与真机分享体验以实际验收记录为准。
+
 ## T05 最终人工审查与版本归档（2026-10-11）
 
 用户人工验证成功，授权本次任务完整 commit。云端本地 Git 已提交 `6bcab703b4d3df231498f1e18e5c8391578fb01c`；验证目录已提交 `b93e68dfbf7b2e6ec28edbf08da826bdfcc9a21c`，主工程随后提交并推送，完整版本映射归档在 /opt/shinian-validation/releases/t05-empty-opening-20261011/t05-final-revisions.json 与本机验证产物同名文件。后文待审查状态保留为历史。
@@ -178,3 +186,67 @@
 随机测试数据库 163 项检查和合成身份真实模型检查通过后，候选版本在 /opt/shinian-validation/releases/t05-prepared-opening-20261011 部署。此前源码、镜像、数据库和媒体备份在 /opt/shinian-validation/backups/pre-t05-prepared-opening-20261011，回退镜像为 shinian-api:t05-before-prepared-opening。无新增迁移，结构仍为 e10100000001。
 
 运行镜像 sha256:c7853d54ed1cde2cdfba15eedc557a0e3661eeff7c862b074755a36e3baf5951；源码包 SHA-256 2ae5d3b5a356f432e3dafddf1f1761dcbab2da84828b3a04f76dddb2d47de592；核对时间 2026-10-11T08:21:04Z。容器 50 个 Python 应用文件与本机一致。健康、人物开场字段、已发布历史与契约只读核对通过，部署前后六张业务表数量均为 [1, 1, 18, 79, 1, 28]，验证未写入正式家庭数据。144 个前端文件归档核对通过，Mac 独立 Release 已安装原 iPhone 17 Pro。源码未 commit，待人工审查后按原链路归档提交。
+
+## 2026-10-11 T06 技术验证与部署（待人工审查）
+
+独立候选 171 项后端检查通过后部署到正式 API，迁移 f10100000001。新增人物制作设置和独立封面照片归属，旧接口保留。发布目录 /opt/shinian-validation/releases/t06-20261011；数据库、媒体、源码及配置备份 /opt/shinian-validation/backups/pre-t06-20261011；回退镜像 shinian-api:t06-before-memoir。降级有数据保护，不能删除新数据来回退。
+
+运行镜像 sha256:185c55c099771a2f527bf0a82ca8ec3044f3c99d4180a12b0f0cdd0597dfb467；后端包 SHA-256 159c8a13d1e6de6e67297986ee20c03bd4a96fc91409afa4ca899b162f26434a；核对时间 2026-10-11T11:27:40Z。54 个运行 Python 应用文件与本机一致。正式健康、新契约、人物回忆录只读快照、原聊天和媒体接口核对通过，六张既有业务表数量部署前后均为 [1, 2, 20, 81, 1, 28]；这仅为只读检查与数量核对，非完整数据库校验。公网 HTTPS 认证边界返回 401，Nginx 配置通过。首次部署的检查脚本误沿用 T05 迁移断言，已修正并补跑，失败日志保留；之后最新候选再次部署并只读核对通过。
+
+149 个前端文件云端归档校验通过，云端不编译 Swift；Mac 独立 Release 构建并安装原 iPhone 17 Pro。主工程、验证和云端均未提交 T06，待人工审查通过再按云端 → 验证目录 → 主工程提交推送。
+
+## 2026-10-11 验收期间生成入口修复部署（待人工审查）
+
+发布 /opt/shinian-validation/releases/generation-place-fix-20261011；备份 /opt/shinian-validation/backups/pre-generation-place-fix-20261011；回退标签 shinian-api:rollback-generation-place-fix。无新增迁移，仍 f10100000001。隔离库最初 181 项及合成真实模型检查通过后部署，54 个应用 Python 文件与本机一致。镜像 sha256:fe5bb83625c54cbaf25d6c74f6bd29144a89ba19216bd936a9b4d25e340a7053；后端源码包 SHA-256 14977680f1fed526493251c7e3b4210d2c993f68cbfb944302218e8760804af5；核对 2026-10-11T11:54:14Z。只读烟雾检查与认证边界通过，部署前后六张既有业务表数量 [1, 2, 20, 87, 1, 28] 不变。
+
+随后单独修复当前误报会话的分析与原助手回复，使用原消息 ID，检查版本防止覆盖新讲述；没有新增消息或保存回忆。原始数据库与媒体备份已在部署前保留，不批量改写其他会话。重新进入该人物聊天可读取修正状态。T06 继续等待人工验收和提交授权。
+
+生成措辞校验的开场职责例外补充后，最终本机／云端各 182 项通过，最终候选合成真实模型两场景再次通过并部署。最终运行镜像 sha256:b98ff6d02430c5e6ffa1d023d013fe4a445b2b7b0fcae47c6cf13adb9513c4e8；源码包 SHA-256 8a6ccc625fad11a8cd83b44ef0d1620e55d79c1c8bfded14be6da79268055979；核对 2026-10-11T12:03:50Z。54 个应用文件匹配本机，无新迁移；当前会话修复没有被后续部署覆盖。原 iPhone 17 Pro 一项生成入口 UI 回归通过，前端仍为原 149 文件 Release，未提交。
+
+
+### 2026-10-11：连续回忆草稿客户端修复
+
+本次仅改前端预览状态与 DEBUG 验证数据；后端运行镜像继续使用 `sha256:b98ff6d02430c5e6ffa1d023d013fe4a445b2b7b0fcae47c6cf13adb9513c4e8`，无需重启或迁移。149 份客户端源码上传至 `/opt/shinian-validation/releases/second-story-fix-20261011/client`，清单 `/opt/shinian-validation/releases/second-story-fix-20261011/client-manifest.json` 逐项校验通过；Release 编译在 Mac 完成并安装原 iPhone 17 Pro。
+
+同目录 logs/backend-regression.log 记录运行镜像在隔离临时数据库的 182 项通过，logs/production-smoke.json 为线上只读验证。业务表计数 [1,2,21,95,2,34] 为此时观察值，包含用户此前手动新增的内容，不代表本次变更迁移了业务数据。云端 Git、验证 Git、主仓库 Git 仍待人工验收后按约定顺序提交。
+
+
+### 2026-10-11：保存后的模型承接部署
+
+Release：`/opt/shinian-validation/releases/saved-story-reply-20261011`；备份：`/opt/shinian-validation/backups/pre-saved-story-reply-20261011`，包含旧源码、数据库及媒体，回退镜像 `shinian-api:rollback-saved-story-reply`。
+
+- 最终镜像 `sha256:b28a0fc92f5e03a03cf07b8054d037b5605af65578047ce87e95d6fc93d8c79a`。
+- 源码归档 SHA256 `8e1ad86ae6fc1babc5d4503982bd79ea16dd4ac0b5b0a5f5d94436922c15f4a9`，运行 app 54 份源文件与主仓库一致。
+- 191 项云端隔离数据库测试通过，真实模型两个合成案例通过；验证时间 `2026-10-11T12:39:29Z`。
+- 无迁移变更，head 仍 `f10100000001`；部署前后业务表计数均 `[1, 2, 22, 95, 3, 34]`，健康与只读契约检查通过。
+- 客户端 149 份源码保存在 `/opt/shinian-validation/releases/saved-reply-fix-20261011/client` 并逐项校验（客户端目录由既有归档脚本命名）；Mac 独立 Release 编译及原 iPhone 17 Pro 安装启动成功。
+- 人工验收待进行；未 commit/push。
+
+
+### 2026-10-11：草稿预览白屏客户端修复（未提交）
+
+新增 JournalDraftPreviewView 将草稿内容与全屏展示绑定为一个载荷；包含 T06 及此前验收修复的 150 份前端文件已上传 /opt/shinian-validation/releases/draft-preview-fix-20261011/client，云端逐项哈希一致。独立正常 Release 构建成功并安装原 iPhone 17 Pro / iOS 26.5。原设备开启 Release 优化的最小白屏场景先失败后通过，最终 4 项 UI 回归通过（含反复 8 次）。验证脚本 shinian-validation/scripts/backend/verify_draft_preview_client.py。
+
+后端未重新部署；54 个 Python 文件与本地一致，镜像继续为 sha256:b28a0fc92f5e03a03cf07b8054d037b5605af65578047ce87e95d6fc93d8c79a。云内只读健康/契约检查通过，迁移 f10100000001；本次没有生产数据写入。最新只读时已有 23 会话、100 消息、4 正式回忆、35 附件，是用户持续体验后的实时数量，不把此前部署数量视为恒定。等待人工验收，未提交。
+
+### 2026-10-12：时间补充生成入口修复部署（未提交）
+
+发布目录 `/opt/shinian-validation/releases/generation-time-fix-20261011`，备份 `/opt/shinian-validation/backups/pre-generation-time-fix-20261011`，回退标签 `shinian-api:rollback-generation-time-fix`。最后镜像 `sha256:0912af60793bb2cf544367afe38f0045eae60cf9c0ea3b0b8622f34b844cff5d`；源码包 SHA256 `7efa43e9d059f4e98137a8f7cc6911529498c8c16a4d94294f3c6fbad9a74da2`；54 份 app Python 源文件与主工程及运行容器一致，验证时间 `2026-10-11T15:58:07Z`。
+
+最终本机、云端隔离数据库各 205 项及真实模型三个合成场景通过。早期部署后的受保护会话修复因模型返回兼容/冲突矛盾而中止，没有写入；之后进一步修复旧字段整句引用覆盖，保留初版归档及失败日志，完整重验后刷新到上述最终镜像。无新增迁移或公开接口变化，head 仍为 `f10100000001`。健康和只读契约通过，部署前后六张业务表计数 `[1,2,23,120,4,36]` 不变。
+
+最终对当前受影响会话执行一次带版本和原消息身份核对的分析/末条助手回复修复，原消息数量不变，没有保存回忆。修复前原数据位于发布目录 `repair-before.json`（600 权限）；最初中止尝试的备份在 `first-deployment/repair-before.json`。后续只读 GET 确认入口关联末条助手消息并且就绪。这些一次性修复和首次部署脚本不可重复重放。
+
+同目录 `client` 归档 150 个客户端文件，云端逐项 SHA256 核对通过；Mac 独立正常 Release 编译并恢复原 iPhone 17 Pro。用户真实保存尚待人工验收，云端、验证仓库及主工程均未提交或推送。
+
+### 2026-10-12：封面滚动客户端修复（未提交）
+
+150 份客户端源码/资源/配置上传至 `/opt/shinian-validation/releases/cover-scroll-fix-20261012/client`，`client-manifest.json` 逐项 SHA256 核对通过。Mac 独立同源正常 Release 构建成功，安装并启动原 iPhone 17 Pro / iOS 26.5；正式人物回忆录的照片入口已目视打开。4 项隔离 UI 回归通过，滑动取景与主页面滚动分开，照片选择入口移到预览上方。
+
+后端未变更和重启；仍为镜像 `sha256:0912af60793bb2cf544367afe38f0045eae60cf9c0ea3b0b8622f34b844cff5d`，54 份 Python 文件本机/运行源一致。无新增迁移或正式照片上传。脚本 `shinian-validation/scripts/backend/verify_cover_scroll_client.py` 只归档/核对前端，云端不编译 Swift，编译在 Mac 完成。T06 与修复继续等待人工验收，未提交或推送。
+
+### 2026-10-12：短文与首张照片同页客户端排版修订（未提交）
+
+按新的内页要求，短篇文字（含标题及元信息）在内容区半页以内时，首图放在正文下方同页；其余和长文照片继续独立分页。150 份客户端文件上传 `/opt/shinian-validation/releases/inline-photo-fix-20261012/client`，同目录 `client-manifest.json` 逐项哈希核对通过。12 项回忆录逻辑/实际 PDF 测试及 4 项 UI 通过，11 份专项实际 PDF 渲染及几何/图片检查通过。
+
+独立同源正常 Release 在 Mac 编译通过，并安装启动原 iPhone 17 Pro。脚本 `shinian-validation/scripts/backend/verify_inline_photo_client.py`，日志 artifacts/logs/inline-photo-{client-final,release-final}.log。此次仅客户端排版和需求文档更新，没有后端重启、迁移或数据改写；后端镜像继续为时间补充修复版 `sha256:0912af60793bb2cf544367afe38f0045eae60cf9c0ea3b0b8622f34b844cff5d`。尚未提交或推送，待用户人工体验。

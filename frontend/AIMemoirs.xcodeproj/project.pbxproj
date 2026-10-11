@@ -35,12 +35,12 @@
 			path = AIMemoirs;
 			sourceTree = "<group>";
 		};
-		7195EDFA2E03E940008FCA27 /* AIMemoirsTests */ = {
+		7195EDFA2E03E940008FCA27 /* ../../shinian-validation/tests/ios/AIMemoirsTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = "../../shinian-validation/tests/ios/AIMemoirsTests";
 			sourceTree = "<group>";
 		};
-		7195EE042E03E940008FCA27 /* AIMemoirsUITests */ = {
+		7195EE042E03E940008FCA27 /* ../../shinian-validation/tests/ios/AIMemoirsUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = "../../shinian-validation/tests/ios/AIMemoirsUITests";
 			sourceTree = "<group>";
@@ -76,8 +76,8 @@
 			isa = PBXGroup;
 			children = (
 				7195EDE42E03E93E008FCA27 /* AIMemoirs */,
-				7195EDFA2E03E940008FCA27 /* AIMemoirsTests */,
-				7195EE042E03E940008FCA27 /* AIMemoirsUITests */,
+				7195EDFA2E03E940008FCA27 /* ../../shinian-validation/tests/ios/AIMemoirsTests */,
+				7195EE042E03E940008FCA27 /* ../../shinian-validation/tests/ios/AIMemoirsUITests */,
 				7195EDE32E03E93E008FCA27 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -131,7 +131,7 @@
 				7195EDF92E03E940008FCA27 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				7195EDFA2E03E940008FCA27 /* AIMemoirsTests */,
+				7195EDFA2E03E940008FCA27 /* ../../shinian-validation/tests/ios/AIMemoirsTests */,
 			);
 			name = AIMemoirsTests;
 			packageProductDependencies = (
@@ -154,7 +154,7 @@
 				7195EE032E03E940008FCA27 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				7195EE042E03E940008FCA27 /* AIMemoirsUITests */,
+				7195EE042E03E940008FCA27 /* ../../shinian-validation/tests/ios/AIMemoirsUITests */,
 			);
 			name = AIMemoirsUITests;
 			packageProductDependencies = (

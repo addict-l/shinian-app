@@ -71,6 +71,10 @@ class SelectedAnalysis(BaseModel):
     feeling: SelectedDimension = Field(default_factory=SelectedDimension)
     detail: SelectedDimension = Field(default_factory=SelectedDimension)
     conflicts: list[SelectedConflict] = Field(default_factory=list, max_length=6)
+    compatible_times: list[SourceRange] = Field(default_factory=list, max_length=8,
+        description='同一事件时间的兼容补充：选择所有相关用户原文；不同明确年份或无法确认兼容则为空')
+    compatible_places: list[SourceRange] = Field(default_factory=list, max_length=8,
+        description='同一地点的兼容说法或补充细节：选择所有相关用户原文；互斥或无法确认兼容则为空')
     guidance_hint: str = Field(default='', max_length=800)
     generation_request: SourceRange | None = Field(default=None, description='仅最新用户明确要求整理、生成、保存或更新草稿时选择请求原文；否定、保存照片和往事中的保存不算')
 
@@ -96,6 +100,8 @@ def resolve_analysis(selected, texts):
     return StoryAnalysis(**values, conflicts=[InformationConflict(dimension=c.dimension,
         alternatives=[dimension(item, f'conflicts.{c.dimension}') for item in c.alternatives]) for c in selected.conflicts],
         guidance_hint=selected.guidance_hint,
+        compatible_times=[resolve_range(source, texts) for source in selected.compatible_times],
+        compatible_places=[resolve_range(source, texts) for source in selected.compatible_places],
         generation_request=request)
 
 

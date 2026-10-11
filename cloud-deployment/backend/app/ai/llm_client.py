@@ -10,7 +10,7 @@ from app.ai.prompts import (
 )
 from app.schemas.memory import MemoryExtraction
 from app.schemas.story_information import StoryInformation
-from app.schemas.story_guidance import ConversationReply
+from app.schemas.story_guidance import ConversationReply, SavedStoryReply
 
 
 class LLMConfigurationError(Exception):
@@ -89,6 +89,9 @@ class LLMClient:
                     if '多个问号' in str(exc):
                         repair += ('本轮修正只做自然承接，不再提任何问题。text 中问号数量必须为0；'
                             '把重复确认用户想讲什么的句子改成陈述，邀请用户继续讲也用句号收尾。')
+                elif schema is SavedStoryReply:
+                    repair += ('只返回 text，逐字提及原 saved_title，说明已经保存，'
+                               '用您自然邀请分享其他事情，最多一个问题。不添加任何故事事实。')
                 else:
                     repair += ('分析时 source 使用 message_id、start_fragment、end_fragment，两个编号必须选择该用户消息 fragments 的 index，单片段编号相同。不要输出或改写引文。'
                         '不要返回 value 或 source_message_ids。矛盾放在顶层 conflicts，status 使用五种规定值。'
@@ -105,7 +108,7 @@ class LLMClient:
         return self._structured(STORY_INFORMATION_PROMPT,
             {'record_subject': person, 'previous_information': previous.model_dump(mode='json', exclude={'conversation', 'analyzed_message_ids'}),
              'messages': [{**item, 'fragments': [{'index': f['index'], 'text': f['text']} for f in source_fragments(item['content'])]} for item in messages]}, SelectedAnalysis, lambda value: validate_analysis(
-                 resolve_analysis(value, {m.id: m.content for m in sources}), sources))
+                 resolve_analysis(value, {m.id: m.content for m in sources}), sources, previous))
 
     def converse(self, history, person, information, result, hint='', explicit_request=False):
         from app.ai.prompts import NATURAL_CONVERSATION_PROMPT
@@ -130,6 +133,18 @@ class LLMClient:
             {'record_subject': person, 'information': statuses,
              'accepted_user_excerpts': [{'index': index, **item} for index, item in enumerate(evidence, 1)]},
              SelectedDraft, lambda value: validate_draft(resolve_draft(value, evidence), evidence, person, information))
+
+    def acknowledge_saved_story(self, person, title):
+        from copy import copy
+        from app.ai.prompts import SAVED_STORY_REPLY_PROMPT
+        from app.services.story_guidance import validate_saved_reply
+        # This optional reply follows an already committed save. Bound each
+        # attempt so an unavailable provider cannot hold the save UI for minutes.
+        bounded = copy(self)
+        bounded.client = self.client.with_options(timeout=6.0, max_retries=0)
+        return bounded._structured(SAVED_STORY_REPLY_PROMPT,
+            {'record_subject': person, 'saved_title': title}, SavedStoryReply,
+            lambda value: validate_saved_reply(value, title))
 
     def __init__(self) -> None:
 

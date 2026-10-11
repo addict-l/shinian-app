@@ -71,7 +71,7 @@ enum APIDate {
     }
 }
 
-@MainActor final class BackendRepository: FamilyAPI, ChatAPI, MemoryAPI {
+@MainActor final class BackendRepository: FamilyAPI, ChatAPI, MemoryAPI, MemoirAPI {
     static let shared = BackendRepository()
     private let client: APIClient
     private var familyID: UUID?
@@ -267,5 +267,34 @@ enum APIDate {
         struct Health: Decodable { let status: String }
         let result = try await client.send(path: "health", method: "GET", as: Health.self)
         guard result.status == "ok" else { throw APIError.invalidResponse }
+    }
+
+    private struct BookDTO: Decodable {
+        var personId: UUID; var personName: String; var version: Int
+        var settings: MemoirSettings; var stories: [MemoryDTO]; var contentRevision: String
+    }
+    private func book(_ dto: BookDTO) throws -> MemoirSnapshot {
+        MemoirSnapshot(personId: dto.personId, personName: dto.personName, version: dto.version,
+            settings: dto.settings, stories: try dto.stories.map { try memory($0) }, contentRevision: dto.contentRevision)
+    }
+    private func bookPath(_ personID: UUID) async throws -> String {
+        let family = try await bootstrap()
+        return "api/v1/families/\(family)/members/\(personID)/memoir"
+    }
+    func memoir(personID: UUID) async throws -> MemoirSnapshot {
+        try book(await client.send(path: bookPath(personID), method: "GET", as: BookDTO.self))
+    }
+    func saveMemoir(personID: UUID, request: MemoirSaveRequest) async throws -> MemoirSnapshot {
+        try book(await client.send(path: bookPath(personID), method: "PUT", body: JSONEncoder().encode(request), as: BookDTO.self))
+    }
+    func uploadMemoirCover(personID: UUID, data: Data, requestID: UUID) async throws -> ChatAttachment {
+        let path = try await bookPath(personID)
+        let boundary = "Cover-\(requestID)"
+        var body = Data("--\(boundary)\r\nContent-Disposition: form-data; name=\"file\"; filename=\"cover.jpg\"\r\nContent-Type: image/jpeg\r\n\r\n".utf8)
+        body.append(data); body.append(Data("\r\n--\(boundary)--\r\n".utf8))
+        let result = try await client.request(path: path + "/photos", method: "POST", body: body,
+            query: [.init(name: "client_request_id", value: requestID.uuidString)], contentType: "multipart/form-data; boundary=\(boundary)")
+        let photo = try JSONDecoder().decode(ChatAttachment.self, from: result)
+        guard photo.id == requestID else { throw APIError.invalidResponse }; return photo
     }
 }

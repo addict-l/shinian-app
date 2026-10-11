@@ -36,6 +36,10 @@ class GroundedDraft(BaseModel):
 
 
 class StoryAnalysis(StoryFacts):
+    compatible_times: list[SourceQuote] = Field(default_factory=list, max_length=8,
+        description='同一事件时间的兼容补充：引用全部相关原文；不同明确年份或仍无法确定则为空')
+    compatible_places: list[SourceQuote] = Field(default_factory=list, max_length=8,
+        description='仅当不同地点原话描述同一地点或补充范围时，引用所有兼容说法；真正互斥或仍不确定则为空')
     guidance_hint: str = Field(default='', max_length=800, description='贴合当前讲述的引导参考；不规定固定问题顺序')
     generation_request: SourceQuote | None = Field(default=None, description='仅当最新用户消息明确要求整理或保存本段回忆时，引用该消息的连续原文；提及往事中的保存不算请求')
 
@@ -48,3 +52,8 @@ class ConversationReply(BaseModel):
 
 class GenerationOffer(BaseModel):
     message_id: UUID
+
+
+class SavedStoryReply(BaseModel):
+    model_config = ConfigDict(extra='forbid', str_strip_whitespace=True)
+    text: str = Field(min_length=1, max_length=600)

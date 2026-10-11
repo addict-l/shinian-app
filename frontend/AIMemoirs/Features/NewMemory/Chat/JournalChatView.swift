@@ -10,7 +10,6 @@ struct JournalChatView: View {
     let onBack: () -> Void
     let onSaved: () async -> Void
     @StateObject private var model: ChatViewModel
-    @StateObject private var saveModel: MemorySaveViewModel
     @StateObject private var dictation = JournalDictation()
     @EnvironmentObject private var navigation: JournalNavigation
     @Environment(\.scenePhase) private var scenePhase
@@ -22,20 +21,14 @@ struct JournalChatView: View {
     @State private var readingPhotos = false
     @State private var managingPhotos = false
     @State private var previewPhoto: ChatAttachment?
-    @State private var imageData: Data?
-    @State private var draft: GeneratedMemory?
-    @State private var showingDraft = false
-    @State private var showingEdit = false
-    @State private var confirmRegeneration = false
-    @State private var regenerating = false
-    @State private var regenerateLatest: GeneratedMemory?
+    @State private var draftPreview: JournalDraftPresentation?
+    @State private var preparingDraft = false
     @State private var mediaError: String?
     @FocusState private var inputFocused: Bool
 
     init(person: FamilyMember, chatAPI: any ChatAPI, memoryAPI: any MemoryAPI, previewScreen: String?, resumedDraft: LocalChatDraft? = nil, onBack: @escaping () -> Void, onSaved: @escaping () async -> Void) {
         self.person = person; self.chatAPI = chatAPI; self.memoryAPI = memoryAPI; self.previewScreen = previewScreen; self.onBack = onBack; self.onSaved = onSaved
         _model = StateObject(wrappedValue: ChatViewModel(api: chatAPI, store: ChatDraftStore.current(previewScreen: previewScreen), draft: resumedDraft, person: person))
-        _saveModel = StateObject(wrappedValue: MemorySaveViewModel(api: memoryAPI))
     }
     var body: some View {
         VStack(spacing: 0) {
@@ -115,32 +108,15 @@ struct JournalChatView: View {
             }
         }
         .alert("照片读取失败", isPresented: Binding(get: { mediaError != nil }, set: { if !$0 { mediaError = nil } })) { Button("确定") { mediaError = nil } } message: { Text(mediaError ?? "") }
-        .fullScreenCover(isPresented: $showingDraft) {
-            if let draft {
-                JournalMemoryReviewView(draft: draft, imageData: imageData,
-                    identity: "\(person.relationship) · \(person.name)", saveModel: saveModel,
-                    onBack: { showingDraft = false },
-                    onEdit: { showingEdit = true },
-                    onRegenerate: { confirmRegeneration = true },
-                    onSave: {
-                        guard await saveModel.save(draft) else { return }
-                        model.finish(); showingDraft = false
-                        _ = await model.beginNextStory(person: person)
-                        await onSaved()
-                    })
-                    .alert("重新生成草稿？", isPresented: $confirmRegeneration) {
-                        Button("保留当前草稿", role: .cancel) {}
-                        Button("确认重新生成", role: .destructive) { Task { await regenerate() } }
-                    } message: { Text("AI 将根据当前讲述重新整理，并替换草稿的标题和正文。手动修改也会被替换。") }
-                    .alert("草稿已在其他设备更新", isPresented: Binding(get: { regenerateLatest != nil }, set: { if !$0 { regenerateLatest = nil } })) {
-                        Button("保留当前预览", role: .cancel) { regenerateLatest = nil }
-                        Button("读取最新草稿") { self.draft = regenerateLatest; regenerateLatest = nil }
-                    } message: { Text("请读取最新草稿并核对后，再决定是否重新生成。") }
-                    .sheet(isPresented: $showingEdit) {
-                        JournalDraftEditorView(draft: draft, api: memoryAPI, onCancel: { showingEdit = false },
-                            onUpdated: { updated in self.draft = updated; showingEdit = false })
-                    }
-            }
+        .fullScreenCover(item: $draftPreview) { presentation in
+            JournalDraftPreviewView(presentation: presentation,
+                identity: "\(person.relationship) · \(person.name)", api: memoryAPI,
+                onBack: { draftPreview = nil },
+                onSaved: {
+                    model.finish(); draftPreview = nil
+                    _ = await model.beginNextStory(person: person)
+                    await onSaved()
+                })
         }
     }
     @ViewBuilder private func messageView(_ message: ChatMessage) -> some View {
@@ -250,16 +226,6 @@ struct JournalChatView: View {
         }
         .scrollIndicators(.hidden).accessibilityIdentifier("chat.selectedPhotos")
     }
-    private func regenerate() async {
-        guard let draft, !regenerating else { return }
-        regenerating = true; saveModel.isSaving = true; saveModel.errorMessage = nil
-        defer { regenerating = false; saveModel.isSaving = false }
-        do { self.draft = try await memoryAPI.regenerateDraft(draft) }
-        catch {
-            saveModel.errorMessage = error.localizedDescription
-            if isVersionConflict(error) { regenerateLatest = try? await memoryAPI.getDraft(id: draft.draftID) }
-        }
-    }
     private func start() async {
         _ = await model.start(person: person)
         #if DEBUG
@@ -278,12 +244,21 @@ struct JournalChatView: View {
         }
     }
     private func generate() async {
-        if draft != nil { showingDraft = true; return }
         dictation.stop()
         inputFocused = false
+        guard !preparingDraft, draftPreview == nil else { return }
+        preparingDraft = true
+        defer { preparingDraft = false }
         if let value = await model.generate() {
-            if let attachment = messages.flatMap(\.attachments).first { imageData = try? await chatAPI.loadPhoto(attachment) }
-            draft = value; showingDraft = true
+            // The server replays an unchanged draft (including manual edits), or
+            // generates from the current story. A local preview may belong to
+            // an earlier saved story or an earlier version of this dialogue.
+            var imageData: Data?
+            let currentIDs = Set(model.latestSnapshot?.currentMessageIDs ?? messages.map(\.id))
+            if let attachment = messages.filter({ currentIDs.contains($0.id) }).flatMap(\.attachments).first {
+                imageData = try? await chatAPI.loadPhoto(attachment)
+            }
+            draftPreview = JournalDraftPresentation(draft: value, imageData: imageData)
         }
     }
 }

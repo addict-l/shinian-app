@@ -21,10 +21,12 @@ from app.schemas.workflow import ChatState, DraftResponse
 from app.schemas.story_guidance import GenerationOffer
 from app.services.chat_service import ChatService
 from app.services.memory_service import MemoryService
+from app.ai.llm_client import LLMConfigurationError, LLMServiceError, LLMResponseFormatError
 from app.services.conversation_opening import OPENING_SESSION_TYPE, publish_prepared_opening
 from app.schemas.story_information import InformationStatus, StoryInformation
 from app.services.story_guidance import (user_texts, validate_information, readiness, conversation_history, validate_analysis, validate_reply, reply_policy,
                                         draft_evidence, validate_draft, exact_date)
+from app.services.story_guidance import validate_saved_reply
 
 _lock_guard = threading.Lock()
 _locks = weakref.WeakValueDictionary()
@@ -126,10 +128,12 @@ class WorkflowService:
                 transcript.append({'id': str(message.id), 'content': message.content, 'question': question})
         analysis = self.chat._get_llm_client().analyze_story(
             transcript, self._record_subject(session), session.information)
-        validate_analysis(analysis, [m for m in messages if m.id in texts])
+        validate_analysis(analysis, [m for m in messages if m.id in texts], session.information)
         information = StoryInformation.model_validate(analysis.model_dump())
         information.conversation = session.information.conversation.model_copy(deep=True)
-        information = validate_information(information, messages, session.information)
+        information = validate_information(information, messages, session.information,
+                                           getattr(analysis, 'compatible_places', ()),
+                                           getattr(analysis, 'compatible_times', ()))
         return information, readiness(information, messages, session.primary_person_id), analysis
 
     def _ensure_analysis(self, session, messages):
@@ -313,7 +317,8 @@ class WorkflowService:
             if draft is None:
                 raise HTTPException(404, '草稿不存在')
             session_id = UUID(draft.session_id)
-        with serialized(session_id):
+        owner = self.chat.get_session(session_id)
+        with serialized(f'person:{owner.family_id}:{owner.primary_person_id}'), serialized(session_id):
             raw = self.memories._build_raw_content(session_id)
             current = self.chat.get_session(session_id)
             with SessionLocal.begin() as db:
@@ -354,7 +359,28 @@ class WorkflowService:
                     session = db.get(ChatSessionModel, str(session_id))
                     session.status = 'completed'
                     session.updated_at = datetime.now(timezone.utc)
-            return self.memories.get_memory(UUID(memory_id))
+            memory = self.memories.get_memory(UUID(memory_id))
+            self._acknowledge_saved(session_id, draft_id, current, memory.title)
+            return memory
+
+    def _acknowledge_saved(self, session_id, draft_id, session, title):
+        # The caller holds the story lock. Confirmation retries replay both the
+        # saved memory and this stable message without paying for another reply.
+        identity = uuid5(NAMESPACE_URL, 'ai-memories:saved-reply:' + str(draft_id))
+        with SessionLocal() as db:
+            if db.get(ChatMessageModel, str(identity)) is not None:
+                return
+        try:
+            reply = self.chat._get_llm_client().acknowledge_saved_story(self._record_subject(session), title)
+            text = validate_saved_reply(reply, title).text
+        except (LLMConfigurationError, LLMServiceError, LLMResponseFormatError):
+            # Saving has already succeeded. An unavailable optional model must
+            # not make the UI report a failed save or require another save.
+            text = f'《{title}》已经保存好了。您还有别的事情想慢慢讲讲吗？'
+        self.chat.message_repository.create(session_id, 'assistant', text,
+            message_id=identity, message_type='saved_reply')
+        # Keep the completed segment timestamp fixed: advancing it could make
+        # open_person discard a new segment already opened on another device.
 
     def get_draft(self, draft_id):
         with SessionLocal() as db:

@@ -9,7 +9,7 @@ enum JournalTab: String, CaseIterable, Identifiable {
     var designIcon: String { switch self { case .home: "home"; case .compose: "plus"; case .family: "film"; case .profile: "person" } }
 }
 /// Routes that sit above the four persistent tabs.
-enum JournalRoute: Hashable { case memories, familyFilms, person(UUID), memory(UUID), settings, privacy }
+enum JournalRoute: Hashable { case memories, familyFilms, person(UUID), memory(UUID), memoir(UUID), settings, privacy }
 enum JournalComposeStep { case add, select, chat }
 
 @MainActor final class JournalNavigation: ObservableObject {

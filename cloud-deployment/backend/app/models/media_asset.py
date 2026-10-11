@@ -30,6 +30,7 @@ class MediaAssetModel(Base):
     )
 
     editing_memory_id: Mapped[str | None] = mapped_column(String(36), ForeignKey('memories.id', ondelete='CASCADE'), nullable=True, index=True)
+    memoir_person_id: Mapped[str | None] = mapped_column(String(36), ForeignKey('family_members.id', ondelete='CASCADE'), nullable=True, index=True)
 
     session_id: Mapped[str | None] = mapped_column(String(36), ForeignKey("chat_sessions.id", ondelete="CASCADE"), nullable=True)
 

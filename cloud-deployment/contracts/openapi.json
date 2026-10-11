@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "AI Memories API",
-    "version": "0.5.0"
+    "version": "0.6.0"
   },
   "paths": {
     "/api/v1/families/": {
@@ -1510,6 +1510,193 @@
         }
       }
     },
+    "/api/v1/families/{family_id}/members/{person_id}/memoir": {
+      "get": {
+        "tags": [
+          "memoirs"
+        ],
+        "summary": "Read Book",
+        "operationId": "read_book_api_v1_families__family_id__members__person_id__memoir_get",
+        "parameters": [
+          {
+            "name": "family_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Family Id"
+            }
+          },
+          {
+            "name": "person_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Person Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemoirSnapshot"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "memoirs"
+        ],
+        "summary": "Save Book",
+        "operationId": "save_book_api_v1_families__family_id__members__person_id__memoir_put",
+        "parameters": [
+          {
+            "name": "family_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Family Id"
+            }
+          },
+          {
+            "name": "person_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Person Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemoirUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemoirSnapshot"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/families/{family_id}/members/{person_id}/memoir/photos": {
+      "post": {
+        "tags": [
+          "memoirs"
+        ],
+        "summary": "Upload Cover",
+        "operationId": "upload_cover_api_v1_families__family_id__members__person_id__memoir_photos_post",
+        "parameters": [
+          {
+            "name": "family_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Family Id"
+            }
+          },
+          {
+            "name": "person_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Person Id"
+            }
+          },
+          {
+            "name": "client_request_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Client Request Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_upload_cover_api_v1_families__family_id__members__person_id__memoir_photos_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/health": {
       "get": {
         "summary": "Health",
@@ -1531,6 +1718,20 @@
   },
   "components": {
     "schemas": {
+      "Body_upload_cover_api_v1_families__family_id__members__person_id__memoir_photos_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "File"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_upload_cover_api_v1_families__family_id__members__person_id__memoir_photos_post"
+      },
       "Body_upload_media_api_v1_chat_sessions__session_id__media_post": {
         "properties": {
           "file": {
@@ -1846,6 +2047,54 @@
         },
         "type": "object",
         "title": "ConversationProgress"
+      },
+      "CoverPhoto": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "sourceMemoryId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sourcememoryid"
+          },
+          "x": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": -1.0,
+            "title": "X",
+            "default": 0
+          },
+          "y": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": -1.0,
+            "title": "Y",
+            "default": 0
+          },
+          "zoom": {
+            "type": "number",
+            "maximum": 4.0,
+            "minimum": 1.0,
+            "title": "Zoom",
+            "default": 1
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "title": "CoverPhoto"
       },
       "DraftConfirmation": {
         "properties": {
@@ -2395,6 +2644,164 @@
           "mime_type"
         ],
         "title": "MediaResponse"
+      },
+      "MemoirSettings": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Title"
+          },
+          "subtitle": {
+            "type": "string",
+            "maxLength": 300,
+            "title": "Subtitle",
+            "default": ""
+          },
+          "coverTemplate": {
+            "type": "string",
+            "enum": [
+              "text",
+              "photo",
+              "collage"
+            ],
+            "title": "Covertemplate",
+            "default": "text"
+          },
+          "coverPhotos": {
+            "items": {
+              "$ref": "#/components/schemas/CoverPhoto"
+            },
+            "type": "array",
+            "maxItems": 3,
+            "title": "Coverphotos"
+          },
+          "ordering": {
+            "type": "string",
+            "enum": [
+              "time",
+              "manual"
+            ],
+            "title": "Ordering",
+            "default": "time"
+          },
+          "storyOrder": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "maxItems": 10000,
+            "title": "Storyorder"
+          },
+          "photoOrders": {
+            "additionalProperties": {
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "type": "array"
+            },
+            "propertyNames": {
+              "format": "uuid"
+            },
+            "type": "object",
+            "maxProperties": 10000,
+            "title": "Photoorders"
+          },
+          "excludedPhotoIds": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "maxItems": 10000,
+            "title": "Excludedphotoids"
+          },
+          "textSize": {
+            "type": "integer",
+            "enum": [
+              14,
+              16
+            ],
+            "title": "Textsize",
+            "default": 16
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "title"
+        ],
+        "title": "MemoirSettings"
+      },
+      "MemoirSnapshot": {
+        "properties": {
+          "personId": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Personid"
+          },
+          "personName": {
+            "type": "string",
+            "title": "Personname"
+          },
+          "version": {
+            "type": "integer",
+            "title": "Version"
+          },
+          "settings": {
+            "$ref": "#/components/schemas/MemoirSettings"
+          },
+          "stories": {
+            "items": {
+              "$ref": "#/components/schemas/Memory"
+            },
+            "type": "array",
+            "title": "Stories"
+          },
+          "contentRevision": {
+            "type": "string",
+            "title": "Contentrevision"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "personId",
+          "personName",
+          "version",
+          "settings",
+          "stories",
+          "contentRevision"
+        ],
+        "title": "MemoirSnapshot"
+      },
+      "MemoirUpdate": {
+        "properties": {
+          "version": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Version"
+          },
+          "requestId": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Requestid"
+          },
+          "settings": {
+            "$ref": "#/components/schemas/MemoirSettings"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "version",
+          "requestId",
+          "settings"
+        ],
+        "title": "MemoirUpdate"
       },
       "Memory": {
         "properties": {

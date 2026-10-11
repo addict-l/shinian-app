@@ -3,9 +3,12 @@ import SwiftUI
 
 /// Explicit launch-only fixture. Never selected in normal launches or Release builds.
 /// No API calls and no writes to the user's database.
-@MainActor final class JournalPreviewAPI: FamilyAPI, ChatAPI, MemoryAPI {
+@MainActor final class JournalPreviewAPI: FamilyAPI, ChatAPI, MemoryAPI, MemoirAPI {
+    private var books: [UUID: MemoirSnapshot] = [:]
     private var conflictOnce: Bool
     private var drafts: [UUID: GeneratedMemory] = [:]
+    private var sessionDrafts: [UUID: UUID] = [:]
+    private var draftSources: [UUID: [UUID]] = [:]
     private let pendingReply: Bool
     private let recoveryOffline: Bool
     private let slowOpening: Bool
@@ -61,6 +64,22 @@ import SwiftUI
             people[0].memoryCount = 0
             events.removeAll { $0.personIDs.contains(people[0].id) }
         }
+        if emptyState == "memoir" {
+            for index in events.indices { events[index].primaryPersonID = events[index].personIDs.first }
+            let data = UIImage(named: "mock_photo")?.jpegData(compressionQuality: 0.8)
+            if let data {
+                for index in [0, 2] {
+                    for position in 0..<3 {
+                        let id = UUID(); photos[id] = data
+                        events[index].mediaAssets.append(ChatAttachment(id: id, url: "/api/v1/media/\(id)", position: position))
+                    }
+                }
+            }
+            var long = MemoryEvent(personName: people[0].name, personIDs: [people[0].id], date: APIDate.parseDay("1982-06-01"),
+                content: Array(repeating: "那天我沿着熟悉的小路回家，路边的树影落在肩上。到了家门口，家里人已经摆好了桌子。我们坐下来慢慢说话，讲起这些年的工作，也讲起小时候的事情。\n\n", count: 28).joined(),
+                title: "回家路上的树影，和一顿慢慢吃完的晚饭", createdAt: APIDate.parseDay("2026-09-12")!, location: "老家的院子")
+            long.primaryPersonID = people[0].id; events.append(long)
+        }
 
     }
     func members() async throws -> [FamilyMember] { people }
@@ -93,6 +112,11 @@ import SwiftUI
             return try await state(sessionID: session)
         }
         conversation = [ChatMessage(sender: .ai, text: "您想从哪件记得的事开始讲？"), ChatMessage(sender: .user, text: "小时候我教孙子骑自行车。我扶着后座，后来松开手，他自己骑到了巷口。"), ChatMessage(sender: .ai, text: "您扶着他骑，后来他自己骑到了巷口。您还记得他回头看您时，说了什么吗？")]
+        if ProcessInfo.processInfo.environment["AI_MEMORIES_PREVIEW_DELAY"] == "1",
+           let data = UIImage(named: "mock_photo")?.jpegData(compressionQuality: 0.8) {
+            let id = UUID(); photos[id] = data
+            conversation[1].attachments = [ChatAttachment(id: id, url: "/api/v1/media/\(id)")]
+        }
         return try await state(sessionID: session)
     }
     func send(sessionID: UUID, text: String, requestID: UUID) async throws -> ChatSnapshot {
@@ -118,6 +142,9 @@ import SwiftUI
     }
     func removePhoto(sessionID: UUID, id: UUID) async throws { photos[id] = nil }
     func loadPhoto(_ attachment: ChatAttachment) async throws -> Data {
+        if ProcessInfo.processInfo.environment["AI_MEMORIES_PREVIEW_DELAY"] == "1" {
+            try await Task.sleep(for: .milliseconds(500))
+        }
         guard let data = photos[attachment.id] else { throw APIError.httpStatus(404) }
         return data
     }
@@ -131,12 +158,20 @@ import SwiftUI
         return ChatSnapshot(sessionID: session, messages: Array(conversation.suffix(20)), canGenerate: current.contains { $0.sender == .user && !$0.text.isEmpty }, generationOffer: offerMessageID.map { GenerationOffer(message_id: $0) }, currentMessageIDs: current.map(\.id))
     }
     func generate(sessionID: UUID) async throws -> GeneratedMemory {
-        let event = events[0]
+        if ProcessInfo.processInfo.environment["AI_MEMORIES_PREVIEW_DELAY"] == "1" {
+            try await Task.sleep(for: .milliseconds(500))
+        }
+        let source = conversation.dropFirst(segmentStart).map(\.id)
+        if draftSources[sessionID] == source, let id = sessionDrafts[sessionID], let value = drafts[id] { return value }
+        let event = segmentStart == 0 ? events[0] : MemoryEvent(personName: activePerson?.name ?? people[0].name,
+            date: nil, content: conversation.dropFirst(segmentStart).filter { $0.sender == .user }.map(\.text).joined(separator: "\n"),
+            title: "另一段回忆")
         let person = activePerson ?? people[0]
         let memory = MemoryEvent(personName: person.name, personIDs: [person.id], date: nil, content: event.content, title: event.title, imageName: event.imageName, dateDescription: "2006年夏天", location: "老家")
         let value = GeneratedMemory(draftID: memory.id, revision: UUID(), memory: memory,
             preview: EventData(person: person.name, date: "2006年夏天", title: memory.title, content: memory.content, location: "老家", participants: [person.name], emotion: ""))
         drafts[value.draftID] = value
+        sessionDrafts[sessionID] = value.draftID; draftSources[sessionID] = source
         return value
     }
     func getMemory(id: UUID) async throws -> MemoryEvent {
@@ -188,13 +223,35 @@ import SwiftUI
     func regenerateDraft(_ draft: GeneratedMemory) async throws -> GeneratedMemory {
         let current = try await getDraft(id: draft.draftID)
         guard current.revision == draft.revision else { throw APIError.rejected(409, "草稿已更新") }
+        draftSources[session] = nil
         let generated = try await generate(sessionID: session)
         let result = GeneratedMemory(draftID: draft.draftID, revision: UUID(), memory: generated.memory, preview: generated.preview)
-        drafts[draft.draftID] = result; return result
+        drafts[draft.draftID] = result; sessionDrafts[session] = draft.draftID; return result
     }
     func upload(sessionID: UUID, image: Data?, requestID: UUID) async throws { }
+    func memoir(personID: UUID) async throws -> MemoirSnapshot {
+        let person = people.first { $0.id == personID }!
+        var value = books[personID] ?? MemoirSnapshot(personId: personID, personName: person.name, version: 0,
+            settings: MemoirSettings(title: person.name + "的回忆录"), stories: [], contentRevision: "")
+        value.stories = events.filter { $0.primaryPersonID == personID }
+        value.contentRevision = "\(value.version)-" + value.stories.map { "\($0.id):\($0.version)" }.joined(separator: ",")
+        return value
+    }
+    func saveMemoir(personID: UUID, request: MemoirSaveRequest) async throws -> MemoirSnapshot {
+        var value = try await memoir(personID: personID)
+        if value.version == request.version + 1, value.settings == request.settings { return value }
+        guard value.version == request.version else { throw APIError.rejected(409, "另一设备已调整回忆录") }
+        value.version += 1; value.settings = request.settings; books[personID] = value
+        return try await memoir(personID: personID)
+    }
+    func uploadMemoirCover(personID: UUID, data: Data, requestID: UUID) async throws -> ChatAttachment {
+        photos[requestID] = data; return ChatAttachment(id: requestID, url: "/api/v1/media/\(requestID)")
+    }
     func save(_ draft: GeneratedMemory) async throws -> MemoryEvent {
-        if savedDrafts.insert(draft.draftID).inserted { events.insert(draft.memory, at: 0) }
+        if savedDrafts.insert(draft.draftID).inserted {
+            events.insert(draft.memory, at: 0)
+            conversation.append(ChatMessage(sender: .ai, text: "《\(draft.memory.title)》已经保存好啦。您还有别的事情想分享吗？"))
+        }
         nextSegment = true
         return draft.memory
     }

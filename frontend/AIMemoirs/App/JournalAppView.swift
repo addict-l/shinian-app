@@ -7,6 +7,7 @@ struct JournalAppView: View {
     @StateObject private var navigation = JournalNavigation()
     private let chatAPI: any ChatAPI
     private let memoryAPI: any MemoryAPI
+    private let memoirAPI: any MemoirAPI
     private let previewScreen: String?
     @State private var previewReady = false
 
@@ -16,13 +17,13 @@ struct JournalAppView: View {
             let api = JournalPreviewAPI(familyFilm: ["film", "tree"].contains(screen), emptyState: screen)
             _members = StateObject(wrappedValue: FamilyMemberStore(api: api))
             _memories = StateObject(wrappedValue: MemoryListViewModel(api: api))
-            chatAPI = api; memoryAPI = api; previewScreen = screen
+            chatAPI = api; memoryAPI = api; memoirAPI = api; previewScreen = screen
             return
         }
         #endif
         _members = StateObject(wrappedValue: FamilyMemberStore())
         _memories = StateObject(wrappedValue: MemoryListViewModel())
-        chatAPI = BackendRepository.shared; memoryAPI = BackendRepository.shared; previewScreen = nil
+        chatAPI = BackendRepository.shared; memoryAPI = BackendRepository.shared; memoirAPI = BackendRepository.shared; previewScreen = nil
     }
 
     private var dark: Bool { false }
@@ -64,6 +65,7 @@ struct JournalAppView: View {
                 case "memories": navigation.path = [.memories]
                 case "memory-edit", "memory-conflict": if let event = memories.memoryEvents.first { navigation.path = [.memory(event.id)] }
                 case "person": if let person = members.members.first { navigation.path = [.person(person.id)] }
+                case "memoir": if let person = members.members.first { navigation.path = [.memoir(person.id)] }
                 default: break
                 }
             }
@@ -88,6 +90,11 @@ struct JournalAppView: View {
                     if let person = members.members.first(where: { $0.id == id }) { JournalPersonView(person: person) }
                 case .memory(let id):
                     if let event = memories.memoryEvents.first(where: { $0.id == id }) { JournalStoryView(memory: event, api: memoryAPI) }
+                case .memoir(let id):
+                    if let person = members.members.first(where: { $0.id == id }),
+                       let store = MemoirLocalStore.current(personID: id, preview: previewScreen) {
+                        JournalMemoirView(person: person, api: memoirAPI, store: store)
+                    }
                 case .settings: JournalSettingsView()
                 case .privacy: JournalPrivacyView()
                 }

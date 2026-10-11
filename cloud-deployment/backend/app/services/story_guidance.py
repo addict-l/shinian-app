@@ -27,8 +27,32 @@ def _without_superseded_alternatives(conflict, excluded_values, new_ids):
     return conflict.model_copy(update={'alternatives': alternatives}) if len(alternatives) >= 2 else None
 
 
-def validate_information(value: StoryInformation, messages, previous=None):
+def validate_information(value: StoryInformation, messages, previous=None, compatible_places=(), compatible_times=()):
     texts = user_texts(messages)
+    for label, sources in (('地点', compatible_places), ('时间', compatible_times)):
+        for source in sources:
+            if source.message_id not in texts or source.quote not in texts[source.message_id]:
+                raise LLMResponseFormatError(f'兼容{label}判断必须引用本段用户的连续原文')
+    def compatible(items, sources):
+        return len(sources) >= 2 and all(
+            item.status in (InformationStatus.known, InformationStatus.approximate)
+            and any(source.message_id in item.source_message_ids and item.value in source.quote
+                    for source in sources) for item in items)
+    def contradicting_calendar(items):
+        # A compatibility claim cannot erase distinct explicit calendar values.
+        # Non-calendar periods (e.g. childhood) still need model evidence.
+        for pattern in (r'(?<!\d)(\d{4})(?:年|[-/])', r'(?<!\d)(\d{1,2})月', r'(?<!\d)(\d{1,2})(?:日|号)'):
+            values = [{int(number) for number in re.findall(pattern, item.value or '')} for item in items]
+            values = [value for value in values if value]
+            if len(values) > 1 and (any(len(value) != 1 for value in values) or len(set.union(*values)) > 1):
+                return True
+        iso = [re.search(r'(?<!\d)(\d{4})[-/](\d{1,2})[-/](\d{1,2})(?!\d)', item.value or '') for item in items]
+        for index, pattern in ((1, r'(?<!\d)(\d{1,2})月'), (2, r'(?<!\d)(\d{1,2})(?:日|号)')):
+            numbers = {int(match.group(index + 1)) for match in iso if match}
+            numbers.update(int(number) for item in items for number in re.findall(pattern, item.value or ''))
+            if len(numbers) > 1:
+                return True
+        return False
     dimensions = [(key, getattr(value, key)) for key in DIMENSIONS]
     dimensions += [(f'conflicts.{conflict.dimension}.alternatives[{index}]', item)
                    for conflict in value.conflicts for index, item in enumerate(conflict.alternatives)]
@@ -80,6 +104,15 @@ def validate_information(value: StoryInformation, messages, previous=None):
             old_conflict = _without_superseded_alternatives(
                 next((c for c in previous.conflicts if c.dimension == key), None), previous.excluded_values, new_ids)
             has_conflict = any(c.dimension == key for c in value.conflicts)
+            related = [old, current, *(old_conflict.alternatives if old_conflict else [])]
+            sources = compatible_places if key == 'place' else compatible_times
+            refinement = (not has_conflict and compatible(related, sources)
+                          and (key != 'time' or not contradicting_calendar(related)))
+            if refinement:
+                # The model explicitly assessed semantic compatibility, with
+                # every old/current alternative grounded in user text. Keep
+                # stricter fallback checks when that assessment is absent.
+                continue
             cited_new = new_ids.intersection(current.source_message_ids)
             correction = bool(cited_new) and ((old_conflict is not None and ('？' in last_question or '?' in last_question)
                 and all(item.value in last_question for item in old_conflict.alternatives))
@@ -205,8 +238,37 @@ def validate_draft(draft, evidence, person=None, information=None):
     return draft
 
 
-def validate_analysis(value, messages):
-    validate_information(StoryInformation.model_validate(value.model_dump()), messages)
+def validate_analysis(value, messages, previous=None):
+    validate_information(StoryInformation.model_validate(value.model_dump()), messages,
+                         compatible_places=getattr(value, 'compatible_places', ()),
+                         compatible_times=getattr(value, 'compatible_times', ()))
+    compatibility_errors = []
+    texts = user_texts(messages)
+    for key, sources in (('time', getattr(value, 'compatible_times', ())),
+                         ('place', getattr(value, 'compatible_places', ()))):
+        conflict = next((item for item in value.conflicts if item.dimension == key), None)
+        if conflict and sources:
+            compatibility_errors.append(
+                f'{key} 同时出现在 conflicts 和 compatible_{"times" if key == "time" else "places"}，'
+                '这两种判断互相矛盾。原文可以同时成立时移除对应 conflicts；'
+                '真正互斥或无法确定时保留 conflicts、清空对应兼容字段。'
+                '不能复制旧误报后又声称兼容；请根据原文选择一种判断，不改变事实或来源。')
+        if previous is not None and sources:
+            old_conflict = next((item for item in previous.conflicts if item.dimension == key), None)
+            related = [getattr(previous, key), *(old_conflict.alternatives if old_conflict else [])]
+            for item in related:
+                if (item.value and item.value not in previous.excluded_values and item.source_message_ids
+                    and all(mid in texts for mid in item.source_message_ids)
+                    and item.value in '\n'.join(texts[mid] for mid in item.source_message_ids)
+                    and not any(source.message_id in item.source_message_ids and item.value in source.quote for source in sources)):
+                    compatibility_errors.append(
+                        f'compatible_{"times" if key == "time" else "places"} 的原文范围没有覆盖 '
+                        f'previous_information.{key} 或旧冲突备选的完整 value。'
+                        '请用 start_fragment/end_fragment 选择覆盖完整旧原文的范围，'
+                        '旧 value 含整句话时不能只选择其中一个时间或地点词。')
+                    break
+    if compatibility_errors:
+        raise LLMResponseFormatError('\n'.join(compatibility_errors))
     latest = messages[-1] if messages else None
     if latest and any(word in latest.content for word in ('更正', '修订', '修正', '说错', '记错', '确认是', '以此为准')):
         for key, words in (('time', ('年', '月', '日期', '时间')), ('place', ('地点', '地方', '地名', '城市'))):
@@ -272,6 +334,19 @@ def conversation_history(messages):
             for m in messages if m.type != 'notice' and m.content.strip()]
 
 
+def validate_saved_reply(value, title):
+    if title not in value.text:
+        raise LLMResponseFormatError('逐字引用已保存标题，不改写标题')
+    remainder = value.text.replace(title, '')
+    if remainder.count('？') + remainder.count('?') > 1 or '你' in remainder:
+        raise LLMResponseFormatError('用您称呼，最多一个自然问题')
+    if re.search(r'\d|\b(?:ready|missing|known|source_message_ids)\b', remainder):
+        raise LLMResponseFormatError('不添加标题之外的数字或后台状态标签')
+    if not re.search(r'已.{0,8}(?:保存|存好|留好|记好)|保存好|存好了|留好了|记好了', remainder):
+        raise LLMResponseFormatError('明确告知这段回忆已保存')
+    return value
+
+
 def reply_policy(information, result, history, explicit_request=False):
     latest = next((m['content'] for m in reversed(history) if m['role'] == 'user'), '')
     pause = bool(re.search(r'(?:先|暂时|今天|现在)(?:不聊|不说|不讲|别聊|别问|不谈)|不想(?:再|继续)(?:聊|讲|说)|还想再想想|想安静|先休息|先停一下|不聊了|不说了|不讲了', latest))
@@ -299,7 +374,9 @@ def validate_reply(value, history, policy):
     if not set(re.findall(r'\d+', value.text)).issubset(set(re.findall(r'\d+', '\n'.join(m['content'] for m in history)))):
         raise LLMResponseFormatError('Conversation invented numeric facts')
     offered = value.action == 'offer_generation'
-    mentions_generation = bool(re.search(r'整理(?:成|这|一下|好|草稿|一段|回忆)|生成|草稿|保存.*回忆|回忆.*保存|(?:帮您|为您|替您).{0,8}整理', value.text))
+    generation_language = (r'整理(?:成|这|一下|好|草稿|一段|回忆)|生成|草稿|保存.*回忆|回忆.*保存|'
+        r'(?:帮您|为您|替您).{0,8}(?:整理|记下|写下|存下)|(?:回忆|故事).{0,12}(?:记下|写下|存下)')
+    mentions_generation = bool(re.search(generation_language, value.text))
     if offered and (not policy['allowed'] or not mentions_generation):
         raise LLMResponseFormatError('Generation offer needs eligibility and matching language')
     if (policy.get('required_offer') or (policy['explicit_request'] and policy['allowed'])) and not offered:
@@ -309,9 +386,15 @@ def validate_reply(value, history, policy):
     # fails, and a confirmation question cannot masquerade as acknowledgement.
     invitation_clauses = re.split(r'[。！？!?；;，,]|但是|不过|但', value.text)
     def invites_generation(clause):
-        if not re.search(r'整理(?:成|这|一下|好|草稿|一段|回忆)|生成|草稿|保存.*回忆|回忆.*保存|(?:帮您|为您|替您).{0,8}整理', clause):
+        if not re.search(generation_language, clause):
             return False
-        if re.search(r'(?:不能|无法|不要|不用|不必|不想|先不|先别|暂不)(?:够|马上|立刻|直接|急着|现在|先|为您|帮您|替您|去){0,3}(?:整理|生成|保存)', clause):
+        if (not any(item['role'] == 'user' for item in history)
+            and re.match(r'^\s*我是.{0,80}(?:晚辈|助手)', clause)
+            and not re.search(r'这段|这份|刚才|现在|马上|已经', clause)):
+            # An opening can explain the assistant's general role. It cannot
+            # offer to generate a particular story before any narration.
+            return False
+        if re.search(r'(?:不能|无法|不要|不用|不必|不想|先不|先别|暂不)(?:够|马上|立刻|直接|急着|现在|先|为您|帮您|替您|去){0,3}(?:整理|生成|保存|记下|写下|存下)', clause):
             return False
         if re.match(r'^\s*(?:我知道|我明白|我理解)?(?:您|刚才您)(?:是|还|也)?(?:想|希望|提到|说过|要求|打算)', clause):
             # A question offering generation is not a statement of what the

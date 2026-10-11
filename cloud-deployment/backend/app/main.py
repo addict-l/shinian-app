@@ -10,6 +10,7 @@ from app.api.family_members import router as family_members_router
 from app.api.memories import router as memories_router
 from app.api.chat import router as chat_router
 from app.api.workflow import router as workflow_router
+from app.api.memoirs import router as memoirs_router
 from app.ai.llm_client import LLMServiceError, LLMConfigurationError, LLMResponseFormatError
 from app.services.chat_service import ChatSessionNotFoundError
 from app.services.family_service import FamilyNotFoundError
@@ -49,9 +50,9 @@ async def lifespan(app):
         except asyncio.CancelledError:
             pass
 
-app = FastAPI(title='AI Memories API', version='0.5.0', lifespan=lifespan)
+app = FastAPI(title='AI Memories API', version='0.6.0', lifespan=lifespan)
 app.add_middleware(TrustedHostMiddleware, allowed_hosts=allowed_hosts)
-for router in [families_router,family_members_router,memories_router,chat_router,workflow_router]:
+for router in [families_router,family_members_router,memories_router,chat_router,workflow_router,memoirs_router]:
     app.include_router(router)
 
 @app.get('/health', response_model=HealthResponse)
