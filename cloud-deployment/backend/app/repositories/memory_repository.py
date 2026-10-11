@@ -26,6 +26,7 @@ class MemoryRepository:
             version=model.version,
             information=model.information or {},
             media_urls=[asset.file_url for asset in sorted(model.media_assets, key=lambda a: (a.created_at, a.position, a.id))],
+            media_assets=[dict(id=asset.id, url=asset.file_url, position=index) for index, asset in enumerate(sorted(model.media_assets, key=lambda a: (a.created_at, a.position, a.id)))],
             id=model.id,
             family_id=model.family_id,
             person_ids=person_ids,

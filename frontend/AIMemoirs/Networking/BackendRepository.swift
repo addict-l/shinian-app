@@ -7,6 +7,8 @@ private struct MemberDTO: Decodable {
     let name: String
     let relationship: String
     let birth_date: String?
+    var opening_message: MessageDTO?
+    var has_chat_history: Bool?
 }
 private struct SessionDTO: Decodable { let id: UUID; var version: Int?; var information: StoryInformation?; var status: String? }
 private struct MessageDTO: Decodable { let id: UUID; let role: String; let content: String; var attachments: [ChatAttachment]? }
@@ -33,11 +35,13 @@ private struct MemoryDTO: Decodable {
     let location: String?
     var created_at: String?
     var media_urls: [String]?
+    var media_assets: [ChatAttachment]?
     var primary_person_id: UUID?
+    var source_session_id: UUID?
     var version: Int?
     var information: StoryInformation?
 }
-private struct DraftDTO: Decodable { let id: UUID; let revision: UUID; let memory: MemoryDTO }
+private struct DraftDTO: Decodable { let id: UUID; let revision: UUID; let memory: MemoryDTO; var manually_edited: Bool? }
 
 enum APIDate {
     static func day(_ value: Date) -> String {
@@ -84,7 +88,9 @@ enum APIDate {
         let date = APIDate.parseDay(value.birth_date)
         return FamilyMember(id: value.id, name: value.name, gender: .unspecified,
                             profileImages: ["person.fill"], memoryCount: count,
-                            relationship: value.relationship, birthDate: date)
+                            relationship: value.relationship, birthDate: date,
+                            openingMessage: value.opening_message.map { ChatMessage(id: $0.id, sender: .ai, text: $0.content) },
+                            hasChatHistory: value.has_chat_history)
     }
     private func memory(_ value: MemoryDTO, draftID: UUID? = nil, image: Data? = nil) throws -> MemoryEvent {
         guard let id = value.id ?? draftID else { throw APIError.decoding }
@@ -94,8 +100,8 @@ enum APIDate {
                            title: value.title, imageData: image,
                            createdAt: APIDate.timestamp(value.created_at) ?? .distantPast,
                            dateDescription: value.information?.time.value, location: value.information?.place.value ?? value.location)
-        result.primaryPersonID = value.primary_person_id; result.version = value.version ?? 1
-        result.information = value.information ?? StoryInformation()
+        result.primaryPersonID = value.primary_person_id; result.sourceSessionID = value.source_session_id; result.version = value.version ?? 1
+        result.information = value.information ?? StoryInformation(); result.mediaAssets = value.media_assets ?? []
         return result
     }
     func members() async throws -> [FamilyMember] {
@@ -151,12 +157,15 @@ enum APIDate {
     }
     func generate(sessionID: UUID) async throws -> GeneratedMemory {
         let draft = try await client.send(path: "api/v1/chat/sessions/\(sessionID)/draft", method: "POST", as: DraftDTO.self)
+        return try generated(draft)
+    }
+    private func generated(_ draft: DraftDTO) throws -> GeneratedMemory {
         let value = try memory(draft.memory, draftID: draft.id)
         return GeneratedMemory(draftID: draft.id, revision: draft.revision, memory: value,
             preview: EventData(person: value.personName, date: value.dateLabel, title: value.title,
                                content: value.content, location: draft.memory.information?.place.value ?? draft.memory.location ?? "待补充",
                                participants: draft.memory.person_ids.compactMap { id in knownMembers.first { $0.id == id }?.name },
-                               emotion: draft.memory.information?.feeling.value ?? "待补充"))
+                               emotion: draft.memory.information?.feeling.value ?? "待补充"), manuallyEdited: draft.manually_edited ?? false)
     }
     func upload(sessionID: UUID, image: Data?, requestID: UUID) async throws {
         guard let image else {
@@ -197,6 +206,62 @@ enum APIDate {
             result.append(try memory(value, image: image))
         }
         return result
+    }
+    func getMemory(id: UUID) async throws -> MemoryEvent {
+        let value = try await client.send(path: "api/v1/memories/\(id)", method: "GET", as: MemoryDTO.self)
+        var cover: Data?
+        if let attachment = value.media_assets?.first { cover = try? await loadPhoto(attachment) }
+        return try memory(value, image: cover)
+    }
+    func updateMemory(_ memory: MemoryEvent, edit: MemoryEdit) async throws -> MemoryEvent {
+        guard edit.isValid else { throw APIError.server("请检查标题、正文和信息说明。") }
+        let family = try await bootstrap()
+        func dimension(_ value: InformationDimension) throws -> Any {
+            try JSONSerialization.jsonObject(with: JSONEncoder().encode(value))
+        }
+        let parsed = edit.time.status == .known ? APIDate.parseDay(edit.time.value) : nil
+        let exactDate = parsed.flatMap { APIDate.day($0) == edit.time.value ? $0 : nil }
+        let result = try await client.send(path: "api/v1/memories/\(memory.id)", method: "PATCH", body: json([
+            "family_id": family.uuidString, "version": memory.version, "title": edit.title, "summary": edit.content,
+            "time": try dimension(edit.time), "place": try dimension(edit.place), "feeling": try dimension(edit.feeling),
+            "memory_date": exactDate.map(APIDate.day) as Any? ?? NSNull(), "media_ids": edit.mediaIDs.map(\.uuidString)
+        ]), as: MemoryDTO.self)
+        var cover: Data?
+        if let attachment = result.media_assets?.first { cover = try? await loadPhoto(attachment) }
+        return try self.memory(result, image: cover)
+    }
+    func deleteMemory(_ memory: MemoryEvent) async throws {
+        let family = try await bootstrap()
+        _ = try await client.request(path: "api/v1/memories/\(memory.id)", method: "DELETE", query: [
+            .init(name: "family_id", value: family.uuidString), .init(name: "version", value: String(memory.version))])
+    }
+    func uploadMemoryPhoto(id: UUID, data: Data, requestID: UUID) async throws -> ChatAttachment {
+        let family = try await bootstrap()
+        let boundary = "Memory-\(requestID)"
+        var body = Data("--\(boundary)\r\nContent-Disposition: form-data; name=\"file\"; filename=\"memory.jpg\"\r\nContent-Type: image/jpeg\r\n\r\n".utf8)
+        body.append(data); body.append(Data("\r\n--\(boundary)--\r\n".utf8))
+        let response = try await client.request(path: "api/v1/memories/\(id)/media", method: "POST", body: body,
+            query: [.init(name: "family_id", value: family.uuidString), .init(name: "client_request_id", value: requestID.uuidString)],
+            contentType: "multipart/form-data; boundary=\(boundary)")
+        let attachment = try JSONDecoder().decode(ChatAttachment.self, from: response)
+        guard attachment.id == requestID else { throw APIError.invalidResponse }
+        return attachment
+    }
+    func discardMemoryPhoto(id: UUID, photoID: UUID) async throws {
+        let family = try await bootstrap()
+        _ = try await client.request(path: "api/v1/memories/\(id)/media/\(photoID)", method: "DELETE",
+            query: [.init(name: "family_id", value: family.uuidString)])
+    }
+    func getDraft(id: UUID) async throws -> GeneratedMemory {
+        try generated(await client.send(path: "api/v1/memory-drafts/\(id)", method: "GET", as: DraftDTO.self))
+    }
+    func editDraft(_ draft: GeneratedMemory, title: String, content: String) async throws -> GeneratedMemory {
+        try generated(await client.send(path: "api/v1/memory-drafts/\(draft.draftID)", method: "PATCH",
+            body: json(["revision": draft.revision.uuidString, "title": title, "summary": content]), as: DraftDTO.self))
+    }
+    func regenerateDraft(_ draft: GeneratedMemory) async throws -> GeneratedMemory {
+        try generated(await client.send(path: "api/v1/memory-drafts/\(draft.draftID)/regenerate", method: "POST",
+            body: json(["revision": draft.revision.uuidString, "replace_confirmed": true]), as: DraftDTO.self))
     }
     func checkHealth() async throws {
         struct Health: Decodable { let status: String }

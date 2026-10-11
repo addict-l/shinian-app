@@ -85,7 +85,7 @@ class MemoryModel(Base):
     )
 
     media_assets: Mapped[list["MediaAssetModel"]] = relationship(
-        back_populates="memory",
+        back_populates="memory", foreign_keys="MediaAssetModel.memory_id",
     )
 
     source_session_id: Mapped[str | None] = mapped_column(

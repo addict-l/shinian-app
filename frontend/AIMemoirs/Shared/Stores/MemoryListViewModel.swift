@@ -28,6 +28,11 @@ final class MemoryListViewModel: ObservableObject {
         } catch { errorMessage = error.localizedDescription }
     }
 
+    func upsert(_ memory: MemoryEvent) {
+        memoryEvents.removeAll { $0.id == memory.id }; memoryEvents.append(memory)
+    }
+    func remove(id: UUID) { memoryEvents.removeAll { $0.id == id } }
+
     func getMemoryEvents(for personID: UUID) -> [MemoryEvent] {
         getAllMemoryEvents().filter { $0.personIDs.contains(personID) }
     }

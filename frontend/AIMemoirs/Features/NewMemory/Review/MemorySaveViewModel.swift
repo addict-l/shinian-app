@@ -3,7 +3,7 @@ import SwiftUI
 /// 保存草稿的独立状态；负责重复提交保护与保存错误，不控制页面导航。
 @MainActor
 final class MemorySaveViewModel: ObservableObject {
-    @Published private(set) var isSaving = false
+    @Published var isSaving = false
     @Published var errorMessage: String?
     private let api: any MemoryAPI
 

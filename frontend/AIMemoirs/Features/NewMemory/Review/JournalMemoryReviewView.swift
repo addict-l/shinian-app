@@ -8,6 +8,7 @@ struct JournalMemoryReviewView: View {
     @ObservedObject var saveModel: MemorySaveViewModel
     let onBack: () -> Void
     let onEdit: () -> Void
+    let onRegenerate: () -> Void
     let onSave: () async -> Void
 
     var body: some View {
@@ -16,7 +17,10 @@ struct JournalMemoryReviewView: View {
                 .journalPage().navigationTitle("回忆预览").navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) { Button(action: onBack) { Image(systemName: "chevron.left") }.disabled(saveModel.isSaving).accessibilityLabel("返回对话") }
-                    ToolbarItem(placement: .topBarTrailing) { Button("编辑", action: onEdit).disabled(saveModel.isSaving) }
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Menu { Button("编辑标题和正文", action: onEdit); Button("重新生成草稿", action: onRegenerate) } label: { Image(systemName: "ellipsis.circle").frame(minWidth: 44, minHeight: 44) }
+                            .disabled(saveModel.isSaving).accessibilityLabel("草稿操作").accessibilityIdentifier("draft.actions")
+                    }
                 }
                 .safeAreaInset(edge: .bottom, spacing: 0) {
                     VStack(spacing: 14) {

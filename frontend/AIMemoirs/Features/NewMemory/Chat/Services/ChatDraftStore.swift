@@ -90,6 +90,22 @@ struct LocalChatDraft: Codable, Identifiable {
         }
     }
 
+    /// Invalidate only downloaded history; local unsent content remains protected.
+    func invalidateHistory(personIDs: Set<UUID>, deletedSessionID: UUID?) throws {
+        for var draft in try list() where personIDs.contains(draft.personID) {
+            draft.snapshot = nil
+            if let deletedSessionID, draft.sessionID == deletedSessionID {
+                draft.sessionID = nil
+                if let pending = draft.pendingText, !pending.isEmpty {
+                    draft.input = [pending, draft.input].filter { !$0.isEmpty }.joined(separator: "\n")
+                }
+                draft.pendingText = nil; draft.pendingMessageID = nil; draft.pendingAttachments = []
+                draft.photos = draft.photos.map { StoredChatPhoto(id: $0.id, attachment: nil) }
+            }
+            try save(draft, photos: [])
+        }
+    }
+
     func remove(id: UUID) throws {
         let directory = root.appendingPathComponent(id.uuidString)
         if FileManager.default.fileExists(atPath: directory.path) { try FileManager.default.removeItem(at: directory) }

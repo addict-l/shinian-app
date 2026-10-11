@@ -16,6 +16,7 @@ class ChatMessageRepository:
             rows = db.scalars(select(ChatMessageModel).join(ChatSessionModel)
                 .where(ChatSessionModel.family_id == str(family_id),
                        ChatSessionModel.primary_person_id == str(person_id))
+                .where(ChatSessionModel.status != 'prepared')
                 .order_by(ChatMessageModel.created_at.desc(), ChatMessageModel.id.desc()).limit(20)).all()
             return [self._to_schema(row) for row in reversed(rows)]
 

@@ -2,7 +2,8 @@ from datetime import date, datetime
 from uuid import UUID
 
 from pydantic import BaseModel, Field
-from app.schemas.story_information import StoryInformation
+from app.schemas.story_information import StoryInformation, InformationDimension
+from app.schemas.media import MessageAttachment
 
 
 class MemoryCreate(BaseModel):
@@ -35,6 +36,7 @@ class Memory(BaseModel):
     version: int = Field(default=1, ge=1)
     information: StoryInformation = Field(default_factory=StoryInformation)
     media_urls: list[str] = Field(default_factory=list)
+    media_assets: list[MessageAttachment] = Field(default_factory=list)
     family_id: UUID
 
     id: UUID
@@ -73,3 +75,19 @@ class MemoryExtraction(BaseModel):
     people: list[str] = Field(
         default_factory=list,
     )
+
+class MemoryUpdate(BaseModel):
+    family_id: UUID
+    version: int = Field(ge=1)
+    title: str = Field(min_length=1, max_length=200)
+    summary: str = Field(min_length=1, max_length=100000)
+    time: InformationDimension
+    place: InformationDimension
+    feeling: InformationDimension
+    memory_date: date | None = None
+    media_ids: list[UUID] = Field(max_length=1000)
+
+class MemoryDeletion(BaseModel):
+    id: UUID
+    deleted: bool = True
+    cleanup_pending: bool = False

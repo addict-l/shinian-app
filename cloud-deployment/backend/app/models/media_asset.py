@@ -29,6 +29,8 @@ class MediaAssetModel(Base):
         nullable=True,
     )
 
+    editing_memory_id: Mapped[str | None] = mapped_column(String(36), ForeignKey('memories.id', ondelete='CASCADE'), nullable=True, index=True)
+
     session_id: Mapped[str | None] = mapped_column(String(36), ForeignKey("chat_sessions.id", ondelete="CASCADE"), nullable=True)
 
     type: Mapped[str] = mapped_column(
@@ -58,5 +60,5 @@ class MediaAssetModel(Base):
     )
 
     memory: Mapped["MemoryModel"] = relationship(
-        back_populates="media_assets",
+        back_populates="media_assets", foreign_keys=[memory_id],
     )

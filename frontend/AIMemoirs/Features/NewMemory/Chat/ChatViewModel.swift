@@ -36,10 +36,11 @@ struct MessagePhoto: Identifiable {
     private var sessionID: UUID?
     private var startID = UUID()
     private var pendingMessage: (text: String, id: UUID, attachments: [UUID])?
-    let openingNotice = ChatMessage(sender: .ai, text: "您可以从一件记得的事开始讲，我会陪您慢慢回想。")
+    private var preparedOpening: ChatMessage?
 
     init(api: (any ChatAPI)? = nil, store: ChatDraftStore? = nil, draft: LocalChatDraft? = nil, person: FamilyMember? = nil) {
         self.api = api ?? BackendRepository.shared; self.store = store
+        if person?.hasChatHistory == false { preparedOpening = person?.openingMessage }
         var draft = draft
         if draft == nil, let person {
             do { draft = try store?.draft(for: person.id) }
@@ -114,16 +115,17 @@ struct MessagePhoto: Identifiable {
     /// The server uses the client request ID as the user message ID. A recovered
     /// snapshot replaces the local echo, including when only the reply was lost.
     var messages: [ChatMessage] {
-        // This is an immediate page welcome, not a generated or saved AI reply.
-        // The model-generated opening replaces it when the session is ready.
-        let saved = latestSnapshot?.messages ?? [openingNotice]
+        // Reuse the server's prepared message ID while history is loading.
+        // A known existing conversation never gets a new placeholder welcome.
+        let history = latestSnapshot?.messages ?? []
+        let saved = history.isEmpty ? preparedOpening.map { [$0] } ?? [] : history
         guard let pendingUserMessage, !saved.contains(where: { $0.id == pendingUserMessage.id }) else { return Array(saved.suffix(20)) }
         return Array((saved + [pendingUserMessage]).suffix(20))
     }
     var pendingText: String? { pendingMessage?.text }
 
     func reset() {
-        pause(); localDraft = nil; inputText = ""; isCompleted = false
+        pause(); localDraft = nil; preparedOpening = nil; inputText = ""; isCompleted = false
         sessionID = nil; startID = UUID(); pendingMessage = nil; pendingUserMessage = nil; photos = []
         canGenerate = false; generationOfferMessageID = nil; hasPendingSend = false; latestSnapshot = nil
     }
@@ -179,7 +181,13 @@ struct MessagePhoto: Identifiable {
         guard persist() else { return nil }
         do {
             let value: ChatSnapshot
-            if let sessionID { value = try await api.resume(sessionID: sessionID) }
+            if let sessionID {
+                value = try await api.resume(sessionID: sessionID)
+                // Old clients can leave a cached empty session. Reading it does
+                // not publish a prepared welcome or generate a missing legacy one.
+                // Re-enter through the idempotent member endpoint in that case.
+                if value.messages.isEmpty { return await beginNextStory(person: person) }
+            }
             else { value = try await api.start(person: person, requestID: startID) }
             reconcile(value)
             let accepted = accept(value)

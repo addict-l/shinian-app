@@ -5,6 +5,7 @@ import PhotosUI
 struct JournalChatView: View {
     let person: FamilyMember
     private let chatAPI: any ChatAPI
+    private let memoryAPI: any MemoryAPI
     let previewScreen: String?
     let onBack: () -> Void
     let onSaved: () async -> Void
@@ -25,12 +26,14 @@ struct JournalChatView: View {
     @State private var draft: GeneratedMemory?
     @State private var showingDraft = false
     @State private var showingEdit = false
-    @State private var editText = ""
+    @State private var confirmRegeneration = false
+    @State private var regenerating = false
+    @State private var regenerateLatest: GeneratedMemory?
     @State private var mediaError: String?
     @FocusState private var inputFocused: Bool
 
     init(person: FamilyMember, chatAPI: any ChatAPI, memoryAPI: any MemoryAPI, previewScreen: String?, resumedDraft: LocalChatDraft? = nil, onBack: @escaping () -> Void, onSaved: @escaping () async -> Void) {
-        self.person = person; self.chatAPI = chatAPI; self.previewScreen = previewScreen; self.onBack = onBack; self.onSaved = onSaved
+        self.person = person; self.chatAPI = chatAPI; self.memoryAPI = memoryAPI; self.previewScreen = previewScreen; self.onBack = onBack; self.onSaved = onSaved
         _model = StateObject(wrappedValue: ChatViewModel(api: chatAPI, store: ChatDraftStore.current(previewScreen: previewScreen), draft: resumedDraft, person: person))
         _saveModel = StateObject(wrappedValue: MemorySaveViewModel(api: memoryAPI))
     }
@@ -117,17 +120,25 @@ struct JournalChatView: View {
                 JournalMemoryReviewView(draft: draft, imageData: imageData,
                     identity: "\(person.relationship) · \(person.name)", saveModel: saveModel,
                     onBack: { showingDraft = false },
-                    onEdit: { editText = draft.memory.content; showingEdit = true },
+                    onEdit: { showingEdit = true },
+                    onRegenerate: { confirmRegeneration = true },
                     onSave: {
                         guard await saveModel.save(draft) else { return }
                         model.finish(); showingDraft = false
                         _ = await model.beginNextStory(person: person)
                         await onSaved()
                     })
+                    .alert("重新生成草稿？", isPresented: $confirmRegeneration) {
+                        Button("保留当前草稿", role: .cancel) {}
+                        Button("确认重新生成", role: .destructive) { Task { await regenerate() } }
+                    } message: { Text("AI 将根据当前讲述重新整理，并替换草稿的标题和正文。手动修改也会被替换。") }
+                    .alert("草稿已在其他设备更新", isPresented: Binding(get: { regenerateLatest != nil }, set: { if !$0 { regenerateLatest = nil } })) {
+                        Button("保留当前预览", role: .cancel) { regenerateLatest = nil }
+                        Button("读取最新草稿") { self.draft = regenerateLatest; regenerateLatest = nil }
+                    } message: { Text("请读取最新草稿并核对后，再决定是否重新生成。") }
                     .sheet(isPresented: $showingEdit) {
-                        JournalDraftEditorView(text: $editText, loading: model.isLoading,
-                            error: model.errorMessage, onCancel: { showingEdit = false },
-                            onUpdate: { Task { await updateDraft() } })
+                        JournalDraftEditorView(draft: draft, api: memoryAPI, onCancel: { showingEdit = false },
+                            onUpdated: { updated in self.draft = updated; showingEdit = false })
                     }
             }
         }
@@ -140,7 +151,7 @@ struct JournalChatView: View {
             }
         } else {
             VStack(alignment: .leading, spacing: 16) {
-                Text(message.id == model.openingNotice.id ? "开始讲述" : "AI  回忆助手").font(JournalTheme.font(11, medium: true)).foregroundStyle(JournalTheme.accent)
+                Text("AI  回忆助手").font(JournalTheme.font(11, medium: true)).foregroundStyle(JournalTheme.accent)
                 Text(message.text).font(JournalTheme.font(16)).lineSpacing(8).fixedSize(horizontal: false, vertical: true)
                 if model.generationOfferMessageID == message.id && model.photos.isEmpty && !model.hasPendingSend && model.inputText.isEmpty && !dictation.isBusy {
                     VStack(alignment: .leading, spacing: 12) {
@@ -239,10 +250,15 @@ struct JournalChatView: View {
         }
         .scrollIndicators(.hidden).accessibilityIdentifier("chat.selectedPhotos")
     }
-    /// 复用当前会话重新生成草稿，更新失败时保留编辑内容供用户重试。
-    private func updateDraft() async {
-        guard await model.send(text: "请根据以下由我修订的内容更新回忆，保留事实，不要编造：\n" + editText, person: person) != nil else { return }
-        if let updated = await model.generate() { draft = updated; showingEdit = false }
+    private func regenerate() async {
+        guard let draft, !regenerating else { return }
+        regenerating = true; saveModel.isSaving = true; saveModel.errorMessage = nil
+        defer { regenerating = false; saveModel.isSaving = false }
+        do { self.draft = try await memoryAPI.regenerateDraft(draft) }
+        catch {
+            saveModel.errorMessage = error.localizedDescription
+            if isVersionConflict(error) { regenerateLatest = try? await memoryAPI.getDraft(id: draft.draftID) }
+        }
     }
     private func start() async {
         _ = await model.start(person: person)
@@ -262,6 +278,7 @@ struct JournalChatView: View {
         }
     }
     private func generate() async {
+        if draft != nil { showingDraft = true; return }
         dictation.stop()
         inputFocused = false
         if let value = await model.generate() {

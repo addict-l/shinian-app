@@ -28,22 +28,27 @@ def receipt(asset):
                          url=asset.file_url, mime_type=asset.mime_type)
 
 
-def upload(session_id, request_id, file):
+def upload(session_id, request_id, file, editing_memory_id=None, family_id=None):
     data = file.read(MAX_BYTES + 1)
     if len(data) > MAX_BYTES:
         raise HTTPException(413, '图片不能超过 8 MB')
     digest = hashlib.sha256(data).hexdigest()
-    with serialized(session_id), serialized('media:' + str(request_id)):
+    with serialized('memory:' + str(editing_memory_id) if editing_memory_id else session_id), serialized('media:' + str(request_id)):
         with SessionLocal() as db:
-            session = db.get(ChatSessionModel, str(session_id))
-            if session is None:
-                raise HTTPException(404, '会话不存在')
+            session = None
+            if editing_memory_id:
+                from app.services.memory_maintenance import owned
+                owned(db, editing_memory_id, family_id)
+            else:
+                session = db.get(ChatSessionModel, str(session_id))
+                if session is None:
+                    raise HTTPException(404, '会话不存在')
             existing = db.get(MediaAssetModel, str(request_id))
             if existing:
-                if existing.session_id != str(session_id) or (existing.content_hash and existing.content_hash != digest):
+                if (existing.editing_memory_id != str(editing_memory_id) and existing.memory_id != str(editing_memory_id) if editing_memory_id else existing.session_id != str(session_id)) or (existing.content_hash and existing.content_hash != digest):
                     raise HTTPException(409, '同一个照片请求标识不能上传不同内容')
                 return receipt(existing)
-            if session.status == 'completed':
+            if session and session.status == 'completed':
                 raise HTTPException(409, '已保存的回忆不能追加会话附件')
         temporary = MEDIA_ROOT / (str(uuid4()) + '.upload')
         path = MEDIA_ROOT / (str(request_id) + '.jpg')
@@ -65,7 +70,8 @@ def upload(session_id, request_id, file):
             os.replace(temporary, path)
             try:
                 with SessionLocal.begin() as db:
-                    asset = MediaAssetModel(id=str(request_id), memory_id=None, session_id=str(session_id),
+                    asset = MediaAssetModel(id=str(request_id), memory_id=None, session_id=str(session_id) if session_id else None,
+                                            editing_memory_id=str(editing_memory_id) if editing_memory_id else None,
                                             type='image', file_url='/api/v1/media/' + str(request_id),
                                             original_filename=None, mime_type='image/jpeg', content_hash=digest)
                     db.add(asset)

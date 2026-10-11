@@ -2,6 +2,7 @@ from datetime import date, datetime
 from uuid import UUID
 
 from pydantic import BaseModel, Field, field_validator
+from app.schemas.chat import ChatMessage
 
 
 class FamilyMemberCreate(BaseModel):
@@ -32,6 +33,8 @@ class FamilyMemberCreate(BaseModel):
 
 
 class FamilyMember(BaseModel):
+    opening_message: ChatMessage | None = None
+    has_chat_history: bool = False
     family_id: UUID
 
     id: UUID

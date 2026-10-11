@@ -81,6 +81,10 @@ struct JournalAddPersonView: View {
                 if let error { Text(error).font(JournalTheme.font(12)).foregroundStyle(.red).padding(.top, 14) }
                 JournalButton(title: "添加并继续", loading: loading, disabled: !draft.isValid()) { focused = nil; onAdd() }
                     .padding(.top, 44).accessibilityIdentifier("member.add")
+                if loading {
+                    Text("正在为\(draft.relationship)准备开场白…").font(JournalTheme.font(12))
+                        .foregroundStyle(JournalTheme.muted).padding(.top, 12)
+                }
                 Button("已添加过家人？选择已有的人物", action: onSelect)
                     .font(JournalTheme.font(13)).foregroundStyle(JournalTheme.lavender)
                     .frame(maxWidth: .infinity).frame(minHeight: 44).padding(.top, 6)
@@ -89,7 +93,7 @@ struct JournalAddPersonView: View {
             }.padding(.horizontal, 24).padding(.bottom, 28)
                 // 与箭头、生日和按钮共用可中断的平滑曲线；滚动容器不参与隐式动画。
                 .animation(reduceMotion ? nil : .smooth(duration: 0.36, extraBounce: 0), value: showingRelationships)
-        }.scrollIndicators(.hidden).scrollDismissesKeyboard(.interactively)
+        }.disabled(loading).scrollIndicators(.hidden).scrollDismissesKeyboard(.interactively)
             .sheet(isPresented: $showingBirthday) {
                 NavigationStack {
                     DatePicker("生日", selection: $pickedBirthday, in: ...Date(), displayedComponents: .date)

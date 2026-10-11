@@ -21,6 +21,7 @@ from app.schemas.workflow import ChatState, DraftResponse
 from app.schemas.story_guidance import GenerationOffer
 from app.services.chat_service import ChatService
 from app.services.memory_service import MemoryService
+from app.services.conversation_opening import OPENING_SESSION_TYPE, publish_prepared_opening
 from app.schemas.story_information import InformationStatus, StoryInformation
 from app.services.story_guidance import (user_texts, validate_information, readiness, conversation_history, validate_analysis, validate_reply, reply_policy,
                                         draft_evidence, validate_draft, exact_date)
@@ -71,13 +72,14 @@ class WorkflowService:
         # Sessions are internal story segments, never a user-facing conversation list.
         with serialized(f'person:{family_id}:{person_id}'):
             sessions = [value for value in self.chat.list_sessions(family_id)
-                        if value.primary_person_id == person_id]
+                        if value.primary_person_id == person_id and value.session_type != OPENING_SESSION_TYPE]
             completed = next((value for value in sessions if value.status == 'completed'), None)
             active = [value for value in sessions if value.status != 'completed'
                       and (completed is None or value.updated_at > completed.updated_at)]
             # Prefer meaningful legacy dialogue over empty sessions left by prior launches.
             current = next((value for value in active if any(message.role == 'user'
                 for message in self.chat.message_repository.list_by_session(value.id))), None)
+            current = current or next((value for value in active if value.status != 'prepared'), None)
             current = current or (active[0] if active else None)
             if current is None:
                 anchor = str(completed.id) if completed else 'initial'
@@ -146,14 +148,24 @@ class WorkflowService:
         return hashlib.sha256((raw + '\n' + information.model_dump_json(exclude={'conversation'})).encode()).hexdigest()
 
     def start(self, session_id):
-        with serialized(session_id):
+        session = self.chat.get_session(session_id)
+        with serialized(f'person:{session.family_id}:{session.primary_person_id}'), serialized(session_id):
             state = self.state(session_id)
+            if state.session.primary_person_id is not None:
+                history = self.chat.message_repository.recent_for_person(state.session.family_id, state.session.primary_person_id)
+                if history:
+                    return state
+                with SessionLocal.begin() as db:
+                    target = db.get(ChatSessionModel, str(session_id), with_for_update=True)
+                    published = publish_prepared_opening(db, target)
+                if published:
+                    return self.state(session_id)
             if not state.messages:
                 subject = self._record_subject(state.session)
                 reply = self.chat._get_llm_client().converse([], subject, state.session.information, state.readiness)
                 policy = {'allowed': False, 'explicit_request': False}
                 validate_reply(reply, [], policy)
-                self.chat.message_repository.create(session_id, 'assistant', reply.text)
+                self.chat.message_repository.create(session_id, 'assistant', reply.text, message_type='opening')
             return self.state(session_id)
 
     def send(self, session_id, body):
@@ -237,9 +249,9 @@ class WorkflowService:
     def _draft_response(model):
         return DraftResponse(id=model.id, session_id=model.session_id, revision=model.revision,
                              memory=MemoryCreate.model_validate(model.payload), saved_memory_id=model.saved_memory_id,
-                             evidence=model.payload.get('_evidence'))
+                             evidence=model.payload.get('_evidence'), manually_edited=model.payload.get('_manually_edited', False))
 
-    def generate(self, session_id):
+    def generate(self, session_id, expected_revision=None, replace_confirmed=False):
         with serialized(session_id):
             session = self.chat.get_session(session_id)
             if session.status == 'completed':
@@ -259,8 +271,12 @@ class WorkflowService:
             digest = self._source_digest(raw, session.information)
             with SessionLocal() as db:
                 old = db.scalar(select(MemoryDraftModel).where(MemoryDraftModel.session_id == str(session_id)))
-                if old and old.source_hash == digest:
+                if expected_revision is not None and (old is None or old.revision != str(expected_revision)):
+                    raise HTTPException(409, '草稿已在其他设备更新，请读取最新版本；你的修改可以保留核对')
+                if old and old.source_hash == digest and expected_revision is None:
                     return self._draft_response(old)
+                if old and old.payload.get('_manually_edited') and not replace_confirmed:
+                    raise HTTPException(409, '草稿包含手动修改，请确认后再重新生成')
                 if session.status == 'completed':
                     raise HTTPException(409, '这段回忆已保存')
             evidence = draft_evidence(session.information, messages)
@@ -302,6 +318,8 @@ class WorkflowService:
             current = self.chat.get_session(session_id)
             with SessionLocal.begin() as db:
                 draft = db.get(MemoryDraftModel, str(draft_id), with_for_update=True)
+                if draft is None:
+                    raise HTTPException(404, '草稿不存在')
                 if draft.revision != str(revision):
                     raise HTTPException(409, '草稿已更新，请重新预览')
                 if draft.saved_memory_id:
@@ -337,3 +355,40 @@ class WorkflowService:
                     session.status = 'completed'
                     session.updated_at = datetime.now(timezone.utc)
             return self.memories.get_memory(UUID(memory_id))
+
+    def get_draft(self, draft_id):
+        with SessionLocal() as db:
+            draft = db.get(MemoryDraftModel, str(draft_id))
+            if draft is None:
+                raise HTTPException(404, '草稿不存在')
+            return self._draft_response(draft)
+
+    def edit_draft(self, draft_id, body):
+        current = self.get_draft(draft_id)
+        with serialized(current.session_id):
+            session = self.chat.get_session(current.session_id)
+            raw = self.memories._build_raw_content(current.session_id)
+            with SessionLocal.begin() as db:
+                draft = db.get(MemoryDraftModel, str(draft_id), with_for_update=True)
+                if draft is None:
+                    raise HTTPException(404, '草稿不存在')
+                if draft.revision != str(body.revision):
+                    raise HTTPException(409, '草稿已在其他设备更新，请读取最新版本；你的修改可以保留核对')
+                if draft.saved_memory_id or session.status == 'completed':
+                    raise HTTPException(409, '草稿已保存，请到回忆详情编辑')
+                if draft.source_hash != self._source_digest(raw, session.information):
+                    raise HTTPException(409, '对话已有新内容，请核对后重新生成；你的修改仍可保留')
+                title, summary = body.title.strip(), body.summary.strip()
+                if not title or not summary:
+                    raise HTTPException(422, '标题和正文不能为空')
+                draft.payload = {**draft.payload, 'title': title, 'summary': summary, '_manually_edited': True,
+                    '_original_evidence': draft.payload.get('_original_evidence') or draft.payload.get('_evidence'), '_evidence': None}
+                draft.revision = str(uuid4())
+                db.flush()
+                return self._draft_response(draft)
+
+    def regenerate_draft(self, draft_id, body):
+        current = self.get_draft(draft_id)
+        if not body.replace_confirmed:
+            raise HTTPException(409, '请确认重新生成会替换当前标题和正文')
+        return self.generate(current.session_id, body.revision, body.replace_confirmed)

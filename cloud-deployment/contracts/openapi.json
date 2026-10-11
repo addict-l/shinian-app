@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "AI Memories API",
-    "version": "0.3.0"
+    "version": "0.5.0"
   },
   "paths": {
     "/api/v1/families/": {
@@ -381,6 +381,247 @@
                 }
               }
             }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "memories"
+        ],
+        "summary": "Update Memory",
+        "operationId": "update_memory_api_v1_memories__memory_id__patch",
+        "parameters": [
+          {
+            "name": "memory_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Memory Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemoryUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Memory"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "memories"
+        ],
+        "summary": "Delete Memory",
+        "operationId": "delete_memory_api_v1_memories__memory_id__delete",
+        "parameters": [
+          {
+            "name": "memory_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Memory Id"
+            }
+          },
+          {
+            "name": "family_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Family Id"
+            }
+          },
+          {
+            "name": "version",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "title": "Version"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemoryDeletion"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/memories/{memory_id}/media": {
+      "post": {
+        "tags": [
+          "memories"
+        ],
+        "summary": "Upload Memory Photo",
+        "operationId": "upload_memory_photo_api_v1_memories__memory_id__media_post",
+        "parameters": [
+          {
+            "name": "memory_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Memory Id"
+            }
+          },
+          {
+            "name": "family_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Family Id"
+            }
+          },
+          {
+            "name": "client_request_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Client Request Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_upload_memory_photo_api_v1_memories__memory_id__media_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/memories/{memory_id}/media/{media_id}": {
+      "delete": {
+        "tags": [
+          "memories"
+        ],
+        "summary": "Discard Memory Photo",
+        "operationId": "discard_memory_photo_api_v1_memories__memory_id__media__media_id__delete",
+        "parameters": [
+          {
+            "name": "memory_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Memory Id"
+            }
+          },
+          {
+            "name": "media_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Media Id"
+            }
+          },
+          {
+            "name": "family_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Family Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
           },
           "422": {
             "description": "Validation Error",
@@ -1122,6 +1363,153 @@
         }
       }
     },
+    "/api/v1/memory-drafts/{draft_id}": {
+      "get": {
+        "tags": [
+          "workflow"
+        ],
+        "summary": "Get Draft",
+        "operationId": "get_draft_api_v1_memory_drafts__draft_id__get",
+        "parameters": [
+          {
+            "name": "draft_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Draft Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DraftResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "workflow"
+        ],
+        "summary": "Edit Draft",
+        "operationId": "edit_draft_api_v1_memory_drafts__draft_id__patch",
+        "parameters": [
+          {
+            "name": "draft_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Draft Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DraftUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DraftResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/memory-drafts/{draft_id}/regenerate": {
+      "post": {
+        "tags": [
+          "workflow"
+        ],
+        "summary": "Regenerate Draft",
+        "operationId": "regenerate_draft_api_v1_memory_drafts__draft_id__regenerate_post",
+        "parameters": [
+          {
+            "name": "draft_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Draft Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DraftRegeneration"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DraftResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/health": {
       "get": {
         "summary": "Health",
@@ -1156,6 +1544,20 @@
           "file"
         ],
         "title": "Body_upload_media_api_v1_chat_sessions__session_id__media_post"
+      },
+      "Body_upload_memory_photo_api_v1_memories__memory_id__media_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "File"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_upload_memory_photo_api_v1_memories__memory_id__media_post"
       },
       "ChatMessage": {
         "properties": {
@@ -1459,6 +1861,25 @@
         ],
         "title": "DraftConfirmation"
       },
+      "DraftRegeneration": {
+        "properties": {
+          "revision": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Revision"
+          },
+          "replace_confirmed": {
+            "type": "boolean",
+            "title": "Replace Confirmed",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "revision"
+        ],
+        "title": "DraftRegeneration"
+      },
       "DraftResponse": {
         "properties": {
           "id": {
@@ -1500,6 +1921,11 @@
                 "type": "null"
               }
             ]
+          },
+          "manually_edited": {
+            "type": "boolean",
+            "title": "Manually Edited",
+            "default": false
           }
         },
         "type": "object",
@@ -1510,6 +1936,34 @@
           "memory"
         ],
         "title": "DraftResponse"
+      },
+      "DraftUpdate": {
+        "properties": {
+          "revision": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Revision"
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Title"
+          },
+          "summary": {
+            "type": "string",
+            "maxLength": 100000,
+            "minLength": 1,
+            "title": "Summary"
+          }
+        },
+        "type": "object",
+        "required": [
+          "revision",
+          "title",
+          "summary"
+        ],
+        "title": "DraftUpdate"
       },
       "Family": {
         "properties": {
@@ -1559,6 +2013,21 @@
       },
       "FamilyMember": {
         "properties": {
+          "opening_message": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ChatMessage"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "has_chat_history": {
+            "type": "boolean",
+            "title": "Has Chat History",
+            "default": false
+          },
           "family_id": {
             "type": "string",
             "format": "uuid",
@@ -1957,6 +2426,13 @@
             "type": "array",
             "title": "Media Urls"
           },
+          "media_assets": {
+            "items": {
+              "$ref": "#/components/schemas/MessageAttachment"
+            },
+            "type": "array",
+            "title": "Media Assets"
+          },
           "family_id": {
             "type": "string",
             "format": "uuid",
@@ -2141,6 +2617,98 @@
           "raw_content"
         ],
         "title": "MemoryCreate"
+      },
+      "MemoryDeletion": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "deleted": {
+            "type": "boolean",
+            "title": "Deleted",
+            "default": true
+          },
+          "cleanup_pending": {
+            "type": "boolean",
+            "title": "Cleanup Pending",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "title": "MemoryDeletion"
+      },
+      "MemoryUpdate": {
+        "properties": {
+          "family_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Family Id"
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Version"
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Title"
+          },
+          "summary": {
+            "type": "string",
+            "maxLength": 100000,
+            "minLength": 1,
+            "title": "Summary"
+          },
+          "time": {
+            "$ref": "#/components/schemas/InformationDimension"
+          },
+          "place": {
+            "$ref": "#/components/schemas/InformationDimension"
+          },
+          "feeling": {
+            "$ref": "#/components/schemas/InformationDimension"
+          },
+          "memory_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Memory Date"
+          },
+          "media_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "maxItems": 1000,
+            "title": "Media Ids"
+          }
+        },
+        "type": "object",
+        "required": [
+          "family_id",
+          "version",
+          "title",
+          "summary",
+          "time",
+          "place",
+          "feeling",
+          "media_ids"
+        ],
+        "title": "MemoryUpdate"
       },
       "MessageAttachment": {
         "properties": {

@@ -16,6 +16,7 @@ struct GeneratedMemory {
     let revision: UUID
     let memory: MemoryEvent
     let preview: EventData
+    var manuallyEdited = false
 }
 @MainActor protocol FamilyAPI {
     func members() async throws -> [FamilyMember]
@@ -49,6 +50,52 @@ extension ChatAPI {
 @MainActor protocol MemoryAPI {
     func list() async throws -> [MemoryEvent]
     func save(_ draft: GeneratedMemory) async throws -> MemoryEvent
+    func getMemory(id: UUID) async throws -> MemoryEvent
+    func updateMemory(_ memory: MemoryEvent, edit: MemoryEdit) async throws -> MemoryEvent
+    func deleteMemory(_ memory: MemoryEvent) async throws
+    func uploadMemoryPhoto(id: UUID, data: Data, requestID: UUID) async throws -> ChatAttachment
+    func discardMemoryPhoto(id: UUID, photoID: UUID) async throws
+    func loadPhoto(_ attachment: ChatAttachment) async throws -> Data
+    func getDraft(id: UUID) async throws -> GeneratedMemory
+    func editDraft(_ draft: GeneratedMemory, title: String, content: String) async throws -> GeneratedMemory
+    func regenerateDraft(_ draft: GeneratedMemory) async throws -> GeneratedMemory
+}
+extension MemoryAPI {
+    func getMemory(id: UUID) async throws -> MemoryEvent { throw APIError.contractUnavailable }
+    func updateMemory(_ memory: MemoryEvent, edit: MemoryEdit) async throws -> MemoryEvent { throw APIError.contractUnavailable }
+    func deleteMemory(_ memory: MemoryEvent) async throws { throw APIError.contractUnavailable }
+    func uploadMemoryPhoto(id: UUID, data: Data, requestID: UUID) async throws -> ChatAttachment { throw APIError.contractUnavailable }
+    func discardMemoryPhoto(id: UUID, photoID: UUID) async throws { throw APIError.contractUnavailable }
+    func loadPhoto(_ attachment: ChatAttachment) async throws -> Data { throw APIError.contractUnavailable }
+    func getDraft(id: UUID) async throws -> GeneratedMemory { throw APIError.contractUnavailable }
+    func editDraft(_ draft: GeneratedMemory, title: String, content: String) async throws -> GeneratedMemory { throw APIError.contractUnavailable }
+    func regenerateDraft(_ draft: GeneratedMemory) async throws -> GeneratedMemory { throw APIError.contractUnavailable }
+}
+struct MemoryEdit: Equatable {
+    var title: String
+    var content: String
+    var time: InformationDimension
+    var place: InformationDimension
+    var feeling: InformationDimension
+    var mediaIDs: [UUID]
+    init(_ memory: MemoryEvent) {
+        title = memory.title; content = memory.content
+        time = memory.information.time; place = memory.information.place; feeling = memory.information.feeling
+        if time.status == .missing, let value = memory.dateDescription ?? memory.date.map(APIDate.day) {
+            time = InformationDimension(status: memory.date == nil ? .approximate : .known, value: value)
+        }
+        if place.status == .missing, let value = memory.location { place = InformationDimension(status: .known, value: value) }
+        mediaIDs = memory.mediaAssets.map(\.id)
+    }
+    var isValid: Bool {
+        !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && title.count <= 200 &&
+        !content.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && content.count <= 100000 &&
+        [time, place, feeling].allSatisfy { $0.status == .missing || !($0.value ?? "").trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
+    }
+}
+func isVersionConflict(_ error: Error) -> Bool {
+    if case APIError.rejected(let status, _) = error { return status == 409 }
+    return false
 }
 protocol ProfileCapabilities {
     func backup() async throws

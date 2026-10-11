@@ -7,6 +7,7 @@ struct JournalStoryContent: View {
     var dateText: String? = nil
     var location: String? = nil
     var isDraft = false
+    var photoAPI: (any MemoryAPI)? = nil
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
@@ -20,6 +21,15 @@ struct JournalStoryContent: View {
                     }.font(JournalTheme.font(12)).foregroundStyle(JournalTheme.muted).padding(.top, 20)
                     Text(memory.content).font(JournalTheme.font(14)).lineSpacing(10)
                         .fixedSize(horizontal: false, vertical: true).padding(.top, 26)
+                    if !isDraft, let feeling = memory.information.feeling.value {
+                        Text("那时的感受 · \(feeling)").font(JournalTheme.font(12)).foregroundStyle(JournalTheme.muted).padding(.top, 24)
+                    }
+                    if let photoAPI, memory.mediaAssets.count > 1 {
+                        Text("这段回忆的照片").font(JournalTheme.font(12)).foregroundStyle(JournalTheme.muted).padding(.top, 24)
+                        ForEach(memory.mediaAssets.dropFirst()) { photo in
+                            MemoryPhotoView(attachment: photo, api: photoAPI).frame(maxWidth: .infinity, minHeight: 160).padding(.top, 12)
+                        }
+                    }
                     if isDraft { Text("根据你的讲述整理，可在保存前编辑。").font(JournalTheme.font(11)).foregroundStyle(JournalTheme.muted).padding(.top, 36) }
                 }.padding(.horizontal, 24).padding(.top, 31).padding(.bottom, 30)
             }

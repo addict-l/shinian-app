@@ -1,5 +1,13 @@
 # 第一阶段云端部署记录
 
+## T05 最终人工审查与版本归档（2026-10-11）
+
+用户人工验证成功，授权本次任务完整 commit。云端本地 Git 已提交 `6bcab703b4d3df231498f1e18e5c8391578fb01c`；验证目录已提交 `b93e68dfbf7b2e6ec28edbf08da826bdfcc9a21c`，主工程随后提交并推送，完整版本映射归档在 /opt/shinian-validation/releases/t05-empty-opening-20261011/t05-final-revisions.json 与本机验证产物同名文件。后文待审查状态保留为历史。
+
+最终空缓存开场修复仅修改客户端，使用已部署镜像 sha256:c7853d54ed1cde2cdfba15eedc557a0e3661eeff7c862b074755a36e3baf5951 在独立随机数据库执行 165 项检查，通过后不重启正式服务；50 个后端 Python 文件与本机一致。无新增迁移，保持 e10100000001。正式只读检查健康、人物状态、20 条窗口和契约通过，测试前后业务表计数均为 [1, 2, 19, 80, 1, 28]。
+
+144 个最终客户端文件上传并核对；独立 Release 在 Mac 构建、安装原 iPhone 17 Pro。正常 UI 打开实际旧空会话后产生一条正常模型开场，用户人工审查通过；这一步不是只读检查。提交及版本归档不触碰业务数据。上一部署备份 pre-t05-prepared-opening-20261011 和历史发布目录继续保留。
+
 ## T04 最终人工审查与版本归档（2026-10-11）
 
 用户认可成员唯一聊天窗口、20 条显示、保存分界与本机恢复的修订版，明确授权“T04可以commit了”。后文待人工审查与未提交状态保留为历史。本次依次创建云端本地提交 `8e5f7b54eb3725f8ad77d2070f06d655b0f0e7b6`、验证目录提交 `2dcc635dcb8c8896d89fc1f759e89cdc9be4c6c9`，主工程随后提交并推送，完整映射由验证目录的 `finalize_t04.py` 在推送后写入发布目录 `t04-final-revisions.json` 与 `deployed-revision`。
@@ -146,3 +154,27 @@
 候选镜像通过 139 项随机独立 MySQL 测试，原受影响会话 3 次只读真实模型重放均正确返回生成提示。正式验证未新增消息或回忆，未批量改写旧会话；旧错误状态在用户下一次整理请求时进入修复后的分析流程。仅重建 API，数据库保持运行，迁移仍为 `d10100000001`。健康、会话及契约、镜像、Nginx、HTTPS 未认证 401 通过；六张业务表部署前后行数一致，47 个生产后端 Python 文件匹配。本次不改客户端。
 
 发布目录 `/opt/shinian-validation/releases/corrected-offer-fix-20261011`；部署前根用户专用备份 `/opt/shinian-validation/backups/pre-corrected-offer-fix-20261011`，包含代码、配置、MySQL、媒体、镜像及 Git 状态；回退镜像 `shinian-api:rollback-corrected-offer-fix` 对应修复前开场与回复校验版本。回退前重新备份当前数据，恢复对应源码并核对配置，将回退镜像作为 API 镜像，以当前 Compose 仅重建 API，检查健康与现有数据。保留数据库和媒体卷、不降级迁移、不删除卷；代码回退不会撤销用户新增内容。本次未执行正式回退演练，旧版会重新存在跨轮更正与请求识别问题。提交和推送等待用户人工审查。
+
+## T05 部署（2026-10-11，待人工审查）
+
+正式检查完成时间（UTC）：`2026-10-11T07:26:30Z`。最终镜像 `sha256:897737843e613f85e5f422899f5db2933bfc848e21ff19f89ea354707c77f485`；后端源码包 SHA256 `8902762a63d1a5193cf6b789d0995439d9bea012ff8f968083085960a1d03132`；迁移 `e10100000001`。候选镜像通过 155 项一次性 MySQL 数据库测试，49 个 App Python 文件与运行镜像一致；144 个前端文件上传哈希校验通过，独立 Release 在 Mac 编译并安装原 iPhone 17 Pro，云端没有编译 iOS。
+
+发布目录 `/opt/shinian-validation/releases/t05-20261011`。最初部署前备份 `/opt/shinian-validation/backups/pre-t05-20261011`，回退镜像 `shinian-api:rollback-t05` 对应已完成 T04。清理并发加固前另备份 `/opt/shinian-validation/backups/pre-t05-cleanup-20261011`，镜像 `shinian-api:t05-before-cleanup-fix`，对应本次前一候选。两次备份均包含 root 专用源码、生产配置、数据库、媒体与运行镜像记录。
+
+正式服务健康、旧数据读取、维护接口契约、镜像、Nginx、HTTPS 401 边界通过，部署前后六张业务表计数一致；不在正式数据中运行编辑或删除试验。文件清理任务在数据库事务落库，提交后执行，服务启动及每 15 秒重试。结构回退必须先处理暂存照片和清理队列；紧急旧镜像启动须绕过旧 Alembic 不认识新修订的问题并保留新增结构。详见 [完整恢复步骤](t05-deployment-plan.md)，没有执行正式回退或回灌数据。
+
+主工程仍为 `e61311d`、验证目录 `2dcc635`、云端 Git `8e5f7b5` 基线，实际运行的是上述工作源码镜像；用户人工审查、T05 commit／push 尚未完成。
+
+## 2026-10-11 T05 开场白修正部署（待人工审查）
+
+候选版本在 `/opt/shinian-validation/releases/t05-opening-20261011` 的独立随机数据库完成 159 项后端检查后部署。源码、数据库、媒体和此前运行镜像已备份至 `/opt/shinian-validation/backups/pre-t05-opening-20261011`，回退镜像为 `shinian-api:t05-before-opening-fix`。无新增迁移，数据库保持 `e10100000001`。
+
+运行镜像 `sha256:61d0bbf2ff349341dd07fca360fb001055f1aefbb1f796e4cc026ebdb58856aa`；源码包 SHA-256 `4d58fcd1ce4dda26974b863dfa45233b9fba6f8a2d807794bfd0c25f9400896b`；核对时间 `2026-10-11T07:53:17Z`。运行容器的 50 个 Python 应用文件与本机源码哈希一致。正式健康、现有会话／历史、契约和照片关系只读核对通过；部署前后六张业务表数量均为 `[1, 1, 18, 79, 1, 28]`，没有为验证创建真实家庭故事或调用正式模型。前端 144 个文件上传与哈希核对通过，编译在 Mac 执行。
+
+后端与客户端仍为 T05 工作版本，尚未 commit／push；待用户人工审查后依既定链路提交。详见 [验证记录](validation-record.md) 与 [迁移部署方案](t05-deployment-plan.md)。
+
+## 2026-10-11 T05 开场白预生成修订部署（待人工审查）
+
+随机测试数据库 163 项检查和合成身份真实模型检查通过后，候选版本在 /opt/shinian-validation/releases/t05-prepared-opening-20261011 部署。此前源码、镜像、数据库和媒体备份在 /opt/shinian-validation/backups/pre-t05-prepared-opening-20261011，回退镜像为 shinian-api:t05-before-prepared-opening。无新增迁移，结构仍为 e10100000001。
+
+运行镜像 sha256:c7853d54ed1cde2cdfba15eedc557a0e3661eeff7c862b074755a36e3baf5951；源码包 SHA-256 2ae5d3b5a356f432e3dafddf1f1761dcbab2da84828b3a04f76dddb2d47de592；核对时间 2026-10-11T08:21:04Z。容器 50 个 Python 应用文件与本机一致。健康、人物开场字段、已发布历史与契约只读核对通过，部署前后六张业务表数量均为 [1, 1, 18, 79, 1, 28]，验证未写入正式家庭数据。144 个前端文件归档核对通过，Mac 独立 Release 已安装原 iPhone 17 Pro。源码未 commit，待人工审查后按原链路归档提交。

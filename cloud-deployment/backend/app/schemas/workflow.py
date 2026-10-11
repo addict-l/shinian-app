@@ -21,6 +21,7 @@ class DraftResponse(BaseModel):
     memory: MemoryCreate
     saved_memory_id: UUID | None = None
     evidence: GroundedDraft | None = None
+    manually_edited: bool = False
 
 class DraftConfirmation(BaseModel):
     revision: UUID
@@ -29,3 +30,12 @@ class HealthResponse(BaseModel):
     status: str
     database: str
     llm_configured: bool
+
+class DraftUpdate(BaseModel):
+    revision: UUID
+    title: str = Field(min_length=1, max_length=200)
+    summary: str = Field(min_length=1, max_length=100000)
+
+class DraftRegeneration(BaseModel):
+    revision: UUID
+    replace_confirmed: bool = False

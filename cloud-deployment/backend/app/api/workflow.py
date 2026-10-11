@@ -10,7 +10,7 @@ from app.models.media_asset import MediaAssetModel
 from app.models.chat_session import ChatSessionModel
 from app.schemas.family import Family
 from app.schemas.memory import Memory
-from app.schemas.workflow import DraftConfirmation, MediaResponse
+from app.schemas.workflow import DraftConfirmation, MediaResponse, DraftResponse, DraftUpdate, DraftRegeneration
 from app.repositories.family_repository import FamilyRepository
 from app.services.workflow_service import WorkflowService, serialized
 
@@ -56,3 +56,15 @@ def get_media(media_id: UUID):
     if not path.is_file():
         raise HTTPException(404, '图片文件不存在')
     return FileResponse(path, media_type='image/jpeg')
+
+@router.get('/memory-drafts/{draft_id}', response_model=DraftResponse)
+def get_draft(draft_id: UUID):
+    return workflow.get_draft(draft_id)
+
+@router.patch('/memory-drafts/{draft_id}', response_model=DraftResponse)
+def edit_draft(draft_id: UUID, body: DraftUpdate):
+    return workflow.edit_draft(draft_id, body)
+
+@router.post('/memory-drafts/{draft_id}/regenerate', response_model=DraftResponse)
+def regenerate_draft(draft_id: UUID, body: DraftRegeneration):
+    return workflow.regenerate_draft(draft_id, body)

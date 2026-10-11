@@ -44,14 +44,25 @@ struct JournalAppView: View {
             await members.load(); await memories.load()
             guard !previewReady else { return }; previewReady = true
             if let previewScreen {
+                #if DEBUG
+                if previewScreen == "chat-empty-resume", let person = members.members.first,
+                   let store = ChatDraftStore.current(previewScreen: previewScreen) {
+                    let session = UUID()
+                    let draft = LocalChatDraft(id: person.id, sessionID: session, personID: person.id,
+                        personName: person.name, relationship: person.relationship, input: "本机尚未发送的文字",
+                        snapshot: ChatSnapshot(sessionID: session, messages: [], canGenerate: false))
+                    try? store.save(draft, photos: [])
+                }
+                #endif
                 switch previewScreen {
                 case "tree", "film": navigation.tab = .family
                 case "profile": navigation.tab = .profile
                 case "chat-offline": navigation.compose(with: members.members.first)
                 case "add": navigation.compose(step: .add)
                 case "select": navigation.compose(step: .select)
-                case "chat", "chat-slow", "chat-opening", "chat-pending", "review": navigation.compose(with: members.members.first)
+                case "chat", "chat-slow", "chat-opening", "chat-empty-resume", "chat-pending", "review": navigation.compose(with: members.members.first)
                 case "memories": navigation.path = [.memories]
+                case "memory-edit", "memory-conflict": if let event = memories.memoryEvents.first { navigation.path = [.memory(event.id)] }
                 case "person": if let person = members.members.first { navigation.path = [.person(person.id)] }
                 default: break
                 }
@@ -76,7 +87,7 @@ struct JournalAppView: View {
                 case .person(let id):
                     if let person = members.members.first(where: { $0.id == id }) { JournalPersonView(person: person) }
                 case .memory(let id):
-                    if let event = memories.memoryEvents.first(where: { $0.id == id }) { JournalStoryView(memory: event) }
+                    if let event = memories.memoryEvents.first(where: { $0.id == id }) { JournalStoryView(memory: event, api: memoryAPI) }
                 case .settings: JournalSettingsView()
                 case .privacy: JournalPrivacyView()
                 }

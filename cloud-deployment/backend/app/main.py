@@ -26,7 +26,30 @@ allowed_hosts = [
     if host.strip()
 ]
 
-app = FastAPI(title='AI Memories API', version='0.3.0')
+import asyncio
+from contextlib import asynccontextmanager
+from app.services.memory_maintenance import drain_cleanup
+
+@asynccontextmanager
+async def lifespan(app):
+    async def cleanup():
+        while True:
+            try:
+                await asyncio.to_thread(drain_cleanup)
+            except Exception as error:
+                logging.getLogger('aimemories').error('Photo cleanup retry deferred: %s', type(error).__name__)
+            await asyncio.sleep(15)
+    worker = asyncio.create_task(cleanup())
+    try:
+        yield
+    finally:
+        worker.cancel()
+        try:
+            await worker
+        except asyncio.CancelledError:
+            pass
+
+app = FastAPI(title='AI Memories API', version='0.5.0', lifespan=lifespan)
 app.add_middleware(TrustedHostMiddleware, allowed_hosts=allowed_hosts)
 for router in [families_router,family_members_router,memories_router,chat_router,workflow_router]:
     app.include_router(router)

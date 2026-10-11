@@ -4,9 +4,12 @@ import SwiftUI
 /// Explicit launch-only fixture. Never selected in normal launches or Release builds.
 /// No API calls and no writes to the user's database.
 @MainActor final class JournalPreviewAPI: FamilyAPI, ChatAPI, MemoryAPI {
+    private var conflictOnce: Bool
+    private var drafts: [UUID: GeneratedMemory] = [:]
     private let pendingReply: Bool
     private let recoveryOffline: Bool
     private let slowOpening: Bool
+    private let emptyResume: Bool
     private let slowReply: Bool
     private var people: [FamilyMember]
     private var events: [MemoryEvent]
@@ -20,9 +23,11 @@ import SwiftUI
     private var photos: [UUID: Data] = [:]
     private var savedDrafts: Set<UUID> = []
     init(familyFilm: Bool = false, emptyState: String? = nil) {
+        conflictOnce = emptyState == "memory-conflict"
         pendingReply = emptyState == "chat-pending"
         recoveryOffline = emptyState == "chat-offline"
         slowOpening = emptyState == "chat-opening"
+        emptyResume = emptyState == "chat-empty-resume"
         slowReply = emptyState == "chat-slow"
         let values = [("陈建国", "爷爷", "1948-05-16", Gender.male), ("林秀兰", "奶奶", "1950-02-09", Gender.female), ("陈明远", "爸爸", "1976-09-22", Gender.male), ("周静", "妈妈", "1978-03-18", Gender.female)]
         people = values.enumerated().map { index, row in
@@ -47,6 +52,15 @@ import SwiftUI
         if emptyState == "home-empty" { people = []; events = [] }
         if emptyState == "home-orphaned" { people = [] }
         if emptyState == "home-people-only" { events = [] }
+        if slowOpening {
+            people[0].openingMessage = ChatMessage(sender: .ai, text: "爷爷，您想从哪件记得的事开始讲？")
+            people[0].hasChatHistory = false
+        }
+        if emptyResume {
+            people[0].hasChatHistory = false
+            people[0].memoryCount = 0
+            events.removeAll { $0.personIDs.contains(people[0].id) }
+        }
 
     }
     func members() async throws -> [FamilyMember] { people }
@@ -68,9 +82,14 @@ import SwiftUI
             return try await state(sessionID: session)
         }
         if !conversation.isEmpty { return try await state(sessionID: session) }
+        if emptyResume {
+            try await Task.sleep(for: .seconds(2))
+            conversation = [ChatMessage(sender: .ai, text: "爷爷，您想从哪件记得的事慢慢讲起？")]
+            return try await state(sessionID: session)
+        }
         if slowOpening {
             try await Task.sleep(for: .seconds(8))
-            conversation = [ChatMessage(sender: .ai, text: "您想从哪件记得的事开始讲？")]
+            conversation = person.openingMessage.map { [$0] } ?? []
             return try await state(sessionID: session)
         }
         conversation = [ChatMessage(sender: .ai, text: "您想从哪件记得的事开始讲？"), ChatMessage(sender: .user, text: "小时候我教孙子骑自行车。我扶着后座，后来松开手，他自己骑到了巷口。"), ChatMessage(sender: .ai, text: "您扶着他骑，后来他自己骑到了巷口。您还记得他回头看您时，说了什么吗？")]
@@ -115,8 +134,63 @@ import SwiftUI
         let event = events[0]
         let person = activePerson ?? people[0]
         let memory = MemoryEvent(personName: person.name, personIDs: [person.id], date: nil, content: event.content, title: event.title, imageName: event.imageName, dateDescription: "2006年夏天", location: "老家")
-        return GeneratedMemory(draftID: memory.id, revision: UUID(), memory: memory,
+        let value = GeneratedMemory(draftID: memory.id, revision: UUID(), memory: memory,
             preview: EventData(person: person.name, date: "2006年夏天", title: memory.title, content: memory.content, location: "老家", participants: [person.name], emotion: ""))
+        drafts[value.draftID] = value
+        return value
+    }
+    func getMemory(id: UUID) async throws -> MemoryEvent {
+        guard let value = events.first(where: { $0.id == id }) else { throw APIError.httpStatus(404) }
+        return value
+    }
+    private func edited(_ base: MemoryEvent, _ edit: MemoryEdit) -> MemoryEvent {
+        var result = MemoryEvent(id: base.id, personName: base.personName, personIDs: base.personIDs,
+            date: edit.time.status == .known ? APIDate.parseDay(edit.time.value) : nil, content: edit.content, title: edit.title,
+            imageName: edit.mediaIDs.isEmpty ? nil : base.imageName, createdAt: base.createdAt,
+            dateDescription: edit.time.value, location: edit.place.value)
+        result.primaryPersonID = base.primaryPersonID; result.version = base.version + 1; result.information = base.information
+        result.information.time = edit.time; result.information.place = edit.place; result.information.feeling = edit.feeling
+        result.mediaAssets = edit.mediaIDs.enumerated().map { ChatAttachment(id: $0.element, url: "/api/v1/media/\($0.element)", position: $0.offset) }
+        if let id = edit.mediaIDs.first { result = result.copy(imageData: photos[id]) }
+        return result
+    }
+    func updateMemory(_ memory: MemoryEvent, edit: MemoryEdit) async throws -> MemoryEvent {
+        guard let index = events.firstIndex(where: { $0.id == memory.id }) else { throw APIError.httpStatus(404) }
+        if conflictOnce {
+            conflictOnce = false
+            var other = MemoryEdit(events[index]); other.title = "另一台设备修改的标题"
+            events[index] = edited(events[index], other)
+        }
+        guard events[index].version == memory.version else { throw APIError.rejected(409, "回忆已在其他设备更新，本机修改仍保留。") }
+        let result = edited(events[index], edit); events[index] = result; return result
+    }
+    func deleteMemory(_ memory: MemoryEvent) async throws {
+        let current = try await getMemory(id: memory.id)
+        guard current.version == memory.version else { throw APIError.rejected(409, "请核对最新回忆") }
+        events.removeAll { $0.id == memory.id }
+    }
+    func uploadMemoryPhoto(id: UUID, data: Data, requestID: UUID) async throws -> ChatAttachment {
+        photos[requestID] = data; return ChatAttachment(id: requestID, url: "/api/v1/media/\(requestID)")
+    }
+    func discardMemoryPhoto(id: UUID, photoID: UUID) async throws { photos[photoID] = nil }
+    func getDraft(id: UUID) async throws -> GeneratedMemory {
+        guard let value = drafts[id] else { throw APIError.httpStatus(404) }; return value
+    }
+    func editDraft(_ draft: GeneratedMemory, title: String, content: String) async throws -> GeneratedMemory {
+        let current = try await getDraft(id: draft.draftID)
+        guard current.revision == draft.revision else { throw APIError.rejected(409, "草稿已更新") }
+        var edit = MemoryEdit(current.memory); edit.title = title; edit.content = content
+        let memory = edited(current.memory, edit)
+        let result = GeneratedMemory(draftID: draft.draftID, revision: UUID(), memory: memory,
+            preview: EventData(person: memory.personName, date: memory.dateLabel, title: title, content: content, location: memory.location ?? "待补充", participants: [memory.personName], emotion: memory.information.feeling.value ?? ""), manuallyEdited: true)
+        drafts[draft.draftID] = result; return result
+    }
+    func regenerateDraft(_ draft: GeneratedMemory) async throws -> GeneratedMemory {
+        let current = try await getDraft(id: draft.draftID)
+        guard current.revision == draft.revision else { throw APIError.rejected(409, "草稿已更新") }
+        let generated = try await generate(sessionID: session)
+        let result = GeneratedMemory(draftID: draft.draftID, revision: UUID(), memory: generated.memory, preview: generated.preview)
+        drafts[draft.draftID] = result; return result
     }
     func upload(sessionID: UUID, image: Data?, requestID: UUID) async throws { }
     func save(_ draft: GeneratedMemory) async throws -> MemoryEvent {

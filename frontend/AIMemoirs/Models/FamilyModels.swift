@@ -18,6 +18,8 @@ struct FamilyMember: Identifiable, Equatable {
     var memoryCount: Int = 0
     var relationship: String = ""
     var birthDate: Date? = nil
+    var openingMessage: ChatMessage? = nil
+    var hasChatHistory: Bool? = nil
 
     static func == (lhs: FamilyMember, rhs: FamilyMember) -> Bool { lhs.id == rhs.id }
 
