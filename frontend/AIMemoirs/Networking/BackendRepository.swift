@@ -8,18 +8,19 @@ private struct MemberDTO: Decodable {
     let relationship: String
     let birth_date: String?
 }
-private struct SessionDTO: Decodable { let id: UUID; var version: Int?; var information: StoryInformation? }
+private struct SessionDTO: Decodable { let id: UUID; var version: Int?; var information: StoryInformation?; var status: String? }
 private struct MessageDTO: Decodable { let id: UUID; let role: String; let content: String; var attachments: [ChatAttachment]? }
 private struct ChatDTO: Decodable {
     let session: SessionDTO
     let messages: [MessageDTO]
     let can_generate: Bool
     var generation_offer: GenerationOffer?
+    var current_message_ids: [UUID]?
     var readiness: StoryReadiness?
     var snapshot: ChatSnapshot {
         ChatSnapshot(sessionID: session.id, messages: messages.filter { ["user", "assistant"].contains($0.role) }
             .map { ChatMessage(id: $0.id, sender: $0.role == "user" ? .user : .ai, text: $0.content, attachments: $0.attachments ?? []) }, canGenerate: can_generate,
-            version: session.version ?? 1, information: session.information ?? StoryInformation(), readiness: readiness, generationOffer: generation_offer)
+            status: session.status ?? "active", version: session.version ?? 1, information: session.information ?? StoryInformation(), readiness: readiness, generationOffer: generation_offer, currentMessageIDs: current_message_ids)
     }
 }
 private struct MemoryDTO: Decodable {
@@ -124,21 +125,22 @@ enum APIDate {
     }
     func start(person: FamilyMember, requestID: UUID) async throws -> ChatSnapshot {
         let family = try await bootstrap()
-        let session = try await client.send(path: "api/v1/chat/sessions", method: "POST", body: json([
-            "family_id": family.uuidString, "primary_person_id": person.id.uuidString,
-            "title": "与\(person.name)的回忆", "client_request_id": requestID.uuidString
-        ]), as: SessionDTO.self)
-        return try await client.send(path: "api/v1/chat/sessions/\(session.id)/start", method: "POST", as: ChatDTO.self).snapshot
+        return try await client.send(path: "api/v1/chat/members/\(person.id)/conversation", method: "POST",
+            query: [.init(name: "family_id", value: family.uuidString)], as: ChatDTO.self).snapshot
     }
+
     func send(sessionID: UUID, text: String, requestID: UUID) async throws -> ChatSnapshot {
         try await send(sessionID: sessionID, text: text, attachmentIDs: [], requestID: requestID)
     }
     func send(sessionID: UUID, text: String, attachmentIDs: [UUID], requestID: UUID) async throws -> ChatSnapshot {
-        try await client.send(path: "api/v1/chat/sessions/\(sessionID)/messages", method: "POST",
+        try await client.send(path: "api/v1/chat/sessions/\(sessionID)/conversation/messages", method: "POST",
             body: json(["content": text, "attachment_ids": attachmentIDs.map(\.uuidString), "client_request_id": requestID.uuidString]), as: ChatDTO.self).snapshot
     }
+    func resume(sessionID: UUID) async throws -> ChatSnapshot {
+        try await state(sessionID: sessionID)
+    }
     func state(sessionID: UUID) async throws -> ChatSnapshot {
-        try await client.send(path: "api/v1/chat/sessions/\(sessionID)/state", method: "GET", as: ChatDTO.self).snapshot
+        try await client.send(path: "api/v1/chat/sessions/\(sessionID)/conversation", method: "GET", as: ChatDTO.self).snapshot
     }
     func loadPhoto(_ attachment: ChatAttachment) async throws -> Data {
         guard attachment.url == "/api/v1/media/\(attachment.id.uuidString.lowercased())" || attachment.url == "/api/v1/media/\(attachment.id.uuidString)" else { throw APIError.invalidResponse }

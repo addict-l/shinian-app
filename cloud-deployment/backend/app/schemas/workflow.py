@@ -10,6 +10,7 @@ class ChatState(BaseModel):
     session: ChatSession
     messages: list[ChatMessage]
     can_generate: bool
+    current_message_ids: list[UUID] | None = None
     generation_offer: GenerationOffer | None = None
     readiness: StoryReadiness = Field(default_factory=StoryReadiness)
 

@@ -5,10 +5,19 @@ from sqlalchemy import select
 
 from app.db.database import SessionLocal
 from app.models.chat_message import ChatMessageModel
+from app.models.chat_session import ChatSessionModel
 from app.schemas.chat import ChatMessage
 
 
 class ChatMessageRepository:
+
+    def recent_for_person(self, family_id: UUID, person_id: UUID):
+        with SessionLocal() as db:
+            rows = db.scalars(select(ChatMessageModel).join(ChatSessionModel)
+                .where(ChatSessionModel.family_id == str(family_id),
+                       ChatSessionModel.primary_person_id == str(person_id))
+                .order_by(ChatMessageModel.created_at.desc(), ChatMessageModel.id.desc()).limit(20)).all()
+            return [self._to_schema(row) for row in reversed(rows)]
 
     @staticmethod
     def _to_schema(

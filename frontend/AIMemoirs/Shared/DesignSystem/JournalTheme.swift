@@ -6,6 +6,7 @@ enum JournalTheme {
     static let surface = Color("JournalSurface")
     static let ink = Color("JournalInk")
     static let muted = Color("JournalMuted")
+    static let secondaryInk = ink.opacity(0.72)
     static let accent = Color("AccentColor")
     static let lavender = Color(red: 0.55, green: 0.50, blue: 0.66)
     static let userMessageSurface = Color("JournalUserMessageSurface")

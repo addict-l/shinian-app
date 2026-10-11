@@ -15,6 +15,19 @@ def get_state(session_id: UUID):
 def create_session(body: ChatSessionCreate):
     return workflow.create_session(body)
 
+@router.post('/members/{person_id}/conversation', response_model=ChatState)
+def open_person_conversation(person_id: UUID, family_id: UUID):
+    return workflow.open_person(family_id, person_id)
+
+@router.get('/sessions/{session_id}/conversation', response_model=ChatState)
+def person_conversation_state(session_id: UUID):
+    return workflow.person_state(session_id)
+
+@router.post('/sessions/{session_id}/conversation/messages', response_model=ChatState, status_code=201)
+def send_person_message(session_id: UUID, body: ChatMessageCreate):
+    workflow.send(session_id, body)
+    return workflow.person_state(session_id)
+
 @router.get('/sessions', response_model=list[ChatSession])
 def list_sessions(family_id: UUID | None = None):
     return workflow.chat.list_sessions(family_id)

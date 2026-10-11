@@ -1,13 +1,15 @@
 import Foundation
 
-struct ChatSnapshot {
+struct ChatSnapshot: Codable {
     let sessionID: UUID
-    let messages: [ChatMessage]
+    var messages: [ChatMessage]
     let canGenerate: Bool
+    var status: String = "active"
     var version: Int = 1
     var information = StoryInformation()
     var readiness: StoryReadiness? = nil
     var generationOffer: GenerationOffer? = nil
+    var currentMessageIDs: [UUID]? = nil
 }
 struct GeneratedMemory {
     let draftID: UUID
@@ -21,6 +23,8 @@ struct GeneratedMemory {
     func deleteMember(id: UUID) async throws
 }
 @MainActor protocol ChatAPI {
+    func resume(sessionID: UUID) async throws -> ChatSnapshot
+
     func start(person: FamilyMember, requestID: UUID) async throws -> ChatSnapshot
     func send(sessionID: UUID, text: String, requestID: UUID) async throws -> ChatSnapshot
     func send(sessionID: UUID, text: String, attachmentIDs: [UUID], requestID: UUID) async throws -> ChatSnapshot
@@ -32,6 +36,7 @@ struct GeneratedMemory {
     func upload(sessionID: UUID, image: Data?, requestID: UUID) async throws
 }
 extension ChatAPI {
+    func resume(sessionID: UUID) async throws -> ChatSnapshot { try await state(sessionID: sessionID) }
     func send(sessionID: UUID, text: String, attachmentIDs: [UUID], requestID: UUID) async throws -> ChatSnapshot {
         guard attachmentIDs.isEmpty else { throw APIError.contractUnavailable }
         return try await send(sessionID: sessionID, text: text, requestID: requestID)

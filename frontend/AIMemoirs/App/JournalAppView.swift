@@ -47,9 +47,10 @@ struct JournalAppView: View {
                 switch previewScreen {
                 case "tree", "film": navigation.tab = .family
                 case "profile": navigation.tab = .profile
-                case "add": navigation.compose()
+                case "chat-offline": navigation.compose(with: members.members.first)
+                case "add": navigation.compose(step: .add)
                 case "select": navigation.compose(step: .select)
-                case "chat", "chat-slow", "chat-opening", "review": navigation.compose(with: members.members.first)
+                case "chat", "chat-slow", "chat-opening", "chat-pending", "review": navigation.compose(with: members.members.first)
                 case "memories": navigation.path = [.memories]
                 case "person": if let person = members.members.first { navigation.path = [.person(person.id)] }
                 default: break

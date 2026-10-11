@@ -33,3 +33,7 @@
 正常联调使用 `AIMemoirs` Scheme；`AIMemoirs-DesignPreview` 使用离线样例。测试源码、验证脚本与构建结果位于主工程同级的 `shinian-validation/`。
 
 单元测试位于 `shinian-validation/tests/ios/AIMemoirsTests`；页面回归测试位于同目录下的 `AIMemoirsUITests/JournalUIFlowTests.swift`。该 UI 测试使用离线数据，覆盖九个页面、人物创建到保存的流程，以及键盘和导航栏下的输入框可见性。验证入口为 `shinian-validation/scripts/ios/check.sh`，运行 App 无需验证目录。
+
+## 本机真机调试签名（2026-10-11）
+
+当前工程使用本机登记的 `ziao zhang (Personal Team)` 自动签名。换到另一台 Mac 时，在 Xcode 的 Signing & Capabilities 中为 App 和测试目标选择该机器自己的开发团队。真机 SDK 使用 `com.shinian.ziaozhang.dev.AIMemoirs`，可与原团队签名的旧 App 并存；模拟器仍使用原标识。手机需要信任当前账号的开发证书，首次安装需要重新登录家庭账号；旧 App 和本机草稿未删除，也未自动迁移至新标识。

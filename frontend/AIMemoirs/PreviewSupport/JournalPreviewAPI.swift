@@ -4,18 +4,24 @@ import SwiftUI
 /// Explicit launch-only fixture. Never selected in normal launches or Release builds.
 /// No API calls and no writes to the user's database.
 @MainActor final class JournalPreviewAPI: FamilyAPI, ChatAPI, MemoryAPI {
+    private let pendingReply: Bool
+    private let recoveryOffline: Bool
     private let slowOpening: Bool
     private let slowReply: Bool
     private var people: [FamilyMember]
     private var events: [MemoryEvent]
     private var activePerson: FamilyMember?
-    private let session = UUID()
+    private var session = UUID()
+    private var nextSegment = false
+    private var segmentStart = 0
     private var conversation: [ChatMessage] = []
     private var offerMessageID: UUID?
     private var automaticOfferUsed = false
     private var photos: [UUID: Data] = [:]
     private var savedDrafts: Set<UUID> = []
     init(familyFilm: Bool = false, emptyState: String? = nil) {
+        pendingReply = emptyState == "chat-pending"
+        recoveryOffline = emptyState == "chat-offline"
         slowOpening = emptyState == "chat-opening"
         slowReply = emptyState == "chat-slow"
         let values = [("陈建国", "爷爷", "1948-05-16", Gender.male), ("林秀兰", "奶奶", "1950-02-09", Gender.female), ("陈明远", "爸爸", "1976-09-22", Gender.male), ("周静", "妈妈", "1978-03-18", Gender.female)]
@@ -56,6 +62,12 @@ import SwiftUI
     func list() async throws -> [MemoryEvent] { events }
     func start(person: FamilyMember, requestID: UUID) async throws -> ChatSnapshot {
         activePerson = person
+        if nextSegment {
+            nextSegment = false; session = UUID(); segmentStart = conversation.count
+            offerMessageID = nil; automaticOfferUsed = false
+            return try await state(sessionID: session)
+        }
+        if !conversation.isEmpty { return try await state(sessionID: session) }
         if slowOpening {
             try await Task.sleep(for: .seconds(8))
             conversation = [ChatMessage(sender: .ai, text: "您想从哪件记得的事开始讲？")]
@@ -71,6 +83,7 @@ import SwiftUI
         if conversation.contains(where: { $0.id == requestID }) { return try await state(sessionID: sessionID) }
         let attachments = attachmentIDs.enumerated().map { position, id in ChatAttachment(id: id, url: "/api/v1/media/\(id)", position: position) }
         conversation.append(ChatMessage(id: requestID, sender: .user, text: text, attachments: attachments))
+        if pendingReply { throw APIError.timeout }
         if slowReply { try await Task.sleep(for: .seconds(8)) }
         offerMessageID = nil
         let explicit = text.contains("保存") || text.contains("整理")
@@ -89,8 +102,14 @@ import SwiftUI
         guard let data = photos[attachment.id] else { throw APIError.httpStatus(404) }
         return data
     }
+    func resume(sessionID: UUID) async throws -> ChatSnapshot {
+        if recoveryOffline { throw APIError.network }
+        return try await state(sessionID: sessionID)
+    }
     func state(sessionID: UUID) async throws -> ChatSnapshot {
-        ChatSnapshot(sessionID: session, messages: conversation, canGenerate: conversation.contains { $0.sender == .user && !$0.text.isEmpty }, generationOffer: offerMessageID.map { GenerationOffer(message_id: $0) })
+        if recoveryOffline { throw APIError.network }
+        let current = Array(conversation.dropFirst(segmentStart))
+        return ChatSnapshot(sessionID: session, messages: Array(conversation.suffix(20)), canGenerate: current.contains { $0.sender == .user && !$0.text.isEmpty }, generationOffer: offerMessageID.map { GenerationOffer(message_id: $0) }, currentMessageIDs: current.map(\.id))
     }
     func generate(sessionID: UUID) async throws -> GeneratedMemory {
         let event = events[0]
@@ -102,6 +121,7 @@ import SwiftUI
     func upload(sessionID: UUID, image: Data?, requestID: UUID) async throws { }
     func save(_ draft: GeneratedMemory) async throws -> MemoryEvent {
         if savedDrafts.insert(draft.draftID).inserted { events.insert(draft.memory, at: 0) }
+        nextSegment = true
         return draft.memory
     }
 }

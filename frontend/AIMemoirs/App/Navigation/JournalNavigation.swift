@@ -15,9 +15,9 @@ enum JournalComposeStep { case add, select, chat }
 @MainActor final class JournalNavigation: ObservableObject {
     @Published var tab: JournalTab = .home
     @Published var path: [JournalRoute] = []
-    @Published var composeStep: JournalComposeStep = .add
+    @Published var composeStep: JournalComposeStep = .select
     @Published var person: FamilyMember?
-    func compose(with person: FamilyMember? = nil, step: JournalComposeStep = .add) {
+    func compose(with person: FamilyMember? = nil, step: JournalComposeStep = .select) {
         path.removeAll(); self.person = person; composeStep = person == nil ? step : .chat; tab = .compose
     }
 }

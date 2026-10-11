@@ -54,6 +54,41 @@ class WorkflowService:
                 return existing
             return self.chat.create_session(data)
 
+    def person_state(self, session_id):
+        state = self.state(session_id)
+        if state.session.primary_person_id is None:
+            raise HTTPException(400, '请先选择家庭人物')
+        state.current_message_ids = [message.id for message in state.messages]
+        state.messages = self.chat.message_repository.recent_for_person(
+            state.session.family_id, state.session.primary_person_id)
+        return state
+
+    def open_person(self, family_id, person_id):
+        person = self.chat.family_member_service.get_family_member(person_id)
+        if person.family_id != family_id:
+            raise HTTPException(409, '人物不属于当前家庭')
+        # The deployment has one worker; serialize by person across devices.
+        # Sessions are internal story segments, never a user-facing conversation list.
+        with serialized(f'person:{family_id}:{person_id}'):
+            sessions = [value for value in self.chat.list_sessions(family_id)
+                        if value.primary_person_id == person_id]
+            completed = next((value for value in sessions if value.status == 'completed'), None)
+            active = [value for value in sessions if value.status != 'completed'
+                      and (completed is None or value.updated_at > completed.updated_at)]
+            # Prefer meaningful legacy dialogue over empty sessions left by prior launches.
+            current = next((value for value in active if any(message.role == 'user'
+                for message in self.chat.message_repository.list_by_session(value.id))), None)
+            current = current or (active[0] if active else None)
+            if current is None:
+                anchor = str(completed.id) if completed else 'initial'
+                current = self.create_session(ChatSessionCreate(family_id=family_id,
+                    primary_person_id=person_id, title=f'与{person.name}的回忆',
+                    client_request_id=uuid5(NAMESPACE_URL, f'ai-memories:person:{family_id}:{person_id}:{anchor}')))
+            history = self.chat.message_repository.recent_for_person(family_id, person_id)
+            if not history:
+                self.start(current.id)
+            return self.person_state(current.id)
+
     def state(self, session_id):
         session = self.chat.get_session(session_id)
         messages = self.chat.message_repository.list_by_session(session_id)
@@ -169,6 +204,16 @@ class WorkflowService:
             information, result, analysis = self._analyze(session, messages)
             explicit_request = getattr(analysis, 'generation_request', None) is not None
             history = conversation_history(messages)
+            if session.primary_person_id is not None:
+                current_ids = {message.id for message in messages}
+                earlier = [message for message in self.chat.message_repository.recent_for_person(
+                    session.family_id, session.primary_person_id) if message.id not in current_ids]
+                if earlier:
+                    # Previous messages provide conversational continuity only. Analysis,
+                    # readiness and draft evidence above still use the full current segment.
+                    history = conversation_history(earlier) + [{'id': 'current-story-boundary', 'role': 'system',
+                        'content': '以上是同一人物较早的聊天，仅供自然承接；以下才是当前尚未保存的回忆。'
+                                   '不得把较早故事混入当前草稿，也不要再次邀请整理已保存的故事。'}] + history
             policy = reply_policy(information, result, history, explicit_request)
             reply = self.chat._get_llm_client().converse(history, self._record_subject(session), information, result,
                 getattr(analysis, 'guidance_hint', ''), explicit_request)

@@ -11,6 +11,8 @@ struct JournalComposeView: View {
     @State private var memberDraft = FamilyMemberDraft()
     @State private var search = ""
     @State private var seeded = false
+    @State private var resumedDraft: LocalChatDraft?
+    @State private var chatIdentity = UUID()
     @State private var personPendingDelete: FamilyMember?
     var body: some View {
         Group {
@@ -20,18 +22,18 @@ struct JournalComposeView: View {
                     onSelect: { navigation.composeStep = .select })
             case .select:
                 JournalPersonSelectionView(search: $search, onSelect: { person in
+                    resumedDraft = nil; chatIdentity = UUID()
                     navigation.person = person
                     navigation.composeStep = .chat
                 }, onDelete: { personPendingDelete = $0 }, onAdd: { navigation.composeStep = .add })
             case .chat:
                 if let person = navigation.person {
-                    JournalChatView(person: person, chatAPI: chatAPI, memoryAPI: memoryAPI, previewScreen: previewScreen) {
+                    JournalChatView(person: person, chatAPI: chatAPI, memoryAPI: memoryAPI, previewScreen: previewScreen, resumedDraft: resumedDraft) {
                         navigation.composeStep = .select
                     } onSaved: {
                         await members.load(); await memories.load()
-                        navigation.composeStep = .select
-                        navigation.path.append(.person(person.id))
-                    }.id(person.id)
+                        resumedDraft = nil
+                    }.id(chatIdentity)
                 }
             }
         }
