@@ -1,0 +1,50 @@
+{
+  "task": "T07",
+  "git_ref": "main",
+  "baseline_commit": "7670f675d7330c8c51e7520f7b7fbd08c2c3a89b",
+  "verified_at": "2026-10-12T08:37:57+08:00",
+  "repository": "https://github.com/addict-l/shinian-app",
+  "api_url": "https://aimemory.47-82-83-74.nip.io",
+  "frontend": {
+    "source_files": 150,
+    "source_manifest_sha256": "0e50e3a1987aac36c05a30205bce378a1502b7248b6269e79c6c91989427250d",
+    "project": "frontend/AIMemoirs.xcodeproj",
+    "scheme": "AIMemoirs",
+    "target_count": 1,
+    "xcode": "26.6",
+    "minimum_ios": "18.1",
+    "simulator": "iPhone 17 Pro / iOS 26.5",
+    "local_test_directory_required": false,
+    "development_team_required_for_simulator": false
+  },
+  "backend": {
+    "app_source_files": 54,
+    "app_source_manifest_sha256": "4d3404cc6cfa8de88878b62d080e1a40873ceb4440f68a12c56a33af2efc1158",
+    "requirements_sha256": "b35453cb4db8949eeb0a9ed7173a7502287ba1c03f8dfb216d4653fca5b1c3d6",
+    "running_image": "sha256:0912af60793bb2cf544367afe38f0045eae60cf9c0ea3b0b8622f34b844cff5d",
+    "candidate_image": "sha256:7ff27cf740e3955216e750488dc7f5badd22d944b2daafe8b7347bb295d7f17b",
+    "delivery_archive_sha256": "9f9a6b6ce7d2cc614612b056e4990672fad0e32756faa7a989ac6e60ac6f9e57",
+    "migration": "f10100000001",
+    "business_source_matches_running_image": true,
+    "production_restart_required_for_delivery_changes": false,
+    "cloud_source_revision": "7cab8819acc2f273c6aab65bd827583b05d00d7b"
+  },
+  "verification": {
+    "swift_tests": 73,
+    "isolated_ui_tests": 12,
+    "isolated_cloud_backend_tests": 205,
+    "standalone_release_without_signing_override": "passed",
+    "production_read_only_checks": "passed",
+    "real_model_synthetic_guidance_reply_and_draft": "passed",
+    "real_model_synthetic_saved_reply": "passed",
+    "real_model_production_database_used": false,
+    "post_push_github_checkout": "Version and Debug build result recorded in local/cloud t07-final-revisions.json",
+    "local_validation_revision": "8193b611923a4ede958c6337c76f7d4a20006520"
+  },
+  "manual_acceptance_pending": [
+    "Teacher own Mac",
+    "Real-device Chinese speech to PDF",
+    "Actual second-device experience"
+  ],
+  "credentials": "Family password provided separately; deployment keys and production data excluded from Git"
+}

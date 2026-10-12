@@ -1,112 +1,84 @@
 # 拾年（Shinian）
 
-“拾年”是一款用于家庭共同记录与整理回忆的 iOS 应用。用户可以添加家庭成员，通过 AI 对话梳理故事，预览并保存回忆，再从首页、回忆列表和家庭胶片中浏览这些内容。
+一款帮助家庭记录真实故事的 iOS App：添加家人，通过 AI 对话梳理回忆，附上照片，校对并保存草稿，按人物制作和导出 PDF 回忆录。
 
-本仓库按运行环境分成两部分：
+**老师运行入口：下载本仓库 `main`，打开 `frontend/AIMemoirs.xcodeproj`，选择 `AIMemoirs` 和 iPhone 模拟器，按 `Command + R`。** 前端默认连接已运行的阿里云后端；无需在 Mac 部署数据库、配置大模型密钥或下载本地测试目录。
 
-```text
-shinian/
-├── frontend/                    iOS 前端工程
-│   ├── AIMemoirs.xcodeproj      Xcode 工程入口
-│   ├── AIMemoirs/               SwiftUI 应用源码与资源
-│   ├── Config/Info.plist        应用名称、权限和 API 地址
-├── cloud-deployment/            云端 API、数据库迁移与部署资料
-│   ├── backend/                 FastAPI 后端、Docker 配置与迁移
-│   ├── contracts/openapi.json   前后端接口契约
-└── README.md
+## 下载最新版本
+
+在 GitHub 页面选择分支 **main → Code → Download ZIP**，解压后打开 `frontend/AIMemoirs.xcodeproj`。已下载的 ZIP 不会自动更新，需要重新下载。
+
+也可以使用 Git：
+
+```sh
+git clone --branch main https://github.com/addict-l/shinian-app.git
+cd shinian-app
+open frontend/AIMemoirs.xcodeproj
 ```
 
-## 系统架构
+已经通过 Git 下载过项目：在原仓库运行 `git pull --ff-only origin main`。可用 `git log -1 --oneline` 查看当前提交；有自己的改动时先保留，避免覆盖。
+
+## 运行条件与步骤
+
+- Mac 和 Xcode；交付验证使用 Xcode 26.6，工程最低支持 iOS 18.1。
+- 已安装 iPhone 模拟器运行时；本次验证设备为原 iPhone 17 Pro / iOS 26.5。
+- 网络能访问现有阿里云 API。
+- 家庭账号 `family`，当前密码由项目维护者单独提供。
+
+1. 打开 `frontend/AIMemoirs.xcodeproj`，等待 Xcode 索引完成。
+2. 顶部 Scheme 选择 **AIMemoirs**，设备选择 **iPhone 模拟器**。
+3. 按 `Command + R`。模拟器运行无需登录开发者账号或选择开发团队。
+4. App 打开后，用 `family` 和单独提供的密码登录。
+5. 从“新的回忆”选择或创建家人；“家庭胶片 → 人物头像”可浏览回忆，或制作／继续制作回忆录。
+
+`AIMemoirs-DesignPreview` 是离线设计样例，不用于验证真实云端数据。老师登录现有家庭账号后会看到已有回忆，新增与编辑也保存在同一家庭。
+
+详细试用步骤、问题排查和实际验证范围见 [老师运行与交付指南](docs/t07-delivery.md)。
+
+## 当前功能
+
+- 每位家人一个聊天窗口，恢复最近 20 条消息；当前回忆的分析仍使用完整讲述。
+- 信息分析模型与对话模型协作，支持自然引导、就绪判断、明确整理请求和第一人称草稿。
+- 一次最多 9 张照片；发送后即时显示文字，失败保留输入和重试状态。照片存储，不送入 AI。
+- 草稿校对、确认保存、已保存回忆编辑与删除；创建家人时准备开场白，保存后承接下一篇。
+- 每人一本回忆录，封面／内容／整本预览三步制作，三种封面、A5、14／16 pt 字号、目录与连续页码。
+- 短篇文字（含标题及时间地点）占内容区半页以内时，首图与文字同页；其余和长文照片继续分页。
+- 制作设置自动保存，处理离线待同步和版本冲突，分享前核对故事与设置，导出预览中的 PDF。
+
+长篇草稿整理质量及修改时间后联动标题／正文是 [后续改进](docs/phase-1-tasks.md#后续改进长篇回忆草稿的整理质量)。
+
+## 项目内容与云端版本
 
 ```text
-iOS App（SwiftUI）
-    │  HTTPS + HTTP Basic Authentication
-    ▼
-Nginx（TLS、访问认证、反向代理）
-    │  127.0.0.1:8000
-    ▼
-FastAPI（业务接口、AI 对话、数据处理）
-    ├── MySQL 8.0（家庭成员、会话、回忆等结构化数据）
-    ├── 服务端媒体目录（回忆照片）
-    └── DashScope 兼容接口（AI 对话与回忆整理）
+frontend/                         可独立运行的 SwiftUI App
+  AIMemoirs.xcodeproj              老师打开的工程（仅 App target）
+  AIMemoirs/                      业务源码、字体与资源
+  Config/Info.plist               云端地址及权限说明
+cloud-deployment/
+  backend/                        线上对应 FastAPI 源码、依赖、迁移与 Compose
+  nginx/                          HTTPS 与家庭认证配置示例
+  contracts/openapi.json          前后端接口契约
+docs/                             需求、交付、验证和部署记录
 ```
 
-前端采用 SwiftUI。`AIMemoirs/App` 负责应用入口和导航，`Features` 按业务页面拆分，`Shared` 存放设计系统、通用组件和共享状态，`Models` 保存业务模型，`Networking` 负责请求云端 API。登录凭据保存在设备系统钥匙串中；iOS 模拟器使用本机调试存储。
+前端默认 API：`https://aimemory.47-82-83-74.nip.io`。后端使用 FastAPI、MySQL 8、Docker Compose、Nginx HTTPS 和 DashScope，固定单 worker。GitHub 推送不会自动更新云服务器；交付时分别核对运行后端与仓库源码，并记录 [版本清单](docs/delivery-manifest.json)。
 
-云端采用 Nginx、FastAPI、MySQL 和 Docker Compose。Nginx 对外提供 HTTPS 和家庭账号认证，再把请求转发到只监听服务器回环地址的 FastAPI。后端负责数据库读写、媒体存储和 AI 服务调用。云端部署默认已经持续运行，普通前端开发不需要在 Mac 上启动后端。
-
-## 前端运行环境
-
-- 一台 Mac
-- Xcode 26 或兼容当前工程格式的较新版本
-- iOS 18.1 或更高版本的模拟器，也可以使用满足该版本要求的真机
-- 可访问互联网，以连接已部署的云端 API
-- 有效的家庭账号和密码；账号默认是 `family`，密码由项目维护者提供
-
-API 地址已经写入 `frontend/Config/Info.plist`：
-
-```text
-https://aimemory.47-82-83-74.nip.io
-```
-
-## 启动前端
-
-1. 在 Finder 中进入 `frontend`，双击 `AIMemoirs.xcodeproj`。
-2. 等待 Xcode 完成工程索引。
-3. 在 Xcode 顶部选择 `AIMemoirs` Scheme。
-4. 选择一个 iOS 18.1 或更高版本的 iPhone 模拟器。
-5. 点击运行按钮，或按 `Command + R`。
-6. App 打开后，使用家庭账号 `family` 和维护者提供的当前密码登录。
-
-首次运行时，macOS 可能会询问是否允许 Xcode、模拟器或应用访问网络；允许后即可连接云端。登录密码不要写入源码、README 或提交记录。
+GitHub 保留运行和维护所需源码、资源、示例配置、依赖版本及数据库迁移。本地 `shinian-validation` 保存测试源码、验证工程、日志、截图、临时 PDF 和构建缓存，不参与老师构建，也不上传本仓库。生产密码、API 密钥、证书私钥、数据库及真实照片备份保留在受控环境。
 
 ## 常见问题
 
-### Xcode 打开后没有可运行设备
+- **没有 iPhone 模拟器：**在 Xcode Settings 的 Components／Platforms 中安装 iOS Simulator Runtime，然后选择模拟器；菜单名称随 Xcode 版本可能不同。
+- **提示 Team／provisioning profile：**检查顶部是否误选真机。模拟器不需要开发团队；真机安装需要在 Signing & Capabilities 选择自己的团队和可用 Bundle ID，步骤见交付指南。
+- **登录失败：**使用维护者单独提供的当前密码。可在“我的 → 设置”退出后重新登录。
+- **无法连接：**在浏览器打开 `https://aimemory.47-82-83-74.nip.io/health`，输入家庭账号。健康响应应显示 `status` 和 `database` 为 `ok`；未认证的 401 属于正常访问限制。
+- **无法选择照片：**模拟器相册需要先有图片，可把图片拖入模拟器导入。
 
-打开 Xcode 的 **Settings → Platforms**，安装一个 iOS 18.1 或更高版本的 Simulator Runtime，然后重新选择模拟器。
+## 开发与维护资料
 
-### App 显示登录失效
+- [前端开发导航](frontend/AIMemoirs/README.md)
+- [后端职责](cloud-deployment/backend/README.md)
+- [云端部署、备份和回退](cloud-deployment/backend/DEPLOY_ALIYUN.md)
+- [T07 已确认交付边界](docs/t07-requirements.md)
+- [验证记录](docs/validation-record.md)、[部署记录](docs/cloud-deployment-record.md)
 
-服务器上的家庭密码可能已经更新。进入 App 的“我的 → 设置”，退出家庭账号，再使用新密码登录。如果无法进入设置，可以删除模拟器中的 App 后重新运行工程。
-
-### App 无法连接服务器
-
-先在 Mac 浏览器访问：
-
-```text
-https://aimemory.47-82-83-74.nip.io/health
-```
-
-浏览器要求输入账号和密码属于正常现象。能够登录并看到包含 `"status":"ok"` 的响应，说明云端可用；否则请联系云服务器维护者检查 Nginx、API 容器和数据库容器。
-
-### 需要更换云端地址
-
-修改 `frontend/Config/Info.plist` 中的 `AI_MEMORIES_API_URL`，保持 HTTPS 地址不带末尾斜杠，然后重新构建 App。
-
-## 开发导航
-
-- 前端目录职责和开发约定：`frontend/AIMemoirs/README.md`
-- 后端服务说明：`cloud-deployment/backend/README.md`
-- 阿里云部署说明：`cloud-deployment/backend/DEPLOY_ALIYUN.md`
-- OpenAPI 契约：`cloud-deployment/contracts/openapi.json`
-
-如只需运行 iOS 客户端，按照“启动前端”操作即可，无需执行 `cloud-deployment` 中的命令。
-
-## 开发验证文件
-
-测试源码与验证脚本存放在同级 `shinian-validation` 文件夹，不属于本仓库。测试日志、截图和构建缓存也输出到该文件夹。仅构建和运行 App 无需这些文件；运行 Xcode 单元与 UI 测试时需要同级验证目录，目录名称保持 `shinian-validation`。路径采用相对路径，可整体迁移到其他 Mac。
-
-## 当前交付范围
-
-已实现数据与接口基础（T01）、多图讲述消息（T02），T03 按修订目标重做自然对话与模型协作。每次讲述可选择最多 9 张照片，也可只发送照片；照片仅存储，不传入 AI。上传前压缩副本，不修改相册原图。上传或回复失败时可重试；未发送照片不会加入保存后的故事。
-
-T03 先由信息分析模型提供有原文依据的事实、引导参考与本轮整理意图，再由对话模型结合完整对话和后端就绪结果组织自然回复，始终对记录对象说“您”。主要人物与基本经过清楚即可整理，时间、地点和感受可以未提供；模糊、明确记不清和拒绝提供分别保留。整理提示与按钮同轮出现，每段最多自动提示一次；继续讲述会收起，之后明确要求整理或保存才再次显示。点击后生成第一人称草稿，保留原文引用，用户确认后才保存。T03 已部署到阿里云并通过技术验证，2026-10-11 用户人工审查通过并授权提交。长篇草稿接近原文、整理不足的问题保留为 [后续改进](docs/phase-1-tasks.md#后续改进长篇回忆草稿的整理质量)；详见 [验证记录](docs/validation-record.md)。
-
-T04 经用户修订为每位家庭成员唯一聊天窗口：点击“新的回忆”先选择家人，直接恢复最近 20 条消息，不再显示会话列表。完整历史保留，当前回忆的分析与生成不受 20 条显示限制；确认保存后留在同一窗口继续下一篇，旧故事不混入新草稿。未发送文字、照片和重试状态按家人保留在本机，退出或重启后恢复，不自动发送；已发送聊天可跨设备继续。语音保留已有输入，停止后等待最终转写，不保存原声。修订版已通过用户人工审查并获准完整提交。真机签名、安装与启动通过，中文识别效果仍保留实际体验这一验收范围。整本 PDF 和整体验收按后续任务继续完成。
-
-T05 已实现草稿标题和正文直接编辑、重新生成确认，以及已保存回忆的信息与照片维护、版本冲突核对和整段删除。图片删除任务可在失败或服务重启后重试，未发送的本机聊天内容不随缓存清理丢失。开场白在人物创建时预生成，删除故事时保留原开场，旧空会话恢复时补齐一次。技术验证、阿里云验证及用户人工审查通过，已获准完整提交；详见 [验证记录](docs/validation-record.md) 与 [部署方案](docs/t05-deployment-plan.md)。
-
-T06 已实现人物回忆录三步制作：文字、单照片与拼贴封面，A5 分页、目录、故事和完整照片页，14／16 pt 正文字号，自动保存与版本冲突处理，以及 PDF 预览、分享／存到文件。入口为“家庭胶片 → 人物头像 → 制作／继续制作回忆录”，需至少一段该人物已保存回忆。短篇标题、时间地点及正文占半页以内时，首张照片与文字同页，其余和长文照片继续分页。已部署阿里云并安装原 iPhone 17 Pro，2026-10-12 用户人工审查通过，授权标记完成并提交上传；具体边界见 [T06 需求](docs/t06-requirements.md)。
-
-第一阶段计划见 `docs/phase-1-plan.md`。新接口仅在对应云端代码部署后可用；Git 推送不会自动更新现有服务器。
+老师自己的 Mac、真机中文语音和实际跨设备体验需要相应环境的人工验收；本机干净下载与模拟器验证不能代替这些实际体验。

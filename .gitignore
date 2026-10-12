@@ -13,3 +13,19 @@ __pycache__/
 .pytest_cache/
 *.pyc
 docs/fullstack-baseline/
+
+# Local verification, build/export output and private deployment material
+artifacts/
+tests/
+.build/
+*.xcresult
+*.xcarchive
+*.dSYM/
+*.ipa
+*.p12
+*.mobileprovision
+*.pem
+*.key
+*.sql
+*.sqlite
+*.sqlite3

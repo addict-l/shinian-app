@@ -1,5 +1,15 @@
 # 第一阶段云端部署记录
 
+## T07 交付来源与云端核对（2026-10-12）
+
+T07 依用户确认范围交付：老师在 Mac 运行最新 main 前端，登录现有家庭账号并连接现有阿里云，密码单独提供。GitHub 包含完整后端、迁移、固定依赖、Compose 和示例环境，另补 Nginx 示例及备份／回退说明；测试源码及产物留本地。
+
+发布验证目录 /opt/shinian-validation/releases/t07-20261012。完整后端候选成功构建，Compose 示例校验与独立随机数据库 205 项检查通过；正式只读健康、迁移与业务快照检查通过，54 个运行 Python 源文件一致。合成真实模型检查覆盖分析、引导、就绪、草稿和保存承接，不接触生产数据库。150 份最终客户端逐项核对，Mac 独立正常 Release 构建通过、已恢复原 iPhone 17 Pro。
+
+正式镜像保持 sha256:0912af60793bb2cf544367afe38f0045eae60cf9c0ea3b0b8622f34b844cff5d，迁移 f10100000001。本次业务 Python 未变，仅更新服务器本地源码中的 README、部署说明和 .env.production.example；真实 .env.production、家庭认证、照片和数据库未覆盖，API 未重启。Nginx 配置为交付示例，没有替换当前配置；新服务器首次部署及备份恢复步骤为维护说明，未把本次验源码记作已演练恢复。
+
+云端本地 Git 已提交 `7cab8819acc2f273c6aab65bd827583b05d00d7b`，独立验证目录已提交 `8193b611923a4ede958c6337c76f7d4a20006520`。主工程交付版本以 main 为准，实际组件哈希、当前运行镜像和候选身份见 docs/delivery-manifest.json；推送后核对 GitHub 全新 clone 和正常 Debug 构建，云端本地 Git／验证目录／主工程的精确提交映射存入本目录 t07-final-revisions.json 与本机验证产物同名文件。候选及构建日志保留，未重新发布相同业务代码。
+
 ## T06 最终人工审查与版本归档（2026-10-12）
 
 用户认可 T06 并授权标记完成与上传；下文待审查、未提交状态保留为历史。云端本地 Git 已提交 `aba016e144ca142eef6fef4e5495d5231c015501`；独立验证目录已提交 `a2a25c01ac6f59577f3b42d72f0a2e4e827006b4`，主工程随后提交并推送 origin/main。完整版本在推送后由 finalize_t06.py 写入本机 artifacts/t06-final-revisions.json 与云端 /opt/shinian-validation/releases/inline-photo-fix-20261012/t06-final-revisions.json，并记录对应后端和客户端版本。

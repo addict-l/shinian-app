@@ -10,6 +10,7 @@
 | `Features/Profile` | 我的主页面；设置与隐私说明放各自子目录 |
 | `Features/Memories` | 全部回忆与已保存回忆详情 |
 | `Features/FamilyMember` | 人物资料与人物关联回忆 |
+| `Features/Memoir` | 三步回忆录制作、本机设置、PDF 排版、预览与分享 |
 | `App/Navigation` | 标签、路由、跨页面导航状态、底部导航栏 |
 | `Shared/Stores` | 全局人物与回忆状态，由根视图创建一次并注入 |
 | `Shared/Components` | 共用按钮、搜索、空态、错误态、人物与回忆展示组件 |
@@ -30,10 +31,10 @@
 
 ## 运行与验证
 
-正常联调使用 `AIMemoirs` Scheme；`AIMemoirs-DesignPreview` 使用离线样例。测试源码、验证脚本与构建结果位于主工程同级的 `shinian-validation/`。
+正常联调使用 `AIMemoirs` Scheme；`AIMemoirs-DesignPreview` 使用离线样例。GitHub 工程仅包含 App target，模拟器运行不依赖测试目录或个人开发团队。测试源码、验证脚本与构建结果位于主工程同级的 `shinian-validation/`，测试目标由该目录的 `scripts/ios/make_validation_project.py` 合并当前产品配置，生成到忽略的 `artifacts/ValidationProject/`。
 
 单元测试位于 `shinian-validation/tests/ios/AIMemoirsTests`；页面回归测试位于同目录下的 `AIMemoirsUITests/JournalUIFlowTests.swift`。该 UI 测试使用离线数据，覆盖九个页面、人物创建到保存的流程，以及键盘和导航栏下的输入框可见性。验证入口为 `shinian-validation/scripts/ios/check.sh`，运行 App 无需验证目录。
 
 ## 本机真机调试签名（2026-10-11）
 
-当前工程使用本机登记的 `ziao zhang (Personal Team)` 自动签名。换到另一台 Mac 时，在 Xcode 的 Signing & Capabilities 中为 App 和测试目标选择该机器自己的开发团队。真机 SDK 使用 `com.shinian.ziaozhang.dev.AIMemoirs`，可与原团队签名的旧 App 并存；模拟器仍使用原标识。手机需要信任当前账号的开发证书，首次安装需要重新登录家庭账号；旧 App 和本机草稿未删除，也未自动迁移至新标识。
+公开产品工程默认开发团队为空，老师在模拟器运行无需 Apple 账号。真机调试时，在 Xcode 的 Signing & Capabilities 中为 App 选择该机器自己的开发团队；本地验证工程可通过 SHINIAN_DEVELOPMENT_TEAM 指定。之前本机采用 `ziao zhang (Personal Team)` 安装的旧 App 保留。真机 SDK 使用 `com.shinian.ziaozhang.dev.AIMemoirs`，可与原团队签名的旧 App 并存；模拟器仍使用原标识。手机需要信任当前账号的开发证书，首次安装需要重新登录家庭账号；旧 App 和本机草稿未删除，也未自动迁移至新标识。
