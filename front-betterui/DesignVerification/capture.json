@@ -1,0 +1,22 @@
+{
+  "device": "iPhone 17 Pro",
+  "udid": "82915145-6254-4561-9028-8F8F8D636B89",
+  "runtime": "iOS 26.5",
+  "screens": [
+    "01-login",
+    "02-home",
+    "03-home-empty",
+    "04-add-person",
+    "05-select-person",
+    "06-chat",
+    "07-review",
+    "08-memories",
+    "09-story",
+    "10-family",
+    "11-person",
+    "12-memoir",
+    "13-profile",
+    "14-settings",
+    "15-privacy"
+  ]
+}

@@ -1,0 +1,222 @@
+{
+  "7195EDF52E03E940008FCA27": {
+    "isa": "PBXResourcesBuildPhase",
+    "buildActionMask": "2147483647",
+    "files": [],
+    "runOnlyForDeploymentPostprocessing": "0"
+  },
+  "7195EE132E03E940008FCA27": {
+    "isa": "XCBuildConfiguration",
+    "buildSettings": {
+      "DEVELOPMENT_TEAM": "MY5MZ9399Z",
+      "MARKETING_VERSION": "1.0",
+      "TARGETED_DEVICE_FAMILY": "1,2",
+      "TEST_TARGET_NAME": "AIMemoirs",
+      "GENERATE_INFOPLIST_FILE": "YES",
+      "CODE_SIGN_STYLE": "Automatic",
+      "PRODUCT_NAME": "$(TARGET_NAME)",
+      "SWIFT_EMIT_LOC_STRINGS": "NO",
+      "SWIFT_VERSION": "5.0",
+      "PRODUCT_BUNDLE_IDENTIFIER": "com.yourname.AIMemoirsUITests",
+      "PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]": "com.shinian.ziaozhang.dev.AIMemoirsUITests",
+      "CURRENT_PROJECT_VERSION": "1"
+    },
+    "name": "Release"
+  },
+  "7195EDFE2E03E940008FCA27": {
+    "isa": "PBXFrameworksBuildPhase",
+    "buildActionMask": "2147483647",
+    "files": [],
+    "runOnlyForDeploymentPostprocessing": "0"
+  },
+  "7195EE042E03E940008FCA27": {
+    "isa": "PBXFileSystemSynchronizedRootGroup",
+    "path": "../../shinian-validation/tests/ios/AIMemoirsUITests",
+    "sourceTree": "<group>"
+  },
+  "7195EDFF2E03E940008FCA27": {
+    "isa": "PBXResourcesBuildPhase",
+    "buildActionMask": "2147483647",
+    "files": [],
+    "runOnlyForDeploymentPostprocessing": "0"
+  },
+  "7195EDF62E03E940008FCA27": {
+    "dependencies": [
+      "7195EDF92E03E940008FCA27"
+    ],
+    "buildConfigurationList": "7195EE0E2E03E940008FCA27",
+    "productReference": "7195EDF72E03E940008FCA27",
+    "productType": "com.apple.product-type.bundle.unit-test",
+    "packageProductDependencies": [],
+    "productName": "AIMemoirsTests",
+    "isa": "PBXNativeTarget",
+    "fileSystemSynchronizedGroups": [
+      "7195EDFA2E03E940008FCA27"
+    ],
+    "buildPhases": [
+      "7195EDF32E03E940008FCA27",
+      "7195EDF42E03E940008FCA27",
+      "7195EDF52E03E940008FCA27"
+    ],
+    "name": "AIMemoirsTests",
+    "buildRules": []
+  },
+  "7195EE0E2E03E940008FCA27": {
+    "isa": "XCConfigurationList",
+    "defaultConfigurationIsVisible": "0",
+    "defaultConfigurationName": "Release",
+    "buildConfigurations": [
+      "7195EE0F2E03E940008FCA27",
+      "7195EE102E03E940008FCA27"
+    ]
+  },
+  "7195EDFA2E03E940008FCA27": {
+    "isa": "PBXFileSystemSynchronizedRootGroup",
+    "path": "../../shinian-validation/tests/ios/AIMemoirsTests",
+    "sourceTree": "<group>"
+  },
+  "7195EE002E03E940008FCA27": {
+    "dependencies": [
+      "7195EE032E03E940008FCA27"
+    ],
+    "buildConfigurationList": "7195EE112E03E940008FCA27",
+    "productReference": "7195EE012E03E940008FCA27",
+    "productType": "com.apple.product-type.bundle.ui-testing",
+    "packageProductDependencies": [],
+    "productName": "AIMemoirsUITests",
+    "isa": "PBXNativeTarget",
+    "fileSystemSynchronizedGroups": [
+      "7195EE042E03E940008FCA27"
+    ],
+    "buildPhases": [
+      "7195EDFD2E03E940008FCA27",
+      "7195EDFE2E03E940008FCA27",
+      "7195EDFF2E03E940008FCA27"
+    ],
+    "name": "AIMemoirsUITests",
+    "buildRules": []
+  },
+  "7195EDF72E03E940008FCA27": {
+    "path": "AIMemoirsTests.xctest",
+    "isa": "PBXFileReference",
+    "includeInIndex": "0",
+    "explicitFileType": "wrapper.cfbundle",
+    "sourceTree": "BUILT_PRODUCTS_DIR"
+  },
+  "7195EE102E03E940008FCA27": {
+    "isa": "XCBuildConfiguration",
+    "buildSettings": {
+      "CURRENT_PROJECT_VERSION": "1",
+      "BUNDLE_LOADER": "$(TEST_HOST)",
+      "DEVELOPMENT_TEAM": "MY5MZ9399Z",
+      "MARKETING_VERSION": "1.0",
+      "TARGETED_DEVICE_FAMILY": "1,2",
+      "TEST_HOST": "$(BUILT_PRODUCTS_DIR)/AIMemoirs.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/AIMemoirs",
+      "GENERATE_INFOPLIST_FILE": "YES",
+      "CODE_SIGN_STYLE": "Automatic",
+      "PRODUCT_NAME": "$(TARGET_NAME)",
+      "SWIFT_VERSION": "5.0",
+      "SWIFT_EMIT_LOC_STRINGS": "NO",
+      "IPHONEOS_DEPLOYMENT_TARGET": "18.1",
+      "PRODUCT_BUNDLE_IDENTIFIER": "com.yourname.AIMemoirsTests",
+      "PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]": "com.shinian.ziaozhang.dev.AIMemoirsTests"
+    },
+    "name": "Release"
+  },
+  "7195EE0F2E03E940008FCA27": {
+    "isa": "XCBuildConfiguration",
+    "buildSettings": {
+      "CURRENT_PROJECT_VERSION": "1",
+      "BUNDLE_LOADER": "$(TEST_HOST)",
+      "DEVELOPMENT_TEAM": "MY5MZ9399Z",
+      "MARKETING_VERSION": "1.0",
+      "TARGETED_DEVICE_FAMILY": "1,2",
+      "TEST_HOST": "$(BUILT_PRODUCTS_DIR)/AIMemoirs.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/AIMemoirs",
+      "GENERATE_INFOPLIST_FILE": "YES",
+      "CODE_SIGN_STYLE": "Automatic",
+      "PRODUCT_NAME": "$(TARGET_NAME)",
+      "SWIFT_VERSION": "5.0",
+      "SWIFT_EMIT_LOC_STRINGS": "NO",
+      "IPHONEOS_DEPLOYMENT_TARGET": "18.1",
+      "PRODUCT_BUNDLE_IDENTIFIER": "com.yourname.AIMemoirsTests",
+      "PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]": "com.shinian.ziaozhang.dev.AIMemoirsTests"
+    },
+    "name": "Debug"
+  },
+  "7195EE012E03E940008FCA27": {
+    "path": "AIMemoirsUITests.xctest",
+    "isa": "PBXFileReference",
+    "includeInIndex": "0",
+    "explicitFileType": "wrapper.cfbundle",
+    "sourceTree": "BUILT_PRODUCTS_DIR"
+  },
+  "7195EDF82E03E940008FCA27": {
+    "isa": "PBXContainerItemProxy",
+    "containerPortal": "7195EDDA2E03E93E008FCA27",
+    "remoteGlobalIDString": "7195EDE12E03E93E008FCA27",
+    "remoteInfo": "AIMemoirs",
+    "proxyType": "1"
+  },
+  "7195EDF32E03E940008FCA27": {
+    "isa": "PBXSourcesBuildPhase",
+    "buildActionMask": "2147483647",
+    "files": [],
+    "runOnlyForDeploymentPostprocessing": "0"
+  },
+  "7195EE022E03E940008FCA27": {
+    "isa": "PBXContainerItemProxy",
+    "containerPortal": "7195EDDA2E03E93E008FCA27",
+    "remoteGlobalIDString": "7195EDE12E03E93E008FCA27",
+    "remoteInfo": "AIMemoirs",
+    "proxyType": "1"
+  },
+  "7195EE112E03E940008FCA27": {
+    "isa": "XCConfigurationList",
+    "defaultConfigurationIsVisible": "0",
+    "defaultConfigurationName": "Release",
+    "buildConfigurations": [
+      "7195EE122E03E940008FCA27",
+      "7195EE132E03E940008FCA27"
+    ]
+  },
+  "7195EDF92E03E940008FCA27": {
+    "isa": "PBXTargetDependency",
+    "target": "7195EDE12E03E93E008FCA27",
+    "targetProxy": "7195EDF82E03E940008FCA27"
+  },
+  "7195EE122E03E940008FCA27": {
+    "isa": "XCBuildConfiguration",
+    "buildSettings": {
+      "DEVELOPMENT_TEAM": "MY5MZ9399Z",
+      "MARKETING_VERSION": "1.0",
+      "TARGETED_DEVICE_FAMILY": "1,2",
+      "TEST_TARGET_NAME": "AIMemoirs",
+      "GENERATE_INFOPLIST_FILE": "YES",
+      "CODE_SIGN_STYLE": "Automatic",
+      "PRODUCT_NAME": "$(TARGET_NAME)",
+      "SWIFT_EMIT_LOC_STRINGS": "NO",
+      "SWIFT_VERSION": "5.0",
+      "PRODUCT_BUNDLE_IDENTIFIER": "com.yourname.AIMemoirsUITests",
+      "PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]": "com.shinian.ziaozhang.dev.AIMemoirsUITests",
+      "CURRENT_PROJECT_VERSION": "1"
+    },
+    "name": "Debug"
+  },
+  "7195EDFD2E03E940008FCA27": {
+    "isa": "PBXSourcesBuildPhase",
+    "buildActionMask": "2147483647",
+    "files": [],
+    "runOnlyForDeploymentPostprocessing": "0"
+  },
+  "7195EDF42E03E940008FCA27": {
+    "isa": "PBXFrameworksBuildPhase",
+    "buildActionMask": "2147483647",
+    "files": [],
+    "runOnlyForDeploymentPostprocessing": "0"
+  },
+  "7195EE032E03E940008FCA27": {
+    "isa": "PBXTargetDependency",
+    "target": "7195EDE12E03E93E008FCA27",
+    "targetProxy": "7195EE022E03E940008FCA27"
+  }
+}
