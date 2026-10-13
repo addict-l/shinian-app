@@ -93,6 +93,8 @@ def validate_information(value: StoryInformation, messages, previous=None, compa
     dimensions += [(f'conflicts.{conflict.dimension}.alternatives[{index}]', item)
                    for conflict in value.conflicts for index, item in enumerate(conflict.alternatives)]
     for key, item in dimensions:
+        if item.user_edited:
+            raise LLMResponseFormatError('AI analysis cannot claim a user metadata edit')
         if item.status == InformationStatus.missing:
             continue
         if not item.source_message_ids or any(key not in texts for key in item.source_message_ids):

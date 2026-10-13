@@ -636,6 +636,59 @@
         }
       }
     },
+    "/api/v1/memories/{memory_id}/time-preview": {
+      "post": {
+        "tags": [
+          "memories"
+        ],
+        "summary": "Memory Time Preview",
+        "operationId": "memory_time_preview_api_v1_memories__memory_id__time_preview_post",
+        "parameters": [
+          {
+            "name": "memory_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Memory Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemoryTimePreviewRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimePreview"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/chat/sessions/{session_id}/state": {
       "get": {
         "tags": [
@@ -1510,6 +1563,59 @@
         }
       }
     },
+    "/api/v1/memory-drafts/{draft_id}/time-preview": {
+      "post": {
+        "tags": [
+          "workflow"
+        ],
+        "summary": "Draft Time Preview",
+        "operationId": "draft_time_preview_api_v1_memory_drafts__draft_id__time_preview_post",
+        "parameters": [
+          {
+            "name": "draft_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Draft Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DraftTimePreviewRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimePreview"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/families/{family_id}/members/{person_id}/memoir": {
       "get": {
         "tags": [
@@ -2175,6 +2281,16 @@
             "type": "boolean",
             "title": "Manually Edited",
             "default": false
+          },
+          "time_review_from": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/InformationDimension"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "type": "object",
@@ -2185,6 +2301,40 @@
           "memory"
         ],
         "title": "DraftResponse"
+      },
+      "DraftTimePreviewRequest": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 200,
+            "title": "Title"
+          },
+          "summary": {
+            "type": "string",
+            "maxLength": 100000,
+            "title": "Summary"
+          },
+          "old_time": {
+            "$ref": "#/components/schemas/InformationDimension"
+          },
+          "new_time": {
+            "$ref": "#/components/schemas/InformationDimension"
+          },
+          "revision": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Revision"
+          }
+        },
+        "type": "object",
+        "required": [
+          "title",
+          "summary",
+          "old_time",
+          "new_time",
+          "revision"
+        ],
+        "title": "DraftTimePreviewRequest"
       },
       "DraftUpdate": {
         "properties": {
@@ -2204,6 +2354,16 @@
             "maxLength": 100000,
             "minLength": 1,
             "title": "Summary"
+          },
+          "time": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/InformationDimension"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "type": "object",
@@ -2561,6 +2721,11 @@
             },
             "type": "array",
             "title": "Source Message Ids"
+          },
+          "user_edited": {
+            "type": "boolean",
+            "title": "User Edited",
+            "default": false
           }
         },
         "type": "object",
@@ -3049,6 +3214,46 @@
         ],
         "title": "MemoryDeletion"
       },
+      "MemoryTimePreviewRequest": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 200,
+            "title": "Title"
+          },
+          "summary": {
+            "type": "string",
+            "maxLength": 100000,
+            "title": "Summary"
+          },
+          "old_time": {
+            "$ref": "#/components/schemas/InformationDimension"
+          },
+          "new_time": {
+            "$ref": "#/components/schemas/InformationDimension"
+          },
+          "family_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Family Id"
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Version"
+          }
+        },
+        "type": "object",
+        "required": [
+          "title",
+          "summary",
+          "old_time",
+          "new_time",
+          "family_id",
+          "version"
+        ],
+        "title": "MemoryTimePreviewRequest"
+      },
       "MemoryUpdate": {
         "properties": {
           "family_id": {
@@ -3154,7 +3359,7 @@
             "maxLength": 12000,
             "minLength": 1,
             "title": "Quote",
-            "description": "逐字复制提供的 content 中连续片段；不改人称，不拼接，不改标点"
+            "description": "逐字复制用户连续原文，不拼接或改写"
           }
         },
         "additionalProperties": false,
@@ -3192,6 +3397,14 @@
             "type": "array",
             "maxItems": 6,
             "title": "Conflicts"
+          },
+          "narrative_sources": {
+            "items": {
+              "$ref": "#/components/schemas/SourceQuote"
+            },
+            "type": "array",
+            "maxItems": 60,
+            "title": "Narrative Sources"
           },
           "conversation": {
             "$ref": "#/components/schemas/ConversationProgress"
@@ -3249,6 +3462,95 @@
         },
         "type": "object",
         "title": "StoryReadiness"
+      },
+      "TimePreview": {
+        "properties": {
+          "snapshot": {
+            "type": "string",
+            "title": "Snapshot"
+          },
+          "suggestions": {
+            "items": {
+              "$ref": "#/components/schemas/TimeSuggestion"
+            },
+            "type": "array",
+            "title": "Suggestions"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          }
+        },
+        "type": "object",
+        "required": [
+          "snapshot",
+          "suggestions",
+          "message"
+        ],
+        "title": "TimePreview"
+      },
+      "TimeSuggestion": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "field": {
+            "type": "string",
+            "enum": [
+              "title",
+              "summary"
+            ],
+            "title": "Field"
+          },
+          "start": {
+            "type": "integer",
+            "title": "Start"
+          },
+          "length": {
+            "type": "integer",
+            "title": "Length"
+          },
+          "before": {
+            "type": "string",
+            "title": "Before"
+          },
+          "after": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "After"
+          },
+          "context": {
+            "type": "string",
+            "title": "Context"
+          },
+          "ambiguous": {
+            "type": "boolean",
+            "title": "Ambiguous"
+          },
+          "reason": {
+            "type": "string",
+            "title": "Reason"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "field",
+          "start",
+          "length",
+          "before",
+          "context",
+          "ambiguous",
+          "reason"
+        ],
+        "title": "TimeSuggestion"
       },
       "ValidationError": {
         "properties": {

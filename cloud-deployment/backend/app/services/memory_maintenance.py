@@ -77,15 +77,18 @@ def update(memory_id, body):
                 previous = getattr(info, name)
                 if (previous.status, previous.value) != (incoming.status, incoming.value):
                     incoming.source_message_ids = []  # User edit is not an original-chat quotation.
+                    incoming.user_edited = True
                 else:
                     incoming.source_message_ids = previous.source_message_ids
+                    incoming.user_edited = previous.user_edited
                 setattr(info, name, incoming)
             info.conflicts = [item for item in info.conflicts if item.dimension not in ('time', 'place', 'feeling')]
             if body.memory_date is not None and (info.time.status != InformationStatus.known or info.time.value != body.memory_date.isoformat()):
                 raise HTTPException(422, '精确日期需与已确定的时间一致')
             model.title, model.summary = title, summary
             model.information = info.model_dump(mode='json')
-            model.memory_date = body.memory_date
+            from app.services.time_linkage import time_date
+            model.memory_date = time_date(info)
             model.location = info.place.value if info.place.status in (InformationStatus.known, InformationStatus.approximate) else None
             model.version += 1
             model.updated_at = datetime.now(timezone.utc)
@@ -161,3 +164,12 @@ def discard_photo(memory_id, family_id, media_id):
                     raise HTTPException(409, '只能丢弃这次编辑中新上传的照片')
                 queue(db, asset, family_id)
     drain_cleanup()
+
+
+def preview_time(memory_id, body):
+    with serialized('memory:' + str(memory_id)), SessionLocal() as db:
+        model = owned(db, memory_id, body.family_id)
+        if model.version != body.version:
+            raise HTTPException(409, '回忆已更新，请读取最新版本；本机修改仍保留')
+        from app.services.time_linkage import preview
+        return preview(body)

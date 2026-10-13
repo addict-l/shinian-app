@@ -17,6 +17,7 @@ struct GeneratedMemory {
     let memory: MemoryEvent
     let preview: EventData
     var manuallyEdited = false
+    var timeReviewFrom: InformationDimension? = nil
 }
 @MainActor protocol FamilyAPI {
     func members() async throws -> [FamilyMember]
@@ -58,6 +59,9 @@ extension ChatAPI {
     func loadPhoto(_ attachment: ChatAttachment) async throws -> Data
     func getDraft(id: UUID) async throws -> GeneratedMemory
     func editDraft(_ draft: GeneratedMemory, title: String, content: String) async throws -> GeneratedMemory
+    func editDraft(_ draft: GeneratedMemory, title: String, content: String, time: InformationDimension) async throws -> GeneratedMemory
+    func previewDraftTime(_ draft: GeneratedMemory, input: TimePreviewInput) async throws -> TimePreview
+    func previewMemoryTime(_ memory: MemoryEvent, input: TimePreviewInput) async throws -> TimePreview
     func regenerateDraft(_ draft: GeneratedMemory) async throws -> GeneratedMemory
 }
 extension MemoryAPI {
@@ -69,6 +73,9 @@ extension MemoryAPI {
     func loadPhoto(_ attachment: ChatAttachment) async throws -> Data { throw APIError.contractUnavailable }
     func getDraft(id: UUID) async throws -> GeneratedMemory { throw APIError.contractUnavailable }
     func editDraft(_ draft: GeneratedMemory, title: String, content: String) async throws -> GeneratedMemory { throw APIError.contractUnavailable }
+    func editDraft(_ draft: GeneratedMemory, title: String, content: String, time: InformationDimension) async throws -> GeneratedMemory { throw APIError.contractUnavailable }
+    func previewDraftTime(_ draft: GeneratedMemory, input: TimePreviewInput) async throws -> TimePreview { throw APIError.contractUnavailable }
+    func previewMemoryTime(_ memory: MemoryEvent, input: TimePreviewInput) async throws -> TimePreview { throw APIError.contractUnavailable }
     func regenerateDraft(_ draft: GeneratedMemory) async throws -> GeneratedMemory { throw APIError.contractUnavailable }
 }
 struct MemoryEdit: Equatable {

@@ -7,6 +7,8 @@ struct JournalMemoryEditorView: View {
     let onCancel: () -> Void
     let onSaved: (MemoryEvent) -> Void
     @State private var items: [PhotosPickerItem] = []
+    @State private var timeAnchor: InformationDimension
+    @State private var timeInput: TimePreviewInput?
     @State private var reading = false
     @State private var discard = false
     @State private var resolve = false
@@ -14,13 +16,23 @@ struct JournalMemoryEditorView: View {
     init(memory: MemoryEvent, api: any MemoryAPI, onCancel: @escaping () -> Void, onSaved: @escaping (MemoryEvent) -> Void) {
         self.api = api; self.onCancel = onCancel; self.onSaved = onSaved
         _model = StateObject(wrappedValue: MemoryEditorModel(memory: memory, api: api))
+        _timeAnchor = State(initialValue: MemoryEdit(memory).time)
     }
     var body: some View {
         NavigationStack {
             Form {
                 Section("标题") { TextField("回忆标题", text: $model.edit.title).focused($focused, equals: "title").accessibilityIdentifier("memory.editTitle") }
                 Section("正文") { TextEditor(text: $model.edit.content).focused($focused, equals: "body").frame(minHeight: 220).accessibilityIdentifier("memory.editBody") }
-                dimension("时间", value: $model.edit.time, id: "time")
+                Section("时间") {
+                    TimeDimensionEditor(value: $model.edit.time, identifier: "memory.edit.time")
+                    Button {
+                        focused = nil
+                        timeInput = TimePreviewInput(title: model.edit.title, content: model.edit.content, oldTime: timeAnchor, newTime: model.edit.time)
+                    } label: { Label("核对标题与正文中的时间", systemImage: "text.badge.checkmark").frame(minHeight: 44) }
+                        .disabled(!model.edit.isValid || model.latest != nil).accessibilityIdentifier("memory.timePreview")
+                    Text("逐项核对后选择要更新的文字，保存修改后才会写入回忆。")
+                        .font(.footnote).foregroundStyle(JournalTheme.ink2)
+                }
                 dimension("地点", value: $model.edit.place, id: "place")
                 dimension("感受", value: $model.edit.feeling, id: "feeling")
                 Section("照片") {
@@ -42,7 +54,7 @@ struct JournalMemoryEditorView: View {
                     PhotosPicker(selection: $items, maxSelectionCount: 9, selectionBehavior: .ordered, matching: .images) {
                         Label("添加照片", systemImage: "plus").frame(minHeight: 44)
                     }.accessibilityIdentifier("memory.addPhotos")
-                    Text("照片和文字会在保存修改后一起更新。原始聊天中的照片会保留，整段删除时一并清除。").font(.footnote).foregroundStyle(JournalTheme.muted)
+                    Text("照片和文字会在保存修改后一起更新。原始聊天中的照片会保留，整段删除时一并清除。").font(.footnote).foregroundStyle(JournalTheme.ink2)
                 }
                 if let error = model.error {
                     Section { Text(error).foregroundStyle(.red); Button("读取最新版本（保留本机修改）") { Task { await model.readLatest() } } }
@@ -77,6 +89,13 @@ struct JournalMemoryEditorView: View {
                     }
                 } message: { Text("请确认已核对其他设备的修改。若再次发生版本变化，仍会保留本机内容并提示核对。") }
         }.interactiveDismissDisabled(model.changed || model.busy || reading)
+            .sheet(item: $timeInput) { input in
+                    TimeLinkageSheet(input: input, load: { try await api.previewMemoryTime(model.base, input: input) }, apply: { captured, preview, selected in
+                        guard model.edit.title == captured.title, model.edit.content == captured.content, model.edit.time == captured.newTime else { throw APIError.server("编辑内容已变化，请重新核对时间。") }
+                        let result = try preview.applying(selected, to: captured)
+                        model.edit.title = result.0; model.edit.content = result.1; timeAnchor = model.edit.time
+                    })
+            }
             .onChange(of: items) { _, values in
                 guard !values.isEmpty else { return }; reading = true
                 Task {

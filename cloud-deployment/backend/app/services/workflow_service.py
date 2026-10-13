@@ -155,11 +155,15 @@ class WorkflowService:
 
     @staticmethod
     def _source_digest(raw, information):
-        excluded = {'conversation'}
+        # Edit provenance is not chat evidence. Exclude it recursively so drafts
+        # created before B03 retain the same source hash after the schema upgrade.
+        excluded = {name: {'user_edited'} for name in ('people', 'event', 'time', 'place', 'feeling', 'detail')}
+        excluded['conversation'] = True
+        excluded['conflicts'] = {'__all__': {'alternatives': {'__all__': {'user_edited'}}}}
         # Existing drafts did not include the new optional narrative field.
         # Keep their hash stable until verified narrative evidence is added.
         if not information.narrative_sources:
-            excluded.add('narrative_sources')
+            excluded['narrative_sources'] = True
         return hashlib.sha256((raw + '\n' + information.model_dump_json(exclude=excluded)).encode()).hexdigest()
 
     def start(self, session_id):
@@ -274,7 +278,8 @@ class WorkflowService:
     def _draft_response(model):
         return DraftResponse(id=model.id, session_id=model.session_id, revision=model.revision,
                              memory=MemoryCreate.model_validate(model.payload), saved_memory_id=model.saved_memory_id,
-                             evidence=model.payload.get('_evidence'), manually_edited=model.payload.get('_manually_edited', False))
+                             evidence=model.payload.get('_evidence'), manually_edited=model.payload.get('_manually_edited', False),
+                             time_review_from=model.payload.get('_time_review_from'))
 
     def generate(self, session_id, expected_revision=None, replace_confirmed=False):
         with serialized(session_id):
@@ -304,6 +309,7 @@ class WorkflowService:
                     raise HTTPException(409, '草稿包含手动修改，请确认后再重新生成')
                 if session.status == 'completed':
                     raise HTTPException(409, '这段回忆已保存')
+            time_override = old.payload.get('_time_override') if old else None
             evidence = draft_evidence(session.information, messages)
             composition = validate_draft(self.memories._get_llm_client().compose_story(
                 evidence, self._record_subject(session), session.information), evidence, self._record_subject(session), session.information)
@@ -319,6 +325,15 @@ class WorkflowService:
                                    memory_date=exact_date(session.information),
                                    location=session.information.place.value if session.information.place.status in
                                        (InformationStatus.known, InformationStatus.approximate) else None)
+            if time_override is not None:
+                # Composition is still grounded in unchanged chat quotes. The correction
+                # is metadata and the newly composed text is presented for another review.
+                from app.schemas.story_information import InformationDimension
+                payload.information = payload.information.model_copy(deep=True)
+                payload.information.time = InformationDimension.model_validate(time_override)
+                payload.information.conflicts = [c for c in payload.information.conflicts if c.dimension != 'time']
+                from app.services.time_linkage import time_date
+                payload.memory_date = time_date(payload.information)
             self.memories._validate_create(payload)
             with SessionLocal.begin() as db:
                 draft = db.scalar(select(MemoryDraftModel).where(MemoryDraftModel.session_id == str(session_id)))
@@ -328,6 +343,9 @@ class WorkflowService:
                 draft.revision = str(uuid4())
                 draft.source_hash = digest
                 draft.payload = {**payload.model_dump(mode='json'), '_evidence': composition.model_dump(mode='json')}
+                if time_override is not None:
+                    draft.payload.update(_time_override=time_override,
+                        _time_review_from=session.information.time.model_dump(mode='json'))
                 db.flush()
                 result = self._draft_response(draft)
             return result
@@ -428,11 +446,35 @@ class WorkflowService:
                 title, summary = body.title.strip(), body.summary.strip()
                 if not title or not summary:
                     raise HTTPException(422, '标题和正文不能为空')
-                draft.payload = {**draft.payload, 'title': title, 'summary': summary, '_manually_edited': True,
+                from app.services.time_linkage import edited_time, time_date
+                info = StoryInformation.model_validate(draft.payload.get('information') or {})
+                override = draft.payload.get('_time_override')
+                if body.time is not None:
+                    info.time = edited_time(info.time, body.time)
+                    info.conflicts = [c for c in info.conflicts if c.dimension != 'time']
+                    if info.time.user_edited:
+                        override = info.time.model_dump(mode='json')
+                draft.payload = {**draft.payload, 'information': info.model_dump(mode='json'),
+                    'memory_date': time_date(info).isoformat() if time_date(info) else None,
+                    '_time_override': override, '_time_review_from': None, 'title': title, 'summary': summary, '_manually_edited': True,
                     '_original_evidence': draft.payload.get('_original_evidence') or draft.payload.get('_evidence'), '_evidence': None}
                 draft.revision = str(uuid4())
                 db.flush()
                 return self._draft_response(draft)
+
+    def preview_time(self, draft_id, body):
+        current = self.get_draft(draft_id)
+        with serialized(current.session_id):
+            current = self.get_draft(draft_id)
+            session = self.chat.get_session(current.session_id)
+            if current.revision != body.revision or current.saved_memory_id or session.status == 'completed':
+                raise HTTPException(409, '草稿已更新或保存，请读取最新版本；本机修改仍保留')
+            with SessionLocal() as db:
+                draft = db.get(MemoryDraftModel, str(draft_id))
+                if draft.source_hash != self._source_digest(self.memories._build_raw_content(current.session_id), session.information):
+                    raise HTTPException(409, '对话已有新内容，请先核对草稿；本机修改仍保留')
+            from app.services.time_linkage import preview
+            return preview(body)
 
     def regenerate_draft(self, draft_id, body):
         current = self.get_draft(draft_id)

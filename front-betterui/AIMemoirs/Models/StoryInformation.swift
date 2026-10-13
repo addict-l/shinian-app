@@ -8,6 +8,7 @@ struct InformationDimension: Codable, Equatable {
     var status: InformationStatus = .missing
     var value: String? = nil
     var source_message_ids: [UUID] = []
+    var user_edited: Bool? = nil
 }
 
 struct StoryInformation: Codable, Equatable {

@@ -41,7 +41,7 @@ struct JournalDraftPreviewView: View {
             .alert("重新生成草稿？", isPresented: $confirmRegeneration) {
                 Button("保留当前草稿", role: .cancel) {}
                 Button("确认重新生成", role: .destructive) { Task { await regenerate() } }
-            } message: { Text("AI 将根据当前讲述重新整理，并替换草稿的标题和正文。手动修改也会被替换。") }
+            } message: { Text("AI 将根据当前讲述重新整理，并替换草稿的标题和正文。手改标题和正文也会被替换；已确认的手改时间会保留，新文字将再次提示校对。") }
             .alert("草稿已在其他设备更新", isPresented: Binding(get: { regenerateLatest != nil }, set: { if !$0 { regenerateLatest = nil } })) {
                 Button("保留当前预览", role: .cancel) { regenerateLatest = nil }
                 Button("读取最新草稿") {
@@ -59,7 +59,10 @@ struct JournalDraftPreviewView: View {
         guard !regenerating else { return }
         regenerating = true; saveModel.isSaving = true; saveModel.errorMessage = nil
         defer { regenerating = false; saveModel.isSaving = false }
-        do { draft = try await api.regenerateDraft(draft) }
+        do {
+            draft = try await api.regenerateDraft(draft)
+            if draft.timeReviewFrom != nil { showingEdit = true }
+        }
         catch {
             saveModel.errorMessage = error.localizedDescription
             if isVersionConflict(error) { regenerateLatest = try? await api.getDraft(id: draft.draftID) }

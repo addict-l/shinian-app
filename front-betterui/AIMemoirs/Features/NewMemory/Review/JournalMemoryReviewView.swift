@@ -26,7 +26,7 @@ struct JournalMemoryReviewView: View {
             JournalNavBar(title: "回忆预览") {
                 JournalRoundButton(icon: "back", label: "返回对话", action: onBack).disabled(saveModel.isSaving)
             } trailing: {
-                Menu { Button("编辑标题和正文", action: onEdit); Button("重新生成草稿", action: onRegenerate) } label: {
+                Menu { Button("编辑文字与时间", action: onEdit); Button("重新生成草稿", action: onRegenerate) } label: {
                     DesignIcon("more").foregroundStyle(JournalTheme.ink)
                         .frame(width: 40, height: 40).background(JournalTheme.surface, in: Circle())
                         .shadow(color: JournalTheme.shadow.opacity(0.08), radius: 7, x: 0, y: 4)
@@ -38,7 +38,7 @@ struct JournalMemoryReviewView: View {
                 VStack(spacing: 0) {
                     letter
                     HStack(spacing: 10) {
-                        action("编辑标题和正文", icon: "edit", perform: onEdit)
+                        action("编辑文字与时间", icon: "edit", perform: onEdit)
                         action("重新生成草稿", icon: "refresh", perform: onRegenerate)
                         action("返回对话", icon: "chat", perform: onBack)
                     }.padding(.top, 16).disabled(saveModel.isSaving)

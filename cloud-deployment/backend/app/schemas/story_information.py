@@ -24,6 +24,8 @@ class InformationDimension(BaseModel):
     value: str | None = Field(default=None, max_length=2000)
     source_message_ids: list[UUID] = Field(default_factory=list)
 
+    user_edited: bool = False
+
     @model_validator(mode='after')
     def coherent(self):
         if self.status == InformationStatus.missing:

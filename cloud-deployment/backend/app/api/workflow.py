@@ -68,3 +68,10 @@ def edit_draft(draft_id: UUID, body: DraftUpdate):
 @router.post('/memory-drafts/{draft_id}/regenerate', response_model=DraftResponse)
 def regenerate_draft(draft_id: UUID, body: DraftRegeneration):
     return workflow.regenerate_draft(draft_id, body)
+
+
+from app.schemas.time_linkage import DraftTimePreviewRequest, TimePreview
+
+@router.post('/memory-drafts/{draft_id}/time-preview', response_model=TimePreview)
+def draft_time_preview(draft_id: UUID, body: DraftTimePreviewRequest):
+    return workflow.preview_time(draft_id, body)

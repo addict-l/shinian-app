@@ -41,7 +41,7 @@ private struct MemoryDTO: Decodable {
     var version: Int?
     var information: StoryInformation?
 }
-private struct DraftDTO: Decodable { let id: UUID; let revision: UUID; let memory: MemoryDTO; var manually_edited: Bool? }
+private struct DraftDTO: Decodable { let id: UUID; let revision: UUID; let memory: MemoryDTO; var manually_edited: Bool?; var time_review_from: InformationDimension? }
 
 enum APIDate {
     static func day(_ value: Date) -> String {
@@ -165,7 +165,7 @@ enum APIDate {
             preview: EventData(person: value.personName, date: value.dateLabel, title: value.title,
                                content: value.content, location: draft.memory.information?.place.value ?? draft.memory.location ?? "待补充",
                                participants: draft.memory.person_ids.compactMap { id in knownMembers.first { $0.id == id }?.name },
-                               emotion: draft.memory.information?.feeling.value ?? "待补充"), manuallyEdited: draft.manually_edited ?? false)
+                               emotion: draft.memory.information?.feeling.value ?? "待补充"), manuallyEdited: draft.manually_edited ?? false, timeReviewFrom: draft.time_review_from)
     }
     func upload(sessionID: UUID, image: Data?, requestID: UUID) async throws {
         guard let image else {
@@ -258,6 +258,19 @@ enum APIDate {
     func editDraft(_ draft: GeneratedMemory, title: String, content: String) async throws -> GeneratedMemory {
         try generated(await client.send(path: "api/v1/memory-drafts/\(draft.draftID)", method: "PATCH",
             body: json(["revision": draft.revision.uuidString, "title": title, "summary": content]), as: DraftDTO.self))
+    }
+    func editDraft(_ draft: GeneratedMemory, title: String, content: String, time: InformationDimension) async throws -> GeneratedMemory {
+        let dimension = try JSONSerialization.jsonObject(with: JSONEncoder().encode(time))
+        return try generated(await client.send(path: "api/v1/memory-drafts/\(draft.draftID)", method: "PATCH",
+            body: json(["revision": draft.revision.uuidString, "title": title, "summary": content, "time": dimension]), as: DraftDTO.self))
+    }
+    func previewDraftTime(_ draft: GeneratedMemory, input: TimePreviewInput) async throws -> TimePreview {
+        var fields = try input.fields(); fields["revision"] = draft.revision.uuidString
+        return try await client.send(path: "api/v1/memory-drafts/\(draft.draftID)/time-preview", method: "POST", body: json(fields), as: TimePreview.self)
+    }
+    func previewMemoryTime(_ memory: MemoryEvent, input: TimePreviewInput) async throws -> TimePreview {
+        var fields = try input.fields(); fields["family_id"] = try await bootstrap().uuidString; fields["version"] = memory.version
+        return try await client.send(path: "api/v1/memories/\(memory.id)/time-preview", method: "POST", body: json(fields), as: TimePreview.self)
     }
     func regenerateDraft(_ draft: GeneratedMemory) async throws -> GeneratedMemory {
         try generated(await client.send(path: "api/v1/memory-drafts/\(draft.draftID)/regenerate", method: "POST",

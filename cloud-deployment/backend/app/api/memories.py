@@ -94,3 +94,10 @@ def upload_memory_photo(memory_id: UUID, family_id: UUID, client_request_id: UUI
 def discard_memory_photo(memory_id: UUID, media_id: UUID, family_id: UUID):
     memory_maintenance.discard_photo(memory_id, family_id, media_id)
     return Response(status_code=204)
+
+
+from app.schemas.time_linkage import MemoryTimePreviewRequest, TimePreview
+
+@router.post('/{memory_id}/time-preview', response_model=TimePreview)
+def memory_time_preview(memory_id: UUID, body: MemoryTimePreviewRequest):
+    return memory_maintenance.preview_time(memory_id, body)

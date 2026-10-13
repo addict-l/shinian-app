@@ -36,6 +36,7 @@ struct FamilyFilmTimeline {
         lanes.map(\.person).filter { moment.memory.personIDs.contains($0.id) }
     }
     static func year(for memory: MemoryEvent, calendar: Calendar = .current) -> Int? {
+        if [.unknown, .withheld].contains(memory.information.time.status) { return nil }
         if let date = memory.date { return calendar.component(.year, from: date) }
         // Accept a stated year/season, but not an ambiguous range or arbitrary prose.
         guard let label = memory.dateDescription?.trimmingCharacters(in: .whitespacesAndNewlines),
