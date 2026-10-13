@@ -117,7 +117,8 @@ class WorkflowService:
         person = self.chat.family_member_service.get_family_member(session.primary_person_id)
         return {'name': person.name, 'relationship': person.relationship}
 
-    def _analyze(self, session, messages):
+    @staticmethod
+    def _analysis_transcript(messages):
         question = ''
         transcript = []
         texts = user_texts(messages)
@@ -126,6 +127,11 @@ class WorkflowService:
                 question = message.content
             elif message.id in texts:
                 transcript.append({'id': str(message.id), 'content': message.content, 'question': question})
+        return transcript
+
+    def _analyze(self, session, messages):
+        transcript = self._analysis_transcript(messages)
+        texts = user_texts(messages)
         analysis = self.chat._get_llm_client().analyze_story(
             transcript, self._record_subject(session), session.information)
         validate_analysis(analysis, [m for m in messages if m.id in texts], session.information)
@@ -149,7 +155,12 @@ class WorkflowService:
 
     @staticmethod
     def _source_digest(raw, information):
-        return hashlib.sha256((raw + '\n' + information.model_dump_json(exclude={'conversation'})).encode()).hexdigest()
+        excluded = {'conversation'}
+        # Existing drafts did not include the new optional narrative field.
+        # Keep their hash stable until verified narrative evidence is added.
+        if not information.narrative_sources:
+            excluded.add('narrative_sources')
+        return hashlib.sha256((raw + '\n' + information.model_dump_json(exclude=excluded)).encode()).hexdigest()
 
     def start(self, session_id):
         session = self.chat.get_session(session_id)
@@ -217,8 +228,6 @@ class WorkflowService:
             if latest_user is None or latest_user.id != request_id:
                 raise HTTPException(409, '这条讲述后已有新内容，请以当前对话为准。')
             # A failed model call leaves the durable user message and the prior evidence intact.
-            information, result, analysis = self._analyze(session, messages)
-            explicit_request = getattr(analysis, 'generation_request', None) is not None
             history = conversation_history(messages)
             if session.primary_person_id is not None:
                 current_ids = {message.id for message in messages}
@@ -230,9 +239,21 @@ class WorkflowService:
                     history = conversation_history(earlier) + [{'id': 'current-story-boundary', 'role': 'system',
                         'content': '以上是同一人物较早的聊天，仅供自然承接；以下才是当前尚未保存的回忆。'
                                    '不得把较早故事混入当前草稿，也不要再次邀请整理已保存的故事。'}] + history
-            policy = reply_policy(information, result, history, explicit_request)
-            reply = self.chat._get_llm_client().converse(history, self._record_subject(session), information, result,
-                getattr(analysis, 'guidance_hint', ''), explicit_request)
+            llm = self.chat._get_llm_client()
+            combined = getattr(llm, 'interview_turn', None)
+            turn = combined(self._analysis_transcript(messages), messages, history,
+                            self._record_subject(session), session.information,
+                            session.primary_person_id) if combined else None
+            if turn is None:
+                information, result, analysis = self._analyze(session, messages)
+                explicit_request = getattr(analysis, 'generation_request', None) is not None
+                reply = llm.converse(history, self._record_subject(session), information, result,
+                                     getattr(analysis, 'guidance_hint', ''), explicit_request,
+                                     **({'event_boundary':analysis.event_boundary} if getattr(analysis,'event_boundary',None) else {}))
+            else:
+                analysis, information, result, reply = turn
+                explicit_request = analysis.generation_request is not None
+            policy = reply_policy(information, result, history, explicit_request, getattr(analysis,'event_boundary',None))
             validate_reply(reply, history, policy)
             progress = information.conversation
             progress.replied_user_message_id = request_id

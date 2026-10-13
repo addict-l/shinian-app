@@ -1,10 +1,10 @@
 """Resolve model-selected evidence against original text; never paraphrase quotes."""
-from typing import Literal
+from typing import Annotated, Literal
 from uuid import UUID
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 from app.ai.llm_client import LLMResponseFormatError
 from app.schemas.story_information import InformationStatus, InformationDimension, InformationConflict
-from app.schemas.story_guidance import StoryAnalysis, SourceQuote, GroundedDraft, GroundedPassage, GroundedTitle
+from app.schemas.story_guidance import StoryAnalysis, SourceQuote, GroundedDraft, GroundedPassage, GroundedTitle, EventBoundary
 
 
 def source_fragments(text):
@@ -62,6 +62,13 @@ class SelectedConflict(BaseModel):
     alternatives: list[SelectedDimension] = Field(min_length=2, max_length=4)
 
 
+class SelectedBoundary(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    kind: Literal['independent', 'return']
+    previous_event: SourceRange
+    current_event: SourceRange
+
+
 class SelectedAnalysis(BaseModel):
     model_config = ConfigDict(extra='forbid')
     people: SelectedDimension = Field(default_factory=SelectedDimension)
@@ -77,6 +84,10 @@ class SelectedAnalysis(BaseModel):
         description='同一地点的兼容说法或补充细节：选择所有相关用户原文；互斥或无法确认兼容则为空')
     guidance_hint: str = Field(default='', max_length=800)
     generation_request: SourceRange | None = Field(default=None, description='仅最新用户明确要求整理、生成、保存或更新草稿时选择请求原文；否定、保存照片和往事中的保存不算')
+    narrative_sources: list[SourceRange] = Field(default_factory=list, max_length=60,
+        description='完整讲述经过的连续原文范围，保留六项摘要以外的关键动作和转折，不含整理指令')
+    event_boundary: SelectedBoundary | None = None
+    latest_has_narrative: bool = Field(default=False, strict=True)
 
 
 def resolve_analysis(selected, texts):
@@ -97,18 +108,27 @@ def resolve_analysis(selected, texts):
             # Invalid optional intent cannot enable an offer or interrupt
             # narration; every story dimension still requires valid evidence.
             pass
+    boundary = selected.event_boundary
+    narration = [resolve_range(source, texts) for source in selected.narrative_sources]
+    if selected.latest_has_narrative and texts:
+        latest_id = next(reversed(texts))
+        narration.append(SourceQuote(message_id=latest_id,quote=texts[latest_id]))
     return StoryAnalysis(**values, conflicts=[InformationConflict(dimension=c.dimension,
         alternatives=[dimension(item, f'conflicts.{c.dimension}') for item in c.alternatives]) for c in selected.conflicts],
         guidance_hint=selected.guidance_hint,
         compatible_times=[resolve_range(source, texts) for source in selected.compatible_times],
         compatible_places=[resolve_range(source, texts) for source in selected.compatible_places],
+        narrative_sources=narration,
+        event_boundary=EventBoundary(kind=boundary.kind,
+            previous_event=resolve_range(boundary.previous_event,texts),
+            current_event=resolve_range(boundary.current_event,texts)) if boundary else None,
         generation_request=request)
 
 
 class SelectedPassage(BaseModel):
     model_config = ConfigDict(extra='forbid', str_strip_whitespace=True)
     text: str = Field(min_length=1, max_length=12000)
-    source_indices: list[int] = Field(min_length=1, max_length=30, description='选择 accepted_user_excerpts 的 index，引用能支持整段事实的原文，不能编造索引')
+    source_indices: list[Annotated[int, Field(strict=True)]] = Field(min_length=1, max_length=30, description='选择 accepted_user_excerpts 的 index，引用能支持整段事实的原文，不能编造索引')
 
 
 class SelectedTitle(SelectedPassage):

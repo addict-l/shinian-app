@@ -1,5 +1,15 @@
 # 第一阶段云端部署记录
 
+## B01/B02 DeepSeek Flash 部署（2026-10-13）
+
+用户明确要求将 DeepSeek API 写入真实云端配置并继续 B02；部署前在 `/opt/shinian-backups/pre-deepseek-b02-20261013/` 保存了生产环境文件、旧 API 镜像、后端源码、MySQL dump、媒体文件及 Nginx/TLS 归档。备份文件均为服务器本地 0600 权限，SHA256 校验通过；DeepSeek 凭据仅存于生产环境文件，暂存文件在激活后删除。
+
+候选后端源码包 SHA256：`3858e3beeba7cb69a1336848a76d7f667d7f4856342a550d4f716cea6d5e1c4c`；正式镜像：`sha256:5d02956a447fb7b51e688cffddf9ca38833aed24805c34960f912261967fc991`。运行迁移保持 `f10100000001`。生产配置现用 `https://api.deepseek.com` / `deepseek-flash`，访谈主/备模型与草稿模型均用 DeepSeek；并行访谈已启用 `LLM_TURN_PARALLEL=true`、`LLM_TURN_STRATEGY=parallel_tasks`。配置更新和 API 重启均由用户指示执行。
+
+隔离随机数据库 273 项回归通过并在结束时清理；21 个合成 DeepSeek HTTP 场景全部通过，短请求上限 6 秒、长篇回应/草稿上限 10 秒，实测最慢分别为 2.283 秒和 2.114 秒。37 次候选模型调用均成功，合计 116,939 输入与 2,366 输出 tokens。线上健康检查、直接结构化 JSON API 冒烟及公网未认证 401 边界通过；正式迁移与只读健康检查未创建或修改人物、消息、回忆及照片。独立激活配置备份位于 `/opt/shinian-backups/deepseek-config-20261013-020414/`，并行策略回退备份位于 `/opt/shinian-backups/deepseek-parallel-20261013-020551/`。
+
+用户随后完成 B01/B02 合并检查并授权正式 commit，要求标注换模为 DeepSeek Flash（ds flash）。本次归档主工程、云端后端及独立验证目录，精确提交映射保存在独立验证目录 `artifacts/phase-2-b02/final-revisions.json`，不重新部署相同业务代码。前端、真机语音与真实家庭认证后的业务流程未在本次验证；隔离故事仅为合成内容。
+
 ## T07 交付来源与云端核对（2026-10-12）
 
 T07 依用户确认范围交付：老师在 Mac 运行最新 main 前端，登录现有家庭账号并连接现有阿里云，密码单独提供。GitHub 包含完整后端、迁移、固定依赖、Compose 和示例环境，另补 Nginx 示例及备份／回退说明；测试源码及产物留本地。

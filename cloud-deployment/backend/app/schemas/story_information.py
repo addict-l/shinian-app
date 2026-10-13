@@ -2,7 +2,13 @@
 from enum import Enum
 from typing import Literal
 from uuid import UUID
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, model_validator
+
+
+class SourceQuote(BaseModel):
+    model_config = ConfigDict(extra='forbid', str_strip_whitespace=True)
+    message_id: UUID
+    quote: str = Field(min_length=1, max_length=12000, description='逐字复制用户连续原文，不拼接或改写')
 
 
 class InformationStatus(str, Enum):
@@ -47,6 +53,7 @@ class StoryFacts(BaseModel):
     feeling: InformationDimension = Field(default_factory=InformationDimension)
     detail: InformationDimension = Field(default_factory=InformationDimension)
     conflicts: list[InformationConflict] = Field(default_factory=list, max_length=6)
+    narrative_sources: list[SourceQuote] = Field(default_factory=list, max_length=60)
 
 
 class StoryInformation(StoryFacts):

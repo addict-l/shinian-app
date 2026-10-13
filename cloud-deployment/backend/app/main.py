@@ -8,7 +8,7 @@ from app.db.database import engine
 from app.api.family import router as families_router
 from app.api.family_members import router as family_members_router
 from app.api.memories import router as memories_router
-from app.api.chat import router as chat_router
+from app.api.chat import router as chat_router, workflow as chat_workflow
 from app.api.workflow import router as workflow_router
 from app.api.memoirs import router as memoirs_router
 from app.ai.llm_client import LLMServiceError, LLMConfigurationError, LLMResponseFormatError
@@ -33,6 +33,14 @@ from app.services.memory_maintenance import drain_cleanup
 
 @asynccontextmanager
 async def lifespan(app):
+    # Opt-in turn deployments prepare their SDK and pooled API connections at
+    # startup. No model inference or user data is sent by the models-list call.
+    if os.getenv('LLM_TURN_MODEL', '').strip():
+        try:
+            client = await asyncio.to_thread(chat_workflow.chat._get_llm_client)
+            await asyncio.to_thread(client.warm_transport)
+        except Exception as error:
+            logging.getLogger('aimemories').warning('AI connection preparation deferred: %s', type(error).__name__)
     async def cleanup():
         while True:
             try:
@@ -59,7 +67,11 @@ for router in [families_router,family_members_router,memories_router,chat_router
 def health():
     with engine.connect() as connection:
         connection.execute(text('SELECT 1'))
-    return HealthResponse(status='ok', database='ok', llm_configured=all(os.getenv(k) for k in ['DASHSCOPE_API_KEY','DASHSCOPE_BASE_URL','LLM_MODEL']))
+    return HealthResponse(status='ok', database='ok', llm_configured=bool(
+        (os.getenv('LLM_API_KEY_B64') or os.getenv('LLM_API_KEY') or os.getenv('DASHSCOPE_API_KEY'))
+        and (os.getenv('LLM_BASE_URL') or os.getenv('DASHSCOPE_BASE_URL'))
+        and os.getenv('LLM_MODEL')
+    ))
 
 async def known_error(request: Request, error: Exception):
     if isinstance(error, (ChatSessionNotFoundError,FamilyNotFoundError,FamilyMemberNotFoundError)):

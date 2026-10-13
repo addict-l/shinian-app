@@ -1,7 +1,7 @@
 """Model output carries evidence; readiness is calculated by the application."""
 from uuid import UUID
 from typing import Literal
-from app.schemas.story_information import StoryFacts
+from app.schemas.story_information import StoryFacts, SourceQuote
 from pydantic import BaseModel, Field, ConfigDict
 
 
@@ -11,12 +11,6 @@ class StoryReadiness(BaseModel):
     conflicting_dimensions: list[str] = Field(default_factory=list)
     needs_analysis: bool = False
     message: str = ''
-
-
-class SourceQuote(BaseModel):
-    model_config = ConfigDict(extra='forbid', str_strip_whitespace=True)
-    message_id: UUID
-    quote: str = Field(min_length=1, max_length=12000, description='逐字复制提供的 content 中连续片段；不改人称，不拼接，不改标点')
 
 
 class GroundedPassage(BaseModel):
@@ -35,6 +29,13 @@ class GroundedDraft(BaseModel):
     paragraphs: list[GroundedPassage] = Field(min_length=1, max_length=30)
 
 
+class EventBoundary(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    kind: Literal['independent', 'return']
+    previous_event: SourceQuote
+    current_event: SourceQuote
+
+
 class StoryAnalysis(StoryFacts):
     compatible_times: list[SourceQuote] = Field(default_factory=list, max_length=8,
         description='同一事件时间的兼容补充：引用全部相关原文；不同明确年份或仍无法确定则为空')
@@ -42,6 +43,7 @@ class StoryAnalysis(StoryFacts):
         description='仅当不同地点原话描述同一地点或补充范围时，引用所有兼容说法；真正互斥或仍不确定则为空')
     guidance_hint: str = Field(default='', max_length=800, description='贴合当前讲述的引导参考；不规定固定问题顺序')
     generation_request: SourceQuote | None = Field(default=None, description='仅当最新用户消息明确要求整理或保存本段回忆时，引用该消息的连续原文；提及往事中的保存不算请求')
+    event_boundary: EventBoundary | None = None
 
 
 class ConversationReply(BaseModel):

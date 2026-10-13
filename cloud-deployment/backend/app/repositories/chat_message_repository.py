@@ -2,6 +2,7 @@ from datetime import datetime, timezone
 from uuid import UUID
 
 from sqlalchemy import select
+from sqlalchemy.orm import selectinload
 
 from app.db.database import SessionLocal
 from app.models.chat_message import ChatMessageModel
@@ -13,7 +14,7 @@ class ChatMessageRepository:
 
     def recent_for_person(self, family_id: UUID, person_id: UUID):
         with SessionLocal() as db:
-            rows = db.scalars(select(ChatMessageModel).join(ChatSessionModel)
+            rows = db.scalars(select(ChatMessageModel).options(selectinload(ChatMessageModel.attachments)).join(ChatSessionModel)
                 .where(ChatSessionModel.family_id == str(family_id),
                        ChatSessionModel.primary_person_id == str(person_id))
                 .where(ChatSessionModel.status != 'prepared')
@@ -88,6 +89,7 @@ class ChatMessageRepository:
 
             statement = (
                 select(ChatMessageModel)
+                .options(selectinload(ChatMessageModel.attachments))
                 .where(
                     ChatMessageModel.session_id
                     == str(session_id)
