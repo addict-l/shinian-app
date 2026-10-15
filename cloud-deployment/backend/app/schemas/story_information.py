@@ -2,7 +2,8 @@
 from enum import Enum
 from typing import Literal
 from uuid import UUID
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, model_validator, model_serializer
+from app.schemas.guided_interview import GuidedInterviewState
 
 
 class SourceQuote(BaseModel):
@@ -59,6 +60,13 @@ class StoryFacts(BaseModel):
 
 
 class StoryInformation(StoryFacts):
+    guided_interview: GuidedInterviewState | None = None
     conversation: ConversationProgress = Field(default_factory=ConversationProgress)
     analyzed_message_ids: list[UUID] = Field(default_factory=list)
     excluded_values: list[str] = Field(default_factory=list)
+
+    @model_serializer(mode='wrap')
+    def omit_inactive_guided_state(self, handler):
+        value=handler(self)
+        if value.get('guided_interview') is None:value.pop('guided_interview',None)
+        return value

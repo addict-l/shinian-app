@@ -3,9 +3,21 @@ from fastapi import APIRouter
 from app.schemas.chat import ChatSession, ChatSessionCreate, ChatMessage, ChatMessageCreate
 from app.schemas.workflow import ChatState, DraftResponse
 from app.services.workflow_service import WorkflowService
+from app.schemas.guided_interview import InterviewSwitch
+from app.services.interview_modules import MODULE_NAMES, MODULE_TOPICS
 
 router = APIRouter(prefix='/api/v1/chat', tags=['chat'])
 workflow = WorkflowService()
+
+@router.get('/interview-modules')
+def interview_modules():
+    return [{'id': key, 'name': name, 'baseline_questions': [
+        {'id': topic.id, 'profile': topic.profile, 'text': topic.text} for topic in MODULE_TOPICS[key]]}
+        for key, name in MODULE_NAMES.items()]
+
+@router.post('/sessions/{session_id}/interview', response_model=ChatState)
+def switch_interview(session_id: UUID, body: InterviewSwitch):
+    return workflow.switch_interview(session_id, body.module, body.expected_version)
 
 @router.get('/sessions/{session_id}/state', response_model=ChatState)
 def get_state(session_id: UUID):

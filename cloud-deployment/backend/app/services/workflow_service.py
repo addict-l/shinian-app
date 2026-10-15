@@ -20,7 +20,7 @@ from app.schemas.memory import MemoryCreate
 from app.schemas.workflow import ChatState, DraftResponse
 from app.schemas.story_guidance import GenerationOffer
 from app.services.chat_service import ChatService
-from app.services.memory_service import MemoryService
+from app.services.memory_service import MemoryService, MemoryNotFoundError
 from app.ai.llm_client import LLMConfigurationError, LLMServiceError, LLMResponseFormatError
 from app.services.conversation_opening import OPENING_SESSION_TYPE, publish_prepared_opening
 from app.schemas.story_information import InformationStatus, StoryInformation
@@ -48,13 +48,20 @@ class WorkflowService:
         self.memories = MemoryService()
 
     def create_session(self, data: ChatSessionCreate):
+        if data.primary_person_id is None and 'interview_module' not in data.model_fields_set:
+            data = data.model_copy(update={'interview_module': None})
         key = data.client_request_id or uuid4()
         with serialized(key):
             existing = self.chat.session_repository.get(key)
             if existing:
                 if (existing.family_id, existing.primary_person_id, existing.title) != (data.family_id, data.primary_person_id, data.title):
                     raise HTTPException(409, '同一个请求标识不能创建不同会话')
+                previous_module = existing.information.guided_interview.module if existing.information.guided_interview else None
+                if 'interview_module' in data.model_fields_set and previous_module != data.interview_module:
+                    raise HTTPException(409, '同一个请求标识不能改变采访模式')
                 return existing
+            if data.interview_module and data.primary_person_id is None:
+                raise HTTPException(400, '人生采访请先选择人物')
             return self.chat.create_session(data)
 
     def person_state(self, session_id):
@@ -85,11 +92,30 @@ class WorkflowService:
             current = current or (active[0] if active else None)
             if current is None:
                 anchor = str(completed.id) if completed else 'initial'
+                prior_history = self.chat.message_repository.recent_for_person(family_id, person_id)
+                if completed and completed.information.guided_interview:
+                    settings = {'interview_module': completed.information.guided_interview.module}
+                elif completed or prior_history:
+                    # A new internal segment is still the same legacy conversation.
+                    # Do not silently opt it in after a save or deletion.
+                    settings = {'interview_module': None}
+                else:
+                    settings = {}
                 current = self.create_session(ChatSessionCreate(family_id=family_id,
-                    primary_person_id=person_id, title=f'与{person.name}的回忆',
+                    primary_person_id=person_id, title=f'与{person.name}的回忆', **settings,
                     client_request_id=uuid5(NAMESPACE_URL, f'ai-memories:person:{family_id}:{person_id}:{anchor}')))
+                if completed and completed.information.guided_interview:
+                    from app.services.guided_interview import following
+                    information=current.information.model_copy(deep=True)
+                    information.guided_interview=following(completed.information.guided_interview)
+                    with SessionLocal.begin() as db:
+                        model=db.get(ChatSessionModel,str(current.id))
+                        model.information=information.model_dump(mode='json')
+                    current=self.chat.get_session(current.id)
             history = self.chat.message_repository.recent_for_person(family_id, person_id)
             if not history:
+                self.start(current.id)
+            elif current.information.guided_interview and not self.chat.message_repository.list_by_session(current.id):
                 self.start(current.id)
             return self.person_state(current.id)
 
@@ -97,6 +123,9 @@ class WorkflowService:
         session = self.chat.get_session(session_id)
         messages = self.chat.message_repository.list_by_session(session_id)
         result = readiness(session.information, messages, session.primary_person_id, session.status == 'completed')
+        if session.information.guided_interview:
+            from app.services.guided_interview import readiness as guided_readiness
+            result=guided_readiness(session.information.guided_interview,messages,session.primary_person_id,session.status=='completed')
         latest_user = next((m for m in reversed(messages) if m.role == 'user'), None)
         progress = session.information.conversation
         # A failed reply never exposes an older offer or an apparently completed turn.
@@ -117,6 +146,66 @@ class WorkflowService:
         person = self.chat.family_member_service.get_family_member(session.primary_person_id)
         return {'name': person.name, 'relationship': person.relationship}
 
+    def switch_interview(self, session_id, module, expected_version=None, command_id=None):
+        """Explicit opt-in for legacy segments; never replace an unconfirmed draft."""
+        from app.schemas.guided_interview import GuidedInterviewState
+        from app.services.guided_interview import current_sources, turn, opening_text
+        from app.services.interview_modules import MODULE_NAMES
+        with serialized(session_id):
+            session = self.chat.get_session(session_id)
+            guide = session.information.guided_interview
+            if expected_version is not None and session.version != expected_version:
+                raise HTTPException(409, '采访进度已更新，请重新读取后切换。')
+            if session.primary_person_id is None:
+                raise HTTPException(400, '请先选择家庭人物')
+            if session.status == 'completed':
+                raise HTTPException(409, '这段已保存，请先打开下一段采访再选择模块。')
+            if guide and guide.module == module and guide.module_selected:
+                return self.state(session_id)
+            messages = self.chat.message_repository.list_by_session(session_id)
+            with SessionLocal() as db:
+                draft = db.scalar(select(MemoryDraftModel).where(MemoryDraftModel.session_id == str(session_id)))
+                if draft and not draft.saved_memory_id:
+                    raise HTTPException(409, '当前草稿已保留，请先核对保存，再切换采访模块。')
+            if guide and guide.module_selected and current_sources(messages):
+                raise HTTPException(409, '这段讲述已保留，请先核对保存，再切换采访模块。')
+            checkpoints = dict(guide.module_checkpoints) if guide else {}
+            if guide:
+                checkpoints[guide.module] = guide.model_dump(mode='json', exclude={'module_checkpoints'})
+            new_guide = GuidedInterviewState.model_validate(checkpoints[module]) if module in checkpoints else GuidedInterviewState(module=module)
+            new_guide.module_selected = True
+            new_guide.module_checkpoints = checkpoints
+            if guide:
+                for source in guide.background_sources:
+                    if source not in new_guide.background_sources:
+                        new_guide.background_sources.append(source)
+            information = session.information.model_copy(deep=True)
+            information.guided_interview = new_guide
+            if current_sources(messages):
+                # A legacy switch re-reads the existing original messages, rather
+                # than making the user retell the story or discarding progress.
+                narrative_ids = {UUID(source['message_id']) for source in current_sources(messages)}
+                information, reply = turn(self.chat._get_llm_client(), information,
+                    [message for message in messages if message.role != 'user' or message.id in narrative_ids])
+                text = reply.text
+            else:
+                text = f'我们聊{MODULE_NAMES[module]}。' + opening_text(new_guide)
+                information.analyzed_message_ids = []
+                reply = None
+            reply_id = uuid5(NAMESPACE_URL, 'ai-memories:reply:' + str(command_id)) if command_id else uuid4()
+            information.conversation.offer_message_id = reply_id if reply and reply.action == 'offer_generation' else None
+            if command_id:
+                information.conversation.replied_user_message_id = command_id
+            with SessionLocal.begin() as db:
+                model = db.get(ChatSessionModel, str(session_id))
+                model.information = information.model_dump(mode='json')
+                model.session_type = 'guided_interview'
+                model.updated_at = datetime.now(timezone.utc)
+                model.version += 1
+                db.add(ChatMessageModel(id=str(reply_id), session_id=str(session_id), role='assistant',
+                    type='text', content=text, created_at=datetime.now(timezone.utc)))
+            return self.state(session_id)
+
     @staticmethod
     def _analysis_transcript(messages):
         question = ''
@@ -136,6 +225,7 @@ class WorkflowService:
             transcript, self._record_subject(session), session.information)
         validate_analysis(analysis, [m for m in messages if m.id in texts], session.information)
         information = StoryInformation.model_validate(analysis.model_dump())
+        information.guided_interview=session.information.guided_interview
         information.conversation = session.information.conversation.model_copy(deep=True)
         information = validate_information(information, messages, session.information,
                                            getattr(analysis, 'compatible_places', ()),
@@ -143,6 +233,12 @@ class WorkflowService:
         return information, readiness(information, messages, session.primary_person_id), analysis
 
     def _ensure_analysis(self, session, messages):
+        if session.information.guided_interview:
+            from app.services.guided_interview import current_sources
+            expected = {UUID(item['message_id']) for item in current_sources(messages)}
+            if expected != set(session.information.analyzed_message_ids):
+                raise HTTPException(409, '讲述已保留，请先重试完成这一轮三层采访。')
+            return session
         if set(user_texts(messages)) != set(session.information.analyzed_message_ids):
             information, _, _ = self._analyze(session, messages)
             with SessionLocal.begin() as db:
@@ -159,6 +255,7 @@ class WorkflowService:
         # created before B03 retain the same source hash after the schema upgrade.
         excluded = {name: {'user_edited'} for name in ('people', 'event', 'time', 'place', 'feeling', 'detail')}
         excluded['conversation'] = True
+        excluded['guided_interview'] = True
         excluded['conflicts'] = {'__all__': {'alternatives': {'__all__': {'user_edited'}}}}
         # Existing drafts did not include the new optional narrative field.
         # Keep their hash stable until verified narrative evidence is added.
@@ -170,6 +267,22 @@ class WorkflowService:
         session = self.chat.get_session(session_id)
         with serialized(f'person:{session.family_id}:{session.primary_person_id}'), serialized(session_id):
             state = self.state(session_id)
+            if state.session.information.guided_interview:
+                if state.session.status == 'prepared':
+                    with SessionLocal.begin() as db:
+                        publish_prepared_opening(db, db.get(ChatSessionModel, str(session_id)))
+                    return self.state(session_id)
+                if not state.messages:
+                    with SessionLocal.begin() as db:
+                        target = db.get(ChatSessionModel, str(session_id))
+                        published = publish_prepared_opening(db, target)
+                    if published and not state.session.information.guided_interview.module_selected:
+                        return self.state(session_id)
+                    from app.services.guided_interview import opening_text
+                    guide=state.session.information.guided_interview
+                    text=opening_text(guide)
+                    self.chat.message_repository.create(session_id,'assistant',text,message_type='opening')
+                return self.state(session_id)
             if state.session.primary_person_id is not None:
                 history = self.chat.message_repository.recent_for_person(state.session.family_id, state.session.primary_person_id)
                 if history:
@@ -204,13 +317,25 @@ class WorkflowService:
                     return self.state(session_id)
             if session.status == 'completed':
                 raise HTTPException(409, '这段回忆已保存，请开始新的对话')
+            from app.services.interview_modules import requested_module
+            guide = session.information.guided_interview
+            selected_module = requested_module(content, allow_label=bool(guide and (not guide.module_selected or guide.topic_index>=6)))
+            changing = selected_module and (not guide or guide.module != selected_module or not guide.module_selected)
+            if previous is None and changing:
+                from app.services.guided_interview import current_sources
+                if guide and guide.module_selected and current_sources(self.chat.message_repository.list_by_session(session_id)):
+                    raise HTTPException(409, '这段讲述已保留，请先核对保存，再切换采访模块。')
+                with SessionLocal() as db:
+                    draft = db.scalar(select(MemoryDraftModel).where(MemoryDraftModel.session_id == str(session_id)))
+                    if draft and not draft.saved_memory_id:
+                        raise HTTPException(409, '当前草稿已保留，请先核对保存，再切换采访模块。')
             if previous is None:
                 with SessionLocal.begin() as db:
                     assets = [db.get(MediaAssetModel, media_id) for media_id in attachment_ids]
                     if any(asset is None or asset.session_id != str(session_id) or asset.message_id is not None for asset in assets):
                         raise HTTPException(409, '照片不存在、属于其他故事或已经发送，请重新加载')
                     db.add(ChatMessageModel(id=str(request_id), session_id=str(session_id), role='user',
-                                            type='text' if content else 'media', content=content,
+                                            type='interview_control' if selected_module else 'text' if content else 'media', content=content,
                                             created_at=datetime.now(timezone.utc)))
                     db.flush()
                     for position, asset in enumerate(assets):
@@ -231,6 +356,8 @@ class WorkflowService:
             latest_user = next((m for m in reversed(messages) if m.role == 'user'), None)
             if latest_user is None or latest_user.id != request_id:
                 raise HTTPException(409, '这条讲述后已有新内容，请以当前对话为准。')
+            if changing:
+                return self.switch_interview(session_id, selected_module, command_id=request_id)
             # A failed model call leaves the durable user message and the prior evidence intact.
             history = conversation_history(messages)
             if session.primary_person_id is not None:
@@ -244,6 +371,19 @@ class WorkflowService:
                         'content': '以上是同一人物较早的聊天，仅供自然承接；以下才是当前尚未保存的回忆。'
                                    '不得把较早故事混入当前草稿，也不要再次邀请整理已保存的故事。'}] + history
             llm = self.chat._get_llm_client()
+            if session.information.guided_interview:
+                from app.services.guided_interview import turn
+                information,reply=turn(llm,session.information,messages)
+                progress=information.conversation
+                progress.replied_user_message_id=request_id
+                progress.offer_message_id=assistant_id if reply.action=='offer_generation' else None
+                with SessionLocal.begin() as db:
+                    model=db.get(ChatSessionModel,str(session_id))
+                    model.information=information.model_dump(mode='json')
+                    model.updated_at=datetime.now(timezone.utc);model.version+=1
+                    db.add(ChatMessageModel(id=str(assistant_id),session_id=str(session_id),role='assistant',
+                        type='text',content=reply.text,created_at=datetime.now(timezone.utc)))
+                return self.state(session_id)
             combined = getattr(llm, 'interview_turn', None)
             turn = combined(self._analysis_transcript(messages), messages, history,
                             self._record_subject(session), session.information,
@@ -296,6 +436,9 @@ class WorkflowService:
                 raise HTTPException(409, '刚才的讲述已保留，请先重试完成对话。')
             session = self._ensure_analysis(session, messages)
             result = readiness(session.information, messages, session.primary_person_id)
+            if session.information.guided_interview:
+                from app.services.guided_interview import readiness as guided_readiness
+                result=guided_readiness(session.information.guided_interview,messages,session.primary_person_id)
             if not result.ready:
                 raise HTTPException(409, result.message)
             digest = self._source_digest(raw, session.information)
@@ -348,6 +491,11 @@ class WorkflowService:
                         _time_review_from=session.information.time.model_dump(mode='json'))
                 db.flush()
                 result = self._draft_response(draft)
+                if session.information.guided_interview:
+                    target=db.get(ChatSessionModel,str(session_id))
+                    info=StoryInformation.model_validate(target.information)
+                    info.guided_interview.phase='review'
+                    target.information=info.model_dump(mode='json')
             return result
 
     def confirm(self, draft_id, revision):
@@ -398,7 +546,52 @@ class WorkflowService:
                     session = db.get(ChatSessionModel, str(session_id))
                     session.status = 'completed'
                     session.updated_at = datetime.now(timezone.utc)
+                    info=StoryInformation.model_validate(session.information or {})
+                    if info.guided_interview:
+                        from app.services.guided_interview import coverage
+                        from app.services.interview_modules import topic_for, STORY_PROFILES
+                        guide=info.guided_interview
+                        guide.phase='saved';guide.pending_question=None
+                        if UUID(memory_id) not in guide.saved_memory_ids:
+                            guide.saved_memory_ids.append(UUID(memory_id))
+                            if all(coverage(guide).values()):
+                                guide.material_memory_ids.append(UUID(memory_id))
+                                if topic_for(guide).profile in STORY_PROFILES:
+                                    guide.qualified_memory_ids.append(UUID(memory_id))
+                            guide.processed_topics[topic_for(guide).id] = 'saved'
+                        live_ids = {UUID(value) for value in db.scalars(select(MemoryModel.id).where(
+                            MemoryModel.id.in_([str(value) for value in guide.saved_memory_ids]),
+                            MemoryModel.family_id == session.family_id,
+                            MemoryModel.primary_person_id == session.primary_person_id))}
+                        if set(guide.saved_memory_ids) != live_ids:
+                            guide.saved_memory_ids = [value for value in guide.saved_memory_ids if value in live_ids]
+                            guide.material_memory_ids = [value for value in guide.material_memory_ids if value in live_ids]
+                            guide.qualified_memory_ids = [value for value in guide.qualified_memory_ids if value in live_ids]
+                            guide.chapter_ready = False
+                            guide.module_assessment = None
+                            guide.module_assessed_count = 0
+                        for fact in guide.facts:
+                            if fact.key in ('participants','before','after') and fact.status=='present':
+                                for quote in fact.evidence:
+                                    if quote not in guide.background_sources:guide.background_sources.append(quote)
+                        session.information=info.model_dump(mode='json')
             memory = self.memories.get_memory(UUID(memory_id))
+            fresh=self.chat.get_session(session_id)
+            guide=fresh.information.guided_interview
+            if (guide and guide.saved_memory_ids and
+                    (len(guide.saved_memory_ids)>=5 or guide.module=='reflection' or guide.topic_index==5) and
+                    guide.module_assessed_count<len(guide.saved_memory_ids)):
+                from app.services.guided_interview import assess_module
+                try:
+                    material=[self.memories.get_memory(mid) for mid in guide.saved_memory_ids]
+                    guide=assess_module(self.chat._get_llm_client(),guide,material)
+                    with SessionLocal.begin() as db:
+                        target=db.get(ChatSessionModel,str(session_id))
+                        info=StoryInformation.model_validate(target.information)
+                        info.guided_interview=guide;target.information=info.model_dump(mode='json')
+                except (LLMConfigurationError,LLMServiceError,LLMResponseFormatError,MemoryNotFoundError):
+                    # The save has committed; optional chapter assessment cannot undo it.
+                    pass
             self._acknowledge_saved(session_id, draft_id, current, memory.title)
             return memory
 
@@ -409,6 +602,13 @@ class WorkflowService:
         with SessionLocal() as db:
             if db.get(ChatMessageModel, str(identity)) is not None:
                 return
+        if session.information.guided_interview:
+            text=f'《{title}》已经保存好了。'
+            fresh = self.chat.get_session(session_id).information.guided_interview
+            if fresh.chapter_ready and not session.information.guided_interview.chapter_ready:
+                text += '这一部分的已存素材可以先整理一版章节，您也可以继续补充。'
+            self.chat.message_repository.create(session_id,'assistant',text,message_id=identity,message_type='saved_reply')
+            return
         try:
             reply = self.chat._get_llm_client().acknowledge_saved_story(self._record_subject(session), title)
             text = validate_saved_reply(reply, title).text

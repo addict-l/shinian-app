@@ -1,12 +1,17 @@
 from datetime import datetime
 from uuid import UUID
+from typing import Literal
 
 from pydantic import BaseModel, Field, model_validator
 from app.schemas.story_information import StoryInformation
 from app.schemas.media import MessageAttachment
+from app.schemas.guided_interview import InterviewModule
 
 
 class ChatSessionCreate(BaseModel):
+    # Omission opts new person sessions into the shared three-layer workflow.
+    # Explicit null remains available for legacy API integrations.
+    interview_module: InterviewModule | None = 'childhood'
     client_request_id: UUID | None = None
 
     family_id: UUID

@@ -163,6 +163,9 @@ class LLMClient:
                 elif schema is SavedStoryReply:
                     repair += ('只返回 text，逐字提及原 saved_title，说明已经保存，'
                                '用您自然邀请分享其他事情，最多一个问题。不添加任何故事事实。')
+                elif schema.__name__.startswith('Guided'):
+                    repair += ('严格按最初JSON schema返回完整对象。证据使用message_id和连续逐字quote，不使用片段编号。'
+                               '不重问已采集事实，不从较早事件提取当前动作；未知/拒绝必须有原话，缺失字段不得擦掉已有事实。')
                 else:
                     repair += ('分析时 source 使用 message_id、start_fragment、end_fragment，两个编号必须选择该用户消息 fragments 的 index，单片段编号相同。不要输出或改写引文。'
                         '不要返回 value 或 source_message_ids。矛盾放在顶层 conflicts，status 使用五种规定值。'
@@ -259,7 +262,15 @@ class LLMClient:
             writer.model = self.draft_model
             writer.nonthinking_json = True
             writer.client = self.client.with_options(timeout=10.0, max_retries=0)
-        return writer._structured(GROUNDED_DRAFT_PROMPT,
+        prompt = GROUNDED_DRAFT_PROMPT
+        if information.guided_interview:
+            from app.services.interview_modules import topic_for, MODULE_NAMES
+            guide = information.guided_interview
+            prompt += ('\n当前模块：'+MODULE_NAMES[guide.module]+'，素材类型：'+topic_for(guide).profile+
+                       '。仅整理当前已接受原话。寄语、回望、原话和前后对照按原类型保留，'
+                       '不扩写成发生过的事件，不补当年想法或人生结论；明确大意的他人话不能加引号。'
+                       '标题和正文都不能把“有一次”或“刚开始接活”改写成“第一次”，也不把通常做的事情变成某天发生。')
+        return writer._structured(prompt,
             {'record_subject': person, 'information': statuses,
              'accepted_user_excerpts': [{'index': index, **item} for index, item in enumerate(evidence, 1)]},
              SelectedDraft, lambda value: validate_draft(resolve_draft(value, evidence), evidence, person, information))

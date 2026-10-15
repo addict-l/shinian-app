@@ -689,6 +689,78 @@
         }
       }
     },
+    "/api/v1/chat/interview-modules": {
+      "get": {
+        "tags": [
+          "chat"
+        ],
+        "summary": "Interview Modules",
+        "operationId": "interview_modules_api_v1_chat_interview_modules_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/chat/sessions/{session_id}/interview": {
+      "post": {
+        "tags": [
+          "chat"
+        ],
+        "summary": "Switch Interview",
+        "operationId": "switch_interview_api_v1_chat_sessions__session_id__interview_post",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Session Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InterviewSwitch"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChatState"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/chat/sessions/{session_id}/state": {
       "get": {
         "tags": [
@@ -2023,6 +2095,26 @@
       },
       "ChatSessionCreate": {
         "properties": {
+          "interview_module": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "childhood",
+                  "growth",
+                  "work",
+                  "family",
+                  "later_life",
+                  "reflection"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Interview Module",
+            "default": "childhood"
+          },
           "client_request_id": {
             "anyOf": [
               {
@@ -2629,6 +2721,463 @@
         ],
         "title": "GroundedTitle"
       },
+      "GuidedFact": {
+        "properties": {
+          "key": {
+            "type": "string",
+            "enum": [
+              "activity",
+              "participants",
+              "self_role",
+              "before",
+              "after",
+              "choice",
+              "expression",
+              "wording"
+            ],
+            "title": "Key"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "present",
+              "missing",
+              "partial",
+              "unknown",
+              "declined",
+              "conflict"
+            ],
+            "title": "Status"
+          },
+          "evidence": {
+            "items": {
+              "$ref": "#/components/schemas/GuidedQuote"
+            },
+            "type": "array",
+            "maxItems": 8,
+            "title": "Evidence"
+          },
+          "replaces_previous": {
+            "type": "boolean",
+            "title": "Replaces Previous",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "key",
+          "status"
+        ],
+        "title": "GuidedFact"
+      },
+      "GuidedInterviewState": {
+        "properties": {
+          "version": {
+            "type": "integer",
+            "enum": [
+              1,
+              2
+            ],
+            "title": "Version",
+            "default": 2
+          },
+          "module": {
+            "type": "string",
+            "enum": [
+              "childhood",
+              "growth",
+              "work",
+              "family",
+              "later_life",
+              "reflection"
+            ],
+            "title": "Module",
+            "default": "childhood"
+          },
+          "module_selected": {
+            "type": "boolean",
+            "title": "Module Selected",
+            "default": true
+          },
+          "topic_index": {
+            "type": "integer",
+            "maximum": 6.0,
+            "minimum": 0.0,
+            "title": "Topic Index",
+            "default": 0
+          },
+          "phase": {
+            "type": "string",
+            "enum": [
+              "opening",
+              "exploring",
+              "supplement",
+              "review",
+              "paused",
+              "saved",
+              "module_review",
+              "finished"
+            ],
+            "title": "Phase",
+            "default": "opening"
+          },
+          "resume_phase": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Resume Phase"
+          },
+          "facts": {
+            "items": {
+              "$ref": "#/components/schemas/GuidedFact"
+            },
+            "type": "array",
+            "title": "Facts"
+          },
+          "units": {
+            "items": {
+              "$ref": "#/components/schemas/GuidedUnit"
+            },
+            "type": "array",
+            "title": "Units"
+          },
+          "links": {
+            "items": {
+              "$ref": "#/components/schemas/GuidedLink"
+            },
+            "type": "array",
+            "title": "Links"
+          },
+          "pending_question": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/GuidedQuestion"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "answered_targets": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Answered Targets"
+          },
+          "asked_targets": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Asked Targets"
+          },
+          "unavailable_targets": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Unavailable Targets"
+          },
+          "answer_status": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Answer Status"
+          },
+          "coverage": {
+            "additionalProperties": {
+              "type": "boolean"
+            },
+            "type": "object",
+            "title": "Coverage"
+          },
+          "process_closed": {
+            "type": "boolean",
+            "title": "Process Closed",
+            "default": false
+          },
+          "background_sources": {
+            "items": {
+              "$ref": "#/components/schemas/GuidedQuote"
+            },
+            "type": "array",
+            "title": "Background Sources"
+          },
+          "saved_memory_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "title": "Saved Memory Ids"
+          },
+          "qualified_memory_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "title": "Qualified Memory Ids"
+          },
+          "module_assessment": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/GuidedModuleAssessment"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "module_assessed_count": {
+            "type": "integer",
+            "title": "Module Assessed Count",
+            "default": 0
+          },
+          "chapter_ready": {
+            "type": "boolean",
+            "title": "Chapter Ready",
+            "default": false
+          },
+          "processed_topics": {
+            "additionalProperties": {
+              "type": "string",
+              "enum": [
+                "saved",
+                "skipped",
+                "reused"
+              ]
+            },
+            "type": "object",
+            "title": "Processed Topics"
+          },
+          "material_memory_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "title": "Material Memory Ids"
+          },
+          "completed_modules": {
+            "items": {
+              "type": "string",
+              "enum": [
+                "childhood",
+                "growth",
+                "work",
+                "family",
+                "later_life",
+                "reflection"
+              ]
+            },
+            "type": "array",
+            "title": "Completed Modules"
+          },
+          "module_checkpoints": {
+            "additionalProperties": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "object",
+            "title": "Module Checkpoints"
+          }
+        },
+        "type": "object",
+        "title": "GuidedInterviewState"
+      },
+      "GuidedLink": {
+        "properties": {
+          "start": {
+            "type": "string",
+            "title": "Start"
+          },
+          "end": {
+            "type": "string",
+            "title": "End"
+          },
+          "relation": {
+            "type": "string",
+            "enum": [
+              "sequence",
+              "response",
+              "state_change"
+            ],
+            "title": "Relation"
+          },
+          "evidence": {
+            "items": {
+              "$ref": "#/components/schemas/GuidedQuote"
+            },
+            "type": "array",
+            "maxItems": 4,
+            "minItems": 1,
+            "title": "Evidence"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "start",
+          "end",
+          "relation",
+          "evidence"
+        ],
+        "title": "GuidedLink"
+      },
+      "GuidedModuleAssessment": {
+        "properties": {
+          "duplicate_memory_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "maxItems": 12,
+            "title": "Duplicate Memory Ids"
+          },
+          "conflicting_memory_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "maxItems": 12,
+            "title": "Conflicting Memory Ids"
+          },
+          "evidence": {
+            "items": {
+              "$ref": "#/components/schemas/GuidedQuote"
+            },
+            "type": "array",
+            "maxItems": 12,
+            "title": "Evidence"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "GuidedModuleAssessment"
+      },
+      "GuidedQuestion": {
+        "properties": {
+          "key": {
+            "type": "string",
+            "title": "Key"
+          },
+          "target": {
+            "type": "string",
+            "title": "Target"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text"
+          },
+          "accept_rule": {
+            "type": "string",
+            "title": "Accept Rule"
+          },
+          "anchor": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/GuidedQuote"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "key",
+          "target",
+          "text",
+          "accept_rule"
+        ],
+        "title": "GuidedQuestion"
+      },
+      "GuidedQuote": {
+        "properties": {
+          "message_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Message Id"
+          },
+          "quote": {
+            "type": "string",
+            "maxLength": 12000,
+            "minLength": 1,
+            "title": "Quote"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "message_id",
+          "quote"
+        ],
+        "title": "GuidedQuote"
+      },
+      "GuidedUnit": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 50,
+            "minLength": 1,
+            "title": "Id"
+          },
+          "actor": {
+            "type": "string",
+            "enum": [
+              "self",
+              "other"
+            ],
+            "title": "Actor"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "actual",
+              "request",
+              "assignment",
+              "static",
+              "summary"
+            ],
+            "title": "Kind"
+          },
+          "operation": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Operation"
+          },
+          "evidence": {
+            "$ref": "#/components/schemas/GuidedQuote"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "actor",
+          "kind",
+          "operation",
+          "evidence"
+        ],
+        "title": "GuidedUnit"
+      },
       "HTTPValidationError": {
         "properties": {
           "detail": {
@@ -2741,6 +3290,33 @@
           "withheld"
         ],
         "title": "InformationStatus"
+      },
+      "InterviewSwitch": {
+        "properties": {
+          "module": {
+            "type": "string",
+            "enum": [
+              "childhood",
+              "growth",
+              "work",
+              "family",
+              "later_life",
+              "reflection"
+            ],
+            "title": "Module"
+          },
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Version"
+          }
+        },
+        "type": "object",
+        "required": [
+          "module",
+          "expected_version"
+        ],
+        "title": "InterviewSwitch"
       },
       "MediaResponse": {
         "properties": {
@@ -3405,6 +3981,16 @@
             "type": "array",
             "maxItems": 60,
             "title": "Narrative Sources"
+          },
+          "guided_interview": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/GuidedInterviewState"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "conversation": {
             "$ref": "#/components/schemas/ConversationProgress"

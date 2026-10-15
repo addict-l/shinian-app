@@ -62,12 +62,17 @@ class FamilyMemberRepository:
             session.add(model)
             session.flush()
             if opening_text:
+                from app.schemas.story_information import StoryInformation
+                from app.schemas.guided_interview import GuidedInterviewState
+                from app.services.interview_modules import module_menu
                 identity = str(uuid5(NAMESPACE_URL, f'ai-memories:person:{model.family_id}:{model.id}:initial'))
                 session.add(ChatSessionModel(id=identity, family_id=model.family_id, primary_person_id=model.id,
-                    title=f'与{model.name}的回忆', status='prepared', llm_model=llm_model))
+                    title=f'与{model.name}的回忆', status='prepared', llm_model=llm_model,
+                    session_type='guided_interview', information=StoryInformation(
+                        guided_interview=GuidedInterviewState(module_selected=False)).model_dump(mode='json')))
                 session.flush()
                 session.add(ChatMessageModel(session_id=identity, role='assistant', type='opening',
-                    content=opening_text))
+                    content=opening_text+'\n'+module_menu()))
             session.commit()
             session.refresh(model)
 

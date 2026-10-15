@@ -303,6 +303,10 @@ def validate_draft(draft, evidence, person=None, information=None):
                 raise LLMResponseFormatError('Draft source quote is absent')
         quotes = '\n'.join(source.quote for source in passage.sources)
         _check_interpretation(passage.text, quotes)
+        if (information and information.guided_interview and
+                re.search(r'第一次|头一回|头一次|首次', passage.text) and
+                not re.search(r'第一次|头一回|头一次|首次', quotes)):
+            raise LLMResponseFormatError('标题和正文不能把“有一次”或“刚开始”改成“第一次”；原话未确认首次时，改用一次或中性标题。')
         # Prevent invented ages, dates and other numeric details during paraphrasing.
         if not set(re.findall(r'\d+', passage.text)).issubset(set(re.findall(r'\d+', quotes))):
             raise LLMResponseFormatError('Draft invented numeric facts')

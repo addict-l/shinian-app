@@ -6,6 +6,8 @@ from sqlalchemy import select
 from app.db.database import SessionLocal
 from app.models.chat_session import ChatSessionModel
 from app.schemas.chat import ChatSession, ChatSessionCreate
+from app.schemas.story_information import StoryInformation
+from app.schemas.guided_interview import GuidedInterviewState
 
 
 class ChatSessionRepository:
@@ -50,6 +52,10 @@ class ChatSessionRepository:
             family_id=str(data.family_id),
             primary_person_id=primary_person_id,
             title=data.title,
+            session_type='guided_interview' if data.interview_module else 'memory_interview',
+            information=StoryInformation(guided_interview=GuidedInterviewState(module=data.interview_module,
+                module_selected='interview_module' in data.model_fields_set)).model_dump(mode='json')
+                if data.interview_module else None,
             llm_model=llm_model,
             created_at=now,
             updated_at=now,
