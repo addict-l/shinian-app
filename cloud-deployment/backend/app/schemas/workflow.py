@@ -1,6 +1,7 @@
 from datetime import datetime
 from uuid import UUID
 from pydantic import BaseModel, Field
+from app.schemas.life_overview import LifeOverview
 from app.schemas.chat import ChatMessage, ChatSession
 from app.schemas.memory import MemoryCreate
 from app.schemas.story_information import InformationDimension
@@ -8,6 +9,7 @@ from app.schemas.media import MediaResponse
 from app.schemas.story_guidance import StoryReadiness, GroundedDraft, GenerationOffer
 
 class ChatState(BaseModel):
+    life_overview: LifeOverview | None = None
     session: ChatSession
     messages: list[ChatMessage]
     can_generate: bool

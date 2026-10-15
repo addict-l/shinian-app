@@ -13,6 +13,7 @@ private struct MemberDTO: Decodable {
 private struct SessionDTO: Decodable { let id: UUID; var version: Int?; var information: StoryInformation?; var status: String? }
 private struct MessageDTO: Decodable { let id: UUID; let role: String; let content: String; var attachments: [ChatAttachment]? }
 private struct ChatDTO: Decodable {
+    var life_overview: LifeOverview?
     let session: SessionDTO
     let messages: [MessageDTO]
     let can_generate: Bool
@@ -20,7 +21,7 @@ private struct ChatDTO: Decodable {
     var current_message_ids: [UUID]?
     var readiness: StoryReadiness?
     var snapshot: ChatSnapshot {
-        ChatSnapshot(sessionID: session.id, messages: messages.filter { ["user", "assistant"].contains($0.role) }
+        ChatSnapshot(lifeOverview: life_overview, sessionID: session.id, messages: messages.filter { ["user", "assistant"].contains($0.role) }
             .map { ChatMessage(id: $0.id, sender: $0.role == "user" ? .user : .ai, text: $0.content, attachments: $0.attachments ?? []) }, canGenerate: can_generate,
             status: session.status ?? "active", version: session.version ?? 1, information: session.information ?? StoryInformation(), readiness: readiness, generationOffer: generation_offer, currentMessageIDs: current_message_ids)
     }
@@ -133,6 +134,15 @@ enum APIDate {
         let family = try await bootstrap()
         return try await client.send(path: "api/v1/chat/members/\(person.id)/conversation", method: "POST",
             query: [.init(name: "family_id", value: family.uuidString)], as: ChatDTO.self).snapshot
+    }
+
+    func lifeAction(sessionID: UUID, command: LifeCommand) async throws -> ChatSnapshot {
+        try await client.send(path: "api/v1/chat/sessions/\(sessionID)/life-overview/actions", method: "POST",
+            body: JSONEncoder().encode(command), as: ChatDTO.self).snapshot
+    }
+    func selectInterview(sessionID: UUID, module: String, version: Int) async throws -> ChatSnapshot {
+        try await client.send(path: "api/v1/chat/sessions/\(sessionID)/interview", method: "POST",
+            body: json(["module": module, "expected_version": version]), as: ChatDTO.self).snapshot
     }
 
     func send(sessionID: UUID, text: String, requestID: UUID) async throws -> ChatSnapshot {

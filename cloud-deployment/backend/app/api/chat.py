@@ -1,4 +1,5 @@
 from uuid import UUID
+from app.schemas.life_overview import LifeAction, LifeOverview
 from fastapi import APIRouter
 from app.schemas.chat import ChatSession, ChatSessionCreate, ChatMessage, ChatMessageCreate
 from app.schemas.workflow import ChatState, DraftResponse
@@ -8,6 +9,16 @@ from app.services.interview_modules import MODULE_NAMES, MODULE_TOPICS
 
 router = APIRouter(prefix='/api/v1/chat', tags=['chat'])
 workflow = WorkflowService()
+
+@router.get('/sessions/{session_id}/life-overview', response_model=LifeOverview | None)
+def life_overview(session_id: UUID):
+    return workflow.state(session_id).life_overview
+
+
+@router.post('/sessions/{session_id}/life-overview/actions', response_model=ChatState)
+def life_action(session_id: UUID, body: LifeAction):
+    return workflow.life_action(session_id, body)
+
 
 @router.get('/interview-modules')
 def interview_modules():

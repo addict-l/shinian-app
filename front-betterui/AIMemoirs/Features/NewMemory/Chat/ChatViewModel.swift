@@ -165,6 +165,7 @@ struct MessagePhoto: Identifiable {
             photos.removeAll { $0.id == id }; _ = persist()
         } catch { errorMessage = error.localizedDescription }
     }
+    func receiveInterviewSnapshot(_ value: ChatSnapshot) { _ = accept(value) }
     private func accept(_ value: ChatSnapshot) -> ChatSnapshot {
         var value = value; value.messages = Array(value.messages.suffix(20))
         sessionID = value.sessionID; canGenerate = value.canGenerate; latestSnapshot = value

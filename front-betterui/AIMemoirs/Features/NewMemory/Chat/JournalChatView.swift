@@ -26,6 +26,8 @@ struct JournalChatView: View {
     @State private var mediaError: String?
     @FocusState private var inputFocused: Bool
     @State private var openedAt = Date()
+    @State private var lifePresented = false
+    @State private var lifeAutomatic = false
 
     init(person: FamilyMember, chatAPI: any ChatAPI, memoryAPI: any MemoryAPI, previewScreen: String?, resumedDraft: LocalChatDraft? = nil, onBack: @escaping () -> Void, onSaved: @escaping () async -> Void) {
         self.person = person; self.chatAPI = chatAPI; self.memoryAPI = memoryAPI; self.previewScreen = previewScreen; self.onBack = onBack; self.onSaved = onSaved
@@ -61,6 +63,12 @@ struct JournalChatView: View {
                 }
             }.frame(height: verticalSizeClass == .compact ? 44 : 58).padding(.horizontal, 14)
             .overlay(alignment: .bottom) { JournalTheme.line.frame(height: 1) }
+            if model.latestSnapshot?.lifeOverview != nil {
+                Button("人生概览") { lifeAutomatic = false; lifePresented = true }
+                    .font(JournalTheme.font(13)).foregroundStyle(JournalTheme.ink2)
+                    .frame(maxWidth: .infinity, minHeight: 44)
+                    .accessibilityIdentifier("chat.lifeOverview")
+            }
             ScrollViewReader { reader in
                 ScrollView {
                     VStack(alignment: .leading, spacing: 14) {
@@ -100,7 +108,8 @@ struct JournalChatView: View {
                     }
             }
         }
-        .task { await start() }
+        .task { await start(); presentLifeIfNeeded() }
+        .onChange(of: model.latestSnapshot?.sessionID) { _, _ in presentLifeIfNeeded() }
         .onDisappear { dictation.cancel(); model.pause() }
         .onChange(of: navigation.tab) { _, tab in if tab != .compose { dictation.cancel(); model.pause() } }
         .onChange(of: scenePhase) { _, phase in if phase != .active { dictation.cancel(); model.pause() } }
@@ -119,6 +128,14 @@ struct JournalChatView: View {
                 }
                 do { try model.appendPhotos(compressed) } catch { mediaError = error.localizedDescription }
                 photoItems = []; readingPhotos = false
+            }
+        }
+        .fullScreenCover(isPresented: $lifePresented) {
+            if let snapshot = model.latestSnapshot {
+                LifeInterviewView(person: person, api: chatAPI, snapshot: snapshot,
+                    onUpdated: { model.receiveInterviewSnapshot($0) },
+                    onClose: { lifePresented = false; if lifeAutomatic { onBack() } },
+                    onEnter: { model.receiveInterviewSnapshot($0); lifePresented = false })
             }
         }
         .sheet(item: $previewPhoto) { attachment in
@@ -146,6 +163,13 @@ struct JournalChatView: View {
                 })
         }
     }
+    private func presentLifeIfNeeded() {
+        guard !lifePresented, previewScreen == nil,
+              let snapshot = model.latestSnapshot, let outline = snapshot.lifeOverview,
+              outline.required, snapshot.information.guided_interview?.module_selected == false else { return }
+        lifeAutomatic = true; lifePresented = true
+    }
+
     @ViewBuilder private func messageView(_ message: ChatMessage) -> some View {
         if message.sender == .user {
             JournalUserMessage(message: message, api: chatAPI,

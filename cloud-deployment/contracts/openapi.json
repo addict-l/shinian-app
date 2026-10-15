@@ -689,6 +689,110 @@
         }
       }
     },
+    "/api/v1/chat/sessions/{session_id}/life-overview": {
+      "get": {
+        "tags": [
+          "chat"
+        ],
+        "summary": "Life Overview",
+        "operationId": "life_overview_api_v1_chat_sessions__session_id__life_overview_get",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Session Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/LifeOverview"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "title": "Response Life Overview Api V1 Chat Sessions  Session Id  Life Overview Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/chat/sessions/{session_id}/life-overview/actions": {
+      "post": {
+        "tags": [
+          "chat"
+        ],
+        "summary": "Life Action",
+        "operationId": "life_action_api_v1_chat_sessions__session_id__life_overview_actions_post",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Session Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LifeAction"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChatState"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/chat/interview-modules": {
       "get": {
         "tags": [
@@ -2160,6 +2264,16 @@
       },
       "ChatState": {
         "properties": {
+          "life_overview": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/LifeOverview"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
           "session": {
             "$ref": "#/components/schemas/ChatSession"
           },
@@ -3317,6 +3431,261 @@
           "expected_version"
         ],
         "title": "InterviewSwitch"
+      },
+      "LifeAction": {
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": [
+              "begin",
+              "answer",
+              "confirm",
+              "correct",
+              "pause",
+              "resume"
+            ],
+            "title": "Action"
+          },
+          "expected_version": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Expected Version"
+          },
+          "client_request_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Client Request Id"
+          },
+          "text": {
+            "type": "string",
+            "maxLength": 12000,
+            "title": "Text",
+            "default": ""
+          },
+          "topic_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "home",
+                  "learning",
+                  "early_work",
+                  "later_work",
+                  "family",
+                  "changes",
+                  "present"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Topic Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "action",
+          "expected_version",
+          "client_request_id"
+        ],
+        "title": "LifeAction"
+      },
+      "LifeField": {
+        "properties": {
+          "topic_id": {
+            "type": "string",
+            "enum": [
+              "home",
+              "learning",
+              "early_work",
+              "later_work",
+              "family",
+              "changes",
+              "present"
+            ],
+            "title": "Topic Id"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "known",
+              "unknown",
+              "declined",
+              "skipped"
+            ],
+            "title": "Status",
+            "default": "pending"
+          },
+          "evidence": {
+            "items": {
+              "$ref": "#/components/schemas/GuidedQuote"
+            },
+            "type": "array",
+            "title": "Evidence"
+          }
+        },
+        "type": "object",
+        "required": [
+          "topic_id"
+        ],
+        "title": "LifeField"
+      },
+      "LifeOverview": {
+        "properties": {
+          "version": {
+            "type": "integer",
+            "title": "Version",
+            "default": 0
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "not_started",
+              "collecting",
+              "review",
+              "confirmed"
+            ],
+            "title": "Status",
+            "default": "not_started"
+          },
+          "required": {
+            "type": "boolean",
+            "title": "Required",
+            "default": false
+          },
+          "paused": {
+            "type": "boolean",
+            "title": "Paused",
+            "default": false
+          },
+          "fields": {
+            "items": {
+              "$ref": "#/components/schemas/LifeField"
+            },
+            "type": "array",
+            "title": "Fields"
+          },
+          "turns": {
+            "items": {
+              "$ref": "#/components/schemas/LifeTurn"
+            },
+            "type": "array",
+            "title": "Turns"
+          },
+          "question_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "home",
+                  "learning",
+                  "early_work",
+                  "later_work",
+                  "family",
+                  "changes",
+                  "present"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Question Id"
+          },
+          "question": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Question"
+          },
+          "question_number": {
+            "type": "integer",
+            "title": "Question Number",
+            "default": 0
+          },
+          "total_questions": {
+            "type": "integer",
+            "title": "Total Questions",
+            "default": 7
+          },
+          "confirmed_version": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Confirmed Version"
+          },
+          "pending_request_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pending Request Id"
+          },
+          "pending_action": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pending Action"
+          }
+        },
+        "type": "object",
+        "title": "LifeOverview"
+      },
+      "LifeTurn": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "user",
+              "assistant"
+            ],
+            "title": "Role"
+          },
+          "content": {
+            "type": "string",
+            "title": "Content"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "role",
+          "content",
+          "created_at"
+        ],
+        "title": "LifeTurn"
       },
       "MediaResponse": {
         "properties": {

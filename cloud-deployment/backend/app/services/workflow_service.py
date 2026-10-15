@@ -69,6 +69,9 @@ class WorkflowService:
         if state.session.primary_person_id is None:
             raise HTTPException(400, '请先选择家庭人物')
         state.current_message_ids = [message.id for message in state.messages]
+        from app.services.life_overview import blocks
+        if state.life_overview and blocks(state.session, state.life_overview):
+            return state
         state.messages = self.chat.message_repository.recent_for_person(
             state.session.family_id, state.session.primary_person_id)
         return state
@@ -126,6 +129,14 @@ class WorkflowService:
         if session.information.guided_interview:
             from app.services.guided_interview import readiness as guided_readiness
             result=guided_readiness(session.information.guided_interview,messages,session.primary_person_id,session.status=='completed')
+        from app.services.life_overview import read as life_read, blocks
+        overview = life_read(session.primary_person_id) if session.primary_person_id else None
+        if overview and blocks(session, overview):
+            from app.schemas.chat import ChatMessage
+            messages = [ChatMessage(id=t.id, session_id=session.id, role=t.role, type='opening' if i==0 else 'life_outline',
+                content=t.content, created_at=datetime.fromisoformat(t.created_at)) for i,t in enumerate(overview.turns)]
+            result.ready = False
+            result.message = '请先核对人生概览，再选择想聊的部分。'
         latest_user = next((m for m in reversed(messages) if m.role == 'user'), None)
         progress = session.information.conversation
         # A failed reply never exposes an older offer or an apparently completed turn.
@@ -137,7 +148,7 @@ class WorkflowService:
         offer = progress.offer_message_id
         show_offer = (result.ready and replied and offer is not None and messages[-1].id == offer
                       and latest_user is not None and progress.replied_user_message_id == latest_user.id)
-        return ChatState(session=session, messages=messages, can_generate=result.ready, readiness=result,
+        return ChatState(session=session, messages=messages, can_generate=result.ready, readiness=result, life_overview=overview,
                          generation_offer=GenerationOffer(message_id=offer) if show_offer else None)
 
     def _record_subject(self, session):
@@ -151,9 +162,13 @@ class WorkflowService:
         from app.schemas.guided_interview import GuidedInterviewState
         from app.services.guided_interview import current_sources, turn, opening_text
         from app.services.interview_modules import MODULE_NAMES
-        with serialized(session_id):
+        session = self.chat.get_session(session_id)
+        with serialized(f'person:{session.family_id}:{session.primary_person_id}'), serialized(session_id):
             session = self.chat.get_session(session_id)
             guide = session.information.guided_interview
+            from app.services.life_overview import read as life_read, blocks
+            if session.primary_person_id and blocks(session, life_read(session.primary_person_id)):
+                raise HTTPException(409, '请先核对人生概览，再选择想聊的部分。')
             if expected_version is not None and session.version != expected_version:
                 raise HTTPException(409, '采访进度已更新，请重新读取后切换。')
             if session.primary_person_id is None:
@@ -179,6 +194,8 @@ class WorkflowService:
                 for source in guide.background_sources:
                     if source not in new_guide.background_sources:
                         new_guide.background_sources.append(source)
+            from app.services.life_overview import refresh_background
+            new_guide = refresh_background(new_guide, session.primary_person_id)
             information = session.information.model_copy(deep=True)
             information.guided_interview = new_guide
             if current_sources(messages):
@@ -205,6 +222,15 @@ class WorkflowService:
                 db.add(ChatMessageModel(id=str(reply_id), session_id=str(session_id), role='assistant',
                     type='text', content=text, created_at=datetime.now(timezone.utc)))
             return self.state(session_id)
+
+    def life_action(self, session_id, action):
+        from app.services.life_overview import perform
+        session = self.chat.get_session(session_id)
+        if session.primary_person_id is None:
+            raise HTTPException(400, '请先选择家庭人物')
+        with serialized(f'person:{session.family_id}:{session.primary_person_id}'):
+            perform(session.primary_person_id, action, self.chat._get_llm_client)
+            return self.person_state(session_id)
 
     @staticmethod
     def _analysis_transcript(messages):
@@ -305,8 +331,24 @@ class WorkflowService:
         assistant_id = uuid5(NAMESPACE_URL, 'ai-memories:reply:' + str(request_id))
         content = body.content.strip()
         attachment_ids = [str(value) for value in body.attachment_ids]
-        with serialized(session_id):
+        session = self.chat.get_session(session_id)
+        with serialized(f'person:{session.family_id}:{session.primary_person_id}'), serialized(session_id):
             session = self.chat.get_session(session_id)
+            from app.services.life_overview import read as life_read, blocks
+            from app.schemas.life_overview import LifeAction
+            if session.primary_person_id:
+                overview = life_read(session.primary_person_id)
+                prior_outline = next((t for t in overview.turns if t.id == request_id and t.role == 'user'), None)
+                if prior_outline:
+                    if prior_outline.content != content or attachment_ids:
+                        raise HTTPException(409, '请求标识与已有骨架回答不一致')
+                    if overview.pending_request_id != request_id:
+                        return self.person_state(session_id)
+                if blocks(session, overview):
+                    if attachment_ids:
+                        raise HTTPException(409, '照片仍保留，请先核对人生概览，进入访谈后再发送照片。')
+                    return self.life_action(session_id, LifeAction(action='answer', text=content,
+                        expected_version=overview.version, client_request_id=request_id))
             with SessionLocal() as db:
                 previous = db.get(ChatMessageModel, str(request_id))
                 if previous and (previous.session_id != str(session_id) or previous.role != 'user' or previous.content != content
@@ -373,6 +415,8 @@ class WorkflowService:
             llm = self.chat._get_llm_client()
             if session.information.guided_interview:
                 from app.services.guided_interview import turn
+                from app.services.life_overview import refresh_background
+                session.information.guided_interview = refresh_background(session.information.guided_interview, session.primary_person_id)
                 information,reply=turn(llm,session.information,messages)
                 progress=information.conversation
                 progress.replied_user_message_id=request_id

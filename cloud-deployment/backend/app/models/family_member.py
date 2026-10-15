@@ -1,7 +1,7 @@
 from datetime import date, datetime
 from uuid import uuid4
 
-from sqlalchemy import Date, DateTime, ForeignKey, String
+from sqlalchemy import Date, DateTime, ForeignKey, String, JSON
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy.orm import relationship as orm_relationship
 
@@ -11,6 +11,8 @@ from app.db.base import Base
 class FamilyMemberModel(Base):
 
     __tablename__ = "family_members"
+
+    life_interview: Mapped[dict | None] = mapped_column(JSON, nullable=True)
 
     family_id: Mapped[str] = mapped_column(
         String(36),

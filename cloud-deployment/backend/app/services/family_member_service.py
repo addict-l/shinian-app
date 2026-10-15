@@ -26,7 +26,7 @@ class FamilyMemberService:
         information = StoryInformation()
         result = readiness(information, [], member.client_request_id, False)
         reply = self._get_llm_client().converse([], {'name': member.name, 'relationship': member.relationship}, information, result,
-            '这是首次开场白。根据记录对象的家庭身份自然称呼对方，温和邀请讲一件记得的事，不预设经历或感受，不建议生成或保存。')
+            '这是首次开场白。只写一句称呼和问候，最多12字，例如“爷爷，您好。”不提问，不介绍系统或流程，不邀请展开故事，不预设经历或感受，不建议生成或保存。')
         validate_reply(reply, [], {'allowed': False, 'explicit_request': False})
         return reply.text
 

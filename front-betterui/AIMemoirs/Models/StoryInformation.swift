@@ -12,6 +12,7 @@ struct InformationDimension: Codable, Equatable {
 }
 
 struct StoryInformation: Codable, Equatable {
+    var guided_interview: GuidedInterviewProgress? = nil
     var people = InformationDimension()
     var event = InformationDimension()
     var time = InformationDimension()
