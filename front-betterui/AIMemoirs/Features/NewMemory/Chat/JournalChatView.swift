@@ -27,7 +27,6 @@ struct JournalChatView: View {
     @FocusState private var inputFocused: Bool
     @State private var openedAt = Date()
     @State private var lifePresented = false
-    @State private var lifeAutomatic = false
 
     init(person: FamilyMember, chatAPI: any ChatAPI, memoryAPI: any MemoryAPI, previewScreen: String?, resumedDraft: LocalChatDraft? = nil, onBack: @escaping () -> Void, onSaved: @escaping () async -> Void) {
         self.person = person; self.chatAPI = chatAPI; self.memoryAPI = memoryAPI; self.previewScreen = previewScreen; self.onBack = onBack; self.onSaved = onSaved
@@ -41,6 +40,51 @@ struct JournalChatView: View {
         return model.photos.isEmpty && !model.hasPendingSend && model.inputText.isEmpty && !dictation.isBusy
     }
     var body: some View {
+        Group {
+            if previewScreen == nil, model.latestSnapshot == nil {
+                initialLoading
+            } else if needsInitialLifeInterview, let snapshot = model.latestSnapshot {
+                LifeInterviewView(person: person, api: chatAPI, snapshot: snapshot,
+                    onUpdated: { model.receiveInterviewSnapshot($0) },
+                    onClose: onBack,
+                    onEnter: { model.receiveInterviewSnapshot($0) })
+            } else {
+                conversation
+            }
+        }
+        .task { await start() }
+        .onDisappear { dictation.cancel(); model.pause() }
+        .onChange(of: navigation.tab) { _, tab in if tab != .compose { dictation.cancel(); model.pause() } }
+        .onChange(of: scenePhase) { _, phase in if phase != .active { dictation.cancel(); model.pause() } }
+    }
+
+    private var needsInitialLifeInterview: Bool {
+        previewScreen == nil && model.latestSnapshot?.lifeOverview?.required == true &&
+            model.latestSnapshot?.information.guided_interview?.module_selected == false
+    }
+
+    private var initialLoading: some View {
+        VStack(spacing: 20) {
+            HStack {
+                JournalRoundButton(icon: "back", label: "返回选择家人", action: onBack)
+                    .accessibilityIdentifier("newMemory.step.1")
+                Spacer()
+            }.padding(.horizontal, 16)
+            Spacer()
+            if let error = model.storageError ?? model.errorMessage {
+                JournalError(message: error, retryTitle: "重试") {
+                    model.retryLocalSave()
+                    Task { await start() }
+                }
+            } else {
+                ProgressView("正在打开记录…")
+                    .accessibilityIdentifier("chat.initialLoading")
+            }
+            Spacer()
+        }.padding(.vertical, 12)
+    }
+
+    private var conversation: some View {
         VStack(spacing: 0) {
             ZStack {
                 if verticalSizeClass == .compact {
@@ -64,7 +108,7 @@ struct JournalChatView: View {
             }.frame(height: verticalSizeClass == .compact ? 44 : 58).padding(.horizontal, 14)
             .overlay(alignment: .bottom) { JournalTheme.line.frame(height: 1) }
             if model.latestSnapshot?.lifeOverview != nil {
-                Button("人生概览") { lifeAutomatic = false; lifePresented = true }
+                Button("人生概览") { lifePresented = true }
                     .font(JournalTheme.font(13)).foregroundStyle(JournalTheme.ink2)
                     .frame(maxWidth: .infinity, minHeight: 44)
                     .accessibilityIdentifier("chat.lifeOverview")
@@ -108,11 +152,6 @@ struct JournalChatView: View {
                     }
             }
         }
-        .task { await start(); presentLifeIfNeeded() }
-        .onChange(of: model.latestSnapshot?.sessionID) { _, _ in presentLifeIfNeeded() }
-        .onDisappear { dictation.cancel(); model.pause() }
-        .onChange(of: navigation.tab) { _, tab in if tab != .compose { dictation.cancel(); model.pause() } }
-        .onChange(of: scenePhase) { _, phase in if phase != .active { dictation.cancel(); model.pause() } }
         .onChange(of: dictation.transcript) { _, text in model.inputText = text }
         .alert("语音输入", isPresented: Binding(get: { dictation.errorMessage != nil }, set: { if !$0 { dictation.errorMessage = nil } })) { Button("确定") { dictation.errorMessage = nil } } message: { Text(dictation.errorMessage ?? "") }
         .onChange(of: photoItems) { _, items in
@@ -134,7 +173,7 @@ struct JournalChatView: View {
             if let snapshot = model.latestSnapshot {
                 LifeInterviewView(person: person, api: chatAPI, snapshot: snapshot,
                     onUpdated: { model.receiveInterviewSnapshot($0) },
-                    onClose: { lifePresented = false; if lifeAutomatic { onBack() } },
+                    onClose: { lifePresented = false },
                     onEnter: { model.receiveInterviewSnapshot($0); lifePresented = false })
             }
         }
@@ -163,13 +202,6 @@ struct JournalChatView: View {
                 })
         }
     }
-    private func presentLifeIfNeeded() {
-        guard !lifePresented, previewScreen == nil,
-              let snapshot = model.latestSnapshot, let outline = snapshot.lifeOverview,
-              outline.required, snapshot.information.guided_interview?.module_selected == false else { return }
-        lifeAutomatic = true; lifePresented = true
-    }
-
     @ViewBuilder private func messageView(_ message: ChatMessage) -> some View {
         if message.sender == .user {
             JournalUserMessage(message: message, api: chatAPI,

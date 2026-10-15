@@ -24,12 +24,11 @@ PROMPT = '''你只记录人生骨架，不采访具体故事，不生成回复�
 七个topic_id对应人工预设问题。当前问题的简短答案足以记录，例如地名、没上学、做农活。不要求两个求学经历、不要求精确年份、婚姻、退休或成就。不把未提供、未知或不愿讲当作没有经历。
 一次回答明确涉及后续话题时记录以免重复提问，但不能凭一般人生规律推算先后、日期、地点、关系或性格。early_work和later_work只在原文有相应阶段依据时分别记录；只有一个不带阶段的工作回答时只归当前被问的工作话题。不能把工作变化自动当作本人一直记得的生活转折。unknown和declined必须引用明确的记不清或不想讲。单独说“记不清”或“不想讲”只处理当前问题，其他六项仍为pending，不能扩展成拒绝全部话题。不能输出skipped。例如“年轻时给邻居修门，后来自己开了修理铺”同时明确覆盖early_work和later_work，两项分别引用原文；不能因为当前只问成长地点就漏记后续人生阶段。本人主动长讲完整原文已保留，只用原话摘录重要线索。语句不能回答当前问题时不冒充已答。'''
 
-def new_data(required=True, greeting=""):
-    prefix=(greeting.strip()+"\n") if greeting.strip() else ""
+def new_data(required=True):
     now=datetime.now(timezone.utc).isoformat()
     return {'version':1,'status':'collecting','required':required,'paused':False,
         'fields':[LifeField(topic_id=k).model_dump(mode='json') for k,_,_ in QUESTIONS],
-        'turns':[{'id':str(uuid4()),'role':'assistant','content':prefix+INTRO+'\n'+QUESTIONS[0][2],'created_at':now}],
+        'turns':[{'id':str(uuid4()),'role':'assistant','content':INTRO+'\n'+QUESTIONS[0][2],'created_at':now}],
         'requests':{},'pending':None,'confirmed_version':None}
 
 def view(data):

@@ -1,6 +1,6 @@
 # 人生骨架与概览验收
 
-状态：2026-10-15 用户明确要求先上传真实后端供实测，现已发布；尚未 commit 或 push，等待用户实际验收。
+状态：2026-10-15 用户明确要求先上传真实后端供实测，现已发布；用户已明确审核通过，批准将前置功能及直达修正拆成两笔提交后推送 main。
 
 ## 业务行为
 
@@ -46,3 +46,21 @@
 备份位于 `/opt/shinian-backups/pre-overview-20261015-20261015-093229`，发布记录 `/opt/shinian-validation/releases/production-overview-20261015`。可识别新迁移并已在隔离数据上读取验证的回退镜像为 `shinian-api:pre-overview-g-compatible`。已有骨架时迁移拒绝直接删列回退；不能使用不识别新迁移的旧镜像启动或恢复旧数据库覆盖新数据。
 
 用户本轮明确纠正默认设备为 iPhone 17 Pro。连接正式服务的正常 iOS 构建已安装并启动在当前已打开的 Pro（iOS 26.0，`8801F7F7-7154-4AEB-88F2-1E77A8393190`）；保留原 App 数据。前文 iPhone 17 的候选联调日志是实际历史记录，不改写成 Pro 测试结果。
+
+
+## 2026-10-15 新人物直接进入骨架修正
+
+用户实测后明确取消独立开场白。创建人物不再依赖模型生成问候，“添加并继续”直接进入人生骨架；客户端按会话状态在当前页面展示骨架，避免先渲染聊天再弹出骨架。等候和失败重试仍有返回入口。已有人物的聊天、草稿及历史开场消息保留。
+
+修正产物位于 `artifacts/direct-life-entry-20261015/`：
+
+- `ios-build.log`：主线正常构建通过；设备为当前 iPhone 17 Pro / iOS 26.0，UDID `8801F7F7-7154-4AEB-88F2-1E77A8393190`。
+- `cloud-verification.log`：随机独立 MySQL 的 350 项回归通过，2 条第三方弃用警告。删除不再适用的模型开场白拦截测试，新增模型不可用仍可创建人物及第一题 ID 稳定的检查；创建重试、并发和身份冲突继续覆盖。
+- `ios-integration.log` / `direct-entry-ui.xcresult`：当前 Pro 上 6 项旧聊天恢复检查通过；1 项阿里云隔离库 UI 联调通过，涵盖创建后直接出现 `life.input`、没有 `chat.history` 或人物卡中间页、暂停后恢复第二题、七题跳过及核对、进入工作模块、手动概览返回聊天。
+- `screenshots/manifest.json`：`new-person-direct-outline-no-chat-overlay`、`outline-resume-second-question`、`outline-to-selected-work-interview`、`manual-overview-return-preserves-interview`，均记录实际 Pro 设备。
+
+人工复核：点击“添加并继续”，应直接看到“01 / 了解人生骨架”和成长地点问题；不需要先选择刚添加的人物，也不经过独立开场白页。此修正已获用户明确审核通过，与前置功能分别提交，并按用户要求推送 main。
+
+修正已沿用此前正式试用授权同步至真实后端。镜像 `sha256:341ba4b50d4e5d1388c90f2d11d1228f6c0f99b091ba829989af4762e05921d5`，80 个运行文件与隔离验收候选一致，迁移仍为 `g10100000001`；32 个会话、3 位人物、8 条回忆只读核对通过，发布前后全部业务表（含已有骨架）及媒体哈希一致。未向正式家庭写入验证内容。备份 `/opt/shinian-backups/pre-direct-entry-20261015-20261015-101756`，发布证据 `/opt/shinian-validation/releases/production-direct-entry-20261015`；本次可直接回退至上个骨架试用镜像，无数据库降级。
+
+连接正式 HTTPS 的正常 App 已更新并启动在相同 Pro，保留 App 数据。发布首次尝试因通过 SSH 标准输入执行脚本、数据库备份命令消耗后续脚本输入而提前结束；立即恢复旧服务，改为上传脚本文件且备份命令关闭标准输入后完成上述发布。原始记录保留在 `production/deploy.log` 与 `production/deploy-retry.log`。

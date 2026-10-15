@@ -68,7 +68,7 @@ struct JournalAddPersonView: View {
                     JournalButton(title: "添加并继续", loading: loading, disabled: !draft.isValid()) { focused = nil; onAdd() }
                         .padding(.top, 22).accessibilityIdentifier("member.add")
                     if loading {
-                        Text("正在为\(draft.relationship)准备开场白…").font(JournalTheme.font(12))
+                        Text("正在添加人物…").font(JournalTheme.font(12))
                             .foregroundStyle(JournalTheme.muted).frame(maxWidth: .infinity).padding(.top, 12)
                     }
                     Button(action: onSelect) {

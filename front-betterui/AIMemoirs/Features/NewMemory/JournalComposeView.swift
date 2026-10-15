@@ -69,8 +69,10 @@ struct JournalComposeView: View {
     }
     private func addMember() {
         Task {
-            guard await members.add(memberDraft) != nil else { return }
-            memberDraft = FamilyMemberDraft(); search = ""; navigation.composeStep = .select
+            guard let person = await members.add(memberDraft) else { return }
+            memberDraft = FamilyMemberDraft(); search = ""
+            resumedDraft = nil; chatIdentity = UUID(); navigation.person = person
+            navigation.composeStep = .chat
         }
     }
 }

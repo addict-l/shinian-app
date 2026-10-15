@@ -42,16 +42,11 @@ class FamilyMemberRepository:
     def create(
         self,
         data: FamilyMemberCreate,
-        opening_text: str | None = None,
         llm_model: str = '',
     ) -> FamilyMember:
 
         from app.services.life_overview import new_data
-        import re
-        greeting = opening_text or ''
-        if len(greeting)>24 or re.search(r'[?？]|系统|骨架|访谈|提问|问题|流程', greeting):
-            greeting = f'{data.relationship}，您好。'
-        initial_outline = new_data(greeting=greeting)
+        initial_outline = new_data()
         model = FamilyMemberModel(
             life_interview=initial_outline,
             id=str(data.client_request_id) if data.client_request_id else None,
@@ -68,17 +63,17 @@ class FamilyMemberRepository:
 
             session.add(model)
             session.flush()
-            if opening_text:
-                from app.schemas.story_information import StoryInformation
-                from app.schemas.guided_interview import GuidedInterviewState
-                identity = str(uuid5(NAMESPACE_URL, f'ai-memories:person:{model.family_id}:{model.id}:initial'))
-                session.add(ChatSessionModel(id=identity, family_id=model.family_id, primary_person_id=model.id,
-                    title=f'与{model.name}的回忆', status='prepared', llm_model=llm_model,
-                    session_type='guided_interview', information=StoryInformation(
-                        guided_interview=GuidedInterviewState(module_selected=False)).model_dump(mode='json')))
-                session.flush()
-                session.add(ChatMessageModel(id=initial_outline['turns'][0]['id'], session_id=identity, role='assistant', type='opening',
-                    content=initial_outline['turns'][0]['content']))
+            from app.schemas.story_information import StoryInformation
+            from app.schemas.guided_interview import GuidedInterviewState
+            identity = str(uuid5(NAMESPACE_URL, f'ai-memories:person:{model.family_id}:{model.id}:initial'))
+            session.add(ChatSessionModel(id=identity, family_id=model.family_id, primary_person_id=model.id,
+                title=f'与{model.name}的回忆', status='prepared', llm_model=llm_model,
+                session_type='guided_interview', information=StoryInformation(
+                    guided_interview=GuidedInterviewState(module_selected=False)).model_dump(mode='json')))
+            session.flush()
+            # Keep the first question compatible with clients that read opening_message.
+            session.add(ChatMessageModel(id=initial_outline['turns'][0]['id'], session_id=identity, role='assistant', type='opening',
+                content=initial_outline['turns'][0]['content']))
             session.commit()
             session.refresh(model)
 
