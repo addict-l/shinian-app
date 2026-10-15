@@ -20,10 +20,9 @@ struct LifeInterviewView: View {
     @Environment(\.dynamicTypeSize) private var typeSize
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @FocusState private var focused: Bool
-    private let modules = [("childhood", "成长的地方"), ("growth", "读书或学艺"), ("work", "工作与生活"), ("family", "重要家人"), ("later_life", "如今的生活"), ("reflection", "人生回望")]
     private var overview: LifeOverview? { snapshot.lifeOverview }
     private var collecting: Bool { overview?.status == "collecting" }
-    private var confirmed: Bool { overview?.status == "confirmed" }
+    private var showingOverview: Bool { overview?.status == "review" || overview?.status == "confirmed" }
     private var cacheKey: String { "life-outline-input-\(person.id)" }
     private var commandKey: String { "life-outline-request-\(person.id)" }
     init(person: FamilyMember, api: any ChatAPI, snapshot: ChatSnapshot, onUpdated: @escaping (ChatSnapshot) -> Void, onClose: @escaping () -> Void, onEnter: @escaping (ChatSnapshot) -> Void) {
@@ -33,6 +32,13 @@ struct LifeInterviewView: View {
     var body: some View {
         VStack(spacing: 0) {
             header
+            if showingOverview, let overview {
+                LifeOverviewContent(overview: overview, selected: $selected, busy: busy, hasPendingAction: pending != nil,
+                    onDetails: { editing = nil; detailsPresented = true },
+                    onConfirm: { Task { await perform("confirm") } },
+                    onEnter: { Task { await choose() } },
+                    feedback: { feedback })
+            } else {
             ScrollViewReader { reader in
                 ScrollView {
                     VStack(alignment: .leading, spacing: 18) {
@@ -53,11 +59,8 @@ struct LifeInterviewView: View {
                                         .frame(maxWidth: .infinity, alignment: turn.role == "user" ? .trailing : .leading)
                                 }.padding(.leading, turn.role == "user" ? 35 : 0)
                             }
-                        } else {
-                            overviewContent
                         }
-                        if let error { JournalError(message: error, retryTitle: pending == nil ? "重新读取" : "重试这次操作") { Task { if let pending { await perform(pending.action, command: pending) } else { await refresh() } } } }
-                        if busy { ProgressView("正在记录与核对…").frame(maxWidth: .infinity) }
+                        feedback
                         Color.clear.frame(height: 1).id("life.bottom")
                     }.padding(22)
                 }.scrollDismissesKeyboard(.interactively)
@@ -67,8 +70,9 @@ struct LifeInterviewView: View {
                     }
             }
             if collecting { composer }
+            }
         }
-        .background(JournalTheme.paper.ignoresSafeArea()).foregroundStyle(JournalTheme.ink)
+        .background((showingOverview ? LifeOverviewStyle.canvas : JournalTheme.paper).ignoresSafeArea()).foregroundStyle(JournalTheme.ink)
         .interactiveDismissDisabled()
         .task {
             input = UserDefaults.standard.string(forKey: cacheKey) ?? ""
@@ -107,56 +111,51 @@ struct LifeInterviewView: View {
             }.interactiveDismissDisabled(busy)
         }
     }
-    private var header: some View {
-        HStack(spacing: 10) {
-            JournalRoundButton(icon: "back", label: "暂停并返回") {
-                dictation.cancel(); focused = false
-                Task { if pending == nil && overview?.status == "collecting" { await perform("pause") }; onClose() }
-            }.disabled(busy).accessibilityIdentifier("life.back")
-            Spacer(minLength: 0)
-            VStack(spacing: 4) {
-                Text("\(collecting ? "开始记录" : "人生概览") · \(person.name)").font(JournalTheme.font(16, medium: true))
-                Text("AI 回忆助手").font(JournalTheme.font(12)).foregroundStyle(JournalTheme.sageInk)
-            }
-            Spacer(minLength: 0)
-            JournalAvatar(person: person, size: 38)
-        }.padding(.horizontal, 16).padding(.vertical, 12)
-            .overlay(alignment: .bottom) { JournalTheme.line.frame(height: 1) }
+    @ViewBuilder private var feedback: some View {
+        if let error {
+            JournalError(message: error, retryTitle: pending == nil ? "重新读取" : "重试这次操作") {
+                Task { if let pending { await perform(pending.action, command: pending) } else { await refresh() } }
+            }.padding(.top, 14)
+        }
+        if busy { ProgressView("正在记录与核对…").frame(maxWidth: .infinity).padding(.top, 12) }
     }
-    private var overviewContent: some View {
-        VStack(alignment: .leading, spacing: 18) {
-            Text(confirmed ? "从哪段日子开始？" : "先核对一下人生脉络").font(JournalTheme.story(25))
-            VStack(alignment: .leading, spacing: 16) {
-                Text("我们已经了解的脉络").font(JournalTheme.story(20))
-                Text((overview?.fields ?? []).filter { !$0.evidence.isEmpty }.map { $0.evidence.map(\.quote).joined(separator: " ") }.joined(separator: "\n").isEmpty ? "目前还没有提供具体生活线索，之后可以随时补充。" : (overview?.fields ?? []).filter { !$0.evidence.isEmpty }.map { $0.evidence.map(\.quote).joined(separator: " ") }.joined(separator: "\n"))
-                    .font(JournalTheme.font(15)).foregroundStyle(JournalTheme.ink2).lineSpacing(5).lineLimit(5)
-                Button("查看全部与更正") { editing = nil; detailsPresented = true }
-                    .font(JournalTheme.font(14)).frame(minHeight: 44).accessibilityIdentifier("life.details")
-                Text(confirmed ? "已核对 · 可以随时更正" : "待本人核对 · 可以更正或保留待补项")
-                    .font(JournalTheme.font(13)).foregroundStyle(JournalTheme.ink2)
-                    .padding(10).background(confirmed ? JournalTheme.sageSoft : JournalTheme.soft, in: Capsule())
-                    .accessibilityIdentifier("life.confirmationStatus")
-            }.frame(maxWidth: .infinity, alignment: .leading).padding(18).journalCard()
-            if !confirmed {
-                JournalButton(title: "确认这些脉络") { Task { await perform("confirm") } }
-                    .disabled(busy || pending != nil).accessibilityIdentifier("life.confirm")
-            } else {
-                LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 12), count: typeSize.isAccessibilitySize ? 1 : 2), spacing: 12) {
-                    ForEach(modules, id: \.0) { module in
-                        Button { selected = module.0 } label: {
-                            VStack(alignment: .leading, spacing: 8) {
-                                Text(module.1).font(JournalTheme.font(18, medium: true))
-                                Text(selected == module.0 ? "先聊这一段" : "按您的节奏选择").font(JournalTheme.font(12)).foregroundStyle(JournalTheme.ink2)
-                            }.frame(maxWidth: .infinity, minHeight: 75, alignment: .leading).padding(14)
-                                .background(selected == module.0 ? JournalTheme.soft : JournalTheme.surface, in: RoundedRectangle(cornerRadius: 20))
-                                .overlay { RoundedRectangle(cornerRadius: 20).stroke(selected == module.0 ? JournalTheme.accentDeep : JournalTheme.line, lineWidth: 1.5) }
-                        }.buttonStyle(.plain).accessibilityAddTraits(selected == module.0 ? .isSelected : [])
-                            .accessibilityIdentifier("life.module.\(module.0)")
+    private func close() {
+        dictation.cancel(); focused = false
+        Task { if pending == nil && collecting { await perform("pause") }; onClose() }
+    }
+    @ViewBuilder private var header: some View {
+        if showingOverview {
+            ZStack {
+                VStack(spacing: 3) {
+                    Text("人生概览").font(JournalTheme.font(19, medium: true)).foregroundStyle(LifeOverviewStyle.ink)
+                    Text("AI 回忆助手").font(JournalTheme.font(13)).foregroundStyle(LifeOverviewStyle.secondary)
+                }
+                HStack {
+                    Button(action: close) { DesignIcon("back", size: 25).frame(width: 44, height: 44).contentShape(Rectangle()) }
+                        .buttonStyle(.plain).foregroundStyle(LifeOverviewStyle.ink)
+                        .accessibilityLabel("暂停并返回").accessibilityIdentifier("life.back").disabled(busy)
+                    Spacer()
+                    if JournalPortraitCache.image(for: person.id) != nil || !person.profileImages.isEmpty {
+                        JournalAvatar(person: person, size: 43)
+                    } else {
+                        Text(JournalAvatar.initial(for: person)).font(JournalTheme.story(20)).foregroundStyle(.white)
+                            .frame(width: 43, height: 43).background(LifeOverviewStyle.green, in: Circle()).accessibilityHidden(true)
                     }
                 }
-                JournalButton(title: "进入“\(modules.first { $0.0 == selected }?.1 ?? "成长的地方")”") { Task { await choose() } }
-                    .disabled(busy).accessibilityIdentifier("life.enter")
-            }
+            }.frame(minHeight: 54).padding(.horizontal, 21).padding(.top, 3).padding(.bottom, 6)
+        } else {
+            HStack(spacing: 10) {
+                JournalRoundButton(icon: "back", label: "暂停并返回", action: close)
+                    .disabled(busy).accessibilityIdentifier("life.back")
+                Spacer(minLength: 0)
+                VStack(spacing: 4) {
+                    Text("\(collecting ? "开始记录" : "人生概览") · \(person.name)").font(JournalTheme.font(16, medium: true))
+                    Text("AI 回忆助手").font(JournalTheme.font(12)).foregroundStyle(JournalTheme.sageInk)
+                }
+                Spacer(minLength: 0)
+                JournalAvatar(person: person, size: 38)
+            }.padding(.horizontal, 16).padding(.vertical, 12)
+                .overlay(alignment: .bottom) { JournalTheme.line.frame(height: 1) }
         }
     }
     private var composer: some View {
