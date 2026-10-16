@@ -7,7 +7,7 @@ struct JournalAuthPage<Content: View>: View {
     let title: String
     let subtitle: String
     var compact = false
-    let focusedField: JournalAuthFieldID?
+    let focusedField: FocusState<JournalAuthFieldID?>.Binding
     @ViewBuilder let content: () -> Content
     @Environment(\.dynamicTypeSize) private var dynamicType
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -41,9 +41,14 @@ struct JournalAuthPage<Content: View>: View {
                         .padding(.top, -8).padding(.bottom, 28)
                     }
                     .frame(maxWidth: .infinity)
+                    .frame(minHeight: geometry.size.height, alignment: .top)
+                    .background {
+                        Color.clear.contentShape(Rectangle())
+                            .onTapGesture { focusedField.wrappedValue = nil }
+                    }
                 }
                 .scrollIndicators(.hidden).scrollDismissesKeyboard(.interactively).clipped()
-                .onChange(of: focusedField) { scrollToFocusedField(using: scroll) }
+                .onChange(of: focusedField.wrappedValue) { scrollToFocusedField(using: scroll) }
                 .onChange(of: geometry.size.height) { scrollToFocusedField(using: scroll) }
             }
         }
@@ -56,9 +61,9 @@ struct JournalAuthPage<Content: View>: View {
     }
 
     private func scrollToFocusedField(using scroll: ScrollViewProxy) {
-        guard let focusedField else { return }
+        guard let field = focusedField.wrappedValue else { return }
         withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.2)) {
-            scroll.scrollTo(focusedField, anchor: .center)
+            scroll.scrollTo(field, anchor: .center)
         }
     }
 }

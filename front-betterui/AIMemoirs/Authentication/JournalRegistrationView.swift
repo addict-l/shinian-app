@@ -3,7 +3,6 @@ import SwiftUI
 /// 注册表单预备界面：只校验本机输入，不发送请求、保存密码或创建账号。
 struct JournalRegistrationView: View {
     @Environment(\.dismiss) private var dismiss
-    @Environment(\.verticalSizeClass) private var verticalSizeClass
     @State private var username = ""
     @State private var password = ""
     @State private var confirmation = ""
@@ -29,7 +28,7 @@ struct JournalRegistrationView: View {
 
     var body: some View {
         JournalAuthPage(title: "开启家庭回忆", subtitle: "从今天起，一起留下值得珍藏的时光。",
-            compact: true, focusedField: focusedField) {
+            compact: true, focusedField: $focusedField) {
             VStack(spacing: 16) {
                 JournalAuthNotice("自助注册尚未开放。已有家庭账号，可直接返回登录。")
                     .accessibilityIdentifier("register.notice")
@@ -67,14 +66,6 @@ struct JournalRegistrationView: View {
         .navigationTitle("创建账号").navigationBarTitleDisplayMode(.inline)
         .toolbar(.visible, for: .navigationBar)
         .toolbarBackground(JournalTheme.paper, for: .navigationBar)
-        .toolbar {
-            if verticalSizeClass != .compact {
-                ToolbarItemGroup(placement: .keyboard) {
-                    Spacer()
-                    Button("完成") { focusedField = nil }.tint(JournalTheme.authAccent)
-                }
-            }
-        }
         .alert("自助注册尚未开放", isPresented: $showsUnavailable) {
             Button("返回登录") { dismiss() }
             Button("继续查看", role: .cancel) { }

@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct JournalLoginView: View {
-    @Environment(\.verticalSizeClass) private var verticalSizeClass
     @ObservedObject var authentication: AuthenticationStore
     @State private var username = JournalDemo.isPreview ? "family" : ""
     @State private var password = JournalDemo.isPreview ? "family12" : ""
@@ -17,7 +16,7 @@ struct JournalLoginView: View {
 
     var body: some View {
         NavigationStack {
-            JournalAuthPage(title: "欢迎回家", subtitle: "把平凡的日子，收藏成家的故事。", focusedField: focusedField) {
+            JournalAuthPage(title: "欢迎回家", subtitle: "把平凡的日子，收藏成家的故事。", focusedField: $focusedField) {
                 VStack(spacing: 18) {
                     VStack(spacing: 16) {
                         JournalAuthField(title: "家庭账号", placeholder: "请输入家庭账号", icon: "home",
@@ -61,14 +60,6 @@ struct JournalLoginView: View {
                 }
             }
             .toolbar(.hidden, for: .navigationBar)
-            .toolbar {
-                if !showsRegistration && verticalSizeClass != .compact {
-                    ToolbarItemGroup(placement: .keyboard) {
-                        Spacer()
-                        Button("完成") { focusedField = nil }.tint(JournalTheme.authAccent)
-                    }
-                }
-            }
             .onChange(of: username) { authentication.errorMessage = nil }
             .onChange(of: password) { authentication.errorMessage = nil }
             .navigationDestination(isPresented: $showsRegistration) { JournalRegistrationView() }
