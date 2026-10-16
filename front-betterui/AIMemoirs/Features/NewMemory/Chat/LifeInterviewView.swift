@@ -16,8 +16,12 @@ struct LifeInterviewView: View {
     @State private var busy = false
     @State private var error: String?
     @State private var pending: LifeCommand?
+    @State private var historyPresented = false
     @StateObject private var dictation = JournalDictation()
     @Environment(\.dynamicTypeSize) private var typeSize
+    @Environment(\.verticalSizeClass) private var verticalSizeClass
+    @Environment(\.journalCareMode) private var care
+    @Environment(\.scenePhase) private var scenePhase
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @FocusState private var focused: Bool
     private var overview: LifeOverview? { snapshot.lifeOverview }
@@ -33,7 +37,10 @@ struct LifeInterviewView: View {
     var body: some View {
         VStack(spacing: 0) {
             header
-            if showingOverview, let overview {
+            if care {
+                careContent
+                feedback.padding(.horizontal, 20)
+            } else if showingOverview, let overview {
                 LifeOverviewContent(overview: overview, selected: $selected, busy: busy, hasPendingAction: pending != nil,
                     onDetails: { editing = nil; detailsPresented = true },
                     onConfirm: { Task { await perform("confirm") } },
@@ -73,7 +80,7 @@ struct LifeInterviewView: View {
             if collecting { composer }
             }
         }
-        .background((showingOverview ? LifeOverviewStyle.canvas : JournalTheme.paper).ignoresSafeArea()).foregroundStyle(JournalTheme.ink)
+        .background((care ? CareTheme.paper : showingOverview ? LifeOverviewStyle.canvas : JournalTheme.paper).ignoresSafeArea()).foregroundStyle(JournalTheme.ink)
         .interactiveDismissDisabled()
         .task {
             input = UserDefaults.standard.string(forKey: cacheKey) ?? ""
@@ -84,7 +91,11 @@ struct LifeInterviewView: View {
         .onChange(of: input) { _, value in UserDefaults.standard.set(value, forKey: cacheKey) }
         .onChange(of: dictation.transcript) { _, value in input = value }
         .onDisappear { dictation.cancel() }
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .background || (phase == .inactive && dictation.phase != .preparing) { dictation.cancel() }
+        }
         .alert("语音输入", isPresented: Binding(get: { dictation.errorMessage != nil }, set: { if !$0 { dictation.errorMessage = nil } })) { Button("确定") { dictation.errorMessage = nil } } message: { Text(dictation.errorMessage ?? "") }
+        .sheet(isPresented: $historyPresented) { CareDialogueHistory(entries: CareDialogueEntry.from(overview?.turns ?? [])) { historyPresented = false } }
         .sheet(isPresented: $detailsPresented) {
             NavigationStack {
                 ScrollView {
@@ -92,16 +103,25 @@ struct LifeInterviewView: View {
                         if let field = editing {
                             Text("请写下这一项应保留的说法。原始讲述会保留，更正后需要重新核对概览。")
                             TextEditor(text: $editText).frame(minHeight: 160).accessibilityIdentifier("life.correctionText")
-                            JournalButton(title: "记录更正") { Task { await perform("correct", text: editText, topic: field.topic_id); if error == nil { editing = nil } } }.disabled(busy || editText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty).accessibilityIdentifier("life.saveCorrection")
+                            Group {
+                                if care {
+                                    CareButton(title: "记录更正", loading: busy, disabled: editText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty) {
+                                        Task { await perform("correct", text: editText, topic: field.topic_id); if error == nil { editing = nil } }
+                                    }
+                                } else {
+                                    JournalButton(title: "记录更正") { Task { await perform("correct", text: editText, topic: field.topic_id); if error == nil { editing = nil } } }
+                                        .disabled(busy || editText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                                }
+                            }.accessibilityIdentifier("life.saveCorrection")
                         } else {
                             ForEach(overview?.fields ?? []) { field in
                                 VStack(alignment: .leading, spacing: 6) {
                                     HStack {
-                                        Text(field.title).font(.headline)
+                                        Text(field.title).font(care ? CareTheme.font(22, bold: true) : .headline)
                                         Spacer()
                                         Button("更正") { editing = field; editText = "" }.frame(minWidth: 44, minHeight: 44).accessibilityLabel("更正\(field.title)").accessibilityIdentifier("life.correct.\(field.id)")
                                     }
-                                    Text(field.content).font(.body).fixedSize(horizontal: false, vertical: true)
+                                    Text(field.content).font(care ? CareTheme.font() : .body).fixedSize(horizontal: false, vertical: true)
                                 }
                             }
                         }
@@ -109,14 +129,20 @@ struct LifeInterviewView: View {
                     }.padding()
                 }.navigationTitle(editing?.title ?? "核对人生脉络")
                     .toolbar { ToolbarItem(placement: .cancellationAction) { Button("返回") { if editing != nil { editing = nil } else { detailsPresented = false } } } }
-            }.interactiveDismissDisabled(busy)
+            }.font(care ? CareTheme.font() : .body).interactiveDismissDisabled(busy)
         }
     }
     @ViewBuilder private var feedback: some View {
         if let error {
+            if care {
+                CareError(message: error) {
+                    Task { if let pending { await perform(pending.action, command: pending) } else { await refresh() } }
+                }.padding(.top, 8)
+            } else {
             JournalError(message: error, retryTitle: pending == nil ? "重新读取" : "重试这次操作") {
                 Task { if let pending { await perform(pending.action, command: pending) } else { await refresh() } }
             }.padding(.top, 14)
+            }
         }
         if busy { ProgressView("正在记录与核对…").frame(maxWidth: .infinity).padding(.top, 12) }
     }
@@ -125,7 +151,11 @@ struct LifeInterviewView: View {
         Task { if pending == nil && collecting { await perform("pause") }; onClose() }
     }
     @ViewBuilder private var header: some View {
-        if showingOverview {
+        if care {
+            CareToolbar(title: showingOverview ? (overview?.status == "confirmed" ? "选择话题" : "核对经历") : "慢慢讲述",
+                        step: showingOverview ? (overview?.status == "confirmed" ? "2 / 3" : "1 / 3") : nil,
+                        backIdentifier: "life.back", onBack: close)
+        } else if showingOverview {
             ZStack {
                 VStack(spacing: 3) {
                     Text("人生概览").font(JournalTheme.font(19, medium: true)).foregroundStyle(LifeOverviewStyle.ink)
@@ -158,6 +188,48 @@ struct LifeInterviewView: View {
             }.padding(.horizontal, 16).padding(.vertical, 12)
                 .overlay(alignment: .bottom) { JournalTheme.line.frame(height: 1) }
         }
+    }
+    private var careInlineInput: Bool { typeSize.isAccessibilitySize || verticalSizeClass == .compact }
+    @ViewBuilder private var careContent: some View {
+        if showingOverview, let overview {
+            CareLifeOverviewView(overview: overview, busy: busy, hasPendingAction: pending != nil,
+                onDetails: { editing = nil; detailsPresented = true },
+                onConfirm: { Task { await perform("confirm") } },
+                onSelect: { module in selected = module; Task { await choose() } },
+                onHistory: { historyPresented = true })
+        } else {
+            ScrollView {
+                VStack(spacing: 20) {
+                    if collecting {
+                        Text("第 \(overview?.question_number ?? 1) 个问题，共 \(overview?.total_questions ?? 7) 个")
+                            .font(CareTheme.font(18)).foregroundStyle(JournalTheme.ink2).accessibilityIdentifier("life.progress")
+                        Text(overview?.question ?? overview?.turns.last(where: { $0.role == "assistant" })?.content ?? "想到什么就说什么。")
+                            .font(CareTheme.font(26, bold: true)).multilineTextAlignment(.center).frame(maxWidth: .infinity)
+                        Button("前面聊过的") { historyPresented = true }.font(CareTheme.font(19)).frame(minHeight: 48)
+                    } else {
+                        CareHeading(title: "先聊聊您的人生经历", subtitle: "一次只问一个问题，慢慢想、慢慢说。")
+                        Text("记不清的可以跳过，累了可以下次继续。").font(CareTheme.font(20)).foregroundStyle(JournalTheme.ink2).multilineTextAlignment(.center)
+                        CareButton(title: "开始聊聊", loading: busy, disabled: pending != nil) { Task { await perform("begin") } }
+                            .accessibilityIdentifier("life.begin")
+                    }
+                    if collecting && careInlineInput { careComposer }
+                }.padding(20)
+            }.scrollDismissesKeyboard(.interactively)
+                .safeAreaInset(edge: .bottom, spacing: 0) {
+                    if collecting && !careInlineInput { careComposer }
+                }
+        }
+    }
+    private var careComposer: some View {
+        VStack(spacing: 8) {
+            CareNarrationInput(text: $input, dictation: dictation, disabled: busy, retrying: pending != nil,
+                inputIdentifier: "life.input", sendIdentifier: "life.send", voiceIdentifier: "life.dictation") {
+                Task { if let pending { await perform(pending.action, command: pending) } else { await perform("answer", text: input) } }
+            }
+            Button("记不清了，跳过") { dictation.cancel(); Task { await perform("answer", text: "跳过") } }
+                .font(CareTheme.font(20)).frame(minHeight: 48).disabled(busy || pending != nil || dictation.isBusy)
+                .accessibilityIdentifier("life.skip")
+        }.padding(.horizontal, 20).padding(.vertical, 8)
     }
     private var composer: some View {
         VStack(spacing: 10) {

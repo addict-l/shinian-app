@@ -5,6 +5,7 @@ import SwiftUI
 final class MemorySaveViewModel: ObservableObject {
     @Published var isSaving = false
     @Published var errorMessage: String?
+    @Published private(set) var savedMemory: MemoryEvent?
     private let api: any MemoryAPI
 
     init(api: (any MemoryAPI)? = nil) { self.api = api ?? BackendRepository() }
@@ -14,7 +15,7 @@ final class MemorySaveViewModel: ObservableObject {
         isSaving = true; errorMessage = nil
         defer { isSaving = false }
         do {
-            _ = try await api.save(draft); return true
+            savedMemory = try await api.save(draft); return true
         } catch is CancellationError {
             return false
         } catch {

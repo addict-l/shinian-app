@@ -20,6 +20,11 @@ struct JournalDraftPreviewView: View {
     @State private var confirmRegeneration = false
     @State private var regenerating = false
     @State private var regenerateLatest: GeneratedMemory?
+    @Environment(\.journalCareMode) private var care
+    @EnvironmentObject private var navigation: JournalNavigation
+    @EnvironmentObject private var memories: MemoryListViewModel
+    @State private var saved = false
+    @State private var readingSaved = false
 
     init(presentation: JournalDraftPresentation, identity: String, api: any MemoryAPI,
          onBack: @escaping () -> Void, onSaved: @escaping () async -> Void) {
@@ -30,13 +35,30 @@ struct JournalDraftPreviewView: View {
     }
 
     var body: some View {
+        Group {
+        if care && saved, let memory = saveModel.savedMemory {
+            if readingSaved {
+                VStack(spacing: 0) {
+                    CareToolbar(title: "珍藏的回忆", onBack: { readingSaved = false })
+                    CareStoryReading(memory: memory, identity: identity, api: api)
+                    CareButton(title: "回到首页", secondary: true) { Task { await finishCare(home: true) } }.padding(20)
+                }.background(CareTheme.paper.ignoresSafeArea())
+            } else {
+                CareSavedMemoryView(memory: memory, onRead: { readingSaved = true },
+                    onHome: { Task { await finishCare(home: true) } },
+                    onContinue: { Task { await finishCare(home: false) } })
+            }
+        } else {
         JournalMemoryReviewView(draft: draft, imageData: imageData, identity: identity,
             saveModel: saveModel, onBack: onBack,
             onEdit: { showingEdit = true },
             onRegenerate: { confirmRegeneration = true },
             onSave: {
                 guard await saveModel.save(draft) else { return }
-                await onSaved()
+                if care {
+                    if let memory = saveModel.savedMemory { memories.upsert(memory) }
+                    saved = true
+                } else { await onSaved() }
             })
             .alert("重新生成草稿？", isPresented: $confirmRegeneration) {
                 Button("保留当前草稿", role: .cancel) {}
@@ -53,6 +75,13 @@ struct JournalDraftPreviewView: View {
                 JournalDraftEditorView(draft: draft, api: api, onCancel: { showingEdit = false },
                     onUpdated: { updated in draft = updated; showingEdit = false })
             }
+        }
+        }.interactiveDismissDisabled(saved || saveModel.isSaving)
+    }
+
+    private func finishCare(home: Bool) async {
+        await onSaved()
+        if home { navigation.path.removeAll(); navigation.tab = .home }
     }
 
     private func regenerate() async {

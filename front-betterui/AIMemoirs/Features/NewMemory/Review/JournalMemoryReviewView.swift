@@ -10,6 +10,7 @@ struct JournalMemoryReviewView: View {
     let onEdit: () -> Void
     let onRegenerate: () -> Void
     let onSave: () async -> Void
+    @Environment(\.journalCareMode) private var care
 
     private var memory: MemoryEvent { draft.memory.copy(imageData: imageData ?? draft.memory.imageData) }
     private var hasPhoto: Bool { memory.imageData != nil || memory.imageName != nil }
@@ -22,6 +23,14 @@ struct JournalMemoryReviewView: View {
     }
 
     var body: some View {
+        Group {
+            if care {
+                CareMemoryReview(draft: draft, memory: memory, identity: identity, saveModel: saveModel,
+                                 onBack: onBack, onEdit: onEdit, onRegenerate: onRegenerate, onSave: onSave)
+            } else { ordinaryBody }
+        }
+    }
+    private var ordinaryBody: some View {
         VStack(spacing: 0) {
             JournalNavBar(title: "回忆预览") {
                 JournalRoundButton(icon: "back", label: "返回对话", action: onBack).disabled(saveModel.isSaving)

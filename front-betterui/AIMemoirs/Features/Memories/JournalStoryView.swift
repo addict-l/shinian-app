@@ -7,6 +7,7 @@ struct JournalStoryView: View {
     @EnvironmentObject private var memories: MemoryListViewModel
     @EnvironmentObject private var navigation: JournalNavigation
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.journalCareMode) private var care
     @State private var editing = false
     @State private var deleting = false
     @State private var showingActions = false
@@ -24,15 +25,7 @@ struct JournalStoryView: View {
         return person.relationship.isEmpty ? "关于\(person.name)" : "关于\(person.relationship) · \(person.name)"
     }
     var body: some View {
-        JournalStoryContent(memory: current, identity: identity, person: person, photoAPI: api, topInset: 48)
-            .overlay(alignment: .top) {
-                JournalNavBar {
-                    JournalRoundButton(icon: "back", label: "返回", background: JournalTheme.surface.opacity(0.85)) { dismiss() }
-                } trailing: {
-                    JournalRoundButton(icon: "more", label: "回忆操作", background: JournalTheme.surface.opacity(0.85)) { showingActions = true }
-                        .disabled(busy).accessibilityIdentifier("memory.actions")
-                }
-            }
+        presentation
             .journalPage()
             .safeAreaInset(edge: .bottom) {
                 if let error {
@@ -41,7 +34,7 @@ struct JournalStoryView: View {
                         if latest != nil { Button("读取最新回忆") { if let latest { current = latest; memories.upsert(latest); self.latest = nil; self.error = nil } } }
                         else if needsCacheCleanup { Button("重试清理本机聊天缓存") { Task { await finishDeletion() } } }
                         else { Button("重试读取回忆") { Task { await refresh() } } }
-                    }.font(JournalTheme.font(13)).foregroundStyle(JournalTheme.accentDeep)
+                    }.font(JournalTheme.font(care ? 20 : 13)).foregroundStyle(JournalTheme.accentDeep)
                         .frame(maxWidth: .infinity, alignment: .leading).padding(16).journalCard().padding(.horizontal, 16)
                 }
             }
@@ -65,6 +58,26 @@ struct JournalStoryView: View {
                 Button("保留回忆", role: .cancel) {}
                 Button("确认删除整段", role: .destructive) { Task { await remove() } }
             } message: { Text("“\(current.title)”及其对应的讲述、AI 回复、草稿和照片会一并删除。AI 开场白和同一人物的其他回忆会保留，已导出到外部的 PDF 不受影响。此操作无法撤销。") }
+    }
+    @ViewBuilder private var presentation: some View {
+        if care {
+            VStack(spacing: 0) {
+                CareToolbar(title: "回忆", onBack: { dismiss() })
+                CareStoryReading(memory: current, identity: identity, api: api)
+                Button("回忆操作") { showingActions = true }.font(CareTheme.font(20)).frame(minHeight: 48)
+                    .disabled(busy).accessibilityIdentifier("memory.actions")
+            }
+        } else {
+            JournalStoryContent(memory: current, identity: identity, person: person, photoAPI: api, topInset: 48)
+            .overlay(alignment: .top) {
+                JournalNavBar {
+                    JournalRoundButton(icon: "back", label: "返回", background: JournalTheme.surface.opacity(0.85)) { dismiss() }
+                } trailing: {
+                    JournalRoundButton(icon: "more", label: "回忆操作", background: JournalTheme.surface.opacity(0.85)) { showingActions = true }
+                        .disabled(busy).accessibilityIdentifier("memory.actions")
+                }
+            }
+        }
     }
     private func refresh() async {
         busy = true; defer { busy = false }

@@ -5,6 +5,7 @@ struct JournalComposeView: View {
     @EnvironmentObject private var members: FamilyMemberStore
     @EnvironmentObject private var memories: MemoryListViewModel
     @EnvironmentObject private var navigation: JournalNavigation
+    @Environment(\.journalCareMode) private var care
     let chatAPI: any ChatAPI
     let memoryAPI: any MemoryAPI
     let previewScreen: String?
@@ -18,18 +19,31 @@ struct JournalComposeView: View {
         Group {
             switch navigation.composeStep {
             case .add:
+                if care {
+                    CareAddPersonView(draft: $memberDraft, loading: members.isSaving, error: members.errorMessage, onAdd: addMember) {
+                        if members.members.isEmpty { navigation.tab = .home }
+                        navigation.composeStep = .select
+                    }
+                } else {
                 JournalAddPersonView(draft: $memberDraft, loading: members.isSaving, error: members.errorMessage, onAdd: addMember,
                     onSelect: { navigation.composeStep = .select },
                     onClose: {
                         if members.members.isEmpty { navigation.tab = .home; navigation.composeStep = .select }
                         else { navigation.composeStep = .select }
                     })
+                }
             case .select:
+                if care {
+                    CarePersonSelectionView(onSelect: { person in
+                        resumedDraft = nil; chatIdentity = UUID(); navigation.person = person; navigation.composeStep = .chat
+                    }, onAdd: { navigation.composeStep = .add })
+                } else {
                 JournalPersonSelectionView(search: $search, onSelect: { person in
                     resumedDraft = nil; chatIdentity = UUID()
                     navigation.person = person
                     navigation.composeStep = .chat
                 }, onDelete: { personPendingDelete = $0 }, onAdd: { navigation.composeStep = .add })
+                }
             case .chat:
                 if let person = navigation.person {
                     JournalChatView(person: person, chatAPI: chatAPI, memoryAPI: memoryAPI, previewScreen: previewScreen, resumedDraft: resumedDraft) {

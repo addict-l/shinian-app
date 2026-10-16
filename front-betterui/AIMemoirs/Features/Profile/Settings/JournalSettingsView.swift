@@ -3,6 +3,7 @@ import SwiftUI
 struct JournalSettingsView: View {
     @AppStorage(FamilySessionRegistry.displayNameKey) private var name = "回忆的收藏者"
     @EnvironmentObject private var authentication: AuthenticationStore
+    @AppStorage(JournalCareMode.storageKey) private var careEnabled = false
     @FocusState private var editingName: Bool
 
     var body: some View {
@@ -10,6 +11,14 @@ struct JournalSettingsView: View {
             JournalBackBar(title: "设置")
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
+                    Toggle(isOn: $careEnabled) {
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text("关怀模式").font(JournalTheme.font(careEnabled ? 22 : 18, medium: true))
+                            Text("大字号、大按钮，更简单的讲述与回看。")
+                                .font(JournalTheme.font(careEnabled ? 18 : 14)).foregroundStyle(JournalTheme.ink2)
+                        }
+                    }.tint(CareTheme.accent).padding(16).frame(minHeight: 80).journalCard()
+                        .accessibilityIdentifier("settings.careMode").padding(.bottom, 20)
                     label("个人展示", top: 0)
                     VStack(alignment: .leading, spacing: 4) {
                         Text("显示名称").font(JournalTheme.font(12)).foregroundStyle(JournalTheme.muted)

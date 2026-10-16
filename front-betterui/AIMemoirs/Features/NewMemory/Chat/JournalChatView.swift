@@ -16,6 +16,7 @@ struct JournalChatView: View {
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.journalCareMode) private var care
     private var messages: [ChatMessage] { model.messages }
     @State private var photoItems: [PhotosPickerItem] = []
     @State private var readingPhotos = false
@@ -27,6 +28,8 @@ struct JournalChatView: View {
     @FocusState private var inputFocused: Bool
     @State private var openedAt = Date()
     @State private var lifePresented = false
+    @State private var careHistoryPresented = false
+    @State private var careContinuing = false
 
     init(person: FamilyMember, chatAPI: any ChatAPI, memoryAPI: any MemoryAPI, previewScreen: String?, resumedDraft: LocalChatDraft? = nil, onBack: @escaping () -> Void, onSaved: @escaping () async -> Void) {
         self.person = person; self.chatAPI = chatAPI; self.memoryAPI = memoryAPI; self.previewScreen = previewScreen; self.onBack = onBack; self.onSaved = onSaved
@@ -38,6 +41,10 @@ struct JournalChatView: View {
     private var offersGeneration: Bool {
         guard let id = model.generationOfferMessageID, messages.contains(where: { $0.id == id }) else { return false }
         return model.photos.isEmpty && !model.hasPendingSend && model.inputText.isEmpty && !dictation.isBusy
+    }
+    private var careOffersGeneration: Bool {
+        model.canGenerate && !model.isLoading && !model.hasPendingSend && model.photos.isEmpty &&
+            model.inputText.isEmpty && !dictation.isBusy && !readingPhotos
     }
     var body: some View {
         Group {
@@ -55,11 +62,17 @@ struct JournalChatView: View {
         .task { await start() }
         .onDisappear { dictation.cancel(); model.pause() }
         .onChange(of: navigation.tab) { _, tab in if tab != .compose { dictation.cancel(); model.pause() } }
-        .onChange(of: scenePhase) { _, phase in if phase != .active { dictation.cancel(); model.pause() } }
+        .onChange(of: scenePhase) { _, phase in
+            if phase != .active {
+                // 系统授权框会暂时 inactive；准备期间保留其返回结果。
+                if phase == .background || dictation.phase != .preparing { dictation.cancel() }
+                model.pause()
+            }
+        }
     }
 
     private var needsInitialLifeInterview: Bool {
-        previewScreen == nil && model.latestSnapshot?.lifeOverview?.required == true &&
+        (previewScreen == nil || previewScreen?.hasPrefix("care-life") == true) && model.latestSnapshot?.lifeOverview?.required == true &&
             model.latestSnapshot?.information.guided_interview?.module_selected == false
     }
 
@@ -85,6 +98,8 @@ struct JournalChatView: View {
     }
 
     private var conversation: some View {
+        Group {
+        if care { careConversation } else {
         VStack(spacing: 0) {
             ZStack {
                 if verticalSizeClass == .compact {
@@ -152,7 +167,14 @@ struct JournalChatView: View {
                     }
             }
         }
+        }
+        }
         .onChange(of: dictation.transcript) { _, text in model.inputText = text }
+        .onChange(of: model.generationOfferMessageID) { _, _ in careContinuing = false }
+        .onChange(of: messages.last?.id) { _, _ in if care { careContinuing = false } }
+        .sheet(isPresented: $careHistoryPresented) {
+            CareDialogueHistory(entries: careHistory, photoAPI: chatAPI) { careHistoryPresented = false }
+        }
         .alert("语音输入", isPresented: Binding(get: { dictation.errorMessage != nil }, set: { if !$0 { dictation.errorMessage = nil } })) { Button("确定") { dictation.errorMessage = nil } } message: { Text(dictation.errorMessage ?? "") }
         .onChange(of: photoItems) { _, items in
             guard !items.isEmpty else { return }
@@ -201,6 +223,65 @@ struct JournalChatView: View {
                     await onSaved()
                 })
         }
+    }
+    private var careHistory: [CareDialogueEntry] {
+        CareDialogueEntry.chat(messages)
+    }
+    private var careInlineInput: Bool { dynamicTypeSize.isAccessibilitySize || verticalSizeClass == .compact }
+    private var careConversation: some View {
+        VStack(spacing: 0) {
+            CareToolbar(title: "慢慢讲述", backTitle: "暂停", step: "3 / 3", backIdentifier: "newMemory.step.1") {
+                dictation.cancel(); model.pause(); onBack()
+            }
+            ScrollView {
+                VStack(spacing: 16) {
+                    Text("正在记录\(person.name)的故事").font(CareTheme.font(18)).foregroundStyle(JournalTheme.ink2)
+                    if let message = messages.last(where: { $0.sender == .ai }) {
+                        VStack(spacing: 12) {
+                            Text("回忆助手").font(CareTheme.font(18)).foregroundStyle(CareTheme.accent)
+                            Text(message.text).font(CareTheme.font(26, bold: true)).multilineTextAlignment(.center)
+                                .fixedSize(horizontal: false, vertical: true).frame(maxWidth: .infinity)
+                                .accessibilityIdentifier("care.chat.question")
+                        }.padding(20).background(JournalTheme.surface, in: RoundedRectangle(cornerRadius: 20))
+                    }
+                    Button("前面聊过的") { careHistoryPresented = true }.font(CareTheme.font(19)).frame(minHeight: 48)
+                        .accessibilityIdentifier("care.chat.history")
+                    if model.isLoading { ProgressView(model.progressText).font(CareTheme.font(20)).frame(maxWidth: .infinity) }
+                    if let error = model.errorMessage {
+                        CareError(message: error) { Task { if model.hasPendingSend { await send() } else { await start() } } }
+                    }
+                    if let error = model.storageError { CareError(message: error) { model.retryLocalSave() } }
+                    if careInlineInput { careComposer }
+                }.padding(20)
+            }.scrollIndicators(.hidden).scrollDismissesKeyboard(.interactively)
+                .safeAreaInset(edge: .bottom, spacing: 0) {
+                    if !careInlineInput { careComposer }
+                }
+        }.background(CareTheme.paper.ignoresSafeArea())
+    }
+    private var careComposer: some View {
+        VStack(spacing: 10) {
+            if careOffersGeneration && !careContinuing {
+                CareButton(title: "整理这段回忆", symbol: "book", loading: preparingDraft, disabled: model.isLoading) { Task { await generate() } }
+                    .accessibilityIdentifier("chat.generate")
+                Text("先看草稿，您点保存才会存入回忆。").font(CareTheme.font(18)).foregroundStyle(JournalTheme.ink2).multilineTextAlignment(.center)
+                CareButton(title: "我还想补充", secondary: true) { careContinuing = true }
+            }
+            if !model.photos.isEmpty {
+                Button("管理已选照片（\(model.photos.count)/9）") { managingPhotos = true }
+                    .font(CareTheme.font(20)).frame(minHeight: 48).accessibilityIdentifier("chat.managePhotos")
+            }
+            if readingPhotos { ProgressView("正在读取照片…").font(CareTheme.font(18)) }
+            if !careOffersGeneration || careContinuing {
+                CareNarrationInput(text: $model.inputText, dictation: dictation,
+                    disabled: model.isLoading || preparingDraft || readingPhotos || model.isCompleted, retrying: model.hasPendingSend,
+                    permitsEmpty: !model.photos.isEmpty) { Task { await send() } }
+            }
+            PhotosPicker(selection: $photoItems, maxSelectionCount: max(1, 9 - model.photos.count), selectionBehavior: .ordered, matching: .images) {
+                Label("添加照片", systemImage: "photo").font(CareTheme.font(18)).frame(minHeight: 48)
+            }.disabled(model.photos.count >= 9 || readingPhotos || model.isLoading || model.hasPendingSend || dictation.isBusy)
+                .accessibilityIdentifier("chat.addPhotos")
+        }.padding(.horizontal, 20).padding(.vertical, 10).background(CareTheme.paper)
     }
     @ViewBuilder private func messageView(_ message: ChatMessage) -> some View {
         if message.sender == .user {

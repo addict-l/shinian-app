@@ -24,6 +24,9 @@ import SwiftUI
     private var automaticOfferUsed = false
     private var photos: [UUID: Data] = [:]
     private var savedDrafts: Set<UUID> = []
+    private var careLife: LifeOverview?
+    private var careModule = ""
+    private var careCommands: Set<UUID> = []
     init(familyFilm: Bool = false, emptyState: String? = nil) {
         conflictOnce = emptyState == "memory-conflict"
         pendingReply = emptyState == "chat-pending"
@@ -64,6 +67,9 @@ import SwiftUI
             events.removeAll { $0.personIDs.contains(people[0].id) }
         }
         loadDesignMockup(screen: emptyState)
+        if let screen = emptyState, screen.hasPrefix("care-life") {
+            careLife = careLifeFixture(status: screen == "care-life-topics" ? "confirmed" : screen == "care-life-question" ? "collecting" : "review")
+        }
         if emptyState == "memoir-fixture" {
             for index in events.indices { events[index].primaryPersonID = events[index].personIDs.first }
             let data = UIImage(named: "mock_photo")?.jpegData(compressionQuality: 0.8)
@@ -238,7 +244,54 @@ import SwiftUI
     func state(sessionID: UUID) async throws -> ChatSnapshot {
         if recoveryOffline { throw APIError.network }
         let current = Array(conversation.dropFirst(segmentStart))
-        return ChatSnapshot(sessionID: session, messages: Array(conversation.suffix(20)), canGenerate: current.contains { $0.sender == .user && !$0.text.isEmpty }, generationOffer: offerMessageID.map { GenerationOffer(message_id: $0) }, currentMessageIDs: current.map(\.id))
+        var snapshot = ChatSnapshot(lifeOverview: careLife, sessionID: session, messages: Array(conversation.suffix(20)), canGenerate: current.contains { $0.sender == .user && !$0.text.isEmpty }, generationOffer: offerMessageID.map { GenerationOffer(message_id: $0) }, currentMessageIDs: current.map(\.id))
+        if careLife != nil { snapshot.information.guided_interview = .init(module: careModule.isEmpty ? "childhood" : careModule, module_selected: !careModule.isEmpty, topic_index: 0, phase: "topic") }
+        return snapshot
+    }
+    /// 只在显式 Debug 预览入口启用；正式启动仍使用 BackendRepository。
+    private let careQuestions = ["您小时候，住在什么样的地方？", "后来在哪里读书或学手艺？", "年轻时做过哪些工作？", "后来工作和生活有哪些变化？", "您最想聊聊哪位家人？", "有没有一次生活变化，您一直记得？", "您现在的日子是怎样的？"]
+    private func careLifeFixture(status: String) -> LifeOverview {
+        let ids = ["home", "learning", "early_work", "later_work", "family", "changes", "present"]
+        let answers = ["小时候住在乡下，和父母一起生活。", "在村里的学校读书。", "年轻时在镇上的工厂工作。", "后来仍在工厂做工。", "我最牵挂的是家人。", "后来搬到了镇上。", "现在喜欢散步、养花。"]
+        let turns = status == "collecting" ? [LifeTurn(id: UUID(), role: "assistant", content: careQuestions[0])] :
+            ids.indices.flatMap { [LifeTurn(id: UUID(), role: "assistant", content: careQuestions[$0]), LifeTurn(id: UUID(), role: "user", content: answers[$0])] }
+        return LifeOverview(version: 1, status: status, required: true, paused: false,
+            fields: ids.indices.map { LifeField(topic_id: ids[$0], status: status == "collecting" ? "pending" : "known", evidence: status == "collecting" ? [] : [LifeQuote(message_id: turns[$0 * 2 + 1].id, quote: answers[$0])]) },
+            turns: turns, question_id: status == "collecting" ? "home" : nil, question: status == "collecting" ? careQuestions[0] : nil,
+            question_number: status == "collecting" ? 1 : 7, total_questions: 7, confirmed_version: status == "confirmed" ? 1 : nil, pending_request_id: nil, pending_action: nil)
+    }
+    func lifeAction(sessionID: UUID, command: LifeCommand) async throws -> ChatSnapshot {
+        guard let previous = careLife else { throw APIError.contractUnavailable }
+        if careCommands.contains(command.client_request_id) { return try await state(sessionID: sessionID) }
+        guard command.expected_version == previous.version else { throw APIError.rejected(409, "经历已更新，请重新核对。") }
+        var status = previous.status; var fields = previous.fields; var turns = previous.turns
+        var number = previous.question_number; var paused = previous.paused
+        switch command.action {
+        case "begin": status = "collecting"; number = 1
+        case "confirm": status = "confirmed"
+        case "pause": paused = true
+        case "answer":
+            let index = min(6, max(0, number - 1)); let id = UUID()
+            turns.append(LifeTurn(id: id, role: "user", content: command.text))
+            fields[index] = LifeField(topic_id: fields[index].topic_id, status: command.text == "跳过" ? "skipped" : "known", evidence: command.text == "跳过" ? [] : [LifeQuote(message_id: id, quote: command.text)])
+            if number == 7 { status = "review" } else { number += 1; turns.append(LifeTurn(id: UUID(), role: "assistant", content: careQuestions[number - 1])) }
+        case "correct":
+            if let index = fields.firstIndex(where: { $0.topic_id == command.topic_id }) {
+                let id = UUID(); turns.append(LifeTurn(id: id, role: "user", content: command.text))
+                fields[index] = LifeField(topic_id: fields[index].topic_id, status: "known", evidence: [LifeQuote(message_id: id, quote: command.text)]); status = "review"
+            }
+        default: throw APIError.contractUnavailable
+        }
+        careCommands.insert(command.client_request_id)
+        careLife = LifeOverview(version: previous.version + 1, status: status, required: true, paused: paused, fields: fields, turns: turns,
+            question_id: status == "collecting" ? fields[number - 1].topic_id : nil, question: status == "collecting" ? careQuestions[number - 1] : nil,
+            question_number: number, total_questions: 7, confirmed_version: status == "confirmed" ? previous.version + 1 : nil, pending_request_id: nil, pending_action: nil)
+        return try await state(sessionID: sessionID)
+    }
+    func selectInterview(sessionID: UUID, module: String, version: Int) async throws -> ChatSnapshot {
+        guard careLife?.status == "confirmed" else { throw APIError.contractUnavailable }
+        careModule = module; conversation = [ChatMessage(sender: .ai, text: "说起这段日子，您最先想起的是哪一个画面？")]
+        return try await state(sessionID: sessionID)
     }
     func generate(sessionID: UUID) async throws -> GeneratedMemory {
         if ProcessInfo.processInfo.environment["AI_MEMORIES_PREVIEW_DELAY"] == "1" {
@@ -247,7 +300,7 @@ import SwiftUI
         let source = conversation.dropFirst(segmentStart).map(\.id)
         if draftSources[sessionID] == source, let id = sessionDrafts[sessionID], let value = drafts[id] { return value }
         let person = activePerson ?? people[0]
-        let mock = segmentStart == 0 && person.relationship == "爷爷" ? mockupDraft : nil
+        let mock = careLife == nil && segmentStart == 0 && person.relationship == "爷爷" ? mockupDraft : nil
         let narration = conversation.dropFirst(segmentStart).filter { $0.sender == .user }.map(\.text).joined(separator: "\n\n")
         var memory = MemoryEvent(personName: person.name, personIDs: [person.id], date: nil,
             content: mock?.content ?? narration, title: mock?.title ?? "关于\(person.relationship.isEmpty ? person.name : person.relationship)的一段回忆",
@@ -298,9 +351,12 @@ import SwiftUI
         guard let value = drafts[id] else { throw APIError.httpStatus(404) }; return value
     }
     func editDraft(_ draft: GeneratedMemory, title: String, content: String) async throws -> GeneratedMemory {
+        try await editDraft(draft, title: title, content: content, time: MemoryEdit(draft.memory).time)
+    }
+    func editDraft(_ draft: GeneratedMemory, title: String, content: String, time: InformationDimension) async throws -> GeneratedMemory {
         let current = try await getDraft(id: draft.draftID)
         guard current.revision == draft.revision else { throw APIError.rejected(409, "草稿已更新") }
-        var edit = MemoryEdit(current.memory); edit.title = title; edit.content = content
+        var edit = MemoryEdit(current.memory); edit.title = title; edit.content = content; edit.time = time
         let memory = edited(current.memory, edit)
         let result = GeneratedMemory(draftID: draft.draftID, revision: UUID(), memory: memory,
             preview: EventData(person: memory.personName, date: memory.dateLabel, title: title, content: content, location: memory.location ?? "待补充", participants: [memory.personName], emotion: memory.information.feeling.value ?? ""), manuallyEdited: true)

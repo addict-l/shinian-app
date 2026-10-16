@@ -17,6 +17,7 @@ struct JournalDraftEditorView: View {
     @State private var discard = false
     @State private var overwrite = false
     @FocusState private var focused: String?
+    @Environment(\.journalCareMode) private var care
     init(draft: GeneratedMemory, api: any MemoryAPI, onCancel: @escaping () -> Void, onUpdated: @escaping (GeneratedMemory) -> Void) {
         self.draft = draft; self.api = api; self.onCancel = onCancel; self.onUpdated = onUpdated
         _title = State(initialValue: draft.memory.title); _text = State(initialValue: draft.memory.content)
@@ -61,7 +62,8 @@ struct JournalDraftEditorView: View {
                 .alert("保存本机修改到最新草稿？", isPresented: $overwrite) {
                     Button("继续核对", role: .cancel) {}; Button("保存我的修改") { if let latest { Task { await save(latest) } } }
                 } message: { Text("将用上方编辑的标题、正文和时间替换最新草稿。其他设备的新修改请先核对。") }
-        }.interactiveDismissDisabled(changed || busy)
+        }.font(care ? CareTheme.font() : .body).environment(\.defaultMinListRowHeight, care ? 64 : 44)
+            .interactiveDismissDisabled(changed || busy)
             .sheet(item: $timeInput) { input in
                     TimeLinkageSheet(input: input, load: { try await api.previewDraftTime(latest ?? draft, input: input) }, apply: { captured, preview, selected in
                         guard title == captured.title, text == captured.content, time == captured.newTime else { throw APIError.server("编辑内容已变化，请重新核对时间。") }

@@ -10,6 +10,7 @@ struct JournalAppView: View {
     private let memoirAPI: any MemoirAPI
     private let previewScreen: String?
     @State private var previewReady = false
+    @AppStorage(JournalCareMode.storageKey) private var careEnabled = false
 
     init() {
         let screen = JournalDemo.screen
@@ -35,6 +36,7 @@ struct JournalAppView: View {
 
     /// 设计稿中：添加人物、对话、回忆详情、回忆录、设置和隐私为全屏页面，不显示主导航。
     private var showsTabBar: Bool {
+        if careEnabled { return navigation.path.isEmpty && navigation.tab != .compose }
         guard let route = navigation.path.last else {
             return navigation.tab != .compose || navigation.composeStep == .select
         }
@@ -47,23 +49,40 @@ struct JournalAppView: View {
     /// The tab content is deliberately kept in one navigation stack so a person or
     /// memory can be opened from any tab without recreating the data stores.
     var body: some View {
-        ZStack(alignment: .bottom) {
-            VStack(spacing: 0) {
-                content
-                if showsTabBar { Color.clear.frame(height: 66) }
-            }
-            if showsTabBar {
-                JournalTabBarFade().ignoresSafeArea(edges: .bottom)
-                JournalTabBar(selection: Binding(get: { navigation.tab }, set: { tab in
-                    navigation.path.removeAll(); navigation.tab = tab
-                })).offset(y: 8)
+        Group {
+            if careEnabled {
+                VStack(spacing: 0) {
+                    content
+                    if showsTabBar {
+                        CareTabBar(selection: Binding(get: { navigation.tab }, set: { tab in
+                            navigation.path.removeAll(); navigation.tab = tab
+                        }))
+                    }
+                }
+            } else {
+                ZStack(alignment: .bottom) {
+                    VStack(spacing: 0) {
+                        content
+                        if showsTabBar { Color.clear.frame(height: 66) }
+                    }
+                    if showsTabBar {
+                        JournalTabBarFade().ignoresSafeArea(edges: .bottom)
+                        JournalTabBar(selection: Binding(get: { navigation.tab }, set: { tab in
+                            navigation.path.removeAll(); navigation.tab = tab
+                        })).offset(y: 8)
+                    }
+                }
             }
         }
         .background(JournalTheme.paper.ignoresSafeArea())
         .environmentObject(members).environmentObject(memories).environmentObject(navigation)
+        .environment(\.journalCareMode, careEnabled)
         .environment(\.locale, Locale(identifier: "zh_CN"))
-        .font(JournalTheme.font(15)).foregroundStyle(JournalTheme.ink)
+        .font(JournalTheme.font(careEnabled ? 22 : 15)).foregroundStyle(JournalTheme.ink)
         .tint(JournalTheme.accent).preferredColorScheme(dark ? .dark : .light)
+        .onChange(of: careEnabled) { _, _ in
+            navigation.path.removeAll(); navigation.tab = .home; navigation.composeStep = .select
+        }
         .task {
             await members.load(); await memories.load()
             guard !previewReady else { return }; previewReady = true
@@ -93,7 +112,8 @@ struct JournalAppView: View {
                 case "memory-edit", "memory-conflict": if let event = memories.memoryEvents.first { navigation.path = [.memory(event.id)] }
                 case "person": navigation.tab = .family; if let person = members.members.first { navigation.path = [.person(person.id)] }
                 case "memoir": if let person = members.members.first { navigation.path = [.memoir(person.id)] }
-                default: break
+                default:
+                    if previewScreen.hasPrefix("care-life") { navigation.compose(with: members.members.first) }
                 }
             }
         }
@@ -102,16 +122,20 @@ struct JournalAppView: View {
     // Reserve actual layout space for the custom tab bar, including on non-scroll pages.
     private var content: some View {
         NavigationStack(path: $navigation.path) {
-            TabView(selection: $navigation.tab) {
+            Group {
+                if careEnabled { careTabs }
+                else { TabView(selection: $navigation.tab) {
                 JournalHomeView().toolbar(.hidden, for: .tabBar).tag(JournalTab.home)
                 JournalComposeView(chatAPI: chatAPI, memoryAPI: memoryAPI, previewScreen: previewScreen).toolbar(.hidden, for: .tabBar).tag(JournalTab.compose)
                 JournalFamilyFilmView().toolbar(.hidden, for: .tabBar).tag(JournalTab.family)
                 JournalProfileView().toolbar(.hidden, for: .tabBar).tag(JournalTab.profile)
+                } }
             }
             .toolbar(.hidden, for: .tabBar).toolbar(.hidden, for: .navigationBar)
             .navigationDestination(for: JournalRoute.self) { route in
                 switch route {
-                case .memories: JournalMemoriesView()
+                case .memories:
+                    if careEnabled { CareMemoriesView() } else { JournalMemoriesView() }
                 case .familyFilms: JournalAllFamilyFilmsView()
                 case .person(let id):
                     if let person = members.members.first(where: { $0.id == id }) { JournalPersonView(person: person) }
@@ -126,6 +150,15 @@ struct JournalAppView: View {
                 case .privacy: JournalPrivacyView()
                 }
             }
+        }
+    }
+
+    @ViewBuilder private var careTabs: some View {
+        switch navigation.tab {
+        case .home: CareHomeView()
+        case .compose: JournalComposeView(chatAPI: chatAPI, memoryAPI: memoryAPI, previewScreen: previewScreen)
+        case .family: CareMemoriesView(isRoot: true)
+        case .profile: CareMoreView()
         }
     }
 }
