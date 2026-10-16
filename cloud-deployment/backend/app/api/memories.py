@@ -1,6 +1,7 @@
+from app.api.authentication import current_session
 from uuid import UUID
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 
 from app.schemas.memory import Memory, MemoryCreate
 from app.services.family_member_service import FamilyMemberNotFoundError
@@ -25,9 +26,9 @@ memory_service = MemoryService()
     response_model=list[Memory],
 )
 def list_memories(
-    family_id: UUID | None = None,
+    family_id: UUID | None = None, principal=Depends(current_session),
 ) -> list[Memory]:
-    return memory_service.list_memories(family_id)
+    return memory_service.list_memories(UUID(principal.family_id))
 
 
 @router.post(

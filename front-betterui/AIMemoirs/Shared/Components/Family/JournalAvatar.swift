@@ -63,8 +63,10 @@ struct JournalUserAvatar: View {
 @MainActor final class JournalProfileAvatarStore: ObservableObject {
     static let shared = JournalProfileAvatarStore()
     @Published private(set) var image: UIImage?
-    private let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("ProfileAvatar.jpg")
-    private init() {
+    private var url: URL { FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        .appendingPathComponent("Accounts/" + FamilySessionRegistry.scopeKey + "/ProfileAvatar.jpg") }
+    private init() { reload() }
+    func reload() {
         image = JournalDemo.isPreview ? UIImage(named: "DesignPhoto-mom") : nil
         if let data = try? Data(contentsOf: url) { image = UIImage(data: data) }
     }
@@ -77,22 +79,22 @@ struct JournalUserAvatar: View {
         let format = UIGraphicsImageRendererFormat(); format.scale = 1
         let resized = UIGraphicsImageRenderer(size: size, format: format).image { _ in decoded.draw(in: CGRect(origin: .zero, size: size)) }
         guard let jpeg = resized.jpegData(compressionQuality: 0.85) else { throw APIError.server("照片保存失败。") }
-        try jpeg.write(to: url, options: .atomic)
+        try FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
+        try jpeg.write(to: url, options: [.atomic, .completeFileProtectionUntilFirstUserAuthentication])
         image = resized
     }
 }
 
 /// 只读访问家庭胶片保存的本机头像（Documents/FamilyPortraits），按文件修改时间失效缓存。
 enum JournalPortraitCache {
-    private static let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        .appendingPathComponent("FamilyPortraits", isDirectory: true)
+    private static var directory: URL { FamilySessionRegistry.portraitsDirectory }
     private static let cache = NSCache<NSString, Entry>()
     private final class Entry { let date: Date; let image: UIImage; init(date: Date, image: UIImage) { self.date = date; self.image = image } }
 
     static func image(for id: UUID) -> UIImage? {
         let url = directory.appendingPathComponent(id.uuidString).appendingPathExtension("jpg")
         guard let date = (try? FileManager.default.attributesOfItem(atPath: url.path))?[.modificationDate] as? Date else { return nil }
-        let key = id.uuidString as NSString
+        let key = (FamilySessionRegistry.scopeKey + id.uuidString) as NSString
         if let entry = cache.object(forKey: key), entry.date == date { return entry.image }
         guard let image = UIImage(contentsOfFile: url.path) else { return nil }
         cache.setObject(Entry(date: date, image: image), forKey: key)

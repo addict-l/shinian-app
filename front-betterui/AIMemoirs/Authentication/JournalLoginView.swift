@@ -62,11 +62,11 @@ struct JournalLoginView: View {
             .toolbar(.hidden, for: .navigationBar)
             .onChange(of: username) { authentication.errorMessage = nil }
             .onChange(of: password) { authentication.errorMessage = nil }
-            .navigationDestination(isPresented: $showsRegistration) { JournalRegistrationView() }
+            .navigationDestination(isPresented: $showsRegistration) { JournalRegistrationView(authentication: authentication) }
             .alert("找回家庭账号", isPresented: $showsAccountHelp) {
                 Button("知道了", role: .cancel) { }
             } message: {
-                Text("当前使用家庭共享账号。请向为你开通账号的人确认账号或重置密码，再回来登录。")
+                Text("一家人使用同一个家庭账号。账号不区分大小写；忘记账号或密码时，请联系服务维护者协助恢复，目前不支持自助找回密码。")
             }
         }
         .tint(JournalTheme.authAccent)

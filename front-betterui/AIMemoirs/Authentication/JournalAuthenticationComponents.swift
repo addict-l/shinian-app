@@ -97,7 +97,7 @@ struct JournalAuthField: View {
                 }
                 .font(JournalTheme.font(16)).foregroundStyle(JournalTheme.ink)
                 .textInputAutocapitalization(.never).autocorrectionDisabled()
-                .keyboardType(secure ? .asciiCapable : .default)
+                .keyboardType(.asciiCapable)
                 .textContentType(secure ? (newPassword ? .newPassword : .password) : .username)
                 .focused(focus, equals: field).submitLabel(submitLabel).onSubmit(onSubmit)
                 .accessibilityIdentifier(identifier).accessibilityHint(error ?? "")

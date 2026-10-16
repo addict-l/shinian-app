@@ -19,7 +19,7 @@ family_service = FamilyService()
     status_code=201,
 )
 def create_family(data: FamilyCreate) -> Family:
-    return family_service.create_family(data)
+    raise HTTPException(409, '注册账号时已自动创建家庭，无需重复创建。')
 
 
 @router.get(

@@ -6,7 +6,7 @@ import SwiftUI
     @Published var errorMessage: String?
     private let directory: URL
     init(directory: URL? = nil) {
-        self.directory = directory ?? FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("FamilyPortraits", isDirectory: true)
+        self.directory = directory ?? FamilySessionRegistry.portraitsDirectory
     }
     func load(_ ids: [UUID]) {
         for id in ids where images[id] == nil {

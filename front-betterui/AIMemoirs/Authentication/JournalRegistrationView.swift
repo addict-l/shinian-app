@@ -1,22 +1,26 @@
 import SwiftUI
 
-/// 注册表单预备界面：只校验本机输入，不发送请求、保存密码或创建账号。
+/// 注册成功后进入服务端新建的独立家庭。
 struct JournalRegistrationView: View {
+    @ObservedObject var authentication: AuthenticationStore
     @Environment(\.dismiss) private var dismiss
     @State private var username = ""
     @State private var password = ""
     @State private var confirmation = ""
     @State private var submitted = false
-    @State private var showsUnavailable = false
     @FocusState private var focusedField: JournalAuthFieldID?
 
     private var usernameError: String? {
-        submitted && username.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? "请填写家庭账号。" : nil
+        guard submitted else { return nil }
+        let value = username.trimmingCharacters(in: .whitespacesAndNewlines)
+        if value.isEmpty { return "请填写家庭账号。" }
+        return value.range(of: "^[A-Za-z0-9_]{3,32}$", options: .regularExpression) == nil
+            ? "账号须为 3–32 位字母、数字或下划线。" : nil
     }
     private var passwordError: String? {
         guard submitted else { return nil }
         if password.isEmpty { return "请设置密码。" }
-        if password.count < 8 { return "密码至少需要 8 位。" }
+        if password.count < 8 || password.count > 128 { return "密码需要 8–128 位。" }
         if password.allSatisfy(\.isWhitespace) { return "密码不能只包含空格。" }
         return nil
     }
@@ -30,12 +34,14 @@ struct JournalRegistrationView: View {
         JournalAuthPage(title: "开启家庭回忆", subtitle: "从今天起，一起留下值得珍藏的时光。",
             compact: true, focusedField: $focusedField) {
             VStack(spacing: 16) {
-                JournalAuthNotice("自助注册尚未开放。已有家庭账号，可直接返回登录。")
+                JournalAuthNotice("一家人共用一个账号，在各自的设备上记录和查看家庭回忆。")
                     .accessibilityIdentifier("register.notice")
                 VStack(spacing: 16) {
                     JournalAuthField(title: "家庭账号", placeholder: "为家庭取一个账号", icon: "home",
                         text: $username, field: .username, focus: $focusedField, error: usernameError,
                         identifier: "register.username", submitLabel: .next) { focusedField = .password }
+                    Text("3–32 位字母、数字或下划线，不区分大小写。")
+                        .font(JournalTheme.font(12)).foregroundStyle(JournalTheme.ink2)
                     VStack(alignment: .leading, spacing: 7) {
                         JournalAuthField(title: "设置密码", placeholder: "至少 8 位密码", icon: "lock",
                             text: $password, field: .password, focus: $focusedField, error: passwordError,
@@ -51,7 +57,12 @@ struct JournalRegistrationView: View {
                         identifier: "register.confirmation", secure: true, newPassword: true,
                         submitLabel: .done, onSubmit: submit)
                 }
-                JournalAuthButton(title: "注册", action: submit).accessibilityIdentifier("register.submit")
+                .disabled(authentication.isLoading)
+                if let error = authentication.errorMessage {
+                    JournalAuthNotice(error, isError: true).accessibilityIdentifier("register.error")
+                }
+                JournalAuthButton(title: authentication.isLoading ? "正在创建家庭…" : "注册并进入家庭",
+                    loading: authentication.isLoading, action: submit).accessibilityIdentifier("register.submit")
                 Button {
                     focusedField = nil
                     dismiss()
@@ -60,26 +71,25 @@ struct JournalRegistrationView: View {
                      + Text("返回登录").foregroundStyle(JournalTheme.authAccent).bold())
                         .font(JournalTheme.font(15)).frame(minHeight: 44)
                 }
-                .buttonStyle(.plain).accessibilityIdentifier("register.login")
+                .buttonStyle(.plain).disabled(authentication.isLoading).accessibilityIdentifier("register.login")
             }
         }
         .navigationTitle("创建账号").navigationBarTitleDisplayMode(.inline)
         .toolbar(.visible, for: .navigationBar)
         .toolbarBackground(JournalTheme.paper, for: .navigationBar)
-        .alert("自助注册尚未开放", isPresented: $showsUnavailable) {
-            Button("返回登录") { dismiss() }
-            Button("继续查看", role: .cancel) { }
-        } message: {
-            Text("填写内容已通过检查，但当前还不能创建账号。账号未创建，填写的密码也未保存。已有家庭账号可直接登录。")
-        }
+        .onChange(of: username) { authentication.errorMessage = nil }
+        .onChange(of: password) { authentication.errorMessage = nil }
+        .onChange(of: confirmation) { authentication.errorMessage = nil }
+        .onDisappear { authentication.errorMessage = nil }
     }
 
     private func submit() {
+        guard !authentication.isLoading else { return }
         submitted = true
         if usernameError != nil { focusedField = .username; return }
         if passwordError != nil { focusedField = .password; return }
         if confirmationError != nil { focusedField = .confirmation; return }
         focusedField = nil
-        showsUnavailable = true
+        Task { await authentication.register(username: username, password: password) }
     }
 }

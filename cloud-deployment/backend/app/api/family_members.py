@@ -1,6 +1,7 @@
+from app.api.authentication import current_session
 from uuid import UUID
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 
 from app.schemas.family_member import FamilyMember, FamilyMemberCreate
 from app.services.family_member_service import (
@@ -40,8 +41,8 @@ def create_family_member(
     "/",
     response_model=list[FamilyMember],
 )
-def list_family_members(family_id: UUID | None = None) -> list[FamilyMember]:
-    return family_member_service.list_family_members(family_id)
+def list_family_members(family_id: UUID | None = None, principal=Depends(current_session)) -> list[FamilyMember]:
+    return family_member_service.list_family_members(UUID(principal.family_id))
 
 
 @router.get(

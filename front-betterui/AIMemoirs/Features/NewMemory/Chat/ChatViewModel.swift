@@ -39,7 +39,7 @@ struct MessagePhoto: Identifiable {
     private var preparedOpening: ChatMessage?
 
     init(api: (any ChatAPI)? = nil, store: ChatDraftStore? = nil, draft: LocalChatDraft? = nil, person: FamilyMember? = nil) {
-        self.api = api ?? BackendRepository.shared; self.store = store
+        self.api = api ?? BackendRepository(); self.store = store
         if person?.hasChatHistory == false { preparedOpening = person?.openingMessage }
         var draft = draft
         if draft == nil, let person {

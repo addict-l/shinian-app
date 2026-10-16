@@ -28,7 +28,8 @@ extension Notification.Name {
 struct APIClient {
     let baseURL: URL
     var session: URLSession = .shared
-    var authorizationProvider: () -> String? = { BasicCredentialStore.shared.authorizationHeader }
+    var timeoutInterval: TimeInterval = 120
+    var authorizationProvider: () -> String? = FamilySessionRegistry.authorizationProvider()
 
     static var local: APIClient {
         #if DEBUG
@@ -58,21 +59,24 @@ struct APIClient {
         var components = URLComponents(url: baseURL.appendingPathComponent(path), resolvingAgainstBaseURL: false)!
         if !query.isEmpty { components.queryItems = query }
         guard let url = components.url else { throw APIError.insecureURL }
-        var request = URLRequest(url: url, timeoutInterval: 120)
+        var request = URLRequest(url: url, timeoutInterval: timeoutInterval)
+        request.cachePolicy = .reloadIgnoringLocalCacheData
         request.httpMethod = method
         request.httpBody = body
         request.setValue("application/json", forHTTPHeaderField: "Accept")
-        if let authorization = authorizationProvider() {
+        let authorization = authorizationProvider()
+        if let authorization {
             request.setValue(authorization, forHTTPHeaderField: "Authorization")
         }
         if body != nil { request.setValue(contentType, forHTTPHeaderField: "Content-Type") }
         do {
             let (data, response) = try await session.data(for: request)
+            guard authorizationProvider() == authorization else { throw CancellationError() }
             guard let http = response as? HTTPURLResponse else { throw APIError.invalidResponse }
             if http.statusCode == 401 {
-                NotificationCenter.default.post(name: .journalAuthenticationRequired, object: nil,
+                await MainActor.run { NotificationCenter.default.post(name: .journalAuthenticationRequired, object: nil,
                     userInfo: ["authorization": request.value(forHTTPHeaderField: "Authorization") ?? "",
-                               "server": baseURL.absoluteString])
+                               "server": baseURL.absoluteString]) }
                 throw APIError.authenticationRequired
             }
             guard (200..<300).contains(http.statusCode) else {
@@ -81,7 +85,10 @@ struct APIClient {
                     if (400..<500).contains(http.statusCode) { throw APIError.rejected(http.statusCode, message) }
                     throw APIError.server(message)
                 }
-                if http.statusCode == 422 { throw APIError.rejected(422, "提交的内容不符合要求，请检查填写的信息和照片。") }
+                if http.statusCode == 422 {
+                    throw APIError.rejected(422, path.hasPrefix("api/v1/auth/")
+                        ? "账号格式或密码不符合要求，请检查后重试。" : "提交的内容不符合要求，请检查填写的信息和照片。")
+                }
                 throw APIError.httpStatus(http.statusCode)
             }
             return data

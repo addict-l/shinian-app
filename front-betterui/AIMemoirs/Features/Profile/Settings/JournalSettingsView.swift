@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct JournalSettingsView: View {
-    @AppStorage("journal.displayName") private var name = "回忆的收藏者"
+    @AppStorage(FamilySessionRegistry.displayNameKey) private var name = "回忆的收藏者"
     @EnvironmentObject private var authentication: AuthenticationStore
     @FocusState private var editingName: Bool
 
@@ -37,14 +37,20 @@ struct JournalSettingsView: View {
                         }
                         Spacer()
                     }.padding(16).journalCard()
-                    Button { authentication.logout() } label: {
+                    Button { Task { await authentication.logout() } } label: {
                         HStack(spacing: 6) {
                             DesignIcon("logout", size: 19)
-                            Text("退出家庭账号").font(JournalTheme.font(15.5))
+                            Text(authentication.isLoading ? "正在退出…" : "退出家庭登录").font(JournalTheme.font(15.5))
                         }.foregroundStyle(JournalTheme.danger).frame(maxWidth: .infinity).frame(height: 52)
                             .background(JournalTheme.surface, in: Capsule())
                             .overlay { Capsule().stroke(Color(hex: 0xF0D3CC), lineWidth: 1) }
-                    }.buttonStyle(JournalActionButtonStyle()).padding(.top, 34)
+                    }.buttonStyle(JournalActionButtonStyle()).disabled(authentication.isLoading)
+                        .accessibilityIdentifier("settings.logout").padding(.top, 34)
+                    Text("仅退出当前设备，家庭和回忆会保留。")
+                        .font(JournalTheme.font(12)).foregroundStyle(JournalTheme.ink2).padding(.top, 10)
+                    if let error = authentication.errorMessage {
+                        Text(error).font(JournalTheme.font(13)).foregroundStyle(JournalTheme.danger).padding(.top, 12)
+                    }
                 }.padding(.horizontal, JournalTheme.gutter).padding(.top, 8).padding(.bottom, 24)
             }.scrollIndicators(.hidden)
         }.journalPage()

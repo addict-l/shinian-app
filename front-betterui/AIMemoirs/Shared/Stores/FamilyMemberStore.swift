@@ -11,7 +11,7 @@ final class FamilyMemberStore: ObservableObject {
     private let api: any FamilyAPI
     private var mutationVersion = 0
 
-    init(api: (any FamilyAPI)? = nil) { self.api = api ?? BackendRepository.shared }
+    init(api: (any FamilyAPI)? = nil) { self.api = api ?? BackendRepository() }
 
     /// Ignore an older load response when a newer add/delete operation has started.
     func load() async {

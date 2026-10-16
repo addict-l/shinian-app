@@ -1,6 +1,7 @@
+from app.api.authentication import current_session
 from uuid import UUID
 from app.schemas.life_overview import LifeAction, LifeOverview
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from app.schemas.chat import ChatSession, ChatSessionCreate, ChatMessage, ChatMessageCreate
 from app.schemas.workflow import ChatState, DraftResponse
 from app.services.workflow_service import WorkflowService
@@ -52,8 +53,8 @@ def send_person_message(session_id: UUID, body: ChatMessageCreate):
     return workflow.person_state(session_id)
 
 @router.get('/sessions', response_model=list[ChatSession])
-def list_sessions(family_id: UUID | None = None):
-    return workflow.chat.list_sessions(family_id)
+def list_sessions(family_id: UUID | None = None, principal=Depends(current_session)):
+    return workflow.chat.list_sessions(UUID(principal.family_id))
 
 @router.post('/sessions/{session_id}/start', response_model=ChatState)
 def start_session(session_id: UUID):

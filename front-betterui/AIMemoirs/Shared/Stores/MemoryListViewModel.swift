@@ -12,7 +12,7 @@ final class MemoryListViewModel: ObservableObject {
     @Published var errorMessage: String?
     private let api: any MemoryAPI
 
-    init(api: (any MemoryAPI)? = nil) { self.api = api ?? BackendRepository.shared }
+    init(api: (any MemoryAPI)? = nil) { self.api = api ?? BackendRepository() }
 
     func load() async {
         guard !isLoading else { return }

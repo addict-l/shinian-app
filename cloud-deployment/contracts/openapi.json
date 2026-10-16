@@ -5,6 +5,133 @@
     "version": "0.6.0"
   },
   "paths": {
+    "/api/v1/auth/register": {
+      "post": {
+        "tags": [
+          "authentication"
+        ],
+        "summary": "Register",
+        "operationId": "register_api_v1_auth_register_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountCredentials"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/login": {
+      "post": {
+        "tags": [
+          "authentication"
+        ],
+        "summary": "Login",
+        "operationId": "login_api_v1_auth_login_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountCredentials"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/me": {
+      "get": {
+        "tags": [
+          "authentication"
+        ],
+        "summary": "Me",
+        "operationId": "me_api_v1_auth_me_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountIdentity"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/auth/logout": {
+      "post": {
+        "tags": [
+          "authentication"
+        ],
+        "summary": "Logout",
+        "operationId": "logout_api_v1_auth_logout_post",
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
     "/api/v1/families/": {
       "post": {
         "tags": [
@@ -43,7 +170,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
       }
     },
     "/api/v1/families/{family_id}": {
@@ -53,6 +185,11 @@
         ],
         "summary": "Get Family",
         "operationId": "get_family_api_v1_families__family_id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "family_id",
@@ -96,6 +233,11 @@
         ],
         "summary": "Create Family Member",
         "operationId": "create_family_member_api_v1_family_members__post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -135,6 +277,11 @@
         ],
         "summary": "List Family Members",
         "operationId": "list_family_members_api_v1_family_members__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "family_id",
@@ -189,6 +336,11 @@
         ],
         "summary": "Get Family Member",
         "operationId": "get_family_member_api_v1_family_members__family_member_id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "family_member_id",
@@ -230,6 +382,11 @@
         ],
         "summary": "Delete Family Member",
         "operationId": "delete_family_member_api_v1_family_members__family_member_id__delete",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "family_member_id",
@@ -266,6 +423,11 @@
         ],
         "summary": "List Memories",
         "operationId": "list_memories_api_v1_memories__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "family_id",
@@ -318,6 +480,11 @@
         ],
         "summary": "Create Memory",
         "operationId": "create_memory_api_v1_memories__post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -359,6 +526,11 @@
         ],
         "summary": "Get Memory",
         "operationId": "get_memory_api_v1_memories__memory_id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "memory_id",
@@ -400,6 +572,11 @@
         ],
         "summary": "Update Memory",
         "operationId": "update_memory_api_v1_memories__memory_id__patch",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "memory_id",
@@ -451,6 +628,11 @@
         ],
         "summary": "Delete Memory",
         "operationId": "delete_memory_api_v1_memories__memory_id__delete",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "memory_id",
@@ -514,6 +696,11 @@
         ],
         "summary": "Upload Memory Photo",
         "operationId": "upload_memory_photo_api_v1_memories__memory_id__media_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "memory_id",
@@ -587,6 +774,11 @@
         ],
         "summary": "Discard Memory Photo",
         "operationId": "discard_memory_photo_api_v1_memories__memory_id__media__media_id__delete",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "memory_id",
@@ -643,6 +835,11 @@
         ],
         "summary": "Memory Time Preview",
         "operationId": "memory_time_preview_api_v1_memories__memory_id__time_preview_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "memory_id",
@@ -696,6 +893,11 @@
         ],
         "summary": "Life Overview",
         "operationId": "life_overview_api_v1_chat_sessions__session_id__life_overview_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "session_id",
@@ -747,6 +949,11 @@
         ],
         "summary": "Life Action",
         "operationId": "life_action_api_v1_chat_sessions__session_id__life_overview_actions_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "session_id",
@@ -809,7 +1016,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
       }
     },
     "/api/v1/chat/sessions/{session_id}/interview": {
@@ -819,6 +1031,11 @@
         ],
         "summary": "Switch Interview",
         "operationId": "switch_interview_api_v1_chat_sessions__session_id__interview_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "session_id",
@@ -872,6 +1089,11 @@
         ],
         "summary": "Get State",
         "operationId": "get_state_api_v1_chat_sessions__session_id__state_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "session_id",
@@ -915,6 +1137,11 @@
         ],
         "summary": "Create Session",
         "operationId": "create_session_api_v1_chat_sessions_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -954,6 +1181,11 @@
         ],
         "summary": "List Sessions",
         "operationId": "list_sessions_api_v1_chat_sessions_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "family_id",
@@ -1008,6 +1240,11 @@
         ],
         "summary": "Open Person Conversation",
         "operationId": "open_person_conversation_api_v1_chat_members__person_id__conversation_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "person_id",
@@ -1061,6 +1298,11 @@
         ],
         "summary": "Person Conversation State",
         "operationId": "person_conversation_state_api_v1_chat_sessions__session_id__conversation_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "session_id",
@@ -1104,6 +1346,11 @@
         ],
         "summary": "Send Person Message",
         "operationId": "send_person_message_api_v1_chat_sessions__session_id__conversation_messages_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "session_id",
@@ -1157,6 +1404,11 @@
         ],
         "summary": "Start Session",
         "operationId": "start_session_api_v1_chat_sessions__session_id__start_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "session_id",
@@ -1200,6 +1452,11 @@
         ],
         "summary": "List Messages",
         "operationId": "list_messages_api_v1_chat_sessions__session_id__messages_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "session_id",
@@ -1245,6 +1502,11 @@
         ],
         "summary": "Send Message",
         "operationId": "send_message_api_v1_chat_sessions__session_id__messages_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "session_id",
@@ -1298,6 +1560,11 @@
         ],
         "summary": "Generate Draft",
         "operationId": "generate_draft_api_v1_chat_sessions__session_id__draft_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "session_id",
@@ -1352,7 +1619,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
       }
     },
     "/api/v1/memory-drafts/{draft_id}/confirm": {
@@ -1362,6 +1634,11 @@
         ],
         "summary": "Confirm",
         "operationId": "confirm_api_v1_memory_drafts__draft_id__confirm_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "draft_id",
@@ -1415,6 +1692,11 @@
         ],
         "summary": "Upload Media",
         "operationId": "upload_media_api_v1_chat_sessions__session_id__media_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "session_id",
@@ -1476,6 +1758,11 @@
         ],
         "summary": "Remove Media",
         "operationId": "remove_media_api_v1_chat_sessions__session_id__media_delete",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "session_id",
@@ -1512,6 +1799,11 @@
         ],
         "summary": "Remove Pending Photo",
         "operationId": "remove_pending_photo_api_v1_chat_sessions__session_id__media__media_id__delete",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "session_id",
@@ -1558,6 +1850,11 @@
         ],
         "summary": "Get Media",
         "operationId": "get_media_api_v1_media__media_id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "media_id",
@@ -1599,6 +1896,11 @@
         ],
         "summary": "Get Draft",
         "operationId": "get_draft_api_v1_memory_drafts__draft_id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "draft_id",
@@ -1640,6 +1942,11 @@
         ],
         "summary": "Edit Draft",
         "operationId": "edit_draft_api_v1_memory_drafts__draft_id__patch",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "draft_id",
@@ -1693,6 +2000,11 @@
         ],
         "summary": "Regenerate Draft",
         "operationId": "regenerate_draft_api_v1_memory_drafts__draft_id__regenerate_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "draft_id",
@@ -1746,6 +2058,11 @@
         ],
         "summary": "Draft Time Preview",
         "operationId": "draft_time_preview_api_v1_memory_drafts__draft_id__time_preview_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "draft_id",
@@ -1799,6 +2116,11 @@
         ],
         "summary": "Read Book",
         "operationId": "read_book_api_v1_families__family_id__members__person_id__memoir_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "family_id",
@@ -1850,6 +2172,11 @@
         ],
         "summary": "Save Book",
         "operationId": "save_book_api_v1_families__family_id__members__person_id__memoir_put",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "family_id",
@@ -1913,6 +2240,11 @@
         ],
         "summary": "Upload Cover",
         "operationId": "upload_cover_api_v1_families__family_id__members__person_id__memoir_photos_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "family_id",
@@ -2000,6 +2332,59 @@
   },
   "components": {
     "schemas": {
+      "AccountCredentials": {
+        "properties": {
+          "username": {
+            "type": "string",
+            "maxLength": 32,
+            "minLength": 1,
+            "title": "Username"
+          },
+          "password": {
+            "type": "string",
+            "format": "password",
+            "title": "Password",
+            "writeOnly": true
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "username",
+          "password"
+        ],
+        "title": "AccountCredentials"
+      },
+      "AccountIdentity": {
+        "properties": {
+          "account_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Account Id"
+          },
+          "family_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Family Id"
+          },
+          "username": {
+            "type": "string",
+            "title": "Username"
+          },
+          "legacy": {
+            "type": "boolean",
+            "title": "Legacy",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "account_id",
+          "family_id",
+          "username"
+        ],
+        "title": "AccountIdentity"
+      },
       "Body_upload_cover_api_v1_families__family_id__members__person_id__memoir_photos_post": {
         "properties": {
           "file": {
@@ -3687,6 +4072,52 @@
         ],
         "title": "LifeTurn"
       },
+      "LoginResponse": {
+        "properties": {
+          "account_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Account Id"
+          },
+          "family_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Family Id"
+          },
+          "username": {
+            "type": "string",
+            "title": "Username"
+          },
+          "legacy": {
+            "type": "boolean",
+            "title": "Legacy",
+            "default": false
+          },
+          "token": {
+            "type": "string",
+            "title": "Token"
+          },
+          "token_type": {
+            "type": "string",
+            "title": "Token Type",
+            "default": "Bearer"
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Expires At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "account_id",
+          "family_id",
+          "username",
+          "token",
+          "expires_at"
+        ],
+        "title": "LoginResponse"
+      },
       "MediaResponse": {
         "properties": {
           "id": {
@@ -4546,6 +4977,12 @@
           "type"
         ],
         "title": "ValidationError"
+      }
+    },
+    "securitySchemes": {
+      "HTTPBearer": {
+        "type": "http",
+        "scheme": "bearer"
       }
     }
   }

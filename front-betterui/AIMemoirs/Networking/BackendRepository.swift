@@ -1,7 +1,7 @@
 import SwiftUI
 
 // Wire fields follow contracts/openapi.json. IDs always come from the server.
-private struct FamilyDTO: Decodable { let id: UUID }
+private struct FamilyDTO: Decodable { let family_id: UUID }
 private struct MemberDTO: Decodable {
     let id: UUID
     let name: String
@@ -73,7 +73,6 @@ enum APIDate {
 }
 
 @MainActor final class BackendRepository: FamilyAPI, ChatAPI, MemoryAPI, MemoirAPI {
-    static let shared = BackendRepository()
     private let client: APIClient
     private var familyID: UUID?
     private var knownMembers: [MemberDTO] = []
@@ -81,9 +80,9 @@ enum APIDate {
     private func json(_ values: [String: Any]) throws -> Data { try JSONSerialization.data(withJSONObject: values) }
     private func bootstrap() async throws -> UUID {
         if let familyID { return familyID }
-        let family = try await client.send(path: "api/v1/local/bootstrap", method: "POST", as: FamilyDTO.self)
-        familyID = family.id
-        return family.id
+        let family = try await client.send(path: "api/v1/auth/me", method: "GET", as: FamilyDTO.self)
+        familyID = family.family_id
+        return family.family_id
     }
     private func member(_ value: MemberDTO, count: Int = 0) -> FamilyMember {
         let date = APIDate.parseDay(value.birth_date)

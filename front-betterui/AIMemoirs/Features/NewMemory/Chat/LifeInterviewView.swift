@@ -23,8 +23,9 @@ struct LifeInterviewView: View {
     private var overview: LifeOverview? { snapshot.lifeOverview }
     private var collecting: Bool { overview?.status == "collecting" }
     private var showingOverview: Bool { overview?.status == "review" || overview?.status == "confirmed" }
-    private var cacheKey: String { "life-outline-input-\(person.id)" }
-    private var commandKey: String { "life-outline-request-\(person.id)" }
+    private let cacheScope = FamilySessionRegistry.scopeKey
+    private var cacheKey: String { cacheScope + ".life-outline-input-\(person.id)" }
+    private var commandKey: String { cacheScope + ".life-outline-request-\(person.id)" }
     init(person: FamilyMember, api: any ChatAPI, snapshot: ChatSnapshot, onUpdated: @escaping (ChatSnapshot) -> Void, onClose: @escaping () -> Void, onEnter: @escaping (ChatSnapshot) -> Void) {
         self.person = person; self.api = api; self.onUpdated = onUpdated; self.onClose = onClose; self.onEnter = onEnter
         _snapshot = State(initialValue: snapshot)

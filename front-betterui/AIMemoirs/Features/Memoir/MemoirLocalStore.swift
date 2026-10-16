@@ -15,8 +15,8 @@ struct MemoirLocalState: Codable {
         let scope: String
         if let preview { scope = "memoir-preview:" + preview }
         else {
-            guard let username = BasicCredentialStore.shared.load()?.username else { return nil }
-            scope = APIClient.local.baseURL.absoluteString + "\n" + username
+            guard let session = FamilySessionRegistry.current?.session else { return nil }
+            scope = session.scope
         }
         let key = SHA256.hash(data: Data(scope.utf8)).map { String(format: "%02x", $0) }.joined()
         return MemoirLocalStore(root: FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]

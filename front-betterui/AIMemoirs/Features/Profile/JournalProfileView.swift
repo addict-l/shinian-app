@@ -5,7 +5,7 @@ struct JournalProfileView: View {
     @EnvironmentObject private var members: FamilyMemberStore
     @EnvironmentObject private var memories: MemoryListViewModel
     @EnvironmentObject private var navigation: JournalNavigation
-    @AppStorage("journal.displayName") private var displayName = "回忆的收藏者"
+    @AppStorage(FamilySessionRegistry.displayNameKey) private var displayName = "回忆的收藏者"
 
     @State private var avatarPhoto: PhotosPickerItem?
     @State private var avatarError: String?
@@ -35,10 +35,12 @@ struct JournalProfileView: View {
             }.padding(.horizontal, JournalTheme.gutter).padding(.top, 6).padding(.bottom, 24)
         }.scrollIndicators(.hidden).journalPage()
             .onChange(of: avatarPhoto) { _, photo in
+                let scope = FamilySessionRegistry.scopeKey
                 Task {
                     defer { avatarPhoto = nil }
                     do {
                         guard let photo, let data = try await photo.loadTransferable(type: Data.self) else { return }
+                        guard scope == FamilySessionRegistry.scopeKey else { return }
                         try JournalProfileAvatarStore.shared.save(data)
                     } catch { avatarError = error.localizedDescription }
                 }

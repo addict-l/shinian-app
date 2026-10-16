@@ -1,5 +1,5 @@
 import logging, os
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Depends
 from fastapi.responses import JSONResponse
 from starlette.middleware.trustedhost import TrustedHostMiddleware
 from sqlalchemy import text
@@ -60,8 +60,18 @@ async def lifespan(app):
 
 app = FastAPI(title='AI Memories API', version='0.6.0', lifespan=lifespan)
 app.add_middleware(TrustedHostMiddleware, allowed_hosts=allowed_hosts)
+from app.api.authentication import router as authentication_router
+from app.api.family_access import authorize_business_request
+app.include_router(authentication_router)
 for router in [families_router,family_members_router,memories_router,chat_router,workflow_router,memoirs_router]:
-    app.include_router(router)
+    app.include_router(router, dependencies=[Depends(authorize_business_request)])
+
+@app.middleware('http')
+async def private_api_responses(request, call_next):
+    response = await call_next(request)
+    if request.url.path.startswith('/api/'):
+        response.headers['Cache-Control'] = 'no-store'
+    return response
 
 @app.get('/health', response_model=HealthResponse)
 def health():

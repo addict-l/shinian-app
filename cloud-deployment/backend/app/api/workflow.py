@@ -1,7 +1,7 @@
 from datetime import datetime, timezone
 from uuid import UUID, uuid5, NAMESPACE_URL
 from pathlib import Path
-from fastapi import APIRouter, File, UploadFile, HTTPException
+from fastapi import APIRouter, File, UploadFile, HTTPException, Depends
 from fastapi.responses import FileResponse, Response
 from sqlalchemy import select
 from app.db.database import SessionLocal, ROOT
@@ -9,6 +9,7 @@ from app.models.family import FamilyModel
 from app.models.media_asset import MediaAssetModel
 from app.models.chat_session import ChatSessionModel
 from app.schemas.family import Family
+from app.api.authentication import current_session
 from app.schemas.memory import Memory
 from app.schemas.workflow import DraftConfirmation, MediaResponse, DraftResponse, DraftUpdate, DraftRegeneration
 from app.repositories.family_repository import FamilyRepository
@@ -21,13 +22,9 @@ from app.services.media_service import MEDIA_ROOT
 LOCAL_FAMILY_ID = uuid5(NAMESPACE_URL, 'ai-memories:local-development-family')
 
 @router.post('/local/bootstrap', response_model=Family)
-def bootstrap():
-    with serialized('bootstrap'):
-        with SessionLocal.begin() as db:
-            if db.get(FamilyModel, str(LOCAL_FAMILY_ID)) is None:
-                now = datetime.now(timezone.utc)
-                db.add(FamilyModel(id=str(LOCAL_FAMILY_ID), name='我的家庭', created_at=now, updated_at=now))
-    return FamilyRepository().get(LOCAL_FAMILY_ID)
+def bootstrap(principal=Depends(current_session)):
+    # Compatibility path for clients: identity determines the family, never a fixed UUID.
+    return FamilyRepository().get(UUID(principal.family_id))
 
 @router.post('/memory-drafts/{draft_id}/confirm', response_model=Memory)
 def confirm(draft_id: UUID, body: DraftConfirmation):

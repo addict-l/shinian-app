@@ -19,3 +19,4 @@ __all__ = [
 from app.models.memory_draft import MemoryDraftModel
 from app.models.maintenance import MediaCleanupModel, MemoryDeletionModel
 from app.models.memoir import MemoirSettingsModel
+from app.models.authentication import FamilyAccountModel, DeviceSessionModel, AuthRateLimitModel

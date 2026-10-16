@@ -32,12 +32,12 @@ struct LocalChatDraft: Codable, Identifiable {
         if let testScope = ProcessInfo.processInfo.environment["AI_MEMORIES_DRAFT_TEST_SCOPE"] {
             scope = "ui-test:" + testScope
         } else {
-            guard previewScreen == nil, let username = BasicCredentialStore.shared.load()?.username else { return nil }
-            scope = APIClient.local.baseURL.absoluteString + "\n" + username
+            guard previewScreen == nil, let session = FamilySessionRegistry.current?.session else { return nil }
+            scope = session.scope
         }
         #else
-        guard let username = BasicCredentialStore.shared.load()?.username else { return nil }
-        scope = APIClient.local.baseURL.absoluteString + "\n" + username
+        guard let session = FamilySessionRegistry.current?.session else { return nil }
+        scope = session.scope
         #endif
         let key = SHA256.hash(data: Data(scope.utf8)).map { String(format: "%02x", $0) }.joined()
         let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
