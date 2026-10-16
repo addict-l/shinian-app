@@ -1,118 +1,91 @@
 import SwiftUI
 
 struct JournalLoginView: View {
+    @Environment(\.verticalSizeClass) private var verticalSizeClass
     @ObservedObject var authentication: AuthenticationStore
-    @State private var username = "family"
+    @State private var username = JournalDemo.isPreview ? "family" : ""
     @State private var password = JournalDemo.isPreview ? "family12" : ""
-    @State private var revealsPassword = false
-    @FocusState private var focusedField: Field?
+    @State private var submitted = false
+    @State private var showsRegistration = false
+    @State private var showsAccountHelp = false
+    @FocusState private var focusedField: JournalAuthFieldID?
 
-    private enum Field { case username, password }
+    private var usernameError: String? {
+        submitted && username.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? "请输入家庭账号。" : nil
+    }
+    private var passwordError: String? { submitted && password.isEmpty ? "请输入密码。" : nil }
 
     var body: some View {
-        ZStack(alignment: .top) {
-            JournalBackdrop().ignoresSafeArea()
-            ScrollView {
-                VStack(spacing: 0) {
-                    Color.clear.frame(height: 378)
-                    VStack(spacing: 0) {
-                        Text("拾 年 · 留 住 时 光").font(JournalTheme.font(12)).tracking(2.2).foregroundStyle(JournalTheme.muted)
-                        Text("欢迎回家").font(JournalTheme.story(34)).tracking(0.7).foregroundStyle(JournalTheme.ink).padding(.top, 8)
-                        Text("登录后，与家人一起收藏珍贵的回忆。").font(JournalTheme.font(14)).foregroundStyle(JournalTheme.ink2)
-                            .multilineTextAlignment(.center).padding(.top, 4)
+        NavigationStack {
+            JournalAuthPage(title: "欢迎回家", subtitle: "把平凡的日子，收藏成家的故事。", focusedField: focusedField) {
+                VStack(spacing: 18) {
+                    VStack(spacing: 16) {
+                        JournalAuthField(title: "家庭账号", placeholder: "请输入家庭账号", icon: "home",
+                            text: $username, field: .username, focus: $focusedField, error: usernameError,
+                            identifier: "login.username", submitLabel: .next) { focusedField = .password }
+                        JournalAuthField(title: "密码", placeholder: "请输入密码", icon: "lock",
+                            text: $password, field: .password, focus: $focusedField, error: passwordError,
+                            identifier: "login.password", secure: true, submitLabel: .go, onSubmit: submit)
+                    }
+                    .disabled(authentication.isLoading)
 
-                        VStack(spacing: 0) {
-                            fieldRow("家庭账号", icon: "home") {
-                                TextField("", text: $username, prompt: Text("请输入账号").foregroundStyle(JournalTheme.placeholder))
-                                    .textInputAutocapitalization(.never)
-                                    .autocorrectionDisabled()
-                                    .textContentType(.username)
-                                    .accessibilityIdentifier("login.username")
-                                    .focused($focusedField, equals: .username)
-                                    .submitLabel(.next)
-                                    .onSubmit { focusedField = .password }
-                            }
-                            JournalTheme.line.frame(height: 1)
-                            fieldRow("家庭密码", icon: "lock") {
-                                Group {
-                                    if revealsPassword {
-                                        TextField("", text: $password, prompt: Text("请输入密码").foregroundStyle(JournalTheme.placeholder))
-                                            .textInputAutocapitalization(.never).autocorrectionDisabled()
-                                    } else {
-                                        SecureField("", text: $password, prompt: Text("请输入密码").foregroundStyle(JournalTheme.placeholder))
-                                    }
-                                }
-                                .textContentType(.password)
-                                .accessibilityIdentifier("login.password")
-                                .focused($focusedField, equals: .password)
-                                .submitLabel(.go)
-                                .onSubmit { submit() }
-                            } accessory: {
-                                Button { revealsPassword.toggle() } label: {
-                                    DesignIcon("eye").foregroundStyle(JournalTheme.muted).frame(width: 44, height: 44)
-                                }.buttonStyle(.plain).accessibilityLabel(revealsPassword ? "隐藏密码" : "显示密码")
-                            }
-                        }
-                        .padding(.horizontal, 18).padding(.vertical, 6)
-                        .journalCard()
-                        .padding(.top, 22)
+                    Button("账号或密码需要帮助？") { focusedField = nil; showsAccountHelp = true }
+                        .font(JournalTheme.font(13)).foregroundStyle(JournalTheme.ink2)
+                        .frame(minHeight: 44).frame(maxWidth: .infinity, alignment: .trailing)
+                        .buttonStyle(.plain).padding(.top, -12)
+                        .disabled(authentication.isLoading).accessibilityIdentifier("login.help")
+
+                    if let error = authentication.errorMessage {
+                        JournalAuthNotice(error, isError: true).accessibilityIdentifier("login.error")
+                    }
+
+                    JournalAuthButton(title: authentication.isLoading ? "正在登录…" : "登录",
+                        loading: authentication.isLoading, action: submit)
                         .accessibilityIdentifier("login.submit")
 
-                        if let error = authentication.errorMessage {
-                            Text(error).font(JournalTheme.font(13)).foregroundStyle(JournalTheme.danger)
-                                .multilineTextAlignment(.center).padding(.top, 14)
-                        }
-
-                        JournalButton(
-                            title: "进入我的家庭",
-                            loading: authentication.isLoading,
-                            disabled: username.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || password.isEmpty,
-                            action: submit
-                        )
-                        .padding(.top, 22)
-
-                        HStack(spacing: 6) {
-                            DesignIcon("shield", size: 14)
-                            Text(JournalDemo.isPreview ? "离线设计预览，使用示例数据" : "登录后，安全访问你的家庭回忆")
-                        }
-                        .font(JournalTheme.font(12)).foregroundStyle(JournalTheme.muted)
-                        .padding(.top, 16)
+                    Button {
+                        focusedField = nil
+                        authentication.errorMessage = nil
+                        showsRegistration = true
+                    } label: {
+                        (Text("还没有账号？ ").foregroundStyle(JournalTheme.ink2)
+                         + Text("去注册").foregroundStyle(JournalTheme.authAccent).bold())
+                            .font(JournalTheme.font(15)).frame(minHeight: 44)
                     }
-                    .padding(.horizontal, JournalTheme.gutter)
-                    .padding(.bottom, 32)
-                }
-                .background(alignment: .top) {
-                    Image("JournalWelcome").resizable().scaledToFill()
-                        .frame(height: 470).frame(maxWidth: .infinity).clipped()
-                        .mask(LinearGradient(stops: [.init(color: .black, location: 0.62), .init(color: .clear, location: 1)], startPoint: .top, endPoint: .bottom))
-                        .accessibilityHidden(true)
+                    .buttonStyle(.plain).disabled(authentication.isLoading)
+                    .accessibilityIdentifier("login.register")
+
+                    Label(JournalDemo.isPreview ? "离线设计预览 · 使用示例数据" : "一家人的回忆，在这里好好珍藏", systemImage: "lock.shield")
+                        .font(JournalTheme.font(12)).foregroundStyle(JournalTheme.ink2)
+                        .multilineTextAlignment(.center)
                 }
             }
-            .scrollIndicators(.hidden)
-            .ignoresSafeArea(edges: .top)
+            .toolbar(.hidden, for: .navigationBar)
+            .toolbar {
+                if !showsRegistration && verticalSizeClass != .compact {
+                    ToolbarItemGroup(placement: .keyboard) {
+                        Spacer()
+                        Button("完成") { focusedField = nil }.tint(JournalTheme.authAccent)
+                    }
+                }
+            }
+            .onChange(of: username) { authentication.errorMessage = nil }
+            .onChange(of: password) { authentication.errorMessage = nil }
+            .navigationDestination(isPresented: $showsRegistration) { JournalRegistrationView() }
+            .alert("找回家庭账号", isPresented: $showsAccountHelp) {
+                Button("知道了", role: .cancel) { }
+            } message: {
+                Text("当前使用家庭共享账号。请向为你开通账号的人确认账号或重置密码，再回来登录。")
+            }
         }
-
-    }
-
-    /// 字段标签保留在可见文字中，图标只做装饰。
-    private func fieldRow<Input: View>(_ title: String, icon: String, @ViewBuilder field: () -> Input) -> some View {
-        fieldRow(title, icon: icon, field: field) { EmptyView() }
-    }
-
-    private func fieldRow<Input: View, Accessory: View>(_ title: String, icon: String, @ViewBuilder field: () -> Input, @ViewBuilder accessory: () -> Accessory) -> some View {
-        HStack(spacing: 12) {
-            DesignIcon(icon).foregroundStyle(JournalTheme.accent)
-            VStack(alignment: .leading, spacing: 2) {
-                Text(title).font(JournalTheme.font(12)).foregroundStyle(JournalTheme.muted)
-                field().font(JournalTheme.font(16)).foregroundStyle(JournalTheme.ink)
-            }
-            Spacer(minLength: 0)
-            accessory()
-        }.frame(minHeight: 58)
+        .tint(JournalTheme.authAccent)
     }
 
     private func submit() {
         guard !authentication.isLoading else { return }
+        submitted = true
+        if usernameError != nil { focusedField = .username; return }
+        if passwordError != nil { focusedField = .password; return }
         focusedField = nil
         Task { await authentication.login(username: username, password: password) }
     }

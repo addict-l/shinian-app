@@ -42,6 +42,8 @@ private struct LoginHealthResponse: Decodable { let status: String }
             if let previous { credentials.save(previous) } else { credentials.clear() }
             if case APIError.authenticationRequired = error {
                 errorMessage = "账号或密码不正确，请重新输入。"
+            } else if case APIError.timeout = error {
+                errorMessage = "登录超时，请检查网络后重试。"
             } else { errorMessage = error.localizedDescription }
         }
     }

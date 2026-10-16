@@ -15,6 +15,8 @@ enum JournalTheme {
 
     static let accent = Color(hex: 0xD47B52)
     static let accentDeep = Color(hex: 0xB9623D)
+    /// 认证表单的按钮与链接，保证暖纸底色和白色按钮文字的对比度。
+    static let authAccent = Color(hex: 0xAD5634)
     static let soft = Color(hex: 0xF8E3D5)
     static let accentSoft = soft
     static let accentFaint = Color(hex: 0xFCF1E9)
