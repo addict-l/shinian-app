@@ -1,0 +1,71 @@
+FF.FF.FF...
+======================================================================
+FAIL: test_actual_english_hobby_question_can_ground_a_habitual_preference (tools.test_interview_target_categories_v28.TargetCategoryTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/student03/Documents/ChatGPT/ai memory/tools/test_interview_target_categories_v28.py", line 72, in test_actual_english_hobby_question_can_ground_a_habitual_preference
+    self.assertEqual(analyze('LT01-E2', text, question='What is your hobby now?')['fields']['LT01-E2']['state'], 'known')
+AssertionError: 'missing' != 'known'
+- missing
++ known
+
+
+======================================================================
+FAIL: test_actual_pleasure_question_can_ground_a_habitual_preference (tools.test_interview_target_categories_v28.TargetCategoryTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/student03/Documents/ChatGPT/ai memory/tools/test_interview_target_categories_v28.py", line 68, in test_actual_pleasure_question_can_ground_a_habitual_preference
+    self.assertEqual(r['fields']['LT01-E2']['state'], 'known')
+AssertionError: 'missing' != 'known'
+- missing
++ known
+
+
+======================================================================
+FAIL: test_even_a_direct_atmosphere_question_does_not_turn_headcounts_into_interaction (tools.test_interview_target_categories_v28.TargetCategoryTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/student03/Documents/ChatGPT/ai memory/tools/test_interview_target_categories_v28.py", line 34, in test_even_a_direct_atmosphere_question_does_not_turn_headcounts_into_interaction
+    self.assertEqual(r['fields']['SK03-E4']['state'], 'missing')
+AssertionError: 'known' != 'missing'
+- known
++ missing
+
+
+======================================================================
+FAIL: test_event_inquiry_is_not_another_persons_trait_judgment (tools.test_interview_target_categories_v28.TargetCategoryTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/student03/Documents/ChatGPT/ai memory/tools/test_interview_target_categories_v28.py", line 46, in test_event_inquiry_is_not_another_persons_trait_judgment
+    self.assertEqual(r['fields']['SK05-R1']['state'], 'missing')
+AssertionError: 'known' != 'missing'
+- known
++ missing
+
+
+======================================================================
+FAIL: test_household_composition_is_not_atmosphere (tools.test_interview_target_categories_v28.TargetCategoryTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/student03/Documents/ChatGPT/ai memory/tools/test_interview_target_categories_v28.py", line 29, in test_household_composition_is_not_atmosphere
+    self.assertEqual(analyze('SK03-E4', text)['fields']['SK03-E4']['state'], 'missing')
+AssertionError: 'known' != 'missing'
+- known
++ missing
+
+
+======================================================================
+FAIL: test_own_trait_survives_rejection_of_a_separate_event_inquiry (tools.test_interview_target_categories_v28.TargetCategoryTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/student03/Documents/ChatGPT/ai memory/tools/test_interview_target_categories_v28.py", line 63, in test_own_trait_survives_rejection_of_a_separate_event_inquiry
+    self.assertEqual(r['fields']['SK05-R1']['state'], 'missing')
+AssertionError: 'known' != 'missing'
+- known
++ missing
+
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.499s
+
+FAILED (failures=6)

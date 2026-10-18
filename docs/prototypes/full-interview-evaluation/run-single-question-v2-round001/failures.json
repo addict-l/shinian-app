@@ -1,0 +1,873 @@
+{
+  "scope": "Observed failures under this frozen gold, not proof every discrepancy is a model bug. Read-only derived ledger; never supplied to extractor or reviewer.",
+  "run": "/Users/student03/Documents/ChatGPT/ai memory/docs/prototypes/full-interview-evaluation/run-single-question-v2-round001",
+  "frozen_model": "deepseek-v4-pro",
+  "fully_executed": true,
+  "overall": {
+    "planned_checkpoints": 33,
+    "evaluated_checkpoints": 33,
+    "transport_errors": 0,
+    "unexecuted": 0,
+    "protocol_invalid": 1,
+    "cases": 33,
+    "whole_case_passes": 24,
+    "whole_case_accuracy": 0.727273,
+    "missed_substantive_fields": 2,
+    "false_accepted_fields": 5,
+    "repeated_or_unnecessary_followups": 1,
+    "substantive_field_checks": 24,
+    "substantive_field_passes": 22,
+    "substantive_field_accuracy": 0.916667,
+    "field_checks": 41,
+    "field_passes": 32,
+    "field_accuracy": 0.780488,
+    "positive_field_checks": 24,
+    "positive_field_passes": 22,
+    "positive_field_accuracy": 0.916667,
+    "nonpositive_field_checks": 17,
+    "nonpositive_field_accuracy": 0.588235,
+    "followup_checks": 33,
+    "followup_passes": 26,
+    "followup_accuracy": 0.787879,
+    "all_critical_checkpoint_passes": 24,
+    "all_critical_checkpoint_accuracy": 0.727273,
+    "planned_completion_adjusted_accuracy": 0.727273
+  },
+  "failure_rows": [
+    {
+      "case_id": "DEV-N-f3af6b6947-SK03-01--SK03d",
+      "narrator_id": "N-f3af6b6947",
+      "name": "侯鎮清",
+      "question_id": "SK03d",
+      "turn": 0,
+      "execution": "evaluated",
+      "main_question": "小时候家里人相处得怎么样？",
+      "actual_original_question": "請侯鎮清先生先介紹一下您小時候的家庭背景。",
+      "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_217.htm?4",
+      "frozen_source_id": "VAC-217-E01",
+      "protocol_errors": [],
+      "semantic_rejections": [],
+      "field_failures": [
+        {
+          "field_id": "SK03-E4",
+          "label": "家庭或实际照料环境相处氛围",
+          "failed_dimensions": [
+            "state"
+          ],
+          "actual": {
+            "state": "ambiguous",
+            "value": null,
+            "scope": {
+              "subject": "family",
+              "period": "childhood",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-217-E01",
+                  "quote": "我父親在青島市做生意，我跟我哥哥、母親在鄉下靠務農來維持生活。"
+                }
+              ]
+            },
+            "clarifications": [
+              "referent"
+            ],
+            "evidence": [
+              {
+                "source_id": "VAC-217-E01",
+                "quote": "我父親在青島市做生意，我跟我哥哥、母親在鄉下靠務農來維持生活。"
+              }
+            ]
+          },
+          "expected": {
+            "state": "missing"
+          },
+          "gap_question": "小时候，家里人平时相处得怎么样？",
+          "missed": false,
+          "false_accepted": false,
+          "required_stage_not_grounded": false
+        }
+      ],
+      "followup": {
+        "passed": true,
+        "checks": [
+          {
+            "dimension": "decision",
+            "passed": true
+          },
+          {
+            "dimension": "target",
+            "passed": true
+          },
+          {
+            "dimension": "no_reask_closed",
+            "passed": true
+          },
+          {
+            "dimension": "question_present",
+            "passed": true
+          },
+          {
+            "dimension": "single_target",
+            "passed": true
+          }
+        ],
+        "actual_decision": "ask",
+        "actual_target": "SK03-E4",
+        "expected": {
+          "decisions": [
+            "ask"
+          ],
+          "targets": [
+            "SK03-E4"
+          ]
+        }
+      },
+      "actual_call_response_files": [
+        "cases/DEV-N-f3af6b6947-SK03-01--SK03d/turn-000/response-000-repair1.json",
+        "cases/DEV-N-f3af6b6947-SK03-01--SK03d/turn-000/response-000-review.json",
+        "cases/DEV-N-f3af6b6947-SK03-01--SK03d/turn-000/response-000.json"
+      ],
+      "internal_repairs": 1,
+      "raw_result": "/Users/student03/Documents/ChatGPT/ai memory/docs/prototypes/full-interview-evaluation/run-single-question-v2-round001/cases/DEV-N-f3af6b6947-SK03-01--SK03d/turn-000/result.json"
+    },
+    {
+      "case_id": "DEV3-N-c5a5031a87-LT05-01--LT05b",
+      "narrator_id": "N-c5a5031a87",
+      "name": "楼燕勤",
+      "question_id": "LT05b",
+      "turn": 0,
+      "execution": "evaluated",
+      "main_question": "您希望后人记住自己的哪件往事？",
+      "actual_original_question": "回首往事，您所做的最得意的事，最想让人记住的是什么？",
+      "source_url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+      "frozen_source_id": "CASA-c5a5031a-Q07",
+      "protocol_errors": [],
+      "semantic_rejections": [],
+      "field_failures": [
+        {
+          "field_id": "LT05-E2",
+          "label": "本人希望后人记住的故事",
+          "failed_dimensions": [
+            "state"
+          ],
+          "actual": {
+            "state": "known",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-c5a5031a-Q07",
+                  "quote": "最想让人记住的 : 麻醉中，让患者能睡得安宁， 术后安全苏醒。"
+                }
+              ]
+            },
+            "value": "最想让人记住的 : 麻醉中，让患者能睡得安宁， 术后安全苏醒。",
+            "evidence": [
+              {
+                "source_id": "CASA-c5a5031a-Q07",
+                "quote": "最想让人记住的 : 麻醉中，让患者能睡得安宁， 术后安全苏醒。"
+              }
+            ]
+          },
+          "expected": {
+            "state": "missing"
+          },
+          "gap_question": "有没有一件您希望后人记住的故事？",
+          "missed": false,
+          "false_accepted": true,
+          "required_stage_not_grounded": false
+        }
+      ],
+      "followup": {
+        "passed": false,
+        "checks": [
+          {
+            "dimension": "decision",
+            "passed": false
+          },
+          {
+            "dimension": "target",
+            "passed": false
+          },
+          {
+            "dimension": "no_reask_closed",
+            "passed": true
+          }
+        ],
+        "actual_decision": "ready",
+        "actual_target": null,
+        "expected": {
+          "decisions": [
+            "ask"
+          ],
+          "targets": [
+            "LT05-E2"
+          ]
+        }
+      },
+      "actual_call_response_files": [
+        "cases/DEV3-N-c5a5031a87-LT05-01--LT05b/turn-000/response-000-review.json",
+        "cases/DEV3-N-c5a5031a87-LT05-01--LT05b/turn-000/response-000.json"
+      ],
+      "internal_repairs": 0,
+      "raw_result": "/Users/student03/Documents/ChatGPT/ai memory/docs/prototypes/full-interview-evaluation/run-single-question-v2-round001/cases/DEV3-N-c5a5031a87-LT05-01--LT05b/turn-000/result.json"
+    },
+    {
+      "case_id": "DEV-SOURCES-N-9ff0b2f16e-RV03-01--RV03",
+      "narrator_id": "N-9ff0b2f16e",
+      "name": "金晓贵",
+      "question_id": "RV03",
+      "turn": 0,
+      "execution": "evaluated",
+      "main_question": "您有没有误会别人或被别人误会的经历？",
+      "actual_original_question": "您2016年3月刚到马鞍村时，遇到的最大困难是什么？据说村民当时觉得您是“书呆子”，吃了很多闭门羹，有没有哪一个具体的闭门羹让您印象最深？",
+      "source_url": "https://www.gzu.edu.cn/_t2805/2026/0509/c17516a272833/page.htm",
+      "frozen_source_id": "WEB-jinxiaogui-E004",
+      "protocol_errors": [],
+      "semantic_rejections": [],
+      "field_failures": [
+        {
+          "field_id": "RV03-E2",
+          "label": "本人后来是否释怀的状态",
+          "failed_dimensions": [
+            "state"
+          ],
+          "actual": {
+            "state": "ambiguous",
+            "value": null,
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-jinxiaogui-E004",
+                  "quote": "这件事让我深刻地认识到：只要你把人民放在心上，人民就会把你高高举起。"
+                }
+              ]
+            },
+            "clarifications": [
+              "meaning"
+            ],
+            "evidence": [
+              {
+                "source_id": "WEB-jinxiaogui-E004",
+                "quote": "这件事让我深刻地认识到：只要你把人民放在心上，人民就会把你高高举起。"
+              }
+            ]
+          },
+          "expected": {
+            "state": "missing"
+          },
+          "gap_question": "对于这件误会，您后来怎么看，还放在心上吗？",
+          "missed": false,
+          "false_accepted": false,
+          "required_stage_not_grounded": false
+        }
+      ],
+      "followup": {
+        "passed": true,
+        "checks": [
+          {
+            "dimension": "decision",
+            "passed": true
+          },
+          {
+            "dimension": "target",
+            "passed": true
+          },
+          {
+            "dimension": "no_reask_closed",
+            "passed": true
+          },
+          {
+            "dimension": "question_present",
+            "passed": true
+          },
+          {
+            "dimension": "single_target",
+            "passed": true
+          }
+        ],
+        "actual_decision": "ask",
+        "actual_target": "RV03-E2",
+        "expected": {
+          "decisions": [
+            "ask"
+          ],
+          "targets": [
+            "RV03-E2"
+          ]
+        }
+      },
+      "actual_call_response_files": [
+        "cases/DEV-SOURCES-N-9ff0b2f16e-RV03-01--RV03/turn-000/response-000-review.json",
+        "cases/DEV-SOURCES-N-9ff0b2f16e-RV03-01--RV03/turn-000/response-000.json"
+      ],
+      "internal_repairs": 0,
+      "raw_result": "/Users/student03/Documents/ChatGPT/ai memory/docs/prototypes/full-interview-evaluation/run-single-question-v2-round001/cases/DEV-SOURCES-N-9ff0b2f16e-RV03-01--RV03/turn-000/result.json"
+    },
+    {
+      "case_id": "DEV-SOURCES-N-6eec6bf458-RV09-01--RV09",
+      "narrator_id": "N-6eec6bf458",
+      "name": "孫樸生",
+      "question_id": "RV09",
+      "turn": 0,
+      "execution": "evaluated",
+      "main_question": "您怎样理解人生里的吃苦？",
+      "actual_original_question": "老師您唱歌的這個部分，是怎麼學的？",
+      "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_4_190.htm?3",
+      "frozen_source_id": "VAC-190-E01",
+      "protocol_errors": [],
+      "semantic_rejections": [],
+      "field_failures": [
+        {
+          "field_id": "RV09-E1",
+          "label": "本人对吃苦的理解",
+          "failed_dimensions": [
+            "state"
+          ],
+          "actual": {
+            "state": "known",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-190-E01",
+                  "quote": "我從事這個行業這麼久，我發現一個道理，就是你後天再努力，但是先天條件不好，還是受影響。那你先天條件好，後天又努力，機會陰錯陽差都被別人搶走，還是沒有用。我都鼓勵年輕人，你條件很好，你不努力也沒有用。先天條件好又努力，然後能掌握機會，我覺得這樣就會成功。"
+                }
+              ]
+            },
+            "value": "我從事這個行業這麼久，我發現一個道理，就是你後天再努力，但是先天條件不好，還是受影響。那你先天條件好，後天又努力，機會陰錯陽差都被別人搶走，還是沒有用。我都鼓勵年輕人，你條件很好，你不努力也沒有用。先天條件好又努力，然後能掌握機會，我覺得這樣就會成功。",
+            "evidence": [
+              {
+                "source_id": "VAC-190-E01",
+                "quote": "我從事這個行業這麼久，我發現一個道理，就是你後天再努力，但是先天條件不好，還是受影響。那你先天條件好，後天又努力，機會陰錯陽差都被別人搶走，還是沒有用。我都鼓勵年輕人，你條件很好，你不努力也沒有用。先天條件好又努力，然後能掌握機會，我覺得這樣就會成功。"
+              }
+            ]
+          },
+          "expected": {
+            "state": "missing"
+          },
+          "gap_question": "您怎样理解人生里的“吃苦”？",
+          "missed": false,
+          "false_accepted": true,
+          "required_stage_not_grounded": false
+        }
+      ],
+      "followup": {
+        "passed": false,
+        "checks": [
+          {
+            "dimension": "decision",
+            "passed": false
+          },
+          {
+            "dimension": "target",
+            "passed": false
+          },
+          {
+            "dimension": "no_reask_closed",
+            "passed": true
+          }
+        ],
+        "actual_decision": "ready",
+        "actual_target": null,
+        "expected": {
+          "decisions": [
+            "ask"
+          ],
+          "targets": [
+            "RV09-E1"
+          ]
+        }
+      },
+      "actual_call_response_files": [
+        "cases/DEV-SOURCES-N-6eec6bf458-RV09-01--RV09/turn-000/response-000-review.json",
+        "cases/DEV-SOURCES-N-6eec6bf458-RV09-01--RV09/turn-000/response-000.json"
+      ],
+      "internal_repairs": 0,
+      "raw_result": "/Users/student03/Documents/ChatGPT/ai memory/docs/prototypes/full-interview-evaluation/run-single-question-v2-round001/cases/DEV-SOURCES-N-6eec6bf458-RV09-01--RV09/turn-000/result.json"
+    },
+    {
+      "case_id": "DEV-SOURCES-N-6eec6bf458-RV09-01--RV09b",
+      "narrator_id": "N-6eec6bf458",
+      "name": "孫樸生",
+      "question_id": "RV09b",
+      "turn": 0,
+      "execution": "evaluated",
+      "main_question": "您怎样理解人生里的努力？",
+      "actual_original_question": "老師您唱歌的這個部分，是怎麼學的？",
+      "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_4_190.htm?3",
+      "frozen_source_id": "VAC-190-E01",
+      "protocol_errors": [
+        "RV09-E2:literal_value_must_be_one_contiguous_source_span"
+      ],
+      "semantic_rejections": [],
+      "field_failures": [
+        {
+          "field_id": "RV09-E2",
+          "label": "本人对努力的理解",
+          "failed_dimensions": [
+            "state",
+            "content_0",
+            "verbatim_evidence",
+            "evidence_fact_0",
+            "scope_subject",
+            "relation_evidence_valid",
+            "relation_evidence_0"
+          ],
+          "actual": {
+            "state": "missing",
+            "value": null,
+            "evidence": []
+          },
+          "expected": {
+            "state": "known",
+            "value_groups": [
+              [
+                "你條件很好，你不努力也沒有用",
+                "後天再努力，但是先天條件不好，還是受影響",
+                "先天條件好又努力，然後能掌握機會"
+              ]
+            ],
+            "scope": {
+              "subject": [
+                "self"
+              ]
+            },
+            "evidence": [
+              {
+                "source_id": "VAC-190-E01",
+                "quote": "你條件很好，你不努力也沒有用",
+                "quote_options": [
+                  "你條件很好，你不努力也沒有用",
+                  "後天再努力，但是先天條件不好，還是受影響",
+                  "先天條件好又努力，然後能掌握機會"
+                ]
+              }
+            ],
+            "relation_evidence": [
+              {
+                "source_id": "VAC-190-E01",
+                "quote": "你條件很好，你不努力也沒有用",
+                "quote_options": [
+                  "你條件很好，你不努力也沒有用",
+                  "後天再努力，但是先天條件不好，還是受影響",
+                  "先天條件好又努力，然後能掌握機會"
+                ]
+              }
+            ]
+          },
+          "gap_question": "您怎样理解人生里的“努力”？",
+          "missed": true,
+          "false_accepted": false,
+          "required_stage_not_grounded": false
+        }
+      ],
+      "followup": {
+        "passed": false,
+        "checks": [
+          {
+            "dimension": "decision",
+            "passed": false
+          },
+          {
+            "dimension": "target",
+            "passed": true
+          },
+          {
+            "dimension": "no_reask_closed",
+            "passed": true
+          }
+        ],
+        "actual_decision": "invalid",
+        "actual_target": null,
+        "expected": {
+          "decisions": [
+            "ready"
+          ],
+          "targets": [
+            null
+          ]
+        }
+      },
+      "actual_call_response_files": [
+        "cases/DEV-SOURCES-N-6eec6bf458-RV09-01--RV09b/turn-000/response-000-repair1.json",
+        "cases/DEV-SOURCES-N-6eec6bf458-RV09-01--RV09b/turn-000/response-000-review.json",
+        "cases/DEV-SOURCES-N-6eec6bf458-RV09-01--RV09b/turn-000/response-000.json"
+      ],
+      "internal_repairs": 1,
+      "raw_result": "/Users/student03/Documents/ChatGPT/ai memory/docs/prototypes/full-interview-evaluation/run-single-question-v2-round001/cases/DEV-SOURCES-N-6eec6bf458-RV09-01--RV09b/turn-000/result.json"
+    },
+    {
+      "case_id": "DEV-SOURCES-N-6eec6bf458-RV09-01--RV09c",
+      "narrator_id": "N-6eec6bf458",
+      "name": "孫樸生",
+      "question_id": "RV09c",
+      "turn": 0,
+      "execution": "evaluated",
+      "main_question": "您怎样理解人生里的运气？",
+      "actual_original_question": "老師您唱歌的這個部分，是怎麼學的？",
+      "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_4_190.htm?3",
+      "frozen_source_id": "VAC-190-E01",
+      "protocol_errors": [],
+      "semantic_rejections": [],
+      "field_failures": [
+        {
+          "field_id": "RV09-E3",
+          "label": "本人对运气的理解",
+          "failed_dimensions": [
+            "state"
+          ],
+          "actual": {
+            "state": "known",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-190-E01",
+                  "quote": "我從事這個行業這麼久，我發現一個道理，就是你後天再努力，但是先天條件不好，還是受影響。那你先天條件好，後天又努力，機會陰錯陽差都被別人搶走，還是沒有用。"
+                },
+                {
+                  "source_id": "VAC-190-E01",
+                  "quote": "先天條件好又努力，然後能掌握機會，我覺得這樣就會成功。"
+                }
+              ]
+            },
+            "value": "先天條件好又努力，然後能掌握機會，我覺得這樣就會成功。",
+            "evidence": [
+              {
+                "source_id": "VAC-190-E01",
+                "quote": "我從事這個行業這麼久，我發現一個道理，就是你後天再努力，但是先天條件不好，還是受影響。那你先天條件好，後天又努力，機會陰錯陽差都被別人搶走，還是沒有用。"
+              },
+              {
+                "source_id": "VAC-190-E01",
+                "quote": "先天條件好又努力，然後能掌握機會，我覺得這樣就會成功。"
+              }
+            ]
+          },
+          "expected": {
+            "state": "missing"
+          },
+          "gap_question": "您怎样理解人生里的“运气”？",
+          "missed": false,
+          "false_accepted": true,
+          "required_stage_not_grounded": false
+        }
+      ],
+      "followup": {
+        "passed": false,
+        "checks": [
+          {
+            "dimension": "decision",
+            "passed": false
+          },
+          {
+            "dimension": "target",
+            "passed": false
+          },
+          {
+            "dimension": "no_reask_closed",
+            "passed": true
+          }
+        ],
+        "actual_decision": "ready",
+        "actual_target": null,
+        "expected": {
+          "decisions": [
+            "ask"
+          ],
+          "targets": [
+            "RV09-E3"
+          ]
+        }
+      },
+      "actual_call_response_files": [
+        "cases/DEV-SOURCES-N-6eec6bf458-RV09-01--RV09c/turn-000/response-000-repair1.json",
+        "cases/DEV-SOURCES-N-6eec6bf458-RV09-01--RV09c/turn-000/response-000-review.json",
+        "cases/DEV-SOURCES-N-6eec6bf458-RV09-01--RV09c/turn-000/response-000.json"
+      ],
+      "internal_repairs": 1,
+      "raw_result": "/Users/student03/Documents/ChatGPT/ai memory/docs/prototypes/full-interview-evaluation/run-single-question-v2-round001/cases/DEV-SOURCES-N-6eec6bf458-RV09-01--RV09c/turn-000/result.json"
+    },
+    {
+      "case_id": "DEV-SOURCES-N-6eec6bf458-RV06-01--RV06b",
+      "narrator_id": "N-6eec6bf458",
+      "name": "孫樸生",
+      "question_id": "RV06b",
+      "turn": 0,
+      "execution": "evaluated",
+      "main_question": "有没有谁让您觉得有所亏欠？",
+      "actual_original_question": "那個時候是陸光康樂隊剛成立嗎？",
+      "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_4_189.htm?3",
+      "frozen_source_id": "VAC-189-E06",
+      "protocol_errors": [],
+      "semantic_rejections": [],
+      "field_failures": [
+        {
+          "field_id": "RV06-E2",
+          "label": "本人觉得亏欠的人及关系",
+          "failed_dimensions": [
+            "state"
+          ],
+          "actual": {
+            "state": "known",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-189-E06",
+                  "quote": "最令人感激的就是張雋。"
+                }
+              ]
+            },
+            "value": "最令人感激的就是張雋。",
+            "evidence": [
+              {
+                "source_id": "VAC-189-E06",
+                "quote": "最令人感激的就是張雋。"
+              }
+            ]
+          },
+          "expected": {
+            "state": "missing"
+          },
+          "gap_question": "有没有哪位人，让您觉得有所亏欠？",
+          "missed": false,
+          "false_accepted": true,
+          "required_stage_not_grounded": false
+        }
+      ],
+      "followup": {
+        "passed": false,
+        "checks": [
+          {
+            "dimension": "decision",
+            "passed": false
+          },
+          {
+            "dimension": "target",
+            "passed": false
+          },
+          {
+            "dimension": "no_reask_closed",
+            "passed": true
+          }
+        ],
+        "actual_decision": "ready",
+        "actual_target": null,
+        "expected": {
+          "decisions": [
+            "ask"
+          ],
+          "targets": [
+            "RV06-E2"
+          ]
+        }
+      },
+      "actual_call_response_files": [
+        "cases/DEV-SOURCES-N-6eec6bf458-RV06-01--RV06b/turn-000/response-000-review.json",
+        "cases/DEV-SOURCES-N-6eec6bf458-RV06-01--RV06b/turn-000/response-000.json"
+      ],
+      "internal_repairs": 0,
+      "raw_result": "/Users/student03/Documents/ChatGPT/ai memory/docs/prototypes/full-interview-evaluation/run-single-question-v2-round001/cases/DEV-SOURCES-N-6eec6bf458-RV06-01--RV06b/turn-000/result.json"
+    },
+    {
+      "case_id": "ROOT-N-6eec6bf458-CH03--CH03",
+      "narrator_id": "N-6eec6bf458",
+      "name": "孫樸生",
+      "question_id": "CH03",
+      "turn": 0,
+      "execution": "evaluated",
+      "main_question": "小时候哪位亲人最疼爱您？",
+      "actual_original_question": "在這樣子的家庭狀況下，你為什麼決定從軍？",
+      "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_186.htm?4",
+      "frozen_source_id": "VAC-186-E05",
+      "protocol_errors": [],
+      "semantic_rejections": [],
+      "field_failures": [
+        {
+          "field_id": "CH03-E3",
+          "label": "与所述亲人有关的难忘小事",
+          "failed_dimensions": [
+            "state",
+            "content_0",
+            "verbatim_evidence",
+            "evidence_fact_0",
+            "scope_subject",
+            "relation_evidence_valid",
+            "relation_evidence_0"
+          ],
+          "actual": {
+            "state": "missing",
+            "value": null,
+            "evidence": []
+          },
+          "expected": {
+            "state": "known",
+            "value_groups": [
+              [
+                "乘坐專用人力車去上學"
+              ]
+            ],
+            "evidence": [
+              {
+                "quote": "乘坐專用人力車去上學",
+                "quote_options": [
+                  "乘坐專用人力車去上學"
+                ],
+                "source_id": "VAC-186-E05"
+              }
+            ],
+            "scope": {
+              "subject": [
+                "self",
+                "family"
+              ]
+            },
+            "relation_evidence": [
+              {
+                "quote": "乘坐專用人力車去上學",
+                "quote_options": [
+                  "乘坐專用人力車去上學"
+                ],
+                "source_id": "VAC-186-E05"
+              }
+            ]
+          },
+          "gap_question": "关于刚才说的这位亲人，有什么难忘的小事？",
+          "missed": true,
+          "false_accepted": false,
+          "required_stage_not_grounded": false
+        }
+      ],
+      "followup": {
+        "passed": false,
+        "checks": [
+          {
+            "dimension": "decision",
+            "passed": false
+          },
+          {
+            "dimension": "target",
+            "passed": false
+          },
+          {
+            "dimension": "no_reask_closed",
+            "passed": false
+          },
+          {
+            "dimension": "question_present",
+            "passed": true
+          },
+          {
+            "dimension": "single_target",
+            "passed": true
+          }
+        ],
+        "actual_decision": "ask",
+        "actual_target": "CH03-E3",
+        "expected": {
+          "decisions": [
+            "ready"
+          ],
+          "targets": [
+            null
+          ]
+        }
+      },
+      "actual_call_response_files": [
+        "cases/ROOT-N-6eec6bf458-CH03--CH03/turn-000/response-000-review.json",
+        "cases/ROOT-N-6eec6bf458-CH03--CH03/turn-000/response-000.json"
+      ],
+      "internal_repairs": 0,
+      "raw_result": "/Users/student03/Documents/ChatGPT/ai memory/docs/prototypes/full-interview-evaluation/run-single-question-v2-round001/cases/ROOT-N-6eec6bf458-CH03--CH03/turn-000/result.json"
+    },
+    {
+      "case_id": "ROOT-N-6eec6bf458-CH03--CH03b",
+      "narrator_id": "N-6eec6bf458",
+      "name": "孫樸生",
+      "question_id": "CH03b",
+      "turn": 0,
+      "execution": "evaluated",
+      "main_question": "童年时哪位亲人对您的影响比较深？",
+      "actual_original_question": "在這樣子的家庭狀況下，你為什麼決定從軍？",
+      "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_186.htm?4",
+      "frozen_source_id": "VAC-186-E05",
+      "protocol_errors": [],
+      "semantic_rejections": [],
+      "field_failures": [
+        {
+          "field_id": "CH03-E2",
+          "label": "童年影响深的亲人及关系",
+          "failed_dimensions": [
+            "state"
+          ],
+          "actual": {
+            "state": "known",
+            "scope": {
+              "subject": "parents",
+              "period": "childhood",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-186-E05",
+                  "quote": "  雖然那時候家裡經濟環境轉差，母親仍然非常疼我，到讀初中的時候，我一直都是乘坐專用人力車去上學。"
+                }
+              ]
+            },
+            "value": "  雖然那時候家裡經濟環境轉差，母親仍然非常疼我，到讀初中的時候，我一直都是乘坐專用人力車去上學。",
+            "evidence": [
+              {
+                "source_id": "VAC-186-E05",
+                "quote": "  雖然那時候家裡經濟環境轉差，母親仍然非常疼我，到讀初中的時候，我一直都是乘坐專用人力車去上學。"
+              }
+            ]
+          },
+          "expected": {
+            "state": "missing"
+          },
+          "gap_question": "童年时，哪位亲人对您的影响比较深？",
+          "missed": false,
+          "false_accepted": true,
+          "required_stage_not_grounded": false
+        }
+      ],
+      "followup": {
+        "passed": false,
+        "checks": [
+          {
+            "dimension": "decision",
+            "passed": false
+          },
+          {
+            "dimension": "target",
+            "passed": false
+          },
+          {
+            "dimension": "no_reask_closed",
+            "passed": true
+          }
+        ],
+        "actual_decision": "ready",
+        "actual_target": null,
+        "expected": {
+          "decisions": [
+            "ask"
+          ],
+          "targets": [
+            "CH03-E2"
+          ]
+        }
+      },
+      "actual_call_response_files": [
+        "cases/ROOT-N-6eec6bf458-CH03--CH03b/turn-000/response-000-review.json",
+        "cases/ROOT-N-6eec6bf458-CH03--CH03b/turn-000/response-000.json"
+      ],
+      "internal_repairs": 0,
+      "raw_result": "/Users/student03/Documents/ChatGPT/ai memory/docs/prototypes/full-interview-evaluation/run-single-question-v2-round001/cases/ROOT-N-6eec6bf458-CH03--CH03b/turn-000/result.json"
+    }
+  ]
+}

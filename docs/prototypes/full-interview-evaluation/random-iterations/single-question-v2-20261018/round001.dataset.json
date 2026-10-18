@@ -1,0 +1,2608 @@
+{
+  "schema": "full-interview-eval-v1",
+  "authoring": {
+    "at": "2026-10-17T09:25:44.929300+00:00",
+    "gold_revision": "unified-v2-development-final",
+    "status": "All source-first adjudications before candidate5 full run; historical snapshots/scores untouched. No holdout model output used.",
+    "components": [
+      {
+        "path": "docs/prototypes/full-interview-evaluation/local-unified-v2-final.json",
+        "sha256": "d2c70bdf0e3c084e783205d6e3841aa9657cc168331e6e8b9b783f53037bdeff"
+      },
+      {
+        "path": "docs/prototypes/full-interview-evaluation/root-unified-v2.json",
+        "sha256": "628aa63cdc6bc939d00eab2cb822fa4056a887982397ce0312309881d057ce95"
+      },
+      {
+        "path": "docs/prototypes/full-interview-evaluation/stage-unified-v2-final.json",
+        "sha256": "7eeee395a0945bd9ec5038821deeba95804e74ada15e76e0e974ca7a10712c09"
+      }
+    ],
+    "source_manifest": "docs/prototypes/full-interview-evaluation/unified-development-v2-sources/sources.json",
+    "source_manifest_sha256": "af1c8f68637702b616dbe09920e2188b5289e7f597cf70d7f6b0bb090227c39c",
+    "source_base": "docs/prototypes/full-interview-evaluation/unified-development-v2-sources",
+    "gold_version": "single-question-v2-projection-1",
+    "parent_sha256": "f9a7949a1ef3a37ef65bdac82f4e949f172ad903cf99026200ce8e8306356035",
+    "adjudication": "gold-v7-adjudication.json",
+    "no_source_or_question_change": true,
+    "review_disclosure": "Root has seen development failures. Every CH04 source was re-read against the unchanged baseline rule; this is not blind labelling.",
+    "parent_dataset": "docs/prototypes/full-interview-evaluation/unified-development-gold-v7.json",
+    "parent_dataset_sha256": "be1046348222f6b8cbff417a2577cb5043e382d1609a3cd502c272ac85985a8d",
+    "business_migration": "single-question-v2",
+    "source_text_and_actual_interviewer_question_unchanged": true,
+    "not_live_answer_simulation": true,
+    "annotation_audit": "single-question-v2-gold.projection.json",
+    "random_iteration": {
+      "algorithm": "sorted development IDs + Python Random(seed).sample, uniform without replacement",
+      "seed": 750443787408427674,
+      "people": 8,
+      "cases": 33,
+      "checkpoints": 33,
+      "questions": [
+        "CH02",
+        "CH02b",
+        "CH03",
+        "CH03b",
+        "CH07",
+        "FM05",
+        "GR07",
+        "LT05",
+        "LT05b",
+        "LT06",
+        "RV02",
+        "RV03",
+        "RV06",
+        "RV06b",
+        "RV09",
+        "RV09b",
+        "RV09c",
+        "RV10",
+        "RV13",
+        "RV16",
+        "SK01",
+        "SK01b",
+        "SK01c",
+        "SK03",
+        "SK03b",
+        "SK03c",
+        "SK03d",
+        "WK13"
+      ],
+      "narrator_ids": [
+        "N-0d4a398022",
+        "N-568db56d4d",
+        "N-6eec6bf458",
+        "N-81acb2dd8d",
+        "N-9ff0b2f16e",
+        "N-c5a5031a87",
+        "N-c8625984e4",
+        "N-f3af6b6947"
+      ],
+      "parent_dataset_sha256": "2b1307ca1e4cc0cd5c6bb841c57262a7ca9a74ac0842f120344ce418f8a882fe",
+      "runtime_manifest_sha256": "d3bbba726e826e5bc84a038e55457077b9c706682e52f588264d1f0f7bc8a503",
+      "all_selected_people_cases_and_turns": true,
+      "scores_not_used_for_selection": true,
+      "not_full55_acceptance": true,
+      "not_an_unseen_accuracy_estimate": true
+    }
+  },
+  "narrators": [
+    {
+      "id": "N-f3af6b6947",
+      "name": "侯鎮清",
+      "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_218.htm?4",
+      "title": "被抓當兵揹子彈  從此跟著部隊跑 沒受訓就打仗  第一次開槍閉著眼睛打",
+      "sources": [
+        {
+          "id": "VAC-217",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_217.htm?4",
+          "title": "歎命苦  小學四年級就失學",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:24:32.246526+00:00",
+          "raw_path": "VAC-217-raw_path.html",
+          "body_path": "VAC-217-body_path.txt",
+          "raw_sha256": "db1518153d8a64f158128c830f4ae129b2a472dd7cc1f9928ee2f89b0af8cc2a",
+          "body_sha256": "888a6c1f971778baa2e7ad2da608c0eb873ce3b7ce62e10cecf4281069b6b452",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "侯鎮清"
+        }
+      ],
+      "split": "development"
+    },
+    {
+      "id": "N-568db56d4d",
+      "name": "易芳運",
+      "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_145.htm?5",
+      "title": "軍服搭草鞋  三餐吃不飽",
+      "sources": [
+        {
+          "id": "VAC-144",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_144.htm?5",
+          "title": "抓伕去當兵  母親哭紅眼",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:24:42.569263+00:00",
+          "raw_path": "VAC-144-raw_path.html",
+          "body_path": "VAC-144-body_path.txt",
+          "raw_sha256": "57c7d607142612370b79882683cf6749933330bda019467f644e4c634758d3b8",
+          "body_sha256": "a83477eb953bf5ec5474bfdabf17fa9b550dc5e4c986cd061d7fac591a60e4d7",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "易芳運"
+        }
+      ],
+      "split": "development"
+    },
+    {
+      "id": "N-c5a5031a87",
+      "name": "楼燕勤",
+      "source_url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+      "title": "CASA  资深会员 访谈录 -楼燕勤 ",
+      "sources": [
+        {
+          "id": "CASA-c5a5031a",
+          "url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+          "title": "CASA  资深会员 访谈录 -楼燕勤 ",
+          "institution": "CASA 华人麻醉医学会，CASA Bulletin of Anesthesiology Vol.9 No.6 2022增刊",
+          "fetched_at": "2026-10-17T08:33:49.364089+00:00",
+          "raw_path": "CASA-c5a5031a-raw_path.md",
+          "body_path": "CASA-c5a5031a-body_path.txt",
+          "raw_sha256": "b249463faf75a83d9076569a34b2634f27b0d231d4dad86be7902db906086463",
+          "body_sha256": "d42853598011b6f24015cb0217787ccfc414b129012fe8c755409e749c21cc16",
+          "format": "published_interview_QA_PDF_text_extraction",
+          "interviewer": "曹锡清（增刊第7页访谈说明）",
+          "narrator": "楼燕勤",
+          "retrieval_backend": "agent-reach Jina Reader PDF",
+          "source_limitations": "原始PDF直连有证书错误；Jina已公开返回77页文字层，当前保留原抽取全文，未伪称原PDF二进制；部分中英文空格与换行为PDF版面产物。"
+        }
+      ],
+      "split": "development"
+    },
+    {
+      "id": "N-6eec6bf458",
+      "name": "孫樸生",
+      "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_186.htm?4",
+      "title": "顯赫的家族  褪色的童年 家境富轉貧  報名去從軍",
+      "sources": [
+        {
+          "id": "VAC-186",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_186.htm?4",
+          "title": "顯赫的家族  褪色的童年 家境富轉貧  報名去從軍",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:24:42.402289+00:00",
+          "raw_path": "VAC-186-raw_path.html",
+          "body_path": "VAC-186-body_path.txt",
+          "raw_sha256": "261152106be6c0c8ed25cb3efe1a362685893bf15a1efe83a9a22a503ec39e1e",
+          "body_sha256": "e085220acd5b593f7baded2724e9eb6436987ba52c4ee370db91518c9407a9fe",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "孫樸生"
+        },
+        {
+          "id": "VAC-190",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_4_190.htm?3",
+          "title": "張雋來提攜  打開廣播路 扣應開台祖  聽眾很溫馨",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:25:36.568720+00:00",
+          "raw_path": "VAC-190-raw_path.html",
+          "body_path": "VAC-190-body_path.txt",
+          "raw_sha256": "47ee25f8485eb6ae537b25457efe0b99fbfbb4dc4a2a516c2f295a1c5a7f91f9",
+          "body_sha256": "d34161c39b2596e042fd805395b4d7fb4bc832080f141135f9e7b9e4f540573a",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "孫樸生"
+        },
+        {
+          "id": "VAC-189",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_4_189.htm?3",
+          "title": "戲劇開根苗  幹校再充電 學藝兼自修  悟出看譜法",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:25:39.234519+00:00",
+          "raw_path": "VAC-189-raw_path.html",
+          "body_path": "VAC-189-body_path.txt",
+          "raw_sha256": "1fca8062a4e01bb8c99bc3e4403bbcfde23594898b9ee7ce65bd1446f4296b30",
+          "body_sha256": "4517df5b2ae3ed0ccab16109856977dd716fd0e106f44ffece82ad19c21d8683",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "孫樸生"
+        }
+      ],
+      "split": "development"
+    },
+    {
+      "id": "N-9ff0b2f16e",
+      "name": "金晓贵",
+      "source_url": "https://www.gzu.edu.cn/_t2805/2026/0509/c17516a272833/page.htm",
+      "title": "讲述｜金晓贵：到祖国最需要的地方去",
+      "sources": [
+        {
+          "id": "WEB-jinxiaogui",
+          "url": "https://www.gzu.edu.cn/_t2805/2026/0509/c17516a272833/page.htm",
+          "title": "讲述｜金晓贵：到祖国最需要的地方去",
+          "institution": "贵州大学",
+          "fetched_at": "2026-10-17T08:30:28.091988+00:00",
+          "raw_path": "WEB-jinxiaogui-raw_path.md",
+          "body_path": "WEB-jinxiaogui-body_path.txt",
+          "raw_sha256": "26e33c1490bc065d0e27ae90da9f76da6354daf78dee9e79bbe622ea58ee24e5",
+          "body_sha256": "9f10c8a6cf7ce54093c59d282c1a7a8464c5ebaa6fbe8ff62a8b69e06ed11447",
+          "format": "published_interview_QA",
+          "interviewer": "陈美美",
+          "narrator": "金晓贵",
+          "retrieval_backend": "agent-reach Jina Reader",
+          "source_limitations": "原采访整理刊物；编辑标题/括号注释不等于本人原话。"
+        }
+      ],
+      "split": "development"
+    },
+    {
+      "id": "N-c8625984e4",
+      "name": "周少凤",
+      "source_url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+      "title": "CASA  资深会员 访谈录 -周少凤 ",
+      "sources": [
+        {
+          "id": "CASA-c8625984",
+          "url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+          "title": "CASA  资深会员 访谈录 -周少凤 ",
+          "institution": "CASA 华人麻醉医学会，CASA Bulletin of Anesthesiology Vol.9 No.6 2022增刊",
+          "fetched_at": "2026-10-17T08:33:49.364089+00:00",
+          "raw_path": "CASA-c8625984-raw_path.md",
+          "body_path": "CASA-c8625984-body_path.txt",
+          "raw_sha256": "b249463faf75a83d9076569a34b2634f27b0d231d4dad86be7902db906086463",
+          "body_sha256": "89984d40aba4d186547f76c1b26d7cffbbfc702e4e7f8202facf93f62b7c66d6",
+          "format": "published_interview_QA_PDF_text_extraction",
+          "interviewer": "曹锡清（增刊第7页访谈说明）",
+          "narrator": "周少凤",
+          "retrieval_backend": "agent-reach Jina Reader PDF",
+          "source_limitations": "原始PDF直连有证书错误；Jina已公开返回77页文字层，当前保留原抽取全文，未伪称原PDF二进制；部分中英文空格与换行为PDF版面产物。"
+        }
+      ],
+      "split": "development"
+    },
+    {
+      "id": "N-0d4a398022",
+      "name": "郭柯",
+      "source_url": "https://news.youth.cn/gn/201708/t20170819_10547682.htm",
+      "title": "对话《二十二》导演郭柯：老人说到至深处，我却关机，不拍了",
+      "sources": [
+        {
+          "id": "SUP-guoke",
+          "url": "https://news.youth.cn/gn/201708/t20170819_10547682.htm",
+          "title": "对话《二十二》导演郭柯：老人说到至深处，我却关机，不拍了",
+          "institution": "中国青年网",
+          "fetched_at": "2026-10-17T08:55:45.483269+00:00",
+          "raw_path": "SUP-guoke-raw_path.md",
+          "body_path": "SUP-guoke-body_path.txt",
+          "raw_sha256": "11aa4fdcf01a663b40bdf25b2128607f7082f013685628539e7f05d6e6048d7c",
+          "body_sha256": "4e40885910ee40ae7a77f7a1703e13ab977a6f68421e1ab9c753e417d68e9815",
+          "format": "published_interview_QA",
+          "interviewer": "范利媛、吴阳",
+          "narrator": "郭柯",
+          "retrieval_backend": "agent-reach Jina Reader",
+          "encoding": "UTF-8",
+          "source_limitations": "Full body includes editorial material; excerpts below manually bounded to explicit respondent answers."
+        }
+      ],
+      "split": "development"
+    },
+    {
+      "id": "N-81acb2dd8d",
+      "name": "劉金標",
+      "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_309.htm?3",
+      "sources": [
+        {
+          "id": "VAC-308",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_308.htm?3",
+          "title": "私塾受教育  身強體壯入海軍",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:24:22.317555+00:00",
+          "raw_path": "VAC-308-raw_path.html",
+          "body_path": "VAC-308-body_path.txt",
+          "raw_sha256": "d5675c8cfd22686d2f297954fe9449557d90d833b80594b0c1b55258a0955126",
+          "body_sha256": "ba9617015eed81f1c2871e60427ab69ff25e0f7566a6ee48db9ba3a18b03c64e",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "劉金標"
+        }
+      ],
+      "split": "development"
+    }
+  ],
+  "cases": [
+    {
+      "id": "DEV-N-f3af6b6947-SK03-01--SK03",
+      "narrator_id": "N-f3af6b6947",
+      "question_id": "SK03",
+      "annotation_note": "",
+      "turns": [
+        {
+          "source": {
+            "id": "VAC-217-E01",
+            "text": "我是民國16年2月20日在青島出生的。我的命運非常不好，因為我小學剛剛升四年級的時候，日本人已經打到青島來了，我從那時起就開始失學在家。我父親在青島市做生意，我跟我哥哥、母親在鄉下靠務農來維持生活。家鄉生活還說得過去。我失學後就跟著我哥哥下田。",
+            "question": "請侯鎮清先生先介紹一下您小時候的家庭背景。",
+            "original_interviewer_question": "請侯鎮清先生先介紹一下您小時候的家庭背景。",
+            "source_excerpt_id": "VAC-217-E01",
+            "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_217.htm?4",
+            "source_id": "VAC-217",
+            "original_excerpt_sha256": "92fc80c69fc46b468253b80dbd729e078b65c4c4dc139279065af060028d3743",
+            "excerpt_char_start": 0,
+            "excerpt_char_end": 122,
+            "body_char_start": 27,
+            "body_char_end": 149
+          },
+          "expected": {
+            "fields": {
+              "SK03-E1": {
+                "state": "known",
+                "value_groups": [
+                  [
+                    "我跟我哥哥、母親在鄉下",
+                    "跟著我哥哥下田"
+                  ]
+                ],
+                "evidence": [
+                  {
+                    "source_id": "VAC-217-E01",
+                    "quote": "我跟我哥哥、母親在鄉下",
+                    "quote_options": [
+                      "我跟我哥哥、母親在鄉下",
+                      "跟著我哥哥下田"
+                    ]
+                  }
+                ],
+                "scope": {
+                  "subject": [
+                    "self",
+                    "family",
+                    "parents",
+                    "siblings"
+                  ]
+                },
+                "relation_evidence": [
+                  {
+                    "source_id": "VAC-217-E01",
+                    "quote": "我跟我哥哥、母親在鄉下靠務農來維持生活",
+                    "quote_options": [
+                      "我跟我哥哥、母親在鄉下靠務農來維持生活",
+                      "我失學後就跟著我哥哥下田"
+                    ]
+                  }
+                ]
+              },
+              "SK03-O1": {
+                "state": "missing",
+                "optional_unscored": true
+              }
+            },
+            "followup": {
+              "decisions": [
+                "ready"
+              ],
+              "targets": [
+                null
+              ]
+            }
+          }
+        }
+      ],
+      "legacy_case_id": "DEV-N-f3af6b6947-SK03-01"
+    },
+    {
+      "id": "DEV-N-f3af6b6947-SK03-01--SK03b",
+      "narrator_id": "N-f3af6b6947",
+      "question_id": "SK03b",
+      "annotation_note": "",
+      "turns": [
+        {
+          "source": {
+            "id": "VAC-217-E01",
+            "text": "我是民國16年2月20日在青島出生的。我的命運非常不好，因為我小學剛剛升四年級的時候，日本人已經打到青島來了，我從那時起就開始失學在家。我父親在青島市做生意，我跟我哥哥、母親在鄉下靠務農來維持生活。家鄉生活還說得過去。我失學後就跟著我哥哥下田。",
+            "question": "請侯鎮清先生先介紹一下您小時候的家庭背景。",
+            "original_interviewer_question": "請侯鎮清先生先介紹一下您小時候的家庭背景。",
+            "source_excerpt_id": "VAC-217-E01",
+            "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_217.htm?4",
+            "source_id": "VAC-217",
+            "original_excerpt_sha256": "92fc80c69fc46b468253b80dbd729e078b65c4c4dc139279065af060028d3743",
+            "excerpt_char_start": 0,
+            "excerpt_char_end": 122,
+            "body_char_start": 27,
+            "body_char_end": 149
+          },
+          "expected": {
+            "fields": {
+              "SK03-E2": {
+                "state": "known",
+                "value_groups": [
+                  [
+                    "靠務農來維持生活",
+                    "做生意",
+                    "下田"
+                  ]
+                ],
+                "evidence": [
+                  {
+                    "source_id": "VAC-217-E01",
+                    "quote": "靠務農來維持生活",
+                    "quote_options": [
+                      "靠務農來維持生活",
+                      "做生意",
+                      "下田"
+                    ]
+                  }
+                ],
+                "scope": {
+                  "subject": [
+                    "self",
+                    "family",
+                    "parents",
+                    "siblings"
+                  ]
+                },
+                "relation_evidence": [
+                  {
+                    "source_id": "VAC-217-E01",
+                    "quote": "我父親在青島市做生意",
+                    "quote_options": [
+                      "我父親在青島市做生意",
+                      "我跟我哥哥、母親在鄉下靠務農來維持生活",
+                      "我失學後就跟著我哥哥下田"
+                    ]
+                  }
+                ]
+              },
+              "SK03-O1b": {
+                "state": "missing",
+                "optional_unscored": true
+              }
+            },
+            "followup": {
+              "decisions": [
+                "ready"
+              ],
+              "targets": [
+                null
+              ]
+            }
+          }
+        }
+      ],
+      "legacy_case_id": "DEV-N-f3af6b6947-SK03-01"
+    },
+    {
+      "id": "DEV-N-f3af6b6947-SK03-01--SK03c",
+      "narrator_id": "N-f3af6b6947",
+      "question_id": "SK03c",
+      "annotation_note": "",
+      "turns": [
+        {
+          "source": {
+            "id": "VAC-217-E01",
+            "text": "我是民國16年2月20日在青島出生的。我的命運非常不好，因為我小學剛剛升四年級的時候，日本人已經打到青島來了，我從那時起就開始失學在家。我父親在青島市做生意，我跟我哥哥、母親在鄉下靠務農來維持生活。家鄉生活還說得過去。我失學後就跟著我哥哥下田。",
+            "question": "請侯鎮清先生先介紹一下您小時候的家庭背景。",
+            "original_interviewer_question": "請侯鎮清先生先介紹一下您小時候的家庭背景。",
+            "source_excerpt_id": "VAC-217-E01",
+            "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_217.htm?4",
+            "source_id": "VAC-217",
+            "original_excerpt_sha256": "92fc80c69fc46b468253b80dbd729e078b65c4c4dc139279065af060028d3743",
+            "excerpt_char_start": 0,
+            "excerpt_char_end": 122,
+            "body_char_start": 27,
+            "body_char_end": 149
+          },
+          "expected": {
+            "fields": {
+              "SK03-E3": {
+                "state": "known",
+                "value_groups": [
+                  [
+                    "我哥哥"
+                  ]
+                ],
+                "evidence": [
+                  {
+                    "source_id": "VAC-217-E01",
+                    "quote": "我哥哥",
+                    "quote_options": [
+                      "我哥哥"
+                    ]
+                  }
+                ],
+                "scope": {
+                  "subject": [
+                    "self",
+                    "family",
+                    "siblings"
+                  ]
+                },
+                "relation_evidence": [
+                  {
+                    "source_id": "VAC-217-E01",
+                    "quote": "我跟我哥哥、母親",
+                    "quote_options": [
+                      "我跟我哥哥、母親",
+                      "我失學後就跟著我哥哥下田"
+                    ]
+                  }
+                ]
+              },
+              "SK03-O1c": {
+                "state": "missing",
+                "optional_unscored": true
+              }
+            },
+            "followup": {
+              "decisions": [
+                "ready"
+              ],
+              "targets": [
+                null
+              ]
+            }
+          }
+        }
+      ],
+      "legacy_case_id": "DEV-N-f3af6b6947-SK03-01"
+    },
+    {
+      "id": "DEV-N-f3af6b6947-SK03-01--SK03d",
+      "narrator_id": "N-f3af6b6947",
+      "question_id": "SK03d",
+      "annotation_note": "",
+      "turns": [
+        {
+          "source": {
+            "id": "VAC-217-E01",
+            "text": "我是民國16年2月20日在青島出生的。我的命運非常不好，因為我小學剛剛升四年級的時候，日本人已經打到青島來了，我從那時起就開始失學在家。我父親在青島市做生意，我跟我哥哥、母親在鄉下靠務農來維持生活。家鄉生活還說得過去。我失學後就跟著我哥哥下田。",
+            "question": "請侯鎮清先生先介紹一下您小時候的家庭背景。",
+            "original_interviewer_question": "請侯鎮清先生先介紹一下您小時候的家庭背景。",
+            "source_excerpt_id": "VAC-217-E01",
+            "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_217.htm?4",
+            "source_id": "VAC-217",
+            "original_excerpt_sha256": "92fc80c69fc46b468253b80dbd729e078b65c4c4dc139279065af060028d3743",
+            "excerpt_char_start": 0,
+            "excerpt_char_end": 122,
+            "body_char_start": 27,
+            "body_char_end": 149
+          },
+          "expected": {
+            "fields": {
+              "SK03-E4": {
+                "state": "missing"
+              },
+              "SK03-O1d": {
+                "state": "missing",
+                "optional_unscored": true
+              }
+            },
+            "followup": {
+              "decisions": [
+                "ask"
+              ],
+              "targets": [
+                "SK03-E4"
+              ]
+            }
+          }
+        }
+      ],
+      "legacy_case_id": "DEV-N-f3af6b6947-SK03-01"
+    },
+    {
+      "id": "DEV-N-568db56d4d-CH02-01--CH02",
+      "narrator_id": "N-568db56d4d",
+      "question_id": "CH02",
+      "annotation_note": "",
+      "turns": [
+        {
+          "source": {
+            "id": "VAC-144-E01",
+            "text": "家裡只有哥哥、媽媽，加我三個人。住在鄉下，生活很苦、很苦，附近少人煙。哥哥比我大兩歲，10多歲時生病，連飯都沒得吃了，因此更沒錢請醫生，所以就過世了。自從我生出來，懂事後，就沒看過我父親，媽媽也沒提過他。家裡沒有人工作。家裡沒種田也沒受教育，平時跟哥哥以放牛維生，早上把牛趕出去，晚上把牛趕回來，靠別人給我飯吃。",
+            "question": "您小時候家裡有哪些人？環境如何？",
+            "original_interviewer_question": "您小時候家裡有哪些人？環境如何？",
+            "source_excerpt_id": "VAC-144-E01",
+            "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_144.htm?5",
+            "source_id": "VAC-144",
+            "original_excerpt_sha256": "fb374b640594d277e94ff1905f55d146de01c016ef511d9ca5b20140689ec9d2",
+            "excerpt_char_start": 0,
+            "excerpt_char_end": 156,
+            "body_char_start": 22,
+            "body_char_end": 178
+          },
+          "expected": {
+            "fields": {
+              "CH02-E1": {
+                "state": "known",
+                "value_groups": [
+                  [
+                    "生活很苦",
+                    "連飯都沒得吃",
+                    "沒錢請醫生",
+                    "靠別人給我飯吃",
+                    "家裡沒有人工作"
+                  ]
+                ],
+                "evidence": [
+                  {
+                    "source_id": "VAC-144-E01",
+                    "quote": "生活很苦",
+                    "quote_options": [
+                      "生活很苦",
+                      "連飯都沒得吃",
+                      "沒錢請醫生",
+                      "靠別人給我飯吃",
+                      "家裡沒有人工作"
+                    ]
+                  }
+                ],
+                "scope": {
+                  "subject": [
+                    "self",
+                    "family"
+                  ]
+                },
+                "relation_evidence": [
+                  {
+                    "source_id": "VAC-144-E01",
+                    "quote": "生活很苦",
+                    "quote_options": [
+                      "生活很苦",
+                      "連飯都沒得吃",
+                      "沒錢請醫生",
+                      "靠別人給我飯吃",
+                      "家裡沒有人工作"
+                    ]
+                  }
+                ]
+              },
+              "CH02-O1": {
+                "state": "missing",
+                "optional_unscored": true
+              }
+            },
+            "followup": {
+              "decisions": [
+                "ready"
+              ],
+              "targets": [
+                null
+              ]
+            }
+          }
+        }
+      ],
+      "legacy_case_id": "DEV-N-568db56d4d-CH02-01"
+    },
+    {
+      "id": "DEV-N-568db56d4d-CH02-01--CH02b",
+      "narrator_id": "N-568db56d4d",
+      "question_id": "CH02b",
+      "annotation_note": "",
+      "turns": [
+        {
+          "source": {
+            "id": "VAC-144-E01",
+            "text": "家裡只有哥哥、媽媽，加我三個人。住在鄉下，生活很苦、很苦，附近少人煙。哥哥比我大兩歲，10多歲時生病，連飯都沒得吃了，因此更沒錢請醫生，所以就過世了。自從我生出來，懂事後，就沒看過我父親，媽媽也沒提過他。家裡沒有人工作。家裡沒種田也沒受教育，平時跟哥哥以放牛維生，早上把牛趕出去，晚上把牛趕回來，靠別人給我飯吃。",
+            "question": "您小時候家裡有哪些人？環境如何？",
+            "original_interviewer_question": "您小時候家裡有哪些人？環境如何？",
+            "source_excerpt_id": "VAC-144-E01",
+            "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_144.htm?5",
+            "source_id": "VAC-144",
+            "original_excerpt_sha256": "fb374b640594d277e94ff1905f55d146de01c016ef511d9ca5b20140689ec9d2",
+            "excerpt_char_start": 0,
+            "excerpt_char_end": 156,
+            "body_char_start": 22,
+            "body_char_end": 178
+          },
+          "expected": {
+            "fields": {
+              "CH02-E2": {
+                "state": "known",
+                "value_groups": [
+                  [
+                    "放牛",
+                    "早上把牛趕出去",
+                    "晚上把牛趕回來"
+                  ]
+                ],
+                "evidence": [
+                  {
+                    "source_id": "VAC-144-E01",
+                    "quote": "放牛",
+                    "quote_options": [
+                      "放牛",
+                      "早上把牛趕出去",
+                      "晚上把牛趕回來"
+                    ]
+                  }
+                ],
+                "scope": {
+                  "subject": [
+                    "self"
+                  ]
+                },
+                "relation_evidence": [
+                  {
+                    "source_id": "VAC-144-E01",
+                    "quote": "平時跟哥哥以放牛維生",
+                    "quote_options": [
+                      "平時跟哥哥以放牛維生",
+                      "早上把牛趕出去，晚上把牛趕回來"
+                    ]
+                  }
+                ]
+              },
+              "CH02-O1b": {
+                "state": "missing",
+                "optional_unscored": true
+              }
+            },
+            "followup": {
+              "decisions": [
+                "ready"
+              ],
+              "targets": [
+                null
+              ]
+            }
+          }
+        }
+      ],
+      "legacy_case_id": "DEV-N-568db56d4d-CH02-01"
+    },
+    {
+      "id": "DEV3-N-c5a5031a87-WK13-01--WK13",
+      "narrator_id": "N-c5a5031a87",
+      "question_id": "WK13",
+      "annotation_note": "",
+      "turns": [
+        {
+          "source": {
+            "id": "CASA-c5a5031a-Q07",
+            "text": "最得意的是 20 多年临床工作至今為止无医疗亊故，有二例家属曾试度为钱财或被某些因素诱惑起诉我而无任何医学问责根底基礎 ，最终自动撤销起诉 ！",
+            "question": "回首往事，您所做的最得意的事，最想让人记住的是什么？",
+            "original_interviewer_question": "回首往事，您所做的最得意的事，最想让人记住的是什么？",
+            "source_excerpt_id": "CASA-c5a5031a-Q07",
+            "source_url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+            "source_id": "CASA-c5a5031a",
+            "original_excerpt_sha256": "bd4d403165f31bd7bc75879bb0564ef9e5bb7bfcc2421abe2e8174ae75e6d502",
+            "excerpt_char_start": 0,
+            "excerpt_char_end": 71,
+            "body_char_start": 5781,
+            "body_char_end": 5852
+          },
+          "expected": {
+            "fields": {
+              "WK13-E1": {
+                "state": "known",
+                "value_groups": [
+                  [
+                    "20 多年临床工作至今為止无医疗亊故",
+                    "最终自动撤销起诉"
+                  ]
+                ],
+                "evidence": [
+                  {
+                    "source_id": "CASA-c5a5031a-Q07",
+                    "quote": "20 多年临床工作至今為止无医疗亊故",
+                    "quote_options": [
+                      "20 多年临床工作至今為止无医疗亊故",
+                      "最终自动撤销起诉"
+                    ]
+                  }
+                ],
+                "scope": {
+                  "subject": [
+                    "self"
+                  ]
+                },
+                "relation_evidence": [
+                  {
+                    "source_id": "CASA-c5a5031a-Q07",
+                    "quote": "最得意的是 20 多年临床工作至今為止无医疗亊故",
+                    "quote_options": [
+                      "最得意的是 20 多年临床工作至今為止无医疗亊故"
+                    ]
+                  }
+                ]
+              },
+              "WK13-O1": {
+                "state": "missing",
+                "optional_unscored": true
+              }
+            },
+            "followup": {
+              "decisions": [
+                "ready"
+              ],
+              "targets": [
+                null
+              ]
+            }
+          }
+        }
+      ],
+      "legacy_case_id": "DEV3-N-c5a5031a87-WK13-01"
+    },
+    {
+      "id": "DEV3-N-c5a5031a87-LT05-01--LT05",
+      "narrator_id": "N-c5a5031a87",
+      "question_id": "LT05",
+      "annotation_note": "首次调用前根审：本人愿被记住的做事/待人态度可直接原话记录，不强迫人格标签；尚未辨认一件具体故事，追E2。",
+      "turns": [
+        {
+          "source": {
+            "id": "CASA-c5a5031a-Q07",
+            "text": "最想让人记住的 : 麻醉中，让患者能睡得安宁， 术后安全苏醒。",
+            "question": "回首往事，您所做的最得意的事，最想让人记住的是什么？",
+            "original_interviewer_question": "回首往事，您所做的最得意的事，最想让人记住的是什么？",
+            "source_excerpt_id": "CASA-c5a5031a-Q07",
+            "source_url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+            "source_id": "CASA-c5a5031a",
+            "original_excerpt_sha256": "bd4d403165f31bd7bc75879bb0564ef9e5bb7bfcc2421abe2e8174ae75e6d502",
+            "excerpt_char_start": 72,
+            "excerpt_char_end": 103,
+            "body_char_start": 5853,
+            "body_char_end": 5884
+          },
+          "expected": {
+            "fields": {
+              "LT05-E1": {
+                "state": "known",
+                "value_groups": [
+                  [
+                    "麻醉中，让患者能睡得安宁",
+                    "术后安全苏醒"
+                  ]
+                ],
+                "evidence": [
+                  {
+                    "source_id": "CASA-c5a5031a-Q07",
+                    "quote": "麻醉中，让患者能睡得安宁",
+                    "quote_options": [
+                      "麻醉中，让患者能睡得安宁",
+                      "术后安全苏醒"
+                    ]
+                  }
+                ],
+                "scope": {
+                  "subject": [
+                    "self"
+                  ]
+                },
+                "relation_evidence": [
+                  {
+                    "source_id": "CASA-c5a5031a-Q07",
+                    "quote": "最想让人记住的 : 麻醉中，让患者能睡得安宁， 术后安全苏醒",
+                    "quote_options": [
+                      "最想让人记住的 : 麻醉中，让患者能睡得安宁， 术后安全苏醒"
+                    ]
+                  }
+                ]
+              },
+              "LT05-O1": {
+                "state": "missing",
+                "optional_unscored": true
+              }
+            },
+            "followup": {
+              "decisions": [
+                "ready"
+              ],
+              "targets": [
+                null
+              ]
+            }
+          }
+        }
+      ],
+      "legacy_case_id": "DEV3-N-c5a5031a87-LT05-01"
+    },
+    {
+      "id": "DEV3-N-c5a5031a87-LT05-01--LT05b",
+      "narrator_id": "N-c5a5031a87",
+      "question_id": "LT05b",
+      "annotation_note": "首次调用前根审：本人愿被记住的做事/待人态度可直接原话记录，不强迫人格标签；尚未辨认一件具体故事，追E2。",
+      "turns": [
+        {
+          "source": {
+            "id": "CASA-c5a5031a-Q07",
+            "text": "最想让人记住的 : 麻醉中，让患者能睡得安宁， 术后安全苏醒。",
+            "question": "回首往事，您所做的最得意的事，最想让人记住的是什么？",
+            "original_interviewer_question": "回首往事，您所做的最得意的事，最想让人记住的是什么？",
+            "source_excerpt_id": "CASA-c5a5031a-Q07",
+            "source_url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+            "source_id": "CASA-c5a5031a",
+            "original_excerpt_sha256": "bd4d403165f31bd7bc75879bb0564ef9e5bb7bfcc2421abe2e8174ae75e6d502",
+            "excerpt_char_start": 72,
+            "excerpt_char_end": 103,
+            "body_char_start": 5853,
+            "body_char_end": 5884
+          },
+          "expected": {
+            "fields": {
+              "LT05-E2": {
+                "state": "missing"
+              },
+              "LT05-O1b": {
+                "state": "missing",
+                "optional_unscored": true
+              }
+            },
+            "followup": {
+              "decisions": [
+                "ask"
+              ],
+              "targets": [
+                "LT05-E2"
+              ]
+            }
+          }
+        }
+      ],
+      "legacy_case_id": "DEV3-N-c5a5031a87-LT05-01"
+    },
+    {
+      "id": "DEV3-N-c5a5031a87-LT06-01--LT06",
+      "narrator_id": "N-c5a5031a87",
+      "question_id": "LT06",
+      "annotation_note": "",
+      "turns": [
+        {
+          "source": {
+            "id": "CASA-c5a5031a-Q04",
+            "text": "打算去哪旅游？ 要想去的地方很多，以前没有太多机会旅游。现在趁退休了，身体尚能行，将争取到中国各地和世界各国去旅游。但愿疫情早日在全球获得控制，我将先囘中國去陪伴照顧年邁的父母，去旅游的話，原则上遠距離先走， 近距離后走 。",
+            "question": "现在的 hobby , 愿意分享的照片，疫情后打算去哪里旅游？",
+            "original_interviewer_question": "现在的 hobby , 愿意分享的照片，疫情后打算去哪里旅游？",
+            "source_excerpt_id": "CASA-c5a5031a-Q04",
+            "source_url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+            "source_id": "CASA-c5a5031a",
+            "original_excerpt_sha256": "acc6b274155cad872011d9d82d3f5a645f3ebcbf9c5025207530fba7fe04b9b6",
+            "excerpt_char_start": 263,
+            "excerpt_char_end": 375,
+            "body_char_start": 2768,
+            "body_char_end": 2880
+          },
+          "expected": {
+            "fields": {
+              "LT06-E1": {
+                "state": "known",
+                "value_groups": [
+                  [
+                    "到中国各地和世界各国去旅游",
+                    "先囘中國去陪伴照顧年邁的父"
+                  ]
+                ],
+                "evidence": [
+                  {
+                    "source_id": "CASA-c5a5031a-Q04",
+                    "quote": "到中国各地和世界各国去旅游",
+                    "quote_options": [
+                      "到中国各地和世界各国去旅游",
+                      "先囘中國去陪伴照顧年邁的父"
+                    ]
+                  }
+                ],
+                "scope": {
+                  "subject": [
+                    "self"
+                  ],
+                  "period": [
+                    "now",
+                    "as_stated"
+                  ]
+                },
+                "relation_evidence": [
+                  {
+                    "source_id": "CASA-c5a5031a-Q04",
+                    "quote": "将争取到中国各地和世界各国去旅游",
+                    "quote_options": [
+                      "将争取到中国各地和世界各国去旅游",
+                      "我将先囘中國去陪伴照顧年邁的父"
+                    ]
+                  }
+                ],
+                "alternatives": [
+                  {
+                    "value_groups": [
+                      [
+                        "但愿疫情早日在全球获得控制",
+                        "疫情早日在全球获得控制"
+                      ]
+                    ],
+                    "evidence": [
+                      {
+                        "source_id": "CASA-c5a5031a-Q04",
+                        "quote": "但愿疫情早日在全球获得控制"
+                      }
+                    ],
+                    "scope": {
+                      "subject": [
+                        "self"
+                      ],
+                      "period": [
+                        "now",
+                        "as_stated"
+                      ]
+                    },
+                    "relation_evidence": [
+                      {
+                        "source_id": "CASA-c5a5031a-Q04",
+                        "quote": "但愿疫情早日在全球获得控制"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "LT06-O1": {
+                "state": "missing",
+                "optional_unscored": true
+              }
+            },
+            "followup": {
+              "decisions": [
+                "ready"
+              ],
+              "targets": [
+                null
+              ]
+            }
+          }
+        }
+      ],
+      "legacy_case_id": "DEV3-N-c5a5031a87-LT06-01"
+    },
+    {
+      "id": "DEV-SOURCES-N-9ff0b2f16e-RV03-01--RV03",
+      "narrator_id": "N-9ff0b2f16e",
+      "question_id": "RV03",
+      "annotation_note": "被误会方向是老人→本人所属驻村干部；后来状态只保留本人自述认识，不改成原谅/和解。；首次前根审：教训/认识不等于本人释怀状态，追E2。",
+      "turns": [
+        {
+          "source": {
+            "id": "WEB-jinxiaogui-E004",
+            "text": "我记得最清楚的是一位家族族长的老人家，刚开始对我们驻村干部心存质疑，有点爱答不理，但是后来因为帮他解决了他家的土地纠纷问题，他就切实改变了对我们的看法和态度，还主动邀请我到他家。他说：“以前不理你们，是因为我觉得你们就是做些表面工作。现在看来，你是实实在在的。你是第一个跑到学校去关心留守儿童的干部，也是第一个跑到病房去看望生病困难群众的干部。所以我现在认可你，以后我们这个村寨有什么问题，你尽管找我就行了。”从这以后，我们的驻村工作顺利开展起来了。这件事让我深刻地认识到：只要你把人民放在心上，人民就会把你高高举起。",
+            "question": "您2016年3月刚到马鞍村时，遇到的最大困难是什么？据说村民当时觉得您是“书呆子”，吃了很多闭门羹，有没有哪一个具体的闭门羹让您印象最深？",
+            "original_interviewer_question": "您2016年3月刚到马鞍村时，遇到的最大困难是什么？据说村民当时觉得您是“书呆子”，吃了很多闭门羹，有没有哪一个具体的闭门羹让您印象最深？",
+            "source_excerpt_id": "WEB-jinxiaogui-E004",
+            "source_url": "https://www.gzu.edu.cn/_t2805/2026/0509/c17516a272833/page.htm",
+            "source_id": "WEB-jinxiaogui",
+            "original_excerpt_sha256": "ee1561b1599cfbabb66d6ed70b111e175a26c298d6c8bd0cacb1750a10232250",
+            "excerpt_char_start": 0,
+            "excerpt_char_end": 259
+          },
+          "expected": {
+            "fields": {
+              "RV03-E1": {
+                "state": "known",
+                "value_groups": [
+                  [
+                    "表面工作",
+                    "心存质疑",
+                    "爱答不理"
+                  ]
+                ],
+                "scope": {
+                  "subject": [
+                    "self"
+                  ]
+                },
+                "evidence": [
+                  {
+                    "source_id": "WEB-jinxiaogui-E004",
+                    "quote": "表面工作",
+                    "quote_options": [
+                      "表面工作",
+                      "心存质疑",
+                      "爱答不理"
+                    ]
+                  }
+                ],
+                "relation_evidence": [
+                  {
+                    "source_id": "WEB-jinxiaogui-E004",
+                    "quote": "对我们驻村干部心存质疑",
+                    "quote_options": [
+                      "对我们驻村干部心存质疑",
+                      "我觉得你们就是做些表面工作"
+                    ]
+                  }
+                ]
+              },
+              "RV03-E2": {
+                "state": "missing"
+              },
+              "RV03-O1": {
+                "state": "missing",
+                "optional_unscored": true
+              }
+            },
+            "followup": {
+              "decisions": [
+                "ask"
+              ],
+              "targets": [
+                "RV03-E2"
+              ]
+            }
+          }
+        }
+      ],
+      "manual_boundary_review": false,
+      "legacy_case_id": "DEV-SOURCES-N-9ff0b2f16e-RV03-01"
+    },
+    {
+      "id": "DEV-SOURCES-N-9ff0b2f16e-GR07-01--GR07",
+      "narrator_id": "N-9ff0b2f16e",
+      "question_id": "GR07",
+      "annotation_note": "本人当时还是学生，明确毕业后的规划；不把总书记被引话当成本人经历。",
+      "turns": [
+        {
+          "source": {
+            "id": "WEB-jinxiaogui-E001",
+            "text": "我是从农村出来的学生，当时记得最清楚的一句话就是“到基层去，到农村去也是在做贡献。希望大学生们积极到基层去，到国家最需要的地方去成长成才，报效祖国。在报效祖国、服务人民的过程中，实现自己的人生价值”，在习近平总书记的激励下，当时就暗暗下了一个决心：毕业之后，我要深入基层去，到祖国最需要的地方去。",
+            "question": "当时您在现场听到的哪一句话对您触动最大？",
+            "original_interviewer_question": "当时您在现场听到的哪一句话对您触动最大？",
+            "source_excerpt_id": "WEB-jinxiaogui-E001",
+            "source_url": "https://www.gzu.edu.cn/_t2805/2026/0509/c17516a272833/page.htm",
+            "source_id": "WEB-jinxiaogui",
+            "original_excerpt_sha256": "9ae8dbc90115ad7d38050b1af269a90cf3d2c8c125177e04ac23e42bb66d92c2",
+            "excerpt_char_start": 0,
+            "excerpt_char_end": 148
+          },
+          "expected": {
+            "fields": {
+              "GR07-A1": {
+                "value_groups": [
+                  [
+                    "学生"
+                  ]
+                ],
+                "scope": {
+                  "subject": [
+                    "self"
+                  ]
+                },
+                "evidence": [
+                  {
+                    "source_id": "WEB-jinxiaogui-E001",
+                    "quote": "我是从农村出来的学生"
+                  }
+                ],
+                "relation_evidence": [
+                  {
+                    "source_id": "WEB-jinxiaogui-E001",
+                    "quote": "我是从农村出来的学生"
+                  }
+                ],
+                "states": [
+                  "missing",
+                  "known"
+                ],
+                "inactive_unscored": true,
+                "inactive_reason": "本题已有真实业务要素证明适用前提；不另加必填守卫，若存储仍验内容及关系。"
+              },
+              "GR07-E1": {
+                "state": "known",
+                "value_groups": [
+                  [
+                    "深入基层"
+                  ]
+                ],
+                "scope": {
+                  "subject": [
+                    "self"
+                  ]
+                },
+                "evidence": [
+                  {
+                    "source_id": "WEB-jinxiaogui-E001",
+                    "quote": "毕业之后，我要深入基层去，到祖国最需要的地方去"
+                  }
+                ],
+                "relation_evidence": [
+                  {
+                    "source_id": "WEB-jinxiaogui-E001",
+                    "quote": "当时就暗暗下了一个决心：毕业之后，我要深入基层去，到祖国最需要的地方去"
+                  }
+                ]
+              },
+              "GR07-O1": {
+                "state": "missing",
+                "optional_unscored": true
+              }
+            },
+            "followup": {
+              "decisions": [
+                "ready"
+              ],
+              "targets": [
+                null
+              ]
+            }
+          }
+        }
+      ],
+      "manual_boundary_review": false,
+      "legacy_case_id": "DEV-SOURCES-N-9ff0b2f16e-GR07-01"
+    },
+    {
+      "id": "DEV-SOURCES-N-9ff0b2f16e-RV16-01--RV16",
+      "narrator_id": "N-9ff0b2f16e",
+      "question_id": "RV16",
+      "annotation_note": "原问直接让他说想给后辈的话；不要求另编新故事。",
+      "turns": [
+        {
+          "source": {
+            "id": "WEB-jinxiaogui-E005",
+            "text": "我最想说的是希望师弟师妹们继续发扬贵州大学“明德至善、博学笃行”的校训精神，吃苦耐劳，到基层去磨炼去成长，在无私奉献中实现自己的人生价值。",
+            "question": "如果让您结合自己从基层信贷员一路走来的经历，对现在贵大的学生说一句话，您最想说什么？",
+            "original_interviewer_question": "如果让您结合自己从基层信贷员一路走来的经历，对现在贵大的学生说一句话，您最想说什么？",
+            "source_excerpt_id": "WEB-jinxiaogui-E005",
+            "source_url": "https://www.gzu.edu.cn/_t2805/2026/0509/c17516a272833/page.htm",
+            "source_id": "WEB-jinxiaogui",
+            "original_excerpt_sha256": "87f4b1b289b35c25e52b34173cdd2cb7dab3f92d3c94b704d5939f973c8ab425",
+            "excerpt_char_start": 0,
+            "excerpt_char_end": 69
+          },
+          "expected": {
+            "fields": {
+              "RV16-E1": {
+                "state": "known",
+                "value_groups": [
+                  [
+                    "吃苦耐劳",
+                    "到基层去磨炼去成长",
+                    "在无私奉献中实现自己的人生价值"
+                  ]
+                ],
+                "scope": {
+                  "subject": [
+                    "self"
+                  ]
+                },
+                "evidence": [
+                  {
+                    "source_id": "WEB-jinxiaogui-E005",
+                    "quote": "吃苦耐劳",
+                    "quote_options": [
+                      "吃苦耐劳",
+                      "到基层去磨炼去成长",
+                      "在无私奉献中实现自己的人生价值"
+                    ]
+                  }
+                ],
+                "relation_evidence": [
+                  {
+                    "source_id": "WEB-jinxiaogui-E005",
+                    "quote": "吃苦耐劳",
+                    "quote_options": [
+                      "吃苦耐劳",
+                      "到基层去磨炼去成长",
+                      "在无私奉献中实现自己的人生价值"
+                    ]
+                  }
+                ]
+              },
+              "RV16-O1": {
+                "state": "missing",
+                "optional_unscored": true
+              }
+            },
+            "followup": {
+              "decisions": [
+                "ready"
+              ],
+              "targets": [
+                null
+              ]
+            }
+          }
+        }
+      ],
+      "manual_boundary_review": false,
+      "legacy_case_id": "DEV-SOURCES-N-9ff0b2f16e-RV16-01"
+    },
+    {
+      "id": "DEV-SOURCES-N-c8625984e4-FM05-01--FM05",
+      "narrator_id": "N-c8625984e4",
+      "question_id": "FM05",
+      "annotation_note": "本人教育方式和文化内容明确；没说希望孩子成为什么样的人，不能代推。",
+      "turns": [
+        {
+          "source": {
+            "id": "CASA-c8625984-Q08",
+            "text": "学习工作再学习，不知不觉来美 35 年，要说我最得意的事情便是教导我的孩子们学习好中文， 了解中国传统文化。除了每周末上中文学校，很简单的办法是进家门后只许说中文。记得 2010 年带他们回国探亲。 说上一口流利的普通话欺骗好多人。 很多朋友不相信他们是在美国长大。我也为他们感到自豪。",
+            "question": "回首往事，您所做的最得意的事，最想让人记住的是什么？给年轻人的寄语是什么？",
+            "original_interviewer_question": "回首往事，您所做的最得意的事，最想让人记住的是什么？给年轻人的寄语是什么？",
+            "source_excerpt_id": "CASA-c8625984-Q08",
+            "source_url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+            "source_id": "CASA-c8625984",
+            "original_excerpt_sha256": "59c91409a71bb9c6d4f720509626c7ce38b6d57b0856dafb92d8adaff31f1285",
+            "excerpt_char_start": 0,
+            "excerpt_char_end": 143
+          },
+          "expected": {
+            "fields": {
+              "FM05-A1": {
+                "value_groups": [
+                  [
+                    "我的孩子们"
+                  ]
+                ],
+                "scope": {
+                  "subject": [
+                    "self"
+                  ]
+                },
+                "evidence": [
+                  {
+                    "source_id": "CASA-c8625984-Q08",
+                    "quote": "教导我的孩子们学习好中文"
+                  }
+                ],
+                "relation_evidence": [
+                  {
+                    "source_id": "CASA-c8625984-Q08",
+                    "quote": "教导我的孩子们学习好中文"
+                  }
+                ],
+                "states": [
+                  "missing",
+                  "known"
+                ],
+                "inactive_unscored": true,
+                "inactive_reason": "本题已有真实业务要素证明适用前提；不另加必填守卫，若存储仍验内容及关系。"
+              },
+              "FM05-E1": {
+                "state": "known",
+                "value_groups": [
+                  [
+                    "学习好中文",
+                    "了解中国传统文化",
+                    "进家门后只许说中文"
+                  ]
+                ],
+                "scope": {
+                  "subject": [
+                    "self"
+                  ]
+                },
+                "evidence": [
+                  {
+                    "source_id": "CASA-c8625984-Q08",
+                    "quote": "学习好中文",
+                    "quote_options": [
+                      "学习好中文",
+                      "了解中国传统文化",
+                      "进家门后只许说中文"
+                    ]
+                  }
+                ],
+                "relation_evidence": [
+                  {
+                    "source_id": "CASA-c8625984-Q08",
+                    "quote": "教导我的孩子们学习好中文",
+                    "quote_options": [
+                      "教导我的孩子们学习好中文",
+                      "除了每周末上中文学校",
+                      "进家门后只许说中文"
+                    ]
+                  }
+                ]
+              },
+              "FM05-E2": {
+                "state": "missing"
+              },
+              "FM05-O1": {
+                "state": "missing",
+                "optional_unscored": true
+              }
+            },
+            "followup": {
+              "decisions": [
+                "ask"
+              ],
+              "targets": [
+                "FM05-E2"
+              ]
+            }
+          }
+        }
+      ],
+      "manual_boundary_review": false,
+      "legacy_case_id": "DEV-SOURCES-N-c8625984e4-FM05-01"
+    },
+    {
+      "id": "DEV-SOURCES-N-c8625984e4-RV10-01--RV10",
+      "narrator_id": "N-c8625984e4",
+      "question_id": "RV10",
+      "annotation_note": "本人可比较两个并认为同等重要；不能补造家庭/事业优于健康，也没给比较原因。",
+      "turns": [
+        {
+          "source": {
+            "id": "CASA-c8625984-Q09",
+            "text": "我常告诫我的孩子们，既然选择了目标，就要坚持并为之努力。 人生不会一帆风顺，不可轻言放弃。踏踏实实做事，诚实待人，做好自己， 切记家庭与事业是同等重要。",
+            "question": "给年轻人的寄语是什么？",
+            "original_interviewer_question": "给年轻人的寄语是什么？",
+            "source_excerpt_id": "CASA-c8625984-Q09",
+            "source_url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+            "source_id": "CASA-c8625984",
+            "original_excerpt_sha256": "220b9d07d95f2710fc37471cbec3ea89698af50b0e5fd916e79d337aa3d66232",
+            "excerpt_char_start": 0,
+            "excerpt_char_end": 76
+          },
+          "expected": {
+            "fields": {
+              "RV10-E1": {
+                "state": "known",
+                "value_groups": [
+                  [
+                    "家庭与事业是同等重要"
+                  ]
+                ],
+                "scope": {
+                  "subject": [
+                    "self"
+                  ]
+                },
+                "evidence": [
+                  {
+                    "source_id": "CASA-c8625984-Q09",
+                    "quote": "切记家庭与事业是同等重要"
+                  }
+                ],
+                "relation_evidence": [
+                  {
+                    "source_id": "CASA-c8625984-Q09",
+                    "quote": "切记家庭与事业是同等重要"
+                  }
+                ]
+              },
+              "RV10-E2": {
+                "state": "missing"
+              },
+              "RV10-O1": {
+                "state": "missing",
+                "optional_unscored": true
+              }
+            },
+            "followup": {
+              "decisions": [
+                "ask"
+              ],
+              "targets": [
+                "RV10-E2"
+              ]
+            }
+          }
+        }
+      ],
+      "manual_boundary_review": false,
+      "legacy_case_id": "DEV-SOURCES-N-c8625984e4-RV10-01"
+    },
+    {
+      "id": "DEV-SOURCES-N-c8625984e4-RV16-01--RV16",
+      "narrator_id": "N-c8625984e4",
+      "question_id": "RV16",
+      "annotation_note": "原问寄语＋本人经常告诫孩子，后辈关系明确。",
+      "turns": [
+        {
+          "source": {
+            "id": "CASA-c8625984-Q09",
+            "text": "我常告诫我的孩子们，既然选择了目标，就要坚持并为之努力。 人生不会一帆风顺，不可轻言放弃。踏踏实实做事，诚实待人，做好自己， 切记家庭与事业是同等重要。",
+            "question": "给年轻人的寄语是什么？",
+            "original_interviewer_question": "给年轻人的寄语是什么？",
+            "source_excerpt_id": "CASA-c8625984-Q09",
+            "source_url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+            "source_id": "CASA-c8625984",
+            "original_excerpt_sha256": "220b9d07d95f2710fc37471cbec3ea89698af50b0e5fd916e79d337aa3d66232",
+            "excerpt_char_start": 0,
+            "excerpt_char_end": 76
+          },
+          "expected": {
+            "fields": {
+              "RV16-E1": {
+                "state": "known",
+                "value_groups": [
+                  [
+                    "踏踏实实做事",
+                    "诚实待人",
+                    "做好自己",
+                    "既然选择了目标，就要坚持并为之努力",
+                    "家庭与事业是同等重要"
+                  ]
+                ],
+                "scope": {
+                  "subject": [
+                    "self"
+                  ]
+                },
+                "evidence": [
+                  {
+                    "source_id": "CASA-c8625984-Q09",
+                    "quote": "踏踏实实做事",
+                    "quote_options": [
+                      "踏踏实实做事",
+                      "诚实待人",
+                      "做好自己",
+                      "既然选择了目标，就要坚持并为之努力",
+                      "家庭与事业是同等重要"
+                    ]
+                  }
+                ],
+                "relation_evidence": [
+                  {
+                    "source_id": "CASA-c8625984-Q09",
+                    "quote": "踏踏实实做事",
+                    "quote_options": [
+                      "踏踏实实做事",
+                      "诚实待人",
+                      "做好自己",
+                      "既然选择了目标，就要坚持并为之努力",
+                      "家庭与事业是同等重要"
+                    ]
+                  }
+                ]
+              },
+              "RV16-O1": {
+                "state": "missing",
+                "optional_unscored": true
+              }
+            },
+            "followup": {
+              "decisions": [
+                "ready"
+              ],
+              "targets": [
+                null
+              ]
+            }
+          }
+        }
+      ],
+      "manual_boundary_review": false,
+      "legacy_case_id": "DEV-SOURCES-N-c8625984e4-RV16-01"
+    },
+    {
+      "id": "DEV-SOURCES-N-6eec6bf458-CH07-01--CH07",
+      "narrator_id": "N-6eec6bf458",
+      "question_id": "CH07",
+      "annotation_note": "本人明确家庭童年→处事影响；保留“好像/多少”的不确定程度，不编家教者。",
+      "turns": [
+        {
+          "source": {
+            "id": "VAC-186-E04",
+            "text": "我想有不太好的影響，對我以後的做人處世多少都會有一點影響。我也沒有什麼特別的宗教信仰，我覺得運氣還不錯，一直到目前為止，都有貴人相助。  當時在那種家庭環境中成長，我學會了反抗強權，所以後來我不管做什麼事，我對我的長官，不一定是唯命是從，除非他讓我很尊敬。相反的，我對我的部下都非常好，這個好像跟我童年的生活，多少有一點關係。",
+            "question": "家族這麼複雜，您那麼小就看到這麼多的事情，會不會對您有一些影響？",
+            "original_interviewer_question": "家族這麼複雜，您那麼小就看到這麼多的事情，會不會對您有一些影響？",
+            "source_excerpt_id": "VAC-186-E04",
+            "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_186.htm?4",
+            "source_id": "VAC-186",
+            "original_excerpt_sha256": "e76d162a01bd874f283c36a4059b92273fed8b3e1828653a0e90e2f180dad94c",
+            "excerpt_char_start": 0,
+            "excerpt_char_end": 163
+          },
+          "expected": {
+            "fields": {
+              "CH07-E1": {
+                "state": "known",
+                "value_groups": [
+                  [
+                    "家庭環境"
+                  ]
+                ],
+                "scope": {
+                  "subject": [
+                    "self"
+                  ]
+                },
+                "evidence": [
+                  {
+                    "source_id": "VAC-186-E04",
+                    "quote": "當時在那種家庭環境中成長"
+                  }
+                ],
+                "relation_evidence": [
+                  {
+                    "source_id": "VAC-186-E04",
+                    "quote": "當時在那種家庭環境中成長"
+                  }
+                ]
+              },
+              "CH07-E2": {
+                "state": "known",
+                "value_groups": [
+                  [
+                    "反抗強權",
+                    "不一定是唯命是從",
+                    "對我的部下都非常好"
+                  ]
+                ],
+                "scope": {
+                  "subject": [
+                    "self"
+                  ]
+                },
+                "evidence": [
+                  {
+                    "source_id": "VAC-186-E04",
+                    "quote": "反抗強權",
+                    "quote_options": [
+                      "反抗強權",
+                      "不一定是唯命是從",
+                      "對我的部下都非常好"
+                    ]
+                  }
+                ],
+                "relation_evidence": [
+                  {
+                    "source_id": "VAC-186-E04",
+                    "quote": "當時在那種家庭環境中成長",
+                    "quote_options": [
+                      "當時在那種家庭環境中成長",
+                      "這個好像跟我童年的生活，多少有一點關係"
+                    ]
+                  }
+                ]
+              },
+              "CH07-O1": {
+                "state": "missing",
+                "optional_unscored": true
+              }
+            },
+            "followup": {
+              "decisions": [
+                "ready"
+              ],
+              "targets": [
+                null
+              ]
+            }
+          }
+        }
+      ],
+      "manual_boundary_review": false,
+      "legacy_case_id": "DEV-SOURCES-N-6eec6bf458-CH07-01"
+    },
+    {
+      "id": "DEV-SOURCES-N-6eec6bf458-RV09-01--RV09",
+      "narrator_id": "N-6eec6bf458",
+      "question_id": "RV09",
+      "annotation_note": "剪去前面引用第三方影星部分；努力理解为本人所说，机会没有自动等同运气，吃苦仍未涉及。",
+      "turns": [
+        {
+          "source": {
+            "id": "VAC-190-E01",
+            "text": "我從事這個行業這麼久，我發現一個道理，就是你後天再努力，但是先天條件不好，還是受影響。那你先天條件好，後天又努力，機會陰錯陽差都被別人搶走，還是沒有用。我都鼓勵年輕人，你條件很好，你不努力也沒有用。先天條件好又努力，然後能掌握機會，我覺得這樣就會成功。",
+            "question": "老師您唱歌的這個部分，是怎麼學的？",
+            "original_interviewer_question": "老師您唱歌的這個部分，是怎麼學的？",
+            "source_excerpt_id": "VAC-190-E01",
+            "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_4_190.htm?3",
+            "source_id": "VAC-190",
+            "original_excerpt_sha256": "c633c9d5cc3ccc2ee4affb4fb1c75a9daf8e7ecc5dc2143737111a7f95cc80a1",
+            "excerpt_char_start": 111,
+            "excerpt_char_end": 237
+          },
+          "expected": {
+            "fields": {
+              "RV09-E1": {
+                "state": "missing"
+              },
+              "RV09-O1": {
+                "state": "missing",
+                "optional_unscored": true
+              }
+            },
+            "followup": {
+              "decisions": [
+                "ask"
+              ],
+              "targets": [
+                "RV09-E1"
+              ]
+            }
+          }
+        }
+      ],
+      "manual_boundary_review": false,
+      "legacy_case_id": "DEV-SOURCES-N-6eec6bf458-RV09-01"
+    },
+    {
+      "id": "DEV-SOURCES-N-6eec6bf458-RV09-01--RV09b",
+      "narrator_id": "N-6eec6bf458",
+      "question_id": "RV09b",
+      "annotation_note": "剪去前面引用第三方影星部分；努力理解为本人所说，机会没有自动等同运气，吃苦仍未涉及。",
+      "turns": [
+        {
+          "source": {
+            "id": "VAC-190-E01",
+            "text": "我從事這個行業這麼久，我發現一個道理，就是你後天再努力，但是先天條件不好，還是受影響。那你先天條件好，後天又努力，機會陰錯陽差都被別人搶走，還是沒有用。我都鼓勵年輕人，你條件很好，你不努力也沒有用。先天條件好又努力，然後能掌握機會，我覺得這樣就會成功。",
+            "question": "老師您唱歌的這個部分，是怎麼學的？",
+            "original_interviewer_question": "老師您唱歌的這個部分，是怎麼學的？",
+            "source_excerpt_id": "VAC-190-E01",
+            "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_4_190.htm?3",
+            "source_id": "VAC-190",
+            "original_excerpt_sha256": "c633c9d5cc3ccc2ee4affb4fb1c75a9daf8e7ecc5dc2143737111a7f95cc80a1",
+            "excerpt_char_start": 111,
+            "excerpt_char_end": 237
+          },
+          "expected": {
+            "fields": {
+              "RV09-E2": {
+                "state": "known",
+                "value_groups": [
+                  [
+                    "你條件很好，你不努力也沒有用",
+                    "後天再努力，但是先天條件不好，還是受影響",
+                    "先天條件好又努力，然後能掌握機會"
+                  ]
+                ],
+                "scope": {
+                  "subject": [
+                    "self"
+                  ]
+                },
+                "evidence": [
+                  {
+                    "source_id": "VAC-190-E01",
+                    "quote": "你條件很好，你不努力也沒有用",
+                    "quote_options": [
+                      "你條件很好，你不努力也沒有用",
+                      "後天再努力，但是先天條件不好，還是受影響",
+                      "先天條件好又努力，然後能掌握機會"
+                    ]
+                  }
+                ],
+                "relation_evidence": [
+                  {
+                    "source_id": "VAC-190-E01",
+                    "quote": "你條件很好，你不努力也沒有用",
+                    "quote_options": [
+                      "你條件很好，你不努力也沒有用",
+                      "後天再努力，但是先天條件不好，還是受影響",
+                      "先天條件好又努力，然後能掌握機會"
+                    ]
+                  }
+                ]
+              },
+              "RV09-O1b": {
+                "state": "missing",
+                "optional_unscored": true
+              }
+            },
+            "followup": {
+              "decisions": [
+                "ready"
+              ],
+              "targets": [
+                null
+              ]
+            }
+          }
+        }
+      ],
+      "manual_boundary_review": false,
+      "legacy_case_id": "DEV-SOURCES-N-6eec6bf458-RV09-01"
+    },
+    {
+      "id": "DEV-SOURCES-N-6eec6bf458-RV09-01--RV09c",
+      "narrator_id": "N-6eec6bf458",
+      "question_id": "RV09c",
+      "annotation_note": "剪去前面引用第三方影星部分；努力理解为本人所说，机会没有自动等同运气，吃苦仍未涉及。",
+      "turns": [
+        {
+          "source": {
+            "id": "VAC-190-E01",
+            "text": "我從事這個行業這麼久，我發現一個道理，就是你後天再努力，但是先天條件不好，還是受影響。那你先天條件好，後天又努力，機會陰錯陽差都被別人搶走，還是沒有用。我都鼓勵年輕人，你條件很好，你不努力也沒有用。先天條件好又努力，然後能掌握機會，我覺得這樣就會成功。",
+            "question": "老師您唱歌的這個部分，是怎麼學的？",
+            "original_interviewer_question": "老師您唱歌的這個部分，是怎麼學的？",
+            "source_excerpt_id": "VAC-190-E01",
+            "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_4_190.htm?3",
+            "source_id": "VAC-190",
+            "original_excerpt_sha256": "c633c9d5cc3ccc2ee4affb4fb1c75a9daf8e7ecc5dc2143737111a7f95cc80a1",
+            "excerpt_char_start": 111,
+            "excerpt_char_end": 237
+          },
+          "expected": {
+            "fields": {
+              "RV09-E3": {
+                "state": "missing"
+              },
+              "RV09-O1c": {
+                "state": "missing",
+                "optional_unscored": true
+              }
+            },
+            "followup": {
+              "decisions": [
+                "ask"
+              ],
+              "targets": [
+                "RV09-E3"
+              ]
+            }
+          }
+        }
+      ],
+      "manual_boundary_review": false,
+      "legacy_case_id": "DEV-SOURCES-N-6eec6bf458-RV09-01"
+    },
+    {
+      "id": "DEV-SOURCES-N-6eec6bf458-RV06-01--RV06",
+      "narrator_id": "N-6eec6bf458",
+      "question_id": "RV06",
+      "annotation_note": "直接感谢的乐界前辈明确；没有亏欠对象不写none。",
+      "turns": [
+        {
+          "source": {
+            "id": "VAC-189-E06",
+            "text": "大概是民國43年，陸光康樂隊成立後，又組織另一班樂隊，那個時候我沒有接觸民間的社會生活，尤其是音樂方面，更是從未接觸，但是我非常感謝翁清溪(Tony)，他那個時候在爵士樂方面造詣已經不錯了，還有吳光麟，擅長吹薩克斯風，外號叫沙西米，我們就請這兩位樂壇老手來到陸光，那時候陸光搬到維揚村，有一台爛鋼琴，那個爛鋼琴的歷史蠻悠久，是抗戰時候，由重慶輾轉運到臺灣，雖然它的弦、音響板還不錯，但是鍵盤全都損壞了，稍事整修後，我就靠那台爛鋼琴上陣。  後來請的那些人，剛才我講的，這兩位都是本省籍的，另外還有兩位外省籍的，一位是我的好朋友，吹薩克斯風，現已過世，名叫袁瑤；另一位叫黃聲，是後來中廣樂隊的指揮。最令人感激的就是張雋。我講的好像時間有點錯亂。我到陸光的後期，軍人待遇很差，舉例來說，我們每天盼著出去勞軍，尤其到外島勞軍，在那個沒有電視的年代，廣播也不准聽，勞軍團特別受到歡迎，一到外島就有吃不完的魚肉菜餚。  平日的飲食供應缺乏，那個時候待遇不好，我們每次演完勞軍演完，只有一碗大魯麵，麵裡面加一個荷包蛋，但是，一碗吃不飽怎麼辦，我們就玩起變身的把戲。吃第一碗的時候穿夾克帶帽子，到吃第二碗的時候，把帽子摘下、夾克脫掉，又過去領一碗，吃了兩碗，但是後來到民國50年的時候，陸光改編。對了，我中間還忘了，當我們請那兩位指導我們之外，後來將他們介紹到民間，就是公家沒有演出的時候我們去伴奏兼差，伴奏賺一點錢我們就請軍官俱樂部的鍵盤手，到我們這裡來指導我們的樂隊，那個，後來大家合作十分愉快，民國50年時，部隊一直進行改編，把我好多好朋友都調走，我也不想在陸光任職，那就請調康樂總隊。",
+            "question": "那個時候是陸光康樂隊剛成立嗎？",
+            "original_interviewer_question": "那個時候是陸光康樂隊剛成立嗎？",
+            "source_excerpt_id": "VAC-189-E06",
+            "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_4_189.htm?3",
+            "source_id": "VAC-189",
+            "original_excerpt_sha256": "84d4e41cd2c73648517405d2cdeb473f3d6fe53dbcd805d96b04b5e2f3309c86",
+            "excerpt_char_start": 0,
+            "excerpt_char_end": 689
+          },
+          "expected": {
+            "fields": {
+              "RV06-E1": {
+                "state": "known",
+                "value_groups": [
+                  [
+                    "翁清溪",
+                    "張雋"
+                  ]
+                ],
+                "scope": {
+                  "subject": [
+                    "self"
+                  ]
+                },
+                "evidence": [
+                  {
+                    "source_id": "VAC-189-E06",
+                    "quote": "翁清溪",
+                    "quote_options": [
+                      "翁清溪",
+                      "張雋"
+                    ]
+                  }
+                ],
+                "relation_evidence": [
+                  {
+                    "source_id": "VAC-189-E06",
+                    "quote": "非常感謝翁清溪",
+                    "quote_options": [
+                      "非常感謝翁清溪",
+                      "最令人感激的就是張雋"
+                    ]
+                  }
+                ]
+              },
+              "RV06-O1": {
+                "state": "missing",
+                "optional_unscored": true
+              }
+            },
+            "followup": {
+              "decisions": [
+                "ready"
+              ],
+              "targets": [
+                null
+              ]
+            }
+          }
+        }
+      ],
+      "manual_boundary_review": false,
+      "legacy_case_id": "DEV-SOURCES-N-6eec6bf458-RV06-01"
+    },
+    {
+      "id": "DEV-SOURCES-N-6eec6bf458-RV06-01--RV06b",
+      "narrator_id": "N-6eec6bf458",
+      "question_id": "RV06b",
+      "annotation_note": "直接感谢的乐界前辈明确；没有亏欠对象不写none。",
+      "turns": [
+        {
+          "source": {
+            "id": "VAC-189-E06",
+            "text": "大概是民國43年，陸光康樂隊成立後，又組織另一班樂隊，那個時候我沒有接觸民間的社會生活，尤其是音樂方面，更是從未接觸，但是我非常感謝翁清溪(Tony)，他那個時候在爵士樂方面造詣已經不錯了，還有吳光麟，擅長吹薩克斯風，外號叫沙西米，我們就請這兩位樂壇老手來到陸光，那時候陸光搬到維揚村，有一台爛鋼琴，那個爛鋼琴的歷史蠻悠久，是抗戰時候，由重慶輾轉運到臺灣，雖然它的弦、音響板還不錯，但是鍵盤全都損壞了，稍事整修後，我就靠那台爛鋼琴上陣。  後來請的那些人，剛才我講的，這兩位都是本省籍的，另外還有兩位外省籍的，一位是我的好朋友，吹薩克斯風，現已過世，名叫袁瑤；另一位叫黃聲，是後來中廣樂隊的指揮。最令人感激的就是張雋。我講的好像時間有點錯亂。我到陸光的後期，軍人待遇很差，舉例來說，我們每天盼著出去勞軍，尤其到外島勞軍，在那個沒有電視的年代，廣播也不准聽，勞軍團特別受到歡迎，一到外島就有吃不完的魚肉菜餚。  平日的飲食供應缺乏，那個時候待遇不好，我們每次演完勞軍演完，只有一碗大魯麵，麵裡面加一個荷包蛋，但是，一碗吃不飽怎麼辦，我們就玩起變身的把戲。吃第一碗的時候穿夾克帶帽子，到吃第二碗的時候，把帽子摘下、夾克脫掉，又過去領一碗，吃了兩碗，但是後來到民國50年的時候，陸光改編。對了，我中間還忘了，當我們請那兩位指導我們之外，後來將他們介紹到民間，就是公家沒有演出的時候我們去伴奏兼差，伴奏賺一點錢我們就請軍官俱樂部的鍵盤手，到我們這裡來指導我們的樂隊，那個，後來大家合作十分愉快，民國50年時，部隊一直進行改編，把我好多好朋友都調走，我也不想在陸光任職，那就請調康樂總隊。",
+            "question": "那個時候是陸光康樂隊剛成立嗎？",
+            "original_interviewer_question": "那個時候是陸光康樂隊剛成立嗎？",
+            "source_excerpt_id": "VAC-189-E06",
+            "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_4_189.htm?3",
+            "source_id": "VAC-189",
+            "original_excerpt_sha256": "84d4e41cd2c73648517405d2cdeb473f3d6fe53dbcd805d96b04b5e2f3309c86",
+            "excerpt_char_start": 0,
+            "excerpt_char_end": 689
+          },
+          "expected": {
+            "fields": {
+              "RV06-E2": {
+                "state": "missing"
+              },
+              "RV06-O1b": {
+                "state": "missing",
+                "optional_unscored": true
+              }
+            },
+            "followup": {
+              "decisions": [
+                "ask"
+              ],
+              "targets": [
+                "RV06-E2"
+              ]
+            }
+          }
+        }
+      ],
+      "manual_boundary_review": false,
+      "legacy_case_id": "DEV-SOURCES-N-6eec6bf458-RV06-01"
+    },
+    {
+      "id": "DEV-SOURCES-N-0d4a398022-RV02-01--RV02",
+      "narrator_id": "N-0d4a398022",
+      "question_id": "RV02",
+      "annotation_note": "本人作为导演的具体遗憾，不把老人受害经历当导演自述；没有本人重来选择，必须保留缺项。",
+      "turns": [
+        {
+          "source": {
+            "id": "SUP-guoke-E005",
+            "text": "最大的遗憾是海南唯一一个苗族老人——邓玉民，没有进入我们的镜头，我们晚了三天，她走了。\n\n拍摄前对片子完全没有预期，只是想通过一些电影节可以找到一些发行商，但这个机会好像也没有，这个片子能收回成本，我们就成功了，没有想到有这么大的反响。\n\n成片与设想没有太大差别，我请台湾剪辑师剪的，但是这一版可能多了一些情感的传递，就是片尾的众筹字幕。",
+            "question": "在拍摄前你对这部纪录片有什么预期？今天呈现在荧幕上的《二十二》与你拍摄前设想的差别大吗？现在看来有没有什么是遗憾的？",
+            "original_interviewer_question": "在拍摄前你对这部纪录片有什么预期？今天呈现在荧幕上的《二十二》与你拍摄前设想的差别大吗？现在看来有没有什么是遗憾的？",
+            "source_excerpt_id": "SUP-guoke-E005",
+            "source_url": "https://news.youth.cn/gn/201708/t20170819_10547682.htm",
+            "source_id": "SUP-guoke",
+            "original_excerpt_sha256": "c801bfca9a444ddc4fa336bf6a7481195ad5983a6fcc29edb8512e365cd10609",
+            "excerpt_char_start": 0,
+            "excerpt_char_end": 169
+          },
+          "expected": {
+            "fields": {
+              "RV02-E1": {
+                "state": "known",
+                "value_groups": [
+                  [
+                    "没有进入我们的镜头",
+                    "我们晚了三天"
+                  ]
+                ],
+                "scope": {
+                  "subject": [
+                    "self"
+                  ]
+                },
+                "evidence": [
+                  {
+                    "source_id": "SUP-guoke-E005",
+                    "quote": "邓玉民，没有进入我们的镜头，我们晚了三天，她走了。",
+                    "quote_options": [
+                      "邓玉民，没有进入我们的镜头，我们晚了三天，她走了。"
+                    ]
+                  }
+                ],
+                "relation_evidence": [
+                  {
+                    "source_id": "SUP-guoke-E005",
+                    "quote": "最大的遗憾是海南唯一一个苗族老人——邓玉民，没有进入我们的镜头，我们晚了三天，她走了。",
+                    "quote_options": [
+                      "最大的遗憾是海南唯一一个苗族老人——邓玉民，没有进入我们的镜头，我们晚了三天，她走了。"
+                    ]
+                  }
+                ]
+              },
+              "RV02-E2": {
+                "state": "missing"
+              },
+              "RV02-O1": {
+                "state": "missing",
+                "optional_unscored": true
+              }
+            },
+            "followup": {
+              "decisions": [
+                "ask"
+              ],
+              "targets": [
+                "RV02-E2"
+              ]
+            }
+          }
+        }
+      ],
+      "legacy_case_id": "DEV-SOURCES-N-0d4a398022-RV02-01"
+    },
+    {
+      "id": "ROOT-N-81acb2dd8d-SK01--SK01",
+      "narrator_id": "N-81acb2dd8d",
+      "question_id": "SK01",
+      "annotation_note": "原稿直接要素；不按题干推断未披露事实。",
+      "turns": [
+        {
+          "source": {
+            "id": "VAC-308-E01",
+            "text": "我是出生在江蘇省鎮江，我的祖籍是懷安縣。",
+            "question": "劉金標先生請問你在哪裡出生長大？有哪一些的親人？兄弟姊妹，還有童年家裡的情景，父母的工作？",
+            "original_interviewer_question": "劉金標先生請問你在哪裡出生長大？有哪一些的親人？兄弟姊妹，還有童年家裡的情景，父母的工作？",
+            "source_excerpt_id": "VAC-308-E01",
+            "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_308.htm?3",
+            "source_id": "VAC-308",
+            "original_excerpt_sha256": "452ba5778b4cd0dc63a97cdb042c5cd1d5d363e4c7aa48a9a884879633af0180",
+            "excerpt_char_start": 0,
+            "excerpt_char_end": 20
+          },
+          "expected": {
+            "fields": {
+              "SK01-E1": {
+                "state": "missing"
+              },
+              "SK01-O1": {
+                "state": "missing",
+                "optional_unscored": true
+              }
+            },
+            "followup": {
+              "decisions": [
+                "ask"
+              ],
+              "targets": [
+                "SK01-E1"
+              ]
+            }
+          }
+        }
+      ],
+      "legacy_case_id": "ROOT-N-81acb2dd8d-SK01"
+    },
+    {
+      "id": "ROOT-N-81acb2dd8d-SK01--SK01b",
+      "narrator_id": "N-81acb2dd8d",
+      "question_id": "SK01b",
+      "annotation_note": "原稿直接要素；不按题干推断未披露事实。",
+      "turns": [
+        {
+          "source": {
+            "id": "VAC-308-E01",
+            "text": "我是出生在江蘇省鎮江，我的祖籍是懷安縣。",
+            "question": "劉金標先生請問你在哪裡出生長大？有哪一些的親人？兄弟姊妹，還有童年家裡的情景，父母的工作？",
+            "original_interviewer_question": "劉金標先生請問你在哪裡出生長大？有哪一些的親人？兄弟姊妹，還有童年家裡的情景，父母的工作？",
+            "source_excerpt_id": "VAC-308-E01",
+            "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_308.htm?3",
+            "source_id": "VAC-308",
+            "original_excerpt_sha256": "452ba5778b4cd0dc63a97cdb042c5cd1d5d363e4c7aa48a9a884879633af0180",
+            "excerpt_char_start": 0,
+            "excerpt_char_end": 20
+          },
+          "expected": {
+            "fields": {
+              "SK01-E2": {
+                "state": "known",
+                "value_groups": [
+                  [
+                    "江蘇省鎮江"
+                  ]
+                ],
+                "evidence": [
+                  {
+                    "quote": "江蘇省鎮江",
+                    "quote_options": [
+                      "江蘇省鎮江"
+                    ],
+                    "source_id": "VAC-308-E01"
+                  }
+                ],
+                "scope": {
+                  "subject": [
+                    "self"
+                  ],
+                  "period": [
+                    "birth"
+                  ]
+                },
+                "relation_evidence": [
+                  {
+                    "quote": "我是出生在江蘇省鎮江",
+                    "quote_options": [
+                      "我是出生在江蘇省鎮江"
+                    ],
+                    "source_id": "VAC-308-E01"
+                  }
+                ]
+              },
+              "SK01-O1b": {
+                "state": "missing",
+                "optional_unscored": true
+              }
+            },
+            "followup": {
+              "decisions": [
+                "ready"
+              ],
+              "targets": [
+                null
+              ]
+            }
+          }
+        }
+      ],
+      "legacy_case_id": "ROOT-N-81acb2dd8d-SK01"
+    },
+    {
+      "id": "ROOT-N-81acb2dd8d-SK01--SK01c",
+      "narrator_id": "N-81acb2dd8d",
+      "question_id": "SK01c",
+      "annotation_note": "原稿直接要素；不按题干推断未披露事实。",
+      "turns": [
+        {
+          "source": {
+            "id": "VAC-308-E01",
+            "text": "我是出生在江蘇省鎮江，我的祖籍是懷安縣。",
+            "question": "劉金標先生請問你在哪裡出生長大？有哪一些的親人？兄弟姊妹，還有童年家裡的情景，父母的工作？",
+            "original_interviewer_question": "劉金標先生請問你在哪裡出生長大？有哪一些的親人？兄弟姊妹，還有童年家裡的情景，父母的工作？",
+            "source_excerpt_id": "VAC-308-E01",
+            "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_308.htm?3",
+            "source_id": "VAC-308",
+            "original_excerpt_sha256": "452ba5778b4cd0dc63a97cdb042c5cd1d5d363e4c7aa48a9a884879633af0180",
+            "excerpt_char_start": 0,
+            "excerpt_char_end": 20
+          },
+          "expected": {
+            "fields": {
+              "SK01-E3.place": {
+                "state": "missing"
+              },
+              "SK01-E3.period": {
+                "state": "missing"
+              },
+              "SK01-E4": {
+                "state": "missing"
+              },
+              "SK01-O1c": {
+                "state": "missing",
+                "optional_unscored": true
+              }
+            },
+            "followup": {
+              "decisions": [
+                "ask"
+              ],
+              "targets": [
+                "SK01-E4"
+              ]
+            }
+          }
+        }
+      ],
+      "legacy_case_id": "ROOT-N-81acb2dd8d-SK01"
+    },
+    {
+      "id": "ROOT-N-81acb2dd8d-SK03--SK03",
+      "narrator_id": "N-81acb2dd8d",
+      "question_id": "SK03",
+      "annotation_note": "父母死亡及存在不自动说明主要共同生活者、职业或相处氛围。",
+      "turns": [
+        {
+          "source": {
+            "id": "VAC-308-E01",
+            "text": "我是出生在江蘇省鎮江，我的祖籍是懷安縣。父親母親在民國33年，雙雙死去了。還有一個哥哥，兩個弟弟。",
+            "question": "劉金標先生請問你在哪裡出生長大？有哪一些的親人？兄弟姊妹，還有童年家裡的情景，父母的工作？",
+            "original_interviewer_question": "劉金標先生請問你在哪裡出生長大？有哪一些的親人？兄弟姊妹，還有童年家裡的情景，父母的工作？",
+            "source_excerpt_id": "VAC-308-E01",
+            "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_308.htm?3",
+            "source_id": "VAC-308",
+            "original_excerpt_sha256": "452ba5778b4cd0dc63a97cdb042c5cd1d5d363e4c7aa48a9a884879633af0180",
+            "excerpt_char_start": 0,
+            "excerpt_char_end": 49
+          },
+          "expected": {
+            "fields": {
+              "SK03-E1": {
+                "state": "missing"
+              },
+              "SK03-O1": {
+                "state": "missing",
+                "optional_unscored": true
+              }
+            },
+            "followup": {
+              "decisions": [
+                "ask"
+              ],
+              "targets": [
+                "SK03-E1"
+              ]
+            }
+          }
+        }
+      ],
+      "legacy_case_id": "ROOT-N-81acb2dd8d-SK03"
+    },
+    {
+      "id": "ROOT-N-81acb2dd8d-SK03--SK03b",
+      "narrator_id": "N-81acb2dd8d",
+      "question_id": "SK03b",
+      "annotation_note": "父母死亡及存在不自动说明主要共同生活者、职业或相处氛围。",
+      "turns": [
+        {
+          "source": {
+            "id": "VAC-308-E01",
+            "text": "我是出生在江蘇省鎮江，我的祖籍是懷安縣。父親母親在民國33年，雙雙死去了。還有一個哥哥，兩個弟弟。",
+            "question": "劉金標先生請問你在哪裡出生長大？有哪一些的親人？兄弟姊妹，還有童年家裡的情景，父母的工作？",
+            "original_interviewer_question": "劉金標先生請問你在哪裡出生長大？有哪一些的親人？兄弟姊妹，還有童年家裡的情景，父母的工作？",
+            "source_excerpt_id": "VAC-308-E01",
+            "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_308.htm?3",
+            "source_id": "VAC-308",
+            "original_excerpt_sha256": "452ba5778b4cd0dc63a97cdb042c5cd1d5d363e4c7aa48a9a884879633af0180",
+            "excerpt_char_start": 0,
+            "excerpt_char_end": 49
+          },
+          "expected": {
+            "fields": {
+              "SK03-E2": {
+                "state": "missing"
+              },
+              "SK03-O1b": {
+                "state": "missing",
+                "optional_unscored": true
+              }
+            },
+            "followup": {
+              "decisions": [
+                "ask"
+              ],
+              "targets": [
+                "SK03-E2"
+              ]
+            }
+          }
+        }
+      ],
+      "legacy_case_id": "ROOT-N-81acb2dd8d-SK03"
+    },
+    {
+      "id": "ROOT-N-81acb2dd8d-SK03--SK03c",
+      "narrator_id": "N-81acb2dd8d",
+      "question_id": "SK03c",
+      "annotation_note": "父母死亡及存在不自动说明主要共同生活者、职业或相处氛围。",
+      "turns": [
+        {
+          "source": {
+            "id": "VAC-308-E01",
+            "text": "我是出生在江蘇省鎮江，我的祖籍是懷安縣。父親母親在民國33年，雙雙死去了。還有一個哥哥，兩個弟弟。",
+            "question": "劉金標先生請問你在哪裡出生長大？有哪一些的親人？兄弟姊妹，還有童年家裡的情景，父母的工作？",
+            "original_interviewer_question": "劉金標先生請問你在哪裡出生長大？有哪一些的親人？兄弟姊妹，還有童年家裡的情景，父母的工作？",
+            "source_excerpt_id": "VAC-308-E01",
+            "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_308.htm?3",
+            "source_id": "VAC-308",
+            "original_excerpt_sha256": "452ba5778b4cd0dc63a97cdb042c5cd1d5d363e4c7aa48a9a884879633af0180",
+            "excerpt_char_start": 0,
+            "excerpt_char_end": 49
+          },
+          "expected": {
+            "fields": {
+              "SK03-E3": {
+                "state": "known",
+                "value_groups": [
+                  [
+                    "一個哥哥，兩個弟弟",
+                    "還有一個哥哥",
+                    "兩個弟弟"
+                  ]
+                ],
+                "evidence": [
+                  {
+                    "source_id": "VAC-308-E01",
+                    "quote": "一個哥哥，兩個弟弟",
+                    "quote_options": [
+                      "一個哥哥，兩個弟弟",
+                      "還有一個哥哥",
+                      "兩個弟弟"
+                    ]
+                  }
+                ],
+                "scope": {
+                  "subject": [
+                    "self",
+                    "siblings",
+                    "family"
+                  ]
+                },
+                "relation_evidence": [
+                  {
+                    "source_id": "VAC-308-E01",
+                    "quote": "一個哥哥，兩個弟弟",
+                    "quote_options": [
+                      "一個哥哥，兩個弟弟",
+                      "還有一個哥哥",
+                      "兩個弟弟"
+                    ]
+                  }
+                ]
+              },
+              "SK03-O1c": {
+                "state": "missing",
+                "optional_unscored": true
+              }
+            },
+            "followup": {
+              "decisions": [
+                "ready"
+              ],
+              "targets": [
+                null
+              ]
+            }
+          }
+        }
+      ],
+      "legacy_case_id": "ROOT-N-81acb2dd8d-SK03"
+    },
+    {
+      "id": "ROOT-N-81acb2dd8d-SK03--SK03d",
+      "narrator_id": "N-81acb2dd8d",
+      "question_id": "SK03d",
+      "annotation_note": "父母死亡及存在不自动说明主要共同生活者、职业或相处氛围。",
+      "turns": [
+        {
+          "source": {
+            "id": "VAC-308-E01",
+            "text": "我是出生在江蘇省鎮江，我的祖籍是懷安縣。父親母親在民國33年，雙雙死去了。還有一個哥哥，兩個弟弟。",
+            "question": "劉金標先生請問你在哪裡出生長大？有哪一些的親人？兄弟姊妹，還有童年家裡的情景，父母的工作？",
+            "original_interviewer_question": "劉金標先生請問你在哪裡出生長大？有哪一些的親人？兄弟姊妹，還有童年家裡的情景，父母的工作？",
+            "source_excerpt_id": "VAC-308-E01",
+            "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_308.htm?3",
+            "source_id": "VAC-308",
+            "original_excerpt_sha256": "452ba5778b4cd0dc63a97cdb042c5cd1d5d363e4c7aa48a9a884879633af0180",
+            "excerpt_char_start": 0,
+            "excerpt_char_end": 49
+          },
+          "expected": {
+            "fields": {
+              "SK03-E4": {
+                "state": "missing"
+              },
+              "SK03-O1d": {
+                "state": "missing",
+                "optional_unscored": true
+              }
+            },
+            "followup": {
+              "decisions": [
+                "ask"
+              ],
+              "targets": [
+                "SK03-E4"
+              ]
+            }
+          }
+        }
+      ],
+      "legacy_case_id": "ROOT-N-81acb2dd8d-SK03"
+    },
+    {
+      "id": "ROOT-N-6eec6bf458-CH03--CH03",
+      "narrator_id": "N-6eec6bf458",
+      "question_id": "CH03",
+      "annotation_note": "母亲疼爱及伴随的上学照料小事，不自动断定其为影响最深的亲人。",
+      "turns": [
+        {
+          "source": {
+            "id": "VAC-186-E05",
+            "text": "後來我父親都不接濟我們，母親雖然有一點錢，也禁不起養一大家子人，也許是因為心情鬱卒，母親就染上吸鴉片的習慣，這個習慣造成她經濟上相當大的開支，後來我離家之後，下定決心絕對不碰投機、典當這兩類生意。  那時讓我印象最深刻的是，我母親陸續將值錢的翡翠、鑽石，叫丫頭拿去當掉，原本價值不斐的珠寶，只典當很少的金額。另一次，從我家嫁出去的丫頭回來找母親，介紹藥品期貨，是韓國廠商經營的產品，投資利潤豐厚，我母親怦然心動，只要有積蓄就投進去，剛開始利潤很高。當我母親將大多數積蓄投入時，忽然，那個丫頭說：「那家韓國的製藥廠，被日本人給抄了」，也就是說我媽媽的錢一夕泡湯，此後，家中就開始靠典當維生。  雖然那時候家裡經濟環境轉差，母親仍然非常疼我，到讀初中的時候，我一直都是乘坐專用人力車去上學。",
+            "question": "在這樣子的家庭狀況下，你為什麼決定從軍？",
+            "original_interviewer_question": "在這樣子的家庭狀況下，你為什麼決定從軍？",
+            "source_excerpt_id": "VAC-186-E05",
+            "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_186.htm?4",
+            "source_id": "VAC-186",
+            "original_excerpt_sha256": "c0d7ca2f8a4fddd4e270e0e521bb3d1bae4c1c198cf80669d3088a4a629798a8",
+            "excerpt_char_start": 0,
+            "excerpt_char_end": 343
+          },
+          "expected": {
+            "fields": {
+              "CH03-E1": {
+                "state": "known",
+                "value_groups": [
+                  [
+                    "母親仍然非常疼我"
+                  ]
+                ],
+                "evidence": [
+                  {
+                    "quote": "母親仍然非常疼我",
+                    "quote_options": [
+                      "母親仍然非常疼我"
+                    ],
+                    "source_id": "VAC-186-E05"
+                  }
+                ],
+                "scope": {
+                  "subject": [
+                    "self",
+                    "parents",
+                    "family"
+                  ]
+                },
+                "relation_evidence": [
+                  {
+                    "quote": "母親仍然非常疼我",
+                    "quote_options": [
+                      "母親仍然非常疼我"
+                    ],
+                    "source_id": "VAC-186-E05"
+                  }
+                ]
+              },
+              "CH03-E3": {
+                "state": "known",
+                "value_groups": [
+                  [
+                    "乘坐專用人力車去上學"
+                  ]
+                ],
+                "evidence": [
+                  {
+                    "quote": "乘坐專用人力車去上學",
+                    "quote_options": [
+                      "乘坐專用人力車去上學"
+                    ],
+                    "source_id": "VAC-186-E05"
+                  }
+                ],
+                "scope": {
+                  "subject": [
+                    "self",
+                    "family"
+                  ]
+                },
+                "relation_evidence": [
+                  {
+                    "quote": "乘坐專用人力車去上學",
+                    "quote_options": [
+                      "乘坐專用人力車去上學"
+                    ],
+                    "source_id": "VAC-186-E05"
+                  }
+                ]
+              },
+              "CH03-O1": {
+                "state": "missing",
+                "optional_unscored": true
+              }
+            },
+            "followup": {
+              "decisions": [
+                "ready"
+              ],
+              "targets": [
+                null
+              ]
+            }
+          }
+        }
+      ],
+      "legacy_case_id": "ROOT-N-6eec6bf458-CH03"
+    },
+    {
+      "id": "ROOT-N-6eec6bf458-CH03--CH03b",
+      "narrator_id": "N-6eec6bf458",
+      "question_id": "CH03b",
+      "annotation_note": "母亲疼爱及伴随的上学照料小事，不自动断定其为影响最深的亲人。",
+      "turns": [
+        {
+          "source": {
+            "id": "VAC-186-E05",
+            "text": "後來我父親都不接濟我們，母親雖然有一點錢，也禁不起養一大家子人，也許是因為心情鬱卒，母親就染上吸鴉片的習慣，這個習慣造成她經濟上相當大的開支，後來我離家之後，下定決心絕對不碰投機、典當這兩類生意。  那時讓我印象最深刻的是，我母親陸續將值錢的翡翠、鑽石，叫丫頭拿去當掉，原本價值不斐的珠寶，只典當很少的金額。另一次，從我家嫁出去的丫頭回來找母親，介紹藥品期貨，是韓國廠商經營的產品，投資利潤豐厚，我母親怦然心動，只要有積蓄就投進去，剛開始利潤很高。當我母親將大多數積蓄投入時，忽然，那個丫頭說：「那家韓國的製藥廠，被日本人給抄了」，也就是說我媽媽的錢一夕泡湯，此後，家中就開始靠典當維生。  雖然那時候家裡經濟環境轉差，母親仍然非常疼我，到讀初中的時候，我一直都是乘坐專用人力車去上學。",
+            "question": "在這樣子的家庭狀況下，你為什麼決定從軍？",
+            "original_interviewer_question": "在這樣子的家庭狀況下，你為什麼決定從軍？",
+            "source_excerpt_id": "VAC-186-E05",
+            "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_186.htm?4",
+            "source_id": "VAC-186",
+            "original_excerpt_sha256": "c0d7ca2f8a4fddd4e270e0e521bb3d1bae4c1c198cf80669d3088a4a629798a8",
+            "excerpt_char_start": 0,
+            "excerpt_char_end": 343
+          },
+          "expected": {
+            "fields": {
+              "CH03-E2": {
+                "state": "missing"
+              },
+              "CH03-O1b": {
+                "state": "missing",
+                "optional_unscored": true
+              }
+            },
+            "followup": {
+              "decisions": [
+                "ask"
+              ],
+              "targets": [
+                "CH03-E2"
+              ]
+            }
+          }
+        }
+      ],
+      "legacy_case_id": "ROOT-N-6eec6bf458-CH03"
+    },
+    {
+      "id": "DEV-STAGE-N-6eec6bf458-RV13-01--RV13",
+      "narrator_id": "N-6eec6bf458",
+      "question_id": "RV13",
+      "annotation_note": "本人直接感谢张雋；同一连续原答讲在军中情绪最差、兼差青黄不接时获邀民本电台现场弹琴这一具体受助事件。感恩的是机会事件，不能把纯“感动”自动判为感恩。",
+      "turns": [
+        {
+          "source": {
+            "id": "VAC-190-E02",
+            "text": "談到這裡，我要感謝張雋先生，當年他在上海，是一個公子哥兒，他在上海擁有一個廣播電台，他跟姚敏、姚莉合組了一個爵士社從事廣播，包括周璇這些很有名的人，都在他的上海電台唱歌，他掛名社長。  再回溯到民國50年，想要調康樂總隊，那是我情緒最差的時候，張雋不曉得怎麼知道我，有一天我就接到電話，那時候軍中電話很難打，他跟我說民本電台有一個現場節目，你有沒有興趣來彈琴。那時兼差工作青黃不接，我就答應了，那個節目正巧是禮拜天。",
+            "question": "什麼樣的機緣讓您從軍中走向社會？又是怎麼開始廣播生涯？",
+            "original_interviewer_question": "什麼樣的機緣讓您從軍中走向社會？又是怎麼開始廣播生涯？",
+            "source_excerpt_id": "VAC-190-E02",
+            "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_4_190.htm?3",
+            "source_id": "VAC-190",
+            "original_excerpt_sha256": "0d93e47bc179f0499ef191811cf0dc73b7bfd685c782d7d27e1d7a47f80a9447",
+            "excerpt_char_start": 0,
+            "excerpt_char_end": 208
+          },
+          "expected": {
+            "fields": {
+              "RV13-E1": {
+                "state": "known",
+                "value_groups": [
+                  [
+                    "民本電台有一個現場節目",
+                    "你有沒有興趣來彈琴",
+                    "那時兼差工作青黃不接，我就答應了"
+                  ]
+                ],
+                "scope": {
+                  "subject": [
+                    "self"
+                  ]
+                },
+                "evidence": [
+                  {
+                    "source_id": "VAC-190-E02",
+                    "quote": "他跟我說民本電台有一個現場節目，你有沒有興趣來彈琴",
+                    "quote_options": [
+                      "他跟我說民本電台有一個現場節目，你有沒有興趣來彈琴",
+                      "那時兼差工作青黃不接，我就答應了"
+                    ]
+                  }
+                ],
+                "relation_evidence": [
+                  {
+                    "source_id": "VAC-190-E02",
+                    "quote": "我要感謝張雋先生",
+                    "quote_options": [
+                      "我要感謝張雋先生"
+                    ]
+                  }
+                ]
+              },
+              "RV13-O1": {
+                "state": "missing",
+                "optional_unscored": true
+              }
+            },
+            "followup": {
+              "decisions": [
+                "ready"
+              ],
+              "targets": [
+                null
+              ]
+            }
+          }
+        }
+      ],
+      "legacy_case_id": "DEV-STAGE-N-6eec6bf458-RV13-01"
+    }
+  ]
+}

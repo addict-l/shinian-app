@@ -1,0 +1,149 @@
+{
+  "kind": "evaluated",
+  "result": {
+    "decision": "ready",
+    "target": null,
+    "question": null,
+    "fields": {
+      "RV13-E1": {
+        "state": "known",
+        "scope": {
+          "subject": "self",
+          "period": "as_stated",
+          "relation_evidence": [
+            {
+              "source_id": "VAC-190-E02",
+              "quote": "談到這裡，我要感謝張雋先生，當年他在上海，是一個公子哥兒，他在上海擁有一個廣播電台，他跟姚敏、姚莉合組了一個爵士社從事廣播，包括周璇這些很有名的人，都在他的上海電台唱歌，他掛名社長。  再回溯到民國50年，想要調康樂總隊，那是我情緒最差的時候，張雋不曉得怎麼知道我，有一天我就接到電話，那時候軍中電話很難打，他跟我說民本電台有一個現場節目，你有沒有興趣來彈琴。那時兼差工作青黃不接，我就答應了，那個節目正巧是禮拜天。"
+            }
+          ]
+        },
+        "value": "  再回溯到民國50年，想要調康樂總隊，那是我情緒最差的時候，張雋不曉得怎麼知道我，有一天我就接到電話，那時候軍中電話很難打，他跟我說民本電台有一個現場節目，你有沒有興趣來彈琴。那時兼差工作青黃不接，我就答應了，那個節目正巧是禮拜天。",
+        "evidence": [
+          {
+            "source_id": "VAC-190-E02",
+            "quote": "談到這裡，我要感謝張雋先生，當年他在上海，是一個公子哥兒，他在上海擁有一個廣播電台，他跟姚敏、姚莉合組了一個爵士社從事廣播，包括周璇這些很有名的人，都在他的上海電台唱歌，他掛名社長。  再回溯到民國50年，想要調康樂總隊，那是我情緒最差的時候，張雋不曉得怎麼知道我，有一天我就接到電話，那時候軍中電話很難打，他跟我說民本電台有一個現場節目，你有沒有興趣來彈琴。那時兼差工作青黃不接，我就答應了，那個節目正巧是禮拜天。"
+          }
+        ]
+      },
+      "RV13-O1": {
+        "state": "missing",
+        "value": null,
+        "evidence": []
+      }
+    },
+    "effective": {
+      "RV13-E1": "known",
+      "RV13-O1": "missing"
+    },
+    "active": [
+      "RV13-E1"
+    ],
+    "errors": [],
+    "rejected_candidates": [],
+    "scope_notices": [
+      {
+        "field_id": "RV13-E1",
+        "rule": "expand_explicit_same_field_evidence_alias"
+      }
+    ],
+    "protocol_normalizations": [
+      {
+        "rule": "expand_control_evidence_units",
+        "original_control": {
+          "action": "continue",
+          "evidence_unit_ids": []
+        },
+        "selections": [
+          {
+            "attribute": "evidence_unit_ids",
+            "selected_ids": [],
+            "refs": []
+          }
+        ]
+      },
+      {
+        "field_id": "RV13-E1",
+        "rule": "expand_selected_original_evidence_units",
+        "original_candidate": {
+          "state": "known",
+          "value_unit_ids": [
+            "S1.2",
+            "S1.3"
+          ],
+          "evidence_unit_ids": [
+            "S1.2",
+            "S1.3",
+            "S1.1"
+          ],
+          "scope": {
+            "subject": "self",
+            "period": "as_stated",
+            "relation_unit_ids": "same_as_evidence"
+          }
+        },
+        "selections": [
+          {
+            "attribute": "value",
+            "rule": "copy_selected_contiguous_original_units",
+            "selected_ids": [
+              "S1.2",
+              "S1.3"
+            ],
+            "refs": [
+              {
+                "source_id": "VAC-190-E02",
+                "quote": "  再回溯到民國50年，想要調康樂總隊，那是我情緒最差的時候，張雋不曉得怎麼知道我，有一天我就接到電話，那時候軍中電話很難打，他跟我說民本電台有一個現場節目，你有沒有興趣來彈琴。那時兼差工作青黃不接，我就答應了，那個節目正巧是禮拜天。"
+              }
+            ]
+          },
+          {
+            "attribute": "evidence_unit_ids",
+            "selected_ids": [
+              "S1.2",
+              "S1.3",
+              "S1.1"
+            ],
+            "refs": [
+              {
+                "source_id": "VAC-190-E02",
+                "quote": "談到這裡，我要感謝張雋先生，當年他在上海，是一個公子哥兒，他在上海擁有一個廣播電台，他跟姚敏、姚莉合組了一個爵士社從事廣播，包括周璇這些很有名的人，都在他的上海電台唱歌，他掛名社長。  再回溯到民國50年，想要調康樂總隊，那是我情緒最差的時候，張雋不曉得怎麼知道我，有一天我就接到電話，那時候軍中電話很難打，他跟我說民本電台有一個現場節目，你有沒有興趣來彈琴。那時兼差工作青黃不接，我就答應了，那個節目正巧是禮拜天。"
+              }
+            ]
+          },
+          {
+            "attribute": "relation_unit_ids",
+            "alias": "same_as_evidence"
+          }
+        ]
+      },
+      {
+        "field_id": "RV13-E1",
+        "rule": "expand_explicit_same_field_evidence_alias",
+        "original_candidate": {
+          "state": "known",
+          "scope": {
+            "subject": "self",
+            "period": "as_stated",
+            "relation_evidence": "same_as_evidence"
+          },
+          "value": "  再回溯到民國50年，想要調康樂總隊，那是我情緒最差的時候，張雋不曉得怎麼知道我，有一天我就接到電話，那時候軍中電話很難打，他跟我說民本電台有一個現場節目，你有沒有興趣來彈琴。那時兼差工作青黃不接，我就答應了，那個節目正巧是禮拜天。",
+          "evidence": [
+            {
+              "source_id": "VAC-190-E02",
+              "quote": "談到這裡，我要感謝張雋先生，當年他在上海，是一個公子哥兒，他在上海擁有一個廣播電台，他跟姚敏、姚莉合組了一個爵士社從事廣播，包括周璇這些很有名的人，都在他的上海電台唱歌，他掛名社長。  再回溯到民國50年，想要調康樂總隊，那是我情緒最差的時候，張雋不曉得怎麼知道我，有一天我就接到電話，那時候軍中電話很難打，他跟我說民本電台有一個現場節目，你有沒有興趣來彈琴。那時兼差工作青黃不接，我就答應了，那個節目正巧是禮拜天。"
+            }
+          ]
+        }
+      }
+    ],
+    "optional_errors": [],
+    "inactive_conditional_errors": [],
+    "unbound_material": [],
+    "provenance": {},
+    "version": "full-interview-v2.0.0",
+    "semantic_rejections": []
+  },
+  "internal_repairs": 0,
+  "semantic_review_calls": 1,
+  "at": "2026-10-18T07:33:15.715523+00:00"
+}

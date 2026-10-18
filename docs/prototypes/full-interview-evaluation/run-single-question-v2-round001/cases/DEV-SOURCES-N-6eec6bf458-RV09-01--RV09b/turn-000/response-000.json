@@ -1,0 +1,198 @@
+{
+  "kind": "model_call",
+  "id": "DEV-SOURCES-N-6eec6bf458-RV09-01--RV09b-t000-a000",
+  "input": {
+    "question_id": "RV09b",
+    "main_question": "您怎样理解人生里的努力？",
+    "question_context_mode": "independent",
+    "source_kind": "published_transcript",
+    "historical_question_verified": true,
+    "focus": null,
+    "field_contract": {
+      "RV09-E2": {
+        "label": "本人对努力的理解",
+        "type": "view",
+        "question": "您怎样理解人生里的“努力”？",
+        "usable_answer": "一句本人对努力的理解/态度，或明确没有特别看法；不由吃苦观点代填。",
+        "none": true,
+        "requirement": "required",
+        "notes": "",
+        "link": null,
+        "vague": [],
+        "id": "RV09-E2",
+        "question_id": "RV09b",
+        "required": true,
+        "activation": {
+          "always": true
+        },
+        "scope": {
+          "subjects": [
+            "self"
+          ],
+          "period": "lifelong",
+          "object_relation": "本人在本题实际问答中所指的本人对努力的理解；引用须证明该关系，不从题干假定事实。"
+        },
+        "allowed_states": [
+          "missing",
+          "known",
+          "unknown",
+          "declined",
+          "deferred",
+          "ambiguous",
+          "conflict",
+          "none"
+        ],
+        "semantic_role": "view",
+        "answer_format": {
+          "value_type": "string"
+        }
+      },
+      "RV09-O1b": {
+        "id": "RV09-O1b",
+        "question_id": "RV09b",
+        "label": "本人愿意举的例子或更多看法",
+        "type": "detail",
+        "question": "您还有想补充的吗？",
+        "usable_answer": "本人自愿提供的同题补充；缺少不影响完成。",
+        "required": false,
+        "requirement": "optional",
+        "activation": {
+          "never_ask": true
+        },
+        "none": true,
+        "scope": {
+          "subjects": [
+            "self",
+            "family",
+            "other"
+          ],
+          "period": "as_stated",
+          "object_relation": "只记录本人主动补充且明确属于本题的内容。"
+        },
+        "allowed_states": [
+          "missing",
+          "known",
+          "none",
+          "unknown",
+          "declined",
+          "deferred",
+          "ambiguous"
+        ],
+        "semantic_role": "detail",
+        "answer_format": {
+          "value_type": "string"
+        }
+      }
+    },
+    "question_contract": {
+      "premise": null,
+      "success": "必要要素与实际激活的条件要素均 known 或允许的明确 none，且作用域、关系与原话依据有效；不要求可选项。",
+      "notes": "",
+      "material_type": [
+        "view"
+      ]
+    },
+    "sources": [
+      {
+        "id": "VAC-190-E01",
+        "text": "我從事這個行業這麼久，我發現一個道理，就是你後天再努力，但是先天條件不好，還是受影響。那你先天條件好，後天又努力，機會陰錯陽差都被別人搶走，還是沒有用。我都鼓勵年輕人，你條件很好，你不努力也沒有用。先天條件好又努力，然後能掌握機會，我覺得這樣就會成功。",
+        "speaker": "narrator",
+        "question_id": "RV09b",
+        "question": "老師您唱歌的這個部分，是怎麼學的？"
+      }
+    ],
+    "previous_fields": {},
+    "evidence_units": [
+      {
+        "id": "S1.1",
+        "source_id": "VAC-190-E01",
+        "text": "我從事這個行業這麼久，我發現一個道理，就是你後天再努力，但是先天條件不好，還是受影響。"
+      },
+      {
+        "id": "S1.2",
+        "source_id": "VAC-190-E01",
+        "text": "那你先天條件好，後天又努力，機會陰錯陽差都被別人搶走，還是沒有用。"
+      },
+      {
+        "id": "S1.3",
+        "source_id": "VAC-190-E01",
+        "text": "我都鼓勵年輕人，你條件很好，你不努力也沒有用。"
+      },
+      {
+        "id": "S1.4",
+        "source_id": "VAC-190-E01",
+        "text": "先天條件好又努力，然後能掌握機會，我覺得這樣就會成功。"
+      }
+    ],
+    "task": "extract_answers_for_target_field_questions_from_recorded_material",
+    "allowed_evidence_unit_ids": [
+      "S1.1",
+      "S1.2",
+      "S1.3",
+      "S1.4"
+    ],
+    "nonknown_protocol_example": {
+      "state": "ambiguous",
+      "value": null,
+      "evidence_unit_ids": [
+        "CHOOSE_AN_ACTUAL_ALLOWED_ID"
+      ],
+      "scope": {
+        "subject": "CHOOSE_ONE_CONTRACT_SUBJECT",
+        "period": "as_stated",
+        "relation_unit_ids": "same_as_evidence"
+      },
+      "clarifications": [
+        "referent"
+      ]
+    },
+    "literal_link_candidates": [],
+    "task_note": "main_question and field_contract define extraction targets. sources.question is a historical context for interpreting short answers, not the question to answer or summarize."
+  },
+  "output": {
+    "control": {
+      "action": "continue",
+      "evidence_unit_ids": []
+    },
+    "fields": {
+      "RV09-E2": {
+        "state": "known",
+        "value_unit_ids": [
+          "S1.1",
+          "S1.2",
+          "S1.4"
+        ],
+        "evidence_unit_ids": [
+          "S1.1",
+          "S1.2",
+          "S1.4"
+        ],
+        "scope": {
+          "subject": "self",
+          "period": "lifelong",
+          "relation_unit_ids": "same_as_evidence"
+        }
+      }
+    }
+  },
+  "raw_content": "{\n  \"control\": {\n    \"action\": \"continue\",\n    \"evidence_unit_ids\": []\n  },\n  \"fields\": {\n    \"RV09-E2\": {\n      \"state\": \"known\",\n      \"value_unit_ids\": [\n        \"S1.1\",\n        \"S1.2\",\n        \"S1.4\"\n      ],\n      \"evidence_unit_ids\": [\n        \"S1.1\",\n        \"S1.2\",\n        \"S1.4\"\n      ],\n      \"scope\": {\n        \"subject\": \"self\",\n        \"period\": \"lifelong\",\n        \"relation_unit_ids\": \"same_as_evidence\"\n      }\n    }\n  }\n}",
+  "parse_error": false,
+  "seconds": 1.777,
+  "usage": {
+    "prompt_tokens": 3070,
+    "completion_tokens": 142,
+    "total_tokens": 3212,
+    "prompt_tokens_details": {
+      "cached_tokens": 1920
+    },
+    "prompt_cache_hit_tokens": 1920,
+    "prompt_cache_miss_tokens": 1150
+  },
+  "finish_reason": "stop",
+  "response_model": "deepseek-v4-pro",
+  "provider_settings": {
+    "model": "deepseek-v4-pro",
+    "thinking": "disabled",
+    "max_tokens": 16384
+  }
+}

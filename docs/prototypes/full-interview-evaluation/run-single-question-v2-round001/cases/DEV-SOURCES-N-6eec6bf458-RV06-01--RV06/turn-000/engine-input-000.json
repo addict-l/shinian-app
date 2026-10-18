@@ -1,0 +1,194 @@
+{
+  "payload": {
+    "question_id": "RV06",
+    "main_question": "一路走来您最想感谢谁？",
+    "question_context_mode": "independent",
+    "current_question": "那個時候是陸光康樂隊剛成立嗎？",
+    "source_kind": "published_transcript",
+    "historical_question_verified": true,
+    "focus": null,
+    "field_contract": {
+      "RV06-E1": {
+        "label": "本人最感谢的人及关系",
+        "type": "person_relation",
+        "question": "一路走来，您最想感谢谁？",
+        "usable_answer": "至少一位可辨认的人/群体及关系，或明确没有特别的人；不必全名或缘由。",
+        "none": true,
+        "requirement": "required",
+        "notes": " 感谢/亏欠态度的持有人为self；父母等放object/object_role及逐字对象关系证据，不写成subject=parents。",
+        "link": null,
+        "vague": [],
+        "id": "RV06-E1",
+        "question_id": "RV06",
+        "required": true,
+        "activation": {
+          "always": true
+        },
+        "scope": {
+          "subjects": [
+            "self"
+          ],
+          "period": "lifelong",
+          "object_relation": "态度持有人是本人self；感谢或亏欠指向的人是对象，可为父母等。field.value记录所指的人或群体，不能把态度持有人与对象角色混为一项subject。",
+          "object_roles": [
+            "parents",
+            "family",
+            "caregiver",
+            "friend",
+            "teacher",
+            "classmate",
+            "partner",
+            "children",
+            "relatives",
+            "other"
+          ]
+        },
+        "allowed_states": [
+          "missing",
+          "known",
+          "unknown",
+          "declined",
+          "deferred",
+          "ambiguous",
+          "conflict",
+          "none"
+        ],
+        "semantic_role": "person_relation",
+        "answer_format": {
+          "value_type": "string"
+        }
+      },
+      "RV06-O1": {
+        "id": "RV06-O1",
+        "question_id": "RV06",
+        "label": "感谢或亏欠的缘由与片段",
+        "type": "detail",
+        "question": "您还有想补充的吗？",
+        "usable_answer": "本人自愿提供的同题补充；缺少不影响完成。",
+        "required": false,
+        "requirement": "optional",
+        "activation": {
+          "never_ask": true
+        },
+        "none": true,
+        "scope": {
+          "subjects": [
+            "self",
+            "family",
+            "other"
+          ],
+          "period": "as_stated",
+          "object_relation": "只记录本人主动补充且明确属于本题的内容。"
+        },
+        "allowed_states": [
+          "missing",
+          "known",
+          "none",
+          "unknown",
+          "declined",
+          "deferred",
+          "ambiguous"
+        ],
+        "semantic_role": "detail",
+        "answer_format": {
+          "value_type": "string"
+        }
+      }
+    },
+    "question_contract": {
+      "premise": null,
+      "success": "必要要素与实际激活的条件要素均 known 或允许的明确 none，且作用域、关系与原话依据有效；不要求可选项。",
+      "notes": "",
+      "material_type": [
+        "person_relation"
+      ]
+    },
+    "sources": [
+      {
+        "id": "VAC-189-E06",
+        "text": "大概是民國43年，陸光康樂隊成立後，又組織另一班樂隊，那個時候我沒有接觸民間的社會生活，尤其是音樂方面，更是從未接觸，但是我非常感謝翁清溪(Tony)，他那個時候在爵士樂方面造詣已經不錯了，還有吳光麟，擅長吹薩克斯風，外號叫沙西米，我們就請這兩位樂壇老手來到陸光，那時候陸光搬到維揚村，有一台爛鋼琴，那個爛鋼琴的歷史蠻悠久，是抗戰時候，由重慶輾轉運到臺灣，雖然它的弦、音響板還不錯，但是鍵盤全都損壞了，稍事整修後，我就靠那台爛鋼琴上陣。  後來請的那些人，剛才我講的，這兩位都是本省籍的，另外還有兩位外省籍的，一位是我的好朋友，吹薩克斯風，現已過世，名叫袁瑤；另一位叫黃聲，是後來中廣樂隊的指揮。最令人感激的就是張雋。我講的好像時間有點錯亂。我到陸光的後期，軍人待遇很差，舉例來說，我們每天盼著出去勞軍，尤其到外島勞軍，在那個沒有電視的年代，廣播也不准聽，勞軍團特別受到歡迎，一到外島就有吃不完的魚肉菜餚。  平日的飲食供應缺乏，那個時候待遇不好，我們每次演完勞軍演完，只有一碗大魯麵，麵裡面加一個荷包蛋，但是，一碗吃不飽怎麼辦，我們就玩起變身的把戲。吃第一碗的時候穿夾克帶帽子，到吃第二碗的時候，把帽子摘下、夾克脫掉，又過去領一碗，吃了兩碗，但是後來到民國50年的時候，陸光改編。對了，我中間還忘了，當我們請那兩位指導我們之外，後來將他們介紹到民間，就是公家沒有演出的時候我們去伴奏兼差，伴奏賺一點錢我們就請軍官俱樂部的鍵盤手，到我們這裡來指導我們的樂隊，那個，後來大家合作十分愉快，民國50年時，部隊一直進行改編，把我好多好朋友都調走，我也不想在陸光任職，那就請調康樂總隊。",
+        "speaker": "narrator",
+        "question_id": "RV06",
+        "question": "那個時候是陸光康樂隊剛成立嗎？"
+      }
+    ],
+    "previous_fields": {},
+    "ask_counts": {},
+    "evidence_units": [
+      {
+        "id": "S1.1",
+        "source_id": "VAC-189-E06",
+        "text": "大概是民國43年，陸光康樂隊成立後，又組織另一班樂隊，那個時候我沒有接觸民間的社會生活，尤其是音樂方面，更是從未接觸，但是我非常感謝翁清溪(Tony)，他那個時候在爵士樂方面造詣已經不錯了，還有吳光麟，擅長吹薩克斯風，外號叫沙西米，我們就請這兩位樂壇老手來到陸光，那時候陸光搬到維揚村，有一台爛鋼琴，那個爛鋼琴的歷史蠻悠久，是抗戰時候，由重慶輾轉運到臺灣，雖然它的弦、音響板還不錯，但是鍵盤全都損壞了，稍事整修後，我就靠那台爛鋼琴上陣。"
+      },
+      {
+        "id": "S1.2",
+        "source_id": "VAC-189-E06",
+        "text": "  後來請的那些人，剛才我講的，這兩位都是本省籍的，另外還有兩位外省籍的，一位是我的好朋友，吹薩克斯風，現已過世，名叫袁瑤；"
+      },
+      {
+        "id": "S1.3",
+        "source_id": "VAC-189-E06",
+        "text": "另一位叫黃聲，是後來中廣樂隊的指揮。"
+      },
+      {
+        "id": "S1.4",
+        "source_id": "VAC-189-E06",
+        "text": "最令人感激的就是張雋。"
+      },
+      {
+        "id": "S1.5",
+        "source_id": "VAC-189-E06",
+        "text": "我講的好像時間有點錯亂。"
+      },
+      {
+        "id": "S1.6",
+        "source_id": "VAC-189-E06",
+        "text": "我到陸光的後期，軍人待遇很差，舉例來說，我們每天盼著出去勞軍，尤其到外島勞軍，在那個沒有電視的年代，廣播也不准聽，勞軍團特別受到歡迎，一到外島就有吃不完的魚肉菜餚。"
+      },
+      {
+        "id": "S1.7",
+        "source_id": "VAC-189-E06",
+        "text": "  平日的飲食供應缺乏，那個時候待遇不好，我們每次演完勞軍演完，只有一碗大魯麵，麵裡面加一個荷包蛋，但是，一碗吃不飽怎麼辦，我們就玩起變身的把戲。"
+      },
+      {
+        "id": "S1.8",
+        "source_id": "VAC-189-E06",
+        "text": "吃第一碗的時候穿夾克帶帽子，到吃第二碗的時候，把帽子摘下、夾克脫掉，又過去領一碗，吃了兩碗，但是後來到民國50年的時候，陸光改編。"
+      },
+      {
+        "id": "S1.9",
+        "source_id": "VAC-189-E06",
+        "text": "對了，我中間還忘了，當我們請那兩位指導我們之外，後來將他們介紹到民間，就是公家沒有演出的時候我們去伴奏兼差，伴奏賺一點錢我們就請軍官俱樂部的鍵盤手，到我們這裡來指導我們的樂隊，那個，後來大家合作十分愉快，民國50年時，部隊一直進行改編，把我好多好朋友都調走，我也不想在陸光任職，那就請調康樂總隊。"
+      }
+    ]
+  },
+  "proposal": {
+    "control": {
+      "action": "continue",
+      "evidence_unit_ids": []
+    },
+    "fields": {
+      "RV06-E1": {
+        "state": "known",
+        "value_unit_ids": [
+          "S1.1",
+          "S1.4"
+        ],
+        "evidence_unit_ids": [
+          "S1.1",
+          "S1.4"
+        ],
+        "scope": {
+          "subject": "self",
+          "period": "lifelong",
+          "relation_unit_ids": "same_as_evidence"
+        }
+      }
+    }
+  },
+  "raw_model_response": {
+    "raw_content": "{\n  \"control\": {\n    \"action\": \"continue\",\n    \"evidence_unit_ids\": []\n  },\n  \"fields\": {\n    \"RV06-E1\": {\n      \"state\": \"known\",\n      \"value_unit_ids\": [\n        \"S1.1\",\n        \"S1.4\"\n      ],\n      \"evidence_unit_ids\": [\n        \"S1.1\",\n        \"S1.4\"\n      ],\n      \"scope\": {\n        \"subject\": \"self\",\n        \"period\": \"lifelong\",\n        \"relation_unit_ids\": \"same_as_evidence\"\n      }\n    }\n  }\n}",
+    "parse_error": false,
+    "finish_reason": "stop"
+  }
+}

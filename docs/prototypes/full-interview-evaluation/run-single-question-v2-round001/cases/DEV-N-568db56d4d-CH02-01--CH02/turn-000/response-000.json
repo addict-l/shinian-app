@@ -1,0 +1,207 @@
+{
+  "kind": "model_call",
+  "id": "DEV-N-568db56d4d-CH02-01--CH02-t000-a000",
+  "input": {
+    "question_id": "CH02",
+    "main_question": "小时候家里的生活条件怎么样？",
+    "question_context_mode": "independent",
+    "source_kind": "published_transcript",
+    "historical_question_verified": true,
+    "focus": null,
+    "field_contract": {
+      "CH02-E1": {
+        "label": "童年家庭的生活条件",
+        "type": "condition",
+        "question": "小时候，家里的生活条件怎么样？",
+        "usable_answer": "贫富、吃穿、住房、生活供给任一可理解概括；不要求收入数字。",
+        "none": false,
+        "requirement": "required",
+        "notes": "",
+        "link": null,
+        "vague": [],
+        "id": "CH02-E1",
+        "question_id": "CH02",
+        "required": true,
+        "activation": {
+          "always": true
+        },
+        "scope": {
+          "subjects": [
+            "self",
+            "family"
+          ],
+          "period": "childhood",
+          "object_relation": "本人在本题实际问答中所指的童年家庭的生活条件；引用须证明该关系，不从题干假定事实。"
+        },
+        "allowed_states": [
+          "missing",
+          "known",
+          "unknown",
+          "declined",
+          "deferred",
+          "ambiguous",
+          "conflict"
+        ],
+        "semantic_role": "condition",
+        "answer_format": {
+          "value_type": "string"
+        }
+      },
+      "CH02-O1": {
+        "id": "CH02-O1",
+        "question_id": "CH02",
+        "label": "童年衣食住行的更多片段",
+        "type": "detail",
+        "question": "您还有想补充的吗？",
+        "usable_answer": "本人自愿提供的同题补充；缺少不影响完成。",
+        "required": false,
+        "requirement": "optional",
+        "activation": {
+          "never_ask": true
+        },
+        "none": true,
+        "scope": {
+          "subjects": [
+            "self",
+            "family",
+            "other"
+          ],
+          "period": "as_stated",
+          "object_relation": "只记录本人主动补充且明确属于本题的内容。"
+        },
+        "allowed_states": [
+          "missing",
+          "known",
+          "none",
+          "unknown",
+          "declined",
+          "deferred",
+          "ambiguous"
+        ],
+        "semantic_role": "detail",
+        "answer_format": {
+          "value_type": "string"
+        }
+      }
+    },
+    "question_contract": {
+      "premise": null,
+      "success": "必要要素与实际激活的条件要素均 known 或允许的明确 none，且作用域、关系与原话依据有效；不要求可选项。",
+      "notes": "",
+      "material_type": [
+        "condition",
+        "daily_life"
+      ]
+    },
+    "sources": [
+      {
+        "id": "VAC-144-E01",
+        "text": "家裡只有哥哥、媽媽，加我三個人。住在鄉下，生活很苦、很苦，附近少人煙。哥哥比我大兩歲，10多歲時生病，連飯都沒得吃了，因此更沒錢請醫生，所以就過世了。自從我生出來，懂事後，就沒看過我父親，媽媽也沒提過他。家裡沒有人工作。家裡沒種田也沒受教育，平時跟哥哥以放牛維生，早上把牛趕出去，晚上把牛趕回來，靠別人給我飯吃。",
+        "speaker": "narrator",
+        "question_id": "CH02",
+        "question": "您小時候家裡有哪些人？環境如何？"
+      }
+    ],
+    "previous_fields": {},
+    "evidence_units": [
+      {
+        "id": "S1.1",
+        "source_id": "VAC-144-E01",
+        "text": "家裡只有哥哥、媽媽，加我三個人。"
+      },
+      {
+        "id": "S1.2",
+        "source_id": "VAC-144-E01",
+        "text": "住在鄉下，生活很苦、很苦，附近少人煙。"
+      },
+      {
+        "id": "S1.3",
+        "source_id": "VAC-144-E01",
+        "text": "哥哥比我大兩歲，10多歲時生病，連飯都沒得吃了，因此更沒錢請醫生，所以就過世了。"
+      },
+      {
+        "id": "S1.4",
+        "source_id": "VAC-144-E01",
+        "text": "自從我生出來，懂事後，就沒看過我父親，媽媽也沒提過他。"
+      },
+      {
+        "id": "S1.5",
+        "source_id": "VAC-144-E01",
+        "text": "家裡沒有人工作。"
+      },
+      {
+        "id": "S1.6",
+        "source_id": "VAC-144-E01",
+        "text": "家裡沒種田也沒受教育，平時跟哥哥以放牛維生，早上把牛趕出去，晚上把牛趕回來，靠別人給我飯吃。"
+      }
+    ],
+    "task": "extract_answers_for_target_field_questions_from_recorded_material",
+    "allowed_evidence_unit_ids": [
+      "S1.1",
+      "S1.2",
+      "S1.3",
+      "S1.4",
+      "S1.5",
+      "S1.6"
+    ],
+    "nonknown_protocol_example": {
+      "state": "ambiguous",
+      "value": null,
+      "evidence_unit_ids": [
+        "CHOOSE_AN_ACTUAL_ALLOWED_ID"
+      ],
+      "scope": {
+        "subject": "CHOOSE_ONE_CONTRACT_SUBJECT",
+        "period": "as_stated",
+        "relation_unit_ids": "same_as_evidence"
+      },
+      "clarifications": [
+        "referent"
+      ]
+    },
+    "literal_link_candidates": [],
+    "task_note": "main_question and field_contract define extraction targets. sources.question is a historical context for interpreting short answers, not the question to answer or summarize."
+  },
+  "output": {
+    "control": {
+      "action": "continue",
+      "evidence_unit_ids": []
+    },
+    "fields": {
+      "CH02-E1": {
+        "state": "known",
+        "value_unit_ids": [
+          "S1.2"
+        ],
+        "evidence_unit_ids": [
+          "S1.2"
+        ],
+        "scope": {
+          "subject": "family",
+          "period": "childhood",
+          "relation_unit_ids": "same_as_evidence"
+        }
+      }
+    }
+  },
+  "raw_content": "{\n  \"control\": {\n    \"action\": \"continue\",\n    \"evidence_unit_ids\": []\n  },\n  \"fields\": {\n    \"CH02-E1\": {\n      \"state\": \"known\",\n      \"value_unit_ids\": [\n        \"S1.2\"\n      ],\n      \"evidence_unit_ids\": [\n        \"S1.2\"\n      ],\n      \"scope\": {\n        \"subject\": \"family\",\n        \"period\": \"childhood\",\n        \"relation_unit_ids\": \"same_as_evidence\"\n      }\n    }\n  }\n}",
+  "parse_error": false,
+  "seconds": 2.285,
+  "usage": {
+    "prompt_tokens": 3199,
+    "completion_tokens": 113,
+    "total_tokens": 3312,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 3199
+  },
+  "finish_reason": "stop",
+  "response_model": "deepseek-v4-pro",
+  "provider_settings": {
+    "model": "deepseek-v4-pro",
+    "thinking": "disabled",
+    "max_tokens": 16384
+  }
+}

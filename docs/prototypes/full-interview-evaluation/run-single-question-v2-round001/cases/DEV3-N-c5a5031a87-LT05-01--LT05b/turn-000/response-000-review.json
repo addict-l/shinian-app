@@ -1,0 +1,218 @@
+{
+  "kind": "model_call",
+  "id": "DEV3-N-c5a5031a87-LT05-01--LT05b-t000-a000-review",
+  "input": {
+    "question_id": "LT05b",
+    "main_question": "您希望后人记住自己的哪件往事？",
+    "question_context_mode": "independent",
+    "source_kind": "published_transcript",
+    "historical_question_verified": true,
+    "focus": null,
+    "field_contract": {
+      "LT05-E2": {
+        "label": "本人希望后人记住的故事",
+        "type": "wish",
+        "question": "有没有一件您希望后人记住的故事？",
+        "usable_answer": "一项本人选出的故事/经历，能辨认即可；或明确没有，不强求完整讲完。泛泛工作职责、服务目标或通常做事方式不是一项具体故事。",
+        "none": true,
+        "requirement": "required",
+        "notes": "",
+        "link": null,
+        "vague": [],
+        "id": "LT05-E2",
+        "question_id": "LT05b",
+        "required": true,
+        "activation": {
+          "always": true
+        },
+        "scope": {
+          "subjects": [
+            "self"
+          ],
+          "period": "lifelong",
+          "object_relation": "本人在本题实际问答中所指的本人希望后人记住的故事；引用须证明该关系，不从题干假定事实。"
+        },
+        "allowed_states": [
+          "missing",
+          "known",
+          "unknown",
+          "declined",
+          "deferred",
+          "ambiguous",
+          "conflict",
+          "none"
+        ],
+        "semantic_role": "selected_identifiable_story",
+        "answer_format": {
+          "value_type": "string"
+        }
+      },
+      "LT05-O1b": {
+        "id": "LT05-O1b",
+        "question_id": "LT05b",
+        "label": "本人愿意补充的故事细节或原因",
+        "type": "detail",
+        "question": "您还有想补充的吗？",
+        "usable_answer": "本人自愿提供的同题补充；缺少不影响完成。",
+        "required": false,
+        "requirement": "optional",
+        "activation": {
+          "never_ask": true
+        },
+        "none": true,
+        "scope": {
+          "subjects": [
+            "self",
+            "family",
+            "other"
+          ],
+          "period": "as_stated",
+          "object_relation": "只记录本人主动补充且明确属于本题的内容。"
+        },
+        "allowed_states": [
+          "missing",
+          "known",
+          "none",
+          "unknown",
+          "declined",
+          "deferred",
+          "ambiguous"
+        ],
+        "semantic_role": "detail",
+        "answer_format": {
+          "value_type": "string"
+        }
+      }
+    },
+    "question_contract": {
+      "premise": null,
+      "success": "必要要素与实际激活的条件要素均 known 或允许的明确 none，且作用域、关系与原话依据有效；不要求可选项。",
+      "notes": "",
+      "material_type": [
+        "wish"
+      ]
+    },
+    "sources": [
+      {
+        "id": "CASA-c5a5031a-Q07",
+        "text": "最想让人记住的 : 麻醉中，让患者能睡得安宁， 术后安全苏醒。",
+        "speaker": "narrator",
+        "question_id": "LT05b",
+        "question": "回首往事，您所做的最得意的事，最想让人记住的是什么？"
+      }
+    ],
+    "previous_fields": {},
+    "evidence_units": [
+      {
+        "id": "S1.1",
+        "source_id": "CASA-c5a5031a-Q07",
+        "text": "最想让人记住的 : 麻醉中，让患者能睡得安宁， 术后安全苏醒。"
+      }
+    ],
+    "task": "extract_answers_for_target_field_questions_from_recorded_material",
+    "allowed_evidence_unit_ids": [
+      "S1.1"
+    ],
+    "nonknown_protocol_example": {
+      "state": "ambiguous",
+      "value": null,
+      "evidence_unit_ids": [
+        "CHOOSE_AN_ACTUAL_ALLOWED_ID"
+      ],
+      "scope": {
+        "subject": "CHOOSE_ONE_CONTRACT_SUBJECT",
+        "period": "as_stated",
+        "relation_unit_ids": "same_as_evidence"
+      },
+      "clarifications": [
+        "referent"
+      ]
+    },
+    "literal_link_candidates": [],
+    "task_note": "main_question and field_contract define extraction targets. sources.question is a historical context for interpreting short answers, not the question to answer or summarize.",
+    "semantic_review": {
+      "unverified_candidate": {
+        "control": {
+          "action": "continue",
+          "evidence_unit_ids": []
+        },
+        "fields": {
+          "LT05-E2": {
+            "state": "known",
+            "value_unit_ids": [
+              "S1.1"
+            ],
+            "evidence_unit_ids": [
+              "S1.1"
+            ],
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_unit_ids": "same_as_evidence"
+            }
+          }
+        }
+      },
+      "code_validation_errors": [],
+      "stage_search_candidates": [],
+      "literal_link_candidates": [],
+      "candidate_validation": {
+        "LT05-E2": {
+          "state": "known",
+          "provenance": null,
+          "expected_stage": null,
+          "clarifications": []
+        },
+        "LT05-O1b": {
+          "state": "missing",
+          "provenance": null,
+          "expected_stage": null,
+          "clarifications": []
+        }
+      },
+      "instruction": "Audit all fields against own sources and contract, including omissions; no gold supplied. Code feedback is not source evidence or a verified memory. An ambiguous or unbound candidate has not passed: reread newer material and choose genuinely grounded evidence, not the old evidence with a changed scope label. Resolve rejected candidates from existing source material before any human follow-up."
+    }
+  },
+  "output": {
+    "control": {
+      "action": "continue",
+      "evidence_unit_ids": []
+    },
+    "fields": {
+      "LT05-E2": {
+        "state": "known",
+        "value_unit_ids": [
+          "S1.1"
+        ],
+        "evidence_unit_ids": [
+          "S1.1"
+        ],
+        "scope": {
+          "subject": "self",
+          "period": "lifelong",
+          "relation_unit_ids": "same_as_evidence"
+        }
+      }
+    }
+  },
+  "raw_content": "{\n  \"control\": {\n    \"action\": \"continue\",\n    \"evidence_unit_ids\": []\n  },\n  \"fields\": {\n    \"LT05-E2\": {\n      \"state\": \"known\",\n      \"value_unit_ids\": [\n        \"S1.1\"\n      ],\n      \"evidence_unit_ids\": [\n        \"S1.1\"\n      ],\n      \"scope\": {\n        \"subject\": \"self\",\n        \"period\": \"lifelong\",\n        \"relation_unit_ids\": \"same_as_evidence\"\n      }\n    }\n  }\n}",
+  "parse_error": false,
+  "seconds": 1.923,
+  "usage": {
+    "prompt_tokens": 3160,
+    "completion_tokens": 114,
+    "total_tokens": 3274,
+    "prompt_tokens_details": {
+      "cached_tokens": 2816
+    },
+    "prompt_cache_hit_tokens": 2816,
+    "prompt_cache_miss_tokens": 344
+  },
+  "finish_reason": "stop",
+  "response_model": "deepseek-v4-pro",
+  "provider_settings": {
+    "model": "deepseek-v4-pro",
+    "thinking": "disabled",
+    "max_tokens": 16384
+  }
+}

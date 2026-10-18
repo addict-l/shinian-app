@@ -1,0 +1,237 @@
+{
+  "kind": "evaluated",
+  "result": {
+    "decision": "ready",
+    "target": null,
+    "question": null,
+    "fields": {
+      "CH07-E1": {
+        "state": "known",
+        "scope": {
+          "subject": "self",
+          "period": "childhood",
+          "relation_evidence": [
+            {
+              "source_id": "VAC-186-E04",
+              "quote": "  當時在那種家庭環境中成長，我學會了反抗強權，所以後來我不管做什麼事，我對我的長官，不一定是唯命是從，除非他讓我很尊敬。"
+            }
+          ]
+        },
+        "value": "  當時在那種家庭環境中成長，我學會了反抗強權，所以後來我不管做什麼事，我對我的長官，不一定是唯命是從，除非他讓我很尊敬。",
+        "evidence": [
+          {
+            "source_id": "VAC-186-E04",
+            "quote": "  當時在那種家庭環境中成長，我學會了反抗強權，所以後來我不管做什麼事，我對我的長官，不一定是唯命是從，除非他讓我很尊敬。"
+          }
+        ]
+      },
+      "CH07-E2": {
+        "state": "known",
+        "scope": {
+          "subject": "self",
+          "period": "lifelong",
+          "relation_evidence": [
+            {
+              "source_id": "VAC-186-E04",
+              "quote": "  當時在那種家庭環境中成長，我學會了反抗強權，所以後來我不管做什麼事，我對我的長官，不一定是唯命是從，除非他讓我很尊敬。"
+            }
+          ]
+        },
+        "value": "  當時在那種家庭環境中成長，我學會了反抗強權，所以後來我不管做什麼事，我對我的長官，不一定是唯命是從，除非他讓我很尊敬。",
+        "evidence": [
+          {
+            "source_id": "VAC-186-E04",
+            "quote": "  當時在那種家庭環境中成長，我學會了反抗強權，所以後來我不管做什麼事，我對我的長官，不一定是唯命是從，除非他讓我很尊敬。"
+          }
+        ]
+      },
+      "CH07-O1": {
+        "state": "missing",
+        "value": null,
+        "evidence": []
+      }
+    },
+    "effective": {
+      "CH07-E1": "known",
+      "CH07-E2": "known",
+      "CH07-O1": "missing"
+    },
+    "active": [
+      "CH07-E1",
+      "CH07-E2"
+    ],
+    "errors": [],
+    "rejected_candidates": [],
+    "scope_notices": [
+      {
+        "field_id": "CH07-E1",
+        "rule": "expand_explicit_same_field_evidence_alias"
+      },
+      {
+        "field_id": "CH07-E2",
+        "rule": "expand_explicit_same_field_evidence_alias"
+      }
+    ],
+    "protocol_normalizations": [
+      {
+        "rule": "expand_control_evidence_units",
+        "original_control": {
+          "action": "continue",
+          "evidence_unit_ids": []
+        },
+        "selections": [
+          {
+            "attribute": "evidence_unit_ids",
+            "selected_ids": [],
+            "refs": []
+          }
+        ]
+      },
+      {
+        "field_id": "CH07-E1",
+        "rule": "expand_selected_original_evidence_units",
+        "original_candidate": {
+          "state": "known",
+          "value_unit_ids": [
+            "S1.3"
+          ],
+          "evidence_unit_ids": [
+            "S1.3"
+          ],
+          "scope": {
+            "subject": "self",
+            "period": "childhood",
+            "relation_unit_ids": "same_as_evidence"
+          }
+        },
+        "selections": [
+          {
+            "attribute": "value",
+            "rule": "copy_selected_contiguous_original_units",
+            "selected_ids": [
+              "S1.3"
+            ],
+            "refs": [
+              {
+                "source_id": "VAC-186-E04",
+                "quote": "  當時在那種家庭環境中成長，我學會了反抗強權，所以後來我不管做什麼事，我對我的長官，不一定是唯命是從，除非他讓我很尊敬。"
+              }
+            ]
+          },
+          {
+            "attribute": "evidence_unit_ids",
+            "selected_ids": [
+              "S1.3"
+            ],
+            "refs": [
+              {
+                "source_id": "VAC-186-E04",
+                "quote": "  當時在那種家庭環境中成長，我學會了反抗強權，所以後來我不管做什麼事，我對我的長官，不一定是唯命是從，除非他讓我很尊敬。"
+              }
+            ]
+          },
+          {
+            "attribute": "relation_unit_ids",
+            "alias": "same_as_evidence"
+          }
+        ]
+      },
+      {
+        "field_id": "CH07-E1",
+        "rule": "expand_explicit_same_field_evidence_alias",
+        "original_candidate": {
+          "state": "known",
+          "scope": {
+            "subject": "self",
+            "period": "childhood",
+            "relation_evidence": "same_as_evidence"
+          },
+          "value": "  當時在那種家庭環境中成長，我學會了反抗強權，所以後來我不管做什麼事，我對我的長官，不一定是唯命是從，除非他讓我很尊敬。",
+          "evidence": [
+            {
+              "source_id": "VAC-186-E04",
+              "quote": "  當時在那種家庭環境中成長，我學會了反抗強權，所以後來我不管做什麼事，我對我的長官，不一定是唯命是從，除非他讓我很尊敬。"
+            }
+          ]
+        }
+      },
+      {
+        "field_id": "CH07-E2",
+        "rule": "expand_selected_original_evidence_units",
+        "original_candidate": {
+          "state": "known",
+          "value_unit_ids": [
+            "S1.3"
+          ],
+          "evidence_unit_ids": [
+            "S1.3"
+          ],
+          "scope": {
+            "subject": "self",
+            "period": "lifelong",
+            "relation_unit_ids": "same_as_evidence"
+          }
+        },
+        "selections": [
+          {
+            "attribute": "value",
+            "rule": "copy_selected_contiguous_original_units",
+            "selected_ids": [
+              "S1.3"
+            ],
+            "refs": [
+              {
+                "source_id": "VAC-186-E04",
+                "quote": "  當時在那種家庭環境中成長，我學會了反抗強權，所以後來我不管做什麼事，我對我的長官，不一定是唯命是從，除非他讓我很尊敬。"
+              }
+            ]
+          },
+          {
+            "attribute": "evidence_unit_ids",
+            "selected_ids": [
+              "S1.3"
+            ],
+            "refs": [
+              {
+                "source_id": "VAC-186-E04",
+                "quote": "  當時在那種家庭環境中成長，我學會了反抗強權，所以後來我不管做什麼事，我對我的長官，不一定是唯命是從，除非他讓我很尊敬。"
+              }
+            ]
+          },
+          {
+            "attribute": "relation_unit_ids",
+            "alias": "same_as_evidence"
+          }
+        ]
+      },
+      {
+        "field_id": "CH07-E2",
+        "rule": "expand_explicit_same_field_evidence_alias",
+        "original_candidate": {
+          "state": "known",
+          "scope": {
+            "subject": "self",
+            "period": "lifelong",
+            "relation_evidence": "same_as_evidence"
+          },
+          "value": "  當時在那種家庭環境中成長，我學會了反抗強權，所以後來我不管做什麼事，我對我的長官，不一定是唯命是從，除非他讓我很尊敬。",
+          "evidence": [
+            {
+              "source_id": "VAC-186-E04",
+              "quote": "  當時在那種家庭環境中成長，我學會了反抗強權，所以後來我不管做什麼事，我對我的長官，不一定是唯命是從，除非他讓我很尊敬。"
+            }
+          ]
+        }
+      }
+    ],
+    "optional_errors": [],
+    "inactive_conditional_errors": [],
+    "unbound_material": [],
+    "provenance": {},
+    "version": "full-interview-v2.0.0",
+    "semantic_rejections": []
+  },
+  "internal_repairs": 0,
+  "semantic_review_calls": 1,
+  "at": "2026-10-18T07:32:15.269874+00:00"
+}

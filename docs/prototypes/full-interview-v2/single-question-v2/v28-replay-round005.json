@@ -1,0 +1,1336 @@
+{
+  "scope": "Offline saved-input code counterfactual only; no new DS calls, no full pipeline re-execution, no acceptance or DS accuracy claim.",
+  "no_model_calls": true,
+  "run": "/Users/student03/Documents/ChatGPT/ai memory/docs/prototypes/full-interview-evaluation/run-v1.27-three-round005",
+  "engine": "/Users/student03/Documents/ChatGPT/ai memory/docs/prototypes/full-interview-v1/candidate32-category-binding/engine.js",
+  "engine_sha256": "283b1030234dc3d830b17ce92a94375a1f08505c6b27044db53ebd3b52bdf6e7",
+  "version": "full-interview-v1.28.0",
+  "rows": [
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.27-three-round005/cases/DEV-N-3776254214-FM07-01/turn-000/engine-input-000-review.json",
+      "question_id": "FM07",
+      "before": {
+        "decision": "ask",
+        "target": "FM07-E1",
+        "errors": [],
+        "fields": {
+          "FM07-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "FM07-E2": {
+            "state": "missing",
+            "value": null
+          },
+          "FM07-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "FM07-E1",
+        "errors": [],
+        "fields": {
+          "FM07-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "FM07-E2": {
+            "state": "missing",
+            "value": null
+          },
+          "FM07-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.27-three-round005/cases/DEV-N-568db56d4d-CH02-01/turn-000/engine-input-000-review.json",
+      "question_id": "CH02",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "CH02-E1": {
+            "state": "known",
+            "value": "家裡只有哥哥、媽媽，加我三個人。住在鄉下，生活很苦、很苦，附近少人煙。",
+            "scope": {
+              "subject": "family",
+              "period": "childhood",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-144-E01",
+                  "quote": "家裡只有哥哥、媽媽，加我三個人。住在鄉下，生活很苦、很苦，附近少人煙。"
+                }
+              ]
+            }
+          },
+          "CH02-E2": {
+            "state": "known",
+            "value": "平時跟哥哥以放牛維生，早上把牛趕出去，晚上把牛趕回來，靠別人給我飯吃。",
+            "scope": {
+              "subject": "self",
+              "period": "childhood",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-144-E01",
+                  "quote": "家裡沒種田也沒受教育，平時跟哥哥以放牛維生，早上把牛趕出去，晚上把牛趕回來，靠別人給我飯吃。"
+                }
+              ]
+            }
+          },
+          "CH02-O1": {
+            "state": "known",
+            "value": "哥哥比我大兩歲，10多歲時生病，連飯都沒得吃了，因此更沒錢請醫生，所以就過世了。",
+            "scope": {
+              "subject": "family",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-144-E01",
+                  "quote": "哥哥比我大兩歲，10多歲時生病，連飯都沒得吃了，因此更沒錢請醫生，所以就過世了。"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "CH02-E1": {
+            "state": "known",
+            "value": "家裡只有哥哥、媽媽，加我三個人。住在鄉下，生活很苦、很苦，附近少人煙。",
+            "scope": {
+              "subject": "family",
+              "period": "childhood",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-144-E01",
+                  "quote": "家裡只有哥哥、媽媽，加我三個人。住在鄉下，生活很苦、很苦，附近少人煙。"
+                }
+              ]
+            }
+          },
+          "CH02-E2": {
+            "state": "known",
+            "value": "平時跟哥哥以放牛維生，早上把牛趕出去，晚上把牛趕回來，靠別人給我飯吃。",
+            "scope": {
+              "subject": "self",
+              "period": "childhood",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-144-E01",
+                  "quote": "家裡沒種田也沒受教育，平時跟哥哥以放牛維生，早上把牛趕出去，晚上把牛趕回來，靠別人給我飯吃。"
+                }
+              ]
+            }
+          },
+          "CH02-O1": {
+            "state": "known",
+            "value": "哥哥比我大兩歲，10多歲時生病，連飯都沒得吃了，因此更沒錢請醫生，所以就過世了。",
+            "scope": {
+              "subject": "family",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-144-E01",
+                  "quote": "哥哥比我大兩歲，10多歲時生病，連飯都沒得吃了，因此更沒錢請醫生，所以就過世了。"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.27-three-round005/cases/DEV-N-cd7326e590-GR01-01/turn-000/engine-input-000-review.json",
+      "question_id": "GR01",
+      "before": {
+        "decision": "ask",
+        "target": "GR01-E1",
+        "errors": [],
+        "fields": {
+          "GR01-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "GR01-E2": {
+            "state": "known",
+            "value": "一開始上學還正常，後來躲日本兵，一天到晚往外跑，就沒辦法讀了。",
+            "scope": {
+              "subject": "self",
+              "period": "school_years",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-205-E03",
+                  "quote": "一開始上學還正常，後來躲日本兵，一天到晚往外跑，就沒辦法讀了。"
+                }
+              ]
+            }
+          },
+          "GR01-E3": {
+            "state": "known",
+            "value": "後來躲日本兵，一天到晚往外跑，就沒辦法讀了。",
+            "scope": {
+              "subject": "self",
+              "period": "school_years",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-205-E03",
+                  "quote": "一開始上學還正常，後來躲日本兵，一天到晚往外跑，就沒辦法讀了。"
+                }
+              ]
+            }
+          },
+          "GR01-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "GR01-E1",
+        "errors": [],
+        "fields": {
+          "GR01-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "GR01-E2": {
+            "state": "known",
+            "value": "一開始上學還正常，後來躲日本兵，一天到晚往外跑，就沒辦法讀了。",
+            "scope": {
+              "subject": "self",
+              "period": "school_years",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-205-E03",
+                  "quote": "一開始上學還正常，後來躲日本兵，一天到晚往外跑，就沒辦法讀了。"
+                }
+              ]
+            }
+          },
+          "GR01-E3": {
+            "state": "known",
+            "value": "後來躲日本兵，一天到晚往外跑，就沒辦法讀了。",
+            "scope": {
+              "subject": "self",
+              "period": "school_years",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-205-E03",
+                  "quote": "一開始上學還正常，後來躲日本兵，一天到晚往外跑，就沒辦法讀了。"
+                }
+              ]
+            }
+          },
+          "GR01-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.27-three-round005/cases/DEV-N-cd7326e590-SK01-01/turn-000/engine-input-000-review.json",
+      "question_id": "SK01",
+      "before": {
+        "decision": "ask",
+        "target": "SK01-E2",
+        "errors": [],
+        "fields": {
+          "SK01-E1": {
+            "state": "known",
+            "value": "我出生於民國9年7月15日",
+            "scope": {
+              "subject": "self",
+              "period": "birth",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-205-E01",
+                  "quote": "我出生於民國9年7月15日，江蘇邳州人。"
+                }
+              ]
+            },
+            "precision": "day"
+          },
+          "SK01-E2": {
+            "state": "missing",
+            "value": null
+          },
+          "SK01-E3.place": {
+            "state": "known",
+            "value": "在趙頓車站城子河後老莊",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-205-E01",
+                  "quote": "我家是在鄉下，但是交通很方便，在趙頓車站城子河後老莊。"
+                }
+              ]
+            }
+          },
+          "SK01-E3.period": {
+            "state": "missing",
+            "value": null
+          },
+          "SK01-E4": {
+            "state": "known",
+            "value": "我家是在鄉下，但是交通很方便，在趙頓車站城子河後老莊。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-205-E01",
+                  "quote": "我家是在鄉下，但是交通很方便，在趙頓車站城子河後老莊。"
+                }
+              ]
+            }
+          },
+          "SK01-O1": {
+            "state": "known",
+            "value": "我父親排行第四，家裡經商開飯店。我們兄弟姊妹七個，我是排行第二的男孩子，有個大哥，女孩五個。",
+            "scope": {
+              "subject": "family",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-205-E01",
+                  "quote": "我父親排行第四，家裡經商開飯店。我們兄弟姊妹七個，我是排行第二的男孩子，有個大哥，女孩五個。"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "SK01-E2",
+        "errors": [],
+        "fields": {
+          "SK01-E1": {
+            "state": "known",
+            "value": "我出生於民國9年7月15日",
+            "scope": {
+              "subject": "self",
+              "period": "birth",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-205-E01",
+                  "quote": "我出生於民國9年7月15日，江蘇邳州人。"
+                }
+              ]
+            },
+            "precision": "day"
+          },
+          "SK01-E2": {
+            "state": "missing",
+            "value": null
+          },
+          "SK01-E3.place": {
+            "state": "known",
+            "value": "在趙頓車站城子河後老莊",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-205-E01",
+                  "quote": "我家是在鄉下，但是交通很方便，在趙頓車站城子河後老莊。"
+                }
+              ]
+            }
+          },
+          "SK01-E3.period": {
+            "state": "missing",
+            "value": null
+          },
+          "SK01-E4": {
+            "state": "known",
+            "value": "我家是在鄉下，但是交通很方便，在趙頓車站城子河後老莊。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-205-E01",
+                  "quote": "我家是在鄉下，但是交通很方便，在趙頓車站城子河後老莊。"
+                }
+              ]
+            }
+          },
+          "SK01-O1": {
+            "state": "known",
+            "value": "我父親排行第四，家裡經商開飯店。我們兄弟姊妹七個，我是排行第二的男孩子，有個大哥，女孩五個。",
+            "scope": {
+              "subject": "family",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-205-E01",
+                  "quote": "我父親排行第四，家裡經商開飯店。我們兄弟姊妹七個，我是排行第二的男孩子，有個大哥，女孩五個。"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.27-three-round005/cases/DEV-N-cd7326e590-SK03-01/turn-000/engine-input-000-review.json",
+      "question_id": "SK03",
+      "before": {
+        "decision": "ask",
+        "target": "SK03-E1",
+        "errors": [],
+        "fields": {
+          "SK03-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "SK03-E2": {
+            "state": "known",
+            "value": "我父親排行第四，家裡經商開飯店。",
+            "scope": {
+              "subject": "family",
+              "period": "childhood",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-205-E01",
+                  "quote": "我父親排行第四，家裡經商開飯店。"
+                }
+              ]
+            }
+          },
+          "SK03-E3": {
+            "state": "known",
+            "value": "我們兄弟姊妹七個，我是排行第二的男孩子，有個大哥，女孩五個。",
+            "scope": {
+              "subject": "self",
+              "period": "childhood",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-205-E01",
+                  "quote": "我們兄弟姊妹七個，我是排行第二的男孩子，有個大哥，女孩五個。"
+                }
+              ]
+            }
+          },
+          "SK03-E4": {
+            "state": "missing",
+            "value": null
+          },
+          "SK03-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "SK03-E1",
+        "errors": [],
+        "fields": {
+          "SK03-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "SK03-E2": {
+            "state": "known",
+            "value": "我父親排行第四，家裡經商開飯店。",
+            "scope": {
+              "subject": "family",
+              "period": "childhood",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-205-E01",
+                  "quote": "我父親排行第四，家裡經商開飯店。"
+                }
+              ]
+            }
+          },
+          "SK03-E3": {
+            "state": "known",
+            "value": "我們兄弟姊妹七個，我是排行第二的男孩子，有個大哥，女孩五個。",
+            "scope": {
+              "subject": "self",
+              "period": "childhood",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-205-E01",
+                  "quote": "我們兄弟姊妹七個，我是排行第二的男孩子，有個大哥，女孩五個。"
+                }
+              ]
+            }
+          },
+          "SK03-E4": {
+            "state": "missing",
+            "value": null
+          },
+          "SK03-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.27-three-round005/cases/DEV-N-cd7326e590-WK09-01/turn-000/engine-input-000-review.json",
+      "question_id": "WK09",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "WK09-E1": {
+            "state": "known",
+            "value": "在檢查退伍過後，吃了一碗牛肉麵，回來就上吐下瀉，好像是急性胃腸炎，可是之後就癱瘓什麼都不能吃了。以前沒藥吃，好可憐，醫院也不讓你住，我們團長那時候親自送我到醫院，醫院都拒收，送到三軍總醫院，不收，到空軍醫院也不收，那時沒有榮總。那陣子什麼都不能吃，吃了就吐，瘦得皮包骨。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-208-E01",
+                  "quote": "在檢查退伍過後，吃了一碗牛肉麵，回來就上吐下瀉，好像是急性胃腸炎，可是之後就癱瘓什麼都不能吃了。以前沒藥吃，好可憐，醫院也不讓你住，我們團長那時候親自送我到醫院，醫院都拒收，送到三軍總醫院，不收，到空軍醫院也不收，那時沒有榮總。那陣子什麼都不能吃，吃了就吐，瘦得皮包骨。"
+                }
+              ]
+            }
+          },
+          "WK09-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "WK09-E1": {
+            "state": "known",
+            "value": "在檢查退伍過後，吃了一碗牛肉麵，回來就上吐下瀉，好像是急性胃腸炎，可是之後就癱瘓什麼都不能吃了。以前沒藥吃，好可憐，醫院也不讓你住，我們團長那時候親自送我到醫院，醫院都拒收，送到三軍總醫院，不收，到空軍醫院也不收，那時沒有榮總。那陣子什麼都不能吃，吃了就吐，瘦得皮包骨。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-208-E01",
+                  "quote": "在檢查退伍過後，吃了一碗牛肉麵，回來就上吐下瀉，好像是急性胃腸炎，可是之後就癱瘓什麼都不能吃了。以前沒藥吃，好可憐，醫院也不讓你住，我們團長那時候親自送我到醫院，醫院都拒收，送到三軍總醫院，不收，到空軍醫院也不收，那時沒有榮總。那陣子什麼都不能吃，吃了就吐，瘦得皮包骨。"
+                }
+              ]
+            }
+          },
+          "WK09-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.27-three-round005/cases/DEV-SOURCES-N-47fee5f0c2-RV16-01/turn-000/engine-input-000-review.json",
+      "question_id": "RV16",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "RV16-E1": {
+            "state": "known",
+            "value": "做自己喜欢做的事。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-47fee5f0-Q08",
+                  "quote": "做自己喜欢做的事。"
+                }
+              ]
+            }
+          },
+          "RV16-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "RV16-E1": {
+            "state": "known",
+            "value": "做自己喜欢做的事。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-47fee5f0-Q08",
+                  "quote": "做自己喜欢做的事。"
+                }
+              ]
+            }
+          },
+          "RV16-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.27-three-round005/cases/DEV-SOURCES-N-47fee5f0c2-WK13-01/turn-000/engine-input-000-review.json",
+      "question_id": "WK13",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "WK13-E1": {
+            "state": "known",
+            "value": "我最得意的事情是在南极站工作一年。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-47fee5f0-Q07",
+                  "quote": "我最得意的事情是在南极站工作一年。"
+                }
+              ]
+            }
+          },
+          "WK13-O1": {
+            "state": "known",
+            "value": "自己即能麻醉、又能手术。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-47fee5f0-Q07",
+                  "quote": "自己即能麻醉、又能手术。"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "WK13-E1": {
+            "state": "known",
+            "value": "我最得意的事情是在南极站工作一年。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-47fee5f0-Q07",
+                  "quote": "我最得意的事情是在南极站工作一年。"
+                }
+              ]
+            }
+          },
+          "WK13-O1": {
+            "state": "known",
+            "value": "自己即能麻醉、又能手术。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-47fee5f0-Q07",
+                  "quote": "自己即能麻醉、又能手术。"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.27-three-round005/cases/DEV-SOURCES-N-b003d35572-RV15-01/turn-000/engine-input-000-review.json",
+      "question_id": "RV15",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "RV15-E1": {
+            "state": "known",
+            "value": "我这一生没有好好做过几件事情，但在艰难困苦的条件下，完成了家乡人、老百姓最期盼、最高兴的事情，我觉得这就值了。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "SUP-huangdafa-E008",
+                  "quote": "我这一生没有好好做过几件事情，但在艰难困苦的条件下，完成了家乡人、老百姓最期盼、最高兴的事情，我觉得这就值了。"
+                }
+              ]
+            }
+          },
+          "RV15-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "RV15-E1": {
+            "state": "known",
+            "value": "我这一生没有好好做过几件事情，但在艰难困苦的条件下，完成了家乡人、老百姓最期盼、最高兴的事情，我觉得这就值了。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "SUP-huangdafa-E008",
+                  "quote": "我这一生没有好好做过几件事情，但在艰难困苦的条件下，完成了家乡人、老百姓最期盼、最高兴的事情，我觉得这就值了。"
+                }
+              ]
+            }
+          },
+          "RV15-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.27-three-round005/cases/DEV3-N-82d14eeb63-LT04-01/turn-000/engine-input-000-review.json",
+      "question_id": "LT04",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "LT04-E1": {
+            "state": "known",
+            "value": "A. 看准目标就要 focus ， focus ， 持之以恒，到达目标 B. 要敢于挑战权威",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-82d14eeb-Q08",
+                  "quote": "A. 看准目标就要 focus ， focus ， 持之以恒，到达目标 B. 要敢于挑战权威"
+                }
+              ]
+            }
+          },
+          "LT04-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "LT04-E1": {
+            "state": "known",
+            "value": "A. 看准目标就要 focus ， focus ， 持之以恒，到达目标 B. 要敢于挑战权威",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-82d14eeb-Q08",
+                  "quote": "A. 看准目标就要 focus ， focus ， 持之以恒，到达目标 B. 要敢于挑战权威"
+                }
+              ]
+            }
+          },
+          "LT04-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.27-three-round005/cases/DEV3-N-82d14eeb63-LT05-01/turn-000/engine-input-000-review.json",
+      "question_id": "LT05",
+      "before": {
+        "decision": "ask",
+        "target": "LT05-E1",
+        "errors": [],
+        "fields": {
+          "LT05-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "LT05-E2": {
+            "state": "known",
+            "value": "A. 最早报道硬膜刺穿后矛盾性头痛 B. 开展 CSF lavage C. 最早在 Louisiana 开展 TEE 监测颅脑手术的气体栓塞和心房气体清除",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-82d14eeb-Q08",
+                  "quote": "A. 最早报道硬膜刺穿后矛盾性头痛 B. 开展 CSF lavage C. 最早在 Louisiana 开展 TEE 监测颅脑手术的气体栓塞和心房气体清除"
+                }
+              ]
+            }
+          },
+          "LT05-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "LT05-E1",
+        "errors": [],
+        "fields": {
+          "LT05-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "LT05-E2": {
+            "state": "known",
+            "value": "A. 最早报道硬膜刺穿后矛盾性头痛 B. 开展 CSF lavage C. 最早在 Louisiana 开展 TEE 监测颅脑手术的气体栓塞和心房气体清除",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-82d14eeb-Q08",
+                  "quote": "A. 最早报道硬膜刺穿后矛盾性头痛 B. 开展 CSF lavage C. 最早在 Louisiana 开展 TEE 监测颅脑手术的气体栓塞和心房气体清除"
+                }
+              ]
+            }
+          },
+          "LT05-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.27-three-round005/cases/DEV3-N-82d14eeb63-WK13-01/turn-000/engine-input-000-review.json",
+      "question_id": "WK13",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "WK13-E1": {
+            "state": "known",
+            "value": "A. 最早报道硬膜刺穿后矛盾性头痛 B. 开展 CSF lavage C. 最早在 Louisiana 开展 TEE 监测颅脑手术的气体栓塞和心房气体清除",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-82d14eeb-Q08",
+                  "quote": "A. 最早报道硬膜刺穿后矛盾性头痛 B. 开展 CSF lavage C. 最早在 Louisiana 开展 TEE 监测颅脑手术的气体栓塞和心房气体清除"
+                }
+              ]
+            }
+          },
+          "WK13-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "WK13-E1": {
+            "state": "known",
+            "value": "A. 最早报道硬膜刺穿后矛盾性头痛 B. 开展 CSF lavage C. 最早在 Louisiana 开展 TEE 监测颅脑手术的气体栓塞和心房气体清除",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-82d14eeb-Q08",
+                  "quote": "A. 最早报道硬膜刺穿后矛盾性头痛 B. 开展 CSF lavage C. 最早在 Louisiana 开展 TEE 监测颅脑手术的气体栓塞和心房气体清除"
+                }
+              ]
+            }
+          },
+          "WK13-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.27-three-round005/cases/ROOT-N-81acb2dd8d-SK01/turn-000/engine-input-000-review.json",
+      "question_id": "SK01",
+      "before": {
+        "decision": "ask",
+        "target": "SK01-E1",
+        "errors": [],
+        "fields": {
+          "SK01-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "SK01-E2": {
+            "state": "known",
+            "value": "我是出生在江蘇省鎮江",
+            "scope": {
+              "subject": "self",
+              "period": "birth",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-308-E01",
+                  "quote": "我是出生在江蘇省鎮江，我的祖籍是懷安縣。"
+                }
+              ]
+            }
+          },
+          "SK01-E3.place": {
+            "state": "missing",
+            "value": null
+          },
+          "SK01-E3.period": {
+            "state": "missing",
+            "value": null
+          },
+          "SK01-E4": {
+            "state": "missing",
+            "value": null
+          },
+          "SK01-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "SK01-E1",
+        "errors": [],
+        "fields": {
+          "SK01-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "SK01-E2": {
+            "state": "known",
+            "value": "我是出生在江蘇省鎮江",
+            "scope": {
+              "subject": "self",
+              "period": "birth",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-308-E01",
+                  "quote": "我是出生在江蘇省鎮江，我的祖籍是懷安縣。"
+                }
+              ]
+            }
+          },
+          "SK01-E3.place": {
+            "state": "missing",
+            "value": null
+          },
+          "SK01-E3.period": {
+            "state": "missing",
+            "value": null
+          },
+          "SK01-E4": {
+            "state": "missing",
+            "value": null
+          },
+          "SK01-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.27-three-round005/cases/ROOT-N-81acb2dd8d-SK03/turn-000/engine-input-000-review.json",
+      "question_id": "SK03",
+      "before": {
+        "decision": "ask",
+        "target": "SK03-E1",
+        "errors": [],
+        "fields": {
+          "SK03-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "SK03-E2": {
+            "state": "missing",
+            "value": null
+          },
+          "SK03-E3": {
+            "state": "known",
+            "value": "還有一個哥哥，兩個弟弟。",
+            "scope": {
+              "subject": "siblings",
+              "period": "childhood",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-308-E01",
+                  "quote": "還有一個哥哥，兩個弟弟。"
+                }
+              ]
+            }
+          },
+          "SK03-E4": {
+            "state": "missing",
+            "value": null
+          },
+          "SK03-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "SK03-E1",
+        "errors": [],
+        "fields": {
+          "SK03-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "SK03-E2": {
+            "state": "missing",
+            "value": null
+          },
+          "SK03-E3": {
+            "state": "known",
+            "value": "還有一個哥哥，兩個弟弟。",
+            "scope": {
+              "subject": "siblings",
+              "period": "childhood",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-308-E01",
+                  "quote": "還有一個哥哥，兩個弟弟。"
+                }
+              ]
+            }
+          },
+          "SK03-E4": {
+            "state": "missing",
+            "value": null
+          },
+          "SK03-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.27-three-round005/cases/ROOT-N-a5c5b05f54-RV06/turn-000/engine-input-000-review.json",
+      "question_id": "RV06",
+      "before": {
+        "decision": "ask",
+        "target": "RV06-E1",
+        "errors": [],
+        "fields": {
+          "RV06-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "RV06-E2": {
+            "state": "known",
+            "value": "我父母",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-267-E02",
+                  "quote": "我後來回大陸，回家看一看我父母的墳。我是很不孝的一個兒子，他老人家我從來沒照顧到，只好回去把他們的陵墓給重修好了，本來是要把我父親母親葬在一起，父親他託夢給我講不可以。"
+                }
+              ]
+            }
+          },
+          "RV06-O1": {
+            "state": "known",
+            "value": "只好回去把他們的陵墓給重修好了，本來是要把我父親母親葬在一起，父親他託夢給我講不可以",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-267-E02",
+                  "quote": "我是很不孝的一個兒子，他老人家我從來沒照顧到，只好回去把他們的陵墓給重修好了，本來是要把我父親母親葬在一起，父親他託夢給我講不可以。"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "RV06-E1",
+        "errors": [],
+        "fields": {
+          "RV06-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "RV06-E2": {
+            "state": "known",
+            "value": "我父母",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-267-E02",
+                  "quote": "我後來回大陸，回家看一看我父母的墳。我是很不孝的一個兒子，他老人家我從來沒照顧到，只好回去把他們的陵墓給重修好了，本來是要把我父親母親葬在一起，父親他託夢給我講不可以。"
+                }
+              ]
+            }
+          },
+          "RV06-O1": {
+            "state": "known",
+            "value": "只好回去把他們的陵墓給重修好了，本來是要把我父親母親葬在一起，父親他託夢給我講不可以",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-267-E02",
+                  "quote": "我是很不孝的一個兒子，他老人家我從來沒照顧到，只好回去把他們的陵墓給重修好了，本來是要把我父親母親葬在一起，父親他託夢給我講不可以。"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.27-three-round005/cases/ROOT-N-a5c5b05f54-SK05/turn-000/engine-input-000-review.json",
+      "question_id": "SK05",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "SK05-E1": {
+            "state": "known",
+            "value": "盡忠職守",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-267-E02",
+                  "quote": "因為我是軍人出身的嘛，盡忠職守，你交代我的事我一定給你做好，絕對不會給你有差錯，交代的事我一定給你辦的好好的，所以我做12年管理員只換過兩個地方。"
+                }
+              ]
+            }
+          },
+          "SK05-R1": {
+            "state": "missing",
+            "value": null
+          },
+          "SK05-E2": {
+            "state": "missing",
+            "value": null
+          },
+          "SK05-E3": {
+            "state": "missing",
+            "value": null
+          },
+          "SK05-O1": {
+            "state": "known",
+            "value": "你交代我的事我一定給你做好，絕對不會給你有差錯，交代的事我一定給你辦的好好的，所以我做12年管理員只換過兩個地方。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-267-E02",
+                  "quote": "因為我是軍人出身的嘛，盡忠職守，你交代我的事我一定給你做好，絕對不會給你有差錯，交代的事我一定給你辦的好好的，所以我做12年管理員只換過兩個地方。"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "SK05-E1": {
+            "state": "known",
+            "value": "盡忠職守",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-267-E02",
+                  "quote": "因為我是軍人出身的嘛，盡忠職守，你交代我的事我一定給你做好，絕對不會給你有差錯，交代的事我一定給你辦的好好的，所以我做12年管理員只換過兩個地方。"
+                }
+              ]
+            }
+          },
+          "SK05-R1": {
+            "state": "missing",
+            "value": null
+          },
+          "SK05-E2": {
+            "state": "missing",
+            "value": null
+          },
+          "SK05-E3": {
+            "state": "missing",
+            "value": null
+          },
+          "SK05-O1": {
+            "state": "known",
+            "value": "你交代我的事我一定給你做好，絕對不會給你有差錯，交代的事我一定給你辦的好好的，所以我做12年管理員只換過兩個地方。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-267-E02",
+                  "quote": "因為我是軍人出身的嘛，盡忠職守，你交代我的事我一定給你做好，絕對不會給你有差錯，交代的事我一定給你辦的好好的，所以我做12年管理員只換過兩個地方。"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.27-three-round005/cases/ROOT-N-a5c5b05f54-WK12/turn-000/engine-input-000-review.json",
+      "question_id": "WK12",
+      "before": {
+        "decision": "ask",
+        "target": "WK12-E2",
+        "errors": [],
+        "fields": {
+          "WK12-E1": {
+            "state": "known",
+            "value": "因為我要照顧三個孩子，那時候我退休了，我當士官長嘛，沒多少錢，要養三個孩子，還有一個老岳母，我要養四個人，我的薪水不夠。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-267-E02",
+                  "quote": "太太過世了以後我就沒有回去過了，因為我要照顧三個孩子，那時候我退休了，我當士官長嘛，沒多少錢，要養三個孩子，還有一個老岳母，我要養四個人，我的薪水不夠。"
+                }
+              ]
+            }
+          },
+          "WK12-E2": {
+            "state": "missing",
+            "value": null
+          },
+          "WK12-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "WK12-E2",
+        "errors": [],
+        "fields": {
+          "WK12-E1": {
+            "state": "known",
+            "value": "因為我要照顧三個孩子，那時候我退休了，我當士官長嘛，沒多少錢，要養三個孩子，還有一個老岳母，我要養四個人，我的薪水不夠。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-267-E02",
+                  "quote": "太太過世了以後我就沒有回去過了，因為我要照顧三個孩子，那時候我退休了，我當士官長嘛，沒多少錢，要養三個孩子，還有一個老岳母，我要養四個人，我的薪水不夠。"
+                }
+              ]
+            }
+          },
+          "WK12-E2": {
+            "state": "missing",
+            "value": null
+          },
+          "WK12-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    }
+  ]
+}

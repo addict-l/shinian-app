@@ -1,0 +1,3529 @@
+{
+  "schema": "real-interview-source-catalog-v2",
+  "narrators": [
+    {
+      "id": "N-cd7326e590",
+      "name": "曹玉昌",
+      "split": "development",
+      "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_205.htm?4",
+      "title": "為家人鄰居性命  頂替兄長從軍",
+      "background_note": "口述人曾有军旅背景；请按本人具体原话区分退役后的职业、家庭及晚年经历，不从网页标题推断。",
+      "sources": [
+        {
+          "id": "VAC-205",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_205.htm?4",
+          "title": "為家人鄰居性命  頂替兄長從軍",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:24:35.424779+00:00",
+          "raw_path": "VAC-205-raw_path.html",
+          "body_path": "VAC-205-body_path.txt",
+          "raw_sha256": "2f93d89ae2d8353b8aee343832cd26f4364d65fcb1b36d044fb4a3967b0f221c",
+          "body_sha256": "d760517e647438881f43a1e5cea83ebe80866e31962343c2ff9e43cd6debab22",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "曹玉昌"
+        },
+        {
+          "id": "VAC-208",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_4_208.htm?2",
+          "title": "退伍前大病  醫院都拒收  中橫兩年工  步步血淚史",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:25:32.606698+00:00",
+          "raw_path": "VAC-208-raw_path.html",
+          "body_path": "VAC-208-body_path.txt",
+          "raw_sha256": "3d5be92554fa6062166b7364666b79c1ddb52ec6322c3e1db2c246fb19025c5f",
+          "body_sha256": "9872683256aef52f4321b33b2b6649ce59bf63493eebb5a76f4b34824f86fcd2",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "曹玉昌"
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "VAC-205-E01",
+          "source_id": "VAC-205",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_205.htm?4",
+          "body_char_start": 34,
+          "body_char_end": 131,
+          "text": "我出生於民國9年7月15日，江蘇邳州人。我家是在鄉下，但是交通很方便，在趙頓車站城子河後老莊。我父親排行第四，家裡經商開飯店。我們兄弟姊妹七個，我是排行第二的男孩子，有個大哥，女孩五個。",
+          "interviewer_question": "請問您小時後在哪裡長大？原生家庭的情形？當時的生活環境？",
+          "speaker": "曹玉昌",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        },
+        {
+          "id": "VAC-205-E03",
+          "source_id": "VAC-205",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_205.htm?4",
+          "body_char_start": 237,
+          "body_char_end": 272,
+          "text": "一開始上學還正常，後來躲日本兵，一天到晚往外跑，就沒辦法讀了。",
+          "interviewer_question": "那你們當時的就學呢？",
+          "speaker": "曹玉昌",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        },
+        {
+          "id": "VAC-208-E01",
+          "source_id": "VAC-208",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_4_208.htm?2",
+          "body_char_start": 13,
+          "body_char_end": 152,
+          "text": "在檢查退伍過後，吃了一碗牛肉麵，回來就上吐下瀉，好像是急性胃腸炎，可是之後就癱瘓什麼都不能吃了。以前沒藥吃，好可憐，醫院也不讓你住，我們團長那時候親自送我到醫院，醫院都拒收，送到三軍總醫院，不收，到空軍醫院也不收，那時沒有榮總。那陣子什麼都不能吃，吃了就吐，瘦得皮包骨。",
+          "interviewer_question": "您後來有生病？",
+          "speaker": "曹玉昌",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        }
+      ]
+    },
+    {
+      "id": "N-63f4aa2206",
+      "name": "李福英",
+      "split": "development",
+      "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_3_436.htm?1",
+      "title": "戰火攜手渡 人倫情份濃",
+      "background_note": "口述人曾有军旅背景；请按本人具体原话区分退役后的职业、家庭及晚年经历，不从网页标题推断。",
+      "sources": [
+        {
+          "id": "VAC-434",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_3_434.htm?2",
+          "title": "重新再出發 步伐已穩健",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:24:52.376707+00:00",
+          "raw_path": "VAC-434-raw_path.html",
+          "body_path": "VAC-434-body_path.txt",
+          "raw_sha256": "09cd7453dafc40f9c0b59d63598c7f2718b4197d295b5d9bbdfb5b8d8f4d6297",
+          "body_sha256": "db2fe6f2af4dd90bc63894453a545b2b7e56eb8553c91a3e7526f7cb1110eb33",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "李福英"
+        },
+        {
+          "id": "VAC-436",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_3_436.htm?1",
+          "title": "戰火攜手渡 人倫情份濃",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:24:48.694620+00:00",
+          "raw_path": "VAC-436-raw_path.html",
+          "body_path": "VAC-436-body_path.txt",
+          "raw_sha256": "295b730880d0d89f4262f2e1121841f0c096bd56822777201a4732e64be1d00c",
+          "body_sha256": "0d62b16d8f5f6f745abf656add94a981ce903bf98be4ced7d26aab60e4cb2d9f",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "李福英"
+        },
+        {
+          "id": "VAC-431",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_3_431.htm?2",
+          "title": "生活求自立 開始賣米線",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:24:53.221609+00:00",
+          "raw_path": "VAC-431-raw_path.html",
+          "body_path": "VAC-431-body_path.txt",
+          "raw_sha256": "a4df6499926dec612a28aaf87bc4d282c6bc779e85c9a87c791a5855900f4b8c",
+          "body_sha256": "80ea22fa2dd152dcfa2bc27089216cf62b6f84cbab2577110c88befca0cb6419",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "李福英"
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "VAC-434-E03",
+          "source_id": "VAC-434",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_3_434.htm?2",
+          "body_char_start": 706,
+          "body_char_end": 977,
+          "text": "我媽一直是站在一個非常支持我們的立場，她是一個最好的消費者。她常去各家店，不管是管理上或口味上出問題，她回來後不是講講而已，她是盯著你把事情做好的人。 我媽非常嚴厲，這部分也是另外一個蠻好的力量，把事情照著媽媽建議走。因為我媽對雲南的東西是最專業的，聽她的，說真的沒有太大的錯誤。這部分我覺得我媽做得很好。當然她也以我們為傲，畢竟外面有很多聲音告訴她說：「妳真的很好，妳真的很有福氣。因為妳的寬宏大量能夠接納這麼多不是自己親生的小孩，所以現在大家都努力的回饋在妳身上。」我媽在晚年的時候每天開個車、打打麻將、游游泳，我覺得她蠻以我們為驕傲的。",
+          "interviewer_question": "您母親看到雲滇美食在子女手中發揚光大，母親有什麼想法？",
+          "speaker": "李福英",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        },
+        {
+          "id": "VAC-436-E02",
+          "source_id": "VAC-436",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_3_436.htm?1",
+          "body_char_start": 369,
+          "body_char_end": 873,
+          "text": "我覺得非常有影響，最大的影響在哪裡？第一個我覺得說經過戰亂，兄弟姊妹間有不曉得什麼時候會失去對方的心態。來到臺灣，為什麼我們不同的媽媽生下的小孩還可以這樣團結？我覺得原因在這邊，我們珍惜來到臺灣這個比較安定的社會，不需要再擔心說是不是還有戰亂？然後還會失去對方？所以我們來到臺灣，就覺得很珍惜、很惜福。大家在一起，沒有什麼好計較，平平安安，就是努力把事情做好。我們每個兄弟姊妹就是珍惜相聚在一起的緣分，然後大家都還非常團結，非常能互相體諒。我覺得這個是目前來講，比較深的感受在這個地方。再過來的話，雖然我現在40出頭，我想到我的生活歷練，從以前武俠片到現在科技時代，大概一百年的生活體驗。我覺得這個部分，一點傳奇的感覺。我常常在想我老一點來寫個自傳，就是想要紀錄一下自己的成長過程，不為人知的過程。現在講大家也許沒什麼感動，像我跟小朋友講，小朋友覺得：又來了，講幾遍？可是那種感受真的是很深刻的感受，對我抗壓、受挫，跟樂觀的個性，影響非常大。我們家小孩都很樂觀，抗壓力都很好。我覺得其實很苦的日子都過過了，現在這個真的社會沒有什麼過不去的事情，沒有什麼克服不了的困難。所以我覺得說這兩方面是對我影響比較深的。",
+          "interviewer_question": "滇緬流亡期間的經歷，對您人生造成何種影響？",
+          "speaker": "李福英",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        },
+        {
+          "id": "VAC-431-E01",
+          "source_id": "VAC-431",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_3_431.htm?2",
+          "body_char_start": 283,
+          "body_char_end": 554,
+          "text": "剛開始就一個小攤子，兩張桌子幾張椅子這樣子。然後媽媽那時候還在幫人帶小孩，就是揹著小孩賣麵。我們小孩子就是一大早起來，要早早起來，要幫忙切麵，店裡的事情都要幫忙準備，弄一弄才去上課。晚上回來要做麵，我們家的麵都是米做的，都是晚上的時候做好。像我讀國中開始就是這樣子，早上大概四點多、五點就要起來，幫媽媽把店開起來。然後該弄的都弄一弄，再去趕車，坐車坐到桃園去上課。下課也是要趕著回來，回來就幫媽媽做麵、切蔥。我們家很多雲南的香料是市面上買不到的，所以幾乎都要自己做。晚上工作還蠻多的，做好才寫功課。就是一直都是在家裡幫忙，過了蠻久這樣的生活。",
+          "interviewer_question": "剛開始經營米干生意時，情形如何？",
+          "speaker": "李福英",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        },
+        {
+          "id": "VAC-436-E01",
+          "source_id": "VAC-436",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_3_436.htm?1",
+          "body_char_start": 52,
+          "body_char_end": 344,
+          "text": "我媽60幾歲就走了，兄弟姊妹蠻大的一個遺憾就是沒有可以讓媽媽享福享很多年，因為她很早就走了。我想我媽在天上應該很安慰，因為每個兄弟姊妹就像她在的時候一樣，非常的認真、非常的善良，也非常的努力。我媽媽過世很久，我們兄弟姊妹也很少夢到她。有的時候跟她說，有需要什麼就托個夢給我們、告訴我們。我媽是一個吃過很多苦的女孩子，像感情生活，我爸爸很早就娶小老婆。以前沒有感受，到我現在這個年紀，蠻能感受媽媽心中那一塊的欠缺。她一生的經歷、一生所有的力氣都花在我們兄弟姊妹身上。還好就是我們非常了解她的辛苦，就希望她過得好，不管她在天之靈或是到另外一個世界再變成另外一個人，我們都希望她真的很好。",
+          "interviewer_question": "雲滇美食事業由您母親一手創立，子女傳承並發揚光大，如果母親還在世，您有沒有什麼話想對母親說呢？",
+          "speaker": "李福英",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        },
+        {
+          "id": "VAC-434-E02",
+          "source_id": "VAC-434",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_3_434.htm?2",
+          "body_char_start": 349,
+          "body_char_end": 674,
+          "text": "剛開始我覺得她蠻反對的，因為她覺得這樣開出去，店多不見得賺錢。我們後來才了解老人家說的還真有智慧，不是說數量多收入就多。她覺得兩個老店好好的，兄弟姊妹全部在裡面做，以兩個老店來講的話，發薪水是絕對沒問題的。可是我們年輕人有年輕人的想法，就覺得那樣的生活不是我要的，我一直這麼覺得。就是每天很辛苦在現場做現場的工作，然後李大姊、王大媽，每個來都要招呼幾句。每個客人來就覺得你是老闆娘，要跟你寒喧幾句，所以不能生病。你一生病門就要關起來了，因為你生病可能就沒有人煮麵了，或是缺了一個洞沒辦法營運。我覺得我不想要這樣的生活模式，我想要我在度假，我所有的店都還在開。我想要那樣的感覺。所以那時候也想得比較簡單，現在證明其實要去做，只要不斷努力，還是可以達到。",
+          "interviewer_question": "從小攤子到展店企業化經營，您母親的態度和意見為何？",
+          "speaker": "李福英",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        }
+      ]
+    },
+    {
+      "id": "N-9c32d8b7c1",
+      "name": "陳信妹",
+      "split": "development",
+      "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_134.htm?5",
+      "title": "團體生活初適應  多元課程興味濃",
+      "background_note": "口述人曾有军旅背景；请按本人具体原话区分退役后的职业、家庭及晚年经历，不从网页标题推断。",
+      "sources": [
+        {
+          "id": "VAC-133",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_133.htm?5",
+          "title": "農家兒女求自立  結伴壯膽進女青",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:24:43.284684+00:00",
+          "raw_path": "VAC-133-raw_path.html",
+          "body_path": "VAC-133-body_path.txt",
+          "raw_sha256": "f9100ea4818e383dfc990666a3eb7338f8abb24f913bde7305d220fb7c4e0d16",
+          "body_sha256": "b7f11a7fb7058b00c63c8929e5bc979cd46f8e5754b5301e1e627ef610a3a1dd",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "陳信妹"
+        },
+        {
+          "id": "VAC-134",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_134.htm?5",
+          "title": "團體生活初適應  多元課程興味濃",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:24:42.737549+00:00",
+          "raw_path": "VAC-134-raw_path.html",
+          "body_path": "VAC-134-body_path.txt",
+          "raw_sha256": "af83091748a4f8b078c978476bdf70758159a74ff74ad80ccab66a22272c129e",
+          "body_sha256": "20dc4cec6ea510f017d0df01f044a3fed2bbbc786473f1041f4a09cdcffe0a66",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "陳信妹"
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "VAC-133-E01",
+          "source_id": "VAC-133",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_133.htm?5",
+          "body_char_start": 28,
+          "body_char_end": 324,
+          "text": "我出生於民國30年1月29日，高雄縣旗山鎮。家裡務農，因為我是身為老大，我家還有三個弟弟，兩個妹妹，那時候呢！民國30年代，就是生活比較辛苦，初中畢業以後，因為弟妹眾多，就沒有辦法再繼續求學。最初我在糖廠實驗室當臨時工，結果有一天看到報紙，要招考女青年工作大隊，我就跟另外兩個同學，就跑到高雄去報考，結果沒想到錄取了。當時父母親都極力的反對，由於當時的情況比較保守，一個女孩子就要遠離家鄉到外去謀生的話，父母親大部分不願意，而且這個女青年工作大隊的工作比較特殊，要到部隊裡做文教工作，所以說雖然反對，可是因為有另外有兩個同學一起，所以三個人就毅然決然地就北上到女青年工作大隊，去報到。",
+          "interviewer_question": "謝謝！請您先介紹一下您的家庭背景和生活環境？",
+          "speaker": "陳信妹",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        },
+        {
+          "id": "VAC-133-E02",
+          "source_id": "VAC-133",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_133.htm?5",
+          "body_char_start": 343,
+          "body_char_end": 538,
+          "text": "我不是講過了嗎？因為家裡沒有辦法讓我再繼續升學。為了生活，為了有飯吃，所以說最起碼我可以自己自力更生，不要讓父母親有對我的負擔，同時，這個工作隊，在當時待遇雖然很低，薪水好像一個月只有九十塊，可是它另外有一個工作勤務加勤，兩百塊，這個很誘惑人，所以我們考進去的那個女同學，大部分都是很照顧家庭，就是把兩百塊錢寄回家，讓作為家裡的那個生活費用，九十塊錢留給我自己做零用錢，是這樣來的。",
+          "interviewer_question": "您為什麼會作出這個決定啊？",
+          "speaker": "陳信妹",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        },
+        {
+          "id": "VAC-134-E02",
+          "source_id": "VAC-134",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_134.htm?5",
+          "body_char_start": 121,
+          "body_char_end": 324,
+          "text": "有啊！有啊！我們有很多那個同學啊！就像現在我們，從那時候受訓到現在，我們都一直都有連絡，都每年都在聚會，大家退伍了以後，我們成立了一個女青年工作聯誼會，這個聯誼會每年都辦一次活動，這個幹事就是張秋香，那會長是陳雪美第一任，第二任就是張海萍。那每年到一個榮民之家去慰問榮民，因為榮民很可憐，從那個大陸到臺灣來，孤家寡人一個，現在年齡7、80歲了，我們每年都選一個地方，最近剛從那個花蓮的榮家慰問回來。",
+          "interviewer_question": "有沒有認識一些外省人？",
+          "speaker": "陳信妹",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        },
+        {
+          "id": "VAC-133-E03",
+          "source_id": "VAC-133",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_133.htm?5",
+          "body_char_start": 557,
+          "body_char_end": 765,
+          "text": "我第一天入伍的情形，我就三個同學，我、還有一個陳美雲，一個陳菊，講到她們我心裡很難過，因為這兩個已經走了，已經往生了，我們三個人因為有伴，我才有那個膽量，到台北去報到，報到了以後，看到很多都是女生嘛，都很年輕。大家也還好啦！算是說有伴就不會想家啦，比較好一點，在女青年隊裡好像第二天還第三天，就是等到大家都報到齊了以後，就把我們送到政戰學校，政工幹校去受訓，所以我們訓練都是政戰代訓了四個月，然後再出來工作。",
+          "interviewer_question": "您記得第一天入伍的情形嗎？",
+          "speaker": "陳信妹",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        }
+      ]
+    },
+    {
+      "id": "N-94f516068b",
+      "name": "孫越",
+      "split": "development",
+      "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_181.htm?5",
+      "title": "即興演出  開啟演藝之路 追隨觀眾潮流  退伍從影",
+      "background_note": "口述人曾有军旅背景；请按本人具体原话区分退役后的职业、家庭及晚年经历，不从网页标题推断。",
+      "sources": [
+        {
+          "id": "VAC-180",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_180.htm?5",
+          "title": "另類童年  出入聲色場所 16歲從軍  考三次才錄取",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:24:37.910773+00:00",
+          "raw_path": "VAC-180-raw_path.html",
+          "body_path": "VAC-180-body_path.txt",
+          "raw_sha256": "46d4d03ee980db4a89b86affe85d08eb40ef75b73c0d4c92655f2be7305fd700",
+          "body_sha256": "ada7dceee41bd586b2bdaa2189f13ca00fe1cac17e2007fd18b68513e2380780",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "孫越"
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "VAC-180-E01",
+          "source_id": "VAC-180",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_180.htm?5",
+          "body_char_start": 36,
+          "body_char_end": 969,
+          "text": "我的祖籍是浙江餘姚。我的父親跟母親結婚後，單生我一個，我沒有兄弟姐妹，我很羨慕有兄弟姐妹的人。  我的童年生活跟一般的孩子不太一樣，是屬於那種燈紅酒綠的。我童年去過的地方，都是兒童不宜的，像是鴉片煙館、妓院等，當然包括戲院、電影院，還有跑馬場或是賽狗場這些地方。童年對我來說，是中國的30年代，我所居住的那個大城市裡，被人家看到最浮面的那一層，就是那種花花綠綠的事情。  其實，我的童年滿孤單的。你想想看，一個孩子在那種成人的社會，而且是在一個完全不健康的成人社會裡，其實是蠻孤單的。如果我說，在那裡能找到一些生活上的趣味的話，我想是進入戲院吧。我不只是從前邊的門進去，給了票後坐座位，我們進戲院多半是先從後邊進去，跟那些主角、配角講話，也看著大人們跟他們的互動關係。  我對後台生活有很大的憧憬，那是我吸引的地方，我喜歡看他們上台前、下台後形形色色的樣子。學校的生活對我來講，刺激不夠大，因為看了這些刺激的，覺得大家在那讀書的感覺，都不夠成熟。我就是在這樣的一個環境裡，從小學到中學，直到母親去世。那是我15歲那年。之後我的生活有很大的改變，那就是必須要思考：將來要怎麼辦。因為，我們母子被父親遺棄好多年了，這種情況下，我過了一段必須要想將來生活的階段。  所以，我16歲時從了軍，當時考的是青年遠征軍第208師623團。我們報到後一個星期，青年遠征軍的「遠征」兩個字就去掉了，變成青年軍208師，623團也變成第三團，後來又改成第四團，團長是曹純東將軍，後來聽說在國共戰爭中被共產黨打死了。  軍中的生活，對我一生的影響非常非常地大。第一，是團體生活，身在一個團體中，學到共同一致、紀律以及互動的關係。還有，就是所謂的階級服從。這些都蠻重要，但都遠不如讀書對我來得重要。因為我周邊的一些人，他們都是流亡學生。有些因家裡是地主，共產黨來了，他們被掃地出門；有的則跳牆就跑了；有的是家在天津，糧盡彈絕，沒有接濟；但是他們卻一直不忘讀書。在這樣的情況下，我從他們身上看到讀書的重要，於是我開始讀書。我讀的書應該說從讀話劇劇本開始。那時候有一本雜誌叫做太平洋月刊，其實是本左傾的刊物，搧動高中生、大學生投入共產黨，但那時候我們都訂這些月刊，也是從那時候開始讀書。",
+          "interviewer_question": "孫越先生，能否請您描述一下，您小時候家裡的人口數及生活情況？",
+          "speaker": "孫越",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        }
+      ]
+    },
+    {
+      "id": "N-3776254214",
+      "name": "葉祖望",
+      "split": "development",
+      "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_3_331.htm?4",
+      "title": "內戰起  時局亂  揮別親人 撤退廣東",
+      "background_note": "口述人曾有军旅背景；请按本人具体原话区分退役后的职业、家庭及晚年经历，不从网页标题推断。",
+      "sources": [
+        {
+          "id": "VAC-331",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_3_331.htm?4",
+          "title": "內戰起  時局亂  揮別親人 撤退廣東",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:25:12.947388+00:00",
+          "raw_path": "VAC-331-raw_path.html",
+          "body_path": "VAC-331-body_path.txt",
+          "raw_sha256": "48a1ecec649faa5399393aa85f3e7b5129530b02fddf5d62d9b3c4f6105562a3",
+          "body_sha256": "9ad9cda81fc0354d649f7d9a8709a326bc87daa18738b38cde0f8a3f2a5e5aa6",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "葉祖望"
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "VAC-331-E01",
+          "source_id": "VAC-331",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_3_331.htm?4",
+          "body_char_start": 21,
+          "body_char_end": 150,
+          "text": "我記得很難過的事情，要分別的時候，我媽媽把她最後一個戒指拿給我，要我留著當盤纏。  雖然我也會寄錢回家，自己往來的旅費也免了，那時候都坐霸王車，沒錢買票就坐霸王車，吃飯就隨便買點東西吃，我母親覺得這麼遠的路還要回到廣州去，她就把唯一的戒指給我去變賣。",
+          "interviewer_question": "還記得那次有特別記憶深刻的事？",
+          "speaker": "葉祖望",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        }
+      ]
+    },
+    {
+      "id": "N-0b69690528",
+      "name": "張程",
+      "split": "development",
+      "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_451.htm?1",
+      "title": "中日韓金 高譽不足論",
+      "background_note": "口述人曾有军旅背景；请按本人具体原话区分退役后的职业、家庭及晚年经历，不从网页标题推断。",
+      "sources": [
+        {
+          "id": "VAC-451",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_451.htm?1",
+          "title": "中日韓金 高譽不足論",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:23:59.937289+00:00",
+          "raw_path": "VAC-451-raw_path.html",
+          "body_path": "VAC-451-body_path.txt",
+          "raw_sha256": "b92cdb2489e3bfa59dc514c0a16b2642bc212c26eafac1672f13f170b6c702e3",
+          "body_sha256": "ab9b215c8d5489a21dd7c94e08ffda232bd27f7fd6487d7b9beb10d414389703",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "張程"
+        },
+        {
+          "id": "VAC-450",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_450.htm?1",
+          "title": "鐵筆運法書 不拘顏歐柳",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:24:01.204199+00:00",
+          "raw_path": "VAC-450-raw_path.html",
+          "body_path": "VAC-450-body_path.txt",
+          "raw_sha256": "e22114343591ace4486137dd77634829f2f034a0bfba919c344bd8fcea9e51d4",
+          "body_sha256": "1bda5071d8ad85b2f1575466bfc9ef8afc9535540f72a11cc7c6387e2c25d40e",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "張程"
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "VAC-451-E01",
+          "source_id": "VAC-451",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_451.htm?1",
+          "body_char_start": 24,
+          "body_char_end": 90,
+          "text": "中日韓三國書畫大展得金獎，另外就是那邊有一個日本的獎牌，是眾議院委員長獎相當於文部大臣獎，這個獎最高，另外一個就是中日韓三國金獎。",
+          "interviewer_question": "在您得過的獎中，最驕傲的是哪一座獎呢？",
+          "speaker": "張程",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        },
+        {
+          "id": "VAC-450-E01",
+          "source_id": "VAC-450",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_450.htm?1",
+          "body_char_start": 24,
+          "body_char_end": 899,
+          "text": "我爸爸他各種字體都寫過了，主要是寫柳公權的，我開始學是寫柳公權的體，我爸爸就教我柳公權的，我現在研究過以後，最好的不是顏真卿的，也不是柳公權的，最好的是黃芝運的，黃芝運是清光緒年間一個書法家，湖南人，那個字比顏真卿的好，也比柳公權的好，我們所有人學的書法字體都是顏真卿、柳公權、歐陽詢的，對不對。但是，我認為最好的不是這三家，是黃芝運。所以我寫了一本書，台中書法家的朋友請我去演講，我講一個道理給你們聽，你看我寫的標題是「張程書法與顏、柳、歐書法之比較」，顏真卿、柳公權、歐陽詢，歷代以來，所有的帝王都崇拜，結果我在台中演講的時候，我說他們都有缺點，我說我的字啊，比顏真卿、柳公權、歐陽詢更好，有的人就要站起來質問我，我就要講一個道理出來。結果我在演講完畢以後，他們就不再說話了。你們看這個第三頁，上面的習字原則，這是我講的習字要根據上面的原則去習，你的字就與別人不一樣，你看，握筆要緊，掌心要空，姿勢端正，筆筆中鋒，所以每一筆都用中鋒，三折筆法必須精通，三折筆法所有現在一般的書法家們，大部分不知道什麼叫三折筆法，所以他寫不好，三折筆法就是王羲之發明的，三折筆法必須精通，左瘦右肥，橫輕直重，左低右高，間隔均勻，上短下長，方圓適中，轉折提頓，力求順利，蒼勁有力，活潑生動，圓潤自然，韻味無窮，持之以恆，必然成功。你用這幾個方法去寫字，你的字就不一樣，翻過來你看，這個基本筆法，口字怎麼寫，三點水怎麼寫，再翻過來，上面有顏真卿、柳公權、歐陽詢寫的，左邊張就是我寫的，與他們筆法就是不一樣，你看，渾厚，起筆，收筆，那個樣子就不一樣，勾，可字的勾就不一樣，安字轉彎的收筆都與他們不一樣，下的收筆也與他們不一樣，再翻過來（字帖上有：池、法、海三字），三點水就用三折筆法寫的，三點水的第三點就像一顆豆子長出豆芽，我寫成這樣子，跟右邊的顏、柳、歐的書法就完全不一樣喔，所以我說我的書法跟他們是不一樣的。再翻過來(字帖上有：無、魚、然三字)，四個點就不一樣，你看無，魚，然，還有要左瘦右肥，像雨，左邊這劃瘦，右邊這劃肥，當中這一劃比右邊的更肥，這個字就漂亮啦。",
+          "interviewer_question": "老師您從小是學習以及模倣什麼字體的呢？",
+          "speaker": "張程",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        }
+      ]
+    },
+    {
+      "id": "N-f3af6b6947",
+      "name": "侯鎮清",
+      "split": "development",
+      "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_218.htm?4",
+      "title": "被抓當兵揹子彈  從此跟著部隊跑 沒受訓就打仗  第一次開槍閉著眼睛打",
+      "background_note": "口述人曾有军旅背景；请按本人具体原话区分退役后的职业、家庭及晚年经历，不从网页标题推断。",
+      "sources": [
+        {
+          "id": "VAC-217",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_217.htm?4",
+          "title": "歎命苦  小學四年級就失學",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:24:32.246526+00:00",
+          "raw_path": "VAC-217-raw_path.html",
+          "body_path": "VAC-217-body_path.txt",
+          "raw_sha256": "db1518153d8a64f158128c830f4ae129b2a472dd7cc1f9928ee2f89b0af8cc2a",
+          "body_sha256": "888a6c1f971778baa2e7ad2da608c0eb873ce3b7ce62e10cecf4281069b6b452",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "侯鎮清"
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "VAC-217-E01",
+          "source_id": "VAC-217",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_217.htm?4",
+          "body_char_start": 27,
+          "body_char_end": 153,
+          "text": "我是民國16年2月20日在青島出生的。我的命運非常不好，因為我小學剛剛升四年級的時候，日本人已經打到青島來了，我從那時起就開始失學在家。我父親在青島市做生意，我跟我哥哥、母親在鄉下靠務農來維持生活。家鄉生活還說得過去。我失學後就跟著我哥哥下田。",
+          "interviewer_question": "請侯鎮清先生先介紹一下您小時候的家庭背景。",
+          "speaker": "侯鎮清",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        }
+      ]
+    },
+    {
+      "id": "N-568db56d4d",
+      "name": "易芳運",
+      "split": "development",
+      "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_145.htm?5",
+      "title": "軍服搭草鞋  三餐吃不飽",
+      "background_note": "口述人曾有军旅背景；请按本人具体原话区分退役后的职业、家庭及晚年经历，不从网页标题推断。",
+      "sources": [
+        {
+          "id": "VAC-144",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_144.htm?5",
+          "title": "抓伕去當兵  母親哭紅眼",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:24:42.569263+00:00",
+          "raw_path": "VAC-144-raw_path.html",
+          "body_path": "VAC-144-body_path.txt",
+          "raw_sha256": "57c7d607142612370b79882683cf6749933330bda019467f644e4c634758d3b8",
+          "body_sha256": "a83477eb953bf5ec5474bfdabf17fa9b550dc5e4c986cd061d7fac591a60e4d7",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "易芳運"
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "VAC-144-E01",
+          "source_id": "VAC-144",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_144.htm?5",
+          "body_char_start": 22,
+          "body_char_end": 182,
+          "text": "家裡只有哥哥、媽媽，加我三個人。住在鄉下，生活很苦、很苦，附近少人煙。哥哥比我大兩歲，10多歲時生病，連飯都沒得吃了，因此更沒錢請醫生，所以就過世了。自從我生出來，懂事後，就沒看過我父親，媽媽也沒提過他。家裡沒有人工作。家裡沒種田也沒受教育，平時跟哥哥以放牛維生，早上把牛趕出去，晚上把牛趕回來，靠別人給我飯吃。",
+          "interviewer_question": "您小時候家裡有哪些人？環境如何？",
+          "speaker": "易芳運",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        }
+      ]
+    },
+    {
+      "id": "N-9d0bf22417",
+      "name": "潘海波",
+      "split": "development",
+      "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_303.htm?3",
+      "title": "小學畢業  離家學手藝",
+      "background_note": "口述人曾有军旅背景；请按本人具体原话区分退役后的职业、家庭及晚年经历，不从网页标题推断。",
+      "sources": [
+        {
+          "id": "VAC-307",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_3_307.htm?5",
+          "title": "年紀大決定到榮家安養",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:25:16.912065+00:00",
+          "raw_path": "VAC-307-raw_path.html",
+          "body_path": "VAC-307-body_path.txt",
+          "raw_sha256": "8ece4618396199aa84676b5d26f3da20908bcb874689374a7da1779feb239bf9",
+          "body_sha256": "e85039064a95172053a7fbc1b7efe1c1be2ecb320083101a0305b7ba24201351",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "潘海波"
+        },
+        {
+          "id": "VAC-306",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_3_306.htm?5",
+          "title": "退伍當船員  賺美金  跑遍世界",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:25:17.004963+00:00",
+          "raw_path": "VAC-306-raw_path.html",
+          "body_path": "VAC-306-body_path.txt",
+          "raw_sha256": "5cb3a27c991d04c8a03cd40aad47be2b2eb43b13b331d79c215db93179f0d2d4",
+          "body_sha256": "37e6828c9d3c82924f874bfe51d840d26d6c96e73d6a99db2cfdd99ebc325cd9",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "潘海波"
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "VAC-307-E04",
+          "source_id": "VAC-307",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_3_307.htm?5",
+          "body_char_start": 547,
+          "body_char_end": 650,
+          "text": "我這名字完全是我自己取的，過去沒有想到要幹什麼。我是38年離開家裡，以前我的名字叫宗樹，祖宗的宗，樹木的樹。我們家是宗字排行。一離開家，到軍隊一報名就改了，沒想到到臺灣又當海軍，幾十年就這麼混過來。",
+          "interviewer_question": "您的名字──潘海波，您進海軍、跑商船，都跟大海有關係，這名字的由來呢？",
+          "speaker": "潘海波",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        },
+        {
+          "id": "VAC-307-E05",
+          "source_id": "VAC-307",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_3_307.htm?5",
+          "body_char_start": 684,
+          "body_char_end": 793,
+          "text": "我沒有一樣滿意的事情，我對我自己從來沒有滿意過。在我身上也沒有發生過任何事，就是渾渾噩噩、平平安安就過了。我始終認為我這一生過得很好，我現在跟你講的話，很多人不滿意，但我覺得我過得很舒服，也沒有什麼遺憾的事情。",
+          "interviewer_question": "到目前為止，有沒有什麼滿意、驕傲之事？有沒有遺憾的事情？",
+          "speaker": "潘海波",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        },
+        {
+          "id": "VAC-306-E03",
+          "source_id": "VAC-306",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_3_306.htm?5",
+          "body_char_start": 791,
+          "body_char_end": 864,
+          "text": "沒有，從來沒有考慮到成家這回事，從來不為這個事情傷腦筋。沒有原因，就是好玩，我這個人好玩。從當兵，從小孩開始，就是好玩，到現在我還是一樣。",
+          "interviewer_question": "退伍後，您有沒有考慮成家？是怎樣的原因讓您不成家？",
+          "speaker": "潘海波",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        }
+      ]
+    },
+    {
+      "id": "N-756a382469",
+      "name": "余华",
+      "split": "development",
+      "source_url": "https://www.chinawriter.com.cn/n1/2022/1125/c405057-32574066.html",
+      "title": "余华：文学、时代和我的写作--访谈--中国作家网",
+      "background_note": "牙医转作家、家庭童年与职业回顾，非军旅",
+      "sources": [
+        {
+          "id": "WEB-yuhua",
+          "url": "https://www.chinawriter.com.cn/n1/2022/1125/c405057-32574066.html",
+          "title": "余华：文学、时代和我的写作--访谈--中国作家网",
+          "institution": "中国作家网",
+          "fetched_at": "2026-10-17T08:30:16.789408+00:00",
+          "raw_path": "WEB-yuhua-raw_path.md",
+          "body_path": "WEB-yuhua-body_path.txt",
+          "raw_sha256": "e0cb24f1f3ec6f4c6a1cbf9f8cba2492bedee7a2c8b6cd0d88783f315816c624",
+          "body_sha256": "03bd1037433cfeb193439faf246dfb6d412a2507a1c8320f76b78e211dea0f7b",
+          "format": "published_interview_QA",
+          "interviewer": "张英",
+          "narrator": "余华",
+          "retrieval_backend": "agent-reach Jina Reader",
+          "source_limitations": "原采访整理刊物；编辑标题/括号注释不等于本人原话。"
+        }
+      ],
+      "excerpts": [
+        {
+          "text": "我懒，不勤奋。如要把作品在书店摆满一格，也让人恐惧。我发现一个秘密：托尔斯泰的全部作品，放在书架上都摆不满一格。我的书架上，他所有作品也就那么多，那可是他一生的创作。中国很多作家都已超过他了。",
+          "interviewer_question": "与国内同时代的作家比，你的小说产量不高。",
+          "body_char_start": 2905,
+          "body_char_end": 3001,
+          "speaker": "余华",
+          "speaker_role": "interviewee",
+          "source_format": "published_interview_QA",
+          "id": "WEB-yuhua-E010",
+          "source_id": "WEB-yuhua",
+          "source_url": "https://www.chinawriter.com.cn/n1/2022/1125/c405057-32574066.html",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "原网页/Jina公开稿逐字子串；未补写事实。版面标记移除，采访者和编辑说明另保留。"
+        },
+        {
+          "text": "父亲医院的外科手术室离太平间不远，我和哥哥进进出出。父亲动手术时，我们可以进去看。我经常在后半夜被哭声吵醒。夏天特别热，睡午觉醒来，湿透了，能在草席上看到自己的身形。生活条件差，屋里没卫生间，得去公厕，公厕挨太平间。太平间干净凉快，有次我试着去睡午觉。小孩胆子大，那个时代没封建迷信，不信鬼神，很快就睡着了。后来读到海涅的诗，“死亡是凉爽的夜晚。”它让我想起在太平间睡午觉的感受。",
+          "interviewer_question": "你不止一次提过小时候医院的生活对创作的影响，还在太平间睡过午觉？",
+          "body_char_start": 3579,
+          "body_char_end": 3769,
+          "speaker": "余华",
+          "speaker_role": "interviewee",
+          "source_format": "published_interview_QA",
+          "id": "WEB-yuhua-E014",
+          "source_id": "WEB-yuhua",
+          "source_url": "https://www.chinawriter.com.cn/n1/2022/1125/c405057-32574066.html",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "原网页/Jina公开稿逐字子串；未补写事实。版面标记移除，采访者和编辑说明另保留。"
+        },
+        {
+          "text": "肯定有关系。父母都是医生，一家人住在医院里，对面是太平间，我对死亡已麻木。从事牙医期间，每天面对各种疼痛，习惯了。这种叙述方式是努力发现自己的过程。我的叙述比较冷漠，即使以第一人称叙述也像旁观者，与小时候的经历有关。",
+          "interviewer_question": "福克纳说，文学应该表现人类的痛苦，我惊奇于你对痛苦的冷漠。这与你当过医生有关吗？从文学史看，当过医生的作家的作品都有冷静的力量，比如鲁迅、池莉、毕淑敏等。",
+          "body_char_start": 3429,
+          "body_char_end": 3537,
+          "speaker": "余华",
+          "speaker_role": "interviewee",
+          "source_format": "published_interview_QA",
+          "id": "WEB-yuhua-E013",
+          "source_id": "WEB-yuhua",
+          "source_url": "https://www.chinawriter.com.cn/n1/2022/1125/c405057-32574066.html",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "原网页/Jina公开稿逐字子串；未补写事实。版面标记移除，采访者和编辑说明另保留。"
+        },
+        {
+          "text": "每个人都不一样。博尔赫斯的书只有三本，但有几十种版本，把各种版本加起来，书也不少。这不是数量关系，是质量关系。要看作品好不好，有没有生命力。\n\n在写作上，我速度越来越慢，越来越不着急。八十年代刚起步时，我写得特别多，功利心重，希望被文学界接受。那时不敢指望被社会认可，社会是非常庞大复杂的范畴。希望被文学界接受得多写。现在我较享受写作，以写作愉悦自己。",
+          "interviewer_question": "你不能以此为你的懒惰开脱。勤奋、多产才能出好作品，你认为呢?",
+          "body_char_start": 3041,
+          "body_char_end": 3217,
+          "speaker": "余华",
+          "speaker_role": "interviewee",
+          "source_format": "published_interview_QA",
+          "id": "WEB-yuhua-E011",
+          "source_id": "WEB-yuhua",
+          "source_url": "https://www.chinawriter.com.cn/n1/2022/1125/c405057-32574066.html",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "原网页/Jina公开稿逐字子串；未补写事实。版面标记移除，采访者和编辑说明另保留。"
+        },
+        {
+          "text": "我比较幸运。当时我少看文学杂志，少看同行作品，但西方文学名著看得不少。一定要看名著，看川端康成、卡夫卡、海明威、马尔克斯、福克纳等。眼界提高了，手才能提高，所写才会比杂志上的好。写作没什么诀窍，一篇一篇写，写不下去，就逼自己写，一篇篇写下来，你就会发现自己在进步。语言变好了，会讲故事了，人物也更丰满了。我是一点一点进步的。\n\n二十世纪七八十年代，很多老杂志复刊，也新创办了许多文学杂志，发行量都很大，几十万册算正常。正是文学的春天，有王蒙、汪曾祺、张贤亮等名作家，年轻写作者更多，编辑对待来稿也非常有责任心。那时寄稿件不花邮费，减去信封一个角就可以了，邮资统一由刊物结算。我能混出来，就是靠自由投稿。当时作家要扬名立万，出书作用不大，主要靠著名的文学刊物。在《人民文学》《收获》发个短篇，就可闻名全国；获个奖，就能改变命运。\n\n除了《星星》，我在《北京文学》还发表了短篇小说《竹女》《月亮照着你，月亮照着我》等。《星星》获得了“北京文学奖”，后来碰到莫言、苏童，他们都说对《星星》印象很深。我接连又发了些，又去了鲁迅文学院和北京师范大学联合举办的创作研究生班学习，逐渐有了点名气，于是从文化馆又调到了嘉兴市文联，后就到了北京发展。",
+          "interviewer_question": "你赶上了文学繁荣兴盛的好时候，能在文学界树立好口碑不容易。",
+          "body_char_start": 1190,
+          "body_char_end": 1706,
+          "speaker": "余华",
+          "speaker_role": "interviewee",
+          "source_format": "published_interview_QA",
+          "id": "WEB-yuhua-E003",
+          "source_id": "WEB-yuhua",
+          "source_url": "https://www.chinawriter.com.cn/n1/2022/1125/c405057-32574066.html",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "原网页/Jina公开稿逐字子串；未补写事实。版面标记移除，采访者和编辑说明另保留。"
+        }
+      ]
+    },
+    {
+      "id": "N-d3da9c100d",
+      "name": "杨绛",
+      "split": "development",
+      "source_url": "https://tech.sina.cn/2020-08-04/detail-iivhvpwx9149803.d.html",
+      "title": "杨绛百岁口述：什么是好的教育？什么是好的婚姻？",
+      "background_note": "百岁女性作家自问自答，教育婚姻反思，非军旅",
+      "sources": [
+        {
+          "id": "WEB-yangjiang",
+          "url": "https://tech.sina.cn/2020-08-04/detail-iivhvpwx9149803.d.html",
+          "title": "杨绛百岁口述：什么是好的教育？什么是好的婚姻？",
+          "institution": "文汇报／澎湃新闻／新浪公开转载",
+          "fetched_at": "2026-10-17T08:24:38.628239+00:00",
+          "raw_path": "WEB-yangjiang-raw_path.md",
+          "body_path": "WEB-yangjiang-body_path.txt",
+          "raw_sha256": "64fbd199f63971f5de38a3eb4568354aa86220983fa4a65688a85c6054b180d5",
+          "body_sha256": "8bf4dc1ad52e284113366f939cf195ae0be27fea7c827d6d946b3719e74dc322",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "杨绛",
+          "retrieval_backend": "agent-reach Jina Reader",
+          "source_limitations": "原采访整理刊物；编辑标题/括号注释不等于本人原话。"
+        }
+      ],
+      "excerpts": [
+        {
+          "text": "教育是管教，受教育是被动的，孩子在父母身边最开心，爱怎么淘气就怎么淘气，一般总是父母的主张，说“这孩子该上学了”。孩子第一天上学，穿了新衣新鞋，拿了新书包，欣欣喜喜地“上学了!”但是上学回来，多半就不想再去受管教，除非老师哄得好。\n\n我体会，“好的教育”首先是启发人的学习兴趣，学习的自觉性，培养人的上进心，引导人们好学，和不断完善自己。要让学生在不知不觉中受教育，让他们潜移默化。这方面榜样的作用很重要，言传不如身教。\n\n我自己就是受父母师长的影响，由淘气转向好学的。爸爸说话入情入理，出口成章，《申报》评论一篇接一篇，浩气冲天，掷地有声。我佩服又好奇，请教秘诀，爸爸说：“哪有什么秘诀?多读书，读好书罢了。”妈妈操劳一家大小衣食住用，得空总要翻翻古典文学，现代小说，读得津津有味。我学他们的样，找父亲藏书来读，果然有趣，从此好读书，读好书入迷。\n\n我在启明还是小孩，虽未受洗入教，受到天主教姆姆的爱心感染，小小年纪便懂得“爱自己，也要爱别人”，就像一首颂歌中唱的“我要爱人，莫负人家信任深；我要爱人，因为有人关心。”\n\n我进振华，已渐长大。振华女校创始人状元夫人王谢长达太老师毁家办学，王季玉校长继承母志，为办好学校“嫁给振华”贡献一生的事迹，使我深受感动。她们都是我心中的楷模。\n\n[\n△\n\n1927年冬摄于苏州老宅的杨家全家福。七妹杨桼、八妹杨必站在母亲唐须嫈两旁，小弟杨保俶站在父亲杨荫杭身边。后排左起为三姐杨闰康、杨季康（杨绛）、大姐杨寿康和大弟杨宝昌。此时二姐杨同康已过世。\n\n爸爸从不训示我们如何做，我是通过他的行动，体会到“富贵不能淫，贫贱不能移，威武不能屈”古训的真正意义的。他在京师高等检察厅厅长任上，因为坚持审理交通部总长许世英受贿案，宁可被官官相护的北洋政府罢官。他当江苏省高等审判厅厅长时，有位军阀到上海，当地士绅联名登报欢迎，爸爸的名字也被他的属下列入欢迎者的名单，爸爸不肯欢迎那位军阀，说“名与器不可假人”，立即在报上登启事声明自己没有欢迎。上海沦陷时期，爸爸路遇当了汉奸的熟人，视而不见，于是有人谣传杨某瞎了眼了。\n\n我们对女儿钱瑗，也从不训示。她见我和钟书嗜读，也猴儿学人，照模照样拿本书来读，居然渐渐入道。她学外文，有个很难的单词，翻了三部词典也未查着，跑来问爸爸，钟书不告诉，让她自己继续查，查到第五部辞典果然找着。\n\n我对现代教育知道的不多。从报上读到过美术家韩美林作了一幅画，送给两三岁的小朋友，小孩子高高兴兴地回去了，又很快把画拿来要韩美林签名，问他签名干什么，小孩说：“您签了名，这画才值钱!”可惜呀，这么小的孩子已受到社会不良风气的影响，价值观的教育难道不应引起注意吗？",
+          "interviewer_question": "您从小进的启明、振华，长大后上的清华、牛津，都是好学校，也听说您父母家训就是：如果有钱，应该让孩子受好的教育。杨先生，您认为怎样的教育才算“好的教育”?",
+          "body_char_start": 83,
+          "body_char_end": 1193,
+          "speaker": "杨绛",
+          "speaker_role": "interviewee",
+          "source_format": "published_self_question_answer",
+          "id": "WEB-yangjiang-E001",
+          "source_id": "WEB-yangjiang",
+          "source_url": "https://tech.sina.cn/2020-08-04/detail-iivhvpwx9149803.d.html",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "原网页/Jina公开稿逐字子串；未补写事实。版面标记移除，采访者和编辑说明另保留。"
+        },
+        {
+          "text": "我由宽裕的娘家嫁到寒素的钱家做“媳妇”，从旧俗，行旧礼，一点没有“下嫁”的感觉。叩拜不过跪一下，礼节而已，和鞠躬没多大分别。如果男女双方计较这类细节，那么，趁早打听清楚彼此的家庭状况，不合适不要结婚。\n\n抗战时期在上海，生活艰难，从大小姐到老妈子，对我来说，角色变化而已，很自然，并不感觉委屈。为什么，因为爱，出于对丈夫的爱。我爱丈夫，胜过自己。我了解钱钟书的价值，我愿为他研究著述志业的成功，为充分发挥他的潜力、创造力而牺牲自己。这种爱不是盲目的，是理解，理解愈深，感情愈好。相互理解，才有自觉的相互支持。\n\n我与钱钟书是志同道合的夫妻。我们当初正是因为两人都酷爱文学，痴迷读书而互相吸引走到一起的。钟书说他“没有大的志气，只想贡献一生，做做学问。”这点和我志趣相同。\n\n[\n△\n\n钱钟书、杨绛夫妇\n\n我成名比钱钟书早，我写的几个剧本被搬上舞台后，他在文化圈里被人介绍为“杨绛的丈夫”。但我把钱钟书看得比自己重要，比自己有价值。我赖以成名的几出喜剧，能够和《围城》比吗?所以，他说想写一部长篇小说，我不仅赞成，还很高兴。我要他减少教课钟点，致力写作，为节省开销，我辞掉女佣，做“灶下婢”是心甘情愿的。握笔的手初干粗活免不了伤痕累累，一会儿劈柴木刺扎进了皮肉，一会儿又烫起了泡。不过吃苦中倒也学会了不少本领，使我很自豪。\n\n钱钟书知我爱面子，大家闺秀第一次挎个菜篮子出门有点难为情，特陪我同去小菜场。两人有说有笑买了菜，也见识到社会一角的众生百相。他怕我太劳累，自己关上卫生间的门悄悄洗衣服，当然洗得一塌糊涂，统统得重洗，他的体己让我感动。\n\n诗人辛笛说钱钟书有“誉妻癖”，钟书的确欣赏我，不论是生活操劳或是翻译写作，对我的鼓励很大，也是爱情的基础。同样，我对钱钟书的作品也很关心、熟悉，1989年黄蜀芹要把他的《围城》搬上银幕，来我家讨论如何突出主题，我觉得应表达《围城》的主要内涵，立即写了两句话给她，那就是：\n\n围在城里的人想逃出来，\n\n城外的人想冲进去。\n\n对婚姻也罢，职业也罢。\n\n人生的愿望大都如此。\n\n意思是“围城”的含义，不仅指方鸿渐的婚姻，更泛指人性中某些可悲的因素，就是对自己处境的不满。钱钟书很赞同我的概括和解析，觉得这个关键词“实获我心”。\n\n我是一位老人，净说些老话。对于时代，我是落伍者，没有什么良言贡献给现代婚姻。只是在物质至上的时代潮流下，想提醒年轻的朋友，男女结合最最重要的是感情，双方互相理解的程度，理解深才能互相欣赏吸引、支持和鼓励，两情相悦。我以为，夫妻间最重要的是朋友关系，即使不能做知心的朋友，也该是能做得伴侣的朋友或互相尊重的伴侣。门当户对及其他，并不重要。\n\n[\n△\n\n我正站在人生的边缘边缘上，向后看看，也向前看看。向后看，我已经活了一辈子，人生一世，为的是什么呢?我要探索人生的价值。向前看呢，我再往前去，就什么都没有了吗？\n\n——杨绛\n\n杨绛先生在96岁高龄时创作了这部充满哲思与意趣的散文集，通过对命运、人生、生与死、灵与肉等根本问题的思考，领悟到人生的价值在于遵循“灵性良心”的要求修炼自己，完善自身。她以深刻独到的体验、秉笔直书的勇气和生动饱满的笔触，为那些在现实生活中因信仰缺失而茫然无助的人们指点迷津。书后巧置精彩随笔，增补“百岁答问”，对其看法加以佐证，语言本色无华、感人至深。",
+          "interviewer_question": "您是在开明家庭和教育中长大的“新女性”，和钱钟书先生结婚后，进门却需对公婆行叩拜礼，学习做“媳妇”，连老圃先生都心疼自己花这么多心血培养的宝贝女儿，在钱家做“不花钱的老妈子”。杨先生，这个转换的动力来自哪里?您可有什么良言贡献给备受困扰的现代婚姻？",
+          "body_char_start": 1346,
+          "body_char_end": 2718,
+          "speaker": "杨绛",
+          "speaker_role": "interviewee",
+          "source_format": "published_self_question_answer",
+          "id": "WEB-yangjiang-E002",
+          "source_id": "WEB-yangjiang",
+          "source_url": "https://tech.sina.cn/2020-08-04/detail-iivhvpwx9149803.d.html",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "原网页/Jina公开稿逐字子串；未补写事实。版面标记移除，采访者和编辑说明另保留。"
+        }
+      ]
+    },
+    {
+      "id": "N-59e3bf0ed0",
+      "name": "常沙娜",
+      "split": "development",
+      "source_url": "https://www.renjiaoshe.com/p/350247.html",
+      "title": "统编版语文高中必修上册《一 记录家乡的人和物》同步练习.docx_教师之家",
+      "background_note": "女性工艺美术家、敦煌童年、留学、本人解释名字，非军旅；当前为教学材料摘编，需标来源等级",
+      "sources": [
+        {
+          "id": "WEB-changshana2",
+          "url": "https://www.renjiaoshe.com/p/350247.html",
+          "title": "统编版语文高中必修上册《一 记录家乡的人和物》同步练习.docx_教师之家",
+          "institution": "可凡倾听／教师之家公开摘编",
+          "fetched_at": "2026-10-17T08:31:29.040281+00:00",
+          "raw_path": "WEB-changshana2-raw_path.md",
+          "body_path": "WEB-changshana2-body_path.txt",
+          "raw_sha256": "2b1b88251a2c35db8a9bdece105b9d7e7d37a59d727cbc7710af664f76804718",
+          "body_sha256": "dc485469d2ce6e468ff5b5a3a83caf492c894ef6f5689db3e447942ad3dd6b3f",
+          "format": "published_interview_QA",
+          "interviewer": "曹可凡",
+          "narrator": "常沙娜",
+          "retrieval_backend": "agent-reach Jina Reader",
+          "source_limitations": "原采访整理刊物；编辑标题/括号注释不等于本人原话。 当前使用二手教学材料公开摘编。"
+        }
+      ],
+      "excerpts": [
+        {
+          "text": "因为我出生在法国里昂，里昂有条河，法语La Saone，中文就是沙娜。后来好多人很奇怪，说常书鸿挺逗的，给女儿起了一个沙漠的沙，我就成了一个沙漠里婀娜多姿的女子了。",
+          "interviewer_question": "你好！我特别想知道您的名字，当时父亲给您取的时候有些什么特别的寓意吗？",
+          "body_char_start": 45,
+          "body_char_end": 127,
+          "speaker": "常沙娜",
+          "speaker_role": "interviewee",
+          "source_format": "published_interview_QA",
+          "id": "WEB-changshana2-E001",
+          "source_id": "WEB-changshana2",
+          "source_url": "https://www.renjiaoshe.com/p/350247.html",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "原网页/Jina公开稿逐字子串；未补写事实。版面标记移除，采访者和编辑说明另保留。"
+        }
+      ]
+    },
+    {
+      "id": "N-c5a5031a87",
+      "name": "楼燕勤",
+      "split": "development",
+      "source_url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+      "title": "CASA  资深会员 访谈录 -楼燕勤 ",
+      "background_note": "旅美华人麻醉医师、非军旅；含职业选择、爱好、家庭／生活反思与后辈寄语。性别不从姓名推断。",
+      "sources": [
+        {
+          "id": "CASA-c5a5031a",
+          "url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+          "title": "CASA  资深会员 访谈录 -楼燕勤 ",
+          "institution": "CASA 华人麻醉医学会，CASA Bulletin of Anesthesiology Vol.9 No.6 2022增刊",
+          "fetched_at": "2026-10-17T08:33:49.364089+00:00",
+          "raw_path": "CASA-c5a5031a-raw_path.md",
+          "body_path": "CASA-c5a5031a-body_path.txt",
+          "raw_sha256": "b249463faf75a83d9076569a34b2634f27b0d231d4dad86be7902db906086463",
+          "body_sha256": "d42853598011b6f24015cb0217787ccfc414b129012fe8c755409e749c21cc16",
+          "format": "published_interview_QA_PDF_text_extraction",
+          "interviewer": "曹锡清（增刊第7页访谈说明）",
+          "narrator": "楼燕勤",
+          "retrieval_backend": "agent-reach Jina Reader PDF",
+          "source_limitations": "原始PDF直连有证书错误；Jina已公开返回77页文字层，当前保留原抽取全文，未伪称原PDF二进制；部分中英文空格与换行为PDF版面产物。"
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "CASA-c5a5031a-Q07",
+          "source_id": "CASA-c5a5031a",
+          "source_url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+          "text": "最得意的是 20 多年临床工作至今為止无医疗亊故，有二例家属曾试度为钱财或被某些因素诱惑起诉我而无任何医学问责根底基礎 ，最终自动撤销起诉 ！ 最想让人记住的 : 麻醉中，让患者能睡得安宁， 术后安全苏醒。 给年轻人的寄语是什么？ 1）做最好的自己，尽最大努力学习和实践，以开放的心态， 独立思考与透过现象看夲质 ，从实践中去学习，勇于探索，敢想敢干敢担当，學習善于沟通交流表达，增强团结和团队精神， 争取为麻醉病人的安全，麻醉学科的规培制度及学科专业建设的不断完善做出贡献！ 2）要积极主動勇于开启和参与各种促进医疗 /病人和麻醉安全的，促进医患沟通，促进术后康复及防治术后并发症的活动。发现问题，多动脑子，多提出建设性建议 /措施和方法。 要多参与社区，医院，科室团队正能量文化建设，使工作环境不断改善成为工作有味，有劲，有热度，开心，有奔頭！有困难時大家一起帮，有喜讯時大家一起乐，有问题時大家一起出主意来解决，出了错误大家一起找原因，对亊不对人，并且由此建立起防范于今后再发生的具體措施。 年轻人是未来的希望，大家一起努力定能够为中国今后走出一条适合于中国国情民情並結合社会與當地的文化傳統又能同步于符合于国际安全标准的中国麻醉安全之道 ！",
+          "interviewer_question": "回首往事，您所做的最得意的事，最想让人记住的是什么？",
+          "body_char_start": 5781,
+          "body_char_end": 6305,
+          "speaker": "楼燕勤",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "Jina公开PDF文字层抽取，移除页眉页脚及PDF行折；未改词，原抽取全文另存。"
+        },
+        {
+          "id": "CASA-c5a5031a-Q04",
+          "source_id": "CASA-c5a5031a",
+          "source_url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+          "text": "至于 Hobby, 还真的不是太清晰。可以说在摸索探索之中。只是觉得时间不够，想与需学的，想看， 想听，想走的地方实在太多，太多！另有许多家庭的包括对父母，对子女，对伴侣的责任与义务， 自我生理 /心理/精神诸方面的训练等都需要时间和精力。更高层面的是作为中华儿女又是曾经受过中美两边教育和培训，对两边都有过临床工作经历的，深切感觉到有一种责任和义务應該为国内麻醉或医学有关的交流与体会分享起一些桥梁作用。 如何把 hobby 与义务 /责任有的放矢的协调分配平衡还是存在着相当大的挑战性。从此点出发，我还在尝试和探索之中。 打算去哪旅游？ 要想去的地方很多，以前没有太多机会旅游。现在趁退休了，身体尚能行，将争取到中国各地和世界各国去旅游。但愿疫情早日在全球获得控制，我将先囘中國去陪伴照顧年邁的父母，去旅游的話，原则上遠距離先走， 近距離后走 。",
+          "interviewer_question": "现在的 hobby , 愿意分享的照片，疫情后打算去哪里旅游？",
+          "body_char_start": 2505,
+          "body_char_end": 2880,
+          "speaker": "楼燕勤",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "Jina公开PDF文字层抽取，移除页眉页脚及PDF行折；未改词，原抽取全文另存。"
+        }
+      ]
+    },
+    {
+      "id": "N-f522cea657",
+      "name": "李金蕾",
+      "split": "development",
+      "source_url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+      "title": "CASA  副会长 访谈录 -李金蕾 ",
+      "background_note": "旅美华人麻醉医师、非军旅；含职业选择、爱好、家庭／生活反思与后辈寄语。性别不从姓名推断。",
+      "sources": [
+        {
+          "id": "CASA-f522cea6",
+          "url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+          "title": "CASA  副会长 访谈录 -李金蕾 ",
+          "institution": "CASA 华人麻醉医学会，CASA Bulletin of Anesthesiology Vol.9 No.6 2022增刊",
+          "fetched_at": "2026-10-17T08:33:49.364089+00:00",
+          "raw_path": "CASA-f522cea6-raw_path.md",
+          "body_path": "CASA-f522cea6-body_path.txt",
+          "raw_sha256": "b249463faf75a83d9076569a34b2634f27b0d231d4dad86be7902db906086463",
+          "body_sha256": "e1d4dd2fde1bd20fc8e4468893410480c06db6c26cb6684754db9be15391b4f0",
+          "format": "published_interview_QA_PDF_text_extraction",
+          "interviewer": "曹锡清（增刊第7页访谈说明）",
+          "narrator": "李金蕾",
+          "retrieval_backend": "agent-reach Jina Reader PDF",
+          "source_limitations": "原始PDF直连有证书错误；Jina已公开返回77页文字层，当前保留原抽取全文，未伪称原PDF二进制；部分中英文空格与换行为PDF版面产物。"
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "CASA-f522cea6-Q04",
+          "source_id": "CASA-f522cea6",
+          "source_url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+          "text": "美食；中国，阿拉斯加",
+          "interviewer_question": "现在的 hobby, 愿意分享的照片，疫情后打算去哪里旅游？",
+          "body_char_start": 193,
+          "body_char_end": 203,
+          "speaker": "李金蕾",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "Jina公开PDF文字层抽取，移除页眉页脚及PDF行折；未改词，原抽取全文另存。"
+        },
+        {
+          "id": "CASA-f522cea6-Q08",
+          "source_id": "CASA-f522cea6",
+          "source_url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+          "text": "当我家孩子选择回家吃我做的剩饭而不是在外面吃的时候是我最自豪的时候。 . 不要着急，一步一个脚印，今天的一点小付出 5-10 年后会有比股票市场更高的回报。",
+          "interviewer_question": "回首往事，您所做的最得意的事，最想让人记住的是什么？给年轻人的寄语是什么？",
+          "body_char_start": 610,
+          "body_char_end": 688,
+          "speaker": "李金蕾",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "Jina公开PDF文字层抽取，移除页眉页脚及PDF行折；未改词，原抽取全文另存。"
+        }
+      ]
+    },
+    {
+      "id": "N-8e9398ae8b",
+      "name": "胡灵群",
+      "split": "development",
+      "source_url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+      "title": "CASA  资深会员 访谈录 -胡灵群 ",
+      "background_note": "旅美华人麻醉医师、非军旅；含职业选择、爱好、家庭／生活反思与后辈寄语。性别不从姓名推断。",
+      "sources": [
+        {
+          "id": "CASA-8e9398ae",
+          "url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+          "title": "CASA  资深会员 访谈录 -胡灵群 ",
+          "institution": "CASA 华人麻醉医学会，CASA Bulletin of Anesthesiology Vol.9 No.6 2022增刊",
+          "fetched_at": "2026-10-17T08:33:49.364089+00:00",
+          "raw_path": "CASA-8e9398ae-raw_path.md",
+          "body_path": "CASA-8e9398ae-body_path.txt",
+          "raw_sha256": "b249463faf75a83d9076569a34b2634f27b0d231d4dad86be7902db906086463",
+          "body_sha256": "5d13a5e652d02be12697d69c91aeab533d8d2d5ca2ac81346c26621f567da30f",
+          "format": "published_interview_QA_PDF_text_extraction",
+          "interviewer": "曹锡清（增刊第7页访谈说明）",
+          "narrator": "胡灵群",
+          "retrieval_backend": "agent-reach Jina Reader PDF",
+          "source_limitations": "原始PDF直连有证书错误；Jina已公开返回77页文字层，当前保留原抽取全文，未伪称原PDF二进制；部分中英文空格与换行为PDF版面产物。"
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "CASA-8e9398ae-Q04",
+          "source_id": "CASA-8e9398ae",
+          "source_url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+          "text": "写作，没有再花时间拍照片。等准退休后去世界各地做麻醉，顺便了解当地民俗民风。",
+          "interviewer_question": "现在的 hobby , 愿意分享的照片，疫情后打算去哪里旅游？",
+          "body_char_start": 171,
+          "body_char_end": 209,
+          "speaker": "胡灵群",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "Jina公开PDF文字层抽取，移除页眉页脚及PDF行折；未改词，原抽取全文另存。"
+        },
+        {
+          "id": "CASA-8e9398ae-Q08",
+          "source_id": "CASA-8e9398ae",
+          "source_url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+          "text": "无痛分娩中国行，发现问题，解决问题，大视野，脚踏实地，付诸行动。走心，有 passion 。",
+          "interviewer_question": "回首往事，您所做的最得意的事，最想让人记住的是什么？给年轻人的寄语是什么？",
+          "body_char_start": 442,
+          "body_char_end": 488,
+          "speaker": "胡灵群",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "Jina公开PDF文字层抽取，移除页眉页脚及PDF行折；未改词，原抽取全文另存。"
+        }
+      ]
+    },
+    {
+      "id": "N-df0eb596f5",
+      "name": "陆晓薇",
+      "split": "development",
+      "source_url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+      "title": "CASA  资深会员 访谈录 -陆晓薇医师 ",
+      "background_note": "旅美华人麻醉医师、非军旅；含职业选择、爱好、家庭／生活反思与后辈寄语。性别不从姓名推断。",
+      "sources": [
+        {
+          "id": "CASA-df0eb596",
+          "url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+          "title": "CASA  资深会员 访谈录 -陆晓薇医师 ",
+          "institution": "CASA 华人麻醉医学会，CASA Bulletin of Anesthesiology Vol.9 No.6 2022增刊",
+          "fetched_at": "2026-10-17T08:33:49.364089+00:00",
+          "raw_path": "CASA-df0eb596-raw_path.md",
+          "body_path": "CASA-df0eb596-body_path.txt",
+          "raw_sha256": "b249463faf75a83d9076569a34b2634f27b0d231d4dad86be7902db906086463",
+          "body_sha256": "741446915c8cf1de304939e7005805ab7dcc12cd9463613e0167860045165135",
+          "format": "published_interview_QA_PDF_text_extraction",
+          "interviewer": "曹锡清（增刊第7页访谈说明）",
+          "narrator": "陆晓薇",
+          "retrieval_backend": "agent-reach Jina Reader PDF",
+          "source_limitations": "原始PDF直连有证书错误；Jina已公开返回77页文字层，当前保留原抽取全文，未伪称原PDF二进制；部分中英文空格与换行为PDF版面产物。"
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "CASA-df0eb596-Q04",
+          "source_id": "CASA-df0eb596",
+          "source_url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+          "text": "业余爱好有很多。以后有时间可能会继续画画。 最近在一个朋友的鼓励下练习唱歌。疫情后其实不在乎去哪儿，只是所到的地方不会再走马观花。有让生活慢下来的节奏。当然回中国和去欧洲是首选。",
+          "interviewer_question": "现在的 hobby , 愿意分享的照片，疫情后打算去哪里旅游？",
+          "body_char_start": 490,
+          "body_char_end": 579,
+          "speaker": "陆晓薇",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "Jina公开PDF文字层抽取，移除页眉页脚及PDF行折；未改词，原抽取全文另存。"
+        },
+        {
+          "id": "CASA-df0eb596-Q03",
+          "source_id": "CASA-df0eb596",
+          "source_url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+          "text": "我选择麻醉专业有先结婚后恋爱的感觉。当时报考大学也是想学食品研究和食品广告，和现在所做的相差十万八千里。医学院毕业又做了一年多内科。麻醉是在美国的重新选择。但如果现在重新考虑的话可能还是做麻醉，因为觉得这一行比较有挑战性，同时也可以兼顾生活和业余爱好。",
+          "interviewer_question": "如果没有做麻醉 ，或者重新选择，这辈子您会做什么？",
+          "body_char_start": 328,
+          "body_char_end": 454,
+          "speaker": "陆晓薇",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "Jina公开PDF文字层抽取，移除页眉页脚及PDF行折；未改词，原抽取全文另存。"
+        }
+      ]
+    },
+    {
+      "id": "N-82d14eeb63",
+      "name": "刘恒意",
+      "split": "development",
+      "source_url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+      "title": "CASA  前会长访谈录 -刘恒意前会长  ",
+      "background_note": "旅美华人麻醉医师、非军旅；含职业选择、爱好、家庭／生活反思与后辈寄语。性别不从姓名推断。",
+      "sources": [
+        {
+          "id": "CASA-82d14eeb",
+          "url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+          "title": "CASA  前会长访谈录 -刘恒意前会长  ",
+          "institution": "CASA 华人麻醉医学会，CASA Bulletin of Anesthesiology Vol.9 No.6 2022增刊",
+          "fetched_at": "2026-10-17T08:33:49.364089+00:00",
+          "raw_path": "CASA-82d14eeb-raw_path.md",
+          "body_path": "CASA-82d14eeb-body_path.txt",
+          "raw_sha256": "b249463faf75a83d9076569a34b2634f27b0d231d4dad86be7902db906086463",
+          "body_sha256": "7749239be6368d2cfa1c3565bcaf9c813f795f9833ba07dc0dd7f68a745f4b0c",
+          "format": "published_interview_QA_PDF_text_extraction",
+          "interviewer": "曹锡清（增刊第7页访谈说明）",
+          "narrator": "刘恒意",
+          "retrieval_backend": "agent-reach Jina Reader PDF",
+          "source_limitations": "原始PDF直连有证书错误；Jina已公开返回77页文字层，当前保留原抽取全文，未伪称原PDF二进制；部分中英文空格与换行为PDF版面产物。"
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "CASA-82d14eeb-Q08",
+          "source_id": "CASA-82d14eeb",
+          "source_url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+          "text": "A. 最早报道硬膜刺穿后矛盾性头痛 B. 开展 CSF lavage C. 最早在 Louisiana 开展 TEE 监测颅脑手术的气体栓塞和心房气体清除给年轻人的寄语是什么？ A. 看准目标就要 focus ， focus ， 持之以恒，到达目标 B. 要敢于挑战权威",
+          "interviewer_question": "回首往事，您所做的最得意的事，最想让人记住的是什么？给年轻人的寄语是什么？",
+          "body_char_start": 1625,
+          "body_char_end": 1760,
+          "speaker": "刘恒意",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "Jina公开PDF文字层抽取，移除页眉页脚及PDF行折；未改词，原抽取全文另存。"
+        }
+      ]
+    },
+    {
+      "id": "N-a06ea91a56",
+      "name": "馬賽",
+      "split": "development",
+      "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_192.htm?4",
+      "title": "出生戰亂  從小流亡 投考軍校  齊心抗日",
+      "background_note": "退辅会机构口述史，涵盖军人、退役后劳动者及军眷。本人职业、是否服役、性别与关系只能依据原话；机构来源不等于人人曾从军。",
+      "sources": [
+        {
+          "id": "VAC-195",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_4_195.htm?2",
+          "title": "特戰部隊  教授野外求生課程",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:25:38.502458+00:00",
+          "raw_path": "VAC-195-raw_path.html",
+          "body_path": "VAC-195-body_path.txt",
+          "raw_sha256": "9556c92252e8ef6993d1e21cad513b4f9d6183f26a92c23cca3b30af2fe85a3d",
+          "body_sha256": "c1ae271721356a91d004a5efe1393f7ca0a66505038561768488dd58dc54188f",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "馬賽"
+        },
+        {
+          "id": "VAC-196",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_4_196.htm?2",
+          "title": "蒙古野性基因  鍾愛野外求生與自然  熱衷保健  蒐藏靈石",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:25:35.769766+00:00",
+          "raw_path": "VAC-196-raw_path.html",
+          "body_path": "VAC-196-body_path.txt",
+          "raw_sha256": "0dde9dd3e3e60c94b4515cc80fed8238a7e25998e4b5f43ee413f18254ffd8cf",
+          "body_sha256": "25e05739e6ffeb4fa543d6d73fe1ce84435431934277c4f611d6ed91cb7cea40",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "馬賽"
+        },
+        {
+          "id": "VAC-192",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_192.htm?4",
+          "title": "出生戰亂  從小流亡 投考軍校  齊心抗日",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:24:34.542128+00:00",
+          "raw_path": "VAC-192-raw_path.html",
+          "body_path": "VAC-192-body_path.txt",
+          "raw_sha256": "0e063d438fbed3d61a3a1bc13d43085bad7556a62bd48a23af2f1728d7ee98da",
+          "body_sha256": "54f553629cbd1fa9b108bb6d8cb5079333e08d07e9293f8806442e42ec9f1fae",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "馬賽"
+        },
+        {
+          "id": "VAC-194",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_4_194.htm?2",
+          "title": "來臺奉調演劇隊  後到情報局",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:25:34.709146+00:00",
+          "raw_path": "VAC-194-raw_path.html",
+          "body_path": "VAC-194-body_path.txt",
+          "raw_sha256": "739a122265018ca34756e4346cd778155e6000cb800d1b309e2d5d91403ffd81",
+          "body_sha256": "d3238adf1057a61a52ccd9c7edeba5daa743ce30beafe2df87fab2597f049c36",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "馬賽"
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "VAC-195-E02",
+          "source_id": "VAC-195",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_4_195.htm?2",
+          "body_char_start": 87,
+          "body_char_end": 520,
+          "text": "沒有，我到臺灣一直都很神氣。我的生活有一個原則「生活簡單就是享受，與人無求就是富有。」我這一生與人無求，人家不知道我窮我富，我生活很簡單。現在有網路，有的人叫我學電腦，我不學，好多人叫我學，都80多歲了，還費腦筋學電腦，才不要。我那老二給我一個小手機聽隨身聽，我說不要，身上多一個裝備，我才不要。他在我電話裡裝了一個答錄機，我不要！有個電話就好啦！我這個電話，電話局查不到的，我不公開，我的生活越簡單越好。我吃東西很簡單，我是個野外求生專家，我什麼都吃，我不挑嘴，所以像我這樣80多歲同輩的人，像我這樣健康的很少，有很多人都垮台了，甚至住醫院、開刀，什麼事都有。我從來沒有遇到過危險，我太幸運了。在大陸的時候一路跑，等我跑到了，後面就斷了；我搭上最後一艘海宿輪，從上海開出，後面就沒有了。我一路上都是如此，所以時運也有關係。我小的時候，我記得我父母說過我是早產兒，七個月生的，我能活到80多歲真是不可思議啊！看看我的棉花手，中國人有句話：「男人手如棉，富貴在眼前。」",
+          "interviewer_question": "這段時間有沒有比較快樂或辛苦的事情？",
+          "speaker": "馬賽",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "parse_note": "原站問／问／間／间均按明确问方标记处理；嵌入故事对话及过长问方跳过。",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        },
+        {
+          "id": "VAC-196-E08",
+          "source_id": "VAC-196",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_4_196.htm?2",
+          "body_char_start": 2004,
+          "body_char_end": 2118,
+          "text": "我現在專門研究保健，針灸、刮痧、拔罐。經常有人到我這找我啊！我研究氣功，我每天都練氣功，你看我的氣色就看得出來。年紀大了，就看自己如何安排自己，不要跟年輕人一樣。今天登那個山、明天登那個山，腿也不行啦！上樓梯都感覺到累了，真的！",
+          "interviewer_question": "您退伍之後研究的重點是什麼？",
+          "speaker": "馬賽",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "parse_note": "原站問／问／間／间均按明确问方标记处理；嵌入故事对话及过长问方跳过。",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        },
+        {
+          "id": "VAC-196-E10",
+          "source_id": "VAC-196",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_4_196.htm?2",
+          "body_char_start": 2375,
+          "body_char_end": 2956,
+          "text": "每天看見它，第一個會有個安定感；第二個它有生趣，看它上面長了草、長了什麼，會讓我們感覺到心地開闊。玩石頭玩久了都一樣，對其他亂七八糟的事情都沒興趣；比方說我過去跳舞，我現在都不跳了，個性完全變了。以前我石頭是擺在樓上，後來有個人到我家來，他說：「你那樓上是誰的？」我說是我的啊！他問說能不能參觀一下，後來他上去看了看，再下來看看我的客廳，說：「哎呀！太可惜了。你樓上的靈氣好大！你沒有把它引下來啊！」所以我就把石頭通通給搬樓下來。花結義，草會意，石頭有靈氣。不要以為它只是塊石頭喔！它有靈氣的！你不愛它，它就長不好；任何花，任何盆景都一樣。你看看養盆景的人，一天到晚把精神放在那裡，它才長得好，石頭也是。  我跟石頭有互動，我每天喜歡它，它知道，它也給我一種安慰。這個靈很難解釋，它屬於超自然的力量，不是圓的、方的、白的、黑的。人也有靈，人的靈在內裡，靈外面是魂，魂外面才是肉體。我過去演講，我就特別講過這個四度空間，一度空間是在地面，二度空間是在水中，三度空間是在空中，四度空間在哪裡？意念中。阿姆斯壯去過月球，他現在在家裡會不會想到月球？你想想你在高中的時候，你一想馬上想到，對不對？這個意念是超自然的，看不見的。每一個人都有，意念是陰性的物質；你看現在憂鬱症為什麼看不好？醫生也沒辦法，因為它是在陰性物質裡面，在你的心思意念裡的，不在肉體上；所以憂鬱症越來",
+          "interviewer_question": "蒐集石頭最大的樂趣是什麼？",
+          "speaker": "馬賽",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "parse_note": "原站問／问／間／间均按明确问方标记处理；嵌入故事对话及过长问方跳过。",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        },
+        {
+          "id": "VAC-192-E01",
+          "source_id": "VAC-192",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_192.htm?4",
+          "body_char_start": 26,
+          "body_char_end": 246,
+          "text": "我一出生就是北伐，接著就是抗日，然後國共大戰，一天到晚在戰爭裡面，所以不提還好，提起來傷心。一開始抗日，我的父親就打游擊去了，我就沒有父親了。我7、8歲就開始跟著部隊逃亡！前面的事情都已經記不到了。我回大陸兩次，找不到一個親人，我找到的人都不認識，我說請他們吃飯，一來，來一百多人，都說是我親戚，我一個都不認得，真滑稽！因為我是獨生子，所以我這一生都是很孤單，在這裡奮鬥、受訓、做事，都是自己一個人。即使到現在我有兩個兒子，我仍然不靠兒子。",
+          "interviewer_question": "請馬賽先生您先介紹一下您原生家庭的背景。",
+          "speaker": "馬賽",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "parse_note": "原站問／问／間／间均按明确问方标记处理；嵌入故事对话及过长问方跳过。",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        },
+        {
+          "id": "VAC-194-E02",
+          "source_id": "VAC-194",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_4_194.htm?2",
+          "body_char_start": 245,
+          "body_char_end": 587,
+          "text": "我是個野外求生專家，我在山上什麼都吃啊！抓到蛇吃蛇、抓到青蛙吃青蛙，我哪都可以住！我長到這麼大，不知道要怕什麼。有一次在坪林山區闊賴下山，我帶了十二個人在山上住了一夜，我們下山後，老百姓都看到我們問說：「你們昨天晚上住在哪裡？」我說：「住在山上一個空房子啊！」他們訝異地說：「什麼？你們敢住啊」我說：「有什麼不敢住啊！」他們說「裡面不乾淨啊！」我說：「我們把它掃一掃就乾淨了。」老百姓們都說他們天黑都不敢到那去！我說：「奇怪了，你搞清楚我們這一批人啊！我們怕什麼？鬼沒出來是他有運氣，他要出來讓我們逮到，就吃了他！」哈哈哈！大家都餓得不得了，求生隊嘛！見什麼抓什麼吃，那鬼怎麼敢出來，我們比鬼還厲害。所以這個野外求生從48年開始訓練特戰部隊，到後來訓練情報局情幹班，搞了差不多45年。",
+          "interviewer_question": "您從小膽子就很大？",
+          "speaker": "馬賽",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "parse_note": "原站問／问／間／间均按明确问方标记处理；嵌入故事对话及过长问方跳过。",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        }
+      ]
+    },
+    {
+      "id": "N-ac3fdd1b55",
+      "name": "刘道镛",
+      "split": "development",
+      "source_url": "https://marxism.seu.edu.cn/2021/0601/c23325a373462/page.htm",
+      "title": "访谈十问 ——回望来时路，眺望前行路，走好当下路（采访刘道镛老师）",
+      "background_note": "退休哲学教师／学术与人生道路回望，非军旅。",
+      "sources": [
+        {
+          "id": "WEB-liudaoyong",
+          "url": "https://marxism.seu.edu.cn/2021/0601/c23325a373462/page.htm",
+          "title": "访谈十问 ——回望来时路，眺望前行路，走好当下路（采访刘道镛老师）",
+          "institution": "东南大学",
+          "fetched_at": "2026-10-17T08:31:26.302343+00:00",
+          "raw_path": "WEB-liudaoyong-raw_path.md",
+          "body_path": "WEB-liudaoyong-body_path.txt",
+          "raw_sha256": "39c4616addc8822d8987412736aca49be6e3d33a3fe1708092268744dea42695",
+          "body_sha256": "285a9f28268f1df41e15c7a4c6065141036046c187ab060c912d8bddd43b903c",
+          "format": "published_interview_QA",
+          "interviewer": "东南大学马克思主义学院研究生党支部",
+          "narrator": "刘道镛",
+          "retrieval_backend": "agent-reach Jina Reader"
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "WEB-liudaoyong-E003",
+          "source_id": "WEB-liudaoyong",
+          "source_url": "https://marxism.seu.edu.cn/2021/0601/c23325a373462/page.htm",
+          "text": "我觉得当一名教师，既可以发挥我之所长，又给我在教书育人过程中享受人生之乐。正如孔子所言：“知之者不如好之者，好之者不如乐之者”。\n\n在回到南开大学经济系所组建的天津财经学院，成为一名教师后，再来到东南大学任教，从此我有了事业依托，这亦成为影响我一生的价值归属。这三次选择有三个关键词“党”、“马克思主义”、“教师”，三位一体合成一句话，就是党的马克思主义教师。从此我就老老实实、认认真真地从事马克思主义教育工作，这就成为我一生当中的身份标识，常被戏称为“老马列”。对“党”忠，忠贞不二；对“马”诚，诚信不移；对“教”勤，勤勉不怠。这成了我今生矢志不渝的使命和责任。",
+          "interviewer_question": "在毕业之后，您选择从事教师这一职业，请问您有什么感受？",
+          "body_char_start": 685,
+          "body_char_end": 967,
+          "speaker": "刘道镛",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "版面标记移除，公开访谈原文逐字；未补充回答。"
+        },
+        {
+          "id": "WEB-liudaoyong-E002",
+          "source_id": "WEB-liudaoyong",
+          "source_url": "https://marxism.seu.edu.cn/2021/0601/c23325a373462/page.htm",
+          "text": "当时在天津南开大学经济系，我的专业是先学会计学、后学统计学。其中学习了政治经济学、哲学和汉语言三门基础课程，加之我自学毛泽东选集，给我留下很深的印象，使我进一步认识到作为中国共产党指导思想的马克思主义博大精深、理想追求立志高远。既使我理解中国共产党的先进性和人民性，又使我对学习马克思主义有了强烈兴趣。后来选择到中国人民 大学哲学系学习马克思主 义哲学，因此 使我在专业上有了精神依归，这也是我人生极为珍视的第二次重要抉择。",
+          "interviewer_question": "在入党之后，您 1960年从南开大学经济系毕业后，进入中国人民 大学哲学系学习马克思主义哲学。是什么原因促使您产生这样的转变呢？",
+          "body_char_start": 439,
+          "body_char_end": 651,
+          "speaker": "刘道镛",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "版面标记移除，公开访谈原文逐字；未补充回答。"
+        }
+      ]
+    },
+    {
+      "id": "N-65804735e4",
+      "name": "王鼎钧",
+      "split": "development",
+      "source_url": "https://ycpai.ycwb.com/ycppad/content/2021-11/26/content_40415460.html",
+      "title": "【视频】王鼎钧：改变那不能接受的，接受那不能改变的",
+      "background_note": "纽约晚年散文作家，曾战乱从军；晚年生活、遗憾／不愿重来及寄语原话。",
+      "sources": [
+        {
+          "id": "WEB-wangdingjun2",
+          "url": "https://ycpai.ycwb.com/ycppad/content/2021-11/26/content_40415460.html",
+          "title": "【视频】王鼎钧：改变那不能接受的，接受那不能改变的",
+          "institution": "羊城晚报",
+          "fetched_at": "2026-10-17T08:31:17.740772+00:00",
+          "raw_path": "WEB-wangdingjun2-raw_path.md",
+          "body_path": "WEB-wangdingjun2-body_path.txt",
+          "raw_sha256": "95c8cce2d24b63da233cfb3f3ddd8677732a33bda3125cfc823e7b3b18dccbac",
+          "body_sha256": "e93a9bf4f58d7f6a2bdc3fb781bd6d8d8a7205f12f509973b11cfa74838496d3",
+          "format": "published_interview_QA",
+          "interviewer": "吴小攀",
+          "narrator": "王鼎钧",
+          "retrieval_backend": "agent-reach Jina Reader"
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "WEB-wangdingjun2-E015",
+          "source_id": "WEB-wangdingjun2",
+          "source_url": "https://ycpai.ycwb.com/ycppad/content/2021-11/26/content_40415460.html",
+          "text": "我做的那些决定，都是只有那样做，必须那样做，我承担后果，我不后悔，但是有遗憾。“憾”和“悔”不同，我无悔，有憾。",
+          "interviewer_question": "有没有什么事让您后悔的？",
+          "body_char_start": 1872,
+          "body_char_end": 1928,
+          "speaker": "王鼎钧",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "版面标记移除，公开访谈原文逐字；未补充回答。"
+        },
+        {
+          "id": "WEB-wangdingjun2-E016",
+          "source_id": "WEB-wangdingjun2",
+          "source_url": "https://ycpai.ycwb.com/ycppad/content/2021-11/26/content_40415460.html",
+          "text": "真正的遗憾是说不出来的。北宋文人彭渊材说他有五大憾事——鲥鱼多骨，金桔太酸，莼菜性冷，海棠无香，曾子固不能诗。\n\n我现在向他学习，你给我千斤，我还你四两：我一恨孔夫子删诗太多，二恨红楼未完，三恨野草太少。《野草》是鲁迅先生的那本散文集，如他的杂文能少几本、薄一点，《野草》能多几本、厚一点，中囯的现代文学史将是何等光景！",
+          "interviewer_question": "遗憾是什么？",
+          "body_char_start": 1947,
+          "body_char_end": 2107,
+          "speaker": "王鼎钧",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "版面标记移除，公开访谈原文逐字；未补充回答。"
+        },
+        {
+          "id": "WEB-wangdingjun2-E013",
+          "source_id": "WEB-wangdingjun2",
+          "source_url": "https://ycpai.ycwb.com/ycppad/content/2021-11/26/content_40415460.html",
+          "text": "忘记了是哪位作家提出来一个问题：你认为贞观之治比现在更好吗？我的答案是“不”。我认为你我都活在很好的世代，当然也常常觉得不满意，但是可以“改变那不能接受的，接受那不能改变的”。",
+          "interviewer_question": "如果可以选择，您更愿意生活在哪里、在哪个年代（朝代）？",
+          "body_char_start": 1670,
+          "body_char_end": 1758,
+          "speaker": "王鼎钧",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "版面标记移除，公开访谈原文逐字；未补充回答。"
+        },
+        {
+          "id": "WEB-wangdingjun2-E005",
+          "source_id": "WEB-wangdingjun2",
+          "source_url": "https://ycpai.ycwb.com/ycppad/content/2021-11/26/content_40415460.html",
+          "text": "我认为婚姻需要感情也需要爱情，感情维持日常生活，爱情支持非常的遭遇。一般来说，夫妻在年轻的时候靠感情，到了七老八十靠爱情，安居乐业的时候靠感情，颠沛流离的时候靠爱情。所谓非常的遭遇也包括陈世美点了状元，或新移民中了五亿美元的乐透大奖。",
+          "interviewer_question": "亲情、爱情是人生的支柱，但从另一个角度看也可能是一种羁绊，您认为呢？",
+          "body_char_start": 447,
+          "body_char_end": 564,
+          "speaker": "王鼎钧",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "版面标记移除，公开访谈原文逐字；未补充回答。"
+        },
+        {
+          "id": "WEB-wangdingjun2-E007",
+          "source_id": "WEB-wangdingjun2",
+          "source_url": "https://ycpai.ycwb.com/ycppad/content/2021-11/26/content_40415460.html",
+          "text": "您说的“传统”是指保守吗？我们老两口对子女的教育很开放，让他们能够适应美国社会。关起门来，我们自己的生活是中国式的。",
+          "interviewer_question": "这样看来，可不可以说您的婚姻家庭观是趋于传统的？",
+          "body_char_start": 740,
+          "body_char_end": 798,
+          "speaker": "王鼎钧",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "版面标记移除，公开访谈原文逐字；未补充回答。"
+        }
+      ]
+    },
+    {
+      "id": "N-9ff0b2f16e",
+      "name": "金晓贵",
+      "split": "development",
+      "source_url": "https://www.gzu.edu.cn/_t2805/2026/0509/c17516a272833/page.htm",
+      "title": "讲述｜金晓贵：到祖国最需要的地方去",
+      "background_note": "基层信贷员／乡村干部，大学毕业后15年，非军旅",
+      "sources": [
+        {
+          "id": "WEB-jinxiaogui",
+          "url": "https://www.gzu.edu.cn/_t2805/2026/0509/c17516a272833/page.htm",
+          "title": "讲述｜金晓贵：到祖国最需要的地方去",
+          "institution": "贵州大学",
+          "fetched_at": "2026-10-17T08:30:28.091988+00:00",
+          "raw_path": "WEB-jinxiaogui-raw_path.md",
+          "body_path": "WEB-jinxiaogui-body_path.txt",
+          "raw_sha256": "26e33c1490bc065d0e27ae90da9f76da6354daf78dee9e79bbe622ea58ee24e5",
+          "body_sha256": "9f10c8a6cf7ce54093c59d282c1a7a8464c5ebaa6fbe8ff62a8b69e06ed11447",
+          "format": "published_interview_QA",
+          "interviewer": "陈美美",
+          "narrator": "金晓贵",
+          "retrieval_backend": "agent-reach Jina Reader",
+          "source_limitations": "原采访整理刊物；编辑标题/括号注释不等于本人原话。"
+        }
+      ],
+      "excerpts": [
+        {
+          "text": "我记得最清楚的是一位家族族长的老人家，刚开始对我们驻村干部心存质疑，有点爱答不理，但是后来因为帮他解决了他家的土地纠纷问题，他就切实改变了对我们的看法和态度，还主动邀请我到他家。他说：“以前不理你们，是因为我觉得你们就是做些表面工作。现在看来，你是实实在在的。你是第一个跑到学校去关心留守儿童的干部，也是第一个跑到病房去看望生病困难群众的干部。所以我现在认可你，以后我们这个村寨有什么问题，你尽管找我就行了。”从这以后，我们的驻村工作顺利开展起来了。这件事让我深刻地认识到：只要你把人民放在心上，人民就会把你高高举起。",
+          "interviewer_question": "您2016年3月刚到马鞍村时，遇到的最大困难是什么？据说村民当时觉得您是“书呆子”，吃了很多闭门羹，有没有哪一个具体的闭门羹让您印象最深？",
+          "body_char_start": 1119,
+          "body_char_end": 1378,
+          "speaker": "金晓贵",
+          "speaker_role": "interviewee",
+          "source_format": "published_interview_QA",
+          "id": "WEB-jinxiaogui-E004",
+          "source_id": "WEB-jinxiaogui",
+          "source_url": "https://www.gzu.edu.cn/_t2805/2026/0509/c17516a272833/page.htm",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "原网页/Jina公开稿逐字子串；未补写事实。版面标记移除，采访者和编辑说明另保留。"
+        },
+        {
+          "text": "我是从农村出来的学生，当时记得最清楚的一句话就是“到基层去，到农村去也是在做贡献。希望大学生们积极到基层去，到国家最需要的地方去成长成才，报效祖国。在报效祖国、服务人民的过程中，实现自己的人生价值”，在习近平总书记的激励下，当时就暗暗下了一个决心：毕业之后，我要深入基层去，到祖国最需要的地方去。",
+          "interviewer_question": "当时您在现场听到的哪一句话对您触动最大？",
+          "body_char_start": 463,
+          "body_char_end": 611,
+          "speaker": "金晓贵",
+          "speaker_role": "interviewee",
+          "source_format": "published_interview_QA",
+          "id": "WEB-jinxiaogui-E001",
+          "source_id": "WEB-jinxiaogui",
+          "source_url": "https://www.gzu.edu.cn/_t2805/2026/0509/c17516a272833/page.htm",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "原网页/Jina公开稿逐字子串；未补写事实。版面标记移除，采访者和编辑说明另保留。"
+        },
+        {
+          "text": "我最想说的是希望师弟师妹们继续发扬贵州大学“明德至善、博学笃行”的校训精神，吃苦耐劳，到基层去磨炼去成长，在无私奉献中实现自己的人生价值。",
+          "interviewer_question": "如果让您结合自己从基层信贷员一路走来的经历，对现在贵大的学生说一句话，您最想说什么？",
+          "body_char_start": 1434,
+          "body_char_end": 1503,
+          "speaker": "金晓贵",
+          "speaker_role": "interviewee",
+          "source_format": "published_interview_QA",
+          "id": "WEB-jinxiaogui-E005",
+          "source_id": "WEB-jinxiaogui",
+          "source_url": "https://www.gzu.edu.cn/_t2805/2026/0509/c17516a272833/page.htm",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "原网页/Jina公开稿逐字子串；未补写事实。版面标记移除，采访者和编辑说明另保留。"
+        }
+      ]
+    },
+    {
+      "id": "N-fe7c1686a2",
+      "name": "周海峰",
+      "split": "development",
+      "source_url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+      "title": "CASA  前会长访谈录 -周海峰前会长 ",
+      "background_note": "旅美华人麻醉医师、非军旅；含职业选择、爱好、家庭／生活反思与后辈寄语。性别不从姓名推断。",
+      "sources": [
+        {
+          "id": "CASA-fe7c1686",
+          "url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+          "title": "CASA  前会长访谈录 -周海峰前会长 ",
+          "institution": "CASA 华人麻醉医学会，CASA Bulletin of Anesthesiology Vol.9 No.6 2022增刊",
+          "fetched_at": "2026-10-17T08:33:49.364089+00:00",
+          "raw_path": "CASA-fe7c1686-raw_path.md",
+          "body_path": "CASA-fe7c1686-body_path.txt",
+          "raw_sha256": "b249463faf75a83d9076569a34b2634f27b0d231d4dad86be7902db906086463",
+          "body_sha256": "d292cc80053986fa982c14c242c27beac9a20da02ead702833346ad29c6185c3",
+          "format": "published_interview_QA_PDF_text_extraction",
+          "interviewer": "曹锡清（增刊第7页访谈说明）",
+          "narrator": "周海峰",
+          "retrieval_backend": "agent-reach Jina Reader PDF",
+          "source_limitations": "原始PDF直连有证书错误；Jina已公开返回77页文字层，当前保留原抽取全文，未伪称原PDF二进制；部分中英文空格与换行为PDF版面产物。"
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "CASA-fe7c1686-Q08",
+          "source_id": "CASA-fe7c1686",
+          "source_url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+          "text": "回首往事，我并没有什么最得意的事，也不希望别人记住什么。作为一个麻醉医生，我觉得重要的是做人坦荡，做事谨慎，时常保持一个愉快感恩进取的心态，做最好的自己。",
+          "interviewer_question": "回首往事，您所做的最得意的事，最想让人记住的是什么？给年轻人的寄语是什么？",
+          "body_char_start": 1713,
+          "body_char_end": 1790,
+          "speaker": "周海峰",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "Jina公开PDF文字层抽取，移除页眉页脚及PDF行折；未改词，原抽取全文另存。"
+        }
+      ]
+    },
+    {
+      "id": "N-47fee5f0c2",
+      "name": "陈国纲",
+      "split": "development",
+      "source_url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+      "title": "CASA  前会长访谈录 -陈国纲前会长 ",
+      "background_note": "旅美华人麻醉医师、非军旅；含职业选择、爱好、家庭／生活反思与后辈寄语。性别不从姓名推断。",
+      "sources": [
+        {
+          "id": "CASA-47fee5f0",
+          "url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+          "title": "CASA  前会长访谈录 -陈国纲前会长 ",
+          "institution": "CASA 华人麻醉医学会，CASA Bulletin of Anesthesiology Vol.9 No.6 2022增刊",
+          "fetched_at": "2026-10-17T08:33:49.364089+00:00",
+          "raw_path": "CASA-47fee5f0-raw_path.md",
+          "body_path": "CASA-47fee5f0-body_path.txt",
+          "raw_sha256": "b249463faf75a83d9076569a34b2634f27b0d231d4dad86be7902db906086463",
+          "body_sha256": "65b380a2eddd9d1401db2bc92b92489d3f6b7ba8726ced388e1ca99248ecb3e0",
+          "format": "published_interview_QA_PDF_text_extraction",
+          "interviewer": "曹锡清（增刊第7页访谈说明）",
+          "narrator": "陈国纲",
+          "retrieval_backend": "agent-reach Jina Reader PDF",
+          "source_limitations": "原始PDF直连有证书错误；Jina已公开返回77页文字层，当前保留原抽取全文，未伪称原PDF二进制；部分中英文空格与换行为PDF版面产物。"
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "CASA-47fee5f0-Q07",
+          "source_id": "CASA-47fee5f0",
+          "source_url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+          "text": "我最得意的事情是在南极站工作一年。自己即能麻醉、又能手术。",
+          "interviewer_question": "回首往事，您所做的最得意的事，最想让人记住的是什么？",
+          "body_char_start": 382,
+          "body_char_end": 411,
+          "speaker": "陈国纲",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "Jina公开PDF文字层抽取，移除页眉页脚及PDF行折；未改词，原抽取全文另存。"
+        },
+        {
+          "id": "CASA-47fee5f0-Q08",
+          "source_id": "CASA-47fee5f0",
+          "source_url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+          "text": "做自己喜欢做的事。",
+          "interviewer_question": "给年轻人的寄语是什么？",
+          "body_char_start": 427,
+          "body_char_end": 436,
+          "speaker": "陈国纲",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "Jina公开PDF文字层抽取，移除页眉页脚及PDF行折；未改词，原抽取全文另存。"
+        }
+      ]
+    },
+    {
+      "id": "N-c8625984e4",
+      "name": "周少凤",
+      "split": "development",
+      "source_url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+      "title": "CASA  资深会员 访谈录 -周少凤 ",
+      "background_note": "旅美华人麻醉医师、非军旅；含职业选择、爱好、家庭／生活反思与后辈寄语。性别不从姓名推断。",
+      "sources": [
+        {
+          "id": "CASA-c8625984",
+          "url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+          "title": "CASA  资深会员 访谈录 -周少凤 ",
+          "institution": "CASA 华人麻醉医学会，CASA Bulletin of Anesthesiology Vol.9 No.6 2022增刊",
+          "fetched_at": "2026-10-17T08:33:49.364089+00:00",
+          "raw_path": "CASA-c8625984-raw_path.md",
+          "body_path": "CASA-c8625984-body_path.txt",
+          "raw_sha256": "b249463faf75a83d9076569a34b2634f27b0d231d4dad86be7902db906086463",
+          "body_sha256": "89984d40aba4d186547f76c1b26d7cffbbfc702e4e7f8202facf93f62b7c66d6",
+          "format": "published_interview_QA_PDF_text_extraction",
+          "interviewer": "曹锡清（增刊第7页访谈说明）",
+          "narrator": "周少凤",
+          "retrieval_backend": "agent-reach Jina Reader PDF",
+          "source_limitations": "原始PDF直连有证书错误；Jina已公开返回77页文字层，当前保留原抽取全文，未伪称原PDF二进制；部分中英文空格与换行为PDF版面产物。"
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "CASA-c8625984-Q08",
+          "source_id": "CASA-c8625984",
+          "source_url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+          "text": "学习工作再学习，不知不觉来美 35 年，要说我最得意的事情便是教导我的孩子们学习好中文， 了解中国传统文化。除了每周末上中文学校，很简单的办法是进家门后只许说中文。记得 2010 年带他们回国探亲。 说上一口流利的普通话欺骗好多人。 很多朋友不相信他们是在美国长大。我也为他们感到自豪。",
+          "interviewer_question": "回首往事，您所做的最得意的事，最想让人记住的是什么？给年轻人的寄语是什么？",
+          "body_char_start": 2040,
+          "body_char_end": 2183,
+          "speaker": "周少凤",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "Jina公开PDF文字层抽取，移除页眉页脚及PDF行折；未改词，原抽取全文另存。"
+        },
+        {
+          "id": "CASA-c8625984-Q09",
+          "source_id": "CASA-c8625984",
+          "source_url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+          "text": "我常告诫我的孩子们，既然选择了目标，就要坚持并为之努力。 人生不会一帆风顺，不可轻言放弃。踏踏实实做事，诚实待人，做好自己， 切记家庭与事业是同等重要。",
+          "interviewer_question": "给年轻人的寄语是什么？",
+          "body_char_start": 2199,
+          "body_char_end": 2275,
+          "speaker": "周少凤",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "Jina公开PDF文字层抽取，移除页眉页脚及PDF行折；未改词，原抽取全文另存。"
+        }
+      ]
+    },
+    {
+      "id": "N-e561eaa8b2",
+      "name": "苗宁",
+      "split": "development",
+      "source_url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+      "title": "CASA  资深会员 访谈录 -苗宁主编 ",
+      "background_note": "旅美华人麻醉医师、非军旅；含职业选择、爱好、家庭／生活反思与后辈寄语。性别不从姓名推断。",
+      "sources": [
+        {
+          "id": "CASA-e561eaa8",
+          "url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+          "title": "CASA  资深会员 访谈录 -苗宁主编 ",
+          "institution": "CASA 华人麻醉医学会，CASA Bulletin of Anesthesiology Vol.9 No.6 2022增刊",
+          "fetched_at": "2026-10-17T08:33:49.364089+00:00",
+          "raw_path": "CASA-e561eaa8-raw_path.md",
+          "body_path": "CASA-e561eaa8-body_path.txt",
+          "raw_sha256": "b249463faf75a83d9076569a34b2634f27b0d231d4dad86be7902db906086463",
+          "body_sha256": "adbe20ec49c6f70e38c30ad0e0e4f5ca900ccb997c42e36af36d9c50f9dbe60c",
+          "format": "published_interview_QA_PDF_text_extraction",
+          "interviewer": "曹锡清（增刊第7页访谈说明）",
+          "narrator": "苗宁",
+          "retrieval_backend": "agent-reach Jina Reader PDF",
+          "source_limitations": "原始PDF直连有证书错误；Jina已公开返回77页文字层，当前保留原抽取全文，未伪称原PDF二进制；部分中英文空格与换行为PDF版面产物。"
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "CASA-e561eaa8-Q08",
+          "source_id": "CASA-e561eaa8",
+          "source_url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+          "text": "进入了医学的浩瀚领域，领略到一点医学知识的精髓。 最想让人记住的是“我是一名麻醉医生，为病患救死扶伤尽心尽力”。",
+          "interviewer_question": "回首往事，您所做的最得意的事，最想让人记住的是什么？",
+          "body_char_start": 1073,
+          "body_char_end": 1129,
+          "speaker": "苗宁",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "Jina公开PDF文字层抽取，移除页眉页脚及PDF行折；未改词，原抽取全文另存。"
+        },
+        {
+          "id": "CASA-e561eaa8-Q04",
+          "source_id": "CASA-e561eaa8",
+          "source_url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+          "text": "喜欢读闲书。疫情中仍然去了几个 Caribbean 小岛，冰岛，葡萄牙，西班牙。多瑙河游轮等。疫情后最想回国见见亲朋好友，旧地重游，把酒言欢。",
+          "interviewer_question": "现在的 hobby , 愿意分享的照片，疫情后打算去哪里旅游？",
+          "body_char_start": 507,
+          "body_char_end": 578,
+          "speaker": "苗宁",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "Jina公开PDF文字层抽取，移除页眉页脚及PDF行折；未改词，原抽取全文另存。"
+        },
+        {
+          "id": "CASA-e561eaa8-Q09",
+          "source_id": "CASA-e561eaa8",
+          "source_url": "https://chineseasa.org/Liao_new/CASA_Events/CASA_2022/3.pdf",
+          "text": "我永远记得我的恩师 -金士翱教授当年对年轻的我的谆谆教诲：认真学习医学，麻醉理论，技术和各科的知识；细致，负责地为病患提供安全的麻醉。荣誉是工作取得一定成就后别人的赠予而非自己争夺而来。也想将此话传给年轻的一代麻醉医生。",
+          "interviewer_question": "给年轻人的寄语是什么？",
+          "body_char_start": 1145,
+          "body_char_end": 1255,
+          "speaker": "苗宁",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "Jina公开PDF文字层抽取，移除页眉页脚及PDF行折；未改词，原抽取全文另存。"
+        }
+      ]
+    },
+    {
+      "id": "N-6eec6bf458",
+      "name": "孫樸生",
+      "split": "development",
+      "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_186.htm?4",
+      "title": "顯赫的家族  褪色的童年 家境富轉貧  報名去從軍",
+      "background_note": "退辅会机构口述史，涵盖军人、退役后劳动者及军眷。本人职业、是否服役、性别与关系只能依据原话；机构来源不等于人人曾从军。",
+      "sources": [
+        {
+          "id": "VAC-186",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_186.htm?4",
+          "title": "顯赫的家族  褪色的童年 家境富轉貧  報名去從軍",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:24:42.402289+00:00",
+          "raw_path": "VAC-186-raw_path.html",
+          "body_path": "VAC-186-body_path.txt",
+          "raw_sha256": "261152106be6c0c8ed25cb3efe1a362685893bf15a1efe83a9a22a503ec39e1e",
+          "body_sha256": "e085220acd5b593f7baded2724e9eb6436987ba52c4ee370db91518c9407a9fe",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "孫樸生"
+        },
+        {
+          "id": "VAC-190",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_4_190.htm?3",
+          "title": "張雋來提攜  打開廣播路 扣應開台祖  聽眾很溫馨",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:25:36.568720+00:00",
+          "raw_path": "VAC-190-raw_path.html",
+          "body_path": "VAC-190-body_path.txt",
+          "raw_sha256": "47ee25f8485eb6ae537b25457efe0b99fbfbb4dc4a2a516c2f295a1c5a7f91f9",
+          "body_sha256": "d34161c39b2596e042fd805395b4d7fb4bc832080f141135f9e7b9e4f540573a",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "孫樸生"
+        },
+        {
+          "id": "VAC-189",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_4_189.htm?3",
+          "title": "戲劇開根苗  幹校再充電 學藝兼自修  悟出看譜法",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:25:39.234519+00:00",
+          "raw_path": "VAC-189-raw_path.html",
+          "body_path": "VAC-189-body_path.txt",
+          "raw_sha256": "1fca8062a4e01bb8c99bc3e4403bbcfde23594898b9ee7ce65bd1446f4296b30",
+          "body_sha256": "4517df5b2ae3ed0ccab16109856977dd716fd0e106f44ffece82ad19c21d8683",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "孫樸生"
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "VAC-186-E04",
+          "source_id": "VAC-186",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_186.htm?4",
+          "body_char_start": 567,
+          "body_char_end": 730,
+          "text": "我想有不太好的影響，對我以後的做人處世多少都會有一點影響。我也沒有什麼特別的宗教信仰，我覺得運氣還不錯，一直到目前為止，都有貴人相助。  當時在那種家庭環境中成長，我學會了反抗強權，所以後來我不管做什麼事，我對我的長官，不一定是唯命是從，除非他讓我很尊敬。相反的，我對我的部下都非常好，這個好像跟我童年的生活，多少有一點關係。",
+          "interviewer_question": "家族這麼複雜，您那麼小就看到這麼多的事情，會不會對您有一些影響？",
+          "speaker": "孫樸生",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "parse_note": "原站問／问／間／间均按明确问方标记处理；嵌入故事对话及过长问方跳过。",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        },
+        {
+          "id": "VAC-190-E01",
+          "source_id": "VAC-190",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_4_190.htm?3",
+          "body_char_start": 23,
+          "body_char_end": 260,
+          "text": "唱歌的部分我沒有學，我不停的接觸喜歡歌唱的人，我覺得，先天遺傳的因子也蠻重要的。多年前，一位奧斯卡金像獎一個男主角，到臺灣來，記者訪問他，說你如何能獲得這麼高的榮譽，他說很簡單，只靠三個條件：先天條件、後天努力、機會。  我從事這個行業這麼久，我發現一個道理，就是你後天再努力，但是先天條件不好，還是受影響。那你先天條件好，後天又努力，機會陰錯陽差都被別人搶走，還是沒有用。我都鼓勵年輕人，你條件很好，你不努力也沒有用。先天條件好又努力，然後能掌握機會，我覺得這樣就會成功。",
+          "interviewer_question": "老師您唱歌的這個部分，是怎麼學的？",
+          "speaker": "孫樸生",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "parse_note": "原站問／问／間／间均按明确问方标记处理；嵌入故事对话及过长问方跳过。",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        },
+        {
+          "id": "VAC-189-E06",
+          "source_id": "VAC-189",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_4_189.htm?3",
+          "body_char_start": 872,
+          "body_char_end": 1561,
+          "text": "大概是民國43年，陸光康樂隊成立後，又組織另一班樂隊，那個時候我沒有接觸民間的社會生活，尤其是音樂方面，更是從未接觸，但是我非常感謝翁清溪(Tony)，他那個時候在爵士樂方面造詣已經不錯了，還有吳光麟，擅長吹薩克斯風，外號叫沙西米，我們就請這兩位樂壇老手來到陸光，那時候陸光搬到維揚村，有一台爛鋼琴，那個爛鋼琴的歷史蠻悠久，是抗戰時候，由重慶輾轉運到臺灣，雖然它的弦、音響板還不錯，但是鍵盤全都損壞了，稍事整修後，我就靠那台爛鋼琴上陣。  後來請的那些人，剛才我講的，這兩位都是本省籍的，另外還有兩位外省籍的，一位是我的好朋友，吹薩克斯風，現已過世，名叫袁瑤；另一位叫黃聲，是後來中廣樂隊的指揮。最令人感激的就是張雋。我講的好像時間有點錯亂。我到陸光的後期，軍人待遇很差，舉例來說，我們每天盼著出去勞軍，尤其到外島勞軍，在那個沒有電視的年代，廣播也不准聽，勞軍團特別受到歡迎，一到外島就有吃不完的魚肉菜餚。  平日的飲食供應缺乏，那個時候待遇不好，我們每次演完勞軍演完，只有一碗大魯麵，麵裡面加一個荷包蛋，但是，一碗吃不飽怎麼辦，我們就玩起變身的把戲。吃第一碗的時候穿夾克帶帽子，到吃第二碗的時候，把帽子摘下、夾克脫掉，又過去領一碗，吃了兩碗，但是後來到民國50年的時候，陸光改編。對了，我中間還忘了，當我們請那兩位指導我們之外，後來將他們介紹到民間，就是公家沒有演出的時候我們去伴奏兼差，伴奏賺一點錢我們就請軍官俱樂部的鍵盤手，到我們這裡來指導我們的樂隊，那個，後來大家合作十分愉快，民國50年時，部隊一直進行改編，把我好多好朋友都調走，我也不想在陸光任職，那就請調康樂總隊。",
+          "interviewer_question": "那個時候是陸光康樂隊剛成立嗎？",
+          "speaker": "孫樸生",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "parse_note": "原站問／问／間／间均按明确问方标记处理；嵌入故事对话及过长问方跳过。",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        },
+        {
+          "id": "VAC-186-E05",
+          "source_id": "VAC-186",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_186.htm?4",
+          "body_char_start": 760,
+          "body_char_end": 1184,
+          "text": "後來我父親都不接濟我們，母親雖然有一點錢，也禁不起養一大家子人，也許是因為心情鬱卒，母親就染上吸鴉片的習慣，這個習慣造成她經濟上相當大的開支，後來我離家之後，下定決心絕對不碰投機、典當這兩類生意。  那時讓我印象最深刻的是，我母親陸續將值錢的翡翠、鑽石，叫丫頭拿去當掉，原本價值不斐的珠寶，只典當很少的金額。另一次，從我家嫁出去的丫頭回來找母親，介紹藥品期貨，是韓國廠商經營的產品，投資利潤豐厚，我母親怦然心動，只要有積蓄就投進去，剛開始利潤很高。當我母親將大多數積蓄投入時，忽然，那個丫頭說：「那家韓國的製藥廠，被日本人給抄了」，也就是說我媽媽的錢一夕泡湯，此後，家中就開始靠典當維生。  雖然那時候家裡經濟環境轉差，母親仍然非常疼我，到讀初中的時候，我一直都是乘坐專用人力車去上學。後來經濟情況越來越差。民國34年抗戰勝利，我們的生活每下愈況，我父親那邊的情形也不理想，有一天，我剛好看到報紙上青年遠征軍二零八師招考啟事，我就偷偷的去報名考試。",
+          "interviewer_question": "在這樣子的家庭狀況下，你為什麼決定從軍？",
+          "speaker": "孫樸生",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "parse_note": "原站問／问／間／间均按明确问方标记处理；嵌入故事对话及过长问方跳过。",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        },
+        {
+          "id": "VAC-190-E02",
+          "source_id": "VAC-190",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_4_190.htm?3",
+          "body_char_start": 297,
+          "body_char_end": 716,
+          "text": "談到這裡，我要感謝張雋先生，當年他在上海，是一個公子哥兒，他在上海擁有一個廣播電台，他跟姚敏、姚莉合組了一個爵士社從事廣播，包括周璇這些很有名的人，都在他的上海電台唱歌，他掛名社長。  再回溯到民國50年，想要調康樂總隊，那是我情緒最差的時候，張雋不曉得怎麼知道我，有一天我就接到電話，那時候軍中電話很難打，他跟我說民本電台有一個現場節目，你有沒有興趣來彈琴。那時兼差工作青黃不接，我就答應了，那個節目正巧是禮拜天。  我那時又沒有報到，那等我到康總報到以後，我發現康總的政策還蠻開放，只要不影響軍中正常的演戲或者是勞軍活動，允許隊員去打知名度，所以後來電影和戲劇很多有名的人，都是康總出來的，像葛香亭、曹健這些人，都可以出外拍電影。  所以不影響我正常的軍中工作，我就出去彈彈琴，但這種情況之下，我就陸續在正聲電台、中廣彈琴。工作最多的時候，禮拜天從上午九點鐘跑現場，然後到當時第一飯店漢宮夜總會，彈琴彈到夜裡一兩點，那是最輝煌的時期。",
+          "interviewer_question": "什麼樣的機緣讓您從軍中走向社會？又是怎麼開始廣播生涯？",
+          "speaker": "孫樸生",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "parse_note": "原站問／问／間／间均按明确问方标记处理；嵌入故事对话及过长问方跳过。",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        }
+      ]
+    },
+    {
+      "id": "N-3b7bd23f91",
+      "name": "林恆富",
+      "split": "development",
+      "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_3_403.htm?3",
+      "title": "省錢為持家 知足樂長富",
+      "background_note": "退辅会机构口述史，涵盖军人、退役后劳动者及军眷。本人职业、是否服役、性别与关系只能依据原话；机构来源不等于人人曾从军。",
+      "sources": [
+        {
+          "id": "VAC-400",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_3_400.htm?4",
+          "title": "布農結髮情 鍾情育三子",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:25:03.188342+00:00",
+          "raw_path": "VAC-400-raw_path.html",
+          "body_path": "VAC-400-body_path.txt",
+          "raw_sha256": "1be92e65d4589c2318b4104cdd1bc5119327b9323d031531cc0c0df893d1567b",
+          "body_sha256": "3ed7ca38820da10901efec80355221d3a9b4bb210d409a6a24f5a6d1c2bc2df1",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "林恆富"
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "VAC-400-E01",
+          "source_id": "VAC-400",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_3_400.htm?4",
+          "body_char_start": 146,
+          "body_char_end": 212,
+          "text": "有什麼驕傲?不要去講那個驕傲的事情。主要是把孩子盼大了，孩子沒有那個做壞的就驕傲了嘛!他有他的事情，他要為他的孩子奮鬥嘛!是不是啊?",
+          "interviewer_question": "您回頭看自己一生，有没有讓您感到驕傲的事情?",
+          "speaker": "林恆富",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "parse_note": "原站問／问／間／间均按明确问方标记处理；嵌入故事对话及过长问方跳过。",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        }
+      ]
+    },
+    {
+      "id": "N-b432740bd8",
+      "name": "張希萍",
+      "split": "development",
+      "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_251.htm?4",
+      "title": "國共內戰起  為了吃飯從軍去",
+      "background_note": "退辅会机构口述史，涵盖军人、退役后劳动者及军眷。本人职业、是否服役、性别与关系只能依据原话；机构来源不等于人人曾从军。",
+      "sources": [
+        {
+          "id": "VAC-251",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_251.htm?4",
+          "title": "國共內戰起  為了吃飯從軍去",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:24:29.628306+00:00",
+          "raw_path": "VAC-251-raw_path.html",
+          "body_path": "VAC-251-body_path.txt",
+          "raw_sha256": "957c47b336466f54c250952648705815ddd59655255be96a7ceafa7a46556ce7",
+          "body_sha256": "290c670dd2af1202c3aa863536a73df8a2479f26cf6043c95020c49ad87a75a3",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "張希萍"
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "VAC-251-E02",
+          "source_id": "VAC-251",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_251.htm?4",
+          "body_char_start": 255,
+          "body_char_end": 385,
+          "text": "加入軍隊是過江，到了鎮江之後就沒有辦法了，才加入軍隊。在流亡的那段時候，你不跟著軍隊會餓死的，要去哪裡吃飯啊？像揚州縣政府，這些機關在當時並沒有統一指揮機制，即使成為流亡政府也沒有待遇，也找不到人，你找他有什麼用？沒有用啊！這個狀況恐怕不是一般人所能想像的到。",
+          "interviewer_question": "您等於是公職人員，並不是加入軍隊？",
+          "speaker": "張希萍",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "parse_note": "原站問／问／間／间均按明确问方标记处理；嵌入故事对话及过长问方跳过。",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        }
+      ]
+    },
+    {
+      "id": "N-6bb5eed04e",
+      "name": "張秋香",
+      "split": "development",
+      "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_4_104.htm?4",
+      "title": "十年女青  終身服務榮民",
+      "background_note": "退辅会机构口述史，涵盖军人、退役后劳动者及军眷。本人职业、是否服役、性别与关系只能依据原话；机构来源不等于人人曾从军。",
+      "sources": [
+        {
+          "id": "VAC-104",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_4_104.htm?4",
+          "title": "十年女青  終身服務榮民",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:25:52.267286+00:00",
+          "raw_path": "VAC-104-raw_path.html",
+          "body_path": "VAC-104-body_path.txt",
+          "raw_sha256": "a28494d0d5feda1ed9cc3a85c4c9e49078548717fd9215cddff118d9b495d73e",
+          "body_sha256": "54be65f85a5b1292dd23cc2e57ad471b008c2068ffbf52358d8e444a64512dc1",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "張秋香"
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "VAC-104-E01",
+          "source_id": "VAC-104",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_4_104.htm?4",
+          "body_char_start": 33,
+          "body_char_end": 231,
+          "text": "我希望永遠都不要碰到。我學妹說：「呀！我好希望戰爭喔！」我說你白痴啦！你會不會覺得戰爭最好都不要發生，發生了是多少人會有一些殘缺，你看像現在還有一些手斷的、腳斷的，他們活到現在日子是怎麼過？  戰爭是非常殘酷的，會有傷亡，就會造成家庭可能離婚或怎樣，他自己的個性能維持正常？會不會脾氣變得很怪異？一個家庭跟著怎樣？所以最好不要有戰爭，我祝福大家都不要有戰爭，大家都快快樂樂、安和樂利、平安過日子。",
+          "interviewer_question": "對於沒有親身經歷過戰爭的人，有沒有什麼話想要對他們說？",
+          "speaker": "張秋香",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "parse_note": "原站問／问／間／间均按明确问方标记处理；嵌入故事对话及过长问方跳过。",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        }
+      ]
+    },
+    {
+      "id": "N-494e209cc7",
+      "name": "黃樹華",
+      "split": "development",
+      "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_162.htm?5",
+      "title": "被抓當兵  母親來探淚眼相望",
+      "background_note": "退辅会机构口述史，涵盖军人、退役后劳动者及军眷。本人职业、是否服役、性别与关系只能依据原话；机构来源不等于人人曾从军。",
+      "sources": [
+        {
+          "id": "VAC-162",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_162.htm?5",
+          "title": "被抓當兵  母親來探淚眼相望",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:24:40.129077+00:00",
+          "raw_path": "VAC-162-raw_path.html",
+          "body_path": "VAC-162-body_path.txt",
+          "raw_sha256": "6a07835a2813697102002930caf8989aa0d2b76b74b23bc5aa1e7c2472508dc1",
+          "body_sha256": "7d266cec194c71a614cd07e9b1ecf4a168c1ea72355ff644ac448d0501068303",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "黃樹華"
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "VAC-162-E01",
+          "source_id": "VAC-162",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_162.htm?5",
+          "body_char_start": 27,
+          "body_char_end": 826,
+          "text": "我出生於民國16年8月24日，出生地四川。大陸家裡是替有錢人家種田，種十畝田。十畝田稻子他要拿六擔回去，十四公斤一擔，要拿六擔。  家裡現在有五個小妹、一個弟弟、一個三叔，三叔不在了，死了好幾年了。我86年回去時，他已經91歲了。後來我弟弟寫信來，三叔已經走了，已經死掉了。  小時家裡我父親是自己請老師，教老書、古書的，穿著大長袍來教書。從三字經開始讀，三字經讀到百家姓，一共是七本，什麼大學、中庸、四書啊，整個一套七本。我們家裡是規定7歲讀書。老師吃飯都在我們家裡一起吃，睡覺我父親他們的房就給他睡，老師為主。我從7歲讀到12歲。  12歲我就開始種田，沒辦法讀啦，因為家裡要種田，沒人啦！我是老大，我下面還有五個妹妹，抗戰勝利的時候34年，我媽媽才生了個小弟。我們家女孩子是不讓她讀書的，讀書有什麼用啊？長大了不嫁給人家去？所以就男孩子可以讀書，我們家裡老風俗習慣就這樣。女孩子就跟媽媽一起在田裡面，種東西。  我們家陰曆四月就開始種，二月也種包穀啊、種黃豆、種綠豆。那時候生活差，一共打十擔稻子，老闆就要拿六擔去，我們自己還剩著四擔，就不夠吃。不夠吃怎麼辦啊？就找有錢的。陰曆二、三月，什麼都沒出來，就找個有錢的借馬鈴薯、洋芋啊，一堆洋芋放在地，他有錢的人還不借給你，沒辦法。那個時候大陸上真是沒錢啊！很苦。苦沒有辦法，大家都是一樣。  我們那兒沒有村，不像你們臺灣人一樣有一個村，我們山這邊的，山那邊的叫做一家人戶，當個甲長的話，要是保長有什麼公事，跑個兩、三個小時還找不到一家人家。這個山翻到山的那邊，才找到一家人家。我們都是山，四川就是山多嘛！我們沒有辦法，我們那個地方當個保長開會，你當個甲長去參加什麼會議，沒有辦法。當保長自己跑啊！通知家裡面、通知開會。開會懶得去啊！讓家裡人去，女孩子不能參加，只有男孩子才可以參加。  我12歲開始種田，種到21歲，37年抓出來的，抓出來當兵。",
+          "interviewer_question": "請您介紹一下大陸家庭的人口狀況、生活情形。",
+          "speaker": "黃樹華",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "parse_note": "原站問／问／間／间均按明确问方标记处理；嵌入故事对话及过长问方跳过。",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        }
+      ]
+    },
+    {
+      "id": "N-b003d35572",
+      "name": "黄大发",
+      "split": "development",
+      "source_url": "https://wenming.cn/zgwmw_ysp/ysp_ft/2018_52284/202103/t20210307_5969586.shtml",
+      "title": "黄大发：为有“天渠”活水来",
+      "sources": [
+        {
+          "id": "SUP-huangdafa",
+          "url": "https://wenming.cn/zgwmw_ysp/ysp_ft/2018_52284/202103/t20210307_5969586.shtml",
+          "title": "黄大发：为有“天渠”活水来",
+          "institution": "中国文明网",
+          "fetched_at": "2026-10-17T08:54:28.059996+00:00",
+          "raw_path": "SUP-huangdafa-raw_path.md",
+          "body_path": "SUP-huangdafa-body_path.txt",
+          "raw_sha256": "eddbb2f2aab3f6524ec1615b899ec9bd5df8e5897e5b3b20b99d187021d11432",
+          "body_sha256": "a52ee0debcec73386aa27e1fcc7c39b761e5b8590ea95c894aaa77c1251f9903",
+          "format": "published_interview_QA",
+          "interviewer": "贺子桓（实习记者）",
+          "narrator": "黄大发",
+          "retrieval_backend": "agent-reach Jina Reader",
+          "encoding": "UTF-8",
+          "source_limitations": "Full body includes editorial material; excerpts below manually bounded to explicit respondent answers."
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "SUP-huangdafa-E008",
+          "source_id": "SUP-huangdafa",
+          "source_url": "https://wenming.cn/zgwmw_ysp/ysp_ft/2018_52284/202103/t20210307_5969586.shtml",
+          "text": "我这一生没有好好做过几件事情，但在艰难困苦的条件下，完成了家乡人、老百姓最期盼、最高兴的事情，我觉得这就值了。我听很多人说，看了电影他们都流下了眼泪，我自己也流泪了，尤其是看到我女儿出事的时候，我心里很心酸很难受。",
+          "interviewer_question": "前一段时间，根据您的个人生平改编的电影《天渠》在院线上映，看完这部电影之后您的感受是什么？",
+          "body_char_start": 1182,
+          "body_char_end": 1289,
+          "speaker": "黄大发",
+          "speaker_role": "interviewee",
+          "question_ids": [
+            "RV15"
+          ],
+          "mapping_status": "manually proposed; gold independent of model output",
+          "verbatim_scope": "continuous exact respondent substring; no interviewer or editorial text; original full body retained"
+        }
+      ]
+    },
+    {
+      "id": "N-0d4a398022",
+      "name": "郭柯",
+      "split": "development",
+      "source_url": "https://news.youth.cn/gn/201708/t20170819_10547682.htm",
+      "title": "对话《二十二》导演郭柯：老人说到至深处，我却关机，不拍了",
+      "sources": [
+        {
+          "id": "SUP-guoke",
+          "url": "https://news.youth.cn/gn/201708/t20170819_10547682.htm",
+          "title": "对话《二十二》导演郭柯：老人说到至深处，我却关机，不拍了",
+          "institution": "中国青年网",
+          "fetched_at": "2026-10-17T08:55:45.483269+00:00",
+          "raw_path": "SUP-guoke-raw_path.md",
+          "body_path": "SUP-guoke-body_path.txt",
+          "raw_sha256": "11aa4fdcf01a663b40bdf25b2128607f7082f013685628539e7f05d6e6048d7c",
+          "body_sha256": "4e40885910ee40ae7a77f7a1703e13ab977a6f68421e1ab9c753e417d68e9815",
+          "format": "published_interview_QA",
+          "interviewer": "范利媛、吴阳",
+          "narrator": "郭柯",
+          "retrieval_backend": "agent-reach Jina Reader",
+          "encoding": "UTF-8",
+          "source_limitations": "Full body includes editorial material; excerpts below manually bounded to explicit respondent answers."
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "SUP-guoke-E005",
+          "source_id": "SUP-guoke",
+          "source_url": "https://news.youth.cn/gn/201708/t20170819_10547682.htm",
+          "text": "最大的遗憾是海南唯一一个苗族老人——邓玉民，没有进入我们的镜头，我们晚了三天，她走了。\n\n拍摄前对片子完全没有预期，只是想通过一些电影节可以找到一些发行商，但这个机会好像也没有，这个片子能收回成本，我们就成功了，没有想到有这么大的反响。\n\n成片与设想没有太大差别，我请台湾剪辑师剪的，但是这一版可能多了一些情感的传递，就是片尾的众筹字幕。",
+          "interviewer_question": "在拍摄前你对这部纪录片有什么预期？今天呈现在荧幕上的《二十二》与你拍摄前设想的差别大吗？现在看来有没有什么是遗憾的？",
+          "body_char_start": 2094,
+          "body_char_end": 2263,
+          "speaker": "郭柯",
+          "speaker_role": "interviewee",
+          "question_ids": [
+            "RV02"
+          ],
+          "mapping_status": "manually proposed; gold independent of model output",
+          "verbatim_scope": "continuous exact respondent substring; no interviewer or editorial text; original full body retained"
+        }
+      ]
+    },
+    {
+      "id": "N-baa2e4d420",
+      "name": "姚策",
+      "split": "development",
+      "source_url": "https://news.ifeng.com/c/85uagdqVQzb",
+      "title": "姚策生命中的最后三十天",
+      "sources": [
+        {
+          "id": "SUP-yaoce",
+          "url": "https://news.ifeng.com/c/85uagdqVQzb",
+          "title": "姚策生命中的最后三十天",
+          "institution": "每日人物（凤凰网公开转载）",
+          "fetched_at": "2026-10-17T08:55:58.149638+00:00",
+          "raw_path": "SUP-yaoce-raw_path.html",
+          "body_path": "SUP-yaoce-body_path.txt",
+          "raw_sha256": "4cb9c383fc2d6c1d6fc5b4a10041c4ed39fafb7bd3475db24c50673d0562f124",
+          "body_sha256": "4736aec91db778671779bafac8f1252c16357e617e8780d763c2a743a932cd5e",
+          "format": "published_interview_QA",
+          "interviewer": "何智",
+          "narrator": "姚策",
+          "retrieval_backend": "direct public HTML after Jina provider domain error",
+          "encoding": "UTF-8",
+          "source_limitations": "Multiple interview dates and editorial diary; retain only labelled 姚策 QA answers. His views of disputed events are self-reports, not independent adjudication. Final video transcript is separate and not used as QA."
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "SUP-yaoce-E029",
+          "source_id": "SUP-yaoce",
+          "source_url": "https://news.ifeng.com/c/85uagdqVQzb",
+          "text": "对，就像熊磊每次一说我，我嫁给你得到什么了？什么都没有啊。这个其实在我看来我是充满遗憾的。",
+          "interviewer_question": "这让你觉得非常遗憾？",
+          "body_char_start": 9642,
+          "body_char_end": 9687,
+          "speaker": "姚策",
+          "speaker_role": "interviewee",
+          "question_ids": [
+            "RV02"
+          ],
+          "mapping_status": "manually proposed; gold independent of model output",
+          "verbatim_scope": "continuous exact respondent substring; no interviewer or editorial text; original full body retained"
+        },
+        {
+          "id": "SUP-yaoce-E030",
+          "source_id": "SUP-yaoce",
+          "source_url": "https://news.ifeng.com/c/85uagdqVQzb",
+          "text": "反正现在对于我来讲，我真的觉得这个家庭比什么都重要。哪怕我现在康复了、治愈了、一点事都没有了，你让我再去选择创造更好的物质条件我也不会，我要把所有的时间留给家庭。",
+          "interviewer_question": "重来的话会有完全不同的选择？",
+          "body_char_start": 9711,
+          "body_char_end": 9792,
+          "speaker": "姚策",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "manually proposed; gold independent of model output",
+          "verbatim_scope": "continuous exact respondent substring; no interviewer or editorial text; original full body retained"
+        },
+        {
+          "id": "SUP-yaoce-E011",
+          "source_id": "SUP-yaoce",
+          "source_url": "https://news.ifeng.com/c/85uagdqVQzb",
+          "text": "其实还是从我妈妈对我不信任开始，她第一次质问我是否认识这些网友，是否有指挥这些网友……这个情况对我的冲击是最大的，因为还是那句话，外界说什么，一天也就过去了，但是家庭的，尤其是我妈妈，对我有28年的养育之恩，对我现在的这种不信任的感觉让我觉得真的是很难以平息。",
+          "interviewer_question": "回顾这一年，这么多次的舆论风波，哪一次对你的影响最大？",
+          "body_char_start": 5250,
+          "body_char_end": 5380,
+          "speaker": "姚策",
+          "speaker_role": "interviewee",
+          "question_ids": [
+            "RV03"
+          ],
+          "mapping_status": "manually proposed; gold independent of model output",
+          "verbatim_scope": "continuous exact respondent substring; no interviewer or editorial text; original full body retained"
+        },
+        {
+          "id": "SUP-yaoce-E016",
+          "source_id": "SUP-yaoce",
+          "source_url": "https://news.ifeng.com/c/85uagdqVQzb",
+          "text": "自从发生这个事情以后，我跟我妈在一起都会经常哭。因为一个最关怀你的人不信任你了，这种感情是不一样的嘛，我以前不管怎么说我哭的话起码我妈站在我这边对吧，是给我最后力量的人，现在连最后的力量都叛变了，都不在了，你说什么感觉，你没法诉说。",
+          "interviewer_question": "这种不信任的裂痕产生之后，对你有什么影响吗？",
+          "body_char_start": 5942,
+          "body_char_end": 6058,
+          "speaker": "姚策",
+          "speaker_role": "interviewee",
+          "question_ids": [
+            "RV03"
+          ],
+          "mapping_status": "manually proposed; gold independent of model output",
+          "verbatim_scope": "continuous exact respondent substring; no interviewer or editorial text; original full body retained"
+        },
+        {
+          "id": "SUP-yaoce-E031",
+          "source_id": "SUP-yaoce",
+          "source_url": "https://news.ifeng.com/c/85uagdqVQzb",
+          "text": "做的最对的选择就是找了熊磊，对吧。其实这方面当初有很多反对啊等等啊，但最终我觉得我的选择没有问题。当时，我的感觉就是，她就是伴我终老的人，就是这种感觉。事实告诉我，我的感觉没问题啊。",
+          "interviewer_question": "你觉得自己做得最对的选择是什么？",
+          "body_char_start": 9818,
+          "body_char_end": 9909,
+          "speaker": "姚策",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "manually proposed; gold independent of model output",
+          "verbatim_scope": "continuous exact respondent substring; no interviewer or editorial text; original full body retained"
+        },
+        {
+          "id": "SUP-yaoce-E033",
+          "source_id": "SUP-yaoce",
+          "source_url": "https://news.ifeng.com/c/85uagdqVQzb",
+          "text": "是啊。过去在外面想让每个人都觉得自己好，然后在家里希望老婆能够理解我，你不理解我就是你的错，可是，别人干吗一定要理解你啊？哪有那么多应该啊、理解啊。她偶尔会跟我吵，但大部分时间还是比较忍让我的。现在想想，你有什么资格让她理解？你作为丈夫的责任、义务没有尽到，还天天让她理解你，其实这是一件很残忍的事情。我现在后悔了，因为我可能没有时间去弥补了。",
+          "interviewer_question": "感觉过去一年的这些变故，让你重新审视了自己？",
+          "body_char_start": 10010,
+          "body_char_end": 10182,
+          "speaker": "姚策",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "manually proposed; gold independent of model output",
+          "verbatim_scope": "continuous exact respondent substring; no interviewer or editorial text; original full body retained"
+        },
+        {
+          "id": "SUP-yaoce-E001",
+          "source_id": "SUP-yaoce",
+          "source_url": "https://news.ifeng.com/c/85uagdqVQzb",
+          "text": "是的。他们曾经帮助过我，让我非常感动，而且是在我最为难，最需要钱的时候。那么现在可能他们觉得我得到了医院的赔偿，那么我就得把这个钱还给他，我觉得这本身也没有什么问题。",
+          "interviewer_question": "这两天是有网友来找你退那个捐款？",
+          "body_char_start": 2157,
+          "body_char_end": 2240,
+          "speaker": "姚策",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "manually proposed; gold independent of model output",
+          "verbatim_scope": "continuous exact respondent substring; no interviewer or editorial text; original full body retained"
+        }
+      ]
+    },
+    {
+      "id": "N-c4c6c5793d",
+      "name": "柳传志",
+      "split": "development",
+      "source_url": "https://finance.ifeng.com/c/7cGKGjx1qx8",
+      "title": "独家专访柳传志：父亲教我正直诚信 母亲教我善良",
+      "sources": [
+        {
+          "id": "SUP-liuchuanzhi",
+          "url": "https://finance.ifeng.com/c/7cGKGjx1qx8",
+          "title": "独家专访柳传志：父亲教我正直诚信 母亲教我善良",
+          "institution": "凤凰卫视／凤凰财经",
+          "fetched_at": "2026-10-17T08:55:58.051805+00:00",
+          "raw_path": "SUP-liuchuanzhi-raw_path.html",
+          "body_path": "SUP-liuchuanzhi-body_path.txt",
+          "raw_sha256": "fa04355748ff387f68c14115aee71df04b8851bfa8ff06670294c647166e2079",
+          "body_sha256": "7daea1f41b56daba622b7c5e85668d3db30dad568eb4a46dbe05179834371051",
+          "format": "published_interview_QA",
+          "interviewer": "许戈辉",
+          "narrator": "柳传志",
+          "retrieval_backend": "direct public HTML after Jina provider domain error",
+          "encoding": "UTF-8",
+          "source_limitations": "Original dialogue labels abbreviated 柳/许; headings and 小编注 editorial. Interviewer reference to 任正非 regret is not 柳传志 experience."
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "SUP-liuchuanzhi-E003",
+          "source_id": "SUP-liuchuanzhi",
+          "source_url": "https://finance.ifeng.com/c/7cGKGjx1qx8",
+          "text": "我父亲去世的时候，我母亲这跟我父亲那一幕，还真是非常动人的。这个我得稍微静静才能说得出来这话。我父亲到那个，不是最后，就是我们当天去看他离开他那时候，他还吻了我母亲。\n我母亲去世的时候呢，其实我们都做得挺不好。我母亲病得不那么厉害，很清楚的时候，再三说，不要让她太受痛苦，就是希望她走的时候更有尊严一点。就是千万不要（折腾她）。\n但是呢，当时医院再三说割了喉以后还能救的时候，我们还是同意割喉了。割喉了以后其实是很难，就每次又到病危的时候，又加一些药物什么的。其实那等于是在受刑，当时她已经不能说话了，思路脑子……将近一年的时间。我每每想起这个都觉得，心里挺对不起她。",
+          "interviewer_question": "所以，您觉得在父母走的时候，他们还有什么未了的心愿吗，有什么遗憾吗？",
+          "body_char_start": 4072,
+          "body_char_end": 4356,
+          "speaker": "柳传志",
+          "speaker_role": "interviewee",
+          "question_ids": [
+            "RV06"
+          ],
+          "mapping_status": "manually proposed; gold independent of model output",
+          "verbatim_scope": "continuous exact respondent substring; no interviewer or editorial text; original full body retained"
+        }
+      ]
+    },
+    {
+      "id": "N-8415e90cdf",
+      "name": "蔡鹭",
+      "split": "development",
+      "source_url": "https://m.thepaper.cn/newsDetail_forward_4020899",
+      "title": "专访｜“崔器”蔡鹭：演《长安十二时辰》，每场戏都要憋着",
+      "sources": [
+        {
+          "id": "SUP-cailu",
+          "url": "https://m.thepaper.cn/newsDetail_forward_4020899",
+          "title": "专访｜“崔器”蔡鹭：演《长安十二时辰》，每场戏都要憋着",
+          "institution": "澎湃新闻",
+          "fetched_at": "2026-10-17T08:56:34.259055+00:00",
+          "raw_path": "SUP-cailu-raw_path.md",
+          "body_path": "SUP-cailu-body_path.txt",
+          "raw_sha256": "5bf514de171471147d5394e9508822ed26a065929c2efb96e3ff118ef6df10fc",
+          "body_sha256": "0d15655d8321e331007bf8b379175a4bbe7dc8b2c7eac3ad1118b28560669bef",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "蔡鹭",
+          "retrieval_backend": "agent-reach Jina Reader",
+          "encoding": "UTF-8",
+          "source_limitations": "Report and role discussion mixed. Only three self-experience QA answers selected; source incorrectly labels another response 崔器, excluded. Fictional character experiences excluded."
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "SUP-cailu-E001",
+          "source_id": "SUP-cailu",
+          "source_url": "https://m.thepaper.cn/newsDetail_forward_4020899",
+          "text": "哈哈，你居然看到了。这是几年前写的，当时我长期合作就曹盾导演，但稍微成功点的演员，会一个戏接一个戏，而我当时除了曹导的戏，接不到其他的，去了很多面试也都没有结果。李小龙是我偶像，我忘了在哪里读到过，他曾经去了200多个面试，才面试上一个角色。我读到这段深有同感。那时候会感觉自己很无力，很被动。当时也和朋友聊天，聊到现在压力太大了，表演的路，不知道能走多远，面对婚姻和家庭，有了更多的压力，要考虑是不是要继续当演员，是不是要继续熬下去。我可以追这个梦，我也可以去追别的梦，人不会只有一个梦，所以当时会思考这件事情。",
+          "interviewer_question": "微博签名是“中年爸爸中年丈夫中年儿子中年演员中年危机”，那聊聊你的“中年危机”？",
+          "body_char_start": 4839,
+          "body_char_end": 5096,
+          "speaker": "蔡鹭",
+          "speaker_role": "interviewee",
+          "question_ids": [
+            "WK07"
+          ],
+          "mapping_status": "manually proposed; gold independent of model output",
+          "verbatim_scope": "continuous exact respondent substring; no interviewer or editorial text; original full body retained"
+        }
+      ]
+    },
+    {
+      "id": "N-570a195946",
+      "name": "赵奕欢",
+      "split": "development",
+      "source_url": "https://news.17173.com/content/2012-05-24/20120524131250508_all.shtml",
+      "title": "零距离专访《青春期3》电影女主角赵奕欢",
+      "sources": [
+        {
+          "id": "SUP-zhaoyihuan",
+          "url": "https://news.17173.com/content/2012-05-24/20120524131250508_all.shtml",
+          "title": "零距离专访《青春期3》电影女主角赵奕欢",
+          "institution": "17173原专访",
+          "fetched_at": "2026-10-17T08:56:49.430697+00:00",
+          "raw_path": "SUP-zhaoyihuan-raw_path.html",
+          "body_path": "SUP-zhaoyihuan-body_path.txt",
+          "raw_sha256": "acc038235f3c7f3225c207e9abd46ed9ea098d0e392884c0bf8b8b379a04c757",
+          "body_sha256": "1513d3643985bc949e6fa9bdf98b7c66ed706055e954a845bde44a67ea9be999",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "赵奕欢",
+          "retrieval_backend": "direct public HTML after Jina provider domain error",
+          "encoding": "UTF-8",
+          "source_limitations": "Promotional interview includes fictional 程小雨. The directly asked second 青春叛逆期 question is answered without repeated speaker prefix; adjacent QA establishes respondent. Do not use preceding fictional character passage."
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "SUP-zhaoyihuan-E001",
+          "source_id": "SUP-zhaoyihuan",
+          "source_url": "https://news.17173.com/content/2012-05-24/20120524131250508_all.shtml",
+          "text": "我现在也还是青春期啊，哈哈，做过最叛逆的事情就是坚持学表演吧，当时家里特别反对。",
+          "interviewer_question": "你在青春叛逆期是个怎样的女孩？",
+          "body_char_start": 1159,
+          "body_char_end": 1199,
+          "speaker": "赵奕欢",
+          "speaker_role": "interviewee",
+          "question_ids": [
+            "GR06"
+          ],
+          "mapping_status": "manually proposed; gold independent of model output",
+          "verbatim_scope": "continuous exact respondent substring; no interviewer or editorial text; original full body retained"
+        },
+        {
+          "id": "SUP-zhaoyihuan-E003",
+          "source_id": "SUP-zhaoyihuan",
+          "source_url": "https://news.17173.com/content/2012-05-24/20120524131250508_all.shtml",
+          "text": "生活中的我比较安静，喜欢做比较静态的活动，比如看电影看书，或是玩玩游戏。兔子，不是说“动如脱兔，静如处子”嘛，我就是动起来很疯，安静时很温顺的兔子。嘿嘿（笑~）",
+          "interviewer_question": "杂志或者电视上的赵奕欢给人的感觉永远是青春、靓丽、充满活力的，那么生活中的你是什么样性格的呢？如果用一种动物来形容自己，会选哪个。",
+          "body_char_start": 1864,
+          "body_char_end": 1944,
+          "speaker": "赵奕欢",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "manually proposed; gold independent of model output",
+          "verbatim_scope": "continuous exact respondent substring; no interviewer or editorial text; original full body retained"
+        }
+      ]
+    },
+    {
+      "id": "N-fb222da48d",
+      "name": "方励",
+      "split": "development",
+      "source_url": "https://xinwen.bjd.com.cn/content/s673b12bae4b0840b5f9e1548.html",
+      "title": "上观专访｜方励：打捞被遗忘的人",
+      "sources": [
+        {
+          "id": "SUP-fangli",
+          "url": "https://xinwen.bjd.com.cn/content/s673b12bae4b0840b5f9e1548.html",
+          "title": "上观专访｜方励：打捞被遗忘的人",
+          "institution": "解放日报·上观新闻（北京日报京报网转载）",
+          "fetched_at": "2026-10-17T09:01:49.621683+00:00",
+          "raw_path": "SUP-fangli-raw_path.md",
+          "body_path": "SUP-fangli-body_path.txt",
+          "raw_sha256": "a6e78e0e795e31a5078d4841833dc6b2cb458b05ad324cc984eb2941d4945f2f",
+          "body_sha256": "f441542b6912efc722682e8a52faae1df0d19e716376b229d1f36b38ab492a50",
+          "format": "published_interview_feature_direct_quotes",
+          "interviewer": "刘璐",
+          "narrator": "方励",
+          "retrieval_backend": "agent-reach Jina Reader",
+          "encoding": "UTF-8",
+          "source_limitations": "Reported interview feature. Only attributed direct respondent quotations selected; reporter biographies, victim accounts and editorial descriptions excluded; no printed interviewer question, null preserved."
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "SUP-fangli-E001",
+          "source_id": "SUP-fangli",
+          "source_url": "https://xinwen.bjd.com.cn/content/s673b12bae4b0840b5f9e1548.html",
+          "text": "人这一生最珍贵的财富是什么？是生命，是时间和心血。",
+          "interviewer_question": null,
+          "body_char_start": 1121,
+          "body_char_end": 1146,
+          "speaker": "方励",
+          "speaker_role": "interviewee",
+          "question_ids": [
+            "RV12"
+          ],
+          "mapping_status": "manually proposed; gold independent of model output",
+          "verbatim_scope": "continuous exact respondent substring; no interviewer or editorial text; original full body retained"
+        },
+        {
+          "id": "SUP-fangli-E003",
+          "source_id": "SUP-fangli",
+          "source_url": "https://xinwen.bjd.com.cn/content/s673b12bae4b0840b5f9e1548.html",
+          "text": "我们都是走在路上的人，遭遇什么就是什么，什么东西引发了你的好奇心，恰好你又有兴趣，那就干呗！人生本身就是一趟旅程，站上山顶很快乐，掉下峡谷也可以快乐啊！走路太顺了，反而没有惊喜了。",
+          "interviewer_question": null,
+          "body_char_start": 6043,
+          "body_char_end": 6133,
+          "speaker": "方励",
+          "speaker_role": "interviewee",
+          "question_ids": [
+            "RV11"
+          ],
+          "mapping_status": "manually proposed; gold independent of model output",
+          "verbatim_scope": "continuous exact respondent substring; no interviewer or editorial text; original full body retained"
+        }
+      ]
+    },
+    {
+      "id": "N-518ead3cab",
+      "name": "应昊茗",
+      "split": "development",
+      "source_url": "https://m.thepaper.cn/baijiahao_5305761",
+      "title": "放弃了三五年，他还是选择继续当演员",
+      "sources": [
+        {
+          "id": "SUP-yinghaoming",
+          "url": "https://m.thepaper.cn/baijiahao_5305761",
+          "title": "放弃了三五年，他还是选择继续当演员",
+          "institution": "上流工作室／超级星声（澎湃号上流UpFlow）",
+          "fetched_at": "2026-10-17T09:02:00.382549+00:00",
+          "raw_path": "SUP-yinghaoming-raw_path.md",
+          "body_path": "SUP-yinghaoming-body_path.txt",
+          "raw_sha256": "580ce291fcb3439ad8053d7f7911de9b061ba9bede8c9642a1fb7b375d46a62a",
+          "body_sha256": "d551621da0974a1ea0879b4f3447709cf10e44931c47f349ad4f0d951528af36",
+          "format": "published_interview_QA",
+          "interviewer": "吴旦、杨怡",
+          "narrator": "应昊茗",
+          "retrieval_backend": "agent-reach Jina Reader",
+          "encoding": "UTF-8",
+          "source_limitations": "Original interview Q&A by named authors, promotional page includes fictional roles; only answers about own career, temperament and moods selected, not role events."
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "SUP-yinghaoming-E001",
+          "source_id": "SUP-yinghaoming",
+          "source_url": "https://m.thepaper.cn/baijiahao_5305761",
+          "text": "有，我以前有想过放弃，也放弃过三五年吧，但是回头来还是继续干自己喜欢的事业。因为你总会觉得干别的事业不是你所擅长的，你会觉得可能不纯粹。",
+          "interviewer_question": "所以从走上演员这条路一直到现在，有过想要放弃的时刻嘛？",
+          "body_char_start": 1860,
+          "body_char_end": 1928,
+          "speaker": "应昊茗",
+          "speaker_role": "interviewee",
+          "question_ids": [
+            "RV05"
+          ],
+          "mapping_status": "manually proposed; gold independent of model output",
+          "verbatim_scope": "continuous exact respondent substring; no interviewer or editorial text; original full body retained"
+        }
+      ]
+    },
+    {
+      "id": "N-3617c85a66",
+      "name": "于是",
+      "split": "development",
+      "source_url": "https://www.chinawriter.com.cn/n1/2026/0608/c405057-40735564.html",
+      "title": "于是：做喜欢的事，让写作更自由",
+      "sources": [
+        {
+          "id": "SUP-yushi",
+          "url": "https://www.chinawriter.com.cn/n1/2026/0608/c405057-40735564.html",
+          "title": "于是：做喜欢的事，让写作更自由",
+          "institution": "中国作家网",
+          "fetched_at": "2026-10-17T09:03:09.920684+00:00",
+          "raw_path": "SUP-yushi-raw_path.md",
+          "body_path": "SUP-yushi-body_path.txt",
+          "raw_sha256": "22f7410020c34c48d572a31c267e496f527839acbae614e2a61420b182192af8",
+          "body_sha256": "deb383931e81a1aa4b9cd5af00e3c2da9fb0880038ad00dca35abb2f11074e02",
+          "format": "published_interview_QA",
+          "interviewer": "袁欢、栗鹿",
+          "narrator": "于是",
+          "retrieval_backend": "agent-reach Jina Reader",
+          "encoding": "UTF-8",
+          "source_limitations": "Explicit named interviewer dialogue. Editor introduction and bold section headings excluded; middle-age period comes from narrator own words 中年/40岁之后, not inferred from demographic age."
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "SUP-yushi-E001",
+          "source_id": "SUP-yushi",
+          "source_url": "https://www.chinawriter.com.cn/n1/2026/0608/c405057-40735564.html",
+          "text": "年龄焦虑，对我来讲，更多的是身体焦虑，因为身体工作到了一定的年限，它开始反抗了，要进厂维修，要更新版本等。但从精神层面来讲，我并没有那种所谓的中年的焦虑。我比较任性地过上了独居的生活，没有小孩，悲凉地把给父母养老送终这件事提前完成了。也就是说，40岁之后，我其实是自由的。\n\n我也会去做体检，包括搬家搬到一个舒适的环境，都是想要对身体好一点，想把这个焦虑解除掉。身体有需求，我们就听它的，哄哄它就好了。年轻的时候，我可能坐在电脑前，一口气翻译个两三小时都不会累，一坐坐一天。但是现在不行，我要出去走一走，要呼吸新鲜空气，要呼吸四月的樱花香，五月的香樟花香。我觉得游泳跟独居很搭，对我来说，是解除焦虑的最好的方式。",
+          "interviewer_question": "你之前提到了“中女的年龄焦虑”，这是大家都很关心的问题。",
+          "body_char_start": 1951,
+          "body_char_end": 2257,
+          "speaker": "于是",
+          "speaker_role": "interviewee",
+          "question_ids": [
+            "WK11"
+          ],
+          "mapping_status": "manually proposed; gold independent of model output",
+          "verbatim_scope": "continuous exact respondent substring; no interviewer or editorial text; original full body retained"
+        },
+        {
+          "id": "SUP-yushi-E002",
+          "source_id": "SUP-yushi",
+          "source_url": "https://www.chinawriter.com.cn/n1/2026/0608/c405057-40735564.html",
+          "text": "我目前最主要的一个变化，人到了中年之后，对社交的需求可能就会减少。年轻的时候，可能每天晚上或者是每个星期有好几天晚上都在外面玩啦，约朋友啦，聚会啦，总有很多活动需要参加。但是中年之后，就觉得那些活动慢慢地在消耗自己的精力。还有，我觉得现在的城市生活，或者说人跟人之间的生活状态的同质化倾向有点严重，出门社交带给我的惊喜越来越少了，那它就只会消耗我的体力，消耗我的时间了。我就觉得还不如回家，跟书里的世界待在一起。因为书里面会有各种各样的人，有各种各样的时代、各种各样的国家，在家里面跟书待在一起更舒服，从书中得到的收获也更多。所以，我就简化了我的生活，常常宅在家里。",
+          "interviewer_question": "那你平时还有什么其他的爱好吗？你日常的一天是如何度过的？",
+          "body_char_start": 831,
+          "body_char_end": 1114,
+          "speaker": "于是",
+          "speaker_role": "interviewee",
+          "question_ids": [
+            "WK11"
+          ],
+          "mapping_status": "manually proposed; gold independent of model output",
+          "verbatim_scope": "continuous exact respondent substring; no interviewer or editorial text; original full body retained"
+        }
+      ]
+    },
+    {
+      "id": "N-0b5b641466",
+      "name": "双雪涛",
+      "split": "development",
+      "source_url": "https://m.thepaper.cn/newsDetail_forward_26646703",
+      "title": "专访｜双雪涛：人到中年，与悲观共存",
+      "sources": [
+        {
+          "id": "SUP-shuangxuetao",
+          "url": "https://m.thepaper.cn/newsDetail_forward_26646703",
+          "title": "专访｜双雪涛：人到中年，与悲观共存",
+          "institution": "澎湃新闻",
+          "fetched_at": "2026-10-17T09:02:59.891451+00:00",
+          "raw_path": "SUP-shuangxuetao-raw_path.md",
+          "body_path": "SUP-shuangxuetao-body_path.txt",
+          "raw_sha256": "96c360a5f06537794fa2b6f6b1e9f2b7ffa360ccd6463544046146a506a1db0c",
+          "body_sha256": "92b332ede7be818968e8f280d1e129b843f060eddfc916d599adb95fcd742674",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "双雪涛",
+          "retrieval_backend": "agent-reach Jina Reader",
+          "encoding": "UTF-8",
+          "source_limitations": "Original Q&A, own age40 explicitly stated. Fictional character discussion/novel events not self-biography; only self middle-age and writing answers selected."
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "SUP-shuangxuetao-E001",
+          "source_id": "SUP-shuangxuetao",
+          "source_url": "https://m.thepaper.cn/newsDetail_forward_26646703",
+          "text": "中年真的是一个残酷的话题。写作到现在，之前我很少意识到有这么一个“中年”的东西等待着我，我老觉得自己还不算年纪太大，就是在自我欺骗里一直往后拖延认识到自己人到中年这个事实。尤其是从2023年到2024年，我变到了40岁，之前岁数还是3打头的，现在到了4打头，突然一下子意识到我已经来到了人生的中缝。\n\n我之前没有预料到感觉会这么明显。有一天，我发现现在流行的APP，比如小红书、快手、抖音，我手机上一个都没有。我的思维方式、看待世界的方式，和新一代年轻人已经有了挺明显的区别。可能我年轻时看中年人的态度，就跟现在年轻人看我的态度是一样的，这个感觉还挺奇妙的。\n\n还有一种感觉，之前我老觉得这个世界还是非常有希望的，或者说人类的命运总体还是向着一个繁荣和大同的方向走去，这是我年轻时的想法。但是到了40岁，尤其是近四五年世界的变化，让我对自己原来的想法有了疑问，包括现在人工智能的发展、社交媒体的泛滥，知识阶层的失语，这些东西能把我们人类带到哪个方向？其实我已经完全不确定了。这可能也是一个中年的心态，从满怀希望到比较审慎。",
+          "interviewer_question": "四十岁前后，你对“中年”最深的感受是什么？",
+          "body_char_start": 893,
+          "body_char_end": 1354,
+          "speaker": "双雪涛",
+          "speaker_role": "interviewee",
+          "question_ids": [
+            "WK11"
+          ],
+          "mapping_status": "manually proposed; gold independent of model output",
+          "verbatim_scope": "continuous exact respondent substring; no interviewer or editorial text; original full body retained"
+        }
+      ]
+    },
+    {
+      "id": "N-c076ca2fa5",
+      "name": "劉柏考勤",
+      "split": "development",
+      "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_3_421.htm?2",
+      "title": "用心做便當 不計較錢事",
+      "background_note": "退辅会机构口述史，涵盖军人、退役后劳动者及军眷。本人职业、是否服役、性别与关系只能依据原话；机构来源不等于人人曾从军。",
+      "sources": [
+        {
+          "id": "VAC-421",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_3_421.htm?2",
+          "title": "用心做便當 不計較錢事",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:24:48.726664+00:00",
+          "raw_path": "VAC-421-raw_path.html",
+          "body_path": "VAC-421-body_path.txt",
+          "raw_sha256": "b968eb46b4d0d5a6250cf2496cbb95c1c448fb36d5e9981895806843562bb191",
+          "body_sha256": "61cfb26c20dcdd31d7d6aa6b39a09cf65e4cc00b95f91c1cd6273200e7ecf1cf",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "劉柏考勤"
+        },
+        {
+          "id": "VAC-417",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_3_417.htm?2",
+          "title": "當姐姐伴娘 為自己成就好姻緣",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:24:51.418988+00:00",
+          "raw_path": "VAC-417-raw_path.html",
+          "body_path": "VAC-417-body_path.txt",
+          "raw_sha256": "27197de4195a1d34762e5350a10b17c73499fee96a9e5aa7a45f2cf8fae32e75",
+          "body_sha256": "e6462f1a05d4f80ee3e84782b0a0b0b6dfbd44bbbfcb6c767471d22ed8f42c6a",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "劉柏考勤"
+        },
+        {
+          "id": "VAC-419",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_3_419.htm?2",
+          "title": "不想太辛苦 規模已縮小",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:24:50.601410+00:00",
+          "raw_path": "VAC-419-raw_path.html",
+          "body_path": "VAC-419-body_path.txt",
+          "raw_sha256": "202fa718d08a1a31c706d64f5059b71a467debcd0ae991ea7bcbd95a317ac276",
+          "body_sha256": "bb0530c63ef5ff111406712a6b13f069d522f7eb289d8edf7431d2ae38334575",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "劉柏考勤"
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "VAC-421-E05",
+          "source_id": "VAC-421",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_3_421.htm?2",
+          "body_char_start": 701,
+          "body_char_end": 809,
+          "text": "我覺得不會，我覺得小孩都沒有給我找過麻煩。有次我女兒回到家說：「媽媽，我考第2名。」我說：「你才考第2名啊？」她就馬上哭了。我說：「媽媽就是要第一名、一百分。」我常鼓勵小孩，我說寧可辛苦幾年，不要辛苦一輩子。劉柏考勤",
+          "interviewer_question": "先生經常不在家，您一個人照顧小孩、經營便當店，有沒有哪段時期是您覺得很辛苦的？",
+          "speaker": "劉柏考勤",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "parse_note": "原站問／问／間／间均按明确问方标记处理；嵌入故事对话及过长问方跳过。",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        },
+        {
+          "id": "VAC-417-E02",
+          "source_id": "VAC-417",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_3_417.htm?2",
+          "body_char_start": 265,
+          "body_char_end": 814,
+          "text": "我們結婚時是住在以前一個大隊長的房子，是日本房子，他1塊錢就給我們住了1年。等我們特准結婚的房子蓋好了以後，就搬到六塊厝去住。結果在那邊住了1年多不到2年，我們就看中這邊的房子，就頂下來住到現在。因為小孩要讀書，我想六塊厝是鄉下地方，加上現在這地方的仁愛國小在屏東算是有名的，所以我說乾脆就來這地方讀書了。婚後先生不讓我工作，我本來是在做會計。他說不要做事，把小孩看好就好了。就這樣，看小孩讀書，每天送便當給小孩吃。仁愛國小就在我們這邊。很近，每天做好午餐就送去。那時先生常不在家，有時出差啦、駐防啦。我就在家帶小孩，給小孩送便當。老師就是看到我每天給小孩送便當，就說：你做一個便當、兩個便當也是做，乾脆你就幫我們幾個老師也做。我想也可以啊， 就乾脆請老師們自己拿飯盒來，拿飯盒來就幫他們做。結果那些學生的家長看到老師吃的便當，一問老師說是劉媽媽幫忙做的。我說：好吧！那我就幫你們做吧！我姊姊讀大學的時候，媽媽在李翰祥家幫忙工作。李翰祥家請很多人，什麼三輪車伕啦，很多，媽媽就專門掌厨。那時候電影明星，什麼江青啦、李翰祥那裡常出出入入好多電影明星，我媽就在那兒工作，就這樣把姊姊供到大學畢業。那時候講良心話，1個軍人的收入要維持7口之家，根本不夠，所以我說我媽媽很偉大。後來我做便當，媽媽也來幫我。",
+          "interviewer_question": "婚後的生活情形？",
+          "speaker": "劉柏考勤",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "parse_note": "原站問／问／間／间均按明确问方标记处理；嵌入故事对话及过长问方跳过。",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        },
+        {
+          "id": "VAC-419-E03",
+          "source_id": "VAC-419",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_3_419.htm?2",
+          "body_char_start": 420,
+          "body_char_end": 717,
+          "text": "先生現在每天都駡我，叫我關門，從他退休以後開始就這樣。他說他退休這麼大年紀了，要享福了，不要跟著我受罪。我們員工有的3個加起來兩百歲，這麽大的年紀又沒有小孩來奉養。雖然待遇不高，他們還要養孫子，真的好可憐。 每次我先生都駡我，要我關起來不要做。每次有人來買便當，我先生就說：「這便當這麼難吃，你們還要買啊？」有個沒有來買過的人就說：「不會啊！人家買給我吃，很好吃。」他也不曉得我先生是老闆。有個客人從讀小學就吃我的便當，吃完了讀到高中讀到師範大學，然後修了碩士回來，在明正國中教書，他太太是在土地銀行上班。他說：「劉媽媽，我要訂你的便當。」我說：「你在哪裡啊？」他說：「我現在在明正當老師了。」",
+          "interviewer_question": "您的便當事業越做越大，先生對您的事業有沒有意見或想法？",
+          "speaker": "劉柏考勤",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "parse_note": "原站問／问／間／间均按明确问方标记处理；嵌入故事对话及过长问方跳过。",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        }
+      ]
+    },
+    {
+      "id": "N-81acb2dd8d",
+      "name": "劉金標",
+      "split": "development",
+      "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_309.htm?3",
+      "title": "成績優良  派送青島",
+      "background_note": "退辅会机构口述史，涵盖军人、退役后劳动者及军眷。本人职业、是否服役、性别与关系只能依据原话；机构来源不等于人人曾从军。",
+      "sources": [
+        {
+          "id": "VAC-308",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_308.htm?3",
+          "title": "私塾受教育  身強體壯入海軍",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:24:22.317555+00:00",
+          "raw_path": "VAC-308-raw_path.html",
+          "body_path": "VAC-308-body_path.txt",
+          "raw_sha256": "d5675c8cfd22686d2f297954fe9449557d90d833b80594b0c1b55258a0955126",
+          "body_sha256": "ba9617015eed81f1c2871e60427ab69ff25e0f7566a6ee48db9ba3a18b03c64e",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "劉金標"
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "VAC-308-E01",
+          "source_id": "VAC-308",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_308.htm?3",
+          "body_char_start": 51,
+          "body_char_end": 441,
+          "text": "我是出生在江蘇省鎮江，我的祖籍是懷安縣。父親母親在民國33年，雙雙死去了。還有一個哥哥，兩個弟弟。  34年日本人投降，我們政府為了招考新海軍，11月11號在南京發布招考，我的身體非常好，錄取了。11月4號在南京入伍，那時海軍總司令是陳紹寬。我們就到江陰受訓，江陰第一期，就是江蘇省江陰縣，就在那個地方受訓。所以我們的海軍是第一期。  到35年，由於美國在青島成立中國海軍訓練中心，就是中央海軍訓練團，團長是蔣總統，蔣中正。我是中央海軍訓練團第五期士官隊，就這樣，同一年，美國人訓練好了以後我們就開始接艦，就叫中美聯合，我記得是美字號，美朋，那時候艦長是李北洲，一直到青島等了3年多，就巡視華北，營口、葫蘆島、長沙巴島這些地方。然後，就轉到上海，在上海準備出隊的時候，我們就護航。這個，海關命令，就是從中央銀行搬出來的錢，我們護航他們回到廈門，廈門那個時候比較緊張，又轉回到基隆。",
+          "interviewer_question": "劉金標先生請問你在哪裡出生長大？有哪一些的親人？兄弟姊妹，還有童年家裡的情景，父母的工作？",
+          "speaker": "劉金標",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "parse_note": "原站問／问／間／间均按明确问方标记处理；嵌入故事对话及过长问方跳过。",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        }
+      ]
+    },
+    {
+      "id": "N-325226d20b",
+      "name": "張壯賜",
+      "split": "development",
+      "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_410.htm?2",
+      "title": "回役任職北部 負責抓偷渡客",
+      "background_note": "退辅会机构口述史，涵盖军人、退役后劳动者及军眷。本人职业、是否服役、性别与关系只能依据原话；机构来源不等于人人曾从军。",
+      "sources": [
+        {
+          "id": "VAC-410",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_410.htm?2",
+          "title": "回役任職北部 負責抓偷渡客",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:24:02.636430+00:00",
+          "raw_path": "VAC-410-raw_path.html",
+          "body_path": "VAC-410-body_path.txt",
+          "raw_sha256": "f768108caf564cdd23750dc9e86e401b973fd0f4f7f63d19f010f19064b187db",
+          "body_sha256": "aee84c697cb0077744315200f1e178ddcea0d5641a81af242b610a4742014f14",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "張壯賜"
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "VAC-410-E03",
+          "source_id": "VAC-410",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_410.htm?2",
+          "body_char_start": 400,
+          "body_char_end": 498,
+          "text": "軍人那時候的待遇不是很好，但是以那時候民間來講，至少算是收入固定，有津貼、配給這些東西，而且很穩定。當初父母親雖然反對我進去，但是收入很穩定，軍中又有人管，所以父母親也很認同我加入職業軍人的行列。",
+          "interviewer_question": "當時軍人的待遇如何？",
+          "speaker": "張壯賜",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "parse_note": "原站問／问／間／间均按明确问方标记处理；嵌入故事对话及过长问方跳过。",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        },
+        {
+          "id": "VAC-410-E06",
+          "source_id": "VAC-410",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_410.htm?2",
+          "body_char_start": 690,
+          "body_char_end": 949,
+          "text": "那時候發生幾件事情，在我服兵役前面階段，一個是退出聯合國、一個是先總統蔣公逝世。那至於國際間也没有發生什麼重大的事情。那時候中共對我們的作戰也比較少，除了一般的心戰，政治作戰方式，其他就没有什麼戰事。後來我在陸戰隊汽車排擔任排長大概有3年左右，因為那時候部隊的長官稍微苛刻一點，所以就退伍了。我們專修班那時候的服役年限是讀書1年、服役4年，合計5年，那5年到了我就退下來。那時候會想退，一方面是因為部隊長官太苛薄，讓我們感覺心理很不舒服；另一個是想看可不可以回到北部，因為我在陸戰隊服役都是在南部，所以想回北部來服務。",
+          "interviewer_question": "在那您服役期間臺灣有沒有發生什麼重大的事件？",
+          "speaker": "張壯賜",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "parse_note": "原站問／问／間／间均按明确问方标记处理；嵌入故事对话及过长问方跳过。",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        }
+      ]
+    },
+    {
+      "id": "N-99fb7cded5",
+      "name": "張復",
+      "split": "development",
+      "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_157.htm?5",
+      "title": "目睹日軍轟炸  立志當飛行員報國復仇",
+      "background_note": "退辅会机构口述史，涵盖军人、退役后劳动者及军眷。本人职业、是否服役、性别与关系只能依据原话；机构来源不等于人人曾从军。",
+      "sources": [
+        {
+          "id": "VAC-157",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_157.htm?5",
+          "title": "目睹日軍轟炸  立志當飛行員報國復仇",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:24:41.032083+00:00",
+          "raw_path": "VAC-157-raw_path.html",
+          "body_path": "VAC-157-body_path.txt",
+          "raw_sha256": "3fdc16daf40c0d7856e8f1323fb63238f37dcfcee0e18939fbf992acef08c27a",
+          "body_sha256": "51cf7dca16f94efd3e08d42804d54306b59961fe419d29119b8be2c1f4d54ee7",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "張復"
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "VAC-157-E01",
+          "source_id": "VAC-157",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_157.htm?5",
+          "body_char_start": 41,
+          "body_char_end": 337,
+          "text": "在民國30年的時候，日本人轟炸重慶非常嚴重，唸小學的我成天都在逃警報，書根本沒辦法好好唸。  有一次，有一個漢奸施放假的解除警報，因此所有的人都回家去了。我父親因為是主管，必須到學校去巡視被轟炸的情形。我就跟母親、妹妹在家裡，突然間我們聽到飛機的聲音，而且炸彈的爆炸聲逐漸逐漸地靠近。  這個時候我父親突然跑回來，匆忙抓著我們往大操場跑。我們就躲到一個低凹處，我很好奇，看著飛機從我們頭頂上一批一批的飛過。我們高射砲不斷地朝著敵機射擊，可是沒有看到敵機被擊落的情形，一股報仇雪恥的決心就深植在我幼小的心中，我心想我將來一定要當飛行員，要把日本人的飛機擊落並趕出國境，這是我想當空軍的主要動機。",
+          "interviewer_question": "請您回憶一下，您為什麼想報考空軍幼校，可不可以請您跟我們談一下這一段。",
+          "speaker": "張復",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "parse_note": "原站問／问／間／间均按明确问方标记处理；嵌入故事对话及过长问方跳过。",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        },
+        {
+          "id": "VAC-157-E05",
+          "source_id": "VAC-157",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_157.htm?5",
+          "body_char_start": 1034,
+          "body_char_end": 1350,
+          "text": "我們在初三之前，完全是採童子軍的教育。功課仍是正常初三學生應該受的教育，可是生活管理完全是軍事化管理。所以我們很小就會整內務、稍息、立正，完全軍事化動作，可是課程就是正常的初中課程，只是加入了一些童子軍的教育，我們穿著完全是童子軍的服裝。  高中則是穿軍服，管理完全是採軍事管理。增加的課程有初級滑翔機，到畢業的時候還有中級滑翔機。我們的課程比一般中學的課程要來得多，好比微積分、有機化學、球面三角，這是當時高中沒有的，這就是我們當時的教育狀況。  最值得提的是我們幼校教育的老師，都是當代一時之選，像是植物老師，西北有關植物方面的考察就是由我們學校派去的。所以我們今年的集會，特別懷念這些老師給我們在德智體群方面的教養，永銘不忘。",
+          "interviewer_question": "那個時候學校裡面課程的安排呢？",
+          "speaker": "張復",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "parse_note": "原站問／问／間／间均按明确问方标记处理；嵌入故事对话及过长问方跳过。",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        }
+      ]
+    },
+    {
+      "id": "N-4ee8bdfbc8",
+      "name": "曾占湖",
+      "split": "development",
+      "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_3_317.htm?5",
+      "title": "開放後到大陸做生意  沒想到漏氣賠錢",
+      "background_note": "退辅会机构口述史，涵盖军人、退役后劳动者及军眷。本人职业、是否服役、性别与关系只能依据原话；机构来源不等于人人曾从军。",
+      "sources": [
+        {
+          "id": "VAC-317",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_3_317.htm?5",
+          "title": "開放後到大陸做生意  沒想到漏氣賠錢",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:25:18.756231+00:00",
+          "raw_path": "VAC-317-raw_path.html",
+          "body_path": "VAC-317-body_path.txt",
+          "raw_sha256": "04a98fad89a7b36890cd2138dc0022151e3b1a67d9e477c35fd6c9e464d29c93",
+          "body_sha256": "f13dc5853be2dbf80ba8d0facae0c8c4aec840fc14c9f5620bce63ecd9ec0e12",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "曾占湖"
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "VAC-317-E01",
+          "source_id": "VAC-317",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_3_317.htm?5",
+          "body_char_start": 18,
+          "body_char_end": 365,
+          "text": "先做腳踏車，也有做過鵝毛，鴨毛，做羽毛衣，我不是製作，我是做新竹市的中盤商，到竹東、竹北、新埔的菜市場，全都收，再運回來彰化，那時候彰化有在做羽毛衣，寒帶在用的衣服，通常是用鵝毛，鴨毛是比較次級品，我們都外銷比較多，內銷就比較便宜。然後十幾年前我也有到大陸去做毛竹做的竹蓆，也有去廈門看金門，我也有回去喔，去太武山那邊做了四、五個生意，但是漏氣，做失敗，我們台商去都賺錢但是我賠錢，我是沒賠光，但是看到做不下去我就趕快離開，我十幾年大陸開始開放時就過去了，過去做生意，買竹蓆回來臺灣賣，一開始時做得也不錯，那時候都是外銷日本，十幾年前大陸才剛起步而已，根本連買竹蓆都買不起，所以要銷日本，那時候日本最強盛，還有美國，做到後來臺灣人很多跟著做，就有競爭，我看做不下去就抽身，所以我也是漏氣，賠錢。",
+          "interviewer_question": "您退伍後做過哪些生意呢？",
+          "speaker": "曾占湖",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "parse_note": "原站問／问／間／间均按明确问方标记处理；嵌入故事对话及过长问方跳过。",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        },
+        {
+          "id": "VAC-317-E02",
+          "source_id": "VAC-317",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_3_317.htm?5",
+          "body_char_start": 390,
+          "body_char_end": 1001,
+          "text": "他們大陸嘛，報紙也有登，福建省眾樂縣有電霸跟水霸，我面對的是水公司，我如果對他不敬就把管路切掉，明天就沒有水可用，你工廠去的時候都說得很好聽，你來問題不大，都沒有問題，台商來都很歡迎，都用他們的車先請我們一頓，開工兩三天，大家請，結果隔天水還是沒來，我問怎麼辦？他就說：「曾先生，你來我們公司，我請你。」我說：「乾脆我辦桌請你就好啦！」，辦桌很簡單，很便宜，請完了明天水就來了，這是好事還是壞事我也不知道，很方便，但是有時候會沒有水，或是沒有電。最近我看報紙，有寫到東莞還是哪個地方，電被切掉，我們那時候就有發生這樣的事情了，所以去那邊做生意要你做得夠大才能賺錢，這是我的看法。如果是小型的企業，很難賺，就把水切掉，也不怕你，你有繳水費也一樣，就是溝通不好。好比我在那邊用臺灣的駕照開車，我不知道現在有沒有改，我那時候不算，臺灣用臺灣的，中國用中國的，我說好，那要怎麼用？他說：「我是交通警察，我給你畫一條線就好，不用開單，兩次就兩條，四次四條。」我說：「這是代表什麼？」他說：「日後再算。」我說要算就算，結果給我畫了幾百條線，幾百條線怎麼辦？他說竹蓆做好後，送一百席到派出所就好了，呵呵！他也不是要最高檔或是最健康的，有就好了。我就把那些壞的，要去修理的再把它拿出來，重新粉刷一遍送出去，就算了，所以大陸跟臺灣不同。這是我遇到的狀況，別人企業比較大的可能就不是這樣，所以我就不做了，而且也老了，我是五十多歲時候過去做的。",
+          "interviewer_question": "您做生意時有遇到過什麼困難嗎？",
+          "speaker": "曾占湖",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "parse_note": "原站問／问／間／间均按明确问方标记处理；嵌入故事对话及过长问方跳过。",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        }
+      ]
+    },
+    {
+      "id": "N-a5c5b05f54",
+      "name": "李昌明",
+      "split": "development",
+      "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_263.htm?3",
+      "title": "內戰紛亂當兵去 共黨鬥爭雙親亡",
+      "background_note": "退辅会机构口述史，涵盖军人、退役后劳动者及军眷。本人职业、是否服役、性别与关系只能依据原话；机构来源不等于人人曾从军。",
+      "sources": [
+        {
+          "id": "VAC-267",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_3_267.htm?5",
+          "title": "父兼母職兩頭忙  子女孝順成就高",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:25:22.058740+00:00",
+          "raw_path": "VAC-267-raw_path.html",
+          "body_path": "VAC-267-body_path.txt",
+          "raw_sha256": "68684a84af1aabad406fed25ef0a9671e331e33229797fcb4b77a7b952d7d7fc",
+          "body_sha256": "63de09676f5d85a1ceedc75e5f4a408a770b5327262840b7157340c88810c7fd",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "李昌明"
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "VAC-267-E02",
+          "source_id": "VAC-267",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_3_267.htm?5",
+          "body_char_start": 886,
+          "body_char_end": 1703,
+          "text": "我在大陸，兩個妹妹還有一個結拜的兄弟，那個結拜兄弟對我父母很孝順，姓王，當時我父母被鬥死，他看很可憐，可是也沒辦法，就把我父母埋葬，那個時候埋葬都是馬馬虎虎，隨便埋掉就好了。  我後來回大陸，回家看一看我父母的墳。我是很不孝的一個兒子，他老人家我從來沒照顧到，只好回去把他們的陵墓給重修好了，本來是要把我父親母親葬在一起，父親他託夢給我講不可以。  後來我兩個妹妹跟兩個妹夫也回來了，我一個妹夫在新疆，那個妹夫家裡很有錢，他也是因為共產黨來了，所以逃到新疆去了，他的父母也是要年輕的趕快走，不要管老人家了，這是沒辦法的事情，你們在那裡好好做事情，將來回來看看我就好，所以我那個妹妹也逃到新疆去了。  說起來我第一次回去帶了很多東西，穿的要用的錢都帶回去了。帶回去以後，我那個二妹很懂事，相當懂事，她說哥哥啊，你在外面吃了很多苦，我知道，從今以後你回來看我們很好，但是你回來，不准帶什麼東西，如果你帶東西回來的話，你乾脆不要回來看我們。  那個時候我小孩子沒帶回去，因為第一次回去嘛，不方便帶小孩子，也不方便帶太太回去。我準備第三次要帶我太太回去，沒辦法，49年我太太就過世了。太太過世了以後我就沒有回去過了，因為我要照顧三個孩子，那時候我退休了，我當士官長嘛，沒多少錢，要養三個孩子，還有一個老岳母，我要養四個人，我的薪水不夠。  當時我們也沒學問的人，我們要做其他的也做不來啊，年齡也很大啦，六十多歲退休年齡也很大啦，只有當個管理員，我下來當管理員有一個好處，做了就不准我走。  因為我是軍人出身的嘛，盡忠職守，你交代我的事我一定給你做好，絕對不會給你有差錯，交代的事我一定給你辦的好好的，所以我做12年管理員只換過兩個地方。沒辦法，就在那做，做到年紀大了，我兒子講爸爸你不能做了，你年紀大了還在當管理員，萬一發生什麼事我們都不知道，女兒都反對，希望我不要當了。後來在長庚醫院那邊買了房子，因為去上班不方便，就把管理員的工作辭掉了。",
+          "interviewer_question": "家鄉還有親人嗎？曾經聯絡嗎？",
+          "speaker": "李昌明",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "parse_note": "原站問／问／間／间均按明确问方标记处理；嵌入故事对话及过长问方跳过。",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        }
+      ]
+    },
+    {
+      "id": "N-25486466f6",
+      "name": "楊秀峰",
+      "split": "development",
+      "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_294.htm?3",
+      "title": "出身小地主  生活無憂慮",
+      "background_note": "退辅会机构口述史，涵盖军人、退役后劳动者及军眷。本人职业、是否服役、性别与关系只能依据原话；机构来源不等于人人曾从军。",
+      "sources": [
+        {
+          "id": "VAC-294",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_294.htm?3",
+          "title": "出身小地主  生活無憂慮",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:24:24.114816+00:00",
+          "raw_path": "VAC-294-raw_path.html",
+          "body_path": "VAC-294-body_path.txt",
+          "raw_sha256": "e763a3e55c3017e7b27a20400f2ced329e2103ee9cfb472c75b81df23ce78be3",
+          "body_sha256": "c7b8f248fdb42563af5c8d2d6cd888fe5dc24cf1f1e330b83e8f59375807e3d8",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "楊秀峰"
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "VAC-294-E02",
+          "source_id": "VAC-294",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_294.htm?3",
+          "body_char_start": 489,
+          "body_char_end": 1316,
+          "text": "我念書唸得很不好，一開始我還有學校念，但是我家鄉不像我們臺灣這裡到處是學校，後來學校沒了，直到我11歲才開始念短期小學，念了一年以後才上國民學校，我們學校二年級末了直接上了三年級，讀了一年，日本軍來了，學校又沒有了。  大概隔了一年，學校柴房裡有個老先生找學生讀私塾，我就去讀私塾了，五經、四書，三字經，讀了一年，一般來講三字經加上詩經，很少能在一年讀完，可是我把三字經加上全部詩經，四書第一本上論語，過去就是上論語，讀到上論語還有大學、中庸，這一年我背得這麼多，那個時間背書是你讀到論語的時間，早上你上去背書，背三字經加上詩經、四書，這麼一落書往老師眼前一放，他翻出來就背，背這個第一篇一定是第一天學的，先背完了這個，老師講話了，他挑到三字經就背三字經，挑到四書你就背四書，這樣讀了一年，有了學堂讀四年級，就讀四年級，四年級讀了一年，五年級就要出去考，那時間是八千多人報考要錄取六十個。  當年的考題以數學來講，在我們學校根本就沒有學，前四年沒學到，那都是大括弧、小括弧、中括弧什麼的，因為考的人太多，他要挑選，而我考上了，學校離家有六哩路，在那裡讀了一年。  然後私立中學招生，我還不夠資格考，但是那個私立中學的老師非要我去參加考試，考私立四維中學的時間，那數學題目的困難程度就連教我們的老師都不會，你說這個學生怎麼考，我們學校一共去了大概六十人，我們的數學都是60分，為什麼？因為我們老師只會三題嘛！前三天試題已經拿到手了，我們老師解了三天，解開了三道，其餘的我們根本就不會，不過沒關係，都錄取了，我們一共十四個人，都是我們小學的籃球校隊的人。  那是為什麼呢？那是因為我們的籃球隊很強，即使是原本四維中學的校隊也打不贏我們，和我們打三場、輸三場，這個裁判不是便衣就是體育老師，如果校隊是他的，我們也是他的，那他也不會偏心，由於這個狀況，我們就被錄取了，可是很抱歉，錄取了以後，共產黨就來了，學校解散了，有的趕著到了青島，我沒有離家，我就回家去了。",
+          "interviewer_question": "請您談談念書的經過？",
+          "speaker": "楊秀峰",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "parse_note": "原站問／问／間／间均按明确问方标记处理；嵌入故事对话及过长问方跳过。",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        },
+        {
+          "id": "VAC-294-E01",
+          "source_id": "VAC-294",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_294.htm?3",
+          "body_char_start": 47,
+          "body_char_end": 469,
+          "text": "我是民國14年9月28日出生，山東省昌邑縣人。我們家是種田，是個小地主，是一個縣裡頭的富戶，等於是富翁，我兄弟是四個，中間還一個姊姊，我爸爸也是兄弟四個，我們都不分家，那個時期我們家庭人口超過30個，在一起吃飯，我們家的生活很好。  我大哥、二哥大概都在15歲以前就結婚了，我三哥也是17、8歲就結婚，因為我們家的生活比較好，而且，我媽待人是非常好，所以媳婦也都很好，我大哥是民國前3年的，我二哥是民國元年，我二嫂是民國前3年的。為什麼到了我結婚，出了問題，因為我一個舅舅他說，這個小兒子不能給他早結婚，20歲以前結婚會有五個太太，換五個，同時壽命也不長，不超過25歲，那時我父親對我舅舅這個掐指算命滿相信的，所以有人給我提親始終不答應，所以我到了21歲，人家來提親我爸爸不同意，所以我打消這個結婚念頭，之後，我大哥、二哥還有我二嫂三個人直說應當給我結婚，他們說我沒結婚這麼年輕，要死今天早就死了為什麼不能結婚，我爸爸說不過他們，就給我結了婚。",
+          "interviewer_question": "請問您在那裡出生、長大？您記不記得童年的時候，家鄉的景象、家庭的環境、父母的工作？",
+          "speaker": "楊秀峰",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "parse_note": "原站問／问／間／间均按明确问方标记处理；嵌入故事对话及过长问方跳过。",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        }
+      ]
+    },
+    {
+      "id": "N-6e4adb332f",
+      "name": "王成偉",
+      "split": "development",
+      "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_259.htm?4",
+      "title": "出自富裕家庭  因戰亂流離",
+      "background_note": "退辅会机构口述史，涵盖军人、退役后劳动者及军眷。本人职业、是否服役、性别与关系只能依据原话；机构来源不等于人人曾从军。",
+      "sources": [
+        {
+          "id": "VAC-259",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_259.htm?4",
+          "title": "出自富裕家庭  因戰亂流離",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:24:26.537376+00:00",
+          "raw_path": "VAC-259-raw_path.html",
+          "body_path": "VAC-259-body_path.txt",
+          "raw_sha256": "ebafcdbbe4cc621d680aeb9cb80beaabbd1ab89702de2c7e323be60ebf0a7f7b",
+          "body_sha256": "fe659f50f534a14fc3d0f4bd7dc747d9eddf8ca35a11b9bbbc1a784f1c109ca2",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "王成偉"
+        },
+        {
+          "id": "VAC-261",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_4_261.htm?1",
+          "title": "結婚受刺激  開始奮發圖強",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:25:28.374077+00:00",
+          "raw_path": "VAC-261-raw_path.html",
+          "body_path": "VAC-261-body_path.txt",
+          "raw_sha256": "484fe12907e46356493789611d12fac83289fdeba76463d30377f90b96b20883",
+          "body_sha256": "b9606fd8ac811d7f54e6af5b37ff5960f71b5eb3fd30ce5620d870ba0483b6b3",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "王成偉"
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "VAC-259-E01",
+          "source_id": "VAC-259",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_259.htm?4",
+          "body_char_start": 43,
+          "body_char_end": 341,
+          "text": "我是民國24年出生於江蘇省的徐州縣。小時候我住在徐州東南雙溝那一帶的鄉間，後來大部分就都在徐州市了。  我的家庭很富裕，父母在家裡種田，兄弟就五個，大的是大姐，最小的是小妹。那時在大陸讀書不像臺灣每個鄉鎮都有學校，所以我都是到城市去讀。民國37年開始內亂後，一天到晚打仗，學校沒有辦法再讀書，就遷到南京。江陰要塞事變的時候，中共打到南京，就到上海來了，在黃浦江坐船，我還是小孩不知道，就跟著學校走了，砲彈也已經打到黃浦江的碼頭上去了，要跑也沒辦法跑，我們很多不幸的同學掉到黃浦江，也有很多被砲彈炸死。那回在上海撤退的情景，我現在回想起來都還覺得真是可怕。當時風大雨也大，結果就到澎湖馬公國民學校。",
+          "interviewer_question": "請您和我們聊一聊您小時候原生家庭的狀況，您在那裡出生、長大，家庭背景如何？",
+          "speaker": "王成偉",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "parse_note": "原站問／问／間／间均按明确问方标记处理；嵌入故事对话及过长问方跳过。",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        },
+        {
+          "id": "VAC-261-E02",
+          "source_id": "VAC-261",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_4_261.htm?1",
+          "body_char_start": 544,
+          "body_char_end": 919,
+          "text": "宜蘭感覺是對我們退伍下來的外省人沒好感，去找工作人家一看你是外省人就不用你，你說你再能幹，他也不會用你。在宜蘭兩年多的時間，我碰了很多釘子，我在開發處開車開好好的，我太太認為山上開車太危險，跑一趟是拿命在換錢，要我想辦法在平地找工作。我在平地找不到工作，幸虧我哥哥也退伍了，我們兄弟一起買一部卡車，在宜蘭跑生意，拉石頭、拉磚子，這樣來做。我太太也跟車一起做工，老實說，我被我太太感化，才奮鬥多賺錢，讓我太太享受一點，不要讓她感覺說嫁到沒出息的丈夫。  我太太有兩個兄長，就她一個女孩子，她大哥說妳嫁給外省人，沒有出息，將來沒有錢，不要回家來要錢。我太太就講要飯也不回家去，這句話使我太感動了。我沒有什麼嗜好，打牌、喝酒、賭博這一類我都不會，就是很奮鬥來賺錢，哪兒有錢賺，我也很敢冒險，心裡希望做的事業，能對得起我的太太，是這樣目的。她是我很大的支持。",
+          "interviewer_question": "伯伯，請跟我們聊一聊，剛從部隊退伍到宜蘭工作的時候，那時候接觸到臺灣的本省族群，在相處上，您的感覺是什麼？",
+          "speaker": "王成偉",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "parse_note": "原站問／问／間／间均按明确问方标记处理；嵌入故事对话及过长问方跳过。",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        },
+        {
+          "id": "VAC-261-E01",
+          "source_id": "VAC-261",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_4_261.htm?1",
+          "body_char_start": 37,
+          "body_char_end": 481,
+          "text": "就是結婚以後才辛苦，沒結婚我是不辛苦，因為結婚受到刺激，要租房子租不到，人家看不起，沒有錢啊！外省人當兵退伍下來，沒有錢，所以我也搬家搬了五、六次，我太太也很辛苦，本來住得很好，住了幾個月，人家又要房子，要你走，又得找房子，把租金給我提高。這對我有個刺激性，所以我奮發圖強，加油賺錢，在農場的土地已經做得差不多，沒有什麼生意了，我就把卡車賣掉，買一部計程車，就開始做計程車生意。然後認識內埔一個添發車行的賴光仁，還不錯，做了兩年以後，我自己成立龍泉計程車行。賴光仁這個朋友幫我很多忙，替我擔保買車，到台北一次買兩部車，就這樣慢慢發展。  我跟我太太結婚，她家裡反對，我總不能讓我太太受一輩子的罪，總要逮到機會多賺點錢、多買房子，這是我心裡的目的。結果我運氣還不錯，買什麼，賺什麼，因為做計程車生意也到花蓮去，跟屏東一家飯店的老闆比較熟了，他告訴我要買土地，所以就在花蓮買，那回大概賺了一千多萬。回來以後在龍泉蓋了八棟房子，現在龍泉還有一棟房子，所以我就是這樣在做，也敢衝啦！運氣來也敢衝。",
+          "interviewer_question": "伯伯很清楚自己想要什麼生活？",
+          "speaker": "王成偉",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "parse_note": "原站問／问／間／间均按明确问方标记处理；嵌入故事对话及过长问方跳过。",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        },
+        {
+          "id": "VAC-261-E03",
+          "source_id": "VAC-261",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_4_261.htm?1",
+          "body_char_start": 947,
+          "body_char_end": 1233,
+          "text": "我太太跟車子，有時候拉小石頭，她跟車上去做，把石頭搬上卡車，做這種小工，以前我看她身體很瘦，在家等於是嬌生慣養的，她跟我這麼吃苦，實在講很對不起她。後來經濟比較好了，我就講妳不要做，請工人，妳在家煮飯就可以了。  不過當時不像現在有怪手，完全都用人工挖土，所以來屏東，我太太在家裡煮飯也很辛苦，煮三餐飯每天要照顧12個人吃飯，這比做工還辛苦，饅頭要做很多。那時工人找的都是退伍軍人的老大哥、前輩，要管他們吃、住，一早大概五點鐘就到地裡去拉土，晚上回來，他們工人要睡覺，我還要修理車子。那舊車因為不是新車，在泥地跑問題比較多。因為我自己會修，所以我太太拿電燈，我就自己修理。",
+          "interviewer_question": "伯伯剛剛說，太太也有幫忙一起工作嗎？",
+          "speaker": "王成偉",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "parse_note": "原站問／问／間／间均按明确问方标记处理；嵌入故事对话及过长问方跳过。",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        }
+      ]
+    },
+    {
+      "id": "N-18def839e4",
+      "name": "羅運良",
+      "split": "development",
+      "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_3_388.htm?4",
+      "title": "投身康樂隊 最愛那卡西",
+      "background_note": "退辅会机构口述史，涵盖军人、退役后劳动者及军眷。本人职业、是否服役、性别与关系只能依据原话；机构来源不等于人人曾从军。",
+      "sources": [
+        {
+          "id": "VAC-388",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_3_388.htm?4",
+          "title": "投身康樂隊 最愛那卡西",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:25:05.907982+00:00",
+          "raw_path": "VAC-388-raw_path.html",
+          "body_path": "VAC-388-body_path.txt",
+          "raw_sha256": "630dd7a3150949922eb1737b59dadffab40de22aff49462056b8f261ea0e714d",
+          "body_sha256": "98b71da356e6bf42a7bf7a6c8de2ad665611a0740fdf20bbc845c87a014b65bc",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "羅運良"
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "VAC-388-E01",
+          "source_id": "VAC-388",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_3_388.htm?4",
+          "body_char_start": 275,
+          "body_char_end": 431,
+          "text": "主要是自己興趣，我小時候就聽很多的軍歌，很有感覺。樂器沒有機會接觸到，就是唱歌，唱歌給了我一個機會在部隊，尤其是在馬祖，各部隊唱歌，然後團裡頭所謂教官，就叫我去各部隊教唱，還有婦女隊去教他們唱，那唱的都是軍歌啦，很少流行歌曲，流行歌曲也有啦，流行歌曲都是自己那個哼唱，都是教唱軍歌。我是到了軍樂隊才開始接觸樂器。",
+          "interviewer_question": "跟我們説一下學音樂的過程？您那時候有特別學什麼樂器嗎？",
+          "speaker": "羅運良",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "parse_note": "原站問／问／間／间均按明确问方标记处理；嵌入故事对话及过长问方跳过。",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        },
+        {
+          "id": "VAC-388-E06",
+          "source_id": "VAC-388",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_3_388.htm?4",
+          "body_char_start": 2131,
+          "body_char_end": 3094,
+          "text": "民國50年，沒有正式病倒以前，是有一些症狀的，我的腿就從腰以下，我不知道這樣恰不恰當，就好比說這個杯子，你拿一把米，什麼東西的，你放下去，從上面一直到腳尖，一陣一陣地，所以醫師問我的情形，我也是這麼跟他講，我記得那個醫師姓盧，他跟我講台語，意思我是懂，現在我會講，他說：「羅先生，你這是重感冒，你放心，我開最讚的藥給你吃，吃三天就好了，你放心、放心。（台語）」民國50年7月31號去看的病，掛了急診。   8月1號、8月2號、8月3號，這三天的藥一吃完，8月4號早晨起來要梳洗，咚咚 摔倒在地下了，摔倒了我認為是自己不小心，我馬上又爬起來，爬起來沒有好久又摔倒了，喔！我曉得事態嚴重了，我就趕快騎單車，到以前看護班的同事家。  他正好在吃早點，他講：「你坐一下，我到房間裡換個衣服。」他早點就沒有吃了，把稀飯放下，他講：「大概2分鐘吧！很快。」他穿衣服很快，他講：「走吧，運良。」 我就起不來了。  那時候就叫三輪車，三輪車就從嘉義市拉到818野戰醫院，醫師會診之後，我又坐了車子又回到家裡頭，8月4號的那一天嘉義市雷電交加，風雨大作，下午就發高燒了，正式發作了，他們就在風雨中把我送到嘉義市省立醫院，省立醫院之後才了解證實是小兒麻痺，之前被誤診為感冒，之後說這個小兒麻痺很多醫師都不懂，那個年代，所以這個人…唉！  我一個叔伯哥哥、我一個堂哥、親戚朋友、還有一個我剛剛講的那個團長，都對我很關心。本省人你跟他處得有感情的話，他了解你的話，真的他們幫我，我那個時候小，他們都5、60歲了，我那個時候才20幾歲，他們真的把我當他們的小孩看待，很好的、很好的，我很感念他們的，但是這一輩子就沒有辦法了，從此就病倒了。  然後在那裡住了一段期間，我的朋友就跟我講：「因為你有榮民的身分，你不要住這個省立醫院，你住省立醫院這個好貴，一天連藥費的話這個很貴、很貴。」在那個時候來講一天要7、8百塊，比一個公務人員一個月的薪水還貴，我是心裡想：「還能負擔的起，把病治好就可以了。」住了不到1個月，然後朋友就幫我寫信給蔣經國，他那個時候是退輔會的輔導主任，然後就安排我到台南的永康榮民醫院住了快兩年。  這個榮家民國52年成立，他們就告訴我，因為我在嘉義很久，我從民國44年就到嘉義，我在嘉義的親朋好友也多，所以我就到白河榮家一直住到現在。",
+          "interviewer_question": "請您談談生病的這一段好嗎？",
+          "speaker": "羅運良",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "parse_note": "原站問／问／間／间均按明确问方标记处理；嵌入故事对话及过长问方跳过。",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        }
+      ]
+    },
+    {
+      "id": "N-0391aab2a1",
+      "name": "胡幼平",
+      "split": "development",
+      "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_233.htm?4",
+      "title": "好玩老么去從軍  落難香江皇家工  舉家逃難  龐大過路費  盤纏用盡",
+      "background_note": "退辅会机构口述史，涵盖军人、退役后劳动者及军眷。本人职业、是否服役、性别与关系只能依据原话；机构来源不等于人人曾从军。",
+      "sources": [
+        {
+          "id": "VAC-233",
+          "url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_233.htm?4",
+          "title": "好玩老么去從軍  落難香江皇家工  舉家逃難  龐大過路費  盤纏用盡",
+          "institution": "國軍退除役官兵輔導委員會／榮民文化網",
+          "fetched_at": "2026-10-17T08:24:31.826596+00:00",
+          "raw_path": "VAC-233-raw_path.html",
+          "body_path": "VAC-233-body_path.txt",
+          "raw_sha256": "0e0bbdf417fb247264f8c378976091fe35999022d6ba86e65bda4d4bdb5d970e",
+          "body_sha256": "043fb5d5e9493b41597bd933c4b706b708303aab941c4b033af92fb719ba6ca1",
+          "format": "published_interview_QA",
+          "interviewer": null,
+          "narrator": "胡幼平"
+        }
+      ],
+      "excerpts": [
+        {
+          "id": "VAC-233-E01",
+          "source_id": "VAC-233",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_233.htm?4",
+          "body_char_start": 25,
+          "body_char_end": 210,
+          "text": "我出生於民國8年12月8號，湖北。我家裡面弟兄四個，我是老四，老么，我有三個姐姐，三個哥哥。我父親是個中醫師，家裡開中藥舖，屋裡是我母親當家，我母親管理家裡的事情。  我年輕讀書的時候好玩，公子少爺，前頭有人嘛！一切都很好。那時我還當鄉長，就這樣，一直到共產黨打來跑了，參加部隊，我的部隊又被打垮了，撐不住了，就這樣往香港跑，到香港在那邊要飯，做皇家工，一直搞到臺灣來。",
+          "interviewer_question": "首先請您跟我們介紹一下您家裡面的狀況。",
+          "speaker": "胡幼平",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "parse_note": "原站問／问／間／间均按明确问方标记处理；嵌入故事对话及过长问方跳过。",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        },
+        {
+          "id": "VAC-233-E02",
+          "source_id": "VAC-233",
+          "source_url": "https://lov.vac.gov.tw/zh-tw/oralhistory_c_1_233.htm?4",
+          "body_char_start": 238,
+          "body_char_end": 792,
+          "text": "我做皇家工。去把我哥哥、嫂嫂、爸爸通通接到臺灣來了。我給他們的衣服都是新衣服，配置行李一個個裝好，我自己也是裝了新的；我還有三千多港幣帶到臺灣來。因為我那裡有五塊錢一天嘛！我做皇家工的時候，我不是拿圓鍬十字鎬的，我不是。雖然身分是這樣，皇家工人，應該開山啊，但是我被調到寫字樓，他們喊寫字樓，就是辦公室，在辦公室幫忙寫字。  每天上工，每一天，我就拿筆墨、油漆什麼東西我要用的，上午寫字、辦公，下午我就到山底下，到那個郵筒，郵差的郵政車，他的信往那個郵筒一放，他就走了；我每天下午這個時候就下山，把一大包的信拿上來。三個山頭，因為他們門牌都是我寫，我熟，我就把信一送，這天工作就完了。到臺灣來沒話說，我還在玩，我哥哥要我考警察，我不考；要我到調查局去，我也不幹。我說我們家裡受的教育，是大事化小，小事化無，妳懂吧？考警察也好，考調查員也好，是無事要找事，找了小事要搞大事，才有功勞，這與我不相關，我還想玩，我就不忙。我說還沒到一個月，我就不忙。輔導會登記退伍軍人就業，申請登記。我就跑到那裡，他就給我登記了。等了ㄧ陣子他就通知我，到輔導會集合，到復興崗去受訓，幹部訓練班受訓。受訓完就工作，一做就是30年。從到輔導會報到那天，一直到退休，30年。在工作當中，人家搞不好的，派我去；最苦的最不好搞的，都是我幹。",
+          "interviewer_question": "剛到臺灣來的時候，生活的狀況如何？",
+          "speaker": "胡幼平",
+          "speaker_role": "interviewee",
+          "question_ids": [],
+          "mapping_status": "unassigned; evaluators map against source evidence",
+          "parse_note": "原站問／问／間／间均按明确问方标记处理；嵌入故事对话及过长问方跳过。",
+          "verbatim_scope": "HTML标签及UI分页移除；文字原样，未改写语气或补全事实"
+        }
+      ]
+    },
+    {
+      "id": "N-8bb9f9537d",
+      "name": "陈美龄",
+      "split": "development",
+      "source_url": "https://ycpai.ycwb.com/ycppad/content/2021-03/28/content_1560551.html",
+      "title": "独家专访|陈美龄传奇人生：从偶像歌星到把三个孩子送进斯坦福大学的母亲",
+      "background_note": "歌手／教育学博士／三个儿子的母亲，非军旅",
+      "sources": [
+        {
+          "id": "WEB-chenmeiling",
+          "url": "https://ycpai.ycwb.com/ycppad/content/2021-03/28/content_1560551.html",
+          "title": "独家专访|陈美龄传奇人生：从偶像歌星到把三个孩子送进斯坦福大学的母亲",
+          "institution": "羊城晚报",
+          "fetched_at": "2026-10-17T08:30:15.432037+00:00",
+          "raw_path": "WEB-chenmeiling-raw_path.md",
+          "body_path": "WEB-chenmeiling-body_path.txt",
+          "raw_sha256": "f37d949d6299e68abaeab82b8a9b422183aa2b4524633966904b819958f98122",
+          "body_sha256": "e1407c3850bf3115992d85ea9ef425dab1a77e8e8dfa51fcde91e8d2fbe03d4e",
+          "format": "published_interview_QA",
+          "interviewer": "孙磊",
+          "narrator": "陈美龄",
+          "retrieval_backend": "agent-reach Jina Reader",
+          "source_limitations": "原采访整理刊物；编辑标题/括号注释不等于本人原话。"
+        }
+      ],
+      "excerpts": [
+        {
+          "text": "那个时候是去加拿大多伦多大学念儿童心理学，本科。我之前出了一本自传叫《人生的38个启示》，里面也有写到这个问题。那个时候我在日本，17岁我到了日本也是红得很快，已经开始唱歌，开始受欢迎了。\n\n爸爸就觉得我太忙了，还没有想清楚自己究竟喜不喜欢做一个明星歌手，有没有时间去交朋友、吃饭甚至睡觉，所以他就跟我说，明星、金钱都是流水，人家都可以抢走，只有进入你脑袋的知识是别人抢不走的，是你一生的宝贝，在你可以学习、读书的时候，应该很正式地去追求知识。他是真正为我着想的，我觉得他说得太好了，于是我就去了加拿大读书。\n\n直到现在我也没有觉得放弃唱歌是很可惜的，但是当时我开发布会说我要去读书的时候，才发觉这是一件影响很大的事，当时大家听到这个消息都很震惊，但是我还是坚决地去读书了。",
+          "interviewer_question": "在您最红的时候选择去国外留学，是出于什么样的考虑？除了您父亲的建议，您个人是怎么想的？",
+          "body_char_start": 718,
+          "body_char_end": 1055,
+          "speaker": "陈美龄",
+          "speaker_role": "interviewee",
+          "source_format": "published_interview_QA",
+          "id": "WEB-chenmeiling-E002",
+          "source_id": "WEB-chenmeiling",
+          "source_url": "https://ycpai.ycwb.com/ycppad/content/2021-03/28/content_1560551.html",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "原网页/Jina公开稿逐字子串；未补写事实。版面标记移除，采访者和编辑说明另保留。"
+        },
+        {
+          "text": "没有后悔，当然对我的歌唱事业是有点影响的。其实当时我也没有想过再回去香港唱歌，但是因为我爸爸去世了，所以我读完书就回香港了。\n\n爸爸的去世对我打击很大，因为爸爸对我是最好的。我开始唱歌之后，旁边的人都是看我受不受欢迎什么的，妈妈也是很紧张我做得好不好；但爸爸不是的，他没有条件地爱我，关心我到底喜不喜欢唱歌，喜不喜欢演戏。当时我伤心得要死，最爱我的人走了，谁来保护我，谁来爱我呢？\n\n爸爸去世前叮嘱我要照顾好妈妈，我出于孝顺就听妈 妈的 话又接着唱歌。但这是不对的，我要对现在的年轻人说，做什么事情一定要出于你内心真正的喜欢。\n\n但是后来有件事让我对唱歌的态度发生了转变。因为妈妈是贵州人，我就回了一次贵州。当时的贵州很穷，房子也很小，我回去后村里边的小朋友都来看我，大家一起吃饭，饭桌都摆到屋子外面了。当时他们就唱那首《归来的燕子》，我当时非常感动，哭得我呀；唱歌的小孩老人也哭了。所以，当时就看到了唱歌的意义，歌声可以翻山越海，把人心联结在一起。\n\n到了1985年，宋庆龄基金会邀请我回来开音乐会，也让我到央视春晚上唱歌，我就唱了《归来的燕子》，有人就说我是“回国歌手第一号”。",
+          "interviewer_question": "做了这个选择现在回头看有没有后悔过？",
+          "body_char_start": 1086,
+          "body_char_end": 1577,
+          "speaker": "陈美龄",
+          "speaker_role": "interviewee",
+          "source_format": "published_interview_QA",
+          "id": "WEB-chenmeiling-E003",
+          "source_id": "WEB-chenmeiling",
+          "source_url": "https://ycpai.ycwb.com/ycppad/content/2021-03/28/content_1560551.html",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "原网页/Jina公开稿逐字子串；未补写事实。版面标记移除，采访者和编辑说明另保留。"
+        }
+      ]
+    },
+    {
+      "id": "N-4b27613445",
+      "name": "蒋世昌",
+      "split": "development",
+      "source_url": "https://www.thepaper.cn/newsDetail_forward_31545615",
+      "title": "乡村教师访谈录︱蒋世昌：八千里风雨砥砺，四十载赤忱不改",
+      "background_note": "上海出生，赴新疆支教40年，退休归沪，非军旅",
+      "sources": [
+        {
+          "id": "WEB-jiangshichang",
+          "url": "https://www.thepaper.cn/newsDetail_forward_31545615",
+          "title": "乡村教师访谈录︱蒋世昌：八千里风雨砥砺，四十载赤忱不改",
+          "institution": "商务印书馆／澎湃新闻",
+          "fetched_at": "2026-10-17T08:30:19.148922+00:00",
+          "raw_path": "WEB-jiangshichang-raw_path.md",
+          "body_path": "WEB-jiangshichang-body_path.txt",
+          "raw_sha256": "9d8e7b11d2406e40361b12bb01ab2520416fb38472e22b407237669d17ff99dc",
+          "body_sha256": "e4c7c9f88365eed6afb24f4ff80b8f5a0bfe33772dfcc846ebaaa85554883267",
+          "format": "published_edited_oral_narrative",
+          "interviewer": "赵辰璐、杨轩宇",
+          "narrator": "蒋世昌",
+          "retrieval_backend": "agent-reach Jina Reader",
+          "source_limitations": "原采访整理刊物；编辑标题/括号注释不等于本人原话。"
+        }
+      ],
+      "excerpts": [
+        {
+          "text": "我高中就读于上海市第六十四中学，这所学校始建于1939年，坐落在上海市中心繁华的淮海中路，道路的两旁是高大的法国梧桐树。校园内有几栋别致的洋房，每栋有四间教室。在寸土寸金的繁华的淮海路上，校园内空间窄小，只有一个带沙坑的200米跑道运动场和篮球场、排球场。因此，我们每周的两节体育课就连起来在离学校不远的淮海体育场进行。高中期间，我学习成绩还算优秀，读书也很轻松，只是靠上课认真听讲和做笔记，平时注意理解和积累，凭着记忆取得好成绩。例如，化学从初中开始到高中毕业，每学期都是五分（那时候是五分制）。我的高中物理是名师教的，力学学得最好，因此在以后的物理从教生涯中，力学部分是我最拿手的。当然，这与大学时代教授我“普通物理”课程的贾冰如教授也有密不可分的影响。",
+          "interviewer_question": null,
+          "body_char_start": 128,
+          "body_char_end": 457,
+          "speaker": "蒋世昌",
+          "speaker_role": "interviewee",
+          "source_format": "published_edited_oral_narrative",
+          "id": "WEB-jiangshichang-E002",
+          "source_id": "WEB-jiangshichang",
+          "source_url": "https://www.thepaper.cn/newsDetail_forward_31545615",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "原网页/Jina公开稿逐字子串；未补写事实。版面标记移除，采访者和编辑说明另保留。"
+        },
+        {
+          "text": "我爱好比较广泛，动手能力也比较强。父母也给了经济上的大力支持，使我可以常到南京西路的“翼风”航模商店买一些飞机模型的材料，有弹射的、螺旋桨的、滑翔机等。我也组装过半导体收音机，从矿石收音机到四个晶体管的收音机（都有）。家里备有电烙铁、万用电表等常用小工具。我家还有照相机，经常和家人外出摄影。高中毕业时，我获得了上海市“五四奖章”，为此我感到特别自豪。生在旧社会，长在红旗下，在14岁读初中时，我就加入了共青团。我从小就有许多愿望，想当飞行员、想当工程师等等来报效祖国。高中毕业时，因为我不具备考飞行员的条件，所以选择了报考地质学院和师范院校，想当一名地质勘探工作者或者一名人民教师。后来我考取了上海师范学院化学系——这样也很好，那些愿望可以通过我的努力，培养我的学生来完成。尽管受家庭出身的影响，但因为是共青团员并且获得过上海市的“五四奖章”，我就被录取到了专科。相比一些同学，我已经是幸运者——有一位同学，因为他爸爸的问题，学校在他的高考报名表的“政审”栏里填了“不宜录取”，他就完全失去了上大学的机会。",
+          "interviewer_question": null,
+          "body_char_start": 1145,
+          "body_char_end": 1599,
+          "speaker": "蒋世昌",
+          "speaker_role": "interviewee",
+          "source_format": "published_edited_oral_narrative",
+          "id": "WEB-jiangshichang-E005",
+          "source_id": "WEB-jiangshichang",
+          "source_url": "https://www.thepaper.cn/newsDetail_forward_31545615",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "原网页/Jina公开稿逐字子串；未补写事实。版面标记移除，采访者和编辑说明另保留。"
+        },
+        {
+          "text": "我们是第一批从师范院校毕业分配来的，学校领导很重视我们，让我担任学校最高年级的化学课教师，孙福萍担任了学校的大队辅导员。有位老教师戏称我们是“科班出身”，我不明白是善意的“挖苦”“恭维”，还是“期望”，认为只有用它来鞭策自己，努力做好自己的工作，不辜负大家的期望，才是最好的回应。我的第一堂课是高中一年级的化学课——“氯气的性质”，学校领导、教导主任和许多老师都来听课了，对我来说压力是很大的。我用带有浓厚上海口音的普通话讲着课，我的讲课、板书都很规范，特别演示实验是经过精心准备的，演示了带有危险性的“氯气和氢气遇强光爆炸”的实验，当点燃镁条时发出明亮的火光，混合气体发生爆炸，产生了白色的烟雾，这是氯化氢气体遇到了空气中的水蒸气，成了盐酸，效果非常好。课后进行了讲评，大家肯定了我的课是成功的；有了好的开始，就要坚持下去。",
+          "interviewer_question": null,
+          "body_char_start": 5740,
+          "body_char_end": 6103,
+          "speaker": "蒋世昌",
+          "speaker_role": "interviewee",
+          "source_format": "published_edited_oral_narrative",
+          "id": "WEB-jiangshichang-E018",
+          "source_id": "WEB-jiangshichang",
+          "source_url": "https://www.thepaper.cn/newsDetail_forward_31545615",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "原网页/Jina公开稿逐字子串；未补写事实。版面标记移除，采访者和编辑说明另保留。"
+        },
+        {
+          "text": "1961年我大学毕业了，那年我20岁。因为上海师院是上海市属高校，面向上海招生、为上海培养师资，关于分配，大家普遍并没有什么想法。毕业考试的那天中午，我们在食堂里吃饭，听到广播里新闻说，上海市教育卫生部部长杨西光和新疆生产建设兵团的领导张仲瀚到学校来了。食堂里大家纷纷议论。后来才知道，教育卫生部和新疆生产建设兵团的领导到学校，是来协调毕业生的分配，支援边疆的发展和建设，而且今后每年都会有毕业生分配到新疆去。不久，我们系的分配方案下来了：除了分配在上海的，还有学生要分配到新疆生产建设兵团和原南京军区防化兵部队。我们班的同学热烈议论起来，但大部分同学还是选择了留在上海，系里要求到新疆去的学生必须是党团干部、自愿报名，并且要得到家长的同意。在国家“好儿女志在四方”“到农村去、到基层去、到祖国最需要的地方去”“到祖国的边疆去、到最艰苦的地方去”等口号的感召下，我们班的学生会干部和班团干部在一起商量，都报名去新疆。",
+          "interviewer_question": null,
+          "body_char_start": 2190,
+          "body_char_end": 2598,
+          "speaker": "蒋世昌",
+          "speaker_role": "interviewee",
+          "source_format": "published_edited_oral_narrative",
+          "id": "WEB-jiangshichang-E008",
+          "source_id": "WEB-jiangshichang",
+          "source_url": "https://www.thepaper.cn/newsDetail_forward_31545615",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "原网页/Jina公开稿逐字子串；未补写事实。版面标记移除，采访者和编辑说明另保留。"
+        },
+        {
+          "text": "对我来说，到了新疆，要长期在这里工作，首先要过的是生活关。南北方气候有差异，东西部的生活习惯也不同，特别是在三年困难时期，生活是非常艰苦的。我们刚到学校时，用一台柴油机带动的小发电机发电，只在学生上晚自习时办公室和教室里才有电，熄灯号吹过就停电了，其他时间都在煤油灯下备课和批改作业。过了两年以后，才接通了市电，时而仍会停电。学校没有自来水，要用水桶到井里去打水，挑到家里备用，有一次孙福萍去井里打水，突然，打水用的杠杆掉了下来，打在她的后背上，到现在遇到天气变化时还隐隐作痛。冬天学校虽然分了烤火煤，但要自己捡柴火，生火取暖。开始，学校没有教师食堂，要和学生在同一个食堂里排队打饭，平时是一个掺着苜蓿干的苞谷馒头和一碗漂着油花的白菜汤，蹲在地上和学生一起吃。吃豆腐就属于改善生活了，逢年过节才能吃到白面馒头和鱼肉。到了1964年后，随着国家经济的好转，生活水平才得到提高。在1965年冬天，学校组织我们到博斯腾湖割芦苇，在零下十几度的情况下，湖面结着厚厚的冰。白天因为劳动还不觉得太冷，晚上就睡在冰面上用芦苇把搭起来的窝棚里，穿着棉衣裤，戴着棉帽，和衣而卧，早上起来，头发和眉毛上都是呼出的气结成的冰碴。",
+          "interviewer_question": null,
+          "body_char_start": 6808,
+          "body_char_end": 7311,
+          "speaker": "蒋世昌",
+          "speaker_role": "interviewee",
+          "source_format": "published_edited_oral_narrative",
+          "id": "WEB-jiangshichang-E021",
+          "source_id": "WEB-jiangshichang",
+          "source_url": "https://www.thepaper.cn/newsDetail_forward_31545615",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "原网页/Jina公开稿逐字子串；未补写事实。版面标记移除，采访者和编辑说明另保留。"
+        },
+        {
+          "text": "在那激情燃烧的岁月，青年们热血沸腾，壮志满怀。我和班内八九个同学报名去新疆，其中有同班同学孙福萍（当时为学生会文娱部长），当时我们已确立了恋爱关系，就去征求两家家长的意见。爸妈很慎重地带我们拜访了留美归来的农学博士、安徽农学院的蒋教授，他分析了当时的国内外形势——中国正在进行大西北的开发，上海已有一些企业向西部搬迁；他又给我讲了美国西部开发的历史，认为美国的西部发展起来了，我国的西部如果得到开发，将来也会很好的，因此鼓励我到新疆去。而我父母年轻时恰逢抗战，在日本侵略军南下时，银行的职员和难民一起从上海撤退到过大西南，所以他们对去边疆并不陌生。加之我们是大学毕业分配去的，感觉肯定是不一样的。因此，我们两家的家长打消了顾虑，一致同意我们到新疆去从教。",
+          "interviewer_question": null,
+          "body_char_start": 2624,
+          "body_char_end": 2951,
+          "speaker": "蒋世昌",
+          "speaker_role": "interviewee",
+          "source_format": "published_edited_oral_narrative",
+          "id": "WEB-jiangshichang-E009",
+          "source_id": "WEB-jiangshichang",
+          "source_url": "https://www.thepaper.cn/newsDetail_forward_31545615",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "原网页/Jina公开稿逐字子串；未补写事实。版面标记移除，采访者和编辑说明另保留。"
+        }
+      ]
+    },
+    {
+      "id": "N-6733a23cd1",
+      "name": "黄小荣",
+      "split": "development",
+      "source_url": "https://m.thepaper.cn/newsDetail_forward_31545869",
+      "title": "乡村教师访谈录︱黄小荣：教育让我走出乡村，也将我留在乡村",
+      "background_note": "福建农民家庭，乡村教师，男，非军旅",
+      "sources": [
+        {
+          "id": "WEB-huangxiaorong2",
+          "url": "https://m.thepaper.cn/newsDetail_forward_31545869",
+          "title": "乡村教师访谈录︱黄小荣：教育让我走出乡村，也将我留在乡村",
+          "institution": "商务印书馆／澎湃新闻",
+          "fetched_at": "2026-10-17T08:31:37.091967+00:00",
+          "raw_path": "WEB-huangxiaorong2-raw_path.md",
+          "body_path": "WEB-huangxiaorong2-body_path.txt",
+          "raw_sha256": "7d0fbc9c046ff27d8dee7bfa3255a89bd941bb49f8c3e2406abbd7f21f9ca688",
+          "body_sha256": "8a245e672ba703e7b8b2977907ac760871e7cc12dc110de996c91bb2e9204089",
+          "format": "published_edited_oral_narrative",
+          "interviewer": "黄毓婕",
+          "narrator": "黄小荣",
+          "retrieval_backend": "agent-reach Jina Reader",
+          "source_limitations": "原采访整理刊物；编辑标题/括号注释不等于本人原话。"
+        }
+      ],
+      "excerpts": [
+        {
+          "text": "我们家三代只出了我一位老师。我1971年出生在福建省浦城县万安乡大游村的一个农民家庭，爸妈都是贫农，一家五口靠种田为生。1978年改革开放以后，国家规定每户需要缴纳的稻谷任务数，每百斤可以兑现17元，余下的粮食能以每百斤19元6角的议价卖给国家粮站，比任务数价格略高。我爸是个勤劳的农民，为了多赚些钱，从那些决定外出打工的亲戚朋友那儿借一块稻田来种，连续种了两三年三四十亩的双季稻，最多的一年卖了一万斤，赚了1000多元。结果没想到1984年、1985年全国大丰收，国家粮站的议价也便宜了许多，每百斤只能卖到14元，那之后的几年，全国的粮食价格一直不高。我爸用存下的这些钱盖了新房，这栋房子一直住到现在。在20世纪七八十年代，我们家算是条件不错了。",
+          "interviewer_question": null,
+          "body_char_start": 13,
+          "body_char_end": 337,
+          "speaker": "黄小荣",
+          "speaker_role": "interviewee",
+          "source_format": "published_edited_oral_narrative",
+          "id": "WEB-huangxiaorong2-E001",
+          "source_id": "WEB-huangxiaorong2",
+          "source_url": "https://m.thepaper.cn/newsDetail_forward_31545869",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "原网页/Jina公开稿逐字子串；未补写事实。版面标记移除，采访者和编辑说明另保留。"
+        },
+        {
+          "text": "我爸虽然没上过几天学，但很重视我们兄妹三人的学习，一天到晚要求我们要好好念书，说读出来就是我们自己的，每次考试的考卷都要拿过去给他过目，一看没达到要求，就少不了一顿打骂。我爸对我哥和我姐的要求比较低，因为他们俩都不爱读书，成绩不太好，所以我爸只要求他们及格就好。我姐对读书不感兴趣，到初一就没读了；我哥没考上师范和中专，去莲塘读了高中，但最后还是没考上专科。而我因为成绩一直不错，所以我爸对我的要求也相应提高——每回考试至少80分。以前的80分比现在要难得多，与现在普及性教育不同，那时是以选拔为主的教育方式，“双高”“普九”还没有实行和推广开。",
+          "interviewer_question": null,
+          "body_char_start": 694,
+          "body_char_end": 967,
+          "speaker": "黄小荣",
+          "speaker_role": "interviewee",
+          "source_format": "published_edited_oral_narrative",
+          "id": "WEB-huangxiaorong2-E003",
+          "source_id": "WEB-huangxiaorong2",
+          "source_url": "https://m.thepaper.cn/newsDetail_forward_31545869",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "原网页/Jina公开稿逐字子串；未补写事实。版面标记移除，采访者和编辑说明另保留。"
+        },
+        {
+          "text": "因为小学时候成绩好，我被班主任选为班长，我想老师肯定是把我的成绩和当班长这事写到我的档案里了，（因为）刚进入中学，班主任就说，这人小学是班长，就选你吧。在初中，班长的活比小学要麻烦很多，我们上晚自习的时候，值班老师经常不见了，走之前嘱咐班长把不听话的人名字记下来。上初中后，周围的男生长得特别快，一个比一个高大，我和他们不同，到了初一体重才60斤，又瘦又小，生怕把那群捣蛋的人名字记下来后，被他们揍，我可真打不过他们，所以总管不住纪律。",
+          "interviewer_question": null,
+          "body_char_start": 1340,
+          "body_char_end": 1558,
+          "speaker": "黄小荣",
+          "speaker_role": "interviewee",
+          "source_format": "published_edited_oral_narrative",
+          "id": "WEB-huangxiaorong2-E006",
+          "source_id": "WEB-huangxiaorong2",
+          "source_url": "https://m.thepaper.cn/newsDetail_forward_31545869",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "原网页/Jina公开稿逐字子串；未补写事实。版面标记移除，采访者和编辑说明另保留。"
+        },
+        {
+          "text": "大概五年前，我曾有个机会可以被借调到教育局工作。那时候我是学校的教导处副主任，负责学校所有排课事务，而我老婆正处于癌症术后化疗康复的关键阶段，学校领导在综合考虑后决定给予她特殊照顾，一周只安排了几节课。这事招来部分同事眼红，每回我排代课，有些人就会回我：“我们可不像某些人哦，一周只需要上几节课……”“让你老婆去代……”，以我老婆的事来抗拒我的安排。我干得很憋屈，就想要换个环境，刚好一个领导告诉我局里有个股室有空缺，股室领导问我是否愿意去。这事我犹豫了两天，没有去主动争取，结果这岗位马上被其他人占去了，我没去成。不过现在想想，这事也没什么后悔的。那时学校的原总务处主任也要退休了，我很快就离开教导处，去填补总务处主任的位置。这份新工作不再整天和人打交道，负责学校的财务、后勤类工作，事情很烦琐，但是我干起来舒服多了，刚好我是比较喜欢业务工作的。",
+          "interviewer_question": null,
+          "body_char_start": 11077,
+          "body_char_end": 11451,
+          "speaker": "黄小荣",
+          "speaker_role": "interviewee",
+          "source_format": "published_edited_oral_narrative",
+          "id": "WEB-huangxiaorong2-E039",
+          "source_id": "WEB-huangxiaorong2",
+          "source_url": "https://m.thepaper.cn/newsDetail_forward_31545869",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "原网页/Jina公开稿逐字子串；未补写事实。版面标记移除，采访者和编辑说明另保留。"
+        }
+      ]
+    },
+    {
+      "id": "N-2c2938c181",
+      "name": "张寿椿",
+      "split": "development",
+      "source_url": "https://www.thepaper.cn/newsDetail_forward_2111653",
+      "title": "口述中国｜北京⑦张寿椿：我们家从70多间房缩成3间房",
+      "background_note": "满族城市女性，原生家庭、求学、婚育口述，非军旅",
+      "sources": [
+        {
+          "id": "WEB-zhangshouchun",
+          "url": "https://www.thepaper.cn/newsDetail_forward_2111653",
+          "title": "口述中国｜北京⑦张寿椿：我们家从70多间房缩成3间房",
+          "institution": "北京出版社／澎湃新闻",
+          "fetched_at": "2026-10-17T08:24:31.917937+00:00",
+          "raw_path": "WEB-zhangshouchun-raw_path.md",
+          "body_path": "WEB-zhangshouchun-body_path.txt",
+          "raw_sha256": "2837e6f2b0adfb4e1654f8bcd4d43ec0b4e557d86c95d21c7f7f605a086d598e",
+          "body_sha256": "1607342b92ac5e2d2be9c77a7bbd771a6d73df580d07f72a10649b76dc4eeafd",
+          "format": "published_interview_QA",
+          "interviewer": "定宜庄",
+          "narrator": "张寿椿",
+          "retrieval_backend": "agent-reach Jina Reader",
+          "source_limitations": "原采访整理刊物；编辑标题/括号注释不等于本人原话。"
+        }
+      ],
+      "excerpts": [
+        {
+          "text": "那就说不上来了，也许吧，那亲做亲他能不沾光么？当然我祖父官小。我父亲说的，我出生时候我们家有70多间大房子，后来是怎么一个情况下，我爷爷不行了眼睛瞎了，活到70多岁时，家里收入就少了，大房子不知怎么就卖了就。我们家住过好几个地儿，我是在哪儿生的，跟我说过都给忘了，反正是东北城，那时候凡是家里稍微高点的，皇亲国戚吧，都住东城。\n\n我祖父娶了5位夫人，到第三位娘家姓曹，就是我亲祖母，生的我父亲，不久又没了。第四位夫人姓王，干嘛的不知道，然后第四位又死了。第五位夫人我小时候朦胧有点印象，姓汪，到现在我跟她的娘家侄女还有来往。这祖母生了一个女儿，11岁死了。合着娶了5位夫人才留下我父亲一个。我也没叔叔也没大爷。\n\n然后我父亲结婚，我这第一位母亲娘家姓邵，邵家本身绝后了，娘家没人，娶到我家不知道是肺痨还是肺病，我哥不到3岁，她死了。我母亲是续弦，那时候二十一，我父亲是二十七，他比她大6岁。\n\n我父亲在故宫当过笔帖式，他字写得不错。民国以后在北京市卫生局工作，做科员，日本时候他有事儿没事儿我就忘了。我们家那会儿住骑河楼，有13间房吧，前面有个铺面房，后边是13间房。铺面房子开个粮店，也不是我们家开的，好像是租，让掌柜的给管，说我们算房东，我也不知道是怎么回事，反正他不给什么钱，别的也不给什么东西，就是每月他给送粮食。反正那时候经济来源不太多，家里有些东西就陆续卖。日本统治时候把我们家在骑河楼的房子占了，我们就自己在外边租房住。",
+          "interviewer_question": "他们也沾您大爷爷（指那桐）的光吧？",
+          "body_char_start": 811,
+          "body_char_end": 1428,
+          "speaker": "张寿椿",
+          "speaker_role": "interviewee",
+          "source_format": "published_interview_QA",
+          "id": "WEB-zhangshouchun-E002",
+          "source_id": "WEB-zhangshouchun",
+          "source_url": "https://www.thepaper.cn/newsDetail_forward_2111653",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "原网页/Jina公开稿逐字子串；未补写事实。版面标记移除，采访者和编辑说明另保留。"
+        },
+        {
+          "text": "我的第一个母亲留下我哥哥。我母亲生了8个，我是老三，前面有两个，一个哥哥一个姐姐，我没看见就死了，我就蹿成第一个了。下边我有一个弟弟，属龙的，要活着七十三四了吧，1942还是1943年死的，得了伤寒，没救过来。\n\n最惨的是我这仨妹妹。1937年闹霍乱吧，那会儿家道已经中落了，经济上差点，要不我哥哥怎么就上的北师，我哥哥上北师就带来一个传染病，水痘吧，之类的，就传给我这仨妹妹，我这仨妹妹最小啊。那年的三月初一死了一个，初一还是初二晚上又死了一个，是二妞和四妞，二妞长得挺好玩的，都6岁了，那个也4岁了，不到3天全死了。那三妹得的叫大头瘟，（访谈者注：大头瘟即流行性腮腺炎，也称痄腮。）三月初八死的。这一传染病里我得的最重，昏迷不醒一个月，但我是最大的，已经是虚岁十三了，所以我抵抗力稍微强点，我都不知道她们死了，等我活过来的时候，头发都脱了，真是不死脱层皮。",
+          "interviewer_question": "房子怎么就让日本人给占了？",
+          "body_char_start": 2499,
+          "body_char_end": 2879,
+          "speaker": "张寿椿",
+          "speaker_role": "interviewee",
+          "source_format": "published_interview_QA",
+          "id": "WEB-zhangshouchun-E005",
+          "source_id": "WEB-zhangshouchun",
+          "source_url": "https://www.thepaper.cn/newsDetail_forward_2111653",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "原网页/Jina公开稿逐字子串；未补写事实。版面标记移除，采访者和编辑说明另保留。"
+        }
+      ]
+    },
+    {
+      "id": "N-53a0ccd987",
+      "name": "佘幼芝",
+      "split": "development",
+      "source_url": "https://www.thepaper.cn/newsDetail_forward_2131558",
+      "title": "口述中国｜北京⑩佘幼芝：不迁袁崇焕墓，当年是有批示的_全球智库_澎湃新闻-The Paper",
+      "background_note": "北京城市女性、家族守墓传统、家庭迁居，非军旅",
+      "sources": [
+        {
+          "id": "WEB-sheyouzhi",
+          "url": "https://www.thepaper.cn/newsDetail_forward_2131558",
+          "title": "口述中国｜北京⑩佘幼芝：不迁袁崇焕墓，当年是有批示的_全球智库_澎湃新闻-The Paper",
+          "institution": "北京出版社／澎湃新闻",
+          "fetched_at": "2026-10-17T08:24:32.668017+00:00",
+          "raw_path": "WEB-sheyouzhi-raw_path.md",
+          "body_path": "WEB-sheyouzhi-body_path.txt",
+          "raw_sha256": "522367c83d0e975f86a0ac261e04c2615900f001b7218a57054ea2cf394e8e0b",
+          "body_sha256": "f88721cda74d45abc3493eff7097a43a82c31759f2802d6a5563da54ea188a99",
+          "format": "published_interview_QA",
+          "interviewer": "定宜庄、岑大利",
+          "narrator": "佘幼芝",
+          "retrieval_backend": "agent-reach Jina Reader",
+          "source_limitations": "原采访整理刊物；编辑标题/括号注释不等于本人原话。"
+        }
+      ],
+      "excerpts": [
+        {
+          "text": "我叫佘幼芝，这是我的丈夫焦立江。我们佘家在这儿住了十几代人了，原来我们这个院子没有外人，都是佘家的，我们这条街叫佘家营，后来盗了袁大将军的头以后，街名就变成佘家村，不知道为什么又变，就叫佘家湾，后来又叫佘家馆。一直叫到七几年“破四旧”的时候，当“四旧”给破了，就叫东花市斜街。\n\n我的先祖是袁大将军的一个谋士。我小时候老听我大伯说“谋士”“谋士”，我以为是磨刀的石头，我想我先祖怎么是石头呢（笑），后来我妈给我写出来，我才知道是“谋士”，所以对这事印象特别的深。现在别的材料有写我们家是马夫的、仆人的，我也不跟人家辩，人有人的写法，学术上的事我不管，采访我，我就按家里传下来的说。我们就是不知道先祖叫什么名字，可惜没有传下来，哪个历史材料都称为佘义士。\n\n袁大将军是广东东莞人，什街镇水南乡的人，我们家是广东顺德县马岗村的人，我们既是同乡又是上下级的关系。从南方一到这儿来就跟这儿住。",
+          "interviewer_question": null,
+          "body_char_start": 1688,
+          "body_char_end": 2080,
+          "speaker": "佘幼芝",
+          "speaker_role": "interviewee",
+          "source_format": "published_interview_QA",
+          "id": "WEB-sheyouzhi-E001",
+          "source_id": "WEB-sheyouzhi",
+          "source_url": "https://www.thepaper.cn/newsDetail_forward_2131558",
+          "question_ids": [],
+          "mapping_status": "unassigned; gold independently mapped",
+          "verbatim_scope": "原网页/Jina公开稿逐字子串；未补写事实。版面标记移除，采访者和编辑说明另保留。"
+        }
+      ]
+    }
+  ],
+  "note": "Union of original immutable catalogs, only used original excerpts and source bytes. No new narrative text or questions created."
+}

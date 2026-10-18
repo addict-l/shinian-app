@@ -1,0 +1,1528 @@
+{
+  "scope": "Offline saved-input code counterfactual only; no new DS calls, no full pipeline re-execution, no acceptance or DS accuracy claim.",
+  "no_model_calls": true,
+  "run": "/Users/student03/Documents/ChatGPT/ai memory/docs/prototypes/full-interview-evaluation/run-v1.25-three-round003",
+  "engine": "/Users/student03/Documents/ChatGPT/ai memory/docs/prototypes/full-interview-v1/candidate30-scoped-feedback/engine.js",
+  "engine_sha256": "068bed33a2ceafc437f70b4bf3d61b1dd7273e165e3bec983b440e3474c187fb",
+  "version": "full-interview-v1.26.0",
+  "rows": [
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round003/cases/DEV-N-3776254214-FM07-01/turn-000/engine-input-002-review.json",
+      "question_id": "FM07",
+      "before": {
+        "decision": "ask",
+        "target": "FM07-E1",
+        "errors": [],
+        "fields": {
+          "FM07-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "FM07-E2": {
+            "state": "missing",
+            "value": null
+          },
+          "FM07-O1": {
+            "state": "known",
+            "value": "我記得很難過的事情，要分別的時候，我媽媽把她最後一個戒指拿給我，要我留著當盤纏。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-331-E01",
+                  "quote": "我記得很難過的事情，要分別的時候，我媽媽把她最後一個戒指拿給我，要我留著當盤纏。"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "FM07-E1",
+        "errors": [],
+        "fields": {
+          "FM07-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "FM07-E2": {
+            "state": "missing",
+            "value": null
+          },
+          "FM07-O1": {
+            "state": "known",
+            "value": "我記得很難過的事情，要分別的時候，我媽媽把她最後一個戒指拿給我，要我留著當盤纏。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-331-E01",
+                  "quote": "我記得很難過的事情，要分別的時候，我媽媽把她最後一個戒指拿給我，要我留著當盤纏。"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round003/cases/DEV-N-63f4aa2206-FM06-01/turn-000/engine-input-000-review.json",
+      "question_id": "FM06",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "FM06-E1": {
+            "state": "known",
+            "value": "來到臺灣，為什麼我們不同的媽媽生下的小孩還可以這樣團結？我覺得原因在這邊，我們珍惜來到臺灣這個比較安定的社會，不需要再擔心說是不是還有戰亂？然後還會失去對方？所以我們來到臺灣，就覺得很珍惜、很惜福。大家在一起，沒有什麼好計較，平平安安，就是努力把事情做好。我們每個兄弟姊妹就是珍惜相聚在一起的緣分，然後大家都還非常團結，非常能互相體諒。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-436-E02",
+                  "quote": "來到臺灣，為什麼我們不同的媽媽生下的小孩還可以這樣團結？我覺得原因在這邊，我們珍惜來到臺灣這個比較安定的社會，不需要再擔心說是不是還有戰亂？然後還會失去對方？所以我們來到臺灣，就覺得很珍惜、很惜福。大家在一起，沒有什麼好計較，平平安安，就是努力把事情做好。我們每個兄弟姊妹就是珍惜相聚在一起的緣分，然後大家都還非常團結，非常能互相體諒。"
+                }
+              ]
+            }
+          },
+          "FM06-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "FM06-E1": {
+            "state": "known",
+            "value": "來到臺灣，為什麼我們不同的媽媽生下的小孩還可以這樣團結？我覺得原因在這邊，我們珍惜來到臺灣這個比較安定的社會，不需要再擔心說是不是還有戰亂？然後還會失去對方？所以我們來到臺灣，就覺得很珍惜、很惜福。大家在一起，沒有什麼好計較，平平安安，就是努力把事情做好。我們每個兄弟姊妹就是珍惜相聚在一起的緣分，然後大家都還非常團結，非常能互相體諒。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-436-E02",
+                  "quote": "來到臺灣，為什麼我們不同的媽媽生下的小孩還可以這樣團結？我覺得原因在這邊，我們珍惜來到臺灣這個比較安定的社會，不需要再擔心說是不是還有戰亂？然後還會失去對方？所以我們來到臺灣，就覺得很珍惜、很惜福。大家在一起，沒有什麼好計較，平平安安，就是努力把事情做好。我們每個兄弟姊妹就是珍惜相聚在一起的緣分，然後大家都還非常團結，非常能互相體諒。"
+                }
+              ]
+            }
+          },
+          "FM06-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round003/cases/DEV-N-63f4aa2206-GR05-01/turn-000/engine-input-000-review.json",
+      "question_id": "GR05",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "GR05-E1": {
+            "state": "known",
+            "value": "剛開始就一個小攤子，兩張桌子幾張椅子這樣子。然後媽媽那時候還在幫人帶小孩，就是揹著小孩賣麵。",
+            "scope": {
+              "subject": "family",
+              "period": "school_years",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-431-E01",
+                  "quote": "剛開始就一個小攤子，兩張桌子幾張椅子這樣子。然後媽媽那時候還在幫人帶小孩，就是揹著小孩賣麵。"
+                },
+                {
+                  "source_id": "VAC-431-E01",
+                  "quote": "像我讀國中開始就是這樣子，早上大概四點多、五點就要起來，幫媽媽把店開起來。"
+                }
+              ]
+            }
+          },
+          "GR05-E2": {
+            "state": "known",
+            "value": "我們小孩子就是一大早起來，要早早起來，要幫忙切麵，店裡的事情都要幫忙準備，弄一弄才去上課。晚上回來要做麵，我們家的麵都是米做的，都是晚上的時候做好。像我讀國中開始就是這樣子，早上大概四點多、五點就要起來，幫媽媽把店開起來。然後該弄的都弄一弄，再去趕車，坐車坐到桃園去上課。下課也是要趕著回來，回來就幫媽媽做麵、切蔥。",
+            "scope": {
+              "subject": "self",
+              "period": "school_years",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-431-E01",
+                  "quote": "我們小孩子就是一大早起來，要早早起來，要幫忙切麵，店裡的事情都要幫忙準備，弄一弄才去上課。晚上回來要做麵，我們家的麵都是米做的，都是晚上的時候做好。像我讀國中開始就是這樣子，早上大概四點多、五點就要起來，幫媽媽把店開起來。然後該弄的都弄一弄，再去趕車，坐車坐到桃園去上課。下課也是要趕著回來，回來就幫媽媽做麵、切蔥。"
+                }
+              ]
+            }
+          },
+          "GR05-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "GR05-E1": {
+            "state": "known",
+            "value": "剛開始就一個小攤子，兩張桌子幾張椅子這樣子。然後媽媽那時候還在幫人帶小孩，就是揹著小孩賣麵。",
+            "scope": {
+              "subject": "family",
+              "period": "school_years",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-431-E01",
+                  "quote": "剛開始就一個小攤子，兩張桌子幾張椅子這樣子。然後媽媽那時候還在幫人帶小孩，就是揹著小孩賣麵。"
+                },
+                {
+                  "source_id": "VAC-431-E01",
+                  "quote": "像我讀國中開始就是這樣子，早上大概四點多、五點就要起來，幫媽媽把店開起來。"
+                }
+              ]
+            }
+          },
+          "GR05-E2": {
+            "state": "known",
+            "value": "我們小孩子就是一大早起來，要早早起來，要幫忙切麵，店裡的事情都要幫忙準備，弄一弄才去上課。晚上回來要做麵，我們家的麵都是米做的，都是晚上的時候做好。像我讀國中開始就是這樣子，早上大概四點多、五點就要起來，幫媽媽把店開起來。然後該弄的都弄一弄，再去趕車，坐車坐到桃園去上課。下課也是要趕著回來，回來就幫媽媽做麵、切蔥。",
+            "scope": {
+              "subject": "self",
+              "period": "school_years",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-431-E01",
+                  "quote": "我們小孩子就是一大早起來，要早早起來，要幫忙切麵，店裡的事情都要幫忙準備，弄一弄才去上課。晚上回來要做麵，我們家的麵都是米做的，都是晚上的時候做好。像我讀國中開始就是這樣子，早上大概四點多、五點就要起來，幫媽媽把店開起來。然後該弄的都弄一弄，再去趕車，坐車坐到桃園去上課。下課也是要趕著回來，回來就幫媽媽做麵、切蔥。"
+                }
+              ]
+            }
+          },
+          "GR05-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round003/cases/DEV-N-63f4aa2206-SK04-01/turn-000/engine-input-000-review.json",
+      "question_id": "SK04",
+      "before": {
+        "decision": "ask",
+        "target": "SK04-E3",
+        "errors": [],
+        "fields": {
+          "SK04-E1": {
+            "state": "known",
+            "value": "她常去各家店，不管是管理上或口味上出問題，她回來後不是講講而已，她是盯著你把事情做好的人。 我媽非常嚴厲，這部分也是另外一個蠻好的力量，把事情照著媽媽建議走。",
+            "scope": {
+              "subject": "parents",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-434-E03",
+                  "quote": "她常去各家店，不管是管理上或口味上出問題，她回來後不是講講而已，她是盯著你把事情做好的人。 我媽非常嚴厲，這部分也是另外一個蠻好的力量，把事情照著媽媽建議走。"
+                }
+              ]
+            }
+          },
+          "SK04-E2.actor": {
+            "state": "missing",
+            "value": null
+          },
+          "SK04-E2.period": {
+            "state": "missing",
+            "value": null
+          },
+          "SK04-E3": {
+            "state": "missing",
+            "value": null
+          },
+          "SK04-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "SK04-E3",
+        "errors": [],
+        "fields": {
+          "SK04-E1": {
+            "state": "known",
+            "value": "她常去各家店，不管是管理上或口味上出問題，她回來後不是講講而已，她是盯著你把事情做好的人。 我媽非常嚴厲，這部分也是另外一個蠻好的力量，把事情照著媽媽建議走。",
+            "scope": {
+              "subject": "parents",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-434-E03",
+                  "quote": "她常去各家店，不管是管理上或口味上出問題，她回來後不是講講而已，她是盯著你把事情做好的人。 我媽非常嚴厲，這部分也是另外一個蠻好的力量，把事情照著媽媽建議走。"
+                }
+              ]
+            }
+          },
+          "SK04-E2.actor": {
+            "state": "missing",
+            "value": null
+          },
+          "SK04-E2.period": {
+            "state": "missing",
+            "value": null
+          },
+          "SK04-E3": {
+            "state": "missing",
+            "value": null
+          },
+          "SK04-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round003/cases/DEV-N-63f4aa2206-SK05-01/turn-000/engine-input-000-review.json",
+      "question_id": "SK05",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "SK05-E1": {
+            "state": "known",
+            "value": "可是那種感受真的是很深刻的感受，對我抗壓、受挫，跟樂觀的個性，影響非常大。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-436-E02",
+                  "quote": "可是那種感受真的是很深刻的感受，對我抗壓、受挫，跟樂觀的個性，影響非常大。"
+                }
+              ]
+            }
+          },
+          "SK05-R1": {
+            "state": "missing",
+            "value": null
+          },
+          "SK05-E2": {
+            "state": "missing",
+            "value": null
+          },
+          "SK05-E3": {
+            "state": "missing",
+            "value": null
+          },
+          "SK05-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "SK05-E1": {
+            "state": "known",
+            "value": "可是那種感受真的是很深刻的感受，對我抗壓、受挫，跟樂觀的個性，影響非常大。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-436-E02",
+                  "quote": "可是那種感受真的是很深刻的感受，對我抗壓、受挫，跟樂觀的個性，影響非常大。"
+                }
+              ]
+            }
+          },
+          "SK05-R1": {
+            "state": "missing",
+            "value": null
+          },
+          "SK05-E2": {
+            "state": "missing",
+            "value": null
+          },
+          "SK05-E3": {
+            "state": "missing",
+            "value": null
+          },
+          "SK05-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round003/cases/DEV-SOURCES-N-0b5b641466-WK11-01/turn-000/engine-input-000-review.json",
+      "question_id": "WK11",
+      "before": {
+        "decision": "ask",
+        "target": "WK11-E1",
+        "errors": [],
+        "fields": {
+          "WK11-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "WK11-E2": {
+            "state": "known",
+            "value": "这可能也是一个中年的心态，从满怀希望到比较审慎。",
+            "scope": {
+              "subject": "self",
+              "period": "middle_age",
+              "relation_evidence": [
+                {
+                  "source_id": "SUP-shuangxuetao-E001",
+                  "quote": "还有一种感觉，之前我老觉得这个世界还是非常有希望的，或者说人类的命运总体还是向着一个繁荣和大同的方向走去，这是我年轻时的想法。但是到了40岁，尤其是近四五年世界的变化，让我对自己原来的想法有了疑问，包括现在人工智能的发展、社交媒体的泛滥，知识阶层的失语，这些东西能把我们人类带到哪个方向？其实我已经完全不确定了。这可能也是一个中年的心态，从满怀希望到比较审慎。"
+                }
+              ]
+            }
+          },
+          "WK11-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "WK11-E1",
+        "errors": [],
+        "fields": {
+          "WK11-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "WK11-E2": {
+            "state": "known",
+            "value": "这可能也是一个中年的心态，从满怀希望到比较审慎。",
+            "scope": {
+              "subject": "self",
+              "period": "middle_age",
+              "relation_evidence": [
+                {
+                  "source_id": "SUP-shuangxuetao-E001",
+                  "quote": "还有一种感觉，之前我老觉得这个世界还是非常有希望的，或者说人类的命运总体还是向着一个繁荣和大同的方向走去，这是我年轻时的想法。但是到了40岁，尤其是近四五年世界的变化，让我对自己原来的想法有了疑问，包括现在人工智能的发展、社交媒体的泛滥，知识阶层的失语，这些东西能把我们人类带到哪个方向？其实我已经完全不确定了。这可能也是一个中年的心态，从满怀希望到比较审慎。"
+                }
+              ]
+            }
+          },
+          "WK11-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round003/cases/DEV-SOURCES-N-494e209cc7-CH02-01/turn-000/engine-input-000-review.json",
+      "question_id": "CH02",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "CH02-E1": {
+            "state": "known",
+            "value": "那時候生活差，一共打十擔稻子，老闆就要拿六擔去，我們自己還剩著四擔，就不夠吃。",
+            "scope": {
+              "subject": "family",
+              "period": "childhood",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-162-E01",
+                  "quote": "  12歲我就開始種田，沒辦法讀啦，因為家裡要種田，沒人啦！"
+                },
+                {
+                  "source_id": "VAC-162-E01",
+                  "quote": "那時候生活差，一共打十擔稻子，老闆就要拿六擔去，我們自己還剩著四擔，就不夠吃。"
+                }
+              ]
+            }
+          },
+          "CH02-E2": {
+            "state": "known",
+            "value": "我從7歲讀到12歲。  12歲我就開始種田，沒辦法讀啦，因為家裡要種田，沒人啦！",
+            "scope": {
+              "subject": "self",
+              "period": "childhood",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-162-E01",
+                  "quote": "我從7歲讀到12歲。  12歲我就開始種田，沒辦法讀啦，因為家裡要種田，沒人啦！"
+                }
+              ]
+            }
+          },
+          "CH02-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "CH02-E1": {
+            "state": "known",
+            "value": "那時候生活差，一共打十擔稻子，老闆就要拿六擔去，我們自己還剩著四擔，就不夠吃。",
+            "scope": {
+              "subject": "family",
+              "period": "childhood",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-162-E01",
+                  "quote": "  12歲我就開始種田，沒辦法讀啦，因為家裡要種田，沒人啦！"
+                },
+                {
+                  "source_id": "VAC-162-E01",
+                  "quote": "那時候生活差，一共打十擔稻子，老闆就要拿六擔去，我們自己還剩著四擔，就不夠吃。"
+                }
+              ]
+            }
+          },
+          "CH02-E2": {
+            "state": "known",
+            "value": "我從7歲讀到12歲。  12歲我就開始種田，沒辦法讀啦，因為家裡要種田，沒人啦！",
+            "scope": {
+              "subject": "self",
+              "period": "childhood",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-162-E01",
+                  "quote": "我從7歲讀到12歲。  12歲我就開始種田，沒辦法讀啦，因為家裡要種田，沒人啦！"
+                }
+              ]
+            }
+          },
+          "CH02-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round003/cases/DEV-SOURCES-N-fb222da48d-RV11-01/turn-000/engine-input-000-review.json",
+      "question_id": "RV11",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "RV11-E1": {
+            "state": "known",
+            "value": "人生本身就是一趟旅程，站上山顶很快乐，掉下峡谷也可以快乐啊！",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "SUP-fangli-E003",
+                  "quote": "人生本身就是一趟旅程，站上山顶很快乐，掉下峡谷也可以快乐啊！"
+                }
+              ]
+            }
+          },
+          "RV11-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "RV11-E1": {
+            "state": "known",
+            "value": "人生本身就是一趟旅程，站上山顶很快乐，掉下峡谷也可以快乐啊！",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "SUP-fangli-E003",
+                  "quote": "人生本身就是一趟旅程，站上山顶很快乐，掉下峡谷也可以快乐啊！"
+                }
+              ]
+            }
+          },
+          "RV11-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round003/cases/DEV-SOURCES-N-fb222da48d-RV12-01/turn-000/engine-input-000-review.json",
+      "question_id": "RV12",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "RV12-E1": {
+            "state": "known",
+            "value": "人这一生最珍贵的财富是什么？是生命，是时间和心血。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "SUP-fangli-E001",
+                  "quote": "人这一生最珍贵的财富是什么？是生命，是时间和心血。"
+                }
+              ]
+            }
+          },
+          "RV12-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "RV12-E1": {
+            "state": "known",
+            "value": "人这一生最珍贵的财富是什么？是生命，是时间和心血。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "SUP-fangli-E001",
+                  "quote": "人这一生最珍贵的财富是什么？是生命，是时间和心血。"
+                }
+              ]
+            }
+          },
+          "RV12-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round003/cases/DEV-STAGE-N-63f4aa2206-WK03-01/turn-000/engine-input-000-review.json",
+      "question_id": "WK03",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "WK03-E1": {
+            "state": "known",
+            "value": "可是我們年輕人有年輕人的想法，就覺得那樣的生活不是我要的，我一直這麼覺得。就是每天很辛苦在現場做現場的工作，然後李大姊、王大媽，每個來都要招呼幾句。每個客人來就覺得你是老闆娘，要跟你寒喧幾句，所以不能生病。你一生病門就要關起來了，因為你生病可能就沒有人煮麵了，或是缺了一個洞沒辦法營運。",
+            "scope": {
+              "subject": "self",
+              "period": "youth",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-434-E02",
+                  "quote": "可是我們年輕人有年輕人的想法，就覺得那樣的生活不是我要的，我一直這麼覺得。就是每天很辛苦在現場做現場的工作，然後李大姊、王大媽，每個來都要招呼幾句。每個客人來就覺得你是老闆娘，要跟你寒喧幾句，所以不能生病。你一生病門就要關起來了，因為你生病可能就沒有人煮麵了，或是缺了一個洞沒辦法營運。"
+                }
+              ]
+            }
+          },
+          "WK03-E2": {
+            "state": "known",
+            "value": "可是我們年輕人有年輕人的想法，就覺得那樣的生活不是我要的，我一直這麼覺得。就是每天很辛苦在現場做現場的工作，然後李大姊、王大媽，每個來都要招呼幾句。每個客人來就覺得你是老闆娘，要跟你寒喧幾句，所以不能生病。你一生病門就要關起來了，因為你生病可能就沒有人煮麵了，或是缺了一個洞沒辦法營運。",
+            "scope": {
+              "subject": "self",
+              "period": "youth",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-434-E02",
+                  "quote": "可是我們年輕人有年輕人的想法，就覺得那樣的生活不是我要的，我一直這麼覺得。就是每天很辛苦在現場做現場的工作，然後李大姊、王大媽，每個來都要招呼幾句。每個客人來就覺得你是老闆娘，要跟你寒喧幾句，所以不能生病。你一生病門就要關起來了，因為你生病可能就沒有人煮麵了，或是缺了一個洞沒辦法營運。"
+                }
+              ]
+            }
+          },
+          "WK03-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "WK03-E1": {
+            "state": "known",
+            "value": "可是我們年輕人有年輕人的想法，就覺得那樣的生活不是我要的，我一直這麼覺得。就是每天很辛苦在現場做現場的工作，然後李大姊、王大媽，每個來都要招呼幾句。每個客人來就覺得你是老闆娘，要跟你寒喧幾句，所以不能生病。你一生病門就要關起來了，因為你生病可能就沒有人煮麵了，或是缺了一個洞沒辦法營運。",
+            "scope": {
+              "subject": "self",
+              "period": "youth",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-434-E02",
+                  "quote": "可是我們年輕人有年輕人的想法，就覺得那樣的生活不是我要的，我一直這麼覺得。就是每天很辛苦在現場做現場的工作，然後李大姊、王大媽，每個來都要招呼幾句。每個客人來就覺得你是老闆娘，要跟你寒喧幾句，所以不能生病。你一生病門就要關起來了，因為你生病可能就沒有人煮麵了，或是缺了一個洞沒辦法營運。"
+                }
+              ]
+            }
+          },
+          "WK03-E2": {
+            "state": "known",
+            "value": "可是我們年輕人有年輕人的想法，就覺得那樣的生活不是我要的，我一直這麼覺得。就是每天很辛苦在現場做現場的工作，然後李大姊、王大媽，每個來都要招呼幾句。每個客人來就覺得你是老闆娘，要跟你寒喧幾句，所以不能生病。你一生病門就要關起來了，因為你生病可能就沒有人煮麵了，或是缺了一個洞沒辦法營運。",
+            "scope": {
+              "subject": "self",
+              "period": "youth",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-434-E02",
+                  "quote": "可是我們年輕人有年輕人的想法，就覺得那樣的生活不是我要的，我一直這麼覺得。就是每天很辛苦在現場做現場的工作，然後李大姊、王大媽，每個來都要招呼幾句。每個客人來就覺得你是老闆娘，要跟你寒喧幾句，所以不能生病。你一生病門就要關起來了，因為你生病可能就沒有人煮麵了，或是缺了一個洞沒辦法營運。"
+                }
+              ]
+            }
+          },
+          "WK03-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round003/cases/DEV-STAGE-N-63f4aa2206-WK05-01/turn-000/engine-input-000-review.json",
+      "question_id": "WK05",
+      "before": {
+        "decision": "ask",
+        "target": "WK05-E1",
+        "errors": [],
+        "fields": {
+          "WK05-E1": {
+            "state": "ambiguous",
+            "value": null,
+            "scope": {
+              "subject": "self",
+              "period": "youth",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-434-E02",
+                  "quote": "可是我們年輕人有年輕人的想法，就覺得那樣的生活不是我要的，我一直這麼覺得。"
+                },
+                {
+                  "source_id": "VAC-434-E02",
+                  "quote": "我覺得我不想要這樣的生活模式，我想要我在度假，我所有的店都還在開。"
+                }
+              ]
+            }
+          },
+          "WK05-O1": {
+            "state": "known",
+            "value": "所以那時候也想得比較簡單，現在證明其實要去做，只要不斷努力，還是可以達到。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-434-E02",
+                  "quote": "所以那時候也想得比較簡單，現在證明其實要去做，只要不斷努力，還是可以達到。"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "WK05-E1",
+        "errors": [],
+        "fields": {
+          "WK05-E1": {
+            "state": "ambiguous",
+            "value": null,
+            "scope": {
+              "subject": "self",
+              "period": "youth",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-434-E02",
+                  "quote": "可是我們年輕人有年輕人的想法，就覺得那樣的生活不是我要的，我一直這麼覺得。"
+                },
+                {
+                  "source_id": "VAC-434-E02",
+                  "quote": "我覺得我不想要這樣的生活模式，我想要我在度假，我所有的店都還在開。"
+                }
+              ]
+            }
+          },
+          "WK05-O1": {
+            "state": "known",
+            "value": "所以那時候也想得比較簡單，現在證明其實要去做，只要不斷努力，還是可以達到。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-434-E02",
+                  "quote": "所以那時候也想得比較簡單，現在證明其實要去做，只要不斷努力，還是可以達到。"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round003/cases/DEV3-N-c5a5031a87-LT05-01/turn-000/engine-input-002-review.json",
+      "question_id": "LT05",
+      "before": {
+        "decision": "ask",
+        "target": "LT05-E2",
+        "errors": [],
+        "fields": {
+          "LT05-E1": {
+            "state": "known",
+            "value": "麻醉中，让患者能睡得安宁， 术后安全苏醒。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-c5a5031a-Q07",
+                  "quote": "最想让人记住的 : 麻醉中，让患者能睡得安宁， 术后安全苏醒。"
+                }
+              ]
+            }
+          },
+          "LT05-E2": {
+            "state": "missing",
+            "value": null
+          },
+          "LT05-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "LT05-E2",
+        "errors": [],
+        "fields": {
+          "LT05-E1": {
+            "state": "known",
+            "value": "麻醉中，让患者能睡得安宁， 术后安全苏醒。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-c5a5031a-Q07",
+                  "quote": "最想让人记住的 : 麻醉中，让患者能睡得安宁， 术后安全苏醒。"
+                }
+              ]
+            }
+          },
+          "LT05-E2": {
+            "state": "missing",
+            "value": null
+          },
+          "LT05-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round003/cases/DEV3-N-c5a5031a87-LT06-01/turn-000/engine-input-002-review.json",
+      "question_id": "LT06",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "LT06-E1": {
+            "state": "known",
+            "value": "现在趁退休了，身体尚能行，将争取到中国各地和世界各国去旅游。但愿疫情早日在全球获得控制，我将先囘中國去陪伴照顧年邁的父母，去旅游的話，原则上遠距離先走， 近距離后走 。",
+            "scope": {
+              "subject": "self",
+              "period": "now",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-c5a5031a-Q04",
+                  "quote": "现在趁退休了，身体尚能行，将争取到中国各地和世界各国去旅游。但愿疫情早日在全球获得控制，我将先囘中國去陪伴照顧年邁的父母，去旅游的話，原则上遠距離先走， 近距離后走 。"
+                }
+              ]
+            }
+          },
+          "LT06-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "LT06-E1": {
+            "state": "known",
+            "value": "现在趁退休了，身体尚能行，将争取到中国各地和世界各国去旅游。但愿疫情早日在全球获得控制，我将先囘中國去陪伴照顧年邁的父母，去旅游的話，原则上遠距離先走， 近距離后走 。",
+            "scope": {
+              "subject": "self",
+              "period": "now",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-c5a5031a-Q04",
+                  "quote": "现在趁退休了，身体尚能行，将争取到中国各地和世界各国去旅游。但愿疫情早日在全球获得控制，我将先囘中國去陪伴照顧年邁的父母，去旅游的話，原则上遠距離先走， 近距離后走 。"
+                }
+              ]
+            }
+          },
+          "LT06-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round003/cases/DEV3-N-c5a5031a87-WK13-01/turn-000/engine-input-002-review.json",
+      "question_id": "WK13",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "WK13-E1": {
+            "state": "known",
+            "value": "最得意的是 20 多年临床工作至今為止无医疗亊故，有二例家属曾试度为钱财或被某些因素诱惑起诉我而无任何医学问责根底基礎 ，最终自动撤销起诉 ！",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-c5a5031a-Q07",
+                  "quote": "最得意的是 20 多年临床工作至今為止无医疗亊故，有二例家属曾试度为钱财或被某些因素诱惑起诉我而无任何医学问责根底基礎 ，最终自动撤销起诉 ！"
+                }
+              ]
+            }
+          },
+          "WK13-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "WK13-E1": {
+            "state": "known",
+            "value": "最得意的是 20 多年临床工作至今為止无医疗亊故，有二例家属曾试度为钱财或被某些因素诱惑起诉我而无任何医学问责根底基礎 ，最终自动撤销起诉 ！",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-c5a5031a-Q07",
+                  "quote": "最得意的是 20 多年临床工作至今為止无医疗亊故，有二例家属曾试度为钱财或被某些因素诱惑起诉我而无任何医学问责根底基礎 ，最终自动撤销起诉 ！"
+                }
+              ]
+            }
+          },
+          "WK13-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round003/cases/ROOT-N-0391aab2a1-SK03/turn-000/engine-input-000-review.json",
+      "question_id": "SK03",
+      "before": {
+        "decision": "ask",
+        "target": "SK03-E1",
+        "errors": [],
+        "fields": {
+          "SK03-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "SK03-E2": {
+            "state": "known",
+            "value": "我父親是個中醫師，家裡開中藥舖，屋裡是我母親當家，我母親管理家裡的事情",
+            "scope": {
+              "subject": "parents",
+              "period": "childhood",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-233-E01",
+                  "quote": "我父親是個中醫師，家裡開中藥舖，屋裡是我母親當家，我母親管理家裡的事情。"
+                }
+              ]
+            }
+          },
+          "SK03-E3": {
+            "state": "known",
+            "value": "我家裡面弟兄四個，我是老四，老么，我有三個姐姐，三個哥哥",
+            "scope": {
+              "subject": "self",
+              "period": "childhood",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-233-E01",
+                  "quote": "我家裡面弟兄四個，我是老四，老么，我有三個姐姐，三個哥哥。"
+                }
+              ]
+            }
+          },
+          "SK03-E4": {
+            "state": "missing",
+            "value": null
+          },
+          "SK03-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "SK03-E1",
+        "errors": [],
+        "fields": {
+          "SK03-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "SK03-E2": {
+            "state": "known",
+            "value": "我父親是個中醫師，家裡開中藥舖，屋裡是我母親當家，我母親管理家裡的事情",
+            "scope": {
+              "subject": "parents",
+              "period": "childhood",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-233-E01",
+                  "quote": "我父親是個中醫師，家裡開中藥舖，屋裡是我母親當家，我母親管理家裡的事情。"
+                }
+              ]
+            }
+          },
+          "SK03-E3": {
+            "state": "known",
+            "value": "我家裡面弟兄四個，我是老四，老么，我有三個姐姐，三個哥哥",
+            "scope": {
+              "subject": "self",
+              "period": "childhood",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-233-E01",
+                  "quote": "我家裡面弟兄四個，我是老四，老么，我有三個姐姐，三個哥哥。"
+                }
+              ]
+            }
+          },
+          "SK03-E4": {
+            "state": "missing",
+            "value": null
+          },
+          "SK03-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round003/cases/ROOT-N-0391aab2a1-SK04/turn-000/engine-input-000-review.json",
+      "question_id": "SK04",
+      "before": {
+        "decision": "ask",
+        "target": "SK04-E3",
+        "errors": [],
+        "fields": {
+          "SK04-E1": {
+            "state": "known",
+            "value": "我們家裡受的教育，是大事化小，小事化無",
+            "scope": {
+              "subject": "family",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-233-E02",
+                  "quote": "我說我們家裡受的教育，是大事化小，小事化無，妳懂吧？"
+                }
+              ]
+            }
+          },
+          "SK04-E2.actor": {
+            "state": "missing",
+            "value": null
+          },
+          "SK04-E2.period": {
+            "state": "missing",
+            "value": null
+          },
+          "SK04-E3": {
+            "state": "missing",
+            "value": null
+          },
+          "SK04-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "SK04-E3",
+        "errors": [],
+        "fields": {
+          "SK04-E1": {
+            "state": "known",
+            "value": "我們家裡受的教育，是大事化小，小事化無",
+            "scope": {
+              "subject": "family",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-233-E02",
+                  "quote": "我說我們家裡受的教育，是大事化小，小事化無，妳懂吧？"
+                }
+              ]
+            }
+          },
+          "SK04-E2.actor": {
+            "state": "missing",
+            "value": null
+          },
+          "SK04-E2.period": {
+            "state": "missing",
+            "value": null
+          },
+          "SK04-E3": {
+            "state": "missing",
+            "value": null
+          },
+          "SK04-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round003/cases/ROOT-N-0391aab2a1-WK08/turn-000/engine-input-000-review.json",
+      "question_id": "WK08",
+      "before": {
+        "decision": "ask",
+        "target": "WK08-E3",
+        "errors": [],
+        "fields": {
+          "WK08-E1": {
+            "state": "known",
+            "value": "受訓完就工作，一做就是30年。從到輔導會報到那天，一直到退休，30年。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-233-E02",
+                  "quote": "受訓完就工作，一做就是30年。從到輔導會報到那天，一直到退休，30年。"
+                }
+              ]
+            }
+          },
+          "WK08-E2": {
+            "state": "known",
+            "value": "30年",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-233-E02",
+                  "quote": "受訓完就工作，一做就是30年。從到輔導會報到那天，一直到退休，30年。"
+                }
+              ]
+            },
+            "precision": "exact",
+            "links": [
+              {
+                "field_id": "WK08-E1",
+                "value": "受訓完就工作，一做就是30年。從到輔導會報到那天，一直到退休，30年。"
+              }
+            ]
+          },
+          "WK08-E3": {
+            "state": "missing",
+            "value": null
+          },
+          "WK08-E4": {
+            "state": "missing",
+            "value": null
+          },
+          "WK08-O1": {
+            "state": "known",
+            "value": "在工作當中，人家搞不好的，派我去；最苦的最不好搞的，都是我幹。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-233-E02",
+                  "quote": "在工作當中，人家搞不好的，派我去；最苦的最不好搞的，都是我幹。"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "WK08-E3",
+        "errors": [],
+        "fields": {
+          "WK08-E1": {
+            "state": "known",
+            "value": "受訓完就工作，一做就是30年。從到輔導會報到那天，一直到退休，30年。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-233-E02",
+                  "quote": "受訓完就工作，一做就是30年。從到輔導會報到那天，一直到退休，30年。"
+                }
+              ]
+            }
+          },
+          "WK08-E2": {
+            "state": "known",
+            "value": "30年",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-233-E02",
+                  "quote": "受訓完就工作，一做就是30年。從到輔導會報到那天，一直到退休，30年。"
+                }
+              ]
+            },
+            "precision": "exact",
+            "links": [
+              {
+                "field_id": "WK08-E1",
+                "value": "受訓完就工作，一做就是30年。從到輔導會報到那天，一直到退休，30年。"
+              }
+            ]
+          },
+          "WK08-E3": {
+            "state": "missing",
+            "value": null
+          },
+          "WK08-E4": {
+            "state": "missing",
+            "value": null
+          },
+          "WK08-O1": {
+            "state": "known",
+            "value": "在工作當中，人家搞不好的，派我去；最苦的最不好搞的，都是我幹。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-233-E02",
+                  "quote": "在工作當中，人家搞不好的，派我去；最苦的最不好搞的，都是我幹。"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round003/cases/ROOT-N-2c2938c181-CH05/turn-000/engine-input-000-review.json",
+      "question_id": "CH05",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "CH05-E1": {
+            "state": "known",
+            "value": "这一传染病里我得的最重，昏迷不醒一个月，但我是最大的，已经是虚岁十三了，所以我抵抗力稍微强点，我都不知道她们死了，等我活过来的时候，头发都脱了，真是不死脱层皮。",
+            "scope": {
+              "subject": "self",
+              "period": "childhood",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-zhangshouchun-E005",
+                  "quote": "这一传染病里我得的最重，昏迷不醒一个月，但我是最大的，已经是虚岁十三了，所以我抵抗力稍微强点，我都不知道她们死了，等我活过来的时候，头发都脱了，真是不死脱层皮。"
+                }
+              ]
+            }
+          },
+          "CH05-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "CH05-E1": {
+            "state": "known",
+            "value": "这一传染病里我得的最重，昏迷不醒一个月，但我是最大的，已经是虚岁十三了，所以我抵抗力稍微强点，我都不知道她们死了，等我活过来的时候，头发都脱了，真是不死脱层皮。",
+            "scope": {
+              "subject": "self",
+              "period": "childhood",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-zhangshouchun-E005",
+                  "quote": "这一传染病里我得的最重，昏迷不醒一个月，但我是最大的，已经是虚岁十三了，所以我抵抗力稍微强点，我都不知道她们死了，等我活过来的时候，头发都脱了，真是不死脱层皮。"
+                }
+              ]
+            }
+          },
+          "CH05-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round003/cases/ROOT-N-2c2938c181-SK03/turn-000/engine-input-000-repair1.json",
+      "question_id": "SK03",
+      "before": {
+        "decision": "ask",
+        "target": "SK03-E1",
+        "errors": [],
+        "fields": {
+          "SK03-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "SK03-E2": {
+            "state": "known",
+            "value": "我父亲在故宫当过笔帖式，他字写得不错。民国以后在北京市卫生局工作，做科员，日本时候他有事儿没事儿我就忘了。我们家那会儿住骑河楼，有13间房吧，前面有个铺面房，后边是13间房。铺面房子开个粮店，也不是我们家开的，好像是租，让掌柜的给管，说我们算房东，我也不知道是怎么回事，反正他不给什么钱，别的也不给什么东西，就是每月他给送粮食。反正那时候经济来源不太多，家里有些东西就陆续卖。",
+            "scope": {
+              "subject": "parents",
+              "period": "childhood",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-zhangshouchun-E002",
+                  "quote": "我父亲在故宫当过笔帖式，他字写得不错。民国以后在北京市卫生局工作，做科员，日本时候他有事儿没事儿我就忘了。我们家那会儿住骑河楼，有13间房吧，前面有个铺面房，后边是13间房。铺面房子开个粮店，也不是我们家开的，好像是租，让掌柜的给管，说我们算房东，我也不知道是怎么回事，反正他不给什么钱，别的也不给什么东西，就是每月他给送粮食。反正那时候经济来源不太多，家里有些东西就陆续卖。"
+                }
+              ]
+            }
+          },
+          "SK03-E3": {
+            "state": "known",
+            "value": "我哥不到3岁",
+            "scope": {
+              "subject": "self",
+              "period": "childhood",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-zhangshouchun-E002",
+                  "quote": "然后我父亲结婚，我这第一位母亲娘家姓邵，邵家本身绝后了，娘家没人，娶到我家不知道是肺痨还是肺病，我哥不到3岁，她死了。"
+                }
+              ]
+            }
+          },
+          "SK03-E4": {
+            "state": "missing",
+            "value": null
+          },
+          "SK03-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "SK03-E1",
+        "errors": [],
+        "fields": {
+          "SK03-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "SK03-E2": {
+            "state": "known",
+            "value": "我父亲在故宫当过笔帖式，他字写得不错。民国以后在北京市卫生局工作，做科员，日本时候他有事儿没事儿我就忘了。我们家那会儿住骑河楼，有13间房吧，前面有个铺面房，后边是13间房。铺面房子开个粮店，也不是我们家开的，好像是租，让掌柜的给管，说我们算房东，我也不知道是怎么回事，反正他不给什么钱，别的也不给什么东西，就是每月他给送粮食。反正那时候经济来源不太多，家里有些东西就陆续卖。",
+            "scope": {
+              "subject": "parents",
+              "period": "childhood",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-zhangshouchun-E002",
+                  "quote": "我父亲在故宫当过笔帖式，他字写得不错。民国以后在北京市卫生局工作，做科员，日本时候他有事儿没事儿我就忘了。我们家那会儿住骑河楼，有13间房吧，前面有个铺面房，后边是13间房。铺面房子开个粮店，也不是我们家开的，好像是租，让掌柜的给管，说我们算房东，我也不知道是怎么回事，反正他不给什么钱，别的也不给什么东西，就是每月他给送粮食。反正那时候经济来源不太多，家里有些东西就陆续卖。"
+                }
+              ]
+            }
+          },
+          "SK03-E3": {
+            "state": "known",
+            "value": "我哥不到3岁",
+            "scope": {
+              "subject": "self",
+              "period": "childhood",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-zhangshouchun-E002",
+                  "quote": "然后我父亲结婚，我这第一位母亲娘家姓邵，邵家本身绝后了，娘家没人，娶到我家不知道是肺痨还是肺病，我哥不到3岁，她死了。"
+                }
+              ]
+            }
+          },
+          "SK03-E4": {
+            "state": "missing",
+            "value": null
+          },
+          "SK03-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round003/cases/ROOT-N-63f4aa2206-RV02/turn-000/engine-input-000-review.json",
+      "question_id": "RV02",
+      "before": {
+        "decision": "ask",
+        "target": "RV02-E2",
+        "errors": [],
+        "fields": {
+          "RV02-E1": {
+            "state": "known",
+            "value": "我媽60幾歲就走了，兄弟姊妹蠻大的一個遺憾就是沒有可以讓媽媽享福享很多年，因為她很早就走了。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-436-E01",
+                  "quote": "我媽60幾歲就走了，兄弟姊妹蠻大的一個遺憾就是沒有可以讓媽媽享福享很多年，因為她很早就走了。"
+                }
+              ]
+            }
+          },
+          "RV02-E2": {
+            "state": "missing",
+            "value": null
+          },
+          "RV02-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "RV02-E2",
+        "errors": [],
+        "fields": {
+          "RV02-E1": {
+            "state": "known",
+            "value": "我媽60幾歲就走了，兄弟姊妹蠻大的一個遺憾就是沒有可以讓媽媽享福享很多年，因為她很早就走了。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-436-E01",
+                  "quote": "我媽60幾歲就走了，兄弟姊妹蠻大的一個遺憾就是沒有可以讓媽媽享福享很多年，因為她很早就走了。"
+                }
+              ]
+            }
+          },
+          "RV02-E2": {
+            "state": "missing",
+            "value": null
+          },
+          "RV02-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    }
+  ]
+}

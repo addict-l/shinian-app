@@ -1,0 +1,137 @@
+{
+  "decision": "ready",
+  "target": null,
+  "question": null,
+  "fields": {
+    "RV16-E1": {
+      "state": "known",
+      "scope": {
+        "subject": "self",
+        "period": "lifelong",
+        "relation_evidence": [
+          {
+            "source_id": "WEB-jinxiaogui-E005",
+            "quote": "我最想说的是希望师弟师妹们继续发扬贵州大学“明德至善、博学笃行”的校训精神，吃苦耐劳，到基层去磨炼去成长，在无私奉献中实现自己的人生价值。"
+          }
+        ]
+      },
+      "value": "我最想说的是希望师弟师妹们继续发扬贵州大学“明德至善、博学笃行”的校训精神，吃苦耐劳，到基层去磨炼去成长，在无私奉献中实现自己的人生价值。",
+      "evidence": [
+        {
+          "source_id": "WEB-jinxiaogui-E005",
+          "quote": "我最想说的是希望师弟师妹们继续发扬贵州大学“明德至善、博学笃行”的校训精神，吃苦耐劳，到基层去磨炼去成长，在无私奉献中实现自己的人生价值。"
+        }
+      ]
+    },
+    "RV16-O1": {
+      "state": "missing",
+      "value": null,
+      "evidence": []
+    }
+  },
+  "effective": {
+    "RV16-E1": "known",
+    "RV16-O1": "missing"
+  },
+  "active": [
+    "RV16-E1"
+  ],
+  "errors": [],
+  "rejected_candidates": [],
+  "scope_notices": [
+    {
+      "field_id": "RV16-E1",
+      "rule": "expand_explicit_same_field_evidence_alias"
+    }
+  ],
+  "protocol_normalizations": [
+    {
+      "rule": "expand_control_evidence_units",
+      "original_control": {
+        "action": "continue",
+        "evidence_unit_ids": []
+      },
+      "selections": [
+        {
+          "attribute": "evidence_unit_ids",
+          "selected_ids": [],
+          "refs": []
+        }
+      ]
+    },
+    {
+      "field_id": "RV16-E1",
+      "rule": "expand_selected_original_evidence_units",
+      "original_candidate": {
+        "state": "known",
+        "value_unit_ids": [
+          "S1.1"
+        ],
+        "evidence_unit_ids": [
+          "S1.1"
+        ],
+        "scope": {
+          "subject": "self",
+          "period": "lifelong",
+          "relation_unit_ids": "same_as_evidence"
+        }
+      },
+      "selections": [
+        {
+          "attribute": "value",
+          "rule": "copy_selected_contiguous_original_units",
+          "selected_ids": [
+            "S1.1"
+          ],
+          "refs": [
+            {
+              "source_id": "WEB-jinxiaogui-E005",
+              "quote": "我最想说的是希望师弟师妹们继续发扬贵州大学“明德至善、博学笃行”的校训精神，吃苦耐劳，到基层去磨炼去成长，在无私奉献中实现自己的人生价值。"
+            }
+          ]
+        },
+        {
+          "attribute": "evidence_unit_ids",
+          "selected_ids": [
+            "S1.1"
+          ],
+          "refs": [
+            {
+              "source_id": "WEB-jinxiaogui-E005",
+              "quote": "我最想说的是希望师弟师妹们继续发扬贵州大学“明德至善、博学笃行”的校训精神，吃苦耐劳，到基层去磨炼去成长，在无私奉献中实现自己的人生价值。"
+            }
+          ]
+        },
+        {
+          "attribute": "relation_unit_ids",
+          "alias": "same_as_evidence"
+        }
+      ]
+    },
+    {
+      "field_id": "RV16-E1",
+      "rule": "expand_explicit_same_field_evidence_alias",
+      "original_candidate": {
+        "state": "known",
+        "scope": {
+          "subject": "self",
+          "period": "lifelong",
+          "relation_evidence": "same_as_evidence"
+        },
+        "value": "我最想说的是希望师弟师妹们继续发扬贵州大学“明德至善、博学笃行”的校训精神，吃苦耐劳，到基层去磨炼去成长，在无私奉献中实现自己的人生价值。",
+        "evidence": [
+          {
+            "source_id": "WEB-jinxiaogui-E005",
+            "quote": "我最想说的是希望师弟师妹们继续发扬贵州大学“明德至善、博学笃行”的校训精神，吃苦耐劳，到基层去磨炼去成长，在无私奉献中实现自己的人生价值。"
+          }
+        ]
+      }
+    }
+  ],
+  "optional_errors": [],
+  "inactive_conditional_errors": [],
+  "unbound_material": [],
+  "provenance": {},
+  "version": "full-interview-v2.0.0",
+  "semantic_rejections": []
+}

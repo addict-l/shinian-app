@@ -1,0 +1,1007 @@
+
+
+<!doctype html>
+<html lang="zh-tw">
+<head id="ctl00_siteHeader"><title>
+	口述歷史-退休生活-榮民文化網
+</title><meta charset="utf-8" /><meta http-equiv="no-cache" /><meta http-equiv="Cache-Control" content="no-cache" /><meta http-equiv="X-UA-Compatible" content="IE=edge" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="keywords" content="榮民 老兵 眷村 橫貫公路 十大建設 清境農場 蔣經國先生 國軍退輔會" />
+<meta name="description" content="60萬榮民承受戰爭動盪，換得現今的安和樂利，以血汗交織的建設，為我們打造堅若磐石的家園，本站蒐錄榮民參與經建、保國衛民、老照片、眷村文化、榮民文物、感人小故事…等珍貴史料，讓更多人認識這群為台灣奉獻的無名英雄，也歡迎民眾投稿分享交流!" />
+<meta content="國軍退除役官兵輔導委員會榮民文化網" name="copyright" />
+<meta content="國軍退除役官兵輔導委員會" name="Author" />
+<meta content="K+6d6xc7yrl1jZSJvxmlDg==" name="csp-nonce" />
+<link href="/favicon.ico" rel="SHORTCUT ICON" />
+<link href="/css/vac.css?20261017042505116030" rel="stylesheet" type="text/css" />
+<link href="/css/style.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="/css/jquery.mCustomScrollbar.css" />
+
+<script src="/js/jquery-3.7.1.min.js" type="text/javascript" nonce='K+6d6xc7yrl1jZSJvxmlDg=='></script>
+<link rel="stylesheet" href="/css/jquery-ui.min.css" />
+<script src="/js/jquery-ui.min.js" type="text/javascript" nonce='K+6d6xc7yrl1jZSJvxmlDg=='></script>
+<script src="/js/jquery.scrollify.js" type="text/javascript" nonce='K+6d6xc7yrl1jZSJvxmlDg=='></script>
+<script nonce='K+6d6xc7yrl1jZSJvxmlDg=='>    window.jQuery || document.write('<script src="/js/jquery-2.1.1.min.js" nonce="K+6d6xc7yrl1jZSJvxmlDg=="><\/script>')</script>
+<script type="text/javascript" nonce='K+6d6xc7yrl1jZSJvxmlDg=='>
+    $(function () {
+        $(".burger2").click(function () {
+			if($(this).hasClass("open")){
+				$(this).find("a").removeAttr("aria-label").attr("aria-label", "展開網站主選單");
+				$(this).find("a").removeAttr("aria-expanded").attr("aria-expanded", "true");
+			}else{
+				$(this).find("a").removeAttr("aria-label").attr("aria-label", "收合網站主選單");
+				$(this).find("a").removeAttr("aria-expanded").attr("aria-expanded", "false");
+			}
+				$(this).toggleClass("open");
+				$(".menupopall").toggleClass("hide");
+				$(".search").toggle();
+
+				setTimeout(function () { 
+		//		$(".mCSB_container").find(".mlv_boxA").eq(0).click();
+				$(".mCSB_container").find(".mlv_boxA").eq(0).focus();
+					//$(".mCSB_container").find(".mlv02_m1").find("a").eq(0).focus(); 
+			}, 500);
+        });
+        $(".mCSB_container").find("a").click(function () {
+            var _parent = parseInt($(this).attr("rel"));
+            $("#m" + _parent).find(".mlv02_box").eq(0).css("color", "#fbff00"); $("#m" + _parent).find(".mlv02_box").eq(0).css("background-color", "#33abe9");
+        });
+        $(document).on('keydown', ".mCSB_container .m1_con a:eq(0)", function (e) {
+            if (e.keyCode === 9 || e.which === 9) {
+                if (e.shiftKey) {
+                    $(".burger2").click(); $(".burger2").find("a").focus();
+                }
+            }
+        })
+        $(document).on('keydown', "#m16 a:last", function (e) {
+            if (e.keyCode === 9 || e.which === 9) {
+                if (!e.shiftKey) {
+                    $(".burger2").find("a").focus(); $(".burger2").toggleClass("close");
+                }
+            }
+        })
+        $(".mlv02_box").parent().focus(function () {
+            $(this).find(".mlv02_box").css("color", "#ffffff"); $(this).find(".mlv02_box").css("background-color", "#1f88be");
+            $(this).find(".mlv02_box").css("color", "#fbff00"); $(this).find(".mlv02_box").css("background-color", "#33abe9");
+        });
+		$(".mCSB_container").find(".mlv_boxA").on("focus", function() {
+			$(".mCSB_container").find(".mlv02_m1").css("visibility", "hidden");
+		})
+		$(".mCSB_container").find(".mlv_boxA:first()").keydown(function(e) {
+            if (e.keyCode === 9 || e.which === 9) {
+                if (e.shiftKey) {
+					$(".mCSB_container").find(".mlv02_m1").css("visibility", "hidden");
+                    $(".burger2").click(); $(".burger2").find("a").focus();
+				}
+	    }
+	})
+	$(".mCSB_container").find(".mlv_boxA:last()").keydown(function(e) {
+            if (e.keyCode === 9 || e.which === 9) {
+                if (!e.shiftKey) {
+$(".mCSB_container").find(".mlv02_m1").css("visibility", "hidden");
+                    $(".burger2").click(); $(".burger2").find("a").focus();
+}
+	    }
+})
+        $(".mlv02_box").parent().keydown(function (e) {
+            if (e.keyCode === 9 || e.which === 9) {
+                if (e.shiftKey) {
+                    var _rel = parseInt($(this).attr("rel"));
+                    if (_rel == 1) {
+                        var _parent = parseInt($(this).attr("parent")) - 1;
+                        setTimeout(function () {
+//                            $(".mCSB_container").find(".mlv_boxA").eq(_parent - 1).click();
+$(".mCSB_container").find(".mlv_boxA").eq(_parent - 1).focus();
+                            setTimeout(function () {
+                                $(".mCSB_container").find(".mlv02_m1 .mlv02_box").css("color", "#ffffff"); $(".mCSB_container").find(".mlv02_m1 .mlv02_box").css("background-color", "#1f88be");
+                                $(".mCSB_container").find(".mlv02_m1").eq(_parent - 1).find("a:last").focus();
+                            }, 100)
+                        }, 100);
+                    }
+                }
+            }
+        })
+        $(".mlv02_box").parent().keydown(function (e) {
+            if (e.keyCode === 9 || e.which === 9) {
+                if (!e.shiftKey) {
+                    $(this).find(".mlv02_box").css("color", "#ffffff"); $(this).find(".mlv02_box").css("background-color", "#1f88be");
+                    var _rel = parseInt($(this).attr("rel"));
+                    if ($(this).parent().find("a").length == _rel) {
+                        var _parent = parseInt($(this).attr("parent"));
+                        if ($(".mlv_boxA").length == _parent) {
+                            $(".burger2").click(); $(".burger2").find("a").focus();
+                        } else {
+                            setTimeout(function () {
+                                //$(".mCSB_container").find(".mlv_boxA").eq(_parent).click();
+$(".mCSB_container").find(".mlv_boxA").eq(_parent).focus();
+				//$(".mCSB_container").find(".mlv02_m1").eq(_parent).find("a").eq(0).focus();
+                            }, 100);
+                        }
+                    }
+                } else {
+                    $(this).find(".mlv02_box").css("color", "#ffffff"); $(this).find(".mlv02_box").css("background-color", "#1f88be");
+                }
+            }
+        });
+	$(".mlv_boxA").attr("href", "javascript:void(0)")
+        $(".mlv_boxA").click(function () {
+            $(".mlv_boxA").removeClass("mCSB_container_hover").attr("aria-expanded", "false");
+            $(this).addClass("mCSB_container_hover").attr("aria-expanded", "true");
+        });
+        setInterval(function () {
+            $('.sinform_pop,.bigpc_pop').each(function () {
+                if ($(this).is(':visible')) {
+                    $(this).find("a").focus();
+                }
+            })
+        }, 500);
+
+        var _isMobile = false;
+        var browser = {
+            versions: function () {
+                var u = navigator.userAgent,
+					app = navigator.appVersion;
+                return { //移動終端瀏覽器版本信息
+                    trident: u.indexOf('Trident') > -1, //IE內核
+                    presto: u.indexOf('Presto') > -1, //opera內核
+                    webKit: u.indexOf('AppleWebKit') > -1, //蘋果、谷歌內核
+                    gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐內核
+                    mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否為移動終端
+                    ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios終端
+                    android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android終端或者uc瀏覽器
+                    iPhone: u.indexOf('iPhone') > -1, //是否為iPhone或者QQHD瀏覽器
+                    iPad: u.indexOf('iPad') > -1, //是否iPad
+                    webApp: u.indexOf('Safari') == -1, //是否web應該進程，沒有頭部與底部
+                    weixin: u.indexOf('MicroMessenger') > -1, //是否微信
+                    qq: u.match(/\sQQ/i) == " qq" //是否QQ
+                };
+            }
+				(),
+            language: (navigator.browserLanguage || navigator.language).toLowerCase()
+        }
+
+        if ((browser.versions.mobile && !browser.versions.iPad) ||
+				(browser.versions.ios && !browser.versions.iPad) ||
+				browser.versions.android ||
+				browser.versions.iPhone
+				) {
+            _isMobile = true;
+        }
+
+        if (window.screen.width <= 1280) {
+            _isMobile = true;
+        }
+
+        if (!_isMobile) {
+            $.scrollify({
+                scrollbars: false,
+                section: ".mcon"
+            });
+        }
+
+        $(".mcon_footer").css("height", "");
+
+    })
+    function MM_showHideLayers() { //v9.0
+        var i, p, v, obj, args = MM_showHideLayers.arguments;
+
+        for (i = 0; i < (args.length - 2); i += 3)
+            with (document) if (getElementById && ((obj = getElementById(args[i])) != null)) {
+                v = args[i + 2];
+        if (v == 'show') {
+            $(".sinf_close").find("a").focus();
+        }
+                if (obj.style) { obj = obj.style; v = (v == 'show') ? 'visible' : (v == 'hide') ? 'hidden' : v; }
+                obj.visibility = v;
+            }
+    }
+</script>
+<!--RWD menu選單JQuery-->
+<script type="text/javascript" nonce='K+6d6xc7yrl1jZSJvxmlDg=='>
+    $(document).ready(function () {
+        $(".RWD_menu").click(function () {
+            $(this).toggleClass("active");
+            $(".nav").slideToggle();
+        });
+        $(".nav").find("a").click(function () {
+            $(this).toggleClass("active");
+            $(".nav").slideToggle();
+        });
+
+        var i;
+        for (i in document.images) {
+            if (document.images[i].src) {
+                var imgSrc = document.images[i].src;
+                if (imgSrc.substr(imgSrc.length - 4) === '.png' || imgSrc.substr(imgSrc.length - 4) === '.PNG') {
+                    document.images[i].style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled='true',sizingMethod='crop',src='" + imgSrc + "')";
+                }
+            }
+        }
+    });
+</script>
+<script type="text/javascript" nonce='K+6d6xc7yrl1jZSJvxmlDg=='>
+    $(document).ready(function () {
+        $('.son_ul').hide(); //初始ul隐藏
+        $('.select_box span').hover(function () { //鼠标移动函数
+            $(this).parent().find('ul.son_ul').slideDown();  //找到ul.son_ul显示
+            $(this).parent().find('li').hover(function () { $(this).addClass('hover') }, function () { $(this).removeClass('hover') }); //li的hover效果
+            $(this).parent().hover(function () { },
+		    function () {
+			    $(this).parent().find("ul.son_ul").slideUp();
+		    }
+		    );
+        }, function () { });
+        $('ul.son_ul li').click(function () {
+            $(this).parents('li').find('span').html($(this).html());
+            $(this).parents('li').find('ul').slideUp();
+        });
+    }
+							 );
+ 
+</script>
+<meta property="og:title" content="投身康樂隊 最愛那卡西" /><meta property="og:description" content="﻿﻿﻿投身康樂隊 最愛那卡西問：您是那個時候進去御風話劇隊的嗎？答：對，參加這個御風話劇隊，我們就是演第一屆的93軍人節，那張戲票我一直到現在都還留著，輔導會如果蒐集，這也是歷史，珍貴的歷史的見證啊！我感覺這張戲票很珍貴，在我們歷史見證，三軍軍人節，就是說陸海空這個軍人節，93軍人節第一屆，因為是第一屆，所以我把這張戲票留下來，當然我們以前演的話劇不少啦，那些都沒有價值了，但是因為這個是93軍人節第一屆的，所以我把這個戲票留下來了，等一下有時間的話，或是我可以做歷史見證的，我都可以幫忙。問：跟我們説一下學音樂的過程？您那時候有特別學什麼樂器嗎？ 答：主要是自己興趣，我小時候就聽很多的軍歌，很有..." /><meta property="og:type" content="website" /><meta property="og:url" content="https://lov.vac.gov.tw/html/oralhistory/content.aspx?l=zh-tw&amp;i=388&amp;c=3&amp;p=?4" /><meta property="og:image" content="https://lov.vac.gov.tw/upload/upload/oralhistory/image/c4d348d6-5734-4ebe-a157-65874fc86e68_1920_1080.jpg" /></head>
+<body id="ctl00_siteBody">
+    <form name="aspnetForm" method="post" action="/zh-tw/oralhistory_c_3_388.htm?4" id="aspnetForm" autocomplete="off">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="LaWNjxE+j6kd89rNdoPjJUWBHtEKIQdRgne8v8HYHc6wIRSllG90L02z7duN8DBLAAjhFQYi4QjcRywD4E6fsc273lN+SbPuOersnPd1y2v6WEI1ScZC9ogEzCMhN5iNK5vRm6W+DVc9mzDmQ16rwX1z7rwS8Cg02NTQxPSU0FfOPjY5DVXUvLPPzq9Lo05ehTxp9Kl/QbmIBP218ucLOuvkIywdffDnXaVywg8uZRSGEH/wjb218cXmiyWIvKvxTjdFwHva2DVbM3Mcwj7vi/uuyDOkNGfuIUM+64/4mCk3W+as7Munx/7U9BPjtnH3VI+j9ZfVEYyCqG5l5d/U6W5G3BfSURxhOZoCbfOB4710Hn4ZlasVufUECRmDBTkeIRTp1PMSwzBYTQ/c7lmDqEDaM16CJ0zMUdt4U3HypaowJZz5falMT9M4G8+jIfd+TnE7mOkbYm1w4og9AD6puBMtRhmBA430DITkCqr+o9I4u/CdKPairlp5RmenuKCLOaa2owvqt3/Wfw4vGtGn2GiHuY5FnG3E2xJ9oyuGiiefBfTmBUsu291SBf0XuS+FQFfEkQ0fxbkZYnCvm8jqloVpW9cLP5+VW0V2StxglyZOliRJTndo6eUVVRGbEs4qHecevJBXD7Rww11Hre1dZA==" />
+
+
+<script src="/ScriptResource.axd?d=h_OOrU5KDPcYj86TI4vWwum9rl6PNEpI6kpWBWOXX0UIcza1-ovd0r3U-LHTX3rM-uruFIWzi2oV8GxsFPiCFIrpco5VwOwd68I42LlKSa-ONJFR9Co0VhobJ29sJ-5ad2qgmJr01av10xy2-UuIi3gb_VigzDSd0&amp;t=20e3ff6b" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+if (typeof(Sys) === 'undefined') throw new Error('ASP.NET Ajax 用戶端架構無法載入。');
+//]]>
+</script>
+
+<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="0F948AF9" />
+<input type="hidden" name="__VIEWSTATEENCRYPTED" id="__VIEWSTATEENCRYPTED" value="" />
+        
+
+<noscript>您的瀏覽器似乎不支援JavaScript語法，這將有部份功能無法使用，建議重新選擇支援的瀏覽器以利我們能提供更舒適的閱讀效果。</noscript>
+<a href="#content" title='跳到主要內容區塊' class="sr-only sr-only-focusable">跳到主要內容區塊</a>
+<div class="mbar">
+    <div class="burger2 menu">
+        <a href="/zh-tw/sitemap.htm" class="mainmenu" title="網站主選單" role="button" aria-label="展開主選單" aria-expanded="true">
+            <div class="icon">
+		<span style="color: #0f2968;font-size: 0.1em;">網站主選單</span>
+            </div>
+        </a>
+        <script type="text/javascript" nonce='K+6d6xc7yrl1jZSJvxmlDg=='>
+            $(function () { $(".mainmenu").attr("href", "javascript:void(0);"); })
+        </script>
+    </div>
+    <a href="/index.htm" title="連結至首頁">
+        <h1 class="vaclogo">
+            <img src="/images/LOGO.png" alt="國軍退除役官兵輔導委員會 LOGO" border="0" /></h1>
+        <div class="vactext">
+            <img src="/images/LOGO_text.png" alt="榮民文化網 字樣說明" /></div>
+    </a>
+    <div class="search">
+        <a href="/zh-tw/search_s.htm" title="請直接點選前往搜尋介面(另開新視窗)" target="_blank">
+            <img src="/images/search.png" alt="搜尋" title="搜尋" border="0" /></a></div>
+</div>
+
+
+<div id="sinform_pop_search" class="sinform_pop">
+    <div class="sinf_box">
+        <div class="sinf_close">
+            <a href="#" onclick="MM_showHideLayers('sinform_pop_search','','hide')">
+                <img src="/images/close.png" alt="關閉" /></a></div>
+        <div class="sinf_all">
+            <div class="sinf_title">
+                 <label for="full_keyword">全文檢索</label></div>
+            <div class="sinf_text">
+                <input id="full_keyword" type="text" class="textfield01" placeholder="請輸入想要查詢的關鍵字..." /><img src="/images/search.png"
+                    alt="開始搜尋" title="開始搜尋" border="0" class="full_search" /></div>
+            <div class="sinf_text">
+                    若您無法搜尋時，可直接點選<a href="https://www.google.com.tw/search?q=site:lov.vac.gov.tw" title="前往google搜尋介面(另開新視窗)" target="_blank">https://www.google.com.tw/search?q=site:lov.vac.gov.tw</a></div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" nonce='K+6d6xc7yrl1jZSJvxmlDg=='>
+    $(document).ready(function () {
+        MM_showHideLayers('sinform_pop_search', '', 'hide');
+
+        $(".search, .RWD_search").find("a").on("click", function () {
+            //$(this).attr("href", "javascript:MM_showHideLayers('sinform_pop_search','','show')");
+        })
+
+        $("#full_keyword").keydown(function (e) {
+            var code = (e.keyCode ? e.keyCode : e.which);
+            if (code == 13) {
+                if ($("#full_keyword").val() == '') { alert("請輸入查詢關鍵字"); }
+                else {
+                    window.open("https://www.google.com.tw/search?q=+" + encodeURIComponent($("#full_keyword").val()) + " site:lov.vac.gov.tw", "_googleS_Win", "");
+                }
+                return false;
+            }
+        });
+        $(".full_search").css({ cursor: "pointer" }).click(function (e) {
+            if ($("#full_keyword").val() == '') { alert("請輸入查詢關鍵字"); }
+            else {
+                window.open("https://www.google.com.tw/search?q=+" + encodeURIComponent($("#full_keyword").val()) + " site:lov.vac.gov.tw", "_googleS_Win", "");
+            }
+        });
+    })
+</script>
+
+<div id="RWD_top">
+    <div class="RWD_logo">
+        <a href="/index.htm">
+            <img src="/images/RWD_logo.png" alt="榮民文化網" /></a></div>
+    <div class="RWD_search">
+        <a href="/zh-tw/search_s.htm" title="請直接點選前往搜尋介面(另開新視窗)" target="_blank">
+            <img src="/images/search.png" alt="搜尋" title="搜尋" border="0" /></a></div>
+    <div class="RWD_menu">
+        <a href="javascript:void(0);">
+            <img src="/images/rwd_menu.png" name="menu" border="0" id="menu" alt="網站主選單" /></a></div>
+    <div style="clear: both">
+    </div>
+</div>
+<nav class="nav rwdNav">
+  <ul>
+    <li><a href="/zh-tw/story.htm">經國先生</a></li><li><a href="/zh-tw/protection.htm">保國衛民</a></li><li><a href="/zh-tw/pioneer.htm">參與經建</a></li><li><a href="/zh-tw/society.htm">深耕社稷</a></li><li><a href="/zh-tw/culture.htm">榮民才藝</a></li><li><a href="/zh-tw/races.htm">融洽生活</a></li><li><a href="/zh-tw/memory.htm">老兵憶往</a></li><li><a href="/zh-tw/photo.htm">圖說舊事</a></li><li><a href="/zh-tw/oralhistory.htm">口述歷史</a></li><li><a href="/zh-tw/village.htm">閱讀眷村</a></li><li><a href="/zh-tw/objects.htm">榮民文物</a></li><li><a href="/zh-tw/virualtour.htm">虛擬導覽</a></li><li><a href="/zh-tw/overseas.htm">四海一家</a></li><li><a href="/zh-tw/payment.htm">退除給付</a></li><li><a href="/zh-tw/career.htm">職涯轉換</a></li><li><a href="/zh-tw/reason.htm">關於本站</a></li>
+	<li><a href="/zh-tw/sitemap.htm" >網站導覽</a></li>
+  </ul>
+</nav>
+<div class="menupopall hide">
+    <div class="mlv01 mCustomScrollbar _mCS_1 mCS-autoHide">
+        <div class="mCustomScrollBox mCS-rounded mCSB_vertical mCSB_inside">
+            <div class="mCSB_container">
+                <a class="mlv_boxA" rel="1" onclick="MM_showHideLayers(&#39;m1&#39;,&#39;&#39;,&#39;show&#39;,&#39;m2&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m3&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m4&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m5&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m6&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m7&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m8&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m9&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m10&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m11&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m12&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m13&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m14&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m15&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m16&#39;,&#39;&#39;,&#39;hide&#39;)" onkeypress="MM_showHideLayers(&#39;m1&#39;,&#39;&#39;,&#39;show&#39;,&#39;m2&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m3&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m4&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m5&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m6&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m7&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m8&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m9&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m10&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m11&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m12&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m13&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m14&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m15&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m16&#39;,&#39;&#39;,&#39;hide&#39;)"><div class="mlv01_box"><img src="/upload/upload/home/290268a3-dbdb-49ce-b0b1-58ccc4475e80_1920_1080.png" alt="" align="absmiddle" />經國先生</div></a><div id="m1" class="mlv02_m1"><div class="m1_con"><a href="/zh-tw/story_l_1.htm?1" parent="1" rel="1"><div class="mlv02_box">追憶</div></a><a href="/zh-tw/story_l_4.htm?1" parent="1" rel="2"><div class="mlv02_box">榮工</div></a><a href="/zh-tw/story_l_5.htm?1" parent="1" rel="3"><div class="mlv02_box">農場</div></a><a href="/zh-tw/story_l_7.htm?1" parent="1" rel="4"><div class="mlv02_box">醫療</div></a><a href="/zh-tw/story_l_11.htm?1" parent="1" rel="5"><div class="mlv02_box">就養</div></a></div></div><a class="mlv_boxA" rel="2" onclick="MM_showHideLayers(&#39;m2&#39;,&#39;&#39;,&#39;show&#39;,&#39;m1&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m3&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m4&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m5&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m6&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m7&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m8&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m9&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m10&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m11&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m12&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m13&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m14&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m15&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m16&#39;,&#39;&#39;,&#39;hide&#39;)" onkeypress="MM_showHideLayers(&#39;m2&#39;,&#39;&#39;,&#39;show&#39;,&#39;m1&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m3&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m4&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m5&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m6&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m7&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m8&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m9&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m10&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m11&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m12&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m13&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m14&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m15&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m16&#39;,&#39;&#39;,&#39;hide&#39;)"><div class="mlv01_box"><img src="/upload/upload/home/6fdf76c9-6355-476a-9caf-f1b54c886038_1920_1080.png" alt="" align="absmiddle" />保國衛民</div></a><div id="m2" class="mlv02_m1"><div class="m2_con"><a href="/zh-tw/protection_l_1.htm?1" parent="2" rel="1"><div class="mlv02_box">北伐</div></a><a href="/zh-tw/protection_l_2.htm?1" parent="2" rel="2"><div class="mlv02_box">抗戰</div></a><a href="/zh-tw/protection_l_3.htm?1" parent="2" rel="3"><div class="mlv02_box">戡亂</div></a><a href="/zh-tw/protection_l_4.htm?1" parent="2" rel="4"><div class="mlv02_box">保衛臺灣</div></a><a href="/zh-tw/protection_l_5.htm?1" parent="2" rel="5"><div class="mlv02_box">影音專區</div></a><a href="/zh-tw/hero_l_1.htm?1" parent="2" rel="6"><div class="mlv02_box">國軍英雄</div></a><a href="/zh-tw/krahero_l_9.htm?1" parent="2" rel="7"><div class="mlv02_box">韓戰反共義士</div></a></div></div><a class="mlv_boxA" rel="3" onclick="MM_showHideLayers(&#39;m3&#39;,&#39;&#39;,&#39;show&#39;,&#39;m1&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m2&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m4&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m5&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m6&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m7&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m8&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m9&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m10&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m11&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m12&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m13&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m14&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m15&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m16&#39;,&#39;&#39;,&#39;hide&#39;)" onkeypress="MM_showHideLayers(&#39;m3&#39;,&#39;&#39;,&#39;show&#39;,&#39;m1&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m2&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m4&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m5&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m6&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m7&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m8&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m9&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m10&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m11&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m12&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m13&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m14&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m15&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m16&#39;,&#39;&#39;,&#39;hide&#39;)"><div class="mlv01_box"><img src="/upload/upload/home/7c59d158-bdf0-47a8-9aac-d0e8c3ce034b_1920_1080.png" alt="" align="absmiddle" />參與經建</div></a><div id="m3" class="mlv02_m1"><div class="m3_con"><a href="/zh-tw/pioneer_l_3.htm?1" parent="3" rel="1"><div class="mlv02_box">會屬工廠</div></a><a href="/zh-tw/pioneer_l_2.htm?1" parent="3" rel="2"><div class="mlv02_box">開闢農林</div></a><a href="/zh-tw/pioneer_l_1.htm?1" parent="3" rel="3"><div class="mlv02_box">建設家園</div></a><a href="/zh-tw/pioneer_l_4.htm?1" parent="3" rel="4"><div class="mlv02_box">影音專區</div></a><a href="/zh-tw/character_l_2.htm?1" parent="3" rel="5"><div class="mlv02_box">建設尖兵</div></a><a href="/zh-tw/assets.htm?1" parent="3" rel="6"><div class="mlv02_box">榮民公司文化性資產</div></a></div></div><a class="mlv_boxA" rel="4" onclick="MM_showHideLayers(&#39;m4&#39;,&#39;&#39;,&#39;show&#39;,&#39;m1&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m2&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m3&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m5&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m6&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m7&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m8&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m9&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m10&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m11&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m12&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m13&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m14&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m15&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m16&#39;,&#39;&#39;,&#39;hide&#39;)" onkeypress="MM_showHideLayers(&#39;m4&#39;,&#39;&#39;,&#39;show&#39;,&#39;m1&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m2&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m3&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m5&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m6&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m7&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m8&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m9&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m10&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m11&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m12&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m13&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m14&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m15&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m16&#39;,&#39;&#39;,&#39;hide&#39;)"><div class="mlv01_box"><img src="/upload/upload/home/cbc9995c-6320-4a67-8757-3312bcff7bdf_1920_1080.png" alt="" align="absmiddle" />深耕社稷</div></a><div id="m4" class="mlv02_m1"><div class="m4_con"><a href="/zh-tw/society_l_6.htm?1" parent="4" rel="1"><div class="mlv02_box">傑出女性榮民</div></a><a href="/zh-tw/society_l_5.htm?1" parent="4" rel="2"><div class="mlv02_box">人瑞翦影</div></a><a href="/zh-tw/society_l_4.htm?1" parent="4" rel="3"><div class="mlv02_box">活動誌慶</div></a><a href="/zh-tw/society_l_3.htm?1" parent="4" rel="4"><div class="mlv02_box">服務鄉里</div></a><a href="/zh-tw/society_l_2.htm?1" parent="4" rel="5"><div class="mlv02_box">各界精英</div></a><a href="/zh-tw/society_l_1.htm?1" parent="4" rel="6"><div class="mlv02_box">善行義舉</div></a><a href="/zh-tw/society_l_8.htm?1" parent="4" rel="7"><div class="mlv02_box">影音專區</div></a></div></div><a class="mlv_boxA" rel="5" onclick="MM_showHideLayers(&#39;m5&#39;,&#39;&#39;,&#39;show&#39;,&#39;m1&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m2&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m3&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m4&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m6&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m7&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m8&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m9&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m10&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m11&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m12&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m13&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m14&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m15&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m16&#39;,&#39;&#39;,&#39;hide&#39;)" onkeypress="MM_showHideLayers(&#39;m5&#39;,&#39;&#39;,&#39;show&#39;,&#39;m1&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m2&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m3&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m4&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m6&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m7&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m8&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m9&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m10&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m11&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m12&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m13&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m14&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m15&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m16&#39;,&#39;&#39;,&#39;hide&#39;)"><div class="mlv01_box"><img src="/upload/upload/home/f9c401ce-d212-4435-b4d1-0003a09ec610_1920_1080.png" alt="" align="absmiddle" />榮民才藝</div></a><div id="m5" class="mlv02_m1"><div class="m5_con"><a href="/zh-tw/culture_l_1.htm?1" parent="5" rel="1"><div class="mlv02_box">文學</div></a><a href="/zh-tw/culture_l_7.htm?1" parent="5" rel="2"><div class="mlv02_box">美食</div></a><a href="/zh-tw/culture_l_6.htm?1" parent="5" rel="3"><div class="mlv02_box">民藝</div></a><a href="/zh-tw/culture_l_5.htm?1" parent="5" rel="4"><div class="mlv02_box">音樂</div></a><a href="/zh-tw/culture_l_4.htm?1" parent="5" rel="5"><div class="mlv02_box">藝術</div></a><a href="/zh-tw/culture_l_28.htm?1" parent="5" rel="6"><div class="mlv02_box">影音專區</div></a></div></div><a class="mlv_boxA" rel="6" onclick="MM_showHideLayers(&#39;m6&#39;,&#39;&#39;,&#39;show&#39;,&#39;m1&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m2&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m3&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m4&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m5&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m7&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m8&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m9&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m10&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m11&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m12&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m13&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m14&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m15&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m16&#39;,&#39;&#39;,&#39;hide&#39;)" onkeypress="MM_showHideLayers(&#39;m6&#39;,&#39;&#39;,&#39;show&#39;,&#39;m1&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m2&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m3&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m4&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m5&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m7&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m8&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m9&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m10&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m11&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m12&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m13&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m14&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m15&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m16&#39;,&#39;&#39;,&#39;hide&#39;)"><div class="mlv01_box"><img src="/upload/upload/home/b4d22388-43c6-4b7e-a45e-ca140b6e400f_1920_1080.png" alt="" align="absmiddle" />融洽生活</div></a><div id="m6" class="mlv02_m1"><div class="m6_con"><a href="/zh-tw/races_l_6.htm?1" parent="6" rel="1"><div class="mlv02_box">榮欣志工</div></a><a href="/zh-tw/races_l_1.htm?1" parent="6" rel="2"><div class="mlv02_box">榮民義行</div></a><a href="/zh-tw/races_l_3.htm?1" parent="6" rel="3"><div class="mlv02_box">杏林春暖</div></a><a href="/zh-tw/races_l_2.htm?1" parent="6" rel="4"><div class="mlv02_box">幸福家庭</div></a><a href="/zh-tw/races_l_5.htm?1" parent="6" rel="5"><div class="mlv02_box">文化交流</div></a><a href="/zh-tw/races_l_4.htm?1" parent="6" rel="6"><div class="mlv02_box">精選文章</div></a><a href="/zh-tw/races_l_7.htm?1" parent="6" rel="7"><div class="mlv02_box">影音專區</div></a></div></div><a class="mlv_boxA" rel="7" onclick="MM_showHideLayers(&#39;m7&#39;,&#39;&#39;,&#39;show&#39;,&#39;m1&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m2&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m3&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m4&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m5&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m6&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m8&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m9&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m10&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m11&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m12&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m13&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m14&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m15&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m16&#39;,&#39;&#39;,&#39;hide&#39;)" onkeypress="MM_showHideLayers(&#39;m7&#39;,&#39;&#39;,&#39;show&#39;,&#39;m1&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m2&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m3&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m4&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m5&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m6&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m8&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m9&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m10&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m11&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m12&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m13&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m14&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m15&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m16&#39;,&#39;&#39;,&#39;hide&#39;)"><div class="mlv01_box"><img src="/upload/upload/home/a98cb34b-a2c0-42d5-99df-aa511961a52d_1920_1080.png" alt="" align="absmiddle" />老兵憶往</div></a><div id="m7" class="mlv02_m1"><div class="m7_con"><a href="/zh-tw/memory_l_1.htm?1" parent="7" rel="1"><div class="mlv02_box">對日抗戰</div></a><a href="/zh-tw/memory_l_2.htm?1" parent="7" rel="2"><div class="mlv02_box">戡亂</div></a><a href="/zh-tw/memory_l_3.htm?1" parent="7" rel="3"><div class="mlv02_box">保衛臺灣</div></a><a href="/zh-tw/memory_l_4.htm?1" parent="7" rel="4"><div class="mlv02_box">參與建設</div></a><a href="/zh-tw/memory_l_5.htm?1" parent="7" rel="5"><div class="mlv02_box">豐富文化</div></a><a href="/zh-tw/memory_l_7.htm?1" parent="7" rel="6"><div class="mlv02_box">影音專區</div></a><a href="/zh-tw/memory_l_6.htm?1" parent="7" rel="7"><div class="mlv02_box">其他</div></a><a href="/zh-tw/memory_s.htm" parent="7" rel="8"><div class="mlv02_box">搜尋</div></a></div></div><a class="mlv_boxA" rel="8" onclick="MM_showHideLayers(&#39;m8&#39;,&#39;&#39;,&#39;show&#39;,&#39;m1&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m2&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m3&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m4&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m5&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m6&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m7&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m9&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m10&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m11&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m12&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m13&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m14&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m15&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m16&#39;,&#39;&#39;,&#39;hide&#39;)" onkeypress="MM_showHideLayers(&#39;m8&#39;,&#39;&#39;,&#39;show&#39;,&#39;m1&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m2&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m3&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m4&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m5&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m6&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m7&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m9&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m10&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m11&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m12&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m13&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m14&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m15&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m16&#39;,&#39;&#39;,&#39;hide&#39;)"><div class="mlv01_box"><img src="/upload/upload/home/1cd2cfb2-1c7f-4db2-9bff-19f7f03b385d_1920_1080.png" alt="" align="absmiddle" />圖說舊事</div></a><div id="m8" class="mlv02_m1"><div class="m8_con"><a href="/zh-tw/photo_l_1006.htm?1" parent="8" rel="1"><div class="mlv02_box">典藏回憶</div></a><a href="/zh-tw/photo_l_1002.htm?1" parent="8" rel="2"><div class="mlv02_box">保國衛民</div></a><a href="/zh-tw/photo_l_1003.htm?1" parent="8" rel="3"><div class="mlv02_box">參與經建</div></a><a href="/zh-tw/photo_l_1004.htm?1" parent="8" rel="4"><div class="mlv02_box">融洽族群</div></a><a href="/zh-tw/photo_l_1005.htm?1" parent="8" rel="5"><div class="mlv02_box">深耕社會</div></a><a href="/zh-tw/photo_l_1007.htm?1" parent="8" rel="6"><div class="mlv02_box">經國先生</div></a><a href="/zh-tw/photo_l_1009.htm?1" parent="8" rel="7"><div class="mlv02_box">輔導會會歌</div></a><a href="/zh-tw/photo_l_1008.htm?1" parent="8" rel="8"><div class="mlv02_box">國建殉職英雄及外國軍人在台殉職紀念碑</div></a><a href="/zh-tw/photo_s.htm?1" parent="8" rel="9"><div class="mlv02_box">搜尋</div></a></div></div><a class="mlv_boxA" rel="9" onclick="MM_showHideLayers(&#39;m9&#39;,&#39;&#39;,&#39;show&#39;,&#39;m1&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m2&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m3&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m4&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m5&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m6&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m7&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m8&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m10&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m11&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m12&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m13&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m14&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m15&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m16&#39;,&#39;&#39;,&#39;hide&#39;)" onkeypress="MM_showHideLayers(&#39;m9&#39;,&#39;&#39;,&#39;show&#39;,&#39;m1&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m2&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m3&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m4&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m5&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m6&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m7&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m8&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m10&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m11&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m12&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m13&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m14&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m15&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m16&#39;,&#39;&#39;,&#39;hide&#39;)"><div class="mlv01_box"><img src="/upload/upload/home/913da53b-2c82-429c-aec2-e6b712fe88f5_1920_1080.png" alt="" align="absmiddle" />口述歷史</div></a><div id="m9" class="mlv02_m1"><div class="m9_con"><a href="/zh-tw/oralhistory_l_1.htm?1" parent="9" rel="1"><div class="mlv02_box">從軍背景</div></a><a href="/zh-tw/oralhistory_l_2.htm?1" parent="9" rel="2"><div class="mlv02_box">戰爭回憶</div></a><a href="/zh-tw/oralhistory_l_4.htm?1" parent="9" rel="3"><div class="mlv02_box">參與經建</div></a><a href="/zh-tw/oralhistory_l_3.htm?1" parent="9" rel="4"><div class="mlv02_box">退休生活</div></a><a href="/zh-tw/oralhistory_l_7.htm?1" parent="9" rel="5"><div class="mlv02_box">古寧頭戰役</div></a><a href="/zh-tw/oralhistory_l_6.htm?1" parent="9" rel="6"><div class="mlv02_box">輔導會故事-典範人物專訪</div></a><a href="/zh-tw/oralhistory_l_5.htm?1" parent="9" rel="7"><div class="mlv02_box">輔導會故事-歷任主委專訪</div></a><a href="/zh-tw/oralperson_l_0.htm?1" parent="9" rel="8"><div class="mlv02_box">口述人</div></a></div></div><a class="mlv_boxA" rel="10" onclick="MM_showHideLayers(&#39;m10&#39;,&#39;&#39;,&#39;show&#39;,&#39;m1&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m2&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m3&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m4&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m5&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m6&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m7&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m8&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m9&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m11&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m12&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m13&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m14&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m15&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m16&#39;,&#39;&#39;,&#39;hide&#39;)" onkeypress="MM_showHideLayers(&#39;m10&#39;,&#39;&#39;,&#39;show&#39;,&#39;m1&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m2&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m3&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m4&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m5&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m6&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m7&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m8&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m9&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m11&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m12&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m13&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m14&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m15&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m16&#39;,&#39;&#39;,&#39;hide&#39;)"><div class="mlv01_box"><img src="/upload/upload/home/454b0de0-99da-4733-8adb-14764112a9f1_1920_1080.png" alt="" align="absmiddle" />閱讀眷村</div></a><div id="m10" class="mlv02_m1"><div class="m10_con"><a href="/zh-tw/village_l_3.htm?1" parent="10" rel="1"><div class="mlv02_box">竹籬笆的故事</div></a><a href="/zh-tw/village_l_2.htm?1" parent="10" rel="2"><div class="mlv02_box">名人話家常</div></a><a href="/zh-tw/village_l_1.htm?1" parent="10" rel="3"><div class="mlv02_box">眷村歷史</div></a></div></div><a class="mlv_boxA" rel="11" onclick="MM_showHideLayers(&#39;m11&#39;,&#39;&#39;,&#39;show&#39;,&#39;m1&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m2&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m3&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m4&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m5&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m6&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m7&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m8&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m9&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m10&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m12&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m13&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m14&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m15&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m16&#39;,&#39;&#39;,&#39;hide&#39;)" onkeypress="MM_showHideLayers(&#39;m11&#39;,&#39;&#39;,&#39;show&#39;,&#39;m1&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m2&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m3&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m4&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m5&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m6&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m7&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m8&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m9&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m10&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m12&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m13&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m14&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m15&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m16&#39;,&#39;&#39;,&#39;hide&#39;)"><div class="mlv01_box"><img src="/upload/upload/home/4bc877b4-dae7-4416-bb29-0a13003d2112_1920_1080.png" alt="" align="absmiddle" />榮民文物</div></a><div id="m11" class="mlv02_m1"><div class="m11_con"><a href="/zh-tw/objects_l_1006.htm?1" parent="11" rel="1"><div class="mlv02_box">紀念史蹟建築</div></a><a href="/zh-tw/objects_l_1005.htm?1" parent="11" rel="2"><div class="mlv02_box">辦公文物</div></a><a href="/zh-tw/objects_l_1004.htm?1" parent="11" rel="3"><div class="mlv02_box">懷舊照片</div></a><a href="/zh-tw/objects_l_1003.htm?1" parent="11" rel="4"><div class="mlv02_box">獎狀勳章</div></a><a href="/zh-tw/objects_l_1002.htm?1" parent="11" rel="5"><div class="mlv02_box">軍事用品</div></a><a href="/zh-tw/objects_l_2.htm?1" parent="11" rel="6"><div class="mlv02_box">生活用品</div></a><a href="/zh-tw/objects_l_1007.htm?1" parent="11" rel="7"><div class="mlv02_box">其他</div></a></div></div><a class="mlv_boxA" rel="12" onclick="MM_showHideLayers(&#39;m12&#39;,&#39;&#39;,&#39;show&#39;,&#39;m1&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m2&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m3&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m4&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m5&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m6&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m7&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m8&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m9&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m10&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m11&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m13&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m14&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m15&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m16&#39;,&#39;&#39;,&#39;hide&#39;)" onkeypress="MM_showHideLayers(&#39;m12&#39;,&#39;&#39;,&#39;show&#39;,&#39;m1&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m2&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m3&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m4&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m5&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m6&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m7&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m8&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m9&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m10&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m11&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m13&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m14&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m15&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m16&#39;,&#39;&#39;,&#39;hide&#39;)"><div class="mlv01_box"><img src="/upload/upload/home/295f464b-ec65-43cc-a591-4fc16c010360_1920_1080.png" alt="" align="absmiddle" />虛擬導覽</div></a><div id="m12" class="mlv02_m1"><div class="m12_con"><a href="/zh-tw/virualtour_l_1.htm?1" parent="12" rel="1"><div class="mlv02_box">線上環景</div></a><a href="/zh-tw/virualtour_l_2.htm?1" parent="12" rel="2"><div class="mlv02_box">文物數位重現</div></a></div></div><a class="mlv_boxA" rel="13" onclick="MM_showHideLayers(&#39;m13&#39;,&#39;&#39;,&#39;show&#39;,&#39;m1&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m2&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m3&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m4&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m5&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m6&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m7&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m8&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m9&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m10&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m11&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m12&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m14&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m15&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m16&#39;,&#39;&#39;,&#39;hide&#39;)" onkeypress="MM_showHideLayers(&#39;m13&#39;,&#39;&#39;,&#39;show&#39;,&#39;m1&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m2&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m3&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m4&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m5&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m6&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m7&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m8&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m9&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m10&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m11&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m12&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m14&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m15&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m16&#39;,&#39;&#39;,&#39;hide&#39;)"><div class="mlv01_box"><img src="/upload/upload/home/9319e33e-73d1-45c6-930a-5eaf69d43166_1920_1080.png" alt="" align="absmiddle" />四海一家</div></a><div id="m13" class="mlv02_m1"><div class="m13_con"><a href="/zh-tw/overseas_l_2.htm?1" parent="13" rel="1"><div class="mlv02_box">海外聯誼</div></a><a href="/zh-tw/overseas_l_1.htm?1" parent="13" rel="2"><div class="mlv02_box">海外經建</div></a></div></div><a class="mlv_boxA" rel="14" onclick="MM_showHideLayers(&#39;m14&#39;,&#39;&#39;,&#39;show&#39;,&#39;m1&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m2&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m3&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m4&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m5&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m6&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m7&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m8&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m9&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m10&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m11&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m12&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m13&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m15&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m16&#39;,&#39;&#39;,&#39;hide&#39;)" onkeypress="MM_showHideLayers(&#39;m14&#39;,&#39;&#39;,&#39;show&#39;,&#39;m1&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m2&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m3&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m4&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m5&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m6&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m7&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m8&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m9&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m10&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m11&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m12&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m13&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m15&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m16&#39;,&#39;&#39;,&#39;hide&#39;)"><div class="mlv01_box"><img src="/upload/upload/home/d0178033-2a9a-4054-ae39-891314acca45_1920_1080.png" alt="" align="absmiddle" />退除給付</div></a><div id="m14" class="mlv02_m1"><div class="m14_con"><a href="/zh-tw/payment_l_1.htm?1" parent="14" rel="1"><div class="mlv02_box">歷史沿革</div></a><a href="/zh-tw/payment_l_2.htm?1" parent="14" rel="2"><div class="mlv02_box">承接創新</div></a><a href="/zh-tw/payment_l_3.htm?1" parent="14" rel="3"><div class="mlv02_box">重要紀實</div></a></div></div><a class="mlv_boxA" rel="15" onclick="MM_showHideLayers(&#39;m15&#39;,&#39;&#39;,&#39;show&#39;,&#39;m1&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m2&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m3&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m4&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m5&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m6&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m7&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m8&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m9&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m10&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m11&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m12&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m13&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m14&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m16&#39;,&#39;&#39;,&#39;hide&#39;)" onkeypress="MM_showHideLayers(&#39;m15&#39;,&#39;&#39;,&#39;show&#39;,&#39;m1&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m2&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m3&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m4&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m5&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m6&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m7&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m8&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m9&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m10&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m11&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m12&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m13&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m14&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m16&#39;,&#39;&#39;,&#39;hide&#39;)"><div class="mlv01_box"><img src="/upload/upload/home/8f208993-9e13-468a-9fb8-2cedc3e0fe5f_1920_1080.png" alt="" align="absmiddle" />職涯轉換</div></a><div id="m15" class="mlv02_m1"><div class="m14_con"><a href="/zh-tw/career_l_1.htm?1" parent="15" rel="1"><div class="mlv02_box">單位演驛</div></a><a href="/zh-tw/career_l_2.htm?1" parent="15" rel="2"><div class="mlv02_box">工作回顧</div></a><a href="/zh-tw/career_l_3.htm?1" parent="15" rel="3"><div class="mlv02_box">職訓典範</div></a></div></div><a class="mlv_boxA" rel="16" onclick="MM_showHideLayers(&#39;m16&#39;,&#39;&#39;,&#39;show&#39;,&#39;m1&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m2&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m3&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m4&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m5&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m6&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m7&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m8&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m9&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m10&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m11&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m12&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m13&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m14&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m15&#39;,&#39;&#39;,&#39;hide&#39;)" onkeypress="MM_showHideLayers(&#39;m16&#39;,&#39;&#39;,&#39;show&#39;,&#39;m1&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m2&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m3&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m4&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m5&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m6&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m7&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m8&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m9&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m10&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m11&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m12&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m13&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m14&#39;,&#39;&#39;,&#39;hide&#39;,&#39;m15&#39;,&#39;&#39;,&#39;hide&#39;)"><div class="mlv01_box"><img src="/upload/upload/home/1b41c524-bfba-4516-a470-a30f226d0783_1920_1080.png" alt="" align="absmiddle" />關於本站</div></a><div id="m16" class="mlv02_m1"><div class="m14_con"><a href="/zh-tw/reason.htm" parent="16" rel="1"><div class="mlv02_box">緣起</div></a><a href="/zh-tw/vision.htm" parent="16" rel="2"><div class="mlv02_box">願景</div></a><a href="/zh-tw/thanks.htm" parent="16" rel="3"><div class="mlv02_box">芬芳錄</div></a><a href="/zh-tw/contact.htm" parent="16" rel="4"><div class="mlv02_box">聯絡我們</div></a><a href="/zh-tw/sitemap.htm" parent="16" rel="5"><div class="mlv02_box">網站導覽</div></a></div></div>
+            </div>
+            <div id="mCSB_1_scrollbar_vertical" class="mCSB_scrollTools mCSB_1_scrollbar mCS-rounded mCSB_scrollTools_vertical">
+                <div class="mCSB_draggerContainer">
+                    <div id="mCSB_1_dragger_vertical" class="mCSB_dragger">
+                        <div class="mCSB_dragger_bar">
+                        </div>
+                    </div>
+                    <div class="mCSB_draggerRail">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        
+
+        <div class="RWD_topicbar"><div class="RWD_topic_icon01"><img src="/upload/upload/home/913da53b-2c82-429c-aec2-e6b712fe88f5_1920_1080.png" alt="口述歷史" /></div><div class="RWD_topic_text"><div class="RWD_toptxt_h1">口述歷史</div><div class="RWD_toptxt_h2">好漢重提當年勇</div></div><div style="clear:both;"></div></div>
+        
+    <div class="mainall">
+        
+
+<div class="topicbar">
+    <div class="topicbarcon">
+        <div class="topicbox">
+            <div class="topicimg">
+                <img src="/upload/upload/home/913da53b-2c82-429c-aec2-e6b712fe88f5_1920_1080.png" alt="" /></div>
+            <h2 class="topictext">
+                口述歷史</h2>
+            <div class="topictext_s">
+                好漢重提當年勇</div>
+        </div>
+        
+        <a id="L" name="L" href="#L" title='左邊服務項目連結區' accesskey="L" class="accesskeyL">:::</a>
+        <div class="ss_menuall"><div class="ss_menubox"><a href="/zh-tw/oralhistory_l_1.htm?1" class="">從軍背景</a></div><div class="ss_menubox"><a href="/zh-tw/oralhistory_l_2.htm?1" class="">戰爭回憶</a></div><div class="ss_menubox"><a href="/zh-tw/oralhistory_l_4.htm?1" class="">參與經建</a></div><div class="ss_menubox adarrow"><a href="/zh-tw/oralhistory_l_3.htm?1" class="sm_active">退休生活</a></div><div class="ss_menubox"><a href="/zh-tw/oralhistory_l_7.htm?1" class="">古寧頭戰役</a></div><div class="ss_menubox"><a href="/zh-tw/oralhistory_l_6.htm?1" class="">輔導會故事-典範人物專訪</a></div><div class="ss_menubox"><a href="/zh-tw/oralhistory_l_5.htm?1" class="">輔導會故事-歷任主委專訪</a></div><div class="ss_menubox"><a href="/zh-tw/oralperson_l_0.htm?1" class="">口述人</a></div></div>
+
+        
+    </div>
+</div>
+<div class="rwd_select"><ul class="main_box"><li class="select_box"><span>退休生活</span><ul class="son_ul"><li><a href="/zh-tw/oralhistory_l_1.htm?1">從軍背景</a></li><li><a href="/zh-tw/oralhistory_l_2.htm?1">戰爭回憶</a></li><li><a href="/zh-tw/oralhistory_l_4.htm?1">參與經建</a></li><li><a href="/zh-tw/oralhistory_l_3.htm?1">退休生活</a></li><li><a href="/zh-tw/oralhistory_l_7.htm?1">古寧頭戰役</a></li><li><a href="/zh-tw/oralhistory_l_6.htm?1">輔導會故事-典範人物專訪</a></li><li><a href="/zh-tw/oralhistory_l_5.htm?1">輔導會故事-歷任主委專訪</a></li><li><a href="/zh-tw/oralperson_l_0.htm?1">口述人</a></li></ul></li></ul></div>
+
+
+        <div class="contenerall">
+            <div class="conboxa11">
+                <div class="toplink_in">
+                    
+<div class="toptext">
+    <a id="U" name="U" href="#U" title='上邊服務項目連結區' accesskey="U" class="accesskeyU">:::</a>
+    <span><a href="/zh-tw/sitemap.htm">網站導覽</a></span>
+    <span><a href="/zh-tw/about.htm">交流園地</a></span>
+    <span><a href="/zh-tw/reason.htm">關於本站</a></span>
+    <span><a href="https://www.vac.gov.tw" target="_blank" title="輔導會(另開新視窗)">輔導會</a></span>
+</div>
+
+                </div>
+                <div class="sitemap"><a>首頁</a><span> &gt; </span><a>口述歷史</a><span> &gt; </span><a>退休生活</a></div><div id="content"></div>
+
+<a id="C" name="C" href="#C" title='主要內容區' accesskey="C" class="accesskeyC">:::</a>
+                <div class="conmain">
+                    <div class="con_inall">
+                        
+
+
+<link rel="stylesheet" type="text/css" href="/css/jquery-pagination-js.css"/>
+
+<link rel="stylesheet" type="text/css" href="/css/slick.css"/>
+<script src="/js/jquery-slick.min.js" type="text/javascript" nonce='K+6d6xc7yrl1jZSJvxmlDg=='></script>
+
+<div class="RWD_con_inall_right"><div class="picarea"><div class="bigpc"><div class="viewbig" onclick="MM_showHideLayers(&#39;bigpc_pop_1&#39;,&#39;&#39;,&#39;show&#39;)" onkeypress="MM_showHideLayers(&#39;bigpc_pop_1&#39;,&#39;&#39;,&#39;show&#39;)"><img src="/images/viewbig.png" alt="放大" /></div><a href="javascript:void(0);" onclick="MM_showHideLayers(&#39;bigpc_pop_1&#39;,&#39;&#39;,&#39;show&#39;)" onkeypress="MM_showHideLayers(&#39;bigpc_pop_1&#39;,&#39;&#39;,&#39;show&#39;)"><img src="/upload/upload/oralhistory/image/c4d348d6-5734-4ebe-a157-65874fc86e68_1920_1080.jpg" id="_img_bigpc" alt="羅先生擔任白河榮家武德堂第二分隊長，領導有方獲頒獎狀" /></a></div><div class="smallpc"><div class="arrow_left"><img src="/images/arrow_left.png" alt="向左移動" /></div><div class="arrow_right"><img src="/images/arrow_right.png" alt="向右移動" /></div><div class="spcbox"><img src="/upload/upload/oralhistory/image/c4d348d6-5734-4ebe-a157-65874fc86e68_1920_1080.jpg" alt="羅先生擔任白河榮家武德堂第二分隊長，領導有方獲頒獎狀" rel="/upload/upload/oralhistory/image/c4d348d6-5734-4ebe-a157-65874fc86e68_1920_1080.jpg" idx="1" /></div><div class="spcbox"><img src="/upload/upload/oralhistory/image/568a916a-688e-4901-9aba-e0fe243e9d5e_1920_1080.jpg" alt="羅先生任白河榮家武德堂房長，熱心負責獲頒獎狀" rel="/upload/upload/oralhistory/image/568a916a-688e-4901-9aba-e0fe243e9d5e_1920_1080.jpg" idx="2" /></div><div class="spcbox"><img src="/upload/upload/oralhistory/image/e6c74cf5-231a-44dc-b0ad-4c2f3f2d080c_1920_1080.jpg" alt="羅先生（左）早年與友人合照" rel="/upload/upload/oralhistory/image/e6c74cf5-231a-44dc-b0ad-4c2f3f2d080c_1920_1080.jpg" idx="3" /></div><div class="spcbox"><img src="/upload/upload/oralhistory/image/aa8629b3-0a7b-4a4a-9644-5e0b4698e3b0_1920_1080.jpg" alt="羅先生（左2站立者）與同伴合照" rel="/upload/upload/oralhistory/image/aa8629b3-0a7b-4a4a-9644-5e0b4698e3b0_1920_1080.jpg" idx="4" /></div></div></div></div>
+<div class="con_inall_left">
+    
+    <h3 class="arttitle">
+        <span id="ctl00_oCPH_Content_WUC_Pg_MContent_WUC_Pg_Content_Zone_Image_oL_title">投身康樂隊 最愛那卡西</span>
+    </h3>
+
+    <div class="arth2">
+        
+        <div class="arth2_left">口述人：羅運良</div>
+        
+
+<noscript>
+	<div style="clear: both;">
+    ＊若您的瀏覽器無法支援本網站部份功能，建議利用以下方式顯示：<br />
+    1.變更瀏覽的字級大小：若您的瀏覽器無法支援，建議您可以使用瀏覽器上方的工具列【檢視】→【字型】來調整字級大小。<br />
+    2.友善列印：建議您可以使用快速鍵【Ctrl + P】或瀏覽器上方的工具列【檔案】→【列印】來列印所需的畫面。<br />
+    3.分享至臉書(facebook)可連結至 <a href="http://www.facebook.com/sharer.php?u=https://lov.vac.gov.tw/html/oralhistory/content.aspx?l=zh-tw&i=388&c=3&p=?4" title="分享至臉書(facebook),另開新視窗">點我分享</a><br />
+    4.分享至Line可連結至 <a href="http://line.naver.jp/R/msg/text/?%0D%0Ahttps://lov.vac.gov.tw/html/oralhistory/content.aspx?l=zh-tw&i=388&c=3&p=?4" title="分享至Line,另開新視窗">點我分享</a>
+	</div>
+</noscript>
+<div class="arth2_right">
+    <a href="javascript:void(0);" class="_plus" role="button">
+        <img src="/images/A_02.png" alt="放大字體" /></a> 
+    <a href="javascript:void(0);" class="_dash" role="button">
+        <img src="/images/A_01.png" alt="縮小字體" /></a>
+</div>
+
+<script type="text/javascript" nonce='K+6d6xc7yrl1jZSJvxmlDg=='>
+    //設定預設字型為15字型並存入Cookies
+    var _defaultFontSize = 1.0;
+    var _defaultFontFormat = 'em';
+
+    //載入預設字型或存入Cookie的字型
+    function _loadDefaultOrCookiesFontSize(_object) {
+        document.getElementById(_object).style.fontSize = (_getCookie('newLOV_Culture_fontSize') == '' ? _defaultFontSize : _getCookie('newLOV_Culture_fontSize')) + _defaultFontFormat;
+        if (_getCookie('newLOV_Culture_fontSize') == '') _setCookie('newLOV_Culture_fontSize', _defaultFontSize, 0);
+    }
+    //放大字體
+    function _setFontSizeLarge(_object) {
+        var _int_Size = (document.getElementById(_object).style.fontSize == '') ? _defaultFontSize : parseFloat(document.getElementById(_object).style.fontSize.replace(_defaultFontFormat, '')).toFixed(1);
+        var _float_Size = (parseFloat(_int_Size) + 0.2).toFixed(1); _float_Size = (_float_Size > 2) ? 2 : _float_Size;
+        document.getElementById(_object).style.fontSize = _float_Size + _defaultFontFormat;
+
+        _setCookie('newLOV_Culture_fontSize', (parseFloat(_int_Size) + 0.2).toFixed(1), 0);
+    }
+
+    //縮小字體
+    function _setFontSizeSmall(_object) {
+        var _int_Size = (document.getElementById(_object).style.fontSize == '') ? _defaultFontSize : parseFloat(document.getElementById(_object).style.fontSize.replace(_defaultFontFormat, '')).toFixed(1);
+        var _float_Size = (parseFloat(_int_Size) - 0.2).toFixed(1);_float_Size = (_float_Size < 0.6) ? 0.6 : _float_Size;
+        document.getElementById(_object).style.fontSize = _float_Size + _defaultFontFormat;
+
+        _setCookie('newLOV_Culture_fontSize', _float_Size, 0);
+    }
+
+    //建立Cookie記錄
+    /*
+    oC_Name    Cookie名稱
+    oC_Value   Cookie所要存的值
+    oC_Days    Cookie的有效日期(0表瀏覽器一關閉就消失)
+    */
+    function _setCookie(_name, _value, _days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (_days * 24 * 60 * 60 * 1000));
+        var expires = (_days == 0) ? '' : '; expires=' + date.toGMTString();
+        document.cookie = _name + '=' + escape(_value) + expires + '; path=/';
+    }
+
+    //讀取Cookie記錄
+    /*
+    oC_Name    Cookie名稱
+    */
+    function _getCookie(_name) {
+        var _str_CN = _name + '=';
+        var _ary_CN = document.cookie.split(';');
+
+        for (var i = 0; i < _ary_CN.length; i++) {
+            var _str_C = _ary_CN[i];
+            while (_str_C.charAt(0) == ' ') _str_C = _str_C.substring(1, _str_C.length);
+            if (_str_C.indexOf(_str_CN) == 0) return unescape(_str_C.substring(_str_CN.length, _str_C.length));
+        }
+
+        return '';
+    }
+
+    //刪除Cookie
+    /*
+    oC_Name    Cookie名稱
+    */
+    function _delCookie(oC_Name) {
+        _setCookie(oC_Name, '', -1);
+    }
+
+    (function ($) {
+        $(window).on("load", function () {
+            _loadDefaultOrCookiesFontSize('ctl00_siteBody');
+
+            $("._plus").on("click", function () {
+                _setFontSizeLarge('ctl00_siteBody');
+            })
+            $("._dash").on("click", function () {
+                _setFontSizeSmall('ctl00_siteBody');
+            })
+        });
+    })(jQuery); 
+</script>
+        <div style="clear: both;">
+        </div>
+    </div>
+    
+    <div style="clear:both;"></div><div id="1" class="con_main_pg" style=""><div class="arth3"><p><span>﻿</span><span>﻿</span><span>﻿投身康樂隊 最愛那卡西<br>問：您是那個時候進去御風話劇隊的嗎？<br>答：對，參加這個御風話劇隊，我們就是演第一屆的93軍人節，那張戲票我一直到現在都還留著，輔導會如果蒐集，這也是歷史，珍貴的歷史的見證啊！我感覺這張戲票很珍貴，在我們歷史見證，三軍軍人節，就是說陸海空這個軍人節，93軍人節第一屆，因為是第一屆，所以我把這張戲票留下來，當然我們以前演的話劇不少啦，那些都沒有價值了，但是因為這個是93軍人節第一屆的，所以我把這個戲票留下來了，等一下有時間的話，或是我可以做歷史見證的，我都可以幫忙。<br>問：跟我們説一下學音樂的過程？您那時候有特別學什麼樂器嗎？ <br>答：主要是自己興趣，我小時候就聽很多的軍歌，很有感覺。樂器沒有機會接觸到，就是唱歌，唱歌給了我一個機會在部隊，尤其是在馬祖，各部隊唱歌，然後團裡頭所謂教官，就叫我去各部隊教唱，還有婦女隊去教他們唱，那唱的都是軍歌啦，很少流行歌曲，流行歌曲也有啦，流行歌曲都是自己那個哼唱，都是教唱軍歌。我是到了軍樂隊才開始接觸樂器。<br>問：那那時候您覺得音樂對您的意義是什麼？<br>答：只要是唱歌，我就快樂、很高興，就是這麼樣的簡單。之後懂得那麼了一點，那真的是陶冶性情，這個音樂是世界語言、共通的。抗日期間，用來提振士氣的軍歌，我們到臺灣來也是一樣，軍中也是。我還記得以前教得一些歌，唉！我都忘記了，比如說：「總統蔣公…」，那個時候我就在教這些歌，類似這些軍歌。<br>問：在這些表演、教育當中有沒有什麼讓您比較印象深刻的事？<br>答：深刻，年輕呀！最深刻的我記得參加這個全師，去所謂「狙擊手比賽」，狙擊手就是所謂「神槍手」，到南竿，就是馬祖的南竿，參加全師比賽，拿了個第二名。我們那個團長姓汪，我們回到北竿的時候他親自接見我，而且還叫他太太做了很好的菜，我這個印象很深，做了很好的菜來慰勞、慰問的意思。<br>問：那您是民國幾年退伍的？退伍後的生活？<br>答：我是民國49年就退休。講實在的，我在軍中，在某方面來講，發揮了文宣的這些功能，為國家做這些事情，但是站在自己個人的立場來講，在那個年代，民國40幾年，軍中要淘汰一批軍員，有一個名詞叫做「自謀生活」。因為我在軍中、在康樂隊，學到了一招半式，就去闖江湖了，所謂闖江湖就是混飯吃，就憑這個一招半式，在社會上幹什麼呢？退伍下來了，那卡西，那卡西你知道吧，我膽子大囉，跟臺灣社會接觸最多，是正式退伍了以後在那卡西。<br>臺灣那個時候，民國40幾年，也沒有什麼娛樂、也沒有卡拉OK，甚至說連個舞廳都很少，正式的舞廳，也只有空軍才有，其他的都沒有，就憑著學了這麼一招半式就闖江湖了，還真不錯啦，收入以退伍軍人來講，收入很豐厚了！當兵時，中士沒有好多錢，不過我們有這種康樂專長的人才，我們叫做「康樂士」，我還有這個人事晉升的命令，有編列專長號碼--康樂士，還有領額外的津貼，當然，之後在康樂隊的時候，因為自己會獨奏，到社會上還可以賺取外快。<br>問：那您剛剛説您後來有去過那卡西唱歌、表演嗎？<br>答：那卡西主要的是音樂伴奏，在那個時代的臺灣，主要是演唱日本歌，這是很奇怪的現象，但是玩音樂是國際性的語言，從我小時候起，我就很討厭日本的東西，但是退伍之後，學了一招半式，要生活就不能排斥，如果你排斥的話，就賺不到錢啦，賺不到錢你怎麼在社會上生活呀？懂我的意思了吧！<br>那時候差不多都是日本音樂的天下，不過，一個搞音樂的人，到了某一個層次的話，人家唱，你就可以伴奏，你把它的調性抓住，就可以伴奏了。在那卡西幾個月以後，我不講話，因為我那個時候還不會講台語，就是閩南語，我也不講話，反正你只要是唱日本 歌，我就能伴奏。<br>幾個月以後-他們一聽，也看到了，時間久了之後，哇！你是外省人，SOGA （日語），是真的嗎？我說：「是的。」他們很驚訝，還問：「外省人怎麼會懂音樂啊？」</span></div><div class="rig_page"><div class="paginationjs paginationjs-big"><div class="paginationjs-pages"><ul><li class="paginationjs-page J-paginationjs-page active " data-num="1"><a class='con_pg page_1' rel='1' href='javascript:void(0)'>1</a></li><li class="paginationjs-page J-paginationjs-page" data-num="2"><a class='con_pg page_2' rel='2' href='javascript:void(0)'>2</a></li><li class="paginationjs-page J-paginationjs-page paginationjs-last " data-num="3"><a class='con_pg page_3' rel='3' href='javascript:void(0)'>3</a></li></ul></div></div></div></div><div id="2" class="con_main_pg" style="display:none"><div class="arth3"></p><p>相知貴交心 日久見真情<br>問：那您那時候跟臺灣人相處起來好嗎？<br>答：很好啊！剛開始他們對我不了解，我打一個比方，他們對外省人有一點點排斥，好像跟政治有關係。我們在大陸當兵的，知道老一輩有這個話：「好男不當兵、好鐵不打釘。」就好像：「秀才遇了兵，有理講不清。」實際上不盡然都是這樣的，有的很好。像我退伍下來的時候，我打個比方，我找房子都找不到，明明這個房子是招租，寫了「招租」兩個字，我去跟他講，他知道你是外省口音，他不租給你，這怎麼辦呢？沒有房子住啊！總要有個窩嘛，對不對？結果我退伍下來參加了嘉義一個很大的樂團，那個團主是地方的里長，人緣也不錯，說話一言九鼎。<br>&nbsp; 他就問我：「羅仔，你住在哪裡啊？（台語）」我那個時候還聽不懂，我之後聽懂了，我就說：「阿伯啊，我找不到房子住。」「那怎麼可能？」老先生很爽直的。他說：「你有沒有中意哪個房子。」我說：「有啊！」我就把剛才的情形講給他聽。「那有這種事，走，你帶我去。」我就帶著他去了。他一見到房東，就把他罵了一頓，意思就好像是：「你這個房子明明是招租，為什麼不租給人家勒？」<br>&nbsp; 人家說：「我們不了解啊！」「人家這個羅先生人很好啊！不要囉唆！就租給他。」老先生真的對我太好了，我剛退伍下來的時候對我很照顧。那個時候的房租，民國49年，一個月兩百塊，那時候兩百塊很大喲！結果我們那個團主的一句話，就給我住了。<br>問：請您談談生病的這一段好嗎？<br>答：民國50年，沒有正式病倒以前，是有一些症狀的，我的腿就從腰以下，我不知道這樣恰不恰當，就好比說這個杯子，你拿一把米，什麼東西的，你放下去，從上面一直到腳尖，一陣一陣地，所以醫師問我的情形，我也是這麼跟他講，我記得那個醫師姓盧，他跟我講台語，意思我是懂，現在我會講，他說：「羅先生，你這是重感冒，你放心，我開最讚的藥給你吃，吃三天就好了，你放心、放心。（台語）」民國50年7月31號去看的病，掛了急診。<br>&nbsp;&nbsp; 8月1號、8月2號、8月3號，這三天的藥一吃完，8月4號早晨起來要梳洗，咚咚 摔倒在地下了，摔倒了我認為是自己不小心，我馬上又爬起來，爬起來沒有好久又摔倒了，喔！我曉得事態嚴重了，我就趕快騎單車，到以前看護班的同事家。<br>&nbsp; 他正好在吃早點，他講：「你坐一下，我到房間裡換個衣服。」他早點就沒有吃了，把稀飯放下，他講：「大概2分鐘吧！很快。」他穿衣服很快，他講：「走吧，運良。」 我就起不來了。<br>&nbsp; 那時候就叫三輪車，三輪車就從嘉義市拉到818野戰醫院，醫師會診之後，我又坐了車子又回到家裡頭，8月4號的那一天嘉義市雷電交加，風雨大作，下午就發高燒了，正式發作了，他們就在風雨中把我送到嘉義市省立醫院，省立醫院之後才了解證實是小兒麻痺，之前被誤診為感冒，之後說這個小兒麻痺很多醫師都不懂，那個年代，所以這個人…唉！<br>&nbsp; 我一個叔伯哥哥、我一個堂哥、親戚朋友、還有一個我剛剛講的那個團長，都對我很關心。本省人你跟他處得有感情的話，他了解你的話，真的他們幫我，我那個時候小，他們都5、60歲了，我那個時候才20幾歲，他們真的把我當他們的小孩看待，很好的、很好的，我很感念他們的，但是這一輩子就沒有辦法了，從此就病倒了。<br>&nbsp; 然後在那裡住了一段期間，我的朋友就跟我講：「因為你有榮民的身分，你不要住這個省立醫院，你住省立醫院這個好貴，一天連藥費的話這個很貴、很貴。」在那個時候來講一天要7、8百塊，比一個公務人員一個月的薪水還貴，我是心裡想：「還能負擔的起，把病治好就可以了。」住了不到1個月，然後朋友就幫我寫信給蔣經國，他那個時候是退輔會的輔導主任，然後就安排我到台南的永康榮民醫院住了快兩年。<br>&nbsp; 這個榮家民國52年成立，他們就告訴我，因為我在嘉義很久，我從民國44年就到嘉義，我在嘉義的親朋好友也多，所以我就到白河榮家一直住到現在。</div><div class="rig_page"><div class="paginationjs paginationjs-big"><div class="paginationjs-pages"><ul><li class="paginationjs-page J-paginationjs-page active " data-num="1"><a class='con_pg page_1' rel='1' href='javascript:void(0)'>1</a></li><li class="paginationjs-page J-paginationjs-page" data-num="2"><a class='con_pg page_2' rel='2' href='javascript:void(0)'>2</a></li><li class="paginationjs-page J-paginationjs-page paginationjs-last " data-num="3"><a class='con_pg page_3' rel='3' href='javascript:void(0)'>3</a></li></ul></div></div></div></div><div id="3" class="con_main_pg" style="display:none"><div class="arth3"><span>﻿</span></p></div><div class="rig_page"><div class="paginationjs paginationjs-big"><div class="paginationjs-pages"><ul><li class="paginationjs-page J-paginationjs-page active " data-num="1"><a class='con_pg page_1' rel='1' href='javascript:void(0)'>1</a></li><li class="paginationjs-page J-paginationjs-page" data-num="2"><a class='con_pg page_2' rel='2' href='javascript:void(0)'>2</a></li><li class="paginationjs-page J-paginationjs-page paginationjs-last " data-num="3"><a class='con_pg page_3' rel='3' href='javascript:void(0)'>3</a></li></ul></div></div></div></div>
+    
+
+<div class="artbtn">
+    <div class="artbtn_back"><a href="/zh-tw/oralhistory_l_3.htm?4">返回列表</a></div><div class="artbtn_pre"><a href="/zh-tw/oralhistory_c_3_394.htm?4">上一則</a></div><div class="artbtn_next"><a href="/zh-tw/oralhistory_c_3_411.htm?4">下一則</a></div>
+</div>
+</div>
+<div class="con_inall_right"><div class="picarea"><div class="bigpc"><div class="viewbig" rel="bigpc_pop_1" onclick="MM_showHideLayers(&#39;bigpc_pop_1&#39;,&#39;&#39;,&#39;show&#39;);" onkeypress="MM_showHideLayers(&#39;bigpc_pop_1&#39;,&#39;&#39;,&#39;show&#39;);"><img src="/images/viewbig.png" alt="放大" /></div><a href="javascript:void(0);" class="viewbigpc" rel="bigpc_pop_1" onclick="MM_showHideLayers(&#39;bigpc_pop_1&#39;,&#39;&#39;,&#39;show&#39;);" onkeypress="MM_showHideLayers(&#39;bigpc_pop_1&#39;,&#39;&#39;,&#39;show&#39;);"><img src="/upload/upload/oralhistory/image/c4d348d6-5734-4ebe-a157-65874fc86e68_1920_1080.jpg" id="_img_bigpc" alt="羅先生擔任白河榮家武德堂第二分隊長，領導有方獲頒獎狀" /></a></div><div class="smallpc"><div class="arrow_left"><img src="/images/arrow_left.png" alt="向左移動" /></div><div class="arrow_right"><img src="/images/arrow_right.png" alt="向右移動" /></div><div class="spcbox"><img src="/upload/upload/oralhistory/image/c4d348d6-5734-4ebe-a157-65874fc86e68_1920_1080.jpg" alt="羅先生擔任白河榮家武德堂第二分隊長，領導有方獲頒獎狀" rel="/upload/upload/oralhistory/image/c4d348d6-5734-4ebe-a157-65874fc86e68_1920_1080.jpg" idx="1" /></div><div class="spcbox"><img src="/upload/upload/oralhistory/image/568a916a-688e-4901-9aba-e0fe243e9d5e_1920_1080.jpg" alt="羅先生任白河榮家武德堂房長，熱心負責獲頒獎狀" rel="/upload/upload/oralhistory/image/568a916a-688e-4901-9aba-e0fe243e9d5e_1920_1080.jpg" idx="2" /></div><div class="spcbox"><img src="/upload/upload/oralhistory/image/e6c74cf5-231a-44dc-b0ad-4c2f3f2d080c_1920_1080.jpg" alt="羅先生（左）早年與友人合照" rel="/upload/upload/oralhistory/image/e6c74cf5-231a-44dc-b0ad-4c2f3f2d080c_1920_1080.jpg" idx="3" /></div><div class="spcbox"><img src="/upload/upload/oralhistory/image/aa8629b3-0a7b-4a4a-9644-5e0b4698e3b0_1920_1080.jpg" alt="羅先生（左2站立者）與同伴合照" rel="/upload/upload/oralhistory/image/aa8629b3-0a7b-4a4a-9644-5e0b4698e3b0_1920_1080.jpg" idx="4" /></div></div></div></div>
+<div style="clear: both;">
+</div>
+<div class="conv2">
+    <div class="cov_B">
+        
+
+        
+
+        
+
+        
+
+        
+    <div class="con_inall_left">
+        <div class="ssbtitle">
+            相關連結</div>
+        <div class="arth3">
+            <ul>
+                <li><a href="/zh-tw/oralperson_c_0_154.htm?1">羅運良</a></li>
+            </ul>
+        </div>
+    </div>
+
+
+        <div style="clear: both;">
+        </div>
+    </div>
+</div>
+<script nonce='K+6d6xc7yrl1jZSJvxmlDg=='>
+    (function ($) {
+        $(window).on("load", function () {
+
+            $(".con_pg").on("click", function () {
+                $(".con_pg").parent().removeClass("active");
+
+                var _page_Id = $(this).attr("rel");
+                setTimeout(function () {
+                    $(".page_" + _page_Id).parent().addClass("active");
+                }, 100);
+
+                $(".con_main_pg").hide(); $("#" + $(this).attr("rel")).show();
+            })
+
+        });
+
+        $(".spcbox").find("img").on("click", function () {
+            if ($(this).attr("pdf")) {
+                $(".bigpc").find("a").attr("onclick", "window.open('" + $(this).attr("pdf") + "', 'paymentPDF', '');");
+                $(".bigpc").find("a").attr("onkeypress", "window.open('" + $(this).attr("pdf") + "', 'paymentPDF', '');");
+
+                $(".viewbig").attr("onclick", "window.open('" + $(this).attr("pdf") + "', 'paymentPDF', '');");
+                $(".viewbig").attr("onkeypress", "window.open('" + $(this).attr("pdf") + "', 'paymentPDF', '');");
+
+                $(".bigpc").find("a>img").attr("src", $(this).attr("rel"));
+            }
+            else {
+                $(".bigpc").find("a").attr("onclick", "MM_showHideLayers('bigpc_pop_" + $(this).attr("idx") + "', '', 'show');");
+                $(".bigpc").find("a").attr("onkeypress", "MM_showHideLayers('bigpc_pop_" + $(this).attr("idx") + "', '', 'show');");
+
+                $(".viewbig").attr("onclick", "MM_showHideLayers('bigpc_pop_" + $(this).attr("idx") + "', '', 'show');");
+                $(".viewbig").attr("onkeypress", "MM_showHideLayers('bigpc_pop_" + $(this).attr("idx") + "', '', 'show');");
+
+                $(".bigpc").find("a>img").attr("src", $(this).attr("rel"));
+            }
+        });        
+        $(document).on("click", ".viewbig, .viewbigpc", function () {
+	    setTimeout(function () {
+            	var rel = $(this).attr("rel");
+            	$("#" + rel).focus(); 
+	    }, 1000);
+        })
+        $(document).on("keydown", ".bigpc_pop .sinf_close a", function (e) {
+            if (e.key === 'Tab' || e.keyCode === 9) {
+                e.preventDefault();
+
+                $(this).focus();
+            }
+        })
+        $(document).on("click", ".bigpc_pop .sinf_close a", function () {
+            $(".viewbigpc").focus();
+        })
+// 1. 動態注入 5px 間距與焦點框樣式
+$('head').append(`
+  <style>
+    /* 修正外層容器，搭配 5px 間距 */
+    .smallpc .slick-list {
+      margin: 0 -5px !important;
+    }
+    /* 將小圖左右間距改為 5px */
+    .smallpc .slick-slide {
+      margin: 0 5px !important;
+      box-sizing: border-box !important;
+    }
+    /* 焦點藍色框樣式 */
+    .smallpc .slick-slide:focus {
+      outline: 3px solid #007aff !important;
+      outline-offset: -3px !important;
+    }
+    /* 隱藏最後一張用來充數的空白投影片，不顯示任何內容，只用來占據寬度空間 */
+    .smallpc .slick-dummy-slide {
+      visibility: hidden !important;
+      pointer-events: none !important;
+    }
+  </style>
+`);
+
+// 2. 在初始化之前，先抓取有幾張圖，並補上空白占位投影片
+var $smallpcContainer = $('.smallpc');
+var originalSlidesCount = $smallpcContainer.children().length;
+
+// 因為 slidesToShow 設定顯示 3 張，為了讓最後一張圖片能被單獨推到第一個位置
+// 後方需要額外補 (slidesToShow - 1) = 2 張空白占位符
+if (originalSlidesCount > 0) {
+  $smallpcContainer.append('<div class="slick-dummy-slide" tabindex="-1"></div>');
+  $smallpcContainer.append('<div class="slick-dummy-slide" tabindex="-1"></div>');
+}
+
+// 3. 初始化 Slick 輪播
+$smallpcContainer
+  .on('init reInit afterChange', function(event, slick) {
+    // 關鍵：只讓「原本真實的圖片投影片」可以被 Tab 鍵選取，排除隱藏的空白占位符
+    $(this).find('.slick-slide:not(.slick-dummy-slide)').attr('tabindex', '0');
+    // 強制將空白投影片的 tabindex 鎖死在 -1，防止 Tab 鍵選取到空白處
+    $(this).find('.slick-dummy-slide').attr('tabindex', '-1');
+  })
+  .slick({
+    accessibility: true,
+    infinite: false,
+    slidesToShow: 3,         // 畫面上看到的完整張數
+    slidesToScroll: 1,       // 每次只推 1 張
+    centerMode: false,       // 關閉置中模式，保證一開始進入時左側不留白
+    focusOnSelect: true,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: { slidesToShow: 3, slidesToScroll: 1, centerMode: false }
+      },
+      {
+        breakpoint: 600,
+        settings: { slidesToShow: 1, slidesToScroll: 1, centerMode: false }
+      }
+    ]
+  });
+
+// 4. Tab 鍵與點擊連動監聽（保持原有機制）
+$smallpcContainer.on('focusin', '.slick-slide:not(.slick-dummy-slide)', function() {
+  var index = $(this).data('slick-index');
+  var $slider = $('.smallpc');
+  if (index !== undefined && index >= 0) {
+    if ($slider.slick('slickCurrentSlide') !== index) {
+      $slider.slick('slickGoTo', index);
+    }
+  }
+});
+
+
+        setTimeout(function () {
+            $(".arrow_left").css("width", "");
+            $(".arrow_right").css("width", "");
+      
+   	    $('.slick-track').find('.arrow_left').remove();
+        }, 500);
+
+    })(jQuery); 
+</script>
+
+
+
+                    </div>
+            	    
+
+<div class="share">
+    <div id="sharebox01">
+        <a class="_print" href="javascript:void(0);">
+            <img src="/images/print.png" alt="我要列印" /></a></div>
+    <div id="sharebox02">
+        <a href="javascript:void(0);" onclick="MM_showHideLayers('sharebox02','','hide','shareopen','','show')" onfocus="MM_showHideLayers('sharebox02','','hide','shareopen','','show')">
+            <img src="/images/share.png" alt="我要分享" /></a></div>
+    <div id="shareopen">
+        <div class="shareop01">
+            <a href="#" onclick="MM_showHideLayers('sharebox02','','show','shareopen','','hide')" onfocus="MM_showHideLayers('sharebox02','','show','shareopen','','hide')">
+                <img src="/images/share_open.png" alt="關閉分享" /></a></div>
+        <div class="shareop02">
+            <a class="_shareLine" href="javascript:void(0);">
+                <img src="/images/share_Line.png" alt="分享至 LINE(另開新視窗)" /></a></div>
+        <div class="shareop03">
+            <a class="_shareFB" href="javascript:void(0);">
+                <img src="/images/share_FB.png" alt="分享至 FACEBOOK(另開新視窗)" /></a></div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/js/jquery-html2canvas.js" nonce='K+6d6xc7yrl1jZSJvxmlDg=='></script>
+<script type="text/javascript" src="/js/jquery-print.js" nonce='K+6d6xc7yrl1jZSJvxmlDg=='></script>
+<script nonce='K+6d6xc7yrl1jZSJvxmlDg=='>
+    function _set_print() {
+        html2canvas($(".conmain"), {
+            onrendered: function (canvas) {
+                var ctx = canvas.toDataURL("image/jpg");
+                $.print('<img src="' + ctx + '"/ alt="*">');
+            }
+        });
+    }
+
+    function _share(type) {
+        var title = encodeURIComponent('');
+        var url = ('https%3a%2f%2flov.vac.gov.tw%2fhtml%2foralhistory%2fcontent.aspx%3fl%3dzh-tw%26i%3d388%26c%3d3%26p%3d%3f4');
+
+        var _href; switch (type) {
+            case 'facebook':
+                _href = "http://www.facebook.com/sharer.php?u=" + url;
+                break;
+            case 'line':
+                _href = "http://line.naver.jp/R/msg/text/?" + title + "%0D%0A" + url;
+                break;
+        }
+
+        window.open(_href);
+    }
+
+    (function ($) {
+        $(window).on("load", function () {
+
+            $("._print").click(function () {
+                _set_print();
+            })
+            $("._shareFB").click(function () {
+                _share('facebook');
+            })
+            $("._shareLine").click(function () {
+                _share('line');
+            })
+
+        });
+
+    })(jQuery); 
+</script>
+
+                </div>
+            </div>
+        </div>
+        <div style="clear: both;">
+        </div>
+    </div>
+
+        
+
+<div class="in_footer">
+    <div class="footer_A">
+        <div class="footerbox"><div class="fboxh1">經國先生</div><div class="fboxh2"><ul><li><a href="/zh-tw/story_l_1.htm?1">追憶</a></li><li><a href="/zh-tw/story_l_4.htm?1">榮工</a></li><li><a href="/zh-tw/story_l_5.htm?1">農場</a></li><li><a href="/zh-tw/story_l_7.htm?1">醫療</a></li><li><a href="/zh-tw/story_l_11.htm?1">就養</a></li></ul></div></div><div class="footerbox"><div class="fboxh1">保國衛民</div><div class="fboxh2"><ul><li><a href="/zh-tw/protection_l_1.htm?1">北伐</a></li><li><a href="/zh-tw/protection_l_2.htm?1">抗戰</a></li><li><a href="/zh-tw/protection_l_3.htm?1">戡亂</a></li><li><a href="/zh-tw/protection_l_4.htm?1">保衛臺灣</a></li><li><a href="/zh-tw/protection_l_5.htm?1">影音專區</a></li><li><a href="/zh-tw/hero_l_1.htm?1">國軍英雄</a></li><li><a href="/zh-tw/krahero_l_9.htm?1">韓戰反共義士</a></li></ul></div></div><div class="footerbox"><div class="fboxh1">參與經建</div><div class="fboxh2"><ul><li><a href="/zh-tw/pioneer_l_3.htm?1">會屬工廠</a></li><li><a href="/zh-tw/pioneer_l_2.htm?1">開闢農林</a></li><li><a href="/zh-tw/pioneer_l_1.htm?1">建設家園</a></li><li><a href="/zh-tw/pioneer_l_4.htm?1">影音專區</a></li><li><a href="/zh-tw/character_l_2.htm?1">建設尖兵</a></li><li><a href="/zh-tw/assets.htm?1">榮民公司文化性資產</a></li></ul></div></div><div class="footerbox"><div class="fboxh1">深耕社稷</div><div class="fboxh2"><ul><li><a href="/zh-tw/society_l_6.htm?1">傑出女性榮民</a></li><li><a href="/zh-tw/society_l_5.htm?1">人瑞翦影</a></li><li><a href="/zh-tw/society_l_4.htm?1">活動誌慶</a></li><li><a href="/zh-tw/society_l_3.htm?1">服務鄉里</a></li><li><a href="/zh-tw/society_l_2.htm?1">各界精英</a></li><li><a href="/zh-tw/society_l_1.htm?1">善行義舉</a></li><li><a href="/zh-tw/society_l_8.htm?1">影音專區</a></li></ul></div></div><div class="footerbox"><div class="fboxh1">榮民才藝</div><div class="fboxh2"><ul><li><a href="/zh-tw/culture_l_1.htm?1">文學</a></li><li><a href="/zh-tw/culture_l_7.htm?1">美食</a></li><li><a href="/zh-tw/culture_l_6.htm?1">民藝</a></li><li><a href="/zh-tw/culture_l_5.htm?1">音樂</a></li><li><a href="/zh-tw/culture_l_4.htm?1">藝術</a></li><li><a href="/zh-tw/culture_l_28.htm?1">影音專區</a></li></ul></div></div><div class="footerbox"><div class="fboxh1">融洽生活</div><div class="fboxh2"><ul><li><a href="/zh-tw/races_l_6.htm?1">榮欣志工</a></li><li><a href="/zh-tw/races_l_1.htm?1">榮民義行</a></li><li><a href="/zh-tw/races_l_3.htm?1">杏林春暖</a></li><li><a href="/zh-tw/races_l_2.htm?1">幸福家庭</a></li><li><a href="/zh-tw/races_l_5.htm?1">文化交流</a></li><li><a href="/zh-tw/races_l_4.htm?1">精選文章</a></li><li><a href="/zh-tw/races_l_7.htm?1">影音專區</a></li></ul></div></div><div class="footerbox"><div class="fboxh1">老兵憶往</div><div class="fboxh2"><ul><li><a href="/zh-tw/memory_l_1.htm?1">對日抗戰</a></li><li><a href="/zh-tw/memory_l_2.htm?1">戡亂</a></li><li><a href="/zh-tw/memory_l_3.htm?1">保衛臺灣</a></li><li><a href="/zh-tw/memory_l_4.htm?1">參與建設</a></li><li><a href="/zh-tw/memory_l_5.htm?1">豐富文化</a></li><li><a href="/zh-tw/memory_l_7.htm?1">影音專區</a></li><li><a href="/zh-tw/memory_l_6.htm?1">其他</a></li><li><a href="/zh-tw/memory_s.htm?1">搜尋</a></li></ul></div></div><div class="footerbox"><div class="fboxh1">圖說舊事</div><div class="fboxh2"><ul><li><a href="/zh-tw/photo_l_1006.htm?1">典藏回憶</a></li><li><a href="/zh-tw/photo_l_1002.htm?1">保國衛民</a></li><li><a href="/zh-tw/photo_l_1003.htm?1">參與經建</a></li><li><a href="/zh-tw/photo_l_1004.htm?1">融洽族群</a></li><li><a href="/zh-tw/photo_l_1005.htm?1">深耕社會</a></li><li><a href="/zh-tw/photo_l_1007.htm?1">經國先生</a></li><li><a href="/zh-tw/photo_l_1009.htm?1">輔導會會歌</a></li><li><a href="/zh-tw/photo_l_1008.htm?1">國建殉職英雄及外國軍人在台殉職紀念碑</a></li><li><a href="/zh-tw/photo_s.htm?1">搜尋</a></li></ul></div></div><div class="footerbox"><div class="fboxh1">口述歷史</div><div class="fboxh2"><ul><li><a href="/zh-tw/oralhistory_l_1.htm?1">從軍背景</a></li><li><a href="/zh-tw/oralhistory_l_2.htm?1">戰爭回憶</a></li><li><a href="/zh-tw/oralhistory_l_4.htm?1">參與經建</a></li><li><a href="/zh-tw/oralhistory_l_3.htm?1">退休生活</a></li><li><a href="/zh-tw/oralhistory_l_7.htm?1">古寧頭戰役</a></li><li><a href="/zh-tw/oralhistory_l_6.htm?1">輔導會故事-典範人物專訪</a></li><li><a href="/zh-tw/oralhistory_l_5.htm?1">輔導會故事-歷任主委專訪</a></li><li><a href="/zh-tw/oralperson_l_0.htm?1">口述人</a></li></ul></div></div><div class="footerbox"><div class="fboxh1">閱讀眷村</div><div class="fboxh2"><ul><li><a href="/zh-tw/village_l_3.htm?1">竹籬笆的故事</a></li><li><a href="/zh-tw/village_l_2.htm?1">名人話家常</a></li><li><a href="/zh-tw/village_l_1.htm?1">眷村歷史</a></li></ul></div></div><div class="footerbox"><div class="fboxh1">榮民文物</div><div class="fboxh2"><ul><li><a href="/zh-tw/objects_l_1006.htm?1">紀念史蹟建築</a></li><li><a href="/zh-tw/objects_l_1005.htm?1">辦公文物</a></li><li><a href="/zh-tw/objects_l_1004.htm?1">懷舊照片</a></li><li><a href="/zh-tw/objects_l_1003.htm?1">獎狀勳章</a></li><li><a href="/zh-tw/objects_l_1002.htm?1">軍事用品</a></li><li><a href="/zh-tw/objects_l_2.htm?1">生活用品</a></li><li><a href="/zh-tw/objects_l_1007.htm?1">其他</a></li></ul></div></div><div class="footerbox"><div class="fboxh1">虛擬導覽</div><div class="fboxh2"><ul><li><a href="/zh-tw/virualtour_l_1.htm?1">線上環景</a></li><li><a href="/zh-tw/virualtour_l_2.htm?1">文物數位重現</a></li></ul></div></div><div class="footerbox"><div class="fboxh1">四海一家</div><div class="fboxh2"><ul><li><a href="/zh-tw/overseas_l_2.htm?1">海外聯誼</a></li><li><a href="/zh-tw/overseas_l_1.htm?1">海外經建</a></li></ul></div></div><div class="footerbox"><div class="fboxh1">退除給付</div><div class="fboxh2"><ul><li><a href="/zh-tw/payment_l_1.htm?1">歷史沿革</a></li><li><a href="/zh-tw/payment_l_2.htm?1">承接創新</a></li><li><a href="/zh-tw/payment_l_3.htm?1">重要紀實</a></li></ul></div></div><div class="footerbox"><div class="fboxh1">職涯轉換</div><div class="fboxh2"><ul><li><a href="/zh-tw/career_l_1.htm?1">單位演驛</a></li><li><a href="/zh-tw/career_l_2.htm?1">工作回顧</a></li><li><a href="/zh-tw/career_l_3.htm?1">職訓典範</a></li></ul></div></div><div class="footerbox"><div class="fboxh1">關於本站</div><div class="fboxh2"><ul><li><a href="/zh-tw/reason.htm">緣起</a></li><li><a href="/zh-tw/vision.htm">願景</a></li><li><a href="/zh-tw/thanks.htm">芬芳錄</a></li><li><a href="/zh-tw/contact.htm">聯絡我們</a></li><li><a href="/zh-tw/sitemap.htm">網站導覽</a></li></ul></div></div><div class="footerbox"><div class="fboxh1">交流園地</div><div class="fboxh2"><ul><li><a href="/zh-tw/online.htm">線上投稿</a></li><li><a href="/zh-tw/oldphoto.htm">老照片徵集</a></li><li><a href="/zh-tw/volunteer.htm">志工招募</a></li><li><a href="/zh-tw/news.htm">榮民文化訊息</a></li><li><a href="/zh-tw/web.htm">相關網站</a></li><li><a href="/zh-tw/opinion.htm">網站滿意度</a></li></ul></div></div>
+        <div style="clear: both;">
+        </div>
+    </div>
+    <div class="ftinf">
+        <div class="ftinf_left">
+            <div class="ftlf_logo">
+                <img src="/images/LOGO_s.png" alt="國軍退除役官兵輔導委員會 LOGO" />
+            </div>
+            <div class="ftlf_text">
+                國軍退除役官兵輔導委員會版權所有© 2019 ／ 最佳解析度為 1920×1080 最新更新日期：<span id="ctl00_WUC_Pg_Footer_UpgradeDT">2026/10/17</span><br />
+                地址：110205 臺北市忠孝東路五段222號 本會總機電話：(02)27255700～27255749(50線) ／ <a href="/zh-tw/opinion.htm">網站滿意度</a></div>
+            <div style="clear: both;">
+            </div>
+        </div>
+        <div class="ftinf_right">
+            <div class="viscount">
+                瀏覽人數：<span id="ctl00_WUC_Pg_Footer_Visitor">23662369</span></div>
+            <div class="aaimg">
+                <a href="https://accessibility.moda.gov.tw/Applications/Detail?category=20260313163333" target="blank" title="無障礙網頁檢測, 另開新視窗"><img src="/images/AA.png" alt="通過AA等級" /></a></div>
+        </div>
+        <div style="clear: both;">
+        </div>
+    </div>
+    <div class="RWD_ftinf">
+        <div class="ftinf_left">
+            <div class="ftlf_logo">
+                <img src="/images/LOGO_s.png" alt="國軍退除役官兵輔導委員會 LOGO" />
+            </div>
+            <div class="ftlf_text">
+                國軍退除役官兵輔導委員會<br>
+                版權所有© 2019
+            </div>
+            <div style="clear: both;">
+                最新更新日期：2019/06/22<br>
+                地址：110205 臺北市忠孝東路五段222號<br>
+                本會總機電話：(02)27255700～27255749(50線)<br>
+                網站滿意度調查</div>
+        </div>
+        <div class="ftinf_right">
+            <div class="viscount">
+                瀏覽人數：<span id="ctl00_WUC_Pg_Footer_Visitor_RWD">23662369</span></div>
+            <div class="aaimg">
+                <a href="https://accessibility.moda.gov.tw/Applications/Detail?category=20260313163333" target="blank" title="無障礙網頁檢測, 另開新視窗"><img src="/images/AA.png" alt="通過AA等級" /></a></div>
+        </div>
+        <div style="clear: both;">
+        </div>
+    </div>
+</div>
+<div style="clear: both;">
+</div>
+<!-- custom scrollbar plugin -->
+<script src="/js/jquery.mCustomScrollbar.concat.min.js" nonce='K+6d6xc7yrl1jZSJvxmlDg=='></script>
+<script nonce='K+6d6xc7yrl1jZSJvxmlDg=='>
+    (function ($) {
+        $(window).on("load", function () {
+
+            $("#content-1").mCustomScrollbar({
+                autoHideScrollbar: true,
+                theme: "rounded"
+            });
+
+        });
+
+        $(".con_pg").on("click", function () {
+            $(".con_pg").parent().removeClass("active");
+
+            var _page_Id = $(this).attr("rel");
+            setTimeout(function () {
+                $(".page_" + _page_Id).parent().addClass("active");
+            }, 100);
+
+            $(".con_main_pg").hide(); $("#" + $(this).attr("rel")).show();
+        })
+	$(".con_pg").removeAttr("role").attr("role", "button");
+	setTimeout(function () {
+		$(".arrow_left").removeAttr("role").attr("role", "button");
+		$(".arrow_right").removeAttr("role").attr("role", "button");
+		$(".con_inall_right").find(".slick-slider .arrow_right.slick-arrow").insertAfter($(".con_inall_right").find(".slick-slider .arrow_left.slick-arrow"));
+            	$(".spcbox").removeAttr("role").attr("role", "button").removeAttr("tabindex").attr("tabindex", 0);
+		$(".spcbox").removeAttr("aria-pressed").attr("aria-pressed", "false");
+		$(".slick-track").find(".spcbox:eq(0)").removeAttr("aria-pressed").attr("aria-pressed", "true");
+
+		$elem = $('.arrow_right').clone();
+	        $('.slick-track').find(".arrow_right").remove().append($elem);
+
+	}, 500);
+
+	$(document).on("click", ".spcbox", function () {
+		$(".spcbox").removeAttr("aria-pressed").attr("aria-pressed", "false");
+		$(this).removeAttr("aria-pressed").attr("aria-pressed", "true");
+	})    
+	$(document).on("click", ".sinform a", function () {
+            $(".sinform_pop .sinf_close > a").focus();
+        })
+        $(document).on("keydown", ".sinform_pop .sinf_close a", function (e) {
+	    if (e.key === 'Tab' || e.keyCode === 9) {
+		e.preventDefault();
+
+           	$(this).focus();
+	    }
+        })
+        $(document).on("click", ".sinform_pop .sinf_close a", function () {
+            $(".sinform a").focus();
+        })
+        $(document).on("click", ".bigpc a", function () {
+            $(".bpc_popbox .sinf_close a").focus();
+        })
+        $(document).on("click", ".sinform_pop .sinf_close a", function () {
+            $(".bigpc a").focus();
+        })
+        $(document).on("blur", ".rwdNav ul > li:last", function () {
+            $(".rwdNav").hide();
+        })
+
+        $(document).on("focus", ".mlv_boxA", function () {
+            $(".mlv_boxA").removeClass("mCSB_container_hover").attr("aria-expanded", "false");
+            $(this).addClass("mCSB_container_hover");
+        })
+	$(".mlv_boxA").attr("role", "button").attr("aria-expanded", "false");
+    })(jQuery); 
+	
+	$(document).ready(function () {
+		$("a[target='_blank']").each(function () {
+			$(this).attr("rel", "noopener noreferrer");
+		});
+
+		//調整inline事件
+		const nonce = $('meta[name="csp-nonce"]').attr('content');
+		if (!nonce) { console.warn('No nonce found!'); return; }
+
+		const inlineEvents = [
+			'onclick', 'ondblclick', 'onmousedown', 'onmouseup', 'onmouseover',
+			'onmouseout', 'onkeydown', 'onkeyup', 'onkeypress', 'onchange',
+			'oninput', 'onsubmit', 'onreset', 'onfocus', 'onblur', 'onload',
+			'onerror', 'onscroll', 'oncontextmenu'
+		];
+
+		// 1. 修復 inline event handlers
+		$('*').each(function () {
+			const el = this;
+			inlineEvents.forEach(function (attr) {
+				const code = $(el).attr(attr);
+				if (code) {
+					try {
+						el.addEventListener(attr.replace(/^on/, ''), new Function('event', code));
+					} catch (e) { console.warn('Convert failed:', attr, el, e); }
+					$(el).removeAttr(attr);
+				}
+			});
+		});
+
+		// 2. 修復 javascript: href
+		$('a[href^="javascript:"]').each(function () {
+			const code = $(this).attr('href').replace(/^javascript:/i, '');
+			try {
+				const fn = new Function(code);
+				$(this).on('click', function (e) { e.preventDefault(); fn.call(this); });
+			} catch (e) { console.warn('href convert failed:', this, e); }
+			$(this).attr('href', '#');
+		});
+
+		// 3. 補上 style nonce
+		$('style,script').each(function () {
+			$(this).attr('nonce', nonce);
+		});
+
+		console.log('CSP inline handler migration complete.');
+	});
+	
+</script>
+
+<script nonce="K+6d6xc7yrl1jZSJvxmlDg==">
+    function cspPostBack(target, argument) {
+        var form = document.getElementById('aspnetForm');
+        if (!form) return;
+
+        var et = form.querySelector('input[name="__EVENTTARGET"]');
+        if (!et) {
+            et = document.createElement('input');
+            et.type = 'hidden';
+            et.name = '__EVENTTARGET';
+            form.appendChild(et);
+        }
+
+        var ea = form.querySelector('input[name="__EVENTARGUMENT"]');
+        if (!ea) {
+            ea = document.createElement('input');
+            ea.type = 'hidden';
+            ea.name = '__EVENTARGUMENT';
+            form.appendChild(ea);
+        }
+
+        et.value = target;
+        ea.value = argument || '';
+        form.submit();
+    }
+</script>
+<script type="text/javascript" nonce='K+6d6xc7yrl1jZSJvxmlDg=='>
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-36871766-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function () {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+</script>
+
+        
+    
+<div class="bigpc_pop" id="bigpc_pop_1" style="visibility:hidden;"><div class="bpc_popbox"><div class="sinf_close"><a href="javascript:void(0);" onclick="MM_showHideLayers(&#39;bigpc_pop_1&#39;,&#39;&#39;,&#39;hide&#39;);" onkeypress="MM_showHideLayers(&#39;bigpc_pop_1&#39;,&#39;&#39;,&#39;hide&#39;)"><img src="/images/close_pc.png" alt="關閉視窗" /></a></div><div class="pcpop_all"><div class="pcpop_img"><img src="/upload/upload/oralhistory/image/c4d348d6-5734-4ebe-a157-65874fc86e68_1920_1080.jpg" alt="羅先生擔任白河榮家武德堂第二分隊長，領導有方獲頒獎狀" /></div><div class="pcpop_text">羅先生擔任白河榮家武德堂第二分隊長，領導有方獲頒獎狀(羅運良提供)<br><br>行政院國軍退除役官兵輔導委員會
+95年度榮民口述歷史 
+融洽臺灣族群</div></div></div></div><div class="bigpc_pop" id="bigpc_pop_2" style="visibility:hidden;"><div class="bpc_popbox"><div class="sinf_close"><a href="javascript:void(0);" onclick="MM_showHideLayers(&#39;bigpc_pop_2&#39;,&#39;&#39;,&#39;hide&#39;);" onkeypress="MM_showHideLayers(&#39;bigpc_pop_2&#39;,&#39;&#39;,&#39;hide&#39;)"><img src="/images/close_pc.png" alt="關閉視窗" /></a></div><div class="pcpop_all"><div class="pcpop_img"><img src="/upload/upload/oralhistory/image/568a916a-688e-4901-9aba-e0fe243e9d5e_1920_1080.jpg" alt="羅先生任白河榮家武德堂房長，熱心負責獲頒獎狀" /></div><div class="pcpop_text">羅先生任白河榮家武德堂房長，熱心負責獲頒獎狀(羅運良提供)<br><br>行政院國軍退除役官兵輔導委員會
+95年度榮民口述歷史 
+融洽臺灣族群</div></div></div></div><div class="bigpc_pop" id="bigpc_pop_3" style="visibility:hidden;"><div class="bpc_popbox"><div class="sinf_close"><a href="javascript:void(0);" onclick="MM_showHideLayers(&#39;bigpc_pop_3&#39;,&#39;&#39;,&#39;hide&#39;);" onkeypress="MM_showHideLayers(&#39;bigpc_pop_3&#39;,&#39;&#39;,&#39;hide&#39;)"><img src="/images/close_pc.png" alt="關閉視窗" /></a></div><div class="pcpop_all"><div class="pcpop_img"><img src="/upload/upload/oralhistory/image/e6c74cf5-231a-44dc-b0ad-4c2f3f2d080c_1920_1080.jpg" alt="羅先生（左）早年與友人合照" /></div><div class="pcpop_text">羅先生（左）早年與友人合照(羅運良提供)<br><br>行政院國軍退除役官兵輔導委員會
+95年度榮民口述歷史 
+融洽臺灣族群</div></div></div></div><div class="bigpc_pop" id="bigpc_pop_4" style="visibility:hidden;"><div class="bpc_popbox"><div class="sinf_close"><a href="javascript:void(0);" onclick="MM_showHideLayers(&#39;bigpc_pop_4&#39;,&#39;&#39;,&#39;hide&#39;);" onkeypress="MM_showHideLayers(&#39;bigpc_pop_4&#39;,&#39;&#39;,&#39;hide&#39;)"><img src="/images/close_pc.png" alt="關閉視窗" /></a></div><div class="pcpop_all"><div class="pcpop_img"><img src="/upload/upload/oralhistory/image/aa8629b3-0a7b-4a4a-9644-5e0b4698e3b0_1920_1080.jpg" alt="羅先生（左2站立者）與同伴合照" /></div><div class="pcpop_text">羅先生（左2站立者）與同伴合照(羅運良提供)<br><br>行政院國軍退除役官兵輔導委員會
+95年度榮民口述歷史 
+融洽臺灣族群</div></div></div></div></form>
+</body>
+</html>

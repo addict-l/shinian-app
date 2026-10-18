@@ -1,0 +1,3592 @@
+{
+  "kind": "synthetic_all_contract_boundaries",
+  "runtime": "full-interview-v1.29.0",
+  "field_contracts": 193,
+  "question_contracts": 62,
+  "tests": 895,
+  "passed": 895,
+  "failed": [],
+  "no_DS_calls": true,
+  "checks": [
+    {
+      "name": "SK01-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "SK01-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "SK01-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "SK01-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "SK01-E2 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "SK01-E2 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "SK01-E2 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "SK01-E2 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "SK01-E3.place forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "SK01-E3.place interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "SK01-E3.place unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "SK01-E3.place explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "SK01-E3.period forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "SK01-E3.period interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "SK01-E3.period unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "SK01-E3.period explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "SK01-E4 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "SK01-E4 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "SK01-E4 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "SK01-E4 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "SK01-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "SK01-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "SK01-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "SK01-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "SK02-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "SK02-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "SK02-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "SK02-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "SK02-E2 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "SK02-E2 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "SK02-E2 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "SK02-E2 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "SK02-E3 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "SK02-E3 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "SK02-E3 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "SK02-E3 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "SK02-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "SK02-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "SK02-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "SK02-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "SK03-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "SK03-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "SK03-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "SK03-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "SK03-E2 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "SK03-E2 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "SK03-E2 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "SK03-E2 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "SK03-E3 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "SK03-E3 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "SK03-E3 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "SK03-E3 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "SK03-E4 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "SK03-E4 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "SK03-E4 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "SK03-E4 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "SK03-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "SK03-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "SK03-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "SK03-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "SK04-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "SK04-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "SK04-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "SK04-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "SK04-E2.actor forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "SK04-E2.actor interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "SK04-E2.actor unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "SK04-E2.actor explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "SK04-E2.period forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "SK04-E2.period interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "SK04-E2.period unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "SK04-E2.period explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "SK04-E3 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "SK04-E3 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "SK04-E3 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "SK04-E3 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "SK04-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "SK04-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "SK04-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "SK04-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "SK05-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "SK05-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "SK05-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "SK05-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "SK05-R1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "SK05-R1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "SK05-R1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "SK05-E2 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "SK05-E2 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "SK05-E2 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "SK05-E2 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "SK05-E3 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "SK05-E3 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "SK05-E3 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "SK05-E3 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "SK05-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "SK05-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "SK05-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "SK05-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "SK06-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "SK06-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "SK06-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "SK06-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "SK06-E2 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "SK06-E2 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "SK06-E2 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "SK06-E2 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "SK06-E3 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "SK06-E3 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "SK06-E3 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "SK06-E3 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "SK06-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "SK06-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "SK06-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "SK06-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "CH01-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "CH01-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "CH01-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "CH01-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "CH01-E2 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "CH01-E2 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "CH01-E2 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "CH01-E2 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "CH01-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "CH01-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "CH01-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "CH01-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "CH02-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "CH02-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "CH02-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "CH02-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "CH02-E2 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "CH02-E2 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "CH02-E2 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "CH02-E2 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "CH02-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "CH02-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "CH02-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "CH02-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "CH03-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "CH03-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "CH03-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "CH03-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "CH03-E2 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "CH03-E2 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "CH03-E2 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "CH03-E2 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "CH03-E3 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "CH03-E3 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "CH03-E3 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "CH03-E3 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "CH03-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "CH03-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "CH03-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "CH03-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "CH04-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "CH04-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "CH04-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "CH04-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "CH04-E2 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "CH04-E2 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "CH04-E2 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "CH04-E2 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "CH04-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "CH04-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "CH04-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "CH04-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "CH05-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "CH05-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "CH05-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "CH05-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "CH05-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "CH05-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "CH05-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "CH05-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "CH06-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "CH06-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "CH06-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "CH06-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "CH06-E2 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "CH06-E2 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "CH06-E2 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "CH06-E2 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "CH06-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "CH06-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "CH06-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "CH06-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "CH07-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "CH07-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "CH07-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "CH07-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "CH07-E2 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "CH07-E2 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "CH07-E2 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "CH07-E2 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "CH07-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "CH07-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "CH07-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "CH07-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "GR01-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "GR01-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "GR01-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "GR01-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "GR01-E2 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "GR01-E2 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "GR01-E2 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "GR01-E2 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "GR01-E3 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "GR01-E3 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "GR01-E3 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "GR01-E3 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "GR01-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "GR01-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "GR01-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "GR01-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "GR02-A1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "GR02-A1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "GR02-A1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "GR02-A1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "GR02-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "GR02-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "GR02-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "GR02-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "GR02-E2 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "GR02-E2 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "GR02-E2 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "GR02-E2 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "GR02-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "GR02-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "GR02-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "GR02-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "GR03-A1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "GR03-A1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "GR03-A1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "GR03-A1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "GR03-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "GR03-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "GR03-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "GR03-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "GR03-E2 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "GR03-E2 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "GR03-E2 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "GR03-E2 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "GR03-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "GR03-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "GR03-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "GR03-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "GR04-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "GR04-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "GR04-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "GR04-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "GR04-E2 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "GR04-E2 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "GR04-E2 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "GR04-E2 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "GR04-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "GR04-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "GR04-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "GR04-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "GR05-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "GR05-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "GR05-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "GR05-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "GR05-E2 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "GR05-E2 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "GR05-E2 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "GR05-E2 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "GR05-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "GR05-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "GR05-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "GR05-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "GR06-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "GR06-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "GR06-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "GR06-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "GR06-E2 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "GR06-E2 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "GR06-E2 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "GR06-E2 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "GR06-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "GR06-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "GR06-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "GR06-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "GR07-A1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "GR07-A1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "GR07-A1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "GR07-A1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "GR07-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "GR07-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "GR07-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "GR07-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "GR07-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "GR07-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "GR07-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "GR07-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "WK01-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "WK01-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "WK01-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "WK01-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "WK01-E2 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "WK01-E2 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "WK01-E2 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "WK01-E2 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "WK01-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "WK01-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "WK01-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "WK01-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "WK02-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "WK02-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "WK02-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "WK02-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "WK02-E2 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "WK02-E2 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "WK02-E2 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "WK02-E2 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "WK02-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "WK02-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "WK02-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "WK02-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "WK03-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "WK03-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "WK03-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "WK03-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "WK03-E2 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "WK03-E2 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "WK03-E2 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "WK03-E2 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "WK03-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "WK03-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "WK03-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "WK03-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "WK04-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "WK04-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "WK04-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "WK04-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "WK04-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "WK04-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "WK04-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "WK04-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "WK05-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "WK05-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "WK05-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "WK05-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "WK05-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "WK05-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "WK05-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "WK05-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "WK06-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "WK06-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "WK06-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "WK06-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "WK06-E2 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "WK06-E2 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "WK06-E2 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "WK06-E2 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "WK06-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "WK06-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "WK06-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "WK06-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "FM01-A1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "FM01-A1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "FM01-A1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "FM01-A1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "FM01-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "FM01-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "FM01-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "FM01-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "FM01-E2 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "FM01-E2 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "FM01-E2 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "FM01-E2 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "FM01-E3 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "FM01-E3 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "FM01-E3 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "FM01-E3 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "FM01-E4 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "FM01-E4 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "FM01-E4 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "FM01-E4 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "FM01-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "FM01-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "FM01-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "FM01-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "FM02-A1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "FM02-A1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "FM02-A1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "FM02-A1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "FM02-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "FM02-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "FM02-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "FM02-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "FM02-E2 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "FM02-E2 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "FM02-E2 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "FM02-E2 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "FM02-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "FM02-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "FM02-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "FM02-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "FM03-A1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "FM03-A1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "FM03-A1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "FM03-A1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "FM03-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "FM03-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "FM03-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "FM03-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "FM03-E2 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "FM03-E2 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "FM03-E2 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "FM03-E2 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "FM03-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "FM03-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "FM03-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "FM03-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "FM04-A1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "FM04-A1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "FM04-A1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "FM04-A1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "FM04-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "FM04-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "FM04-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "FM04-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "FM04-E2 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "FM04-E2 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "FM04-E2 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "FM04-E2 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "FM04-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "FM04-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "FM04-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "FM04-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "FM05-A1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "FM05-A1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "FM05-A1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "FM05-A1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "FM05-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "FM05-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "FM05-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "FM05-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "FM05-E2 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "FM05-E2 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "FM05-E2 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "FM05-E2 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "FM05-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "FM05-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "FM05-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "FM05-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "FM06-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "FM06-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "FM06-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "FM06-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "FM06-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "FM06-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "FM06-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "FM06-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "FM07-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "FM07-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "FM07-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "FM07-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "FM07-E2 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "FM07-E2 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "FM07-E2 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "FM07-E2 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "FM07-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "FM07-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "FM07-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "FM07-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "WK07-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "WK07-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "WK07-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "WK07-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "WK07-E2 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "WK07-E2 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "WK07-E2 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "WK07-E2 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "WK07-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "WK07-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "WK07-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "WK07-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "WK08-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "WK08-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "WK08-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "WK08-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "WK08-E2 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "WK08-E2 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "WK08-E2 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "WK08-E2 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "WK08-E3 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "WK08-E3 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "WK08-E3 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "WK08-E3 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "WK08-E4 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "WK08-E4 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "WK08-E4 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "WK08-E4 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "WK08-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "WK08-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "WK08-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "WK08-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "WK09-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "WK09-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "WK09-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "WK09-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "WK09-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "WK09-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "WK09-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "WK09-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "WK10-A1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "WK10-A1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "WK10-A1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "WK10-A1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "WK10-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "WK10-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "WK10-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "WK10-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "WK10-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "WK10-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "WK10-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "WK10-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "WK11-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "WK11-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "WK11-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "WK11-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "WK11-E2 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "WK11-E2 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "WK11-E2 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "WK11-E2 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "WK11-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "WK11-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "WK11-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "WK11-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "WK12-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "WK12-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "WK12-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "WK12-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "WK12-E2 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "WK12-E2 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "WK12-E2 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "WK12-E2 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "WK12-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "WK12-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "WK12-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "WK12-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "WK13-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "WK13-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "WK13-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "WK13-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "WK13-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "WK13-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "WK13-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "WK13-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "RV01-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "RV01-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "RV01-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "RV01-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "RV01-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "RV01-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "RV01-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "RV01-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "RV02-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "RV02-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "RV02-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "RV02-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "RV02-E2 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "RV02-E2 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "RV02-E2 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "RV02-E2 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "RV02-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "RV02-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "RV02-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "RV02-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "RV03-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "RV03-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "RV03-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "RV03-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "RV03-E2 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "RV03-E2 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "RV03-E2 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "RV03-E2 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "RV03-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "RV03-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "RV03-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "RV03-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "RV04-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "RV04-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "RV04-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "RV04-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "RV04-E2 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "RV04-E2 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "RV04-E2 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "RV04-E2 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "RV04-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "RV04-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "RV04-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "RV04-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "RV05-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "RV05-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "RV05-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "RV05-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "RV05-E2 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "RV05-E2 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "RV05-E2 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "RV05-E2 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "RV05-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "RV05-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "RV05-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "RV05-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "RV06-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "RV06-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "RV06-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "RV06-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "RV06-E2 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "RV06-E2 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "RV06-E2 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "RV06-E2 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "RV06-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "RV06-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "RV06-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "RV06-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "RV07-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "RV07-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "RV07-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "RV07-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "RV07-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "RV07-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "RV07-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "RV07-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "RV08-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "RV08-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "RV08-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "RV08-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "RV08-E2 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "RV08-E2 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "RV08-E2 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "RV08-E2 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "RV08-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "RV08-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "RV08-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "RV08-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "RV09-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "RV09-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "RV09-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "RV09-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "RV09-E2 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "RV09-E2 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "RV09-E2 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "RV09-E2 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "RV09-E3 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "RV09-E3 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "RV09-E3 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "RV09-E3 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "RV09-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "RV09-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "RV09-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "RV09-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "RV10-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "RV10-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "RV10-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "RV10-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "RV10-E2 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "RV10-E2 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "RV10-E2 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "RV10-E2 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "RV10-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "RV10-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "RV10-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "RV10-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "RV11-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "RV11-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "RV11-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "RV11-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "RV11-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "RV11-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "RV11-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "RV11-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "RV12-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "RV12-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "RV12-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "RV12-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "RV12-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "RV12-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "RV12-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "RV12-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "LT01-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "LT01-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "LT01-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "LT01-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "LT01-E2 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "LT01-E2 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "LT01-E2 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "LT01-E2 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "LT01-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "LT01-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "LT01-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "LT01-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "LT02-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "LT02-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "LT02-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "LT02-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "LT02-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "LT02-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "LT02-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "LT02-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "LT03-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "LT03-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "LT03-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "LT03-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "LT03-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "LT03-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "LT03-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "LT03-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "LT04-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "LT04-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "LT04-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "LT04-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "LT04-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "LT04-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "LT04-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "LT04-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "LT05-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "LT05-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "LT05-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "LT05-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "LT05-E2 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "LT05-E2 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "LT05-E2 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "LT05-E2 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "LT05-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "LT05-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "LT05-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "LT05-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "LT06-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "LT06-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "LT06-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "LT06-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "LT06-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "LT06-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "LT06-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "LT06-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "RV13-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "RV13-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "RV13-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "RV13-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "RV13-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "RV13-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "RV13-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "RV13-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "RV14-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "RV14-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "RV14-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "RV14-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "RV14-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "RV14-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "RV14-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "RV14-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "RV15-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "RV15-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "RV15-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "RV15-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "RV15-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "RV15-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "RV15-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "RV15-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "RV16-E1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "RV16-E1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "RV16-E1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "RV16-E1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "RV16-O1 forged source reference cannot create a fact",
+      "pass": true
+    },
+    {
+      "name": "RV16-O1 interviewer words cannot become narrator fact",
+      "pass": true
+    },
+    {
+      "name": "RV16-O1 unrelated literal cannot close field as unknown",
+      "pass": true
+    },
+    {
+      "name": "RV16-O1 explicit target unknown survives resume without reasking this field",
+      "pass": true
+    },
+    {
+      "name": "SK01 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "SK01 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "SK02 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "SK02 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "SK03 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "SK03 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "SK04 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "SK04 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "SK05 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "SK05 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "SK06 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "SK06 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "CH01 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "CH01 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "CH02 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "CH02 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "CH03 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "CH03 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "CH04 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "CH04 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "CH05 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "CH05 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "CH06 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "CH06 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "CH07 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "CH07 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "GR01 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "GR01 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "GR02 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "GR02 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "GR03 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "GR03 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "GR04 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "GR04 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "GR05 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "GR05 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "GR06 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "GR06 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "GR07 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "GR07 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "WK01 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "WK01 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "WK02 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "WK02 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "WK03 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "WK03 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "WK04 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "WK04 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "WK05 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "WK05 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "WK06 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "WK06 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "FM01 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "FM01 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "FM02 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "FM02 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "FM03 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "FM03 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "FM04 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "FM04 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "FM05 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "FM05 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "FM06 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "FM06 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "FM07 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "FM07 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "WK07 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "WK07 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "WK08 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "WK08 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "WK09 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "WK09 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "WK10 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "WK10 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "WK11 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "WK11 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "WK12 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "WK12 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "WK13 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "WK13 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "RV01 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "RV01 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "RV02 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "RV02 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "RV03 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "RV03 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "RV04 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "RV04 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "RV05 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "RV05 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "RV06 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "RV06 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "RV07 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "RV07 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "RV08 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "RV08 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "RV09 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "RV09 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "RV10 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "RV10 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "RV11 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "RV11 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "RV12 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "RV12 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "LT01 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "LT01 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "LT02 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "LT02 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "LT03 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "LT03 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "LT04 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "LT04 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "LT05 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "LT05 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "LT06 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "LT06 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "RV13 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "RV13 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "RV14 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "RV14 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "RV15 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "RV15 foreign question cache cannot be reused",
+      "pass": true
+    },
+    {
+      "name": "RV16 verified current pause takes priority over independent extraction error",
+      "pass": true
+    },
+    {
+      "name": "RV16 foreign question cache cannot be reused",
+      "pass": true
+    }
+  ]
+}

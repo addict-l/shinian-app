@@ -1,0 +1,151 @@
+{
+  "kind": "evaluated",
+  "result": {
+    "decision": "ready",
+    "target": null,
+    "question": null,
+    "fields": {
+      "RV16-E1": {
+        "state": "known",
+        "scope": {
+          "subject": "self",
+          "period": "lifelong",
+          "relation_evidence": [
+            {
+              "source_id": "CASA-c8625984-Q09",
+              "quote": "我常告诫我的孩子们，既然选择了目标，就要坚持并为之努力。 人生不会一帆风顺，不可轻言放弃。踏踏实实做事，诚实待人，做好自己， 切记家庭与事业是同等重要。"
+            }
+          ]
+        },
+        "value": "我常告诫我的孩子们，既然选择了目标，就要坚持并为之努力。 人生不会一帆风顺，不可轻言放弃。踏踏实实做事，诚实待人，做好自己， 切记家庭与事业是同等重要。",
+        "evidence": [
+          {
+            "source_id": "CASA-c8625984-Q09",
+            "quote": "我常告诫我的孩子们，既然选择了目标，就要坚持并为之努力。 人生不会一帆风顺，不可轻言放弃。踏踏实实做事，诚实待人，做好自己， 切记家庭与事业是同等重要。"
+          }
+        ]
+      },
+      "RV16-O1": {
+        "state": "missing",
+        "value": null,
+        "evidence": []
+      }
+    },
+    "effective": {
+      "RV16-E1": "known",
+      "RV16-O1": "missing"
+    },
+    "active": [
+      "RV16-E1"
+    ],
+    "errors": [],
+    "rejected_candidates": [],
+    "scope_notices": [
+      {
+        "field_id": "RV16-E1",
+        "rule": "expand_explicit_same_field_evidence_alias"
+      }
+    ],
+    "protocol_normalizations": [
+      {
+        "rule": "expand_control_evidence_units",
+        "original_control": {
+          "action": "continue",
+          "evidence_unit_ids": []
+        },
+        "selections": [
+          {
+            "attribute": "evidence_unit_ids",
+            "selected_ids": [],
+            "refs": []
+          }
+        ]
+      },
+      {
+        "field_id": "RV16-E1",
+        "rule": "expand_selected_original_evidence_units",
+        "original_candidate": {
+          "state": "known",
+          "value_unit_ids": [
+            "S1.1",
+            "S1.2",
+            "S1.3"
+          ],
+          "evidence_unit_ids": [
+            "S1.1",
+            "S1.2",
+            "S1.3"
+          ],
+          "scope": {
+            "subject": "self",
+            "period": "lifelong",
+            "relation_unit_ids": "same_as_evidence"
+          }
+        },
+        "selections": [
+          {
+            "attribute": "value",
+            "rule": "copy_selected_contiguous_original_units",
+            "selected_ids": [
+              "S1.1",
+              "S1.2",
+              "S1.3"
+            ],
+            "refs": [
+              {
+                "source_id": "CASA-c8625984-Q09",
+                "quote": "我常告诫我的孩子们，既然选择了目标，就要坚持并为之努力。 人生不会一帆风顺，不可轻言放弃。踏踏实实做事，诚实待人，做好自己， 切记家庭与事业是同等重要。"
+              }
+            ]
+          },
+          {
+            "attribute": "evidence_unit_ids",
+            "selected_ids": [
+              "S1.1",
+              "S1.2",
+              "S1.3"
+            ],
+            "refs": [
+              {
+                "source_id": "CASA-c8625984-Q09",
+                "quote": "我常告诫我的孩子们，既然选择了目标，就要坚持并为之努力。 人生不会一帆风顺，不可轻言放弃。踏踏实实做事，诚实待人，做好自己， 切记家庭与事业是同等重要。"
+              }
+            ]
+          },
+          {
+            "attribute": "relation_unit_ids",
+            "alias": "same_as_evidence"
+          }
+        ]
+      },
+      {
+        "field_id": "RV16-E1",
+        "rule": "expand_explicit_same_field_evidence_alias",
+        "original_candidate": {
+          "state": "known",
+          "scope": {
+            "subject": "self",
+            "period": "lifelong",
+            "relation_evidence": "same_as_evidence"
+          },
+          "value": "我常告诫我的孩子们，既然选择了目标，就要坚持并为之努力。 人生不会一帆风顺，不可轻言放弃。踏踏实实做事，诚实待人，做好自己， 切记家庭与事业是同等重要。",
+          "evidence": [
+            {
+              "source_id": "CASA-c8625984-Q09",
+              "quote": "我常告诫我的孩子们，既然选择了目标，就要坚持并为之努力。 人生不会一帆风顺，不可轻言放弃。踏踏实实做事，诚实待人，做好自己， 切记家庭与事业是同等重要。"
+            }
+          ]
+        }
+      }
+    ],
+    "optional_errors": [],
+    "inactive_conditional_errors": [],
+    "unbound_material": [],
+    "provenance": {},
+    "version": "full-interview-v2.0.0",
+    "semantic_rejections": []
+  },
+  "internal_repairs": 0,
+  "semantic_review_calls": 1,
+  "at": "2026-10-18T07:32:01.269910+00:00"
+}

@@ -1,0 +1,348 @@
+{
+  "decision": "ask",
+  "target": "FM05-E2",
+  "question": "您希望孩子以后成为什么样的人？",
+  "fields": {
+    "FM05-A1": {
+      "state": "known",
+      "scope": {
+        "subject": "self",
+        "period": "as_stated",
+        "relation_evidence": [
+          {
+            "source_id": "CASA-c8625984-Q08",
+            "quote": "学习工作再学习，不知不觉来美 35 年，要说我最得意的事情便是教导我的孩子们学习好中文， 了解中国传统文化。除了每周末上中文学校，很简单的办法是进家门后只许说中文。"
+          }
+        ]
+      },
+      "value": "学习工作再学习，不知不觉来美 35 年，要说我最得意的事情便是教导我的孩子们学习好中文， 了解中国传统文化。除了每周末上中文学校，很简单的办法是进家门后只许说中文。",
+      "evidence": [
+        {
+          "source_id": "CASA-c8625984-Q08",
+          "quote": "学习工作再学习，不知不觉来美 35 年，要说我最得意的事情便是教导我的孩子们学习好中文， 了解中国传统文化。除了每周末上中文学校，很简单的办法是进家门后只许说中文。"
+        }
+      ]
+    },
+    "FM05-E1": {
+      "state": "known",
+      "scope": {
+        "subject": "self",
+        "period": "adulthood",
+        "relation_evidence": [
+          {
+            "source_id": "CASA-c8625984-Q08",
+            "quote": "学习工作再学习，不知不觉来美 35 年，要说我最得意的事情便是教导我的孩子们学习好中文， 了解中国传统文化。除了每周末上中文学校，很简单的办法是进家门后只许说中文。"
+          }
+        ]
+      },
+      "value": "学习工作再学习，不知不觉来美 35 年，要说我最得意的事情便是教导我的孩子们学习好中文， 了解中国传统文化。除了每周末上中文学校，很简单的办法是进家门后只许说中文。",
+      "evidence": [
+        {
+          "source_id": "CASA-c8625984-Q08",
+          "quote": "学习工作再学习，不知不觉来美 35 年，要说我最得意的事情便是教导我的孩子们学习好中文， 了解中国传统文化。除了每周末上中文学校，很简单的办法是进家门后只许说中文。"
+        }
+      ]
+    },
+    "FM05-E2": {
+      "state": "missing",
+      "value": null,
+      "evidence": []
+    },
+    "FM05-O1": {
+      "state": "missing",
+      "value": null,
+      "evidence": []
+    }
+  },
+  "effective": {
+    "FM05-A1": "known",
+    "FM05-E1": "known",
+    "FM05-E2": "missing",
+    "FM05-O1": "missing"
+  },
+  "active": [
+    "FM05-E1",
+    "FM05-E2"
+  ],
+  "errors": [],
+  "rejected_candidates": [
+    {
+      "field_id": "FM05-E2",
+      "reason": "education_instruction_not_personhood_expectation",
+      "candidate": {
+        "state": "known",
+        "scope": {
+          "subject": "self",
+          "period": "adulthood",
+          "relation_evidence": [
+            {
+              "source_id": "CASA-c8625984-Q08",
+              "quote": "学习工作再学习，不知不觉来美 35 年，要说我最得意的事情便是教导我的孩子们学习好中文， 了解中国传统文化。"
+            }
+          ]
+        },
+        "value": "学习工作再学习，不知不觉来美 35 年，要说我最得意的事情便是教导我的孩子们学习好中文， 了解中国传统文化。",
+        "evidence": [
+          {
+            "source_id": "CASA-c8625984-Q08",
+            "quote": "学习工作再学习，不知不觉来美 35 年，要说我最得意的事情便是教导我的孩子们学习好中文， 了解中国传统文化。"
+          }
+        ]
+      }
+    }
+  ],
+  "scope_notices": [
+    {
+      "field_id": "FM05-A1",
+      "rule": "expand_explicit_same_field_evidence_alias"
+    },
+    {
+      "field_id": "FM05-E1",
+      "rule": "expand_explicit_same_field_evidence_alias"
+    },
+    {
+      "field_id": "FM05-E2",
+      "rule": "expand_explicit_same_field_evidence_alias"
+    }
+  ],
+  "protocol_normalizations": [
+    {
+      "rule": "expand_control_evidence_units",
+      "original_control": {
+        "action": "continue",
+        "evidence_unit_ids": []
+      },
+      "selections": [
+        {
+          "attribute": "evidence_unit_ids",
+          "selected_ids": [],
+          "refs": []
+        }
+      ]
+    },
+    {
+      "field_id": "FM05-A1",
+      "rule": "expand_selected_original_evidence_units",
+      "original_candidate": {
+        "state": "known",
+        "value_unit_ids": [
+          "S1.1",
+          "S1.2"
+        ],
+        "evidence_unit_ids": [
+          "S1.1",
+          "S1.2"
+        ],
+        "scope": {
+          "subject": "self",
+          "period": "as_stated",
+          "relation_unit_ids": "same_as_evidence"
+        }
+      },
+      "selections": [
+        {
+          "attribute": "value",
+          "rule": "copy_selected_contiguous_original_units",
+          "selected_ids": [
+            "S1.1",
+            "S1.2"
+          ],
+          "refs": [
+            {
+              "source_id": "CASA-c8625984-Q08",
+              "quote": "学习工作再学习，不知不觉来美 35 年，要说我最得意的事情便是教导我的孩子们学习好中文， 了解中国传统文化。除了每周末上中文学校，很简单的办法是进家门后只许说中文。"
+            }
+          ]
+        },
+        {
+          "attribute": "evidence_unit_ids",
+          "selected_ids": [
+            "S1.1",
+            "S1.2"
+          ],
+          "refs": [
+            {
+              "source_id": "CASA-c8625984-Q08",
+              "quote": "学习工作再学习，不知不觉来美 35 年，要说我最得意的事情便是教导我的孩子们学习好中文， 了解中国传统文化。除了每周末上中文学校，很简单的办法是进家门后只许说中文。"
+            }
+          ]
+        },
+        {
+          "attribute": "relation_unit_ids",
+          "alias": "same_as_evidence"
+        }
+      ]
+    },
+    {
+      "field_id": "FM05-A1",
+      "rule": "expand_explicit_same_field_evidence_alias",
+      "original_candidate": {
+        "state": "known",
+        "scope": {
+          "subject": "self",
+          "period": "as_stated",
+          "relation_evidence": "same_as_evidence"
+        },
+        "value": "学习工作再学习，不知不觉来美 35 年，要说我最得意的事情便是教导我的孩子们学习好中文， 了解中国传统文化。除了每周末上中文学校，很简单的办法是进家门后只许说中文。",
+        "evidence": [
+          {
+            "source_id": "CASA-c8625984-Q08",
+            "quote": "学习工作再学习，不知不觉来美 35 年，要说我最得意的事情便是教导我的孩子们学习好中文， 了解中国传统文化。除了每周末上中文学校，很简单的办法是进家门后只许说中文。"
+          }
+        ]
+      }
+    },
+    {
+      "field_id": "FM05-E1",
+      "rule": "expand_selected_original_evidence_units",
+      "original_candidate": {
+        "state": "known",
+        "value_unit_ids": [
+          "S1.1",
+          "S1.2"
+        ],
+        "evidence_unit_ids": [
+          "S1.1",
+          "S1.2"
+        ],
+        "scope": {
+          "subject": "self",
+          "period": "adulthood",
+          "relation_unit_ids": "same_as_evidence"
+        }
+      },
+      "selections": [
+        {
+          "attribute": "value",
+          "rule": "copy_selected_contiguous_original_units",
+          "selected_ids": [
+            "S1.1",
+            "S1.2"
+          ],
+          "refs": [
+            {
+              "source_id": "CASA-c8625984-Q08",
+              "quote": "学习工作再学习，不知不觉来美 35 年，要说我最得意的事情便是教导我的孩子们学习好中文， 了解中国传统文化。除了每周末上中文学校，很简单的办法是进家门后只许说中文。"
+            }
+          ]
+        },
+        {
+          "attribute": "evidence_unit_ids",
+          "selected_ids": [
+            "S1.1",
+            "S1.2"
+          ],
+          "refs": [
+            {
+              "source_id": "CASA-c8625984-Q08",
+              "quote": "学习工作再学习，不知不觉来美 35 年，要说我最得意的事情便是教导我的孩子们学习好中文， 了解中国传统文化。除了每周末上中文学校，很简单的办法是进家门后只许说中文。"
+            }
+          ]
+        },
+        {
+          "attribute": "relation_unit_ids",
+          "alias": "same_as_evidence"
+        }
+      ]
+    },
+    {
+      "field_id": "FM05-E1",
+      "rule": "expand_explicit_same_field_evidence_alias",
+      "original_candidate": {
+        "state": "known",
+        "scope": {
+          "subject": "self",
+          "period": "adulthood",
+          "relation_evidence": "same_as_evidence"
+        },
+        "value": "学习工作再学习，不知不觉来美 35 年，要说我最得意的事情便是教导我的孩子们学习好中文， 了解中国传统文化。除了每周末上中文学校，很简单的办法是进家门后只许说中文。",
+        "evidence": [
+          {
+            "source_id": "CASA-c8625984-Q08",
+            "quote": "学习工作再学习，不知不觉来美 35 年，要说我最得意的事情便是教导我的孩子们学习好中文， 了解中国传统文化。除了每周末上中文学校，很简单的办法是进家门后只许说中文。"
+          }
+        ]
+      }
+    },
+    {
+      "field_id": "FM05-E2",
+      "rule": "expand_selected_original_evidence_units",
+      "original_candidate": {
+        "state": "known",
+        "value_unit_ids": [
+          "S1.1"
+        ],
+        "evidence_unit_ids": [
+          "S1.1"
+        ],
+        "scope": {
+          "subject": "self",
+          "period": "adulthood",
+          "relation_unit_ids": "same_as_evidence"
+        }
+      },
+      "selections": [
+        {
+          "attribute": "value",
+          "rule": "copy_selected_contiguous_original_units",
+          "selected_ids": [
+            "S1.1"
+          ],
+          "refs": [
+            {
+              "source_id": "CASA-c8625984-Q08",
+              "quote": "学习工作再学习，不知不觉来美 35 年，要说我最得意的事情便是教导我的孩子们学习好中文， 了解中国传统文化。"
+            }
+          ]
+        },
+        {
+          "attribute": "evidence_unit_ids",
+          "selected_ids": [
+            "S1.1"
+          ],
+          "refs": [
+            {
+              "source_id": "CASA-c8625984-Q08",
+              "quote": "学习工作再学习，不知不觉来美 35 年，要说我最得意的事情便是教导我的孩子们学习好中文， 了解中国传统文化。"
+            }
+          ]
+        },
+        {
+          "attribute": "relation_unit_ids",
+          "alias": "same_as_evidence"
+        }
+      ]
+    },
+    {
+      "field_id": "FM05-E2",
+      "rule": "expand_explicit_same_field_evidence_alias",
+      "original_candidate": {
+        "state": "known",
+        "scope": {
+          "subject": "self",
+          "period": "adulthood",
+          "relation_evidence": "same_as_evidence"
+        },
+        "value": "学习工作再学习，不知不觉来美 35 年，要说我最得意的事情便是教导我的孩子们学习好中文， 了解中国传统文化。",
+        "evidence": [
+          {
+            "source_id": "CASA-c8625984-Q08",
+            "quote": "学习工作再学习，不知不觉来美 35 年，要说我最得意的事情便是教导我的孩子们学习好中文， 了解中国传统文化。"
+          }
+        ]
+      }
+    }
+  ],
+  "optional_errors": [],
+  "inactive_conditional_errors": [],
+  "unbound_material": [],
+  "provenance": {},
+  "version": "full-interview-v2.0.0",
+  "semantic_rejections": [
+    {
+      "field_id": "FM05-E2",
+      "reason": "education_instruction_not_personhood_expectation",
+      "retained_state": "missing_or_validated_previous"
+    }
+  ]
+}

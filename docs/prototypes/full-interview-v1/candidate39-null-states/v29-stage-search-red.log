@@ -1,0 +1,21 @@
+EE
+======================================================================
+ERROR: test_no_stage_gap_does_not_generate_search_work_or_change_fields (tools.test_interview_stage_search_v29.StageSearchTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/student03/Documents/ChatGPT/ai memory/tools/test_interview_stage_search_v29.py", line 34, in test_no_stage_gap_does_not_generate_search_work_or_change_fields
+    self.assertEqual(result['semantic_review']['stage_search_candidates'], [])
+KeyError: 'stage_search_candidates'
+
+======================================================================
+ERROR: test_stage_gap_search_points_to_literal_units_without_claiming_proof (tools.test_interview_stage_search_v29.StageSearchTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/student03/Documents/ChatGPT/ai memory/tools/test_interview_stage_search_v29.py", line 25, in test_stage_gap_search_points_to_literal_units_without_claiming_proof
+    suggestions = result['semantic_review']['stage_search_candidates']
+KeyError: 'stage_search_candidates'
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.075s
+
+FAILED (errors=2)

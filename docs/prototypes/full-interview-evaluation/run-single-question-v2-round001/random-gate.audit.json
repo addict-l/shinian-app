@@ -1,0 +1,92 @@
+{
+  "scope": "Immutable files, raw provider transport, executed identities, question isolation only; not semantic accuracy or acceptance.",
+  "runs": [
+    {
+      "run": "run-single-question-v2-round001",
+      "model": "deepseek-v4-pro",
+      "freeze_sha256": "1e6092c95c9240bf2740a43dac475ca9ec0f69173694b7966eb448485d79b02d",
+      "actual_people": [
+        {
+          "id": "N-0d4a398022",
+          "name": "郭柯"
+        },
+        {
+          "id": "N-568db56d4d",
+          "name": "易芳運"
+        },
+        {
+          "id": "N-6eec6bf458",
+          "name": "孫樸生"
+        },
+        {
+          "id": "N-81acb2dd8d",
+          "name": "劉金標"
+        },
+        {
+          "id": "N-9ff0b2f16e",
+          "name": "金晓贵"
+        },
+        {
+          "id": "N-c5a5031a87",
+          "name": "楼燕勤"
+        },
+        {
+          "id": "N-c8625984e4",
+          "name": "周少凤"
+        },
+        {
+          "id": "N-f3af6b6947",
+          "name": "侯鎮清"
+        }
+      ],
+      "actual_cases": 33,
+      "actual_question_ids": [
+        "CH02",
+        "CH02b",
+        "CH03",
+        "CH03b",
+        "CH07",
+        "FM05",
+        "GR07",
+        "LT05",
+        "LT05b",
+        "LT06",
+        "RV02",
+        "RV03",
+        "RV06",
+        "RV06b",
+        "RV09",
+        "RV09b",
+        "RV09c",
+        "RV10",
+        "RV13",
+        "RV16",
+        "SK01",
+        "SK01b",
+        "SK01c",
+        "SK03",
+        "SK03b",
+        "SK03c",
+        "SK03d",
+        "WK13"
+      ],
+      "attempt_files": 70,
+      "successful_call_records": 70,
+      "raw_transport_kinds": {
+        "run_start": 20,
+        "model_call": 70,
+        "run_end": 20
+      },
+      "provider_failures": [],
+      "errors": [],
+      "passed": true
+    }
+  ],
+  "actual_distinct_narrator_ids": 8,
+  "actual_distinct_names": 8,
+  "same_name_identity_review": {},
+  "successful_call_records": 70,
+  "provider_failure_records": 0,
+  "errors": 0,
+  "passed": true
+}

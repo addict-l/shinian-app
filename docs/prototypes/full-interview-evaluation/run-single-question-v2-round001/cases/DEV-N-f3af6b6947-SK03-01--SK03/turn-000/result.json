@@ -1,0 +1,143 @@
+{
+  "kind": "evaluated",
+  "result": {
+    "decision": "ready",
+    "target": null,
+    "question": null,
+    "fields": {
+      "SK03-E1": {
+        "state": "known",
+        "scope": {
+          "subject": "self",
+          "period": "childhood",
+          "relation_evidence": [
+            {
+              "source_id": "VAC-217-E01",
+              "quote": "我父親在青島市做生意，我跟我哥哥、母親在鄉下靠務農來維持生活。"
+            }
+          ]
+        },
+        "value": "我父親在青島市做生意，我跟我哥哥、母親在鄉下靠務農來維持生活。",
+        "evidence": [
+          {
+            "source_id": "VAC-217-E01",
+            "quote": "我父親在青島市做生意，我跟我哥哥、母親在鄉下靠務農來維持生活。"
+          }
+        ]
+      },
+      "SK03-O1": {
+        "state": "missing",
+        "value": null,
+        "evidence": []
+      }
+    },
+    "effective": {
+      "SK03-E1": "known",
+      "SK03-O1": "missing"
+    },
+    "active": [
+      "SK03-E1"
+    ],
+    "errors": [],
+    "rejected_candidates": [],
+    "scope_notices": [
+      {
+        "field_id": "SK03-E1",
+        "rule": "expand_explicit_same_field_evidence_alias"
+      }
+    ],
+    "protocol_normalizations": [
+      {
+        "rule": "expand_control_evidence_units",
+        "original_control": {
+          "action": "continue",
+          "evidence_unit_ids": []
+        },
+        "selections": [
+          {
+            "attribute": "evidence_unit_ids",
+            "selected_ids": [],
+            "refs": []
+          }
+        ]
+      },
+      {
+        "field_id": "SK03-E1",
+        "rule": "expand_selected_original_evidence_units",
+        "original_candidate": {
+          "state": "known",
+          "value_unit_ids": [
+            "S1.3"
+          ],
+          "evidence_unit_ids": [
+            "S1.3"
+          ],
+          "scope": {
+            "subject": "self",
+            "period": "childhood",
+            "relation_unit_ids": "same_as_evidence"
+          }
+        },
+        "selections": [
+          {
+            "attribute": "value",
+            "rule": "copy_selected_contiguous_original_units",
+            "selected_ids": [
+              "S1.3"
+            ],
+            "refs": [
+              {
+                "source_id": "VAC-217-E01",
+                "quote": "我父親在青島市做生意，我跟我哥哥、母親在鄉下靠務農來維持生活。"
+              }
+            ]
+          },
+          {
+            "attribute": "evidence_unit_ids",
+            "selected_ids": [
+              "S1.3"
+            ],
+            "refs": [
+              {
+                "source_id": "VAC-217-E01",
+                "quote": "我父親在青島市做生意，我跟我哥哥、母親在鄉下靠務農來維持生活。"
+              }
+            ]
+          },
+          {
+            "attribute": "relation_unit_ids",
+            "alias": "same_as_evidence"
+          }
+        ]
+      },
+      {
+        "field_id": "SK03-E1",
+        "rule": "expand_explicit_same_field_evidence_alias",
+        "original_candidate": {
+          "state": "known",
+          "scope": {
+            "subject": "self",
+            "period": "childhood",
+            "relation_evidence": "same_as_evidence"
+          },
+          "value": "我父親在青島市做生意，我跟我哥哥、母親在鄉下靠務農來維持生活。",
+          "evidence": [
+            {
+              "source_id": "VAC-217-E01",
+              "quote": "我父親在青島市做生意，我跟我哥哥、母親在鄉下靠務農來維持生活。"
+            }
+          ]
+        }
+      }
+    ],
+    "optional_errors": [],
+    "inactive_conditional_errors": [],
+    "unbound_material": [],
+    "provenance": {},
+    "version": "full-interview-v2.0.0",
+    "semantic_rejections": []
+  },
+  "internal_repairs": 1,
+  "semantic_review_calls": 1,
+  "at": "2026-10-18T07:31:18.481654+00:00"
+}

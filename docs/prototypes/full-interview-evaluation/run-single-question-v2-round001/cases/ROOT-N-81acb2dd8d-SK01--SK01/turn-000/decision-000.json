@@ -1,0 +1,141 @@
+{
+  "decision": "ask",
+  "target": "SK01-E1",
+  "question": "您大概是哪一年出生的？",
+  "fields": {
+    "SK01-E1": {
+      "state": "missing",
+      "value": null,
+      "evidence": []
+    },
+    "SK01-O1": {
+      "state": "missing",
+      "value": null,
+      "evidence": []
+    }
+  },
+  "effective": {
+    "SK01-E1": "missing",
+    "SK01-O1": "missing"
+  },
+  "active": [
+    "SK01-E1"
+  ],
+  "errors": [],
+  "rejected_candidates": [
+    {
+      "field_id": "SK01-E1",
+      "reason": "time_ambiguity_without_when_answer",
+      "candidate": {
+        "state": "ambiguous",
+        "value": null,
+        "scope": {
+          "subject": "self",
+          "period": "birth",
+          "relation_evidence": [
+            {
+              "source_id": "VAC-308-E01",
+              "quote": "我是出生在江蘇省鎮江，我的祖籍是懷安縣。"
+            }
+          ]
+        },
+        "clarifications": [
+          "period"
+        ],
+        "evidence": [
+          {
+            "source_id": "VAC-308-E01",
+            "quote": "我是出生在江蘇省鎮江，我的祖籍是懷安縣。"
+          }
+        ]
+      }
+    }
+  ],
+  "scope_notices": [
+    {
+      "field_id": "SK01-E1",
+      "rule": "expand_explicit_same_field_evidence_alias"
+    }
+  ],
+  "protocol_normalizations": [
+    {
+      "rule": "expand_control_evidence_units",
+      "original_control": {
+        "action": "continue",
+        "evidence_unit_ids": []
+      },
+      "selections": [
+        {
+          "attribute": "evidence_unit_ids",
+          "selected_ids": [],
+          "refs": []
+        }
+      ]
+    },
+    {
+      "field_id": "SK01-E1",
+      "rule": "expand_selected_original_evidence_units",
+      "original_candidate": {
+        "state": "ambiguous",
+        "value": null,
+        "evidence_unit_ids": [
+          "S1.1"
+        ],
+        "scope": {
+          "subject": "self",
+          "period": "birth",
+          "relation_unit_ids": "same_as_evidence"
+        },
+        "clarifications": [
+          "period"
+        ]
+      },
+      "selections": [
+        {
+          "attribute": "evidence_unit_ids",
+          "selected_ids": [
+            "S1.1"
+          ],
+          "refs": [
+            {
+              "source_id": "VAC-308-E01",
+              "quote": "我是出生在江蘇省鎮江，我的祖籍是懷安縣。"
+            }
+          ]
+        },
+        {
+          "attribute": "relation_unit_ids",
+          "alias": "same_as_evidence"
+        }
+      ]
+    },
+    {
+      "field_id": "SK01-E1",
+      "rule": "expand_explicit_same_field_evidence_alias",
+      "original_candidate": {
+        "state": "ambiguous",
+        "value": null,
+        "scope": {
+          "subject": "self",
+          "period": "birth",
+          "relation_evidence": "same_as_evidence"
+        },
+        "clarifications": [
+          "period"
+        ],
+        "evidence": [
+          {
+            "source_id": "VAC-308-E01",
+            "quote": "我是出生在江蘇省鎮江，我的祖籍是懷安縣。"
+          }
+        ]
+      }
+    }
+  ],
+  "optional_errors": [],
+  "inactive_conditional_errors": [],
+  "unbound_material": [],
+  "provenance": {},
+  "version": "full-interview-v2.0.0",
+  "semantic_rejections": []
+}

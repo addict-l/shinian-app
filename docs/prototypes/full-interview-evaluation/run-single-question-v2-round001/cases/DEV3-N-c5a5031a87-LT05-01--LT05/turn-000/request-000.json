@@ -1,0 +1,133 @@
+{
+  "id": "DEV3-N-c5a5031a87-LT05-01--LT05-t000-a000",
+  "payload": {
+    "question_id": "LT05",
+    "main_question": "您希望后人记住自己怎样的品格？",
+    "question_context_mode": "independent",
+    "source_kind": "published_transcript",
+    "historical_question_verified": true,
+    "focus": null,
+    "field_contract": {
+      "LT05-E1": {
+        "label": "本人希望后人记住的品格或自我形象",
+        "type": "wish",
+        "question": "您希望后人记住您什么样的品格？",
+        "usable_answer": "至少一点本人愿被记住的品质或自我形象，或明确不希望/没有特别想法。在真实“希望后人记住我什么”的问答下，以如何做事/待人、服务目标描述自己也足够，不必强贴负责善良等标签。",
+        "none": true,
+        "requirement": "required",
+        "notes": "必须有本人自选的希望被记住关联；旁支行为、普通工作目标不能自动成为希望后人记住的品格。",
+        "link": null,
+        "vague": [],
+        "id": "LT05-E1",
+        "question_id": "LT05",
+        "required": true,
+        "activation": {
+          "always": true
+        },
+        "scope": {
+          "subjects": [
+            "self"
+          ],
+          "period": "lifelong",
+          "object_relation": "必须有本人自选的希望被记住关联；旁支行为、普通工作目标不能自动成为希望后人记住的品格。"
+        },
+        "allowed_states": [
+          "missing",
+          "known",
+          "unknown",
+          "declined",
+          "deferred",
+          "ambiguous",
+          "conflict",
+          "none"
+        ],
+        "semantic_role": "selected_personal_quality",
+        "answer_format": {
+          "value_type": "string"
+        }
+      },
+      "LT05-O1": {
+        "id": "LT05-O1",
+        "question_id": "LT05",
+        "label": "本人愿意补充的故事细节或原因",
+        "type": "detail",
+        "question": "您还有想补充的吗？",
+        "usable_answer": "本人自愿提供的同题补充；缺少不影响完成。",
+        "required": false,
+        "requirement": "optional",
+        "activation": {
+          "never_ask": true
+        },
+        "none": true,
+        "scope": {
+          "subjects": [
+            "self",
+            "family",
+            "other"
+          ],
+          "period": "as_stated",
+          "object_relation": "只记录本人主动补充且明确属于本题的内容。"
+        },
+        "allowed_states": [
+          "missing",
+          "known",
+          "none",
+          "unknown",
+          "declined",
+          "deferred",
+          "ambiguous"
+        ],
+        "semantic_role": "detail",
+        "answer_format": {
+          "value_type": "string"
+        }
+      }
+    },
+    "question_contract": {
+      "premise": null,
+      "success": "必要要素与实际激活的条件要素均 known 或允许的明确 none，且作用域、关系与原话依据有效；不要求可选项。",
+      "notes": "",
+      "material_type": [
+        "wish"
+      ]
+    },
+    "sources": [
+      {
+        "id": "CASA-c5a5031a-Q07",
+        "text": "最想让人记住的 : 麻醉中，让患者能睡得安宁， 术后安全苏醒。",
+        "speaker": "narrator",
+        "question_id": "LT05",
+        "question": "回首往事，您所做的最得意的事，最想让人记住的是什么？"
+      }
+    ],
+    "previous_fields": {},
+    "evidence_units": [
+      {
+        "id": "S1.1",
+        "source_id": "CASA-c5a5031a-Q07",
+        "text": "最想让人记住的 : 麻醉中，让患者能睡得安宁， 术后安全苏醒。"
+      }
+    ],
+    "task": "extract_answers_for_target_field_questions_from_recorded_material",
+    "allowed_evidence_unit_ids": [
+      "S1.1"
+    ],
+    "nonknown_protocol_example": {
+      "state": "ambiguous",
+      "value": null,
+      "evidence_unit_ids": [
+        "CHOOSE_AN_ACTUAL_ALLOWED_ID"
+      ],
+      "scope": {
+        "subject": "CHOOSE_ONE_CONTRACT_SUBJECT",
+        "period": "as_stated",
+        "relation_unit_ids": "same_as_evidence"
+      },
+      "clarifications": [
+        "referent"
+      ]
+    },
+    "literal_link_candidates": [],
+    "task_note": "main_question and field_contract define extraction targets. sources.question is a historical context for interpreting short answers, not the question to answer or summarize."
+  }
+}

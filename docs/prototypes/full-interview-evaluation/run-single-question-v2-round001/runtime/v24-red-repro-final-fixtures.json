@@ -1,0 +1,614 @@
+{
+  "runtime": "unchanged candidate27",
+  "note": "One relation fixture made explicitly about a colleague dispute rather than a potentially ambiguous work arrangement; both versions fail the same old guard. Original red record retained.",
+  "rows": [
+    {
+      "text": "我先生总骂我。",
+      "directed": false,
+      "expected": "missing",
+      "state": "missing",
+      "decision": "ask",
+      "rejections": [
+        {
+          "field_id": "FM03-E2",
+          "reason": "complaint_or_bystander_evaluation_not_interpersonal_response",
+          "retained_state": "missing_or_validated_previous"
+        }
+      ]
+    },
+    {
+      "text": "我先生总骂我。",
+      "directed": true,
+      "expected": "missing",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "我先生嫌我回家太晚，要我辞职。",
+      "directed": false,
+      "expected": "missing",
+      "state": "missing",
+      "decision": "ask",
+      "rejections": [
+        {
+          "field_id": "FM03-E2",
+          "reason": "complaint_or_bystander_evaluation_not_interpersonal_response",
+          "retained_state": "missing_or_validated_previous"
+        }
+      ]
+    },
+    {
+      "text": "我先生嫌我回家太晚，要我辞职。",
+      "directed": true,
+      "expected": "missing",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "我的先生批评我工作太忙。",
+      "directed": false,
+      "expected": "missing",
+      "state": "missing",
+      "decision": "ask",
+      "rejections": [
+        {
+          "field_id": "FM03-E2",
+          "reason": "complaint_or_bystander_evaluation_not_interpersonal_response",
+          "retained_state": "missing_or_validated_previous"
+        }
+      ]
+    },
+    {
+      "text": "我的先生批评我工作太忙。",
+      "directed": true,
+      "expected": "missing",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "丈夫总骂我。",
+      "directed": false,
+      "expected": "missing",
+      "state": "missing",
+      "decision": "ask",
+      "rejections": [
+        {
+          "field_id": "FM03-E2",
+          "reason": "complaint_or_bystander_evaluation_not_interpersonal_response",
+          "retained_state": "missing_or_validated_previous"
+        }
+      ]
+    },
+    {
+      "text": "丈夫总骂我。",
+      "directed": true,
+      "expected": "missing",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "丈夫说我不懂体谅他。",
+      "directed": false,
+      "expected": "missing",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "丈夫说我不懂体谅他。",
+      "directed": true,
+      "expected": "missing",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "他说我从不包容他。",
+      "directed": false,
+      "expected": "missing",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "他说我从不包容他。",
+      "directed": true,
+      "expected": "missing",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "他要求我向他道歉。",
+      "directed": false,
+      "expected": "missing",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "他要求我向他道歉。",
+      "directed": true,
+      "expected": "missing",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "他希望我们以后多沟通。",
+      "directed": false,
+      "expected": "missing",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "他希望我们以后多沟通。",
+      "directed": true,
+      "expected": "missing",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "他总说邻居夫妻更会沟通。",
+      "directed": false,
+      "expected": "missing",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "他总说邻居夫妻更会沟通。",
+      "directed": true,
+      "expected": "missing",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "我应该多体谅他。",
+      "directed": false,
+      "expected": "missing",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "我应该多体谅他。",
+      "directed": true,
+      "expected": "missing",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "如果我们肯好好沟通就好了。",
+      "directed": false,
+      "expected": "missing",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "如果我们肯好好沟通就好了。",
+      "directed": true,
+      "expected": "missing",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "他要我先冷静再向他认错。",
+      "directed": false,
+      "expected": "missing",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "他要我先冷静再向他认错。",
+      "directed": true,
+      "expected": "missing",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "我们经常为家务吵架。",
+      "directed": false,
+      "expected": "missing",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "我们经常为家务吵架。",
+      "directed": true,
+      "expected": "missing",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "她抱怨我不理解她。",
+      "directed": false,
+      "expected": "missing",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "她抱怨我不理解她。",
+      "directed": true,
+      "expected": "missing",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "他希望我以后体谅他，邻居却说我的花养得好。",
+      "directed": false,
+      "expected": "missing",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "他希望我以后体谅他，邻居却说我的花养得好。",
+      "directed": true,
+      "expected": "missing",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "丈夫说：“你从不体谅我，也不愿意沟通。”",
+      "directed": false,
+      "expected": "missing",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "丈夫说：“你从不体谅我，也不愿意沟通。”",
+      "directed": true,
+      "expected": "missing",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "邻居夫妻后来谈开了。",
+      "directed": false,
+      "expected": "missing",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "邻居夫妻后来谈开了。",
+      "directed": true,
+      "expected": "missing",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "我和同事之间的矛盾已经说开了。",
+      "directed": false,
+      "expected": "missing",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "我和同事之间的矛盾已经说开了。",
+      "directed": true,
+      "expected": "missing",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "他抱怨很累，我先泡茶请他坐下。",
+      "directed": false,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "他抱怨很累，我先泡茶请他坐下。",
+      "directed": true,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "我先生嫌我晚归，我就把夜班换成白班。",
+      "directed": false,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "我先生嫌我晚归，我就把夜班换成白班。",
+      "directed": true,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "他批评我花钱多，我们先各自列出必要开销。",
+      "directed": false,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "他批评我花钱多，我们先各自列出必要开销。",
+      "directed": true,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "我们先各自冷静，第二天一起商量分工。",
+      "directed": false,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "我们先各自冷静，第二天一起商量分工。",
+      "directed": true,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "他后来向我道歉。",
+      "directed": false,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "他后来向我道歉。",
+      "directed": true,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "我们谈过几次还没谈拢，现在先分开住。",
+      "directed": false,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "我们谈过几次还没谈拢，现在先分开住。",
+      "directed": true,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "一直没有解决。",
+      "directed": false,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "一直没有解决。",
+      "directed": true,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "我一直不理他。",
+      "directed": false,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "我一直不理他。",
+      "directed": true,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "后来他不再骂我了。",
+      "directed": false,
+      "expected": "known",
+      "state": "missing",
+      "decision": "ask",
+      "rejections": [
+        {
+          "field_id": "FM03-E2",
+          "reason": "complaint_or_bystander_evaluation_not_interpersonal_response",
+          "retained_state": "missing_or_validated_previous"
+        }
+      ]
+    },
+    {
+      "text": "后来他不再骂我了。",
+      "directed": true,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "我没有体谅他，还是各过各的。",
+      "directed": false,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "我没有体谅他，还是各过各的。",
+      "directed": true,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "他要求我道歉，我后来确实向他认了错。",
+      "directed": false,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "他要求我道歉，我后来确实向他认了错。",
+      "directed": true,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "他说我不懂体谅他，我就先让他休息。",
+      "directed": false,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "他说我不懂体谅他，我就先让他休息。",
+      "directed": true,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "我应该多体谅他，但没有这么做。",
+      "directed": false,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "我应该多体谅他，但没有这么做。",
+      "directed": true,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "我没有答应他的要求，后来还是各自住。",
+      "directed": false,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "我没有答应他的要求，后来还是各自住。",
+      "directed": true,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "后来我们没有再吵了。",
+      "directed": false,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "后来我们没有再吵了。",
+      "directed": true,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "我们最后决定分开。",
+      "directed": false,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "我们最后决定分开。",
+      "directed": true,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "我找朋友帮我们调解过。",
+      "directed": false,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "我找朋友帮我们调解过。",
+      "directed": true,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "先各自冷静，第二天再谈。",
+      "directed": false,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "先各自冷静，第二天再谈。",
+      "directed": true,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    }
+  ],
+  "passed": 39,
+  "checks": 72
+}

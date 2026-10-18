@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-17T18:30:36.704543+00:00",
+  "release_layout": "repo/backend/app/ai/runtime; baseline repo/docs/interview-development-baseline.md",
+  "build_exit_code": 0,
+  "contracts_byte_equal": {
+    "contracts.json": true,
+    "contracts.md": true
+  },
+  "missing_baseline_exit_code": 1,
+  "missing_baseline_error": "FileNotFoundError: interview-development-baseline.md not found in an ancestor or its docs/ directory"
+}

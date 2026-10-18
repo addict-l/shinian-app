@@ -1,0 +1,189 @@
+{
+  "id": "DEV-SOURCES-N-9ff0b2f16e-GR07-01--GR07-t000-a000",
+  "payload": {
+    "question_id": "GR07",
+    "main_question": "离开学校时您怎样设想以后的生活？",
+    "question_context_mode": "independent",
+    "source_kind": "published_transcript",
+    "historical_question_verified": true,
+    "focus": null,
+    "field_contract": {
+      "GR07-A1": {
+        "id": "GR07-A1",
+        "question_id": "GR07",
+        "label": "本题是否有求学经历",
+        "type": "applicability",
+        "question": "您有过上学的经历吗？",
+        "usable_answer": "本人明确有上学经历，或本题已讲出自己的学生经历。",
+        "required": false,
+        "requirement": "conditional",
+        "activation": {
+          "premise_check": true
+        },
+        "none": true,
+        "scope": {
+          "subjects": [
+            "self"
+          ],
+          "period": "as_stated",
+          "object_relation": "本题本人明确披露的适用经历，不能由其他题的婚育、学校或年龄推断。"
+        },
+        "allowed_states": [
+          "missing",
+          "known",
+          "none",
+          "unknown",
+          "declined",
+          "deferred",
+          "ambiguous",
+          "conflict"
+        ],
+        "semantic_role": "applicability",
+        "answer_format": {
+          "value_type": "string"
+        }
+      },
+      "GR07-E1": {
+        "label": "离校时的憧憬或规划",
+        "type": "expectation",
+        "question": "离开校园时，您对未来有过什么想法或打算？",
+        "usable_answer": "愿景或具体打算任一可用；明确当时没想过/没规划也是回答，不要求实现。",
+        "none": true,
+        "requirement": "required",
+        "notes": "",
+        "link": null,
+        "vague": [],
+        "id": "GR07-E1",
+        "question_id": "GR07",
+        "required": true,
+        "activation": {
+          "always": true
+        },
+        "scope": {
+          "subjects": [
+            "self"
+          ],
+          "period": "school_years",
+          "object_relation": "本人在本题实际问答中所指的离校时的憧憬或规划；引用须证明该关系，不从题干假定事实。"
+        },
+        "allowed_states": [
+          "missing",
+          "known",
+          "unknown",
+          "declined",
+          "deferred",
+          "ambiguous",
+          "conflict",
+          "none",
+          "not_applicable"
+        ],
+        "semantic_role": "expectation",
+        "answer_format": {
+          "value_type": "string"
+        }
+      },
+      "GR07-O1": {
+        "id": "GR07-O1",
+        "question_id": "GR07",
+        "label": "憧憬与后来经历的差别",
+        "type": "detail",
+        "question": "您还有想补充的吗？",
+        "usable_answer": "本人自愿提供的同题补充；缺少不影响完成。",
+        "required": false,
+        "requirement": "optional",
+        "activation": {
+          "never_ask": true
+        },
+        "none": true,
+        "scope": {
+          "subjects": [
+            "self",
+            "family",
+            "other"
+          ],
+          "period": "as_stated",
+          "object_relation": "只记录本人主动补充且明确属于本题的内容。"
+        },
+        "allowed_states": [
+          "missing",
+          "known",
+          "none",
+          "unknown",
+          "declined",
+          "deferred",
+          "ambiguous"
+        ],
+        "semantic_role": "detail",
+        "answer_format": {
+          "value_type": "string"
+        }
+      }
+    },
+    "question_contract": {
+      "premise": {
+        "label": "本题是否有求学经历",
+        "question": "您有过上学的经历吗？",
+        "usable": "本人明确有上学经历，或本题已讲出自己的学生经历。",
+        "negative": "本人明确没上过学，关闭本题学生经历分支。",
+        "no_premise_pattern": "没(?:有)?(?:上过|读过)学|从(?:来)?没(?:有)?(?:上|读)过?学|未(?:曾)?上过学",
+        "relation": "本题本人明确披露的适用经历，不能由其他题的婚育、学校或年龄推断。"
+      },
+      "success": "必要要素与实际激活的条件要素均 known 或允许的明确 none，且作用域、关系与原话依据有效；不要求可选项。",
+      "notes": "",
+      "material_type": [
+        "applicability",
+        "expectation"
+      ]
+    },
+    "sources": [
+      {
+        "id": "WEB-jinxiaogui-E001",
+        "text": "我是从农村出来的学生，当时记得最清楚的一句话就是“到基层去，到农村去也是在做贡献。希望大学生们积极到基层去，到国家最需要的地方去成长成才，报效祖国。在报效祖国、服务人民的过程中，实现自己的人生价值”，在习近平总书记的激励下，当时就暗暗下了一个决心：毕业之后，我要深入基层去，到祖国最需要的地方去。",
+        "speaker": "narrator",
+        "question_id": "GR07",
+        "question": "当时您在现场听到的哪一句话对您触动最大？"
+      }
+    ],
+    "previous_fields": {},
+    "evidence_units": [
+      {
+        "id": "S1.1",
+        "source_id": "WEB-jinxiaogui-E001",
+        "text": "我是从农村出来的学生，当时记得最清楚的一句话就是“到基层去，到农村去也是在做贡献。"
+      },
+      {
+        "id": "S1.2",
+        "source_id": "WEB-jinxiaogui-E001",
+        "text": "希望大学生们积极到基层去，到国家最需要的地方去成长成才，报效祖国。"
+      },
+      {
+        "id": "S1.3",
+        "source_id": "WEB-jinxiaogui-E001",
+        "text": "在报效祖国、服务人民的过程中，实现自己的人生价值”，在习近平总书记的激励下，当时就暗暗下了一个决心：毕业之后，我要深入基层去，到祖国最需要的地方去。"
+      }
+    ],
+    "task": "extract_answers_for_target_field_questions_from_recorded_material",
+    "allowed_evidence_unit_ids": [
+      "S1.1",
+      "S1.2",
+      "S1.3"
+    ],
+    "nonknown_protocol_example": {
+      "state": "ambiguous",
+      "value": null,
+      "evidence_unit_ids": [
+        "CHOOSE_AN_ACTUAL_ALLOWED_ID"
+      ],
+      "scope": {
+        "subject": "CHOOSE_ONE_CONTRACT_SUBJECT",
+        "period": "as_stated",
+        "relation_unit_ids": "same_as_evidence"
+      },
+      "clarifications": [
+        "referent"
+      ]
+    },
+    "literal_link_candidates": [],
+    "task_note": "main_question and field_contract define extraction targets. sources.question is a historical context for interpreting short answers, not the question to answer or summarize."
+  }
+}

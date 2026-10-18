@@ -1,0 +1,140 @@
+{
+  "payload": {
+    "question_id": "WK13",
+    "main_question": "这一生有什么工作成果让您引以为傲？",
+    "question_context_mode": "independent",
+    "current_question": "回首往事，您所做的最得意的事，最想让人记住的是什么？",
+    "source_kind": "published_transcript",
+    "historical_question_verified": true,
+    "focus": null,
+    "field_contract": {
+      "WK13-E1": {
+        "label": "本人最引以为傲的一项工作成绩或成果",
+        "type": "achievement",
+        "question": "这一生工作打拼，有什么成果让您最引以为傲？",
+        "usable_answer": "本人认可的一项成果或明确没有；普通劳动成果同样可用，不要求奖项或量化收入。",
+        "none": true,
+        "requirement": "required",
+        "notes": "",
+        "link": null,
+        "vague": [],
+        "id": "WK13-E1",
+        "question_id": "WK13",
+        "required": true,
+        "activation": {
+          "always": true
+        },
+        "scope": {
+          "subjects": [
+            "self"
+          ],
+          "period": "lifelong",
+          "object_relation": "本人在本题实际问答中所指的本人最引以为傲的一项工作成绩或成果；引用须证明该关系，不从题干假定事实。"
+        },
+        "allowed_states": [
+          "missing",
+          "known",
+          "unknown",
+          "declined",
+          "deferred",
+          "ambiguous",
+          "conflict",
+          "none"
+        ],
+        "semantic_role": "achievement",
+        "answer_format": {
+          "value_type": "string"
+        }
+      },
+      "WK13-O1": {
+        "id": "WK13-O1",
+        "question_id": "WK13",
+        "label": "成果的过程、意义或更多成果",
+        "type": "detail",
+        "question": "您还有想补充的吗？",
+        "usable_answer": "本人自愿提供的同题补充；缺少不影响完成。",
+        "required": false,
+        "requirement": "optional",
+        "activation": {
+          "never_ask": true
+        },
+        "none": true,
+        "scope": {
+          "subjects": [
+            "self",
+            "family",
+            "other"
+          ],
+          "period": "as_stated",
+          "object_relation": "只记录本人主动补充且明确属于本题的内容。"
+        },
+        "allowed_states": [
+          "missing",
+          "known",
+          "none",
+          "unknown",
+          "declined",
+          "deferred",
+          "ambiguous"
+        ],
+        "semantic_role": "detail",
+        "answer_format": {
+          "value_type": "string"
+        }
+      }
+    },
+    "question_contract": {
+      "premise": null,
+      "success": "必要要素与实际激活的条件要素均 known 或允许的明确 none，且作用域、关系与原话依据有效；不要求可选项。",
+      "notes": "",
+      "material_type": [
+        "achievement"
+      ]
+    },
+    "sources": [
+      {
+        "id": "CASA-c5a5031a-Q07",
+        "text": "最得意的是 20 多年临床工作至今為止无医疗亊故，有二例家属曾试度为钱财或被某些因素诱惑起诉我而无任何医学问责根底基礎 ，最终自动撤销起诉 ！",
+        "speaker": "narrator",
+        "question_id": "WK13",
+        "question": "回首往事，您所做的最得意的事，最想让人记住的是什么？"
+      }
+    ],
+    "previous_fields": {},
+    "ask_counts": {},
+    "evidence_units": [
+      {
+        "id": "S1.1",
+        "source_id": "CASA-c5a5031a-Q07",
+        "text": "最得意的是 20 多年临床工作至今為止无医疗亊故，有二例家属曾试度为钱财或被某些因素诱惑起诉我而无任何医学问责根底基礎 ，最终自动撤销起诉 ！"
+      }
+    ]
+  },
+  "proposal": {
+    "control": {
+      "action": "continue",
+      "evidence_unit_ids": []
+    },
+    "fields": {
+      "WK13-E1": {
+        "state": "known",
+        "value_unit_ids": [
+          "S1.1"
+        ],
+        "evidence_unit_ids": [
+          "S1.1"
+        ],
+        "scope": {
+          "subject": "self",
+          "period": "lifelong",
+          "relation_unit_ids": "same_as_evidence"
+        }
+      }
+    }
+  },
+  "raw_model_response": {
+    "raw_content": "{\n  \"control\": {\n    \"action\": \"continue\",\n    \"evidence_unit_ids\": []\n  },\n  \"fields\": {\n    \"WK13-E1\": {\n      \"state\": \"known\",\n      \"value_unit_ids\": [\n        \"S1.1\"\n      ],\n      \"evidence_unit_ids\": [\n        \"S1.1\"\n      ],\n      \"scope\": {\n        \"subject\": \"self\",\n        \"period\": \"lifelong\",\n        \"relation_unit_ids\": \"same_as_evidence\"\n      }\n    }\n  }\n}",
+    "parse_error": false,
+    "finish_reason": "stop"
+  }
+}

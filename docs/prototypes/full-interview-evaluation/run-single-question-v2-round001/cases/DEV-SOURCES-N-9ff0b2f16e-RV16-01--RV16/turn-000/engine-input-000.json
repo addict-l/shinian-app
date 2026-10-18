@@ -1,0 +1,140 @@
+{
+  "payload": {
+    "question_id": "RV16",
+    "main_question": "还有什么您想留给后人的心里话？",
+    "question_context_mode": "independent",
+    "current_question": "如果让您结合自己从基层信贷员一路走来的经历，对现在贵大的学生说一句话，您最想说什么？",
+    "source_kind": "published_transcript",
+    "historical_question_verified": true,
+    "focus": null,
+    "field_contract": {
+      "RV16-E1": {
+        "label": "本人想补充留下的心里话",
+        "type": "message",
+        "question": "还有什么您想留给岁月、留给后人的话？",
+        "usable_answer": "一段本人心里话即可，或明确没有补充；不要求新故事、意义或完整结构。",
+        "none": true,
+        "requirement": "required",
+        "notes": "",
+        "link": null,
+        "vague": [],
+        "id": "RV16-E1",
+        "question_id": "RV16",
+        "required": true,
+        "activation": {
+          "always": true
+        },
+        "scope": {
+          "subjects": [
+            "self"
+          ],
+          "period": "lifelong",
+          "object_relation": "本人在本题实际问答中所指的本人想补充留下的心里话；引用须证明该关系，不从题干假定事实。"
+        },
+        "allowed_states": [
+          "missing",
+          "known",
+          "unknown",
+          "declined",
+          "deferred",
+          "ambiguous",
+          "conflict",
+          "none"
+        ],
+        "semantic_role": "message",
+        "answer_format": {
+          "value_type": "string"
+        }
+      },
+      "RV16-O1": {
+        "id": "RV16-O1",
+        "question_id": "RV16",
+        "label": "本人自愿继续补充的话",
+        "type": "detail",
+        "question": "您还有想补充的吗？",
+        "usable_answer": "本人自愿提供的同题补充；缺少不影响完成。",
+        "required": false,
+        "requirement": "optional",
+        "activation": {
+          "never_ask": true
+        },
+        "none": true,
+        "scope": {
+          "subjects": [
+            "self",
+            "family",
+            "other"
+          ],
+          "period": "as_stated",
+          "object_relation": "只记录本人主动补充且明确属于本题的内容。"
+        },
+        "allowed_states": [
+          "missing",
+          "known",
+          "none",
+          "unknown",
+          "declined",
+          "deferred",
+          "ambiguous"
+        ],
+        "semantic_role": "detail",
+        "answer_format": {
+          "value_type": "string"
+        }
+      }
+    },
+    "question_contract": {
+      "premise": null,
+      "success": "必要要素与实际激活的条件要素均 known 或允许的明确 none，且作用域、关系与原话依据有效；不要求可选项。",
+      "notes": "",
+      "material_type": [
+        "message"
+      ]
+    },
+    "sources": [
+      {
+        "id": "WEB-jinxiaogui-E005",
+        "text": "我最想说的是希望师弟师妹们继续发扬贵州大学“明德至善、博学笃行”的校训精神，吃苦耐劳，到基层去磨炼去成长，在无私奉献中实现自己的人生价值。",
+        "speaker": "narrator",
+        "question_id": "RV16",
+        "question": "如果让您结合自己从基层信贷员一路走来的经历，对现在贵大的学生说一句话，您最想说什么？"
+      }
+    ],
+    "previous_fields": {},
+    "ask_counts": {},
+    "evidence_units": [
+      {
+        "id": "S1.1",
+        "source_id": "WEB-jinxiaogui-E005",
+        "text": "我最想说的是希望师弟师妹们继续发扬贵州大学“明德至善、博学笃行”的校训精神，吃苦耐劳，到基层去磨炼去成长，在无私奉献中实现自己的人生价值。"
+      }
+    ]
+  },
+  "proposal": {
+    "control": {
+      "action": "continue",
+      "evidence_unit_ids": []
+    },
+    "fields": {
+      "RV16-E1": {
+        "state": "known",
+        "value_unit_ids": [
+          "S1.1"
+        ],
+        "evidence_unit_ids": [
+          "S1.1"
+        ],
+        "scope": {
+          "subject": "self",
+          "period": "lifelong",
+          "relation_unit_ids": "same_as_evidence"
+        }
+      }
+    }
+  },
+  "raw_model_response": {
+    "raw_content": "{\n  \"control\": {\n    \"action\": \"continue\",\n    \"evidence_unit_ids\": []\n  },\n  \"fields\": {\n    \"RV16-E1\": {\n      \"state\": \"known\",\n      \"value_unit_ids\": [\n        \"S1.1\"\n      ],\n      \"evidence_unit_ids\": [\n        \"S1.1\"\n      ],\n      \"scope\": {\n        \"subject\": \"self\",\n        \"period\": \"lifelong\",\n        \"relation_unit_ids\": \"same_as_evidence\"\n      }\n    }\n  }\n}",
+    "parse_error": false,
+    "finish_reason": "stop"
+  }
+}

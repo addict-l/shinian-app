@@ -1,0 +1,86 @@
+{
+  "count": 10,
+  "pass": 10,
+  "observations": [
+    {
+      "text": "我们商量过后觉得还有希望。",
+      "directed": false,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "我们商量过后觉得还有希望。",
+      "directed": true,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "我先问她为什么抱怨，然后一起商量了分工。",
+      "directed": false,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "我先问她为什么抱怨，然后一起商量了分工。",
+      "directed": true,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "我向他解释我为什么不愿意辞职。",
+      "directed": false,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "我向他解释我为什么不愿意辞职。",
+      "directed": true,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "我劝她不要再责怪自己。",
+      "directed": false,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "我劝她不要再责怪自己。",
+      "directed": true,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "我跟他说：“咱们先冷静一下。”",
+      "directed": false,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    },
+    {
+      "text": "我跟他说：“咱们先冷静一下。”",
+      "directed": true,
+      "expected": "known",
+      "state": "known",
+      "decision": "ask",
+      "rejections": []
+    }
+  ]
+}

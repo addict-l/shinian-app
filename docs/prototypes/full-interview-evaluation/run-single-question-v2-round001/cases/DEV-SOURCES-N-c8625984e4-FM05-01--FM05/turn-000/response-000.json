@@ -1,0 +1,326 @@
+{
+  "kind": "model_call",
+  "id": "DEV-SOURCES-N-c8625984e4-FM05-01--FM05-t000-a000",
+  "input": {
+    "question_id": "FM05",
+    "main_question": "教育子女时您最看重什么？",
+    "question_context_mode": "independent",
+    "source_kind": "published_transcript",
+    "historical_question_verified": true,
+    "focus": null,
+    "field_contract": {
+      "FM05-A1": {
+        "id": "FM05-A1",
+        "question_id": "FM05",
+        "label": "本题是否有养育子女经历",
+        "type": "applicability",
+        "question": "您有过养育子女的经历吗？",
+        "usable_answer": "亲生、收养或实际养育都可，以本人本题表述为准。",
+        "required": false,
+        "requirement": "conditional",
+        "activation": {
+          "premise_check": true
+        },
+        "none": true,
+        "scope": {
+          "subjects": [
+            "self"
+          ],
+          "period": "as_stated",
+          "object_relation": "本题本人明确披露的适用经历，不能由其他题的婚育、学校或年龄推断。"
+        },
+        "allowed_states": [
+          "missing",
+          "known",
+          "none",
+          "unknown",
+          "declined",
+          "deferred",
+          "ambiguous",
+          "conflict"
+        ],
+        "semantic_role": "applicability",
+        "answer_format": {
+          "value_type": "string"
+        }
+      },
+      "FM05-E1": {
+        "label": "本人对子女的教育理念",
+        "type": "view",
+        "question": "对子女的教育，您最看重什么？",
+        "usable_answer": "一句本人理念、做法或明确没有固定理念；不收成父母当年对本人的教育。",
+        "none": true,
+        "requirement": "required",
+        "notes": "教育者是本人，教育对象是本人实际养育的子女，方向与 SK04 相反。",
+        "link": null,
+        "vague": [],
+        "id": "FM05-E1",
+        "question_id": "FM05",
+        "required": true,
+        "activation": {
+          "always": true
+        },
+        "scope": {
+          "subjects": [
+            "self",
+            "children"
+          ],
+          "period": "adulthood",
+          "object_relation": "教育者是本人，教育对象是本人实际养育的子女，方向与 SK04 相反。"
+        },
+        "allowed_states": [
+          "missing",
+          "known",
+          "unknown",
+          "declined",
+          "deferred",
+          "ambiguous",
+          "conflict",
+          "none",
+          "not_applicable"
+        ],
+        "semantic_role": "view",
+        "answer_format": {
+          "value_type": "string"
+        }
+      },
+      "FM05-E2": {
+        "label": "本人希望子女成为什么样的人",
+        "type": "person_expectation",
+        "question": "您希望孩子以后成为什么样的人？",
+        "usable_answer": "本人对孩子品格、人生或生活方式的期望，或明确没设期望；一次考试成绩、名次等单项学习要求不是其未来人格/人生期望，不能由教育做法自动代填。",
+        "none": true,
+        "requirement": "conditional",
+        "notes": "",
+        "link": null,
+        "vague": [],
+        "id": "FM05-E2",
+        "question_id": "FM05",
+        "required": false,
+        "activation": {
+          "after_answer": [
+            "FM05-E1"
+          ]
+        },
+        "scope": {
+          "subjects": [
+            "self",
+            "children"
+          ],
+          "period": "adulthood",
+          "object_relation": "本人在本题实际问答中所指的本人希望子女成为什么样的人；引用须证明该关系，不从题干假定事实。"
+        },
+        "allowed_states": [
+          "missing",
+          "known",
+          "unknown",
+          "declined",
+          "deferred",
+          "ambiguous",
+          "conflict",
+          "none",
+          "not_applicable"
+        ],
+        "semantic_role": "child_personhood_expectation",
+        "answer_format": {
+          "value_type": "string"
+        }
+      },
+      "FM05-O1": {
+        "id": "FM05-O1",
+        "question_id": "FM05",
+        "label": "本人愿意补充的教育片段",
+        "type": "detail",
+        "question": "您还有想补充的吗？",
+        "usable_answer": "本人自愿提供的同题补充；缺少不影响完成。",
+        "required": false,
+        "requirement": "optional",
+        "activation": {
+          "never_ask": true
+        },
+        "none": true,
+        "scope": {
+          "subjects": [
+            "self",
+            "family",
+            "other"
+          ],
+          "period": "as_stated",
+          "object_relation": "只记录本人主动补充且明确属于本题的内容。"
+        },
+        "allowed_states": [
+          "missing",
+          "known",
+          "none",
+          "unknown",
+          "declined",
+          "deferred",
+          "ambiguous"
+        ],
+        "semantic_role": "detail",
+        "answer_format": {
+          "value_type": "string"
+        }
+      }
+    },
+    "question_contract": {
+      "premise": {
+        "label": "本题是否有养育子女经历",
+        "question": "您有过养育子女的经历吗？",
+        "usable": "亲生、收养或实际养育都可，以本人本题表述为准。",
+        "negative": "本人明确没有子女且无养育经历，关闭养育分支；不推断婚姻或生育原因。",
+        "no_premise_pattern": "没(?:有|过)?(?:子女|孩子|养育过孩子)|从未养育|没有养育经历",
+        "relation": "本题本人明确披露的适用经历，不能由其他题的婚育、学校或年龄推断。"
+      },
+      "success": "必要要素与实际激活的条件要素均 known 或允许的明确 none，且作用域、关系与原话依据有效；不要求可选项。",
+      "notes": "",
+      "material_type": [
+        "applicability",
+        "person_expectation",
+        "view"
+      ]
+    },
+    "sources": [
+      {
+        "id": "CASA-c8625984-Q08",
+        "text": "学习工作再学习，不知不觉来美 35 年，要说我最得意的事情便是教导我的孩子们学习好中文， 了解中国传统文化。除了每周末上中文学校，很简单的办法是进家门后只许说中文。记得 2010 年带他们回国探亲。 说上一口流利的普通话欺骗好多人。 很多朋友不相信他们是在美国长大。我也为他们感到自豪。",
+        "speaker": "narrator",
+        "question_id": "FM05",
+        "question": "回首往事，您所做的最得意的事，最想让人记住的是什么？给年轻人的寄语是什么？"
+      }
+    ],
+    "previous_fields": {},
+    "evidence_units": [
+      {
+        "id": "S1.1",
+        "source_id": "CASA-c8625984-Q08",
+        "text": "学习工作再学习，不知不觉来美 35 年，要说我最得意的事情便是教导我的孩子们学习好中文， 了解中国传统文化。"
+      },
+      {
+        "id": "S1.2",
+        "source_id": "CASA-c8625984-Q08",
+        "text": "除了每周末上中文学校，很简单的办法是进家门后只许说中文。"
+      },
+      {
+        "id": "S1.3",
+        "source_id": "CASA-c8625984-Q08",
+        "text": "记得 2010 年带他们回国探亲。"
+      },
+      {
+        "id": "S1.4",
+        "source_id": "CASA-c8625984-Q08",
+        "text": " 说上一口流利的普通话欺骗好多人。"
+      },
+      {
+        "id": "S1.5",
+        "source_id": "CASA-c8625984-Q08",
+        "text": " 很多朋友不相信他们是在美国长大。"
+      },
+      {
+        "id": "S1.6",
+        "source_id": "CASA-c8625984-Q08",
+        "text": "我也为他们感到自豪。"
+      }
+    ],
+    "task": "extract_answers_for_target_field_questions_from_recorded_material",
+    "allowed_evidence_unit_ids": [
+      "S1.1",
+      "S1.2",
+      "S1.3",
+      "S1.4",
+      "S1.5",
+      "S1.6"
+    ],
+    "nonknown_protocol_example": {
+      "state": "ambiguous",
+      "value": null,
+      "evidence_unit_ids": [
+        "CHOOSE_AN_ACTUAL_ALLOWED_ID"
+      ],
+      "scope": {
+        "subject": "CHOOSE_ONE_CONTRACT_SUBJECT",
+        "period": "as_stated",
+        "relation_unit_ids": "same_as_evidence"
+      },
+      "clarifications": [
+        "referent"
+      ]
+    },
+    "literal_link_candidates": [],
+    "task_note": "main_question and field_contract define extraction targets. sources.question is a historical context for interpreting short answers, not the question to answer or summarize."
+  },
+  "output": {
+    "control": {
+      "action": "continue",
+      "evidence_unit_ids": []
+    },
+    "fields": {
+      "FM05-A1": {
+        "state": "known",
+        "value_unit_ids": [
+          "S1.1",
+          "S1.2"
+        ],
+        "evidence_unit_ids": [
+          "S1.1",
+          "S1.2"
+        ],
+        "scope": {
+          "subject": "self",
+          "period": "as_stated",
+          "relation_unit_ids": "same_as_evidence"
+        }
+      },
+      "FM05-E1": {
+        "state": "known",
+        "value_unit_ids": [
+          "S1.1",
+          "S1.2"
+        ],
+        "evidence_unit_ids": [
+          "S1.1",
+          "S1.2"
+        ],
+        "scope": {
+          "subject": "self",
+          "period": "adulthood",
+          "relation_unit_ids": "same_as_evidence"
+        }
+      },
+      "FM05-E2": {
+        "state": "known",
+        "value_unit_ids": [
+          "S1.1"
+        ],
+        "evidence_unit_ids": [
+          "S1.1"
+        ],
+        "scope": {
+          "subject": "self",
+          "period": "adulthood",
+          "relation_unit_ids": "same_as_evidence"
+        }
+      }
+    }
+  },
+  "raw_content": "{\n  \"control\": {\n    \"action\": \"continue\",\n    \"evidence_unit_ids\": []\n  },\n  \"fields\": {\n    \"FM05-A1\": {\n      \"state\": \"known\",\n      \"value_unit_ids\": [\n        \"S1.1\",\n        \"S1.2\"\n      ],\n      \"evidence_unit_ids\": [\n        \"S1.1\",\n        \"S1.2\"\n      ],\n      \"scope\": {\n        \"subject\": \"self\",\n        \"period\": \"as_stated\",\n        \"relation_unit_ids\": \"same_as_evidence\"\n      }\n    },\n    \"FM05-E1\": {\n      \"state\": \"known\",\n      \"value_unit_ids\": [\n        \"S1.1\",\n        \"S1.2\"\n      ],\n      \"evidence_unit_ids\": [\n        \"S1.1\",\n        \"S1.2\"\n      ],\n      \"scope\": {\n        \"subject\": \"self\",\n        \"period\": \"adulthood\",\n        \"relation_unit_ids\": \"same_as_evidence\"\n      }\n    },\n    \"FM05-E2\": {\n      \"state\": \"known\",\n      \"value_unit_ids\": [\n        \"S1.1\"\n      ],\n      \"evidence_unit_ids\": [\n        \"S1.1\"\n      ],\n      \"scope\": {\n        \"subject\": \"self\",\n        \"period\": \"adulthood\",\n        \"relation_unit_ids\": \"same_as_evidence\"\n      }\n    }\n  }\n}",
+  "parse_error": false,
+  "seconds": 2.789,
+  "usage": {
+    "prompt_tokens": 3781,
+    "completion_tokens": 308,
+    "total_tokens": 4089,
+    "prompt_tokens_details": {
+      "cached_tokens": 1920
+    },
+    "prompt_cache_hit_tokens": 1920,
+    "prompt_cache_miss_tokens": 1861
+  },
+  "finish_reason": "stop",
+  "response_model": "deepseek-v4-pro",
+  "provider_settings": {
+    "model": "deepseek-v4-pro",
+    "thinking": "disabled",
+    "max_tokens": 16384
+  }
+}

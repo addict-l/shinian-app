@@ -1,0 +1,2210 @@
+{
+  "scope": "Offline saved-input code counterfactual only; no new DS calls, no full pipeline re-execution, no acceptance or DS accuracy claim.",
+  "no_model_calls": true,
+  "run": "/Users/student03/Documents/ChatGPT/ai memory/docs/prototypes/full-interview-evaluation/run-v1.28-three-round007",
+  "engine": "/Users/student03/Documents/ChatGPT/ai memory/docs/prototypes/full-interview-v1/candidate33-stage-search/engine.js",
+  "engine_sha256": "8ed3ee55511fedf70cf64ac51849168213c36ab9cb5202e97487ada441d295f6",
+  "version": "full-interview-v1.29.0",
+  "rows": [
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.28-three-round007/cases/DEV-N-3776254214-FM07-01/turn-000/engine-input-000-review.json",
+      "question_id": "FM07",
+      "before": {
+        "decision": "ask",
+        "target": "FM07-E1",
+        "errors": [],
+        "fields": {
+          "FM07-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "FM07-E2": {
+            "state": "missing",
+            "value": null
+          },
+          "FM07-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "FM07-E1",
+        "errors": [],
+        "fields": {
+          "FM07-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "FM07-E2": {
+            "state": "missing",
+            "value": null
+          },
+          "FM07-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.28-three-round007/cases/DEV-N-9c32d8b7c1-GR05-01/turn-000/engine-input-000-review.json",
+      "question_id": "GR05",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "GR05-E1": {
+            "state": "known",
+            "value": "家裡務農，因為我是身為老大，我家還有三個弟弟，兩個妹妹，那時候呢！民國30年代，就是生活比較辛苦",
+            "scope": {
+              "subject": "self",
+              "period": "school_years",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-133-E01",
+                  "quote": "家裡務農，因為我是身為老大，我家還有三個弟弟，兩個妹妹，那時候呢！民國30年代，就是生活比較辛苦，初中畢業以後，因為弟妹眾多，就沒有辦法再繼續求學。"
+                }
+              ]
+            }
+          },
+          "GR05-E2": {
+            "state": "known",
+            "value": "初中畢業以後，因為弟妹眾多，就沒有辦法再繼續求學。",
+            "scope": {
+              "subject": "self",
+              "period": "school_years",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-133-E01",
+                  "quote": "民國30年代，就是生活比較辛苦，初中畢業以後，因為弟妹眾多，就沒有辦法再繼續求學。"
+                }
+              ]
+            }
+          },
+          "GR05-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "GR05-E1": {
+            "state": "known",
+            "value": "家裡務農，因為我是身為老大，我家還有三個弟弟，兩個妹妹，那時候呢！民國30年代，就是生活比較辛苦",
+            "scope": {
+              "subject": "self",
+              "period": "school_years",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-133-E01",
+                  "quote": "家裡務農，因為我是身為老大，我家還有三個弟弟，兩個妹妹，那時候呢！民國30年代，就是生活比較辛苦，初中畢業以後，因為弟妹眾多，就沒有辦法再繼續求學。"
+                }
+              ]
+            }
+          },
+          "GR05-E2": {
+            "state": "known",
+            "value": "初中畢業以後，因為弟妹眾多，就沒有辦法再繼續求學。",
+            "scope": {
+              "subject": "self",
+              "period": "school_years",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-133-E01",
+                  "quote": "民國30年代，就是生活比較辛苦，初中畢業以後，因為弟妹眾多，就沒有辦法再繼續求學。"
+                }
+              ]
+            }
+          },
+          "GR05-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.28-three-round007/cases/DEV-N-9c32d8b7c1-WK01-01/turn-000/engine-input-000-review.json",
+      "question_id": "WK01",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "WK01-E1": {
+            "state": "known",
+            "value": "最初我在糖廠實驗室當臨時工",
+            "scope": {
+              "subject": "self",
+              "period": "youth",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-133-E01",
+                  "quote": "民國30年代，就是生活比較辛苦，初中畢業以後，因為弟妹眾多，就沒有辦法再繼續求學。最初我在糖廠實驗室當臨時工，結果有一天看到報紙，要招考女青年工作大隊，我就跟另外兩個同學，就跑到高雄去報考，結果沒想到錄取了。"
+                }
+              ]
+            }
+          },
+          "WK01-E2": {
+            "state": "known",
+            "value": "初中畢業以後，因為弟妹眾多，就沒有辦法再繼續求學",
+            "scope": {
+              "subject": "self",
+              "period": "youth",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-133-E01",
+                  "quote": "民國30年代，就是生活比較辛苦，初中畢業以後，因為弟妹眾多，就沒有辦法再繼續求學。最初我在糖廠實驗室當臨時工，結果有一天看到報紙，要招考女青年工作大隊，我就跟另外兩個同學，就跑到高雄去報考，結果沒想到錄取了。"
+                }
+              ]
+            },
+            "links": [
+              {
+                "field_id": "WK01-E1",
+                "value": "最初我在糖廠實驗室當臨時工"
+              }
+            ]
+          },
+          "WK01-O1": {
+            "state": "known",
+            "value": "有一天看到報紙，要招考女青年工作大隊，我就跟另外兩個同學，就跑到高雄去報考，結果沒想到錄取了。當時父母親都極力的反對，由於當時的情況比較保守，一個女孩子就要遠離家鄉到外去謀生的話，父母親大部分不願意，而且這個女青年工作大隊的工作比較特殊，要到部隊裡做文教工作，所以說雖然反對，可是因為有另外有兩個同學一起，所以三個人就毅然決然地就北上到女青年工作大隊，去報到。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-133-E01",
+                  "quote": "最初我在糖廠實驗室當臨時工，結果有一天看到報紙，要招考女青年工作大隊，我就跟另外兩個同學，就跑到高雄去報考，結果沒想到錄取了。當時父母親都極力的反對，由於當時的情況比較保守，一個女孩子就要遠離家鄉到外去謀生的話，父母親大部分不願意，而且這個女青年工作大隊的工作比較特殊，要到部隊裡做文教工作，所以說雖然反對，可是因為有另外有兩個同學一起，所以三個人就毅然決然地就北上到女青年工作大隊，去報到。"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "WK01-E1": {
+            "state": "known",
+            "value": "最初我在糖廠實驗室當臨時工",
+            "scope": {
+              "subject": "self",
+              "period": "youth",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-133-E01",
+                  "quote": "民國30年代，就是生活比較辛苦，初中畢業以後，因為弟妹眾多，就沒有辦法再繼續求學。最初我在糖廠實驗室當臨時工，結果有一天看到報紙，要招考女青年工作大隊，我就跟另外兩個同學，就跑到高雄去報考，結果沒想到錄取了。"
+                }
+              ]
+            }
+          },
+          "WK01-E2": {
+            "state": "known",
+            "value": "初中畢業以後，因為弟妹眾多，就沒有辦法再繼續求學",
+            "scope": {
+              "subject": "self",
+              "period": "youth",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-133-E01",
+                  "quote": "民國30年代，就是生活比較辛苦，初中畢業以後，因為弟妹眾多，就沒有辦法再繼續求學。最初我在糖廠實驗室當臨時工，結果有一天看到報紙，要招考女青年工作大隊，我就跟另外兩個同學，就跑到高雄去報考，結果沒想到錄取了。"
+                }
+              ]
+            },
+            "links": [
+              {
+                "field_id": "WK01-E1",
+                "value": "最初我在糖廠實驗室當臨時工"
+              }
+            ]
+          },
+          "WK01-O1": {
+            "state": "known",
+            "value": "有一天看到報紙，要招考女青年工作大隊，我就跟另外兩個同學，就跑到高雄去報考，結果沒想到錄取了。當時父母親都極力的反對，由於當時的情況比較保守，一個女孩子就要遠離家鄉到外去謀生的話，父母親大部分不願意，而且這個女青年工作大隊的工作比較特殊，要到部隊裡做文教工作，所以說雖然反對，可是因為有另外有兩個同學一起，所以三個人就毅然決然地就北上到女青年工作大隊，去報到。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-133-E01",
+                  "quote": "最初我在糖廠實驗室當臨時工，結果有一天看到報紙，要招考女青年工作大隊，我就跟另外兩個同學，就跑到高雄去報考，結果沒想到錄取了。當時父母親都極力的反對，由於當時的情況比較保守，一個女孩子就要遠離家鄉到外去謀生的話，父母親大部分不願意，而且這個女青年工作大隊的工作比較特殊，要到部隊裡做文教工作，所以說雖然反對，可是因為有另外有兩個同學一起，所以三個人就毅然決然地就北上到女青年工作大隊，去報到。"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.28-three-round007/cases/DEV-N-9c32d8b7c1-WK01-01/turn-001/engine-input-000-review.json",
+      "question_id": "WK01",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "WK01-E1": {
+            "state": "known",
+            "value": "最初我在糖廠實驗室當臨時工",
+            "scope": {
+              "subject": "self",
+              "period": "youth",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-133-E01",
+                  "quote": "民國30年代，就是生活比較辛苦，初中畢業以後，因為弟妹眾多，就沒有辦法再繼續求學。最初我在糖廠實驗室當臨時工，結果有一天看到報紙，要招考女青年工作大隊，我就跟另外兩個同學，就跑到高雄去報考，結果沒想到錄取了。"
+                }
+              ]
+            }
+          },
+          "WK01-E2": {
+            "state": "known",
+            "value": "初中畢業以後，因為弟妹眾多，就沒有辦法再繼續求學",
+            "scope": {
+              "subject": "self",
+              "period": "youth",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-133-E01",
+                  "quote": "民國30年代，就是生活比較辛苦，初中畢業以後，因為弟妹眾多，就沒有辦法再繼續求學。最初我在糖廠實驗室當臨時工，結果有一天看到報紙，要招考女青年工作大隊，我就跟另外兩個同學，就跑到高雄去報考，結果沒想到錄取了。"
+                }
+              ]
+            },
+            "links": [
+              {
+                "field_id": "WK01-E1",
+                "value": "最初我在糖廠實驗室當臨時工"
+              }
+            ]
+          },
+          "WK01-O1": {
+            "state": "known",
+            "value": "有一天看到報紙，要招考女青年工作大隊，我就跟另外兩個同學，就跑到高雄去報考，結果沒想到錄取了。當時父母親都極力的反對，由於當時的情況比較保守，一個女孩子就要遠離家鄉到外去謀生的話，父母親大部分不願意，而且這個女青年工作大隊的工作比較特殊，要到部隊裡做文教工作，所以說雖然反對，可是因為有另外有兩個同學一起，所以三個人就毅然決然地就北上到女青年工作大隊，去報到。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-133-E01",
+                  "quote": "最初我在糖廠實驗室當臨時工，結果有一天看到報紙，要招考女青年工作大隊，我就跟另外兩個同學，就跑到高雄去報考，結果沒想到錄取了。當時父母親都極力的反對，由於當時的情況比較保守，一個女孩子就要遠離家鄉到外去謀生的話，父母親大部分不願意，而且這個女青年工作大隊的工作比較特殊，要到部隊裡做文教工作，所以說雖然反對，可是因為有另外有兩個同學一起，所以三個人就毅然決然地就北上到女青年工作大隊，去報到。"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "WK01-E1": {
+            "state": "known",
+            "value": "最初我在糖廠實驗室當臨時工",
+            "scope": {
+              "subject": "self",
+              "period": "youth",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-133-E01",
+                  "quote": "民國30年代，就是生活比較辛苦，初中畢業以後，因為弟妹眾多，就沒有辦法再繼續求學。最初我在糖廠實驗室當臨時工，結果有一天看到報紙，要招考女青年工作大隊，我就跟另外兩個同學，就跑到高雄去報考，結果沒想到錄取了。"
+                }
+              ]
+            }
+          },
+          "WK01-E2": {
+            "state": "known",
+            "value": "初中畢業以後，因為弟妹眾多，就沒有辦法再繼續求學",
+            "scope": {
+              "subject": "self",
+              "period": "youth",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-133-E01",
+                  "quote": "民國30年代，就是生活比較辛苦，初中畢業以後，因為弟妹眾多，就沒有辦法再繼續求學。最初我在糖廠實驗室當臨時工，結果有一天看到報紙，要招考女青年工作大隊，我就跟另外兩個同學，就跑到高雄去報考，結果沒想到錄取了。"
+                }
+              ]
+            },
+            "links": [
+              {
+                "field_id": "WK01-E1",
+                "value": "最初我在糖廠實驗室當臨時工"
+              }
+            ]
+          },
+          "WK01-O1": {
+            "state": "known",
+            "value": "有一天看到報紙，要招考女青年工作大隊，我就跟另外兩個同學，就跑到高雄去報考，結果沒想到錄取了。當時父母親都極力的反對，由於當時的情況比較保守，一個女孩子就要遠離家鄉到外去謀生的話，父母親大部分不願意，而且這個女青年工作大隊的工作比較特殊，要到部隊裡做文教工作，所以說雖然反對，可是因為有另外有兩個同學一起，所以三個人就毅然決然地就北上到女青年工作大隊，去報到。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-133-E01",
+                  "quote": "最初我在糖廠實驗室當臨時工，結果有一天看到報紙，要招考女青年工作大隊，我就跟另外兩個同學，就跑到高雄去報考，結果沒想到錄取了。當時父母親都極力的反對，由於當時的情況比較保守，一個女孩子就要遠離家鄉到外去謀生的話，父母親大部分不願意，而且這個女青年工作大隊的工作比較特殊，要到部隊裡做文教工作，所以說雖然反對，可是因為有另外有兩個同學一起，所以三個人就毅然決然地就北上到女青年工作大隊，去報到。"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.28-three-round007/cases/DEV-N-9c32d8b7c1-WK06-01/turn-000/engine-input-000-review.json",
+      "question_id": "WK06",
+      "before": {
+        "decision": "ask",
+        "target": "WK06-E1",
+        "errors": [],
+        "fields": {
+          "WK06-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "WK06-E2": {
+            "state": "known",
+            "value": "我們有很多那個同學啊！就像現在我們，從那時候受訓到現在，我們都一直都有連絡，都每年都在聚會",
+            "scope": {
+              "subject": "self",
+              "period": "youth",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-134-E02",
+                  "quote": "我們有很多那個同學啊！就像現在我們，從那時候受訓到現在，我們都一直都有連絡，都每年都在聚會，大家退伍了以後，我們成立了一個女青年工作聯誼會，這個聯誼會每年都辦一次活動，這個幹事就是張秋香，那會長是陳雪美第一任，第二任就是張海萍。"
+                }
+              ]
+            }
+          },
+          "WK06-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "WK06-E1",
+        "errors": [],
+        "fields": {
+          "WK06-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "WK06-E2": {
+            "state": "known",
+            "value": "我們有很多那個同學啊！就像現在我們，從那時候受訓到現在，我們都一直都有連絡，都每年都在聚會",
+            "scope": {
+              "subject": "self",
+              "period": "youth",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-134-E02",
+                  "quote": "我們有很多那個同學啊！就像現在我們，從那時候受訓到現在，我們都一直都有連絡，都每年都在聚會，大家退伍了以後，我們成立了一個女青年工作聯誼會，這個聯誼會每年都辦一次活動，這個幹事就是張秋香，那會長是陳雪美第一任，第二任就是張海萍。"
+                }
+              ]
+            }
+          },
+          "WK06-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.28-three-round007/cases/DEV-N-cd7326e590-GR01-01/turn-000/engine-input-000-review.json",
+      "question_id": "GR01",
+      "before": {
+        "decision": "ask",
+        "target": "GR01-E1",
+        "errors": [],
+        "fields": {
+          "GR01-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "GR01-E2": {
+            "state": "known",
+            "value": "一開始上學還正常，後來躲日本兵，一天到晚往外跑，就沒辦法讀了。",
+            "scope": {
+              "subject": "self",
+              "period": "school_years",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-205-E03",
+                  "quote": "一開始上學還正常，後來躲日本兵，一天到晚往外跑，就沒辦法讀了。"
+                }
+              ]
+            }
+          },
+          "GR01-E3": {
+            "state": "known",
+            "value": "後來躲日本兵，一天到晚往外跑，就沒辦法讀了。",
+            "scope": {
+              "subject": "self",
+              "period": "school_years",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-205-E03",
+                  "quote": "一開始上學還正常，後來躲日本兵，一天到晚往外跑，就沒辦法讀了。"
+                }
+              ]
+            }
+          },
+          "GR01-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "GR01-E1",
+        "errors": [],
+        "fields": {
+          "GR01-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "GR01-E2": {
+            "state": "known",
+            "value": "一開始上學還正常，後來躲日本兵，一天到晚往外跑，就沒辦法讀了。",
+            "scope": {
+              "subject": "self",
+              "period": "school_years",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-205-E03",
+                  "quote": "一開始上學還正常，後來躲日本兵，一天到晚往外跑，就沒辦法讀了。"
+                }
+              ]
+            }
+          },
+          "GR01-E3": {
+            "state": "known",
+            "value": "後來躲日本兵，一天到晚往外跑，就沒辦法讀了。",
+            "scope": {
+              "subject": "self",
+              "period": "school_years",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-205-E03",
+                  "quote": "一開始上學還正常，後來躲日本兵，一天到晚往外跑，就沒辦法讀了。"
+                }
+              ]
+            }
+          },
+          "GR01-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.28-three-round007/cases/DEV-N-cd7326e590-SK01-01/turn-000/engine-input-000-review.json",
+      "question_id": "SK01",
+      "before": {
+        "decision": "ask",
+        "target": "SK01-E2",
+        "errors": [],
+        "fields": {
+          "SK01-E1": {
+            "state": "known",
+            "value": "民國9年7月15日",
+            "scope": {
+              "subject": "self",
+              "period": "birth",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-205-E01",
+                  "quote": "我出生於民國9年7月15日，江蘇邳州人。"
+                }
+              ]
+            },
+            "precision": "day"
+          },
+          "SK01-E2": {
+            "state": "missing",
+            "value": null
+          },
+          "SK01-E3.place": {
+            "state": "known",
+            "value": "趙頓車站城子河後老莊",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-205-E01",
+                  "quote": "我家是在鄉下，但是交通很方便，在趙頓車站城子河後老莊。"
+                }
+              ]
+            }
+          },
+          "SK01-E3.period": {
+            "state": "missing",
+            "value": null
+          },
+          "SK01-E4": {
+            "state": "known",
+            "value": "我家是在鄉下，但是交通很方便，在趙頓車站城子河後老莊。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-205-E01",
+                  "quote": "我家是在鄉下，但是交通很方便，在趙頓車站城子河後老莊。"
+                }
+              ]
+            }
+          },
+          "SK01-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "SK01-E2",
+        "errors": [],
+        "fields": {
+          "SK01-E1": {
+            "state": "known",
+            "value": "民國9年7月15日",
+            "scope": {
+              "subject": "self",
+              "period": "birth",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-205-E01",
+                  "quote": "我出生於民國9年7月15日，江蘇邳州人。"
+                }
+              ]
+            },
+            "precision": "day"
+          },
+          "SK01-E2": {
+            "state": "missing",
+            "value": null
+          },
+          "SK01-E3.place": {
+            "state": "known",
+            "value": "趙頓車站城子河後老莊",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-205-E01",
+                  "quote": "我家是在鄉下，但是交通很方便，在趙頓車站城子河後老莊。"
+                }
+              ]
+            }
+          },
+          "SK01-E3.period": {
+            "state": "missing",
+            "value": null
+          },
+          "SK01-E4": {
+            "state": "known",
+            "value": "我家是在鄉下，但是交通很方便，在趙頓車站城子河後老莊。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-205-E01",
+                  "quote": "我家是在鄉下，但是交通很方便，在趙頓車站城子河後老莊。"
+                }
+              ]
+            }
+          },
+          "SK01-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.28-three-round007/cases/DEV-N-cd7326e590-SK03-01/turn-000/engine-input-000-review.json",
+      "question_id": "SK03",
+      "before": {
+        "decision": "ask",
+        "target": "SK03-E1",
+        "errors": [],
+        "fields": {
+          "SK03-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "SK03-E2": {
+            "state": "known",
+            "value": "家裡經商開飯店",
+            "scope": {
+              "subject": "family",
+              "period": "childhood",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-205-E01",
+                  "quote": "我父親排行第四，家裡經商開飯店。"
+                }
+              ]
+            }
+          },
+          "SK03-E3": {
+            "state": "known",
+            "value": "我們兄弟姊妹七個，我是排行第二的男孩子，有個大哥，女孩五個。",
+            "scope": {
+              "subject": "self",
+              "period": "childhood",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-205-E01",
+                  "quote": "我們兄弟姊妹七個，我是排行第二的男孩子，有個大哥，女孩五個。"
+                }
+              ]
+            }
+          },
+          "SK03-E4": {
+            "state": "missing",
+            "value": null
+          },
+          "SK03-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "SK03-E1",
+        "errors": [],
+        "fields": {
+          "SK03-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "SK03-E2": {
+            "state": "known",
+            "value": "家裡經商開飯店",
+            "scope": {
+              "subject": "family",
+              "period": "childhood",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-205-E01",
+                  "quote": "我父親排行第四，家裡經商開飯店。"
+                }
+              ]
+            }
+          },
+          "SK03-E3": {
+            "state": "known",
+            "value": "我們兄弟姊妹七個，我是排行第二的男孩子，有個大哥，女孩五個。",
+            "scope": {
+              "subject": "self",
+              "period": "childhood",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-205-E01",
+                  "quote": "我們兄弟姊妹七個，我是排行第二的男孩子，有個大哥，女孩五個。"
+                }
+              ]
+            }
+          },
+          "SK03-E4": {
+            "state": "missing",
+            "value": null
+          },
+          "SK03-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.28-three-round007/cases/DEV-N-cd7326e590-WK09-01/turn-000/engine-input-000-review.json",
+      "question_id": "WK09",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "WK09-E1": {
+            "state": "known",
+            "value": "在檢查退伍過後，吃了一碗牛肉麵，回來就上吐下瀉，好像是急性胃腸炎，可是之後就癱瘓什麼都不能吃了。以前沒藥吃，好可憐，醫院也不讓你住，我們團長那時候親自送我到醫院，醫院都拒收，送到三軍總醫院，不收，到空軍醫院也不收，那時沒有榮總。那陣子什麼都不能吃，吃了就吐，瘦得皮包骨。",
+            "scope": {
+              "subject": "self",
+              "period": "adulthood",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-208-E01",
+                  "quote": "在檢查退伍過後，吃了一碗牛肉麵，回來就上吐下瀉，好像是急性胃腸炎，可是之後就癱瘓什麼都不能吃了。以前沒藥吃，好可憐，醫院也不讓你住，我們團長那時候親自送我到醫院，醫院都拒收，送到三軍總醫院，不收，到空軍醫院也不收，那時沒有榮總。那陣子什麼都不能吃，吃了就吐，瘦得皮包骨。"
+                }
+              ]
+            }
+          },
+          "WK09-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "WK09-E1": {
+            "state": "known",
+            "value": "在檢查退伍過後，吃了一碗牛肉麵，回來就上吐下瀉，好像是急性胃腸炎，可是之後就癱瘓什麼都不能吃了。以前沒藥吃，好可憐，醫院也不讓你住，我們團長那時候親自送我到醫院，醫院都拒收，送到三軍總醫院，不收，到空軍醫院也不收，那時沒有榮總。那陣子什麼都不能吃，吃了就吐，瘦得皮包骨。",
+            "scope": {
+              "subject": "self",
+              "period": "adulthood",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-208-E01",
+                  "quote": "在檢查退伍過後，吃了一碗牛肉麵，回來就上吐下瀉，好像是急性胃腸炎，可是之後就癱瘓什麼都不能吃了。以前沒藥吃，好可憐，醫院也不讓你住，我們團長那時候親自送我到醫院，醫院都拒收，送到三軍總醫院，不收，到空軍醫院也不收，那時沒有榮總。那陣子什麼都不能吃，吃了就吐，瘦得皮包骨。"
+                }
+              ]
+            }
+          },
+          "WK09-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.28-three-round007/cases/DEV-SOURCES-N-0b5b641466-WK11-01/turn-000/engine-input-000-review.json",
+      "question_id": "WK11",
+      "before": {
+        "decision": "ask",
+        "target": "WK11-E1",
+        "errors": [],
+        "fields": {
+          "WK11-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "WK11-E2": {
+            "state": "known",
+            "value": "但是到了40岁，尤其是近四五年世界的变化，让我对自己原来的想法有了疑问，包括现在人工智能的发展、社交媒体的泛滥，知识阶层的失语，这些东西能把我们人类带到哪个方向？其实我已经完全不确定了。这可能也是一个中年的心态，从满怀希望到比较审慎。",
+            "scope": {
+              "subject": "self",
+              "period": "middle_age",
+              "relation_evidence": [
+                {
+                  "source_id": "SUP-shuangxuetao-E001",
+                  "quote": "但是到了40岁，尤其是近四五年世界的变化，让我对自己原来的想法有了疑问，包括现在人工智能的发展、社交媒体的泛滥，知识阶层的失语，这些东西能把我们人类带到哪个方向？其实我已经完全不确定了。这可能也是一个中年的心态，从满怀希望到比较审慎。"
+                }
+              ]
+            }
+          },
+          "WK11-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "WK11-E1",
+        "errors": [],
+        "fields": {
+          "WK11-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "WK11-E2": {
+            "state": "known",
+            "value": "但是到了40岁，尤其是近四五年世界的变化，让我对自己原来的想法有了疑问，包括现在人工智能的发展、社交媒体的泛滥，知识阶层的失语，这些东西能把我们人类带到哪个方向？其实我已经完全不确定了。这可能也是一个中年的心态，从满怀希望到比较审慎。",
+            "scope": {
+              "subject": "self",
+              "period": "middle_age",
+              "relation_evidence": [
+                {
+                  "source_id": "SUP-shuangxuetao-E001",
+                  "quote": "但是到了40岁，尤其是近四五年世界的变化，让我对自己原来的想法有了疑问，包括现在人工智能的发展、社交媒体的泛滥，知识阶层的失语，这些东西能把我们人类带到哪个方向？其实我已经完全不确定了。这可能也是一个中年的心态，从满怀希望到比较审慎。"
+                }
+              ]
+            }
+          },
+          "WK11-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.28-three-round007/cases/DEV-SOURCES-N-b432740bd8-WK09-01/turn-000/engine-input-000-review.json",
+      "question_id": "WK09",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "WK09-E1": {
+            "state": "known",
+            "value": "加入軍隊是過江，到了鎮江之後就沒有辦法了，才加入軍隊。在流亡的那段時候，你不跟著軍隊會餓死的，要去哪裡吃飯啊？",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-251-E02",
+                  "quote": "加入軍隊是過江，到了鎮江之後就沒有辦法了，才加入軍隊。在流亡的那段時候，你不跟著軍隊會餓死的，要去哪裡吃飯啊？"
+                }
+              ]
+            }
+          },
+          "WK09-O1": {
+            "state": "known",
+            "value": "像揚州縣政府，這些機關在當時並沒有統一指揮機制，即使成為流亡政府也沒有待遇，也找不到人，你找他有什麼用？沒有用啊！這個狀況恐怕不是一般人所能想像的到。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-251-E02",
+                  "quote": "像揚州縣政府，這些機關在當時並沒有統一指揮機制，即使成為流亡政府也沒有待遇，也找不到人，你找他有什麼用？沒有用啊！這個狀況恐怕不是一般人所能想像的到。"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "WK09-E1": {
+            "state": "known",
+            "value": "加入軍隊是過江，到了鎮江之後就沒有辦法了，才加入軍隊。在流亡的那段時候，你不跟著軍隊會餓死的，要去哪裡吃飯啊？",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-251-E02",
+                  "quote": "加入軍隊是過江，到了鎮江之後就沒有辦法了，才加入軍隊。在流亡的那段時候，你不跟著軍隊會餓死的，要去哪裡吃飯啊？"
+                }
+              ]
+            }
+          },
+          "WK09-O1": {
+            "state": "known",
+            "value": "像揚州縣政府，這些機關在當時並沒有統一指揮機制，即使成為流亡政府也沒有待遇，也找不到人，你找他有什麼用？沒有用啊！這個狀況恐怕不是一般人所能想像的到。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-251-E02",
+                  "quote": "像揚州縣政府，這些機關在當時並沒有統一指揮機制，即使成為流亡政府也沒有待遇，也找不到人，你找他有什麼用？沒有用啊！這個狀況恐怕不是一般人所能想像的到。"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.28-three-round007/cases/DEV-SOURCES-N-fb222da48d-RV11-01/turn-000/engine-input-000-review.json",
+      "question_id": "RV11",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "RV11-E1": {
+            "state": "known",
+            "value": "人生本身就是一趟旅程，站上山顶很快乐，掉下峡谷也可以快乐啊！走路太顺了，反而没有惊喜了。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "SUP-fangli-E003",
+                  "quote": "人生本身就是一趟旅程，站上山顶很快乐，掉下峡谷也可以快乐啊！走路太顺了，反而没有惊喜了。"
+                }
+              ]
+            }
+          },
+          "RV11-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "RV11-E1": {
+            "state": "known",
+            "value": "人生本身就是一趟旅程，站上山顶很快乐，掉下峡谷也可以快乐啊！走路太顺了，反而没有惊喜了。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "SUP-fangli-E003",
+                  "quote": "人生本身就是一趟旅程，站上山顶很快乐，掉下峡谷也可以快乐啊！走路太顺了，反而没有惊喜了。"
+                }
+              ]
+            }
+          },
+          "RV11-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.28-three-round007/cases/DEV-SOURCES-N-fb222da48d-RV12-01/turn-000/engine-input-000-review.json",
+      "question_id": "RV12",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "RV12-E1": {
+            "state": "known",
+            "value": "是生命，是时间和心血。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "SUP-fangli-E001",
+                  "quote": "人这一生最珍贵的财富是什么？是生命，是时间和心血。"
+                }
+              ]
+            }
+          },
+          "RV12-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "RV12-E1": {
+            "state": "known",
+            "value": "是生命，是时间和心血。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "SUP-fangli-E001",
+                  "quote": "人这一生最珍贵的财富是什么？是生命，是时间和心血。"
+                }
+              ]
+            }
+          },
+          "RV12-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.28-three-round007/cases/DEV-STAGE-N-9c32d8b7c1-WK05-01/turn-000/engine-input-000-review.json",
+      "question_id": "WK05",
+      "before": {
+        "decision": "ask",
+        "target": "WK05-E1",
+        "errors": [],
+        "fields": {
+          "WK05-E1": {
+            "state": "ambiguous",
+            "value": null,
+            "scope": {
+              "subject": "self",
+              "period": "unspecified",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-133-E01",
+                  "quote": "民國30年代，就是生活比較辛苦，初中畢業以後，因為弟妹眾多，就沒有辦法再繼續求學。最初我在糖廠實驗室當臨時工，結果有一天看到報紙，要招考女青年工作大隊，我就跟另外兩個同學，就跑到高雄去報考，結果沒想到錄取了。當時父母親都極力的反對，由於當時的情況比較保守，一個女孩子就要遠離家鄉到外去謀生的話，父母親大部分不願意，而且這個女青年工作大隊的工作比較特殊，要到部隊裡做文教工作，所以說雖然反對，可是因為有另外有兩個同學一起，所以三個人就毅然決然地就北上到女青年工作大隊，去報到。"
+                }
+              ]
+            }
+          },
+          "WK05-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "WK05-E1",
+        "errors": [],
+        "fields": {
+          "WK05-E1": {
+            "state": "ambiguous",
+            "value": null,
+            "scope": {
+              "subject": "self",
+              "period": "unspecified",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-133-E01",
+                  "quote": "民國30年代，就是生活比較辛苦，初中畢業以後，因為弟妹眾多，就沒有辦法再繼續求學。最初我在糖廠實驗室當臨時工，結果有一天看到報紙，要招考女青年工作大隊，我就跟另外兩個同學，就跑到高雄去報考，結果沒想到錄取了。當時父母親都極力的反對，由於當時的情況比較保守，一個女孩子就要遠離家鄉到外去謀生的話，父母親大部分不願意，而且這個女青年工作大隊的工作比較特殊，要到部隊裡做文教工作，所以說雖然反對，可是因為有另外有兩個同學一起，所以三個人就毅然決然地就北上到女青年工作大隊，去報到。"
+                }
+              ]
+            }
+          },
+          "WK05-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.28-three-round007/cases/DEV-STAGE-N-9c32d8b7c1-WK05-01/turn-001/engine-input-000-review.json",
+      "question_id": "WK05",
+      "before": {
+        "decision": "ask",
+        "target": "WK05-E1",
+        "errors": [],
+        "fields": {
+          "WK05-E1": {
+            "state": "ambiguous",
+            "value": null,
+            "scope": {
+              "subject": "self",
+              "period": "unspecified",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-133-E01",
+                  "quote": "我出生於民國30年1月29日，高雄縣旗山鎮。"
+                },
+                {
+                  "source_id": "VAC-133-E01",
+                  "quote": "民國30年代，就是生活比較辛苦，初中畢業以後，因為弟妹眾多，就沒有辦法再繼續求學。最初我在糖廠實驗室當臨時工，結果有一天看到報紙，要招考女青年工作大隊，我就跟另外兩個同學，就跑到高雄去報考，結果沒想到錄取了。當時父母親都極力的反對，由於當時的情況比較保守，一個女孩子就要遠離家鄉到外去謀生的話，父母親大部分不願意，而且這個女青年工作大隊的工作比較特殊，要到部隊裡做文教工作，所以說雖然反對，可是因為有另外有兩個同學一起，所以三個人就毅然決然地就北上到女青年工作大隊，去報到。"
+                }
+              ]
+            }
+          },
+          "WK05-O1": {
+            "state": "known",
+            "value": "在女青年隊裡好像第二天還第三天，就是等到大家都報到齊了以後，就把我們送到政戰學校，政工幹校去受訓，所以我們訓練都是政戰代訓了四個月，然後再出來工作。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-133-E03",
+                  "quote": "算是說有伴就不會想家啦，比較好一點，在女青年隊裡好像第二天還第三天，就是等到大家都報到齊了以後，就把我們送到政戰學校，政工幹校去受訓，所以我們訓練都是政戰代訓了四個月，然後再出來工作。"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "WK05-E1",
+        "errors": [],
+        "fields": {
+          "WK05-E1": {
+            "state": "ambiguous",
+            "value": null,
+            "scope": {
+              "subject": "self",
+              "period": "unspecified",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-133-E01",
+                  "quote": "我出生於民國30年1月29日，高雄縣旗山鎮。"
+                },
+                {
+                  "source_id": "VAC-133-E01",
+                  "quote": "民國30年代，就是生活比較辛苦，初中畢業以後，因為弟妹眾多，就沒有辦法再繼續求學。最初我在糖廠實驗室當臨時工，結果有一天看到報紙，要招考女青年工作大隊，我就跟另外兩個同學，就跑到高雄去報考，結果沒想到錄取了。當時父母親都極力的反對，由於當時的情況比較保守，一個女孩子就要遠離家鄉到外去謀生的話，父母親大部分不願意，而且這個女青年工作大隊的工作比較特殊，要到部隊裡做文教工作，所以說雖然反對，可是因為有另外有兩個同學一起，所以三個人就毅然決然地就北上到女青年工作大隊，去報到。"
+                }
+              ]
+            }
+          },
+          "WK05-O1": {
+            "state": "known",
+            "value": "在女青年隊裡好像第二天還第三天，就是等到大家都報到齊了以後，就把我們送到政戰學校，政工幹校去受訓，所以我們訓練都是政戰代訓了四個月，然後再出來工作。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-133-E03",
+                  "quote": "算是說有伴就不會想家啦，比較好一點，在女青年隊裡好像第二天還第三天，就是等到大家都報到齊了以後，就把我們送到政戰學校，政工幹校去受訓，所以我們訓練都是政戰代訓了四個月，然後再出來工作。"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.28-three-round007/cases/DEV3-N-d3da9c100d-FM01-01/turn-000/engine-input-000-review.json",
+      "question_id": "FM01",
+      "before": {
+        "decision": "ask",
+        "target": "FM01-E1",
+        "errors": [],
+        "fields": {
+          "FM01-A1": {
+            "state": "known",
+            "value": "钱钟书知我爱面子，大家闺秀第一次挎个菜篮子出门有点难为情，特陪我同去小菜场。两人有说有笑买了菜，也见识到社会一角的众生百相。他怕我太劳累，自己关上卫生间的门悄悄洗衣服，当然洗得一塌糊涂，统统得重洗，他的体己让我感动。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-yangjiang-E002",
+                  "quote": "钱钟书知我爱面子，大家闺秀第一次挎个菜篮子出门有点难为情，特陪我同去小菜场。两人有说有笑买了菜，也见识到社会一角的众生百相。他怕我太劳累，自己关上卫生间的门悄悄洗衣服，当然洗得一塌糊涂，统统得重洗，他的体己让我感动。"
+                }
+              ]
+            }
+          },
+          "FM01-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "FM01-E2": {
+            "state": "known",
+            "value": "钱钟书知我爱面子，大家闺秀第一次挎个菜篮子出门有点难为情，特陪我同去小菜场。",
+            "scope": {
+              "subject": "self",
+              "period": "adulthood",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-yangjiang-E002",
+                  "quote": "钱钟书知我爱面子，大家闺秀第一次挎个菜篮子出门有点难为情，特陪我同去小菜场。"
+                }
+              ]
+            }
+          },
+          "FM01-E3": {
+            "state": "known",
+            "value": "两人有说有笑买了菜，也见识到社会一角的众生百相。他怕我太劳累，自己关上卫生间的门悄悄洗衣服，当然洗得一塌糊涂，统统得重洗，他的体己让我感动。",
+            "scope": {
+              "subject": "self",
+              "period": "adulthood",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-yangjiang-E002",
+                  "quote": "两人有说有笑买了菜，也见识到社会一角的众生百相。他怕我太劳累，自己关上卫生间的门悄悄洗衣服，当然洗得一塌糊涂，统统得重洗，他的体己让我感动。"
+                }
+              ]
+            }
+          },
+          "FM01-E4": {
+            "state": "known",
+            "value": "他怕我太劳累，自己关上卫生间的门悄悄洗衣服，当然洗得一塌糊涂，统统得重洗，他的体己让我感动。",
+            "scope": {
+              "subject": "self",
+              "period": "adulthood",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-yangjiang-E002",
+                  "quote": "他怕我太劳累，自己关上卫生间的门悄悄洗衣服，当然洗得一塌糊涂，统统得重洗，他的体己让我感动。"
+                }
+              ]
+            }
+          },
+          "FM01-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "FM01-E1",
+        "errors": [],
+        "fields": {
+          "FM01-A1": {
+            "state": "known",
+            "value": "钱钟书知我爱面子，大家闺秀第一次挎个菜篮子出门有点难为情，特陪我同去小菜场。两人有说有笑买了菜，也见识到社会一角的众生百相。他怕我太劳累，自己关上卫生间的门悄悄洗衣服，当然洗得一塌糊涂，统统得重洗，他的体己让我感动。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-yangjiang-E002",
+                  "quote": "钱钟书知我爱面子，大家闺秀第一次挎个菜篮子出门有点难为情，特陪我同去小菜场。两人有说有笑买了菜，也见识到社会一角的众生百相。他怕我太劳累，自己关上卫生间的门悄悄洗衣服，当然洗得一塌糊涂，统统得重洗，他的体己让我感动。"
+                }
+              ]
+            }
+          },
+          "FM01-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "FM01-E2": {
+            "state": "known",
+            "value": "钱钟书知我爱面子，大家闺秀第一次挎个菜篮子出门有点难为情，特陪我同去小菜场。",
+            "scope": {
+              "subject": "self",
+              "period": "adulthood",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-yangjiang-E002",
+                  "quote": "钱钟书知我爱面子，大家闺秀第一次挎个菜篮子出门有点难为情，特陪我同去小菜场。"
+                }
+              ]
+            }
+          },
+          "FM01-E3": {
+            "state": "known",
+            "value": "两人有说有笑买了菜，也见识到社会一角的众生百相。他怕我太劳累，自己关上卫生间的门悄悄洗衣服，当然洗得一塌糊涂，统统得重洗，他的体己让我感动。",
+            "scope": {
+              "subject": "self",
+              "period": "adulthood",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-yangjiang-E002",
+                  "quote": "两人有说有笑买了菜，也见识到社会一角的众生百相。他怕我太劳累，自己关上卫生间的门悄悄洗衣服，当然洗得一塌糊涂，统统得重洗，他的体己让我感动。"
+                }
+              ]
+            }
+          },
+          "FM01-E4": {
+            "state": "known",
+            "value": "他怕我太劳累，自己关上卫生间的门悄悄洗衣服，当然洗得一塌糊涂，统统得重洗，他的体己让我感动。",
+            "scope": {
+              "subject": "self",
+              "period": "adulthood",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-yangjiang-E002",
+                  "quote": "他怕我太劳累，自己关上卫生间的门悄悄洗衣服，当然洗得一塌糊涂，统统得重洗，他的体己让我感动。"
+                }
+              ]
+            }
+          },
+          "FM01-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.28-three-round007/cases/DEV3-N-d3da9c100d-FM06-01/turn-000/engine-input-000-review.json",
+      "question_id": "FM06",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "FM06-E1": {
+            "state": "known",
+            "value": "我以为，夫妻间最重要的是朋友关系，即使不能做知心的朋友，也该是能做得伴侣的朋友或互相尊重的伴侣。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-yangjiang-E002",
+                  "quote": "我以为，夫妻间最重要的是朋友关系，即使不能做知心的朋友，也该是能做得伴侣的朋友或互相尊重的伴侣。"
+                }
+              ]
+            }
+          },
+          "FM06-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "FM06-E1": {
+            "state": "known",
+            "value": "我以为，夫妻间最重要的是朋友关系，即使不能做知心的朋友，也该是能做得伴侣的朋友或互相尊重的伴侣。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-yangjiang-E002",
+                  "quote": "我以为，夫妻间最重要的是朋友关系，即使不能做知心的朋友，也该是能做得伴侣的朋友或互相尊重的伴侣。"
+                }
+              ]
+            }
+          },
+          "FM06-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.28-three-round007/cases/DEV3-N-d3da9c100d-LT04-01/turn-000/engine-input-000-review.json",
+      "question_id": "LT04",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "LT04-E1": {
+            "state": "known",
+            "value": "只是在物质至上的时代潮流下，想提醒年轻的朋友，男女结合最最重要的是感情，双方互相理解的程度，理解深才能互相欣赏吸引、支持和鼓励，两情相悦。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-yangjiang-E002",
+                  "quote": "只是在物质至上的时代潮流下，想提醒年轻的朋友，男女结合最最重要的是感情，双方互相理解的程度，理解深才能互相欣赏吸引、支持和鼓励，两情相悦。"
+                }
+              ]
+            }
+          },
+          "LT04-O1": {
+            "state": "known",
+            "value": "我以为，夫妻间最重要的是朋友关系，即使不能做知心的朋友，也该是能做得伴侣的朋友或互相尊重的伴侣。门当户对及其他，并不重要。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-yangjiang-E002",
+                  "quote": "我以为，夫妻间最重要的是朋友关系，即使不能做知心的朋友，也该是能做得伴侣的朋友或互相尊重的伴侣。门当户对及其他，并不重要。"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "LT04-E1": {
+            "state": "known",
+            "value": "只是在物质至上的时代潮流下，想提醒年轻的朋友，男女结合最最重要的是感情，双方互相理解的程度，理解深才能互相欣赏吸引、支持和鼓励，两情相悦。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-yangjiang-E002",
+                  "quote": "只是在物质至上的时代潮流下，想提醒年轻的朋友，男女结合最最重要的是感情，双方互相理解的程度，理解深才能互相欣赏吸引、支持和鼓励，两情相悦。"
+                }
+              ]
+            }
+          },
+          "LT04-O1": {
+            "state": "known",
+            "value": "我以为，夫妻间最重要的是朋友关系，即使不能做知心的朋友，也该是能做得伴侣的朋友或互相尊重的伴侣。门当户对及其他，并不重要。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-yangjiang-E002",
+                  "quote": "我以为，夫妻间最重要的是朋友关系，即使不能做知心的朋友，也该是能做得伴侣的朋友或互相尊重的伴侣。门当户对及其他，并不重要。"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.28-three-round007/cases/DEV3-N-d3da9c100d-SK04-01/turn-000/engine-input-000-review.json",
+      "question_id": "SK04",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "SK04-E1": {
+            "state": "known",
+            "value": "爸爸说：“哪有什么秘诀?多读书，读好书罢了。”",
+            "scope": {
+              "subject": "parents",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-yangjiang-E001",
+                  "quote": "我佩服又好奇，请教秘诀，爸爸说：“哪有什么秘诀?多读书，读好书罢了。”"
+                }
+              ]
+            }
+          },
+          "SK04-E2.actor": {
+            "state": "missing",
+            "value": null
+          },
+          "SK04-E2.period": {
+            "state": "missing",
+            "value": null
+          },
+          "SK04-E3": {
+            "state": "known",
+            "value": "我自己就是受父母师长的影响，由淘气转向好学的。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-yangjiang-E001",
+                  "quote": "我自己就是受父母师长的影响，由淘气转向好学的。"
+                }
+              ]
+            }
+          },
+          "SK04-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "SK04-E1": {
+            "state": "known",
+            "value": "爸爸说：“哪有什么秘诀?多读书，读好书罢了。”",
+            "scope": {
+              "subject": "parents",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-yangjiang-E001",
+                  "quote": "我佩服又好奇，请教秘诀，爸爸说：“哪有什么秘诀?多读书，读好书罢了。”"
+                }
+              ]
+            }
+          },
+          "SK04-E2.actor": {
+            "state": "missing",
+            "value": null
+          },
+          "SK04-E2.period": {
+            "state": "missing",
+            "value": null
+          },
+          "SK04-E3": {
+            "state": "known",
+            "value": "我自己就是受父母师长的影响，由淘气转向好学的。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-yangjiang-E001",
+                  "quote": "我自己就是受父母师长的影响，由淘气转向好学的。"
+                }
+              ]
+            }
+          },
+          "SK04-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.28-three-round007/cases/ROOT-N-6e4adb332f-FM07/turn-000/engine-input-000-review.json",
+      "question_id": "FM07",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "FM07-E1": {
+            "state": "known",
+            "value": "她是我很大的支持。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-261-E02",
+                  "quote": "我沒有什麼嗜好，打牌、喝酒、賭博這一類我都不會，就是很奮鬥來賺錢，哪兒有錢賺，我也很敢冒險，心裡希望做的事業，能對得起我的太太，是這樣目的。她是我很大的支持。"
+                }
+              ]
+            }
+          },
+          "FM07-E2": {
+            "state": "known",
+            "value": "我太太就講要飯也不回家去，這句話使我太感動了。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-261-E02",
+                  "quote": "我太太就講要飯也不回家去，這句話使我太感動了。"
+                }
+              ]
+            }
+          },
+          "FM07-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "FM07-E1": {
+            "state": "known",
+            "value": "她是我很大的支持。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-261-E02",
+                  "quote": "我沒有什麼嗜好，打牌、喝酒、賭博這一類我都不會，就是很奮鬥來賺錢，哪兒有錢賺，我也很敢冒險，心裡希望做的事業，能對得起我的太太，是這樣目的。她是我很大的支持。"
+                }
+              ]
+            }
+          },
+          "FM07-E2": {
+            "state": "known",
+            "value": "我太太就講要飯也不回家去，這句話使我太感動了。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-261-E02",
+                  "quote": "我太太就講要飯也不回家去，這句話使我太感動了。"
+                }
+              ]
+            }
+          },
+          "FM07-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.28-three-round007/cases/ROOT-N-6e4adb332f-GR01/turn-000/engine-input-000-review.json",
+      "question_id": "GR01",
+      "before": {
+        "decision": "ask",
+        "target": "GR01-E1",
+        "errors": [],
+        "fields": {
+          "GR01-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "GR01-E2": {
+            "state": "known",
+            "value": "民國37年開始內亂後，一天到晚打仗，學校沒有辦法再讀書，就遷到南京。",
+            "scope": {
+              "subject": "self",
+              "period": "school_years",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-259-E01",
+                  "quote": "民國37年開始內亂後，一天到晚打仗，學校沒有辦法再讀書，就遷到南京。"
+                }
+              ]
+            }
+          },
+          "GR01-E3": {
+            "state": "known",
+            "value": "民國37年開始內亂後，一天到晚打仗，學校沒有辦法再讀書，就遷到南京。江陰要塞事變的時候，中共打到南京，就到上海來了，在黃浦江坐船，我還是小孩不知道，就跟著學校走了，砲彈也已經打到黃浦江的碼頭上去了，要跑也沒辦法跑，我們很多不幸的同學掉到黃浦江，也有很多被砲彈炸死。那回在上海撤退的情景，我現在回想起來都還覺得真是可怕。當時風大雨也大，結果就到澎湖馬公國民學校。",
+            "scope": {
+              "subject": "self",
+              "period": "school_years",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-259-E01",
+                  "quote": "民國37年開始內亂後，一天到晚打仗，學校沒有辦法再讀書，就遷到南京。江陰要塞事變的時候，中共打到南京，就到上海來了，在黃浦江坐船，我還是小孩不知道，就跟著學校走了，砲彈也已經打到黃浦江的碼頭上去了，要跑也沒辦法跑，我們很多不幸的同學掉到黃浦江，也有很多被砲彈炸死。那回在上海撤退的情景，我現在回想起來都還覺得真是可怕。當時風大雨也大，結果就到澎湖馬公國民學校。"
+                }
+              ]
+            }
+          },
+          "GR01-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "GR01-E1",
+        "errors": [],
+        "fields": {
+          "GR01-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "GR01-E2": {
+            "state": "known",
+            "value": "民國37年開始內亂後，一天到晚打仗，學校沒有辦法再讀書，就遷到南京。",
+            "scope": {
+              "subject": "self",
+              "period": "school_years",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-259-E01",
+                  "quote": "民國37年開始內亂後，一天到晚打仗，學校沒有辦法再讀書，就遷到南京。"
+                }
+              ]
+            }
+          },
+          "GR01-E3": {
+            "state": "known",
+            "value": "民國37年開始內亂後，一天到晚打仗，學校沒有辦法再讀書，就遷到南京。江陰要塞事變的時候，中共打到南京，就到上海來了，在黃浦江坐船，我還是小孩不知道，就跟著學校走了，砲彈也已經打到黃浦江的碼頭上去了，要跑也沒辦法跑，我們很多不幸的同學掉到黃浦江，也有很多被砲彈炸死。那回在上海撤退的情景，我現在回想起來都還覺得真是可怕。當時風大雨也大，結果就到澎湖馬公國民學校。",
+            "scope": {
+              "subject": "self",
+              "period": "school_years",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-259-E01",
+                  "quote": "民國37年開始內亂後，一天到晚打仗，學校沒有辦法再讀書，就遷到南京。江陰要塞事變的時候，中共打到南京，就到上海來了，在黃浦江坐船，我還是小孩不知道，就跟著學校走了，砲彈也已經打到黃浦江的碼頭上去了，要跑也沒辦法跑，我們很多不幸的同學掉到黃浦江，也有很多被砲彈炸死。那回在上海撤退的情景，我現在回想起來都還覺得真是可怕。當時風大雨也大，結果就到澎湖馬公國民學校。"
+                }
+              ]
+            }
+          },
+          "GR01-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.28-three-round007/cases/ROOT-N-6e4adb332f-SK01/turn-000/engine-input-000-review.json",
+      "question_id": "SK01",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "SK01-E1": {
+            "state": "known",
+            "value": "民國24年出生",
+            "scope": {
+              "subject": "self",
+              "period": "birth",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-259-E01",
+                  "quote": "我是民國24年出生於江蘇省的徐州縣。"
+                }
+              ]
+            },
+            "precision": "year"
+          },
+          "SK01-E2": {
+            "state": "known",
+            "value": "江蘇省的徐州縣",
+            "scope": {
+              "subject": "self",
+              "period": "birth",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-259-E01",
+                  "quote": "我是民國24年出生於江蘇省的徐州縣。"
+                }
+              ]
+            }
+          },
+          "SK01-E3.place": {
+            "state": "known",
+            "value": "徐州東南雙溝那一帶",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-259-E01",
+                  "quote": "小時候我住在徐州東南雙溝那一帶的鄉間，後來大部分就都在徐州市了。"
+                }
+              ]
+            }
+          },
+          "SK01-E3.period": {
+            "state": "known",
+            "value": "小時候",
+            "scope": {
+              "subject": "self",
+              "period": "childhood",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-259-E01",
+                  "quote": "小時候我住在徐州東南雙溝那一帶的鄉間，後來大部分就都在徐州市了。"
+                }
+              ]
+            }
+          },
+          "SK01-E4": {
+            "state": "known",
+            "value": "鄉間",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-259-E01",
+                  "quote": "小時候我住在徐州東南雙溝那一帶的鄉間，後來大部分就都在徐州市了。"
+                }
+              ]
+            }
+          },
+          "SK01-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "SK01-E1": {
+            "state": "known",
+            "value": "民國24年出生",
+            "scope": {
+              "subject": "self",
+              "period": "birth",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-259-E01",
+                  "quote": "我是民國24年出生於江蘇省的徐州縣。"
+                }
+              ]
+            },
+            "precision": "year"
+          },
+          "SK01-E2": {
+            "state": "known",
+            "value": "江蘇省的徐州縣",
+            "scope": {
+              "subject": "self",
+              "period": "birth",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-259-E01",
+                  "quote": "我是民國24年出生於江蘇省的徐州縣。"
+                }
+              ]
+            }
+          },
+          "SK01-E3.place": {
+            "state": "known",
+            "value": "徐州東南雙溝那一帶",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-259-E01",
+                  "quote": "小時候我住在徐州東南雙溝那一帶的鄉間，後來大部分就都在徐州市了。"
+                }
+              ]
+            }
+          },
+          "SK01-E3.period": {
+            "state": "known",
+            "value": "小時候",
+            "scope": {
+              "subject": "self",
+              "period": "childhood",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-259-E01",
+                  "quote": "小時候我住在徐州東南雙溝那一帶的鄉間，後來大部分就都在徐州市了。"
+                }
+              ]
+            }
+          },
+          "SK01-E4": {
+            "state": "known",
+            "value": "鄉間",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-259-E01",
+                  "quote": "小時候我住在徐州東南雙溝那一帶的鄉間，後來大部分就都在徐州市了。"
+                }
+              ]
+            }
+          },
+          "SK01-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.28-three-round007/cases/ROOT-N-6e4adb332f-WK03/turn-000/engine-input-001-review.json",
+      "question_id": "WK03",
+      "before": {
+        "decision": "ask",
+        "target": "WK03-E1",
+        "errors": [],
+        "fields": {
+          "WK03-E1": {
+            "state": "ambiguous",
+            "value": null,
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-261-E03",
+                  "quote": "我太太跟車子，有時候拉小石頭，她跟車上去做，把石頭搬上卡車，做這種小工，以前我看她身體很瘦，在家等於是嬌生慣養的，她跟我這麼吃苦，實在講很對不起她。"
+                }
+              ]
+            }
+          },
+          "WK03-E2": {
+            "state": "ambiguous",
+            "value": null,
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-261-E03",
+                  "quote": "那時工人找的都是退伍軍人的老大哥、前輩，要管他們吃、住，一早大概五點鐘就到地裡去拉土，晚上回來，他們工人要睡覺，我還要修理車子。"
+                },
+                {
+                  "source_id": "VAC-261-E03",
+                  "quote": "因為我自己會修，所以我太太拿電燈，我就自己修理。"
+                }
+              ]
+            }
+          },
+          "WK03-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "WK03-E1",
+        "errors": [],
+        "fields": {
+          "WK03-E1": {
+            "state": "ambiguous",
+            "value": null,
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-261-E03",
+                  "quote": "我太太跟車子，有時候拉小石頭，她跟車上去做，把石頭搬上卡車，做這種小工，以前我看她身體很瘦，在家等於是嬌生慣養的，她跟我這麼吃苦，實在講很對不起她。"
+                }
+              ]
+            }
+          },
+          "WK03-E2": {
+            "state": "ambiguous",
+            "value": null,
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-261-E03",
+                  "quote": "那時工人找的都是退伍軍人的老大哥、前輩，要管他們吃、住，一早大概五點鐘就到地裡去拉土，晚上回來，他們工人要睡覺，我還要修理車子。"
+                },
+                {
+                  "source_id": "VAC-261-E03",
+                  "quote": "因為我自己會修，所以我太太拿電燈，我就自己修理。"
+                }
+              ]
+            }
+          },
+          "WK03-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.28-three-round007/cases/ROOT-N-6e4adb332f-WK05/turn-000/engine-input-000-review.json",
+      "question_id": "WK05",
+      "before": {
+        "decision": "ask",
+        "target": "WK05-E1",
+        "errors": [],
+        "fields": {
+          "WK05-E1": {
+            "state": "ambiguous",
+            "value": null,
+            "scope": {
+              "subject": "self",
+              "period": "unspecified",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-261-E01",
+                  "quote": "就是結婚以後才辛苦，沒結婚我是不辛苦，因為結婚受到刺激，要租房子租不到，人家看不起，沒有錢啊！"
+                },
+                {
+                  "source_id": "VAC-261-E01",
+                  "quote": "這對我有個刺激性，所以我奮發圖強，加油賺錢，在農場的土地已經做得差不多，沒有什麼生意了，我就把卡車賣掉，買一部計程車，就開始做計程車生意。"
+                }
+              ]
+            }
+          },
+          "WK05-O1": {
+            "state": "known",
+            "value": "這對我有個刺激性，所以我奮發圖強，加油賺錢，在農場的土地已經做得差不多，沒有什麼生意了，我就把卡車賣掉，買一部計程車，就開始做計程車生意。然後認識內埔一個添發車行的賴光仁，還不錯，做了兩年以後，我自己成立龍泉計程車行。賴光仁這個朋友幫我很多忙，替我擔保買車，到台北一次買兩部車，就這樣慢慢發展。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-261-E01",
+                  "quote": "這對我有個刺激性，所以我奮發圖強，加油賺錢，在農場的土地已經做得差不多，沒有什麼生意了，我就把卡車賣掉，買一部計程車，就開始做計程車生意。然後認識內埔一個添發車行的賴光仁，還不錯，做了兩年以後，我自己成立龍泉計程車行。賴光仁這個朋友幫我很多忙，替我擔保買車，到台北一次買兩部車，就這樣慢慢發展。"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "WK05-E1",
+        "errors": [],
+        "fields": {
+          "WK05-E1": {
+            "state": "ambiguous",
+            "value": null,
+            "scope": {
+              "subject": "self",
+              "period": "unspecified",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-261-E01",
+                  "quote": "就是結婚以後才辛苦，沒結婚我是不辛苦，因為結婚受到刺激，要租房子租不到，人家看不起，沒有錢啊！"
+                },
+                {
+                  "source_id": "VAC-261-E01",
+                  "quote": "這對我有個刺激性，所以我奮發圖強，加油賺錢，在農場的土地已經做得差不多，沒有什麼生意了，我就把卡車賣掉，買一部計程車，就開始做計程車生意。"
+                }
+              ]
+            }
+          },
+          "WK05-O1": {
+            "state": "known",
+            "value": "這對我有個刺激性，所以我奮發圖強，加油賺錢，在農場的土地已經做得差不多，沒有什麼生意了，我就把卡車賣掉，買一部計程車，就開始做計程車生意。然後認識內埔一個添發車行的賴光仁，還不錯，做了兩年以後，我自己成立龍泉計程車行。賴光仁這個朋友幫我很多忙，替我擔保買車，到台北一次買兩部車，就這樣慢慢發展。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-261-E01",
+                  "quote": "這對我有個刺激性，所以我奮發圖強，加油賺錢，在農場的土地已經做得差不多，沒有什麼生意了，我就把卡車賣掉，買一部計程車，就開始做計程車生意。然後認識內埔一個添發車行的賴光仁，還不錯，做了兩年以後，我自己成立龍泉計程車行。賴光仁這個朋友幫我很多忙，替我擔保買車，到台北一次買兩部車，就這樣慢慢發展。"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.28-three-round007/cases/ROOT-N-6e4adb332f-WK10/turn-000/engine-input-000-review.json",
+      "question_id": "WK10",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "WK10-A1": {
+            "state": "known",
+            "value": "在宜蘭兩年多的時間，我碰了很多釘子，我在開發處開車開好好的，我太太認為山上開車太危險，跑一趟是拿命在換錢，要我想辦法在平地找工作。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-261-E02",
+                  "quote": "在宜蘭兩年多的時間，我碰了很多釘子，我在開發處開車開好好的，我太太認為山上開車太危險，跑一趟是拿命在換錢，要我想辦法在平地找工作。"
+                }
+              ]
+            }
+          },
+          "WK10-E1": {
+            "state": "known",
+            "value": "我太太也跟車一起做工，老實說，我被我太太感化，才奮鬥多賺錢，讓我太太享受一點，不要讓她感覺說嫁到沒出息的丈夫。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-261-E02",
+                  "quote": "我太太也跟車一起做工，老實說，我被我太太感化，才奮鬥多賺錢，讓我太太享受一點，不要讓她感覺說嫁到沒出息的丈夫。"
+                }
+              ]
+            }
+          },
+          "WK10-O1": {
+            "state": "known",
+            "value": "我沒有什麼嗜好，打牌、喝酒、賭博這一類我都不會，就是很奮鬥來賺錢，哪兒有錢賺，我也很敢冒險，心裡希望做的事業，能對得起我的太太，是這樣目的。她是我很大的支持。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-261-E02",
+                  "quote": "我沒有什麼嗜好，打牌、喝酒、賭博這一類我都不會，就是很奮鬥來賺錢，哪兒有錢賺，我也很敢冒險，心裡希望做的事業，能對得起我的太太，是這樣目的。她是我很大的支持。"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "WK10-A1": {
+            "state": "known",
+            "value": "在宜蘭兩年多的時間，我碰了很多釘子，我在開發處開車開好好的，我太太認為山上開車太危險，跑一趟是拿命在換錢，要我想辦法在平地找工作。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-261-E02",
+                  "quote": "在宜蘭兩年多的時間，我碰了很多釘子，我在開發處開車開好好的，我太太認為山上開車太危險，跑一趟是拿命在換錢，要我想辦法在平地找工作。"
+                }
+              ]
+            }
+          },
+          "WK10-E1": {
+            "state": "known",
+            "value": "我太太也跟車一起做工，老實說，我被我太太感化，才奮鬥多賺錢，讓我太太享受一點，不要讓她感覺說嫁到沒出息的丈夫。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-261-E02",
+                  "quote": "我太太也跟車一起做工，老實說，我被我太太感化，才奮鬥多賺錢，讓我太太享受一點，不要讓她感覺說嫁到沒出息的丈夫。"
+                }
+              ]
+            }
+          },
+          "WK10-O1": {
+            "state": "known",
+            "value": "我沒有什麼嗜好，打牌、喝酒、賭博這一類我都不會，就是很奮鬥來賺錢，哪兒有錢賺，我也很敢冒險，心裡希望做的事業，能對得起我的太太，是這樣目的。她是我很大的支持。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-261-E02",
+                  "quote": "我沒有什麼嗜好，打牌、喝酒、賭博這一類我都不會，就是很奮鬥來賺錢，哪兒有錢賺，我也很敢冒險，心裡希望做的事業，能對得起我的太太，是這樣目的。她是我很大的支持。"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    }
+  ]
+}

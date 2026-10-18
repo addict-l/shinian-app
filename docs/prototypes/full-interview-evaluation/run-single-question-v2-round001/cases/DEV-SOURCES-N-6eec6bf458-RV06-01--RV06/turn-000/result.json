@@ -1,0 +1,143 @@
+{
+  "kind": "evaluated",
+  "result": {
+    "decision": "ready",
+    "target": null,
+    "question": null,
+    "fields": {
+      "RV06-E1": {
+        "state": "known",
+        "scope": {
+          "subject": "self",
+          "period": "lifelong",
+          "relation_evidence": [
+            {
+              "source_id": "VAC-189-E06",
+              "quote": "最令人感激的就是張雋。"
+            }
+          ]
+        },
+        "value": "最令人感激的就是張雋。",
+        "evidence": [
+          {
+            "source_id": "VAC-189-E06",
+            "quote": "最令人感激的就是張雋。"
+          }
+        ]
+      },
+      "RV06-O1": {
+        "state": "missing",
+        "value": null,
+        "evidence": []
+      }
+    },
+    "effective": {
+      "RV06-E1": "known",
+      "RV06-O1": "missing"
+    },
+    "active": [
+      "RV06-E1"
+    ],
+    "errors": [],
+    "rejected_candidates": [],
+    "scope_notices": [
+      {
+        "field_id": "RV06-E1",
+        "rule": "expand_explicit_same_field_evidence_alias"
+      }
+    ],
+    "protocol_normalizations": [
+      {
+        "rule": "expand_control_evidence_units",
+        "original_control": {
+          "action": "continue",
+          "evidence_unit_ids": []
+        },
+        "selections": [
+          {
+            "attribute": "evidence_unit_ids",
+            "selected_ids": [],
+            "refs": []
+          }
+        ]
+      },
+      {
+        "field_id": "RV06-E1",
+        "rule": "expand_selected_original_evidence_units",
+        "original_candidate": {
+          "state": "known",
+          "value_unit_ids": [
+            "S1.4"
+          ],
+          "evidence_unit_ids": [
+            "S1.4"
+          ],
+          "scope": {
+            "subject": "self",
+            "period": "lifelong",
+            "relation_unit_ids": "same_as_evidence"
+          }
+        },
+        "selections": [
+          {
+            "attribute": "value",
+            "rule": "copy_selected_contiguous_original_units",
+            "selected_ids": [
+              "S1.4"
+            ],
+            "refs": [
+              {
+                "source_id": "VAC-189-E06",
+                "quote": "最令人感激的就是張雋。"
+              }
+            ]
+          },
+          {
+            "attribute": "evidence_unit_ids",
+            "selected_ids": [
+              "S1.4"
+            ],
+            "refs": [
+              {
+                "source_id": "VAC-189-E06",
+                "quote": "最令人感激的就是張雋。"
+              }
+            ]
+          },
+          {
+            "attribute": "relation_unit_ids",
+            "alias": "same_as_evidence"
+          }
+        ]
+      },
+      {
+        "field_id": "RV06-E1",
+        "rule": "expand_explicit_same_field_evidence_alias",
+        "original_candidate": {
+          "state": "known",
+          "scope": {
+            "subject": "self",
+            "period": "lifelong",
+            "relation_evidence": "same_as_evidence"
+          },
+          "value": "最令人感激的就是張雋。",
+          "evidence": [
+            {
+              "source_id": "VAC-189-E06",
+              "quote": "最令人感激的就是張雋。"
+            }
+          ]
+        }
+      }
+    ],
+    "optional_errors": [],
+    "inactive_conditional_errors": [],
+    "unbound_material": [],
+    "provenance": {},
+    "version": "full-interview-v2.0.0",
+    "semantic_rejections": []
+  },
+  "internal_repairs": 0,
+  "semantic_review_calls": 1,
+  "at": "2026-10-18T07:32:35.505142+00:00"
+}

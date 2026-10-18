@@ -1,0 +1,205 @@
+{
+  "payload": {
+    "question_id": "CH03",
+    "main_question": "小时候哪位亲人最疼爱您？",
+    "question_context_mode": "independent",
+    "current_question": "在這樣子的家庭狀況下，你為什麼決定從軍？",
+    "source_kind": "published_transcript",
+    "historical_question_verified": true,
+    "focus": null,
+    "field_contract": {
+      "CH03-E1": {
+        "label": "童年疼爱本人的亲人及关系",
+        "type": "person_relation",
+        "question": "小时候，哪位亲人最疼爱您？",
+        "usable_answer": "至少一位本人认定疼爱自己的亲人及关系；可明确没有特别的人。",
+        "none": true,
+        "requirement": "required",
+        "notes": "",
+        "link": null,
+        "vague": [],
+        "id": "CH03-E1",
+        "question_id": "CH03",
+        "required": true,
+        "activation": {
+          "always": true
+        },
+        "scope": {
+          "subjects": [
+            "family",
+            "caregiver",
+            "parents"
+          ],
+          "period": "childhood",
+          "object_relation": "本人在本题实际问答中所指的童年疼爱本人的亲人及关系；引用须证明该关系，不从题干假定事实。"
+        },
+        "allowed_states": [
+          "missing",
+          "known",
+          "unknown",
+          "declined",
+          "deferred",
+          "ambiguous",
+          "conflict",
+          "none"
+        ],
+        "semantic_role": "person_relation",
+        "answer_format": {
+          "value_type": "string"
+        }
+      },
+      "CH03-E3": {
+        "label": "与所述亲人有关的难忘小事",
+        "type": "event",
+        "question": "关于刚才说的这位亲人，有什么难忘的小事？",
+        "usable_answer": "一件本人记得的相关小事足够；没有具体小事可明确 none。",
+        "none": true,
+        "requirement": "conditional",
+        "notes": "与 E1 或 E2 的至少一位亲人关联，不强迫每人一个故事。",
+        "link": null,
+        "vague": [],
+        "id": "CH03-E3",
+        "question_id": "CH03",
+        "required": false,
+        "activation": {
+          "known": [
+            "CH03-E1"
+          ]
+        },
+        "scope": {
+          "subjects": [
+            "self",
+            "family",
+            "caregiver"
+          ],
+          "period": "childhood",
+          "object_relation": "与 E1 或 E2 的至少一位亲人关联，不强迫每人一个故事。"
+        },
+        "allowed_states": [
+          "missing",
+          "known",
+          "unknown",
+          "declined",
+          "deferred",
+          "ambiguous",
+          "conflict",
+          "none"
+        ],
+        "semantic_role": "event",
+        "answer_format": {
+          "value_type": "string"
+        }
+      },
+      "CH03-O1": {
+        "id": "CH03-O1",
+        "question_id": "CH03",
+        "label": "亲人带来的感受或更多小事",
+        "type": "detail",
+        "question": "您还有想补充的吗？",
+        "usable_answer": "本人自愿提供的同题补充；缺少不影响完成。",
+        "required": false,
+        "requirement": "optional",
+        "activation": {
+          "never_ask": true
+        },
+        "none": true,
+        "scope": {
+          "subjects": [
+            "self",
+            "family",
+            "other"
+          ],
+          "period": "as_stated",
+          "object_relation": "只记录本人主动补充且明确属于本题的内容。"
+        },
+        "allowed_states": [
+          "missing",
+          "known",
+          "none",
+          "unknown",
+          "declined",
+          "deferred",
+          "ambiguous"
+        ],
+        "semantic_role": "detail",
+        "answer_format": {
+          "value_type": "string"
+        }
+      }
+    },
+    "question_contract": {
+      "premise": null,
+      "success": "必要要素与实际激活的条件要素均 known 或允许的明确 none，且作用域、关系与原话依据有效；不要求可选项。",
+      "notes": "",
+      "material_type": [
+        "event",
+        "person_relation"
+      ]
+    },
+    "sources": [
+      {
+        "id": "VAC-186-E05",
+        "text": "後來我父親都不接濟我們，母親雖然有一點錢，也禁不起養一大家子人，也許是因為心情鬱卒，母親就染上吸鴉片的習慣，這個習慣造成她經濟上相當大的開支，後來我離家之後，下定決心絕對不碰投機、典當這兩類生意。  那時讓我印象最深刻的是，我母親陸續將值錢的翡翠、鑽石，叫丫頭拿去當掉，原本價值不斐的珠寶，只典當很少的金額。另一次，從我家嫁出去的丫頭回來找母親，介紹藥品期貨，是韓國廠商經營的產品，投資利潤豐厚，我母親怦然心動，只要有積蓄就投進去，剛開始利潤很高。當我母親將大多數積蓄投入時，忽然，那個丫頭說：「那家韓國的製藥廠，被日本人給抄了」，也就是說我媽媽的錢一夕泡湯，此後，家中就開始靠典當維生。  雖然那時候家裡經濟環境轉差，母親仍然非常疼我，到讀初中的時候，我一直都是乘坐專用人力車去上學。",
+        "speaker": "narrator",
+        "question_id": "CH03",
+        "question": "在這樣子的家庭狀況下，你為什麼決定從軍？"
+      }
+    ],
+    "previous_fields": {},
+    "ask_counts": {},
+    "evidence_units": [
+      {
+        "id": "S1.1",
+        "source_id": "VAC-186-E05",
+        "text": "後來我父親都不接濟我們，母親雖然有一點錢，也禁不起養一大家子人，也許是因為心情鬱卒，母親就染上吸鴉片的習慣，這個習慣造成她經濟上相當大的開支，後來我離家之後，下定決心絕對不碰投機、典當這兩類生意。"
+      },
+      {
+        "id": "S1.2",
+        "source_id": "VAC-186-E05",
+        "text": "  那時讓我印象最深刻的是，我母親陸續將值錢的翡翠、鑽石，叫丫頭拿去當掉，原本價值不斐的珠寶，只典當很少的金額。"
+      },
+      {
+        "id": "S1.3",
+        "source_id": "VAC-186-E05",
+        "text": "另一次，從我家嫁出去的丫頭回來找母親，介紹藥品期貨，是韓國廠商經營的產品，投資利潤豐厚，我母親怦然心動，只要有積蓄就投進去，剛開始利潤很高。"
+      },
+      {
+        "id": "S1.4",
+        "source_id": "VAC-186-E05",
+        "text": "當我母親將大多數積蓄投入時，忽然，那個丫頭說：「那家韓國的製藥廠，被日本人給抄了」，也就是說我媽媽的錢一夕泡湯，此後，家中就開始靠典當維生。"
+      },
+      {
+        "id": "S1.5",
+        "source_id": "VAC-186-E05",
+        "text": "  雖然那時候家裡經濟環境轉差，母親仍然非常疼我，到讀初中的時候，我一直都是乘坐專用人力車去上學。"
+      }
+    ]
+  },
+  "proposal": {
+    "control": {
+      "action": "continue",
+      "evidence_unit_ids": []
+    },
+    "fields": {
+      "CH03-E1": {
+        "state": "known",
+        "value_unit_ids": [
+          "S1.5"
+        ],
+        "evidence_unit_ids": [
+          "S1.5"
+        ],
+        "scope": {
+          "subject": "family",
+          "period": "childhood",
+          "relation_unit_ids": "same_as_evidence"
+        }
+      }
+    }
+  },
+  "raw_model_response": {
+    "raw_content": "{\n  \"control\": {\n    \"action\": \"continue\",\n    \"evidence_unit_ids\": []\n  },\n  \"fields\": {\n    \"CH03-E1\": {\n      \"state\": \"known\",\n      \"value_unit_ids\": [\n        \"S1.5\"\n      ],\n      \"evidence_unit_ids\": [\n        \"S1.5\"\n      ],\n      \"scope\": {\n        \"subject\": \"family\",\n        \"period\": \"childhood\",\n        \"relation_unit_ids\": \"same_as_evidence\"\n      }\n    }\n  }\n}",
+    "parse_error": false,
+    "finish_reason": "stop"
+  }
+}

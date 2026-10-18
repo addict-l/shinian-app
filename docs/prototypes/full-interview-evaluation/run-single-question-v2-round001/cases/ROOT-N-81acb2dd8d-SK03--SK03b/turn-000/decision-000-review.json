@@ -1,0 +1,49 @@
+{
+  "decision": "ask",
+  "target": "SK03-E2",
+  "question": "那时家里主要靠什么维持生活？",
+  "fields": {
+    "SK03-E2": {
+      "state": "missing",
+      "value": null,
+      "evidence": []
+    },
+    "SK03-O1b": {
+      "state": "missing",
+      "value": null,
+      "evidence": []
+    }
+  },
+  "effective": {
+    "SK03-E2": "missing",
+    "SK03-O1b": "missing"
+  },
+  "active": [
+    "SK03-E2"
+  ],
+  "errors": [],
+  "rejected_candidates": [],
+  "scope_notices": [],
+  "protocol_normalizations": [
+    {
+      "rule": "expand_control_evidence_units",
+      "original_control": {
+        "action": "continue",
+        "evidence_unit_ids": []
+      },
+      "selections": [
+        {
+          "attribute": "evidence_unit_ids",
+          "selected_ids": [],
+          "refs": []
+        }
+      ]
+    }
+  ],
+  "optional_errors": [],
+  "inactive_conditional_errors": [],
+  "unbound_material": [],
+  "provenance": {},
+  "version": "full-interview-v2.0.0",
+  "semantic_rejections": []
+}

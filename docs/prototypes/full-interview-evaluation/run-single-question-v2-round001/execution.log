@@ -1,0 +1,10 @@
+{"run_started": "2026-10-18T07:30:57.721170+00:00", "eligible_cases": 33, "already_finished_cases": 0, "remaining_cases": 33, "split": "all", "model": "deepseek-v4-pro"}
+{"batch": 3, "completed_or_blocked_cases_this_run": 4, "remaining_cases": 29}
+{"batch": 5, "completed_or_blocked_cases_this_run": 8, "remaining_cases": 25}
+{"batch": 7, "completed_or_blocked_cases_this_run": 12, "remaining_cases": 21}
+{"batch": 9, "completed_or_blocked_cases_this_run": 16, "remaining_cases": 17}
+{"batch": 12, "completed_or_blocked_cases_this_run": 20, "remaining_cases": 13}
+{"batch": 14, "completed_or_blocked_cases_this_run": 24, "remaining_cases": 9}
+{"batch": 16, "completed_or_blocked_cases_this_run": 28, "remaining_cases": 5}
+{"batch": 18, "completed_or_blocked_cases_this_run": 32, "remaining_cases": 1}
+{"batch": 20, "completed_or_blocked_cases_this_run": 33, "remaining_cases": 0}

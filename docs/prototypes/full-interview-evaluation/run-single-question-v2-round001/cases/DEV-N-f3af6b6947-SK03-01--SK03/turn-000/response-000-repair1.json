@@ -1,0 +1,235 @@
+{
+  "kind": "model_call",
+  "id": "DEV-N-f3af6b6947-SK03-01--SK03-t000-a000-repair1",
+  "input": {
+    "question_id": "SK03",
+    "main_question": "您小时候主要跟谁一起生活？",
+    "question_context_mode": "independent",
+    "source_kind": "published_transcript",
+    "historical_question_verified": true,
+    "focus": null,
+    "field_contract": {
+      "SK03-E1": {
+        "label": "主要共同生活者或照料者及关系",
+        "type": "person_relation",
+        "question": "您小时候主要跟谁一起生活？",
+        "usable_answer": "跟父母长大、奶奶带大、住舅舅家或实际照料机构均可；不需姓名。同行、逃难或工作关系不自动证明主要共同生活/照料。",
+        "none": false,
+        "requirement": "required",
+        "notes": "本人是被照料者；只出现父母身份、职业或一次教育行为不证明主要共同生活。",
+        "link": null,
+        "vague": [],
+        "id": "SK03-E1",
+        "question_id": "SK03",
+        "required": true,
+        "activation": {
+          "always": true
+        },
+        "scope": {
+          "subjects": [
+            "self",
+            "family",
+            "parents",
+            "caregiver"
+          ],
+          "period": "childhood",
+          "object_relation": "本人是被照料者；只出现父母身份、职业或一次教育行为不证明主要共同生活。"
+        },
+        "allowed_states": [
+          "missing",
+          "known",
+          "unknown",
+          "declined",
+          "deferred",
+          "ambiguous",
+          "conflict"
+        ],
+        "semantic_role": "narrator_upbringing_relation",
+        "answer_format": {
+          "value_type": "string"
+        }
+      },
+      "SK03-O1": {
+        "id": "SK03-O1",
+        "question_id": "SK03",
+        "label": "更多亲属资料或家庭生活片段",
+        "type": "detail",
+        "question": "您还有想补充的吗？",
+        "usable_answer": "本人自愿提供的同题补充；缺少不影响完成。",
+        "required": false,
+        "requirement": "optional",
+        "activation": {
+          "never_ask": true
+        },
+        "none": true,
+        "scope": {
+          "subjects": [
+            "self",
+            "family",
+            "other"
+          ],
+          "period": "as_stated",
+          "object_relation": "只记录本人主动补充且明确属于本题的内容。"
+        },
+        "allowed_states": [
+          "missing",
+          "known",
+          "none",
+          "unknown",
+          "declined",
+          "deferred",
+          "ambiguous"
+        ],
+        "semantic_role": "detail",
+        "answer_format": {
+          "value_type": "string"
+        }
+      }
+    },
+    "question_contract": {
+      "premise": null,
+      "success": "必要要素与实际激活的条件要素均 known 或允许的明确 none，且作用域、关系与原话依据有效；不要求可选项。",
+      "notes": "",
+      "material_type": [
+        "atmosphere",
+        "livelihood",
+        "person_relation",
+        "sibling_relation"
+      ]
+    },
+    "sources": [
+      {
+        "id": "VAC-217-E01",
+        "text": "我是民國16年2月20日在青島出生的。我的命運非常不好，因為我小學剛剛升四年級的時候，日本人已經打到青島來了，我從那時起就開始失學在家。我父親在青島市做生意，我跟我哥哥、母親在鄉下靠務農來維持生活。家鄉生活還說得過去。我失學後就跟著我哥哥下田。",
+        "speaker": "narrator",
+        "question_id": "SK03",
+        "question": "請侯鎮清先生先介紹一下您小時候的家庭背景。"
+      }
+    ],
+    "previous_fields": {},
+    "evidence_units": [
+      {
+        "id": "S1.1",
+        "source_id": "VAC-217-E01",
+        "text": "我是民國16年2月20日在青島出生的。"
+      },
+      {
+        "id": "S1.2",
+        "source_id": "VAC-217-E01",
+        "text": "我的命運非常不好，因為我小學剛剛升四年級的時候，日本人已經打到青島來了，我從那時起就開始失學在家。"
+      },
+      {
+        "id": "S1.3",
+        "source_id": "VAC-217-E01",
+        "text": "我父親在青島市做生意，我跟我哥哥、母親在鄉下靠務農來維持生活。"
+      },
+      {
+        "id": "S1.4",
+        "source_id": "VAC-217-E01",
+        "text": "家鄉生活還說得過去。"
+      },
+      {
+        "id": "S1.5",
+        "source_id": "VAC-217-E01",
+        "text": "我失學後就跟著我哥哥下田。"
+      }
+    ],
+    "task": "extract_answers_for_target_field_questions_from_recorded_material",
+    "allowed_evidence_unit_ids": [
+      "S1.1",
+      "S1.2",
+      "S1.3",
+      "S1.4",
+      "S1.5"
+    ],
+    "nonknown_protocol_example": {
+      "state": "ambiguous",
+      "value": null,
+      "evidence_unit_ids": [
+        "CHOOSE_AN_ACTUAL_ALLOWED_ID"
+      ],
+      "scope": {
+        "subject": "CHOOSE_ONE_CONTRACT_SUBJECT",
+        "period": "as_stated",
+        "relation_unit_ids": "same_as_evidence"
+      },
+      "clarifications": [
+        "referent"
+      ]
+    },
+    "literal_link_candidates": [],
+    "task_note": "main_question and field_contract define extraction targets. sources.question is a historical context for interpreting short answers, not the question to answer or summarize.",
+    "extraction_retry": {
+      "attempt": 1,
+      "validation_errors": [
+        "SK03-E1:literal_value_must_be_one_contiguous_source_span"
+      ],
+      "previous_proposal": {
+        "control": {
+          "action": "continue",
+          "evidence_unit_ids": []
+        },
+        "fields": {
+          "SK03-E1": {
+            "state": "known",
+            "value_unit_ids": [
+              "S1.3",
+              "S1.5"
+            ],
+            "evidence_unit_ids": [
+              "S1.3",
+              "S1.5"
+            ],
+            "scope": {
+              "subject": "self",
+              "period": "childhood",
+              "relation_unit_ids": "same_as_evidence"
+            }
+          }
+        }
+      }
+    }
+  },
+  "output": {
+    "control": {
+      "action": "continue",
+      "evidence_unit_ids": []
+    },
+    "fields": {
+      "SK03-E1": {
+        "state": "known",
+        "value_unit_ids": [
+          "S1.3"
+        ],
+        "evidence_unit_ids": [
+          "S1.3"
+        ],
+        "scope": {
+          "subject": "self",
+          "period": "childhood",
+          "relation_unit_ids": "same_as_evidence"
+        }
+      }
+    }
+  },
+  "raw_content": "{\n  \"control\": {\n    \"action\": \"continue\",\n    \"evidence_unit_ids\": []\n  },\n  \"fields\": {\n    \"SK03-E1\": {\n      \"state\": \"known\",\n      \"value_unit_ids\": [\n        \"S1.3\"\n      ],\n      \"evidence_unit_ids\": [\n        \"S1.3\"\n      ],\n      \"scope\": {\n        \"subject\": \"self\",\n        \"period\": \"childhood\",\n        \"relation_unit_ids\": \"same_as_evidence\"\n      }\n    }\n  }\n}",
+  "parse_error": false,
+  "seconds": 1.705,
+  "usage": {
+    "prompt_tokens": 3320,
+    "completion_tokens": 113,
+    "total_tokens": 3433,
+    "prompt_tokens_details": {
+      "cached_tokens": 3072
+    },
+    "prompt_cache_hit_tokens": 3072,
+    "prompt_cache_miss_tokens": 248
+  },
+  "finish_reason": "stop",
+  "response_model": "deepseek-v4-pro",
+  "provider_settings": {
+    "model": "deepseek-v4-pro",
+    "thinking": "disabled",
+    "max_tokens": 16384
+  }
+}

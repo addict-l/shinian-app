@@ -1,0 +1,10 @@
+{
+  "started_at": "2026-10-18T07:30:57.711975+00:00",
+  "split": "all",
+  "model": "deepseek-v4-pro",
+  "concurrency": 4,
+  "exit_code": 0,
+  "status": "completed",
+  "ended_at": "2026-10-18T07:33:15.789912+00:00",
+  "wall_seconds": 138.078
+}

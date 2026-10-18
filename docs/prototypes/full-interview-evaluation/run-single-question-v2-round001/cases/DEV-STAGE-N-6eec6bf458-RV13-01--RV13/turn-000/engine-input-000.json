@@ -1,0 +1,153 @@
+{
+  "payload": {
+    "question_id": "RV13",
+    "main_question": "这一生您最想感恩的一件事是什么？",
+    "question_context_mode": "independent",
+    "current_question": "什麼樣的機緣讓您從軍中走向社會？又是怎麼開始廣播生涯？",
+    "source_kind": "published_transcript",
+    "historical_question_verified": true,
+    "focus": null,
+    "field_contract": {
+      "RV13-E1": {
+        "label": "本人一项感恩的事",
+        "type": "experience",
+        "question": "这一生，您最想感恩的一件事是什么？",
+        "usable_answer": "至少一件本人认定感恩的事即可；三个是邀请，不凑数，不强求完整故事。",
+        "none": true,
+        "requirement": "required",
+        "notes": "",
+        "link": null,
+        "vague": [],
+        "id": "RV13-E1",
+        "question_id": "RV13",
+        "required": true,
+        "activation": {
+          "always": true
+        },
+        "scope": {
+          "subjects": [
+            "self"
+          ],
+          "period": "lifelong",
+          "object_relation": "本人在本题实际问答中所指的本人一项感恩的事；引用须证明该关系，不从题干假定事实。"
+        },
+        "allowed_states": [
+          "missing",
+          "known",
+          "unknown",
+          "declined",
+          "deferred",
+          "ambiguous",
+          "conflict",
+          "none"
+        ],
+        "semantic_role": "gratitude_experience",
+        "answer_format": {
+          "value_type": "string"
+        }
+      },
+      "RV13-O1": {
+        "id": "RV13-O1",
+        "question_id": "RV13",
+        "label": "第二第三件或更多感恩的事",
+        "type": "detail",
+        "question": "您还有想补充的吗？",
+        "usable_answer": "本人自愿提供的同题补充；缺少不影响完成。",
+        "required": false,
+        "requirement": "optional",
+        "activation": {
+          "never_ask": true
+        },
+        "none": true,
+        "scope": {
+          "subjects": [
+            "self",
+            "family",
+            "other"
+          ],
+          "period": "as_stated",
+          "object_relation": "只记录本人主动补充且明确属于本题的内容。"
+        },
+        "allowed_states": [
+          "missing",
+          "known",
+          "none",
+          "unknown",
+          "declined",
+          "deferred",
+          "ambiguous"
+        ],
+        "semantic_role": "detail",
+        "answer_format": {
+          "value_type": "string"
+        }
+      }
+    },
+    "question_contract": {
+      "premise": null,
+      "success": "必要要素与实际激活的条件要素均 known 或允许的明确 none，且作用域、关系与原话依据有效；不要求可选项。",
+      "notes": "",
+      "material_type": [
+        "experience"
+      ]
+    },
+    "sources": [
+      {
+        "id": "VAC-190-E02",
+        "text": "談到這裡，我要感謝張雋先生，當年他在上海，是一個公子哥兒，他在上海擁有一個廣播電台，他跟姚敏、姚莉合組了一個爵士社從事廣播，包括周璇這些很有名的人，都在他的上海電台唱歌，他掛名社長。  再回溯到民國50年，想要調康樂總隊，那是我情緒最差的時候，張雋不曉得怎麼知道我，有一天我就接到電話，那時候軍中電話很難打，他跟我說民本電台有一個現場節目，你有沒有興趣來彈琴。那時兼差工作青黃不接，我就答應了，那個節目正巧是禮拜天。",
+        "speaker": "narrator",
+        "question_id": "RV13",
+        "question": "什麼樣的機緣讓您從軍中走向社會？又是怎麼開始廣播生涯？"
+      }
+    ],
+    "previous_fields": {},
+    "ask_counts": {},
+    "evidence_units": [
+      {
+        "id": "S1.1",
+        "source_id": "VAC-190-E02",
+        "text": "談到這裡，我要感謝張雋先生，當年他在上海，是一個公子哥兒，他在上海擁有一個廣播電台，他跟姚敏、姚莉合組了一個爵士社從事廣播，包括周璇這些很有名的人，都在他的上海電台唱歌，他掛名社長。"
+      },
+      {
+        "id": "S1.2",
+        "source_id": "VAC-190-E02",
+        "text": "  再回溯到民國50年，想要調康樂總隊，那是我情緒最差的時候，張雋不曉得怎麼知道我，有一天我就接到電話，那時候軍中電話很難打，他跟我說民本電台有一個現場節目，你有沒有興趣來彈琴。"
+      },
+      {
+        "id": "S1.3",
+        "source_id": "VAC-190-E02",
+        "text": "那時兼差工作青黃不接，我就答應了，那個節目正巧是禮拜天。"
+      }
+    ]
+  },
+  "proposal": {
+    "control": {
+      "action": "continue",
+      "evidence_unit_ids": []
+    },
+    "fields": {
+      "RV13-E1": {
+        "state": "known",
+        "value_unit_ids": [
+          "S1.2",
+          "S1.3"
+        ],
+        "evidence_unit_ids": [
+          "S1.2",
+          "S1.3",
+          "S1.1"
+        ],
+        "scope": {
+          "subject": "self",
+          "period": "as_stated",
+          "relation_unit_ids": "same_as_evidence"
+        }
+      }
+    }
+  },
+  "raw_model_response": {
+    "raw_content": "{\n  \"control\": {\n    \"action\": \"continue\",\n    \"evidence_unit_ids\": []\n  },\n  \"fields\": {\n    \"RV13-E1\": {\n      \"state\": \"known\",\n      \"value_unit_ids\": [\n        \"S1.2\",\n        \"S1.3\"\n      ],\n      \"evidence_unit_ids\": [\n        \"S1.2\",\n        \"S1.3\",\n        \"S1.1\"\n      ],\n      \"scope\": {\n        \"subject\": \"self\",\n        \"period\": \"as_stated\",\n        \"relation_unit_ids\": \"same_as_evidence\"\n      }\n    }\n  }\n}",
+    "parse_error": false,
+    "finish_reason": "stop"
+  }
+}

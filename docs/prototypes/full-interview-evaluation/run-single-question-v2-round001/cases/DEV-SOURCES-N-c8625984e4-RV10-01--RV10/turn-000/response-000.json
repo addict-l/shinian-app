@@ -1,0 +1,228 @@
+{
+  "kind": "model_call",
+  "id": "DEV-SOURCES-N-c8625984e4-RV10-01--RV10-t000-a000",
+  "input": {
+    "question_id": "RV10",
+    "main_question": "家庭幸福、事业成功、身体健康，您最看重什么？",
+    "question_context_mode": "independent",
+    "source_kind": "published_transcript",
+    "historical_question_verified": true,
+    "focus": null,
+    "field_contract": {
+      "RV10-E1": {
+        "label": "本人对家庭事业健康的重要性判断",
+        "type": "view",
+        "question": "家庭幸福、事业成功、身体健康，您最看重哪一项？",
+        "usable_answer": "选择一项、多项并重、无法排序或自己的价值判断均可；不强迫三选一。",
+        "none": true,
+        "requirement": "required",
+        "notes": "",
+        "link": null,
+        "vague": [],
+        "id": "RV10-E1",
+        "question_id": "RV10",
+        "required": true,
+        "activation": {
+          "always": true
+        },
+        "scope": {
+          "subjects": [
+            "self"
+          ],
+          "period": "lifelong",
+          "object_relation": "本人在本题实际问答中所指的本人对家庭事业健康的重要性判断；引用须证明该关系，不从题干假定事实。"
+        },
+        "allowed_states": [
+          "missing",
+          "known",
+          "unknown",
+          "declined",
+          "deferred",
+          "ambiguous",
+          "conflict",
+          "none"
+        ],
+        "semantic_role": "view",
+        "answer_format": {
+          "value_type": "string"
+        }
+      },
+      "RV10-E2": {
+        "label": "本人作此判断的原因",
+        "type": "explanation",
+        "question": "您为什么会这样看？",
+        "usable_answer": "本人对 E1 判断的一句解释即可；不需故事，不由常识代填。",
+        "none": false,
+        "requirement": "conditional",
+        "notes": "对应 E1 的本人的重要性判断。",
+        "link": null,
+        "vague": [],
+        "id": "RV10-E2",
+        "question_id": "RV10",
+        "required": false,
+        "activation": {
+          "known": [
+            "RV10-E1"
+          ]
+        },
+        "scope": {
+          "subjects": [
+            "self"
+          ],
+          "period": "lifelong",
+          "object_relation": "对应 E1 的本人的重要性判断。"
+        },
+        "allowed_states": [
+          "missing",
+          "known",
+          "unknown",
+          "declined",
+          "deferred",
+          "ambiguous",
+          "conflict"
+        ],
+        "semantic_role": "explanation",
+        "answer_format": {
+          "value_type": "string_or_string_array"
+        }
+      },
+      "RV10-O1": {
+        "id": "RV10-O1",
+        "question_id": "RV10",
+        "label": "本人愿意补充的相关经历",
+        "type": "detail",
+        "question": "您还有想补充的吗？",
+        "usable_answer": "本人自愿提供的同题补充；缺少不影响完成。",
+        "required": false,
+        "requirement": "optional",
+        "activation": {
+          "never_ask": true
+        },
+        "none": true,
+        "scope": {
+          "subjects": [
+            "self",
+            "family",
+            "other"
+          ],
+          "period": "as_stated",
+          "object_relation": "只记录本人主动补充且明确属于本题的内容。"
+        },
+        "allowed_states": [
+          "missing",
+          "known",
+          "none",
+          "unknown",
+          "declined",
+          "deferred",
+          "ambiguous"
+        ],
+        "semantic_role": "detail",
+        "answer_format": {
+          "value_type": "string"
+        }
+      }
+    },
+    "question_contract": {
+      "premise": null,
+      "success": "必要要素与实际激活的条件要素均 known 或允许的明确 none，且作用域、关系与原话依据有效；不要求可选项。",
+      "notes": "",
+      "material_type": [
+        "explanation",
+        "view"
+      ]
+    },
+    "sources": [
+      {
+        "id": "CASA-c8625984-Q09",
+        "text": "我常告诫我的孩子们，既然选择了目标，就要坚持并为之努力。 人生不会一帆风顺，不可轻言放弃。踏踏实实做事，诚实待人，做好自己， 切记家庭与事业是同等重要。",
+        "speaker": "narrator",
+        "question_id": "RV10",
+        "question": "给年轻人的寄语是什么？"
+      }
+    ],
+    "previous_fields": {},
+    "evidence_units": [
+      {
+        "id": "S1.1",
+        "source_id": "CASA-c8625984-Q09",
+        "text": "我常告诫我的孩子们，既然选择了目标，就要坚持并为之努力。"
+      },
+      {
+        "id": "S1.2",
+        "source_id": "CASA-c8625984-Q09",
+        "text": " 人生不会一帆风顺，不可轻言放弃。"
+      },
+      {
+        "id": "S1.3",
+        "source_id": "CASA-c8625984-Q09",
+        "text": "踏踏实实做事，诚实待人，做好自己， 切记家庭与事业是同等重要。"
+      }
+    ],
+    "task": "extract_answers_for_target_field_questions_from_recorded_material",
+    "allowed_evidence_unit_ids": [
+      "S1.1",
+      "S1.2",
+      "S1.3"
+    ],
+    "nonknown_protocol_example": {
+      "state": "ambiguous",
+      "value": null,
+      "evidence_unit_ids": [
+        "CHOOSE_AN_ACTUAL_ALLOWED_ID"
+      ],
+      "scope": {
+        "subject": "CHOOSE_ONE_CONTRACT_SUBJECT",
+        "period": "as_stated",
+        "relation_unit_ids": "same_as_evidence"
+      },
+      "clarifications": [
+        "referent"
+      ]
+    },
+    "literal_link_candidates": [],
+    "task_note": "main_question and field_contract define extraction targets. sources.question is a historical context for interpreting short answers, not the question to answer or summarize."
+  },
+  "output": {
+    "control": {
+      "action": "continue",
+      "evidence_unit_ids": []
+    },
+    "fields": {
+      "RV10-E1": {
+        "state": "known",
+        "value_unit_ids": [
+          "S1.3"
+        ],
+        "evidence_unit_ids": [
+          "S1.3"
+        ],
+        "scope": {
+          "subject": "self",
+          "period": "lifelong",
+          "relation_unit_ids": "same_as_evidence"
+        }
+      }
+    }
+  },
+  "raw_content": "{\n  \"control\": {\n    \"action\": \"continue\",\n    \"evidence_unit_ids\": []\n  },\n  \"fields\": {\n    \"RV10-E1\": {\n      \"state\": \"known\",\n      \"value_unit_ids\": [\n        \"S1.3\"\n      ],\n      \"evidence_unit_ids\": [\n        \"S1.3\"\n      ],\n      \"scope\": {\n        \"subject\": \"self\",\n        \"period\": \"lifelong\",\n        \"relation_unit_ids\": \"same_as_evidence\"\n      }\n    }\n  }\n}",
+  "parse_error": false,
+  "seconds": 1.701,
+  "usage": {
+    "prompt_tokens": 3203,
+    "completion_tokens": 114,
+    "total_tokens": 3317,
+    "prompt_tokens_details": {
+      "cached_tokens": 1920
+    },
+    "prompt_cache_hit_tokens": 1920,
+    "prompt_cache_miss_tokens": 1283
+  },
+  "finish_reason": "stop",
+  "response_model": "deepseek-v4-pro",
+  "provider_settings": {
+    "model": "deepseek-v4-pro",
+    "thinking": "disabled",
+    "max_tokens": 16384
+  }
+}

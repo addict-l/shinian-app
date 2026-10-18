@@ -1,0 +1,165 @@
+{
+  "id": "DEV-N-f3af6b6947-SK03-01--SK03d-t000-a000",
+  "payload": {
+    "question_id": "SK03d",
+    "main_question": "小时候家里人相处得怎么样？",
+    "question_context_mode": "independent",
+    "source_kind": "published_transcript",
+    "historical_question_verified": true,
+    "focus": null,
+    "field_contract": {
+      "SK03-E4": {
+        "label": "家庭或实际照料环境相处氛围",
+        "type": "atmosphere",
+        "question": "小时候，家里人平时相处得怎么样？",
+        "usable_answer": "一句有含义的相处描述；照料机构中已明确的相处氛围也可；生活条件过得去、家乡交通方便不等于相处氛围。",
+        "none": false,
+        "requirement": "required",
+        "notes": "实际成长家庭/照料环境中人际相处；生活条件、职业、地理环境不能代填。本人终身孤单等个人情绪不自动描述成长家庭的人际氛围。只说家教严不自动等于家庭不和。",
+        "link": null,
+        "vague": [
+          "一般",
+          "还行"
+        ],
+        "id": "SK03-E4",
+        "question_id": "SK03d",
+        "required": true,
+        "activation": {
+          "always": true
+        },
+        "scope": {
+          "subjects": [
+            "self",
+            "parents",
+            "family",
+            "caregiver"
+          ],
+          "period": "childhood",
+          "object_relation": "实际成长家庭/照料环境中人际相处；生活条件、职业、地理环境不能代填。本人终身孤单等个人情绪不自动描述成长家庭的人际氛围。只说家教严不自动等于家庭不和。"
+        },
+        "allowed_states": [
+          "missing",
+          "known",
+          "unknown",
+          "declined",
+          "deferred",
+          "ambiguous",
+          "conflict"
+        ],
+        "semantic_role": "atmosphere",
+        "answer_format": {
+          "value_type": "string"
+        }
+      },
+      "SK03-O1d": {
+        "id": "SK03-O1d",
+        "question_id": "SK03d",
+        "label": "更多亲属资料或家庭生活片段",
+        "type": "detail",
+        "question": "您还有想补充的吗？",
+        "usable_answer": "本人自愿提供的同题补充；缺少不影响完成。",
+        "required": false,
+        "requirement": "optional",
+        "activation": {
+          "never_ask": true
+        },
+        "none": true,
+        "scope": {
+          "subjects": [
+            "self",
+            "family",
+            "other"
+          ],
+          "period": "as_stated",
+          "object_relation": "只记录本人主动补充且明确属于本题的内容。"
+        },
+        "allowed_states": [
+          "missing",
+          "known",
+          "none",
+          "unknown",
+          "declined",
+          "deferred",
+          "ambiguous"
+        ],
+        "semantic_role": "detail",
+        "answer_format": {
+          "value_type": "string"
+        }
+      }
+    },
+    "question_contract": {
+      "premise": null,
+      "success": "必要要素与实际激活的条件要素均 known 或允许的明确 none，且作用域、关系与原话依据有效；不要求可选项。",
+      "notes": "",
+      "material_type": [
+        "atmosphere",
+        "livelihood",
+        "person_relation",
+        "sibling_relation"
+      ]
+    },
+    "sources": [
+      {
+        "id": "VAC-217-E01",
+        "text": "我是民國16年2月20日在青島出生的。我的命運非常不好，因為我小學剛剛升四年級的時候，日本人已經打到青島來了，我從那時起就開始失學在家。我父親在青島市做生意，我跟我哥哥、母親在鄉下靠務農來維持生活。家鄉生活還說得過去。我失學後就跟著我哥哥下田。",
+        "speaker": "narrator",
+        "question_id": "SK03d",
+        "question": "請侯鎮清先生先介紹一下您小時候的家庭背景。"
+      }
+    ],
+    "previous_fields": {},
+    "evidence_units": [
+      {
+        "id": "S1.1",
+        "source_id": "VAC-217-E01",
+        "text": "我是民國16年2月20日在青島出生的。"
+      },
+      {
+        "id": "S1.2",
+        "source_id": "VAC-217-E01",
+        "text": "我的命運非常不好，因為我小學剛剛升四年級的時候，日本人已經打到青島來了，我從那時起就開始失學在家。"
+      },
+      {
+        "id": "S1.3",
+        "source_id": "VAC-217-E01",
+        "text": "我父親在青島市做生意，我跟我哥哥、母親在鄉下靠務農來維持生活。"
+      },
+      {
+        "id": "S1.4",
+        "source_id": "VAC-217-E01",
+        "text": "家鄉生活還說得過去。"
+      },
+      {
+        "id": "S1.5",
+        "source_id": "VAC-217-E01",
+        "text": "我失學後就跟著我哥哥下田。"
+      }
+    ],
+    "task": "extract_answers_for_target_field_questions_from_recorded_material",
+    "allowed_evidence_unit_ids": [
+      "S1.1",
+      "S1.2",
+      "S1.3",
+      "S1.4",
+      "S1.5"
+    ],
+    "nonknown_protocol_example": {
+      "state": "ambiguous",
+      "value": null,
+      "evidence_unit_ids": [
+        "CHOOSE_AN_ACTUAL_ALLOWED_ID"
+      ],
+      "scope": {
+        "subject": "CHOOSE_ONE_CONTRACT_SUBJECT",
+        "period": "as_stated",
+        "relation_unit_ids": "same_as_evidence"
+      },
+      "clarifications": [
+        "referent"
+      ]
+    },
+    "literal_link_candidates": [],
+    "task_note": "main_question and field_contract define extraction targets. sources.question is a historical context for interpreting short answers, not the question to answer or summarize."
+  }
+}

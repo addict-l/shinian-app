@@ -1,0 +1,187 @@
+[
+  {
+    "file": "check-engine.js",
+    "exit": 0,
+    "result": {
+      "kind": "synthetic_code_guard_regression",
+      "version": "full-interview-v1.22.0",
+      "tests": 181,
+      "passed": 181,
+      "failed": []
+    }
+  },
+  {
+    "file": "check-field-rejections.js",
+    "exit": 0,
+    "result": {
+      "kind": "synthetic_minimized_field_rejection_tests",
+      "tests": 10,
+      "passed": 10,
+      "results": [
+        {
+          "name": "selected joint-proof units need no duplicate literal relation attribute",
+          "pass": true
+        },
+        {
+          "name": "terminal quoted display text normalizes to null then explicit basis is still checked",
+          "pass": true
+        },
+        {
+          "name": "semantic nonanswer is rejected without blocking independent missing-field selection",
+          "pass": true
+        },
+        {
+          "name": "not mentioning the target cannot become unknown or close it",
+          "pass": true
+        },
+        {
+          "name": "unsupported empty not-applicable is not stored as absence",
+          "pass": true
+        },
+        {
+          "name": "joint proof does not repair invented unit or source",
+          "pass": true
+        },
+        {
+          "name": "wrong role remains hard invalid in the joint proof interface",
+          "pass": true
+        },
+        {
+          "name": "semantic terminal rejection cannot erase a valid same-question cache",
+          "pass": true
+        },
+        {
+          "name": "explicit correction remains strict even for semantic terminal rejection",
+          "pass": true
+        },
+        {
+          "name": "quoted terminal display text does not supply absent negative semantics",
+          "pass": true
+        }
+      ]
+    }
+  },
+  {
+    "file": "check-typed-precision.js",
+    "exit": 0,
+    "result": {
+      "kind": "synthetic_typed_precision_normalization",
+      "tests": 6,
+      "passed": 6,
+      "rows": [
+        {
+          "name": "same-type singleton precision wrapper is losslessly lifted",
+          "pass": true
+        },
+        {
+          "name": "same top-level precision is not a conflict",
+          "pass": true
+        },
+        {
+          "name": "conflicting precision is never overwritten",
+          "pass": true
+        },
+        {
+          "name": "wrapper with extra semantic properties is still rejected",
+          "pass": true
+        },
+        {
+          "name": "wrong-type wrapper is still rejected",
+          "pass": true
+        },
+        {
+          "name": "moving precision never repairs a forged source",
+          "pass": true
+        }
+      ],
+      "no_DS_calls": true
+    }
+  },
+  {
+    "file": "check-joint-proof.js",
+    "exit": 0,
+    "result": {
+      "kind": "synthetic_joint_proof_union",
+      "tests": 4,
+      "passed": 4,
+      "rows": [
+        {
+          "name": "explicit extra relation units augment selected joint answer proof",
+          "pass": true
+        },
+        {
+          "name": "unselected sentence gaps are never filled",
+          "pass": true
+        },
+        {
+          "name": "explicitly selected foreign unit remains rejected",
+          "pass": true
+        },
+        {
+          "name": "legacy non-joint interface does not augment its relation selection",
+          "pass": true
+        }
+      ],
+      "no_DS_calls": true
+    }
+  },
+  {
+    "file": "check-field-review.js",
+    "exit": 0,
+    "result": {
+      "kind": "synthetic_atomic_control_integrity",
+      "tests": 6,
+      "passed": 6,
+      "checks": [
+        {
+          "name": "missing first control cannot silently become continue",
+          "pass": true
+        },
+        {
+          "name": "unparsed first proposal cannot silently become continue",
+          "pass": true
+        },
+        {
+          "name": "explicit first pause remains intact after per-field reviews",
+          "pass": true
+        },
+        {
+          "name": "review cannot return another field unnoticed",
+          "pass": true
+        },
+        {
+          "name": "malformed field response cannot silently become missing",
+          "pass": true
+        },
+        {
+          "name": "duplicate reviews cannot replace another target",
+          "pass": true
+        }
+      ]
+    }
+  },
+  {
+    "file": "check-evidence-units.js",
+    "exit": 0,
+    "result": {
+      "kind": "synthetic_evidence_unit_checks",
+      "passed": true,
+      "narrative_units": 4,
+      "no_DS_calls": true
+    }
+  },
+  {
+    "file": "all-contract-boundaries",
+    "exit": 0,
+    "result": {
+      "kind": "synthetic_all_contract_boundaries",
+      "runtime": "full-interview-v1.22.0",
+      "field_contracts": 193,
+      "question_contracts": 62,
+      "tests": 895,
+      "passed": 895,
+      "failed": [],
+      "no_DS_calls": true
+    }
+  }
+]

@@ -1,0 +1,143 @@
+{
+  "kind": "evaluated",
+  "result": {
+    "decision": "ready",
+    "target": null,
+    "question": null,
+    "fields": {
+      "CH03-E2": {
+        "state": "known",
+        "scope": {
+          "subject": "parents",
+          "period": "childhood",
+          "relation_evidence": [
+            {
+              "source_id": "VAC-186-E05",
+              "quote": "  雖然那時候家裡經濟環境轉差，母親仍然非常疼我，到讀初中的時候，我一直都是乘坐專用人力車去上學。"
+            }
+          ]
+        },
+        "value": "  雖然那時候家裡經濟環境轉差，母親仍然非常疼我，到讀初中的時候，我一直都是乘坐專用人力車去上學。",
+        "evidence": [
+          {
+            "source_id": "VAC-186-E05",
+            "quote": "  雖然那時候家裡經濟環境轉差，母親仍然非常疼我，到讀初中的時候，我一直都是乘坐專用人力車去上學。"
+          }
+        ]
+      },
+      "CH03-O1b": {
+        "state": "missing",
+        "value": null,
+        "evidence": []
+      }
+    },
+    "effective": {
+      "CH03-E2": "known",
+      "CH03-O1b": "missing"
+    },
+    "active": [
+      "CH03-E2"
+    ],
+    "errors": [],
+    "rejected_candidates": [],
+    "scope_notices": [
+      {
+        "field_id": "CH03-E2",
+        "rule": "expand_explicit_same_field_evidence_alias"
+      }
+    ],
+    "protocol_normalizations": [
+      {
+        "rule": "expand_control_evidence_units",
+        "original_control": {
+          "action": "continue",
+          "evidence_unit_ids": []
+        },
+        "selections": [
+          {
+            "attribute": "evidence_unit_ids",
+            "selected_ids": [],
+            "refs": []
+          }
+        ]
+      },
+      {
+        "field_id": "CH03-E2",
+        "rule": "expand_selected_original_evidence_units",
+        "original_candidate": {
+          "state": "known",
+          "value_unit_ids": [
+            "S1.5"
+          ],
+          "evidence_unit_ids": [
+            "S1.5"
+          ],
+          "scope": {
+            "subject": "parents",
+            "period": "childhood",
+            "relation_unit_ids": "same_as_evidence"
+          }
+        },
+        "selections": [
+          {
+            "attribute": "value",
+            "rule": "copy_selected_contiguous_original_units",
+            "selected_ids": [
+              "S1.5"
+            ],
+            "refs": [
+              {
+                "source_id": "VAC-186-E05",
+                "quote": "  雖然那時候家裡經濟環境轉差，母親仍然非常疼我，到讀初中的時候，我一直都是乘坐專用人力車去上學。"
+              }
+            ]
+          },
+          {
+            "attribute": "evidence_unit_ids",
+            "selected_ids": [
+              "S1.5"
+            ],
+            "refs": [
+              {
+                "source_id": "VAC-186-E05",
+                "quote": "  雖然那時候家裡經濟環境轉差，母親仍然非常疼我，到讀初中的時候，我一直都是乘坐專用人力車去上學。"
+              }
+            ]
+          },
+          {
+            "attribute": "relation_unit_ids",
+            "alias": "same_as_evidence"
+          }
+        ]
+      },
+      {
+        "field_id": "CH03-E2",
+        "rule": "expand_explicit_same_field_evidence_alias",
+        "original_candidate": {
+          "state": "known",
+          "scope": {
+            "subject": "parents",
+            "period": "childhood",
+            "relation_evidence": "same_as_evidence"
+          },
+          "value": "  雖然那時候家裡經濟環境轉差，母親仍然非常疼我，到讀初中的時候，我一直都是乘坐專用人力車去上學。",
+          "evidence": [
+            {
+              "source_id": "VAC-186-E05",
+              "quote": "  雖然那時候家裡經濟環境轉差，母親仍然非常疼我，到讀初中的時候，我一直都是乘坐專用人力車去上學。"
+            }
+          ]
+        }
+      }
+    ],
+    "optional_errors": [],
+    "inactive_conditional_errors": [],
+    "unbound_material": [],
+    "provenance": {},
+    "version": "full-interview-v2.0.0",
+    "semantic_rejections": []
+  },
+  "internal_repairs": 0,
+  "semantic_review_calls": 1,
+  "at": "2026-10-18T07:33:02.654051+00:00"
+}

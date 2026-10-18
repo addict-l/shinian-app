@@ -1,0 +1,137 @@
+{
+  "decision": "ready",
+  "target": null,
+  "question": null,
+  "fields": {
+    "WK13-E1": {
+      "state": "known",
+      "scope": {
+        "subject": "self",
+        "period": "lifelong",
+        "relation_evidence": [
+          {
+            "source_id": "CASA-c5a5031a-Q07",
+            "quote": "最得意的是 20 多年临床工作至今為止无医疗亊故，有二例家属曾试度为钱财或被某些因素诱惑起诉我而无任何医学问责根底基礎 ，最终自动撤销起诉 ！"
+          }
+        ]
+      },
+      "value": "最得意的是 20 多年临床工作至今為止无医疗亊故，有二例家属曾试度为钱财或被某些因素诱惑起诉我而无任何医学问责根底基礎 ，最终自动撤销起诉 ！",
+      "evidence": [
+        {
+          "source_id": "CASA-c5a5031a-Q07",
+          "quote": "最得意的是 20 多年临床工作至今為止无医疗亊故，有二例家属曾试度为钱财或被某些因素诱惑起诉我而无任何医学问责根底基礎 ，最终自动撤销起诉 ！"
+        }
+      ]
+    },
+    "WK13-O1": {
+      "state": "missing",
+      "value": null,
+      "evidence": []
+    }
+  },
+  "effective": {
+    "WK13-E1": "known",
+    "WK13-O1": "missing"
+  },
+  "active": [
+    "WK13-E1"
+  ],
+  "errors": [],
+  "rejected_candidates": [],
+  "scope_notices": [
+    {
+      "field_id": "WK13-E1",
+      "rule": "expand_explicit_same_field_evidence_alias"
+    }
+  ],
+  "protocol_normalizations": [
+    {
+      "rule": "expand_control_evidence_units",
+      "original_control": {
+        "action": "continue",
+        "evidence_unit_ids": []
+      },
+      "selections": [
+        {
+          "attribute": "evidence_unit_ids",
+          "selected_ids": [],
+          "refs": []
+        }
+      ]
+    },
+    {
+      "field_id": "WK13-E1",
+      "rule": "expand_selected_original_evidence_units",
+      "original_candidate": {
+        "state": "known",
+        "value_unit_ids": [
+          "S1.1"
+        ],
+        "evidence_unit_ids": [
+          "S1.1"
+        ],
+        "scope": {
+          "subject": "self",
+          "period": "lifelong",
+          "relation_unit_ids": "same_as_evidence"
+        }
+      },
+      "selections": [
+        {
+          "attribute": "value",
+          "rule": "copy_selected_contiguous_original_units",
+          "selected_ids": [
+            "S1.1"
+          ],
+          "refs": [
+            {
+              "source_id": "CASA-c5a5031a-Q07",
+              "quote": "最得意的是 20 多年临床工作至今為止无医疗亊故，有二例家属曾试度为钱财或被某些因素诱惑起诉我而无任何医学问责根底基礎 ，最终自动撤销起诉 ！"
+            }
+          ]
+        },
+        {
+          "attribute": "evidence_unit_ids",
+          "selected_ids": [
+            "S1.1"
+          ],
+          "refs": [
+            {
+              "source_id": "CASA-c5a5031a-Q07",
+              "quote": "最得意的是 20 多年临床工作至今為止无医疗亊故，有二例家属曾试度为钱财或被某些因素诱惑起诉我而无任何医学问责根底基礎 ，最终自动撤销起诉 ！"
+            }
+          ]
+        },
+        {
+          "attribute": "relation_unit_ids",
+          "alias": "same_as_evidence"
+        }
+      ]
+    },
+    {
+      "field_id": "WK13-E1",
+      "rule": "expand_explicit_same_field_evidence_alias",
+      "original_candidate": {
+        "state": "known",
+        "scope": {
+          "subject": "self",
+          "period": "lifelong",
+          "relation_evidence": "same_as_evidence"
+        },
+        "value": "最得意的是 20 多年临床工作至今為止无医疗亊故，有二例家属曾试度为钱财或被某些因素诱惑起诉我而无任何医学问责根底基礎 ，最终自动撤销起诉 ！",
+        "evidence": [
+          {
+            "source_id": "CASA-c5a5031a-Q07",
+            "quote": "最得意的是 20 多年临床工作至今為止无医疗亊故，有二例家属曾试度为钱财或被某些因素诱惑起诉我而无任何医学问责根底基礎 ，最终自动撤销起诉 ！"
+          }
+        ]
+      }
+    }
+  ],
+  "optional_errors": [],
+  "inactive_conditional_errors": [],
+  "unbound_material": [],
+  "provenance": {},
+  "version": "full-interview-v2.0.0",
+  "semantic_rejections": []
+}

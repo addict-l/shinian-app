@@ -1,0 +1,157 @@
+{
+  "payload": {
+    "question_id": "LT06",
+    "main_question": "对于以后的日子您最盼望什么？",
+    "question_context_mode": "independent",
+    "current_question": "现在的 hobby , 愿意分享的照片，疫情后打算去哪里旅游？",
+    "source_kind": "published_transcript",
+    "historical_question_verified": true,
+    "focus": null,
+    "field_contract": {
+      "LT06-E1": {
+        "label": "本人对未来的心愿或期许",
+        "type": "wish",
+        "question": "对于以后的日子，您最盼望什么？",
+        "usable_answer": "至少一个本人心愿/期许或明确没有特别心愿；不需计划、期限或正面措辞。",
+        "none": true,
+        "requirement": "required",
+        "notes": "",
+        "link": null,
+        "vague": [],
+        "id": "LT06-E1",
+        "question_id": "LT06",
+        "required": true,
+        "activation": {
+          "always": true
+        },
+        "scope": {
+          "subjects": [
+            "self"
+          ],
+          "period": "now",
+          "object_relation": "本人在本题实际问答中所指的本人对未来的心愿或期许；引用须证明该关系，不从题干假定事实。"
+        },
+        "allowed_states": [
+          "missing",
+          "known",
+          "unknown",
+          "declined",
+          "deferred",
+          "ambiguous",
+          "conflict",
+          "none"
+        ],
+        "semantic_role": "wish",
+        "answer_format": {
+          "value_type": "string"
+        }
+      },
+      "LT06-O1": {
+        "id": "LT06-O1",
+        "question_id": "LT06",
+        "label": "本人愿意补充的打算或缘由",
+        "type": "detail",
+        "question": "您还有想补充的吗？",
+        "usable_answer": "本人自愿提供的同题补充；缺少不影响完成。",
+        "required": false,
+        "requirement": "optional",
+        "activation": {
+          "never_ask": true
+        },
+        "none": true,
+        "scope": {
+          "subjects": [
+            "self",
+            "family",
+            "other"
+          ],
+          "period": "as_stated",
+          "object_relation": "只记录本人主动补充且明确属于本题的内容。"
+        },
+        "allowed_states": [
+          "missing",
+          "known",
+          "none",
+          "unknown",
+          "declined",
+          "deferred",
+          "ambiguous"
+        ],
+        "semantic_role": "detail",
+        "answer_format": {
+          "value_type": "string"
+        }
+      }
+    },
+    "question_contract": {
+      "premise": null,
+      "success": "必要要素与实际激活的条件要素均 known 或允许的明确 none，且作用域、关系与原话依据有效；不要求可选项。",
+      "notes": "",
+      "material_type": [
+        "wish"
+      ]
+    },
+    "sources": [
+      {
+        "id": "CASA-c5a5031a-Q04",
+        "text": "打算去哪旅游？ 要想去的地方很多，以前没有太多机会旅游。现在趁退休了，身体尚能行，将争取到中国各地和世界各国去旅游。但愿疫情早日在全球获得控制，我将先囘中國去陪伴照顧年邁的父母，去旅游的話，原则上遠距離先走， 近距離后走 。",
+        "speaker": "narrator",
+        "question_id": "LT06",
+        "question": "现在的 hobby , 愿意分享的照片，疫情后打算去哪里旅游？"
+      }
+    ],
+    "previous_fields": {},
+    "ask_counts": {},
+    "evidence_units": [
+      {
+        "id": "S1.1",
+        "source_id": "CASA-c5a5031a-Q04",
+        "text": "打算去哪旅游？"
+      },
+      {
+        "id": "S1.2",
+        "source_id": "CASA-c5a5031a-Q04",
+        "text": " 要想去的地方很多，以前没有太多机会旅游。"
+      },
+      {
+        "id": "S1.3",
+        "source_id": "CASA-c5a5031a-Q04",
+        "text": "现在趁退休了，身体尚能行，将争取到中国各地和世界各国去旅游。"
+      },
+      {
+        "id": "S1.4",
+        "source_id": "CASA-c5a5031a-Q04",
+        "text": "但愿疫情早日在全球获得控制，我将先囘中國去陪伴照顧年邁的父母，去旅游的話，原则上遠距離先走， 近距離后走 。"
+      }
+    ]
+  },
+  "proposal": {
+    "control": {
+      "action": "continue",
+      "evidence_unit_ids": []
+    },
+    "fields": {
+      "LT06-E1": {
+        "state": "known",
+        "value_unit_ids": [
+          "S1.3",
+          "S1.4"
+        ],
+        "evidence_unit_ids": [
+          "S1.3",
+          "S1.4"
+        ],
+        "scope": {
+          "subject": "self",
+          "period": "now",
+          "relation_unit_ids": "same_as_evidence"
+        }
+      }
+    }
+  },
+  "raw_model_response": {
+    "raw_content": "{\n  \"control\": {\n    \"action\": \"continue\",\n    \"evidence_unit_ids\": []\n  },\n  \"fields\": {\n    \"LT06-E1\": {\n      \"state\": \"known\",\n      \"value_unit_ids\": [\n        \"S1.3\",\n        \"S1.4\"\n      ],\n      \"evidence_unit_ids\": [\n        \"S1.3\",\n        \"S1.4\"\n      ],\n      \"scope\": {\n        \"subject\": \"self\",\n        \"period\": \"now\",\n        \"relation_unit_ids\": \"same_as_evidence\"\n      }\n    }\n  }\n}",
+    "parse_error": false,
+    "finish_reason": "stop"
+  }
+}
