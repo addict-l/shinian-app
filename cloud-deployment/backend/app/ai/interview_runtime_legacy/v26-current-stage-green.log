@@ -1,0 +1,15 @@
+test_a_value_mixing_current_and_future_is_still_unbound (tools.test_interview_current_stage_v26.CurrentStageTests) ... ok
+test_current_marker_after_past_or_future_resets_the_local_frame (tools.test_interview_current_stage_v26.CurrentStageTests) ... ok
+test_current_marker_elsewhere_does_not_promote_a_future_selected_act (tools.test_interview_current_stage_v26.CurrentStageTests) ... ok
+test_future_frame_cannot_be_hidden_by_quoting_just_the_last_clause (tools.test_interview_current_stage_v26.CurrentStageTests) ... ok
+test_mixed_question_cannot_supply_time_for_an_unmarked_short_answer (tools.test_interview_current_stage_v26.CurrentStageTests) ... ok
+test_recent_action_is_not_erased_by_unselected_future_evidence (tools.test_interview_current_stage_v26.CurrentStageTests) ... ok
+test_retirement_afterword_is_not_automatically_a_future_wish (tools.test_interview_current_stage_v26.CurrentStageTests) ... ok
+test_single_current_question_does_not_override_explicit_future_prefix (tools.test_interview_current_stage_v26.CurrentStageTests) ... ok
+test_unambiguous_actual_current_question_still_supports_an_elliptic_answer (tools.test_interview_current_stage_v26.CurrentStageTests) ... ok
+test_uncited_current_marker_does_not_become_silent_positive_evidence (tools.test_interview_current_stage_v26.CurrentStageTests) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.485s
+
+OK

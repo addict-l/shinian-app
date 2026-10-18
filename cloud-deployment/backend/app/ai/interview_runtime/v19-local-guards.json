@@ -1,0 +1,44 @@
+[
+  {
+    "name": "check-engine.js",
+    "exit": 0,
+    "tests": 181,
+    "passed": 181,
+    "failures": []
+  },
+  {
+    "name": "check-field-rejections.js",
+    "exit": 0,
+    "tests": 10,
+    "passed": 10,
+    "failures": []
+  },
+  {
+    "name": "check-typed-precision.js",
+    "exit": 0,
+    "tests": 6,
+    "passed": 6,
+    "failures": []
+  },
+  {
+    "name": "check-joint-proof.js",
+    "exit": 0,
+    "tests": 4,
+    "passed": 4,
+    "failures": []
+  },
+  {
+    "name": "check-field-review.js",
+    "exit": 0,
+    "tests": 6,
+    "passed": 6,
+    "failures": []
+  },
+  {
+    "name": "check-evidence-units.js",
+    "exit": 0,
+    "tests": null,
+    "passed": true,
+    "failures": []
+  }
+]

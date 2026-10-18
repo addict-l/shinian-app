@@ -187,7 +187,8 @@ class WorkflowService:
             checkpoints = dict(guide.module_checkpoints) if guide else {}
             if guide:
                 checkpoints[guide.module] = guide.model_dump(mode='json', exclude={'module_checkpoints'})
-            new_guide = GuidedInterviewState.model_validate(checkpoints[module]) if module in checkpoints else GuidedInterviewState(module=module)
+            new_guide = GuidedInterviewState.model_validate(checkpoints[module]) if module in checkpoints else (
+                GuidedInterviewState(version=3, module=module, runtime_version=guide.runtime_version) if guide and guide.version == 3 else GuidedInterviewState(module=module))
             new_guide.module_selected = True
             new_guide.module_checkpoints = checkpoints
             if guide:
@@ -361,7 +362,8 @@ class WorkflowService:
                 raise HTTPException(409, '这段回忆已保存，请开始新的对话')
             from app.services.interview_modules import requested_module
             guide = session.information.guided_interview
-            selected_module = requested_module(content, allow_label=bool(guide and (not guide.module_selected or guide.topic_index>=6)))
+            from app.services.interview_modules import topic_count
+            selected_module = requested_module(content, allow_label=bool(guide and (not guide.module_selected or guide.topic_index>=topic_count(guide))))
             changing = selected_module and (not guide or guide.module != selected_module or not guide.module_selected)
             if previous is None and changing:
                 from app.services.guided_interview import current_sources
@@ -372,12 +374,21 @@ class WorkflowService:
                     if draft and not draft.saved_memory_id:
                         raise HTTPException(409, '当前草稿已保留，请先核对保存，再切换采访模块。')
             if previous is None:
+                # Preserve the retained request as the latest user message until
+                # its provider chain finishes. Inserting another answer first
+                # would make the original retry fail the latest-user guard and
+                # strand both answers behind different pending request IDs.
+                pending = ((guide.contract_state or {}).get('pending')
+                           if guide and guide.version == 3 else None)
+                from app.services.interview_controls import skips_question
+                if pending and pending.get('request_id') != str(request_id) and not skips_question(content):
+                    raise HTTPException(409, '上次回答已保留，请先重试完成该回答，再发送新内容。')
                 with SessionLocal.begin() as db:
                     assets = [db.get(MediaAssetModel, media_id) for media_id in attachment_ids]
                     if any(asset is None or asset.session_id != str(session_id) or asset.message_id is not None for asset in assets):
                         raise HTTPException(409, '照片不存在、属于其他故事或已经发送，请重新加载')
                     db.add(ChatMessageModel(id=str(request_id), session_id=str(session_id), role='user',
-                                            type='interview_control' if selected_module else 'text' if content else 'media', content=content,
+                                            type='interview_control' if selected_module or (guide and skips_question(content)) else 'text' if content else 'media', content=content,
                                             created_at=datetime.now(timezone.utc)))
                     db.flush()
                     for position, asset in enumerate(assets):
@@ -598,7 +609,8 @@ class WorkflowService:
                         guide.phase='saved';guide.pending_question=None
                         if UUID(memory_id) not in guide.saved_memory_ids:
                             guide.saved_memory_ids.append(UUID(memory_id))
-                            if all(coverage(guide).values()):
+                            covered = coverage(guide)
+                            if covered and all(covered.values()):
                                 guide.material_memory_ids.append(UUID(memory_id))
                                 if topic_for(guide).profile in STORY_PROFILES:
                                     guide.qualified_memory_ids.append(UUID(memory_id))
@@ -623,7 +635,7 @@ class WorkflowService:
             fresh=self.chat.get_session(session_id)
             guide=fresh.information.guided_interview
             if (guide and guide.saved_memory_ids and
-                    (len(guide.saved_memory_ids)>=5 or guide.module=='reflection' or guide.topic_index==5) and
+                    (guide.version == 3 or len(guide.saved_memory_ids)>=5 or guide.module=='reflection' or guide.topic_index==5) and
                     guide.module_assessed_count<len(guide.saved_memory_ids)):
                 from app.services.guided_interview import assess_module
                 try:

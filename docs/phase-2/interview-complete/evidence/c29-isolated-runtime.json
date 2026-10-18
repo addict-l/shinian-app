@@ -1,0 +1,10 @@
+{
+  "scope": "isolated schema only; production unchanged",
+  "pin": "6cc0c0648f88e4ccc930f0910e4eacd8cb4e1842b5667016038d0da81c5d960e",
+  "image": "sha256:ddabd07d513ae42a9f33129905f2b583d85440e531eae6c2b3174528f10041bf",
+  "health": {
+    "status": "ok",
+    "database": "ok",
+    "llm_configured": true
+  }
+}

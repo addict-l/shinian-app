@@ -4,7 +4,8 @@ from uuid import UUID
 from pydantic import BaseModel, Field, ConfigDict
 from app.schemas.guided_interview import GuidedQuote
 
-TopicID = Literal['home', 'learning', 'early_work', 'later_work', 'family', 'changes', 'present']
+TopicID = Literal['home', 'learning', 'early_work', 'later_work', 'family', 'changes', 'present',
+                  'SK01', 'SK01b', 'SK01c', 'SK02', 'SK03', 'SK03b', 'SK03c', 'SK03d', 'SK04', 'SK05', 'SK06']
 
 class LifeField(BaseModel):
     topic_id: TopicID

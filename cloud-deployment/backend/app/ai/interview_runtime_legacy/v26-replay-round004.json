@@ -1,0 +1,2060 @@
+{
+  "scope": "Offline saved-input code counterfactual only; no new DS calls, no full pipeline re-execution, no acceptance or DS accuracy claim.",
+  "no_model_calls": true,
+  "run": "/Users/student03/Documents/ChatGPT/ai memory/docs/prototypes/full-interview-evaluation/run-v1.25-three-round004",
+  "engine": "/Users/student03/Documents/ChatGPT/ai memory/docs/prototypes/full-interview-v1/candidate30-scoped-feedback/engine.js",
+  "engine_sha256": "068bed33a2ceafc437f70b4bf3d61b1dd7273e165e3bec983b440e3474c187fb",
+  "version": "full-interview-v1.26.0",
+  "rows": [
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round004/cases/DEV-SOURCES-N-a06ea91a56-SK05-01/turn-000/engine-input-000-review.json",
+      "question_id": "SK05",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "SK05-E1": {
+            "state": "known",
+            "value": "我長到這麼大，不知道要怕什麼。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-194-E02",
+                  "quote": "我長到這麼大，不知道要怕什麼。"
+                }
+              ]
+            }
+          },
+          "SK05-R1": {
+            "state": "missing",
+            "value": null
+          },
+          "SK05-E2": {
+            "state": "missing",
+            "value": null
+          },
+          "SK05-E3": {
+            "state": "missing",
+            "value": null
+          },
+          "SK05-O1": {
+            "state": "known",
+            "value": "有一次在坪林山區闊賴下山，我帶了十二個人在山上住了一夜，我們下山後，老百姓都看到我們問說：「你們昨天晚上住在哪裡？」我說：「住在山上一個空房子啊！」他們訝異地說：「什麼？你們敢住啊」我說：「有什麼不敢住啊！」他們說「裡面不乾淨啊！」我說：「我們把它掃一掃就乾淨了。」老百姓們都說他們天黑都不敢到那去！我說：「奇怪了，你搞清楚我們這一批人啊！我們怕什麼？鬼沒出來是他有運氣，他要出來讓我們逮到，就吃了他！」哈哈哈！大家都餓得不得了，求生隊嘛！見什麼抓什麼吃，那鬼怎麼敢出來，我們比鬼還厲害。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-194-E02",
+                  "quote": "有一次在坪林山區闊賴下山，我帶了十二個人在山上住了一夜，我們下山後，老百姓都看到我們問說：「你們昨天晚上住在哪裡？」我說：「住在山上一個空房子啊！」他們訝異地說：「什麼？你們敢住啊」我說：「有什麼不敢住啊！」他們說「裡面不乾淨啊！」我說：「我們把它掃一掃就乾淨了。」老百姓們都說他們天黑都不敢到那去！我說：「奇怪了，你搞清楚我們這一批人啊！我們怕什麼？鬼沒出來是他有運氣，他要出來讓我們逮到，就吃了他！」哈哈哈！大家都餓得不得了，求生隊嘛！見什麼抓什麼吃，那鬼怎麼敢出來，我們比鬼還厲害。"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "SK05-E1": {
+            "state": "known",
+            "value": "我長到這麼大，不知道要怕什麼。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-194-E02",
+                  "quote": "我長到這麼大，不知道要怕什麼。"
+                }
+              ]
+            }
+          },
+          "SK05-R1": {
+            "state": "missing",
+            "value": null
+          },
+          "SK05-E2": {
+            "state": "missing",
+            "value": null
+          },
+          "SK05-E3": {
+            "state": "missing",
+            "value": null
+          },
+          "SK05-O1": {
+            "state": "known",
+            "value": "有一次在坪林山區闊賴下山，我帶了十二個人在山上住了一夜，我們下山後，老百姓都看到我們問說：「你們昨天晚上住在哪裡？」我說：「住在山上一個空房子啊！」他們訝異地說：「什麼？你們敢住啊」我說：「有什麼不敢住啊！」他們說「裡面不乾淨啊！」我說：「我們把它掃一掃就乾淨了。」老百姓們都說他們天黑都不敢到那去！我說：「奇怪了，你搞清楚我們這一批人啊！我們怕什麼？鬼沒出來是他有運氣，他要出來讓我們逮到，就吃了他！」哈哈哈！大家都餓得不得了，求生隊嘛！見什麼抓什麼吃，那鬼怎麼敢出來，我們比鬼還厲害。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-194-E02",
+                  "quote": "有一次在坪林山區闊賴下山，我帶了十二個人在山上住了一夜，我們下山後，老百姓都看到我們問說：「你們昨天晚上住在哪裡？」我說：「住在山上一個空房子啊！」他們訝異地說：「什麼？你們敢住啊」我說：「有什麼不敢住啊！」他們說「裡面不乾淨啊！」我說：「我們把它掃一掃就乾淨了。」老百姓們都說他們天黑都不敢到那去！我說：「奇怪了，你搞清楚我們這一批人啊！我們怕什麼？鬼沒出來是他有運氣，他要出來讓我們逮到，就吃了他！」哈哈哈！大家都餓得不得了，求生隊嘛！見什麼抓什麼吃，那鬼怎麼敢出來，我們比鬼還厲害。"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round004/cases/DEV-SOURCES-N-ac3fdd1b55-RV01-01/turn-000/engine-input-000-review.json",
+      "question_id": "RV01",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "RV01-E1": {
+            "state": "known",
+            "value": "后来选择到中国人民 大学哲学系学习马克思主 义哲学，因此 使我在专业上有了精神依归，这也是我人生极为珍视的第二次重要抉择。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-liudaoyong-E002",
+                  "quote": "后来选择到中国人民 大学哲学系学习马克思主 义哲学，因此 使我在专业上有了精神依归，这也是我人生极为珍视的第二次重要抉择。"
+                }
+              ]
+            }
+          },
+          "RV01-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "RV01-E1": {
+            "state": "known",
+            "value": "后来选择到中国人民 大学哲学系学习马克思主 义哲学，因此 使我在专业上有了精神依归，这也是我人生极为珍视的第二次重要抉择。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-liudaoyong-E002",
+                  "quote": "后来选择到中国人民 大学哲学系学习马克思主 义哲学，因此 使我在专业上有了精神依归，这也是我人生极为珍视的第二次重要抉择。"
+                }
+              ]
+            }
+          },
+          "RV01-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round004/cases/DEV-SOURCES-N-ac3fdd1b55-RV14-01/turn-000/engine-input-000-review.json",
+      "question_id": "RV14",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "RV14-E1": {
+            "state": "known",
+            "value": "这三次选择有三个关键词“党”、“马克思主义”、“教师”，三位一体合成一句话，就是党的马克思主义教师。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-liudaoyong-E003",
+                  "quote": "在回到南开大学经济系所组建的天津财经学院，成为一名教师后，再来到东南大学任教，从此我有了事业依托，这亦成为影响我一生的价值归属。这三次选择有三个关键词“党”、“马克思主义”、“教师”，三位一体合成一句话，就是党的马克思主义教师。"
+                }
+              ]
+            }
+          },
+          "RV14-O1": {
+            "state": "known",
+            "value": "从此我就老老实实、认认真真地从事马克思主义教育工作，这就成为我一生当中的身份标识，常被戏称为“老马列”。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-liudaoyong-E003",
+                  "quote": "从此我就老老实实、认认真真地从事马克思主义教育工作，这就成为我一生当中的身份标识，常被戏称为“老马列”。"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "RV14-E1": {
+            "state": "known",
+            "value": "这三次选择有三个关键词“党”、“马克思主义”、“教师”，三位一体合成一句话，就是党的马克思主义教师。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-liudaoyong-E003",
+                  "quote": "在回到南开大学经济系所组建的天津财经学院，成为一名教师后，再来到东南大学任教，从此我有了事业依托，这亦成为影响我一生的价值归属。这三次选择有三个关键词“党”、“马克思主义”、“教师”，三位一体合成一句话，就是党的马克思主义教师。"
+                }
+              ]
+            }
+          },
+          "RV14-O1": {
+            "state": "known",
+            "value": "从此我就老老实实、认认真真地从事马克思主义教育工作，这就成为我一生当中的身份标识，常被戏称为“老马列”。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-liudaoyong-E003",
+                  "quote": "从此我就老老实实、认认真真地从事马克思主义教育工作，这就成为我一生当中的身份标识，常被戏称为“老马列”。"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round004/cases/DEV-SOURCES-N-ac3fdd1b55-SK06-01/turn-000/engine-input-000-review.json",
+      "question_id": "SK06",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "SK06-E1": {
+            "state": "known",
+            "value": "这三次选择有三个关键词“党”、“马克思主义”、“教师”，三位一体合成一句话，就是党的马克思主义教师。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-liudaoyong-E003",
+                  "quote": "这三次选择有三个关键词“党”、“马克思主义”、“教师”，三位一体合成一句话，就是党的马克思主义教师。从此我就老老实实、认认真真地从事马克思主义教育工作，这就成为我一生当中的身份标识，常被戏称为“老马列”。"
+                }
+              ]
+            }
+          },
+          "SK06-E2": {
+            "state": "known",
+            "value": "对“党”忠，忠贞不二；对“马”诚，诚信不移；对“教”勤，勤勉不怠。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-liudaoyong-E003",
+                  "quote": "对“党”忠，忠贞不二；对“马”诚，诚信不移；对“教”勤，勤勉不怠。这成了我今生矢志不渝的使命和责任。"
+                }
+              ]
+            },
+            "links": [
+              {
+                "field_id": "SK06-E1",
+                "value": "党"
+              },
+              {
+                "field_id": "SK06-E1",
+                "value": "马克思主义"
+              },
+              {
+                "field_id": "SK06-E1",
+                "value": "教师"
+              }
+            ]
+          },
+          "SK06-E3": {
+            "state": "missing",
+            "value": null
+          },
+          "SK06-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "SK06-E1": {
+            "state": "known",
+            "value": "这三次选择有三个关键词“党”、“马克思主义”、“教师”，三位一体合成一句话，就是党的马克思主义教师。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-liudaoyong-E003",
+                  "quote": "这三次选择有三个关键词“党”、“马克思主义”、“教师”，三位一体合成一句话，就是党的马克思主义教师。从此我就老老实实、认认真真地从事马克思主义教育工作，这就成为我一生当中的身份标识，常被戏称为“老马列”。"
+                }
+              ]
+            }
+          },
+          "SK06-E2": {
+            "state": "known",
+            "value": "对“党”忠，忠贞不二；对“马”诚，诚信不移；对“教”勤，勤勉不怠。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-liudaoyong-E003",
+                  "quote": "对“党”忠，忠贞不二；对“马”诚，诚信不移；对“教”勤，勤勉不怠。这成了我今生矢志不渝的使命和责任。"
+                }
+              ]
+            },
+            "links": [
+              {
+                "field_id": "SK06-E1",
+                "value": "党"
+              },
+              {
+                "field_id": "SK06-E1",
+                "value": "马克思主义"
+              },
+              {
+                "field_id": "SK06-E1",
+                "value": "教师"
+              }
+            ]
+          },
+          "SK06-E3": {
+            "state": "missing",
+            "value": null
+          },
+          "SK06-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round004/cases/DEV-SOURCES-N-e561eaa8b2-LT05-01/turn-000/engine-input-000-review.json",
+      "question_id": "LT05",
+      "before": {
+        "decision": "ask",
+        "target": "LT05-E2",
+        "errors": [],
+        "fields": {
+          "LT05-E1": {
+            "state": "known",
+            "value": "最想让人记住的是“我是一名麻醉医生，为病患救死扶伤尽心尽力”。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-e561eaa8-Q08",
+                  "quote": " 最想让人记住的是“我是一名麻醉医生，为病患救死扶伤尽心尽力”。"
+                }
+              ]
+            }
+          },
+          "LT05-E2": {
+            "state": "missing",
+            "value": null
+          },
+          "LT05-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "LT05-E2",
+        "errors": [],
+        "fields": {
+          "LT05-E1": {
+            "state": "known",
+            "value": "最想让人记住的是“我是一名麻醉医生，为病患救死扶伤尽心尽力”。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-e561eaa8-Q08",
+                  "quote": " 最想让人记住的是“我是一名麻醉医生，为病患救死扶伤尽心尽力”。"
+                }
+              ]
+            }
+          },
+          "LT05-E2": {
+            "state": "missing",
+            "value": null
+          },
+          "LT05-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round004/cases/DEV-SOURCES-N-e561eaa8b2-LT06-01/turn-000/engine-input-000-review.json",
+      "question_id": "LT06",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "LT06-E1": {
+            "state": "known",
+            "value": "疫情后最想回国见见亲朋好友，旧地重游，把酒言欢。",
+            "scope": {
+              "subject": "self",
+              "period": "now",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-e561eaa8-Q04",
+                  "quote": "疫情后最想回国见见亲朋好友，旧地重游，把酒言欢。"
+                }
+              ]
+            }
+          },
+          "LT06-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "LT06-E1": {
+            "state": "known",
+            "value": "疫情后最想回国见见亲朋好友，旧地重游，把酒言欢。",
+            "scope": {
+              "subject": "self",
+              "period": "now",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-e561eaa8-Q04",
+                  "quote": "疫情后最想回国见见亲朋好友，旧地重游，把酒言欢。"
+                }
+              ]
+            }
+          },
+          "LT06-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round004/cases/DEV-SOURCES-N-e561eaa8b2-RV16-01/turn-000/engine-input-000-review.json",
+      "question_id": "RV16",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "RV16-E1": {
+            "state": "known",
+            "value": "认真学习医学，麻醉理论，技术和各科的知识；细致，负责地为病患提供安全的麻醉。荣誉是工作取得一定成就后别人的赠予而非自己争夺而来。也想将此话传给年轻的一代麻醉医生。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-e561eaa8-Q09",
+                  "quote": "我永远记得我的恩师 -金士翱教授当年对年轻的我的谆谆教诲：认真学习医学，麻醉理论，技术和各科的知识；细致，负责地为病患提供安全的麻醉。荣誉是工作取得一定成就后别人的赠予而非自己争夺而来。也想将此话传给年轻的一代麻醉医生。"
+                }
+              ]
+            }
+          },
+          "RV16-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "RV16-E1": {
+            "state": "known",
+            "value": "认真学习医学，麻醉理论，技术和各科的知识；细致，负责地为病患提供安全的麻醉。荣誉是工作取得一定成就后别人的赠予而非自己争夺而来。也想将此话传给年轻的一代麻醉医生。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-e561eaa8-Q09",
+                  "quote": "我永远记得我的恩师 -金士翱教授当年对年轻的我的谆谆教诲：认真学习医学，麻醉理论，技术和各科的知识；细致，负责地为病患提供安全的麻醉。荣誉是工作取得一定成就后别人的赠予而非自己争夺而来。也想将此话传给年轻的一代麻醉医生。"
+                }
+              ]
+            }
+          },
+          "RV16-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round004/cases/DEV3-N-59e3bf0ed0-SK01-01/turn-000/engine-input-000-review.json",
+      "question_id": "SK01",
+      "before": {
+        "decision": "ask",
+        "target": "SK01-E1",
+        "errors": [],
+        "fields": {
+          "SK01-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "SK01-E2": {
+            "state": "known",
+            "value": "法国里昂",
+            "scope": {
+              "subject": "self",
+              "period": "birth",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-changshana2-E001",
+                  "quote": "因为我出生在法国里昂，里昂有条河，法语La Saone，中文就是沙娜。"
+                }
+              ]
+            }
+          },
+          "SK01-E3.place": {
+            "state": "known",
+            "value": "法国里昂",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-changshana2-E001",
+                  "quote": "因为我出生在法国里昂，里昂有条河，法语La Saone，中文就是沙娜。"
+                }
+              ]
+            }
+          },
+          "SK01-E3.period": {
+            "state": "missing",
+            "value": null
+          },
+          "SK01-E4": {
+            "state": "known",
+            "value": "里昂有条河",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-changshana2-E001",
+                  "quote": "因为我出生在法国里昂，里昂有条河，法语La Saone，中文就是沙娜。"
+                }
+              ]
+            }
+          },
+          "SK01-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "SK01-E1",
+        "errors": [],
+        "fields": {
+          "SK01-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "SK01-E2": {
+            "state": "known",
+            "value": "法国里昂",
+            "scope": {
+              "subject": "self",
+              "period": "birth",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-changshana2-E001",
+                  "quote": "因为我出生在法国里昂，里昂有条河，法语La Saone，中文就是沙娜。"
+                }
+              ]
+            }
+          },
+          "SK01-E3.place": {
+            "state": "known",
+            "value": "法国里昂",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-changshana2-E001",
+                  "quote": "因为我出生在法国里昂，里昂有条河，法语La Saone，中文就是沙娜。"
+                }
+              ]
+            }
+          },
+          "SK01-E3.period": {
+            "state": "missing",
+            "value": null
+          },
+          "SK01-E4": {
+            "state": "known",
+            "value": "里昂有条河",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-changshana2-E001",
+                  "quote": "因为我出生在法国里昂，里昂有条河，法语La Saone，中文就是沙娜。"
+                }
+              ]
+            }
+          },
+          "SK01-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round004/cases/DEV3-N-59e3bf0ed0-SK02-01/turn-000/engine-input-000-review.json",
+      "question_id": "SK02",
+      "before": {
+        "decision": "ask",
+        "target": "SK02-E3",
+        "errors": [],
+        "fields": {
+          "SK02-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "SK02-E2": {
+            "state": "known",
+            "value": "因为我出生在法国里昂，里昂有条河，法语La Saone，中文就是沙娜。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-changshana2-E001",
+                  "quote": "因为我出生在法国里昂，里昂有条河，法语La Saone，中文就是沙娜。"
+                }
+              ]
+            }
+          },
+          "SK02-E3": {
+            "state": "missing",
+            "value": null
+          },
+          "SK02-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "SK02-E3",
+        "errors": [],
+        "fields": {
+          "SK02-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "SK02-E2": {
+            "state": "known",
+            "value": "因为我出生在法国里昂，里昂有条河，法语La Saone，中文就是沙娜。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-changshana2-E001",
+                  "quote": "因为我出生在法国里昂，里昂有条河，法语La Saone，中文就是沙娜。"
+                }
+              ]
+            }
+          },
+          "SK02-E3": {
+            "state": "missing",
+            "value": null
+          },
+          "SK02-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round004/cases/DEV3-N-a06ea91a56-LT01-01/turn-000/engine-input-000-review.json",
+      "question_id": "LT01",
+      "before": {
+        "decision": "ask",
+        "target": "LT01-E2",
+        "errors": [],
+        "fields": {
+          "LT01-E1": {
+            "state": "known",
+            "value": "我現在專門研究保健，針灸、刮痧、拔罐。經常有人到我這找我啊！我研究氣功，我每天都練氣功，你看我的氣色就看得出來。",
+            "scope": {
+              "subject": "self",
+              "period": "now",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-196-E08",
+                  "quote": "我現在專門研究保健，針灸、刮痧、拔罐。經常有人到我這找我啊！我研究氣功，我每天都練氣功，你看我的氣色就看得出來。"
+                }
+              ]
+            }
+          },
+          "LT01-E2": {
+            "state": "missing",
+            "value": null
+          },
+          "LT01-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "LT01-E2",
+        "errors": [],
+        "fields": {
+          "LT01-E1": {
+            "state": "known",
+            "value": "我現在專門研究保健，針灸、刮痧、拔罐。經常有人到我這找我啊！我研究氣功，我每天都練氣功，你看我的氣色就看得出來。",
+            "scope": {
+              "subject": "self",
+              "period": "now",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-196-E08",
+                  "quote": "我現在專門研究保健，針灸、刮痧、拔罐。經常有人到我這找我啊！我研究氣功，我每天都練氣功，你看我的氣色就看得出來。"
+                }
+              ]
+            }
+          },
+          "LT01-E2": {
+            "state": "missing",
+            "value": null
+          },
+          "LT01-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": [
+        {
+          "field_id": "LT01-E2",
+          "reason": "routine_not_personal_preference",
+          "retained_state": "missing_or_validated_previous"
+        }
+      ]
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round004/cases/DEV3-N-a06ea91a56-LT01-01/turn-001/engine-input-000-review.json",
+      "question_id": "LT01",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "LT01-E1": {
+            "state": "known",
+            "value": "我現在專門研究保健，針灸、刮痧、拔罐。經常有人到我這找我啊！我研究氣功，我每天都練氣功，你看我的氣色就看得出來。",
+            "scope": {
+              "subject": "self",
+              "period": "now",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-196-E08",
+                  "quote": "我現在專門研究保健，針灸、刮痧、拔罐。經常有人到我這找我啊！我研究氣功，我每天都練氣功，你看我的氣色就看得出來。"
+                }
+              ]
+            }
+          },
+          "LT01-E2": {
+            "state": "known",
+            "value": "玩石頭玩久了都一樣，對其他亂七八糟的事情都沒興趣；比方說我過去跳舞，我現在都不跳了，個性完全變了。",
+            "scope": {
+              "subject": "self",
+              "period": "now",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-196-E10",
+                  "quote": "玩石頭玩久了都一樣，對其他亂七八糟的事情都沒興趣；比方說我過去跳舞，我現在都不跳了，個性完全變了。"
+                }
+              ]
+            }
+          },
+          "LT01-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "LT01-E2",
+        "errors": [],
+        "fields": {
+          "LT01-E1": {
+            "state": "known",
+            "value": "我現在專門研究保健，針灸、刮痧、拔罐。經常有人到我這找我啊！我研究氣功，我每天都練氣功，你看我的氣色就看得出來。",
+            "scope": {
+              "subject": "self",
+              "period": "now",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-196-E08",
+                  "quote": "我現在專門研究保健，針灸、刮痧、拔罐。經常有人到我這找我啊！我研究氣功，我每天都練氣功，你看我的氣色就看得出來。"
+                }
+              ]
+            }
+          },
+          "LT01-E2": {
+            "state": "ambiguous",
+            "value": null,
+            "scope": {
+              "subject": "self",
+              "period": "unspecified",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-196-E10",
+                  "quote": "玩石頭玩久了都一樣，對其他亂七八糟的事情都沒興趣；比方說我過去跳舞，我現在都不跳了，個性完全變了。"
+                }
+              ]
+            }
+          },
+          "LT01-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": true,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round004/cases/DEV3-N-a06ea91a56-RV14-01/turn-000/engine-input-000-review.json",
+      "question_id": "RV14",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "RV14-E1": {
+            "state": "known",
+            "value": "我的生活有一個原則「生活簡單就是享受，與人無求就是富有。」我這一生與人無求，人家不知道我窮我富，我生活很簡單。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-195-E02",
+                  "quote": "我的生活有一個原則「生活簡單就是享受，與人無求就是富有。」我這一生與人無求，人家不知道我窮我富，我生活很簡單。"
+                }
+              ]
+            }
+          },
+          "RV14-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "RV14-E1": {
+            "state": "known",
+            "value": "我的生活有一個原則「生活簡單就是享受，與人無求就是富有。」我這一生與人無求，人家不知道我窮我富，我生活很簡單。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-195-E02",
+                  "quote": "我的生活有一個原則「生活簡單就是享受，與人無求就是富有。」我這一生與人無求，人家不知道我窮我富，我生活很簡單。"
+                }
+              ]
+            }
+          },
+          "RV14-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round004/cases/DEV3-N-a06ea91a56-SK03-01/turn-000/engine-input-000-review.json",
+      "question_id": "SK03",
+      "before": {
+        "decision": "ask",
+        "target": "SK03-E1",
+        "errors": [],
+        "fields": {
+          "SK03-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "SK03-E2": {
+            "state": "known",
+            "value": "一開始抗日，我的父親就打游擊去了",
+            "scope": {
+              "subject": "parents",
+              "period": "childhood",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-192-E01",
+                  "quote": "一開始抗日，我的父親就打游擊去了，我就沒有父親了。"
+                }
+              ]
+            }
+          },
+          "SK03-E3": {
+            "state": "none",
+            "value": null,
+            "scope": {
+              "subject": "self",
+              "period": "childhood",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-192-E01",
+                  "quote": "因為我是獨生子，所以我這一生都是很孤單，在這裡奮鬥、受訓、做事，都是自己一個人。"
+                }
+              ]
+            }
+          },
+          "SK03-E4": {
+            "state": "missing",
+            "value": null
+          },
+          "SK03-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "SK03-E1",
+        "errors": [],
+        "fields": {
+          "SK03-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "SK03-E2": {
+            "state": "known",
+            "value": "一開始抗日，我的父親就打游擊去了",
+            "scope": {
+              "subject": "parents",
+              "period": "childhood",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-192-E01",
+                  "quote": "一開始抗日，我的父親就打游擊去了，我就沒有父親了。"
+                }
+              ]
+            }
+          },
+          "SK03-E3": {
+            "state": "none",
+            "value": null,
+            "scope": {
+              "subject": "self",
+              "period": "childhood",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-192-E01",
+                  "quote": "因為我是獨生子，所以我這一生都是很孤單，在這裡奮鬥、受訓、做事，都是自己一個人。"
+                }
+              ]
+            }
+          },
+          "SK03-E4": {
+            "state": "missing",
+            "value": null
+          },
+          "SK03-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round004/cases/DEV3-N-a06ea91a56-SK06-01/turn-000/engine-input-000-review.json",
+      "question_id": "SK06",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "SK06-E1": {
+            "state": "known",
+            "value": "生活簡單就是享受，與人無求就是富有",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-195-E02",
+                  "quote": "我的生活有一個原則「生活簡單就是享受，與人無求就是富有。"
+                }
+              ]
+            }
+          },
+          "SK06-E2": {
+            "state": "known",
+            "value": "我這一生與人無求，人家不知道我窮我富，我生活很簡單。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-195-E02",
+                  "quote": "」我這一生與人無求，人家不知道我窮我富，我生活很簡單。"
+                }
+              ]
+            },
+            "links": [
+              {
+                "field_id": "SK06-E1",
+                "value": "生活簡單就是享受，與人無求就是富有"
+              }
+            ]
+          },
+          "SK06-E3": {
+            "state": "missing",
+            "value": null
+          },
+          "SK06-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "SK06-E1": {
+            "state": "known",
+            "value": "生活簡單就是享受，與人無求就是富有",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-195-E02",
+                  "quote": "我的生活有一個原則「生活簡單就是享受，與人無求就是富有。"
+                }
+              ]
+            }
+          },
+          "SK06-E2": {
+            "state": "known",
+            "value": "我這一生與人無求，人家不知道我窮我富，我生活很簡單。",
+            "scope": {
+              "subject": "self",
+              "period": "lifelong",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-195-E02",
+                  "quote": "」我這一生與人無求，人家不知道我窮我富，我生活很簡單。"
+                }
+              ]
+            },
+            "links": [
+              {
+                "field_id": "SK06-E1",
+                "value": "生活簡單就是享受，與人無求就是富有"
+              }
+            ]
+          },
+          "SK06-E3": {
+            "state": "missing",
+            "value": null
+          },
+          "SK06-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round004/cases/DEV3-N-df0eb596f5-GR07-01/turn-000/engine-input-000-review.json",
+      "question_id": "GR07",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "GR07-A1": {
+            "state": "known",
+            "value": "医学院毕业又做了一年多内科。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-df0eb596-Q03",
+                  "quote": "医学院毕业又做了一年多内科。"
+                }
+              ]
+            }
+          },
+          "GR07-E1": {
+            "state": "known",
+            "value": "当时报考大学也是想学食品研究和食品广告",
+            "scope": {
+              "subject": "self",
+              "period": "school_years",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-df0eb596-Q03",
+                  "quote": "当时报考大学也是想学食品研究和食品广告，和现在所做的相差十万八千里。"
+                }
+              ]
+            }
+          },
+          "GR07-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "GR07-A1": {
+            "state": "known",
+            "value": "医学院毕业又做了一年多内科。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-df0eb596-Q03",
+                  "quote": "医学院毕业又做了一年多内科。"
+                }
+              ]
+            }
+          },
+          "GR07-E1": {
+            "state": "known",
+            "value": "当时报考大学也是想学食品研究和食品广告",
+            "scope": {
+              "subject": "self",
+              "period": "school_years",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-df0eb596-Q03",
+                  "quote": "当时报考大学也是想学食品研究和食品广告，和现在所做的相差十万八千里。"
+                }
+              ]
+            }
+          },
+          "GR07-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round004/cases/DEV3-N-df0eb596f5-LT01-01/turn-000/engine-input-000-review.json",
+      "question_id": "LT01",
+      "before": {
+        "decision": "ask",
+        "target": "LT01-E1",
+        "errors": [],
+        "fields": {
+          "LT01-E1": {
+            "state": "ambiguous",
+            "value": null,
+            "scope": {
+              "subject": "self",
+              "period": "unspecified",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-df0eb596-Q04",
+                  "quote": " 最近在一个朋友的鼓励下练习唱歌。疫情后其实不在乎去哪儿，只是所到的地方不会再走马观花。有让生活慢下来的节奏。"
+                }
+              ]
+            }
+          },
+          "LT01-E2": {
+            "state": "known",
+            "value": "有让生活慢下来的节奏。",
+            "scope": {
+              "subject": "self",
+              "period": "now",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-df0eb596-Q04",
+                  "quote": "有让生活慢下来的节奏。"
+                }
+              ]
+            }
+          },
+          "LT01-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "LT01-E1",
+        "errors": [],
+        "fields": {
+          "LT01-E1": {
+            "state": "ambiguous",
+            "value": null,
+            "scope": {
+              "subject": "self",
+              "period": "unspecified",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-df0eb596-Q04",
+                  "quote": " 最近在一个朋友的鼓励下练习唱歌。疫情后其实不在乎去哪儿，只是所到的地方不会再走马观花。有让生活慢下来的节奏。"
+                }
+              ]
+            }
+          },
+          "LT01-E2": {
+            "state": "ambiguous",
+            "value": null,
+            "scope": {
+              "subject": "self",
+              "period": "unspecified",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-df0eb596-Q04",
+                  "quote": "有让生活慢下来的节奏。"
+                }
+              ]
+            }
+          },
+          "LT01-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": true,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round004/cases/DEV3-N-df0eb596f5-LT06-01/turn-000/engine-input-000-review.json",
+      "question_id": "LT06",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "LT06-E1": {
+            "state": "known",
+            "value": "疫情后其实不在乎去哪儿，只是所到的地方不会再走马观花。有让生活慢下来的节奏。当然回中国和去欧洲是首选。",
+            "scope": {
+              "subject": "self",
+              "period": "now",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-df0eb596-Q04",
+                  "quote": "疫情后其实不在乎去哪儿，只是所到的地方不会再走马观花。有让生活慢下来的节奏。当然回中国和去欧洲是首选。"
+                }
+              ]
+            }
+          },
+          "LT06-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "LT06-E1": {
+            "state": "known",
+            "value": "疫情后其实不在乎去哪儿，只是所到的地方不会再走马观花。有让生活慢下来的节奏。当然回中国和去欧洲是首选。",
+            "scope": {
+              "subject": "self",
+              "period": "now",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-df0eb596-Q04",
+                  "quote": "疫情后其实不在乎去哪儿，只是所到的地方不会再走马观花。有让生活慢下来的节奏。当然回中国和去欧洲是首选。"
+                }
+              ]
+            }
+          },
+          "LT06-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round004/cases/DEV3-N-f522cea657-FM04-01/turn-000/engine-input-000-review.json",
+      "question_id": "FM04",
+      "before": {
+        "decision": "ask",
+        "target": "FM04-E1",
+        "errors": [],
+        "fields": {
+          "FM04-A1": {
+            "state": "known",
+            "value": "当我家孩子选择回家吃我做的剩饭而不是在外面吃的时候是我最自豪的时候。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-f522cea6-Q08",
+                  "quote": "当我家孩子选择回家吃我做的剩饭而不是在外面吃的时候是我最自豪的时候。"
+                }
+              ]
+            }
+          },
+          "FM04-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "FM04-E2": {
+            "state": "known",
+            "value": "当我家孩子选择回家吃我做的剩饭而不是在外面吃的时候是我最自豪的时候。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-f522cea6-Q08",
+                  "quote": "当我家孩子选择回家吃我做的剩饭而不是在外面吃的时候是我最自豪的时候。"
+                }
+              ]
+            }
+          },
+          "FM04-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "FM04-E1",
+        "errors": [],
+        "fields": {
+          "FM04-A1": {
+            "state": "known",
+            "value": "当我家孩子选择回家吃我做的剩饭而不是在外面吃的时候是我最自豪的时候。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-f522cea6-Q08",
+                  "quote": "当我家孩子选择回家吃我做的剩饭而不是在外面吃的时候是我最自豪的时候。"
+                }
+              ]
+            }
+          },
+          "FM04-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "FM04-E2": {
+            "state": "known",
+            "value": "当我家孩子选择回家吃我做的剩饭而不是在外面吃的时候是我最自豪的时候。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-f522cea6-Q08",
+                  "quote": "当我家孩子选择回家吃我做的剩饭而不是在外面吃的时候是我最自豪的时候。"
+                }
+              ]
+            }
+          },
+          "FM04-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round004/cases/DEV3-N-f522cea657-LT01-01/turn-000/engine-input-000-review.json",
+      "question_id": "LT01",
+      "before": {
+        "decision": "ask",
+        "target": "LT01-E1",
+        "errors": [],
+        "fields": {
+          "LT01-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "LT01-E2": {
+            "state": "known",
+            "value": "美食",
+            "scope": {
+              "subject": "self",
+              "period": "now",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-f522cea6-Q04",
+                  "quote": "美食；"
+                }
+              ]
+            }
+          },
+          "LT01-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "LT01-E2",
+        "errors": [],
+        "fields": {
+          "LT01-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "LT01-E2": {
+            "state": "ambiguous",
+            "value": null,
+            "scope": {
+              "subject": "self",
+              "period": "unspecified",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-f522cea6-Q04",
+                  "quote": "美食；"
+                }
+              ]
+            }
+          },
+          "LT01-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": true,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round004/cases/DEV3-N-f522cea657-LT06-01/turn-000/engine-input-000-review.json",
+      "question_id": "LT06",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "LT06-E1": {
+            "state": "known",
+            "value": "中国，阿拉斯加",
+            "scope": {
+              "subject": "self",
+              "period": "now",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-f522cea6-Q04",
+                  "quote": "中国，阿拉斯加"
+                }
+              ]
+            }
+          },
+          "LT06-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "LT06-E1": {
+            "state": "known",
+            "value": "中国，阿拉斯加",
+            "scope": {
+              "subject": "self",
+              "period": "now",
+              "relation_evidence": [
+                {
+                  "source_id": "CASA-f522cea6-Q04",
+                  "quote": "中国，阿拉斯加"
+                }
+              ]
+            }
+          },
+          "LT06-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round004/cases/ROOT-N-2c2938c181-CH05/turn-000/engine-input-000-review.json",
+      "question_id": "CH05",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "CH05-E1": {
+            "state": "known",
+            "value": "这一传染病里我得的最重，昏迷不醒一个月，但我是最大的，已经是虚岁十三了，所以我抵抗力稍微强点，我都不知道她们死了，等我活过来的时候，头发都脱了，真是不死脱层皮。",
+            "scope": {
+              "subject": "self",
+              "period": "childhood",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-zhangshouchun-E005",
+                  "quote": "这一传染病里我得的最重，昏迷不醒一个月，但我是最大的，已经是虚岁十三了，所以我抵抗力稍微强点，我都不知道她们死了，等我活过来的时候，头发都脱了，真是不死脱层皮。"
+                }
+              ]
+            }
+          },
+          "CH05-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "CH05-E1": {
+            "state": "known",
+            "value": "这一传染病里我得的最重，昏迷不醒一个月，但我是最大的，已经是虚岁十三了，所以我抵抗力稍微强点，我都不知道她们死了，等我活过来的时候，头发都脱了，真是不死脱层皮。",
+            "scope": {
+              "subject": "self",
+              "period": "childhood",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-zhangshouchun-E005",
+                  "quote": "这一传染病里我得的最重，昏迷不醒一个月，但我是最大的，已经是虚岁十三了，所以我抵抗力稍微强点，我都不知道她们死了，等我活过来的时候，头发都脱了，真是不死脱层皮。"
+                }
+              ]
+            }
+          },
+          "CH05-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round004/cases/ROOT-N-2c2938c181-SK03/turn-000/engine-input-000-review.json",
+      "question_id": "SK03",
+      "before": {
+        "decision": "ask",
+        "target": "SK03-E1",
+        "errors": [],
+        "fields": {
+          "SK03-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "SK03-E2": {
+            "state": "known",
+            "value": "我父亲在故宫当过笔帖式，他字写得不错。民国以后在北京市卫生局工作，做科员",
+            "scope": {
+              "subject": "parents",
+              "period": "childhood",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-zhangshouchun-E002",
+                  "quote": "我父亲在故宫当过笔帖式，他字写得不错。民国以后在北京市卫生局工作，做科员，日本时候他有事儿没事儿我就忘了。"
+                }
+              ]
+            }
+          },
+          "SK03-E3": {
+            "state": "known",
+            "value": "我哥不到3岁，她死了。",
+            "scope": {
+              "subject": "self",
+              "period": "childhood",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-zhangshouchun-E002",
+                  "quote": "然后我父亲结婚，我这第一位母亲娘家姓邵，邵家本身绝后了，娘家没人，娶到我家不知道是肺痨还是肺病，我哥不到3岁，她死了。"
+                }
+              ]
+            }
+          },
+          "SK03-E4": {
+            "state": "missing",
+            "value": null
+          },
+          "SK03-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "SK03-E1",
+        "errors": [],
+        "fields": {
+          "SK03-E1": {
+            "state": "missing",
+            "value": null
+          },
+          "SK03-E2": {
+            "state": "known",
+            "value": "我父亲在故宫当过笔帖式，他字写得不错。民国以后在北京市卫生局工作，做科员",
+            "scope": {
+              "subject": "parents",
+              "period": "childhood",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-zhangshouchun-E002",
+                  "quote": "我父亲在故宫当过笔帖式，他字写得不错。民国以后在北京市卫生局工作，做科员，日本时候他有事儿没事儿我就忘了。"
+                }
+              ]
+            }
+          },
+          "SK03-E3": {
+            "state": "known",
+            "value": "我哥不到3岁，她死了。",
+            "scope": {
+              "subject": "self",
+              "period": "childhood",
+              "relation_evidence": [
+                {
+                  "source_id": "WEB-zhangshouchun-E002",
+                  "quote": "然后我父亲结婚，我这第一位母亲娘家姓邵，邵家本身绝后了，娘家没人，娶到我家不知道是肺痨还是肺病，我哥不到3岁，她死了。"
+                }
+              ]
+            }
+          },
+          "SK03-E4": {
+            "state": "missing",
+            "value": null
+          },
+          "SK03-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round004/cases/ROOT-N-c076ca2fa5-FM02/turn-000/engine-input-000-review.json",
+      "question_id": "FM02",
+      "before": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "FM02-A1": {
+            "state": "known",
+            "value": "我們結婚時是住在以前一個大隊長的房子，是日本房子，他1塊錢就給我們住了1年。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-417-E02",
+                  "quote": "我們結婚時是住在以前一個大隊長的房子，是日本房子，他1塊錢就給我們住了1年。"
+                }
+              ]
+            }
+          },
+          "FM02-E1": {
+            "state": "known",
+            "value": "我們結婚時是住在以前一個大隊長的房子，是日本房子，他1塊錢就給我們住了1年。",
+            "scope": {
+              "subject": "self",
+              "period": "adulthood",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-417-E02",
+                  "quote": "我們結婚時是住在以前一個大隊長的房子，是日本房子，他1塊錢就給我們住了1年。"
+                }
+              ]
+            }
+          },
+          "FM02-E2": {
+            "state": "known",
+            "value": "婚後先生不讓我工作，我本來是在做會計。他說不要做事，把小孩看好就好了。就這樣，看小孩讀書，每天送便當給小孩吃。仁愛國小就在我們這邊。很近，每天做好午餐就送去。那時先生常不在家，有時出差啦、駐防啦。我就在家帶小孩，給小孩送便當。",
+            "scope": {
+              "subject": "self",
+              "period": "adulthood",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-417-E02",
+                  "quote": "婚後先生不讓我工作，我本來是在做會計。他說不要做事，把小孩看好就好了。就這樣，看小孩讀書，每天送便當給小孩吃。仁愛國小就在我們這邊。很近，每天做好午餐就送去。那時先生常不在家，有時出差啦、駐防啦。我就在家帶小孩，給小孩送便當。"
+                }
+              ]
+            }
+          },
+          "FM02-O1": {
+            "state": "known",
+            "value": "等我們特准結婚的房子蓋好了以後，就搬到六塊厝去住。結果在那邊住了1年多不到2年，我們就看中這邊的房子，就頂下來住到現在。因為小孩要讀書，我想六塊厝是鄉下地方，加上現在這地方的仁愛國小在屏東算是有名的，所以我說乾脆就來這地方讀書了。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-417-E02",
+                  "quote": "等我們特准結婚的房子蓋好了以後，就搬到六塊厝去住。結果在那邊住了1年多不到2年，我們就看中這邊的房子，就頂下來住到現在。因為小孩要讀書，我想六塊厝是鄉下地方，加上現在這地方的仁愛國小在屏東算是有名的，所以我說乾脆就來這地方讀書了。"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "after": {
+        "decision": "ready",
+        "target": null,
+        "errors": [],
+        "fields": {
+          "FM02-A1": {
+            "state": "known",
+            "value": "我們結婚時是住在以前一個大隊長的房子，是日本房子，他1塊錢就給我們住了1年。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-417-E02",
+                  "quote": "我們結婚時是住在以前一個大隊長的房子，是日本房子，他1塊錢就給我們住了1年。"
+                }
+              ]
+            }
+          },
+          "FM02-E1": {
+            "state": "known",
+            "value": "我們結婚時是住在以前一個大隊長的房子，是日本房子，他1塊錢就給我們住了1年。",
+            "scope": {
+              "subject": "self",
+              "period": "adulthood",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-417-E02",
+                  "quote": "我們結婚時是住在以前一個大隊長的房子，是日本房子，他1塊錢就給我們住了1年。"
+                }
+              ]
+            }
+          },
+          "FM02-E2": {
+            "state": "known",
+            "value": "婚後先生不讓我工作，我本來是在做會計。他說不要做事，把小孩看好就好了。就這樣，看小孩讀書，每天送便當給小孩吃。仁愛國小就在我們這邊。很近，每天做好午餐就送去。那時先生常不在家，有時出差啦、駐防啦。我就在家帶小孩，給小孩送便當。",
+            "scope": {
+              "subject": "self",
+              "period": "adulthood",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-417-E02",
+                  "quote": "婚後先生不讓我工作，我本來是在做會計。他說不要做事，把小孩看好就好了。就這樣，看小孩讀書，每天送便當給小孩吃。仁愛國小就在我們這邊。很近，每天做好午餐就送去。那時先生常不在家，有時出差啦、駐防啦。我就在家帶小孩，給小孩送便當。"
+                }
+              ]
+            }
+          },
+          "FM02-O1": {
+            "state": "known",
+            "value": "等我們特准結婚的房子蓋好了以後，就搬到六塊厝去住。結果在那邊住了1年多不到2年，我們就看中這邊的房子，就頂下來住到現在。因為小孩要讀書，我想六塊厝是鄉下地方，加上現在這地方的仁愛國小在屏東算是有名的，所以我說乾脆就來這地方讀書了。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-417-E02",
+                  "quote": "等我們特准結婚的房子蓋好了以後，就搬到六塊厝去住。結果在那邊住了1年多不到2年，我們就看中這邊的房子，就頂下來住到現在。因為小孩要讀書，我想六塊厝是鄉下地方，加上現在這地方的仁愛國小在屏東算是有名的，所以我說乾脆就來這地方讀書了。"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round004/cases/ROOT-N-c076ca2fa5-FM03/turn-000/engine-input-000-review.json",
+      "question_id": "FM03",
+      "before": {
+        "decision": "ask",
+        "target": "FM03-E2",
+        "errors": [],
+        "fields": {
+          "FM03-A1": {
+            "state": "known",
+            "value": "先生現在每天都駡我，叫我關門，從他退休以後開始就這樣。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-419-E03",
+                  "quote": "先生現在每天都駡我，叫我關門，從他退休以後開始就這樣。"
+                }
+              ]
+            }
+          },
+          "FM03-E1": {
+            "state": "known",
+            "value": "先生現在每天都駡我，叫我關門，從他退休以後開始就這樣。",
+            "scope": {
+              "subject": "self",
+              "period": "adulthood",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-419-E03",
+                  "quote": "先生現在每天都駡我，叫我關門，從他退休以後開始就這樣。"
+                }
+              ]
+            }
+          },
+          "FM03-E2": {
+            "state": "missing",
+            "value": null
+          },
+          "FM03-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "FM03-E2",
+        "errors": [],
+        "fields": {
+          "FM03-A1": {
+            "state": "known",
+            "value": "先生現在每天都駡我，叫我關門，從他退休以後開始就這樣。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-419-E03",
+                  "quote": "先生現在每天都駡我，叫我關門，從他退休以後開始就這樣。"
+                }
+              ]
+            }
+          },
+          "FM03-E1": {
+            "state": "known",
+            "value": "先生現在每天都駡我，叫我關門，從他退休以後開始就這樣。",
+            "scope": {
+              "subject": "self",
+              "period": "adulthood",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-419-E03",
+                  "quote": "先生現在每天都駡我，叫我關門，從他退休以後開始就這樣。"
+                }
+              ]
+            }
+          },
+          "FM03-E2": {
+            "state": "missing",
+            "value": null
+          },
+          "FM03-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    },
+    {
+      "saved_input": "docs/prototypes/full-interview-evaluation/run-v1.25-three-round004/cases/ROOT-N-c076ca2fa5-FM05/turn-000/engine-input-000-review.json",
+      "question_id": "FM05",
+      "before": {
+        "decision": "ask",
+        "target": "FM05-E2",
+        "errors": [],
+        "fields": {
+          "FM05-A1": {
+            "state": "known",
+            "value": "有次我女兒回到家說：「媽媽，我考第2名。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-421-E05",
+                  "quote": "有次我女兒回到家說：「媽媽，我考第2名。"
+                }
+              ]
+            }
+          },
+          "FM05-E1": {
+            "state": "known",
+            "value": "我說：「媽媽就是要第一名、一百分。」我常鼓勵小孩，我說寧可辛苦幾年，不要辛苦一輩子。",
+            "scope": {
+              "subject": "self",
+              "period": "adulthood",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-421-E05",
+                  "quote": "我說：「媽媽就是要第一名、一百分。」我常鼓勵小孩，我說寧可辛苦幾年，不要辛苦一輩子。"
+                }
+              ]
+            }
+          },
+          "FM05-E2": {
+            "state": "missing",
+            "value": null
+          },
+          "FM05-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "after": {
+        "decision": "ask",
+        "target": "FM05-E2",
+        "errors": [],
+        "fields": {
+          "FM05-A1": {
+            "state": "known",
+            "value": "有次我女兒回到家說：「媽媽，我考第2名。",
+            "scope": {
+              "subject": "self",
+              "period": "as_stated",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-421-E05",
+                  "quote": "有次我女兒回到家說：「媽媽，我考第2名。"
+                }
+              ]
+            }
+          },
+          "FM05-E1": {
+            "state": "known",
+            "value": "我說：「媽媽就是要第一名、一百分。」我常鼓勵小孩，我說寧可辛苦幾年，不要辛苦一輩子。",
+            "scope": {
+              "subject": "self",
+              "period": "adulthood",
+              "relation_evidence": [
+                {
+                  "source_id": "VAC-421-E05",
+                  "quote": "我說：「媽媽就是要第一名、一百分。」我常鼓勵小孩，我說寧可辛苦幾年，不要辛苦一輩子。"
+                }
+              ]
+            }
+          },
+          "FM05-E2": {
+            "state": "missing",
+            "value": null
+          },
+          "FM05-O1": {
+            "state": "missing",
+            "value": null
+          }
+        }
+      },
+      "changed": false,
+      "semantic_rejections": []
+    }
+  ]
+}

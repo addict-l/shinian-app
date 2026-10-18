@@ -68,11 +68,26 @@ class GuidedModuleAssessment(BaseModel):
     evidence: list[GuidedQuote] = Field(default_factory=list, max_length=12)
 
 
+def _default_version():
+    from app.services.contract_interview_state import enabled
+    return 3 if enabled() else 2
+
+
+def _default_runtime_version():
+    from app.services.contract_interview_state import enabled, runtime
+    return runtime().version if enabled() else None
+
+
 class GuidedInterviewState(BaseModel):
-    version: Literal[1, 2] = 2
+    version: Literal[1, 2, 3] = Field(default_factory=_default_version)
     module: InterviewModule = 'childhood'
     module_selected: bool = True
-    topic_index: int = Field(default=0, ge=0, le=6)
+    topic_index: int = Field(default=0, ge=0, le=100)
+    runtime_version: str | None = Field(default_factory=_default_runtime_version)
+    last_topic_skipped: bool = False
+    contract_state: dict = Field(default_factory=dict)
+    contract_history: dict[str, dict] = Field(default_factory=dict)
+    legacy_checkpoint: dict | None = None
     phase: Literal['opening', 'exploring', 'supplement', 'review', 'paused', 'saved', 'module_review', 'finished'] = 'opening'
     resume_phase: str | None = None
     facts: list[GuidedFact] = Field(default_factory=list)
@@ -98,8 +113,19 @@ class GuidedInterviewState(BaseModel):
     # Each module's durable checkpoint is restored explicitly when switching back.
     module_checkpoints: dict[str, dict] = Field(default_factory=dict)
 
+    @model_validator(mode='before')
+    @classmethod
+    def preserve_saved_catalog(cls, data):
+        if isinstance(data, dict) and data.get('version') == 3 and 'runtime_version' not in data:
+            return {**data, 'runtime_version': 'full-interview-v1.29.1'}
+        return data
+
     @model_validator(mode='after')
     def migrate_childhood_counts(self):
+        if self.version == 3 and self.runtime_version is None:
+            # Missing marker means a persisted pre-v2 catalog, never the new
+            # catalog at the same integer index. New creation pins explicitly.
+            self.runtime_version = 'full-interview-v1.29.1'
         if self.version == 1:
             # Pilot v1 accepted story materials only. Preserve those verified IDs
             # without turning skipped or incomplete records into qualified ones.

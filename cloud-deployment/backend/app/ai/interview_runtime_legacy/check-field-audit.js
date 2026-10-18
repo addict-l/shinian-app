@@ -1,0 +1,14 @@
+'use strict';
+const assert=require('assert'),G=require('./engine'),rows=[];
+const source={id:'own',question_id:'SK05',text:'我是慢热的人。',question:G.baseQuestion.SK05};
+const p=G.modelInput(G.buildPayload('SK05',[source]));
+const field=G.stepFrontier(p,{fields:{},active:[]},[]).find(x=>x.field_id==='SK05-E1');
+const draft={fields:{'SK05-E1':{state:'known',value:'我是慢热的人',evidence_unit_ids:['S1.1'],scope:{subject:'self',period:'lifelong'}}}};
+const test=(name,fn)=>{try{fn();rows.push({name,pass:true});}catch(e){rows.push({name,pass:false,error:e.message});}};
+test('draft is not added to validated previous fields',()=>{const r=G.fieldVerification(field.payload,field.field_id,draft);assert.deepEqual(r.previous_fields,field.payload.previous_fields);assert(!r.previous_fields['SK05-E1']);assert.equal(r.atomic_review.mode,'source_audit_v1');});
+test('missing draft is also audited for omissions',()=>{const r=G.fieldVerification(field.payload,field.field_id,{fields:{}});assert.deepEqual(r.semantic_review.unverified_candidate,{fields:{}});assert.deepEqual(r.sources,field.payload.sources);});
+test('another target cannot enter field audit',()=>assert.throws(()=>G.fieldVerification(field.payload,'SK04-E1',draft)));
+test('foreign-question cache is rejected',()=>{const x=JSON.parse(JSON.stringify(field.payload));x.previous_fields={'SK04-E1':{state:'known'}};assert.throws(()=>G.fieldVerification(x,field.field_id,draft));});
+test('foreign-question source is rejected',()=>{const x=JSON.parse(JSON.stringify(field.payload));x.sources[0].question_id='SK04';assert.throws(()=>G.fieldVerification(x,field.field_id,draft));});
+test('only this fields draft is forwarded, never another fields candidate',()=>{const r=G.fieldVerification(field.payload,field.field_id,{fields:{...draft.fields,'SK04-E1':{state:'known',value:'untrusted foreign draft'}}});assert.deepEqual(Object.keys(r.semantic_review.unverified_candidate.fields),['SK05-E1']);assert.deepEqual(r.field_contract,field.payload.field_contract);});
+const result={kind:'synthetic_fixed_field_source_audit',tests:rows.length,passed:rows.filter(x=>x.pass).length,rows,no_DS_calls:true};console.log(JSON.stringify(result,null,2));process.exitCode=result.passed===result.tests?0:1;

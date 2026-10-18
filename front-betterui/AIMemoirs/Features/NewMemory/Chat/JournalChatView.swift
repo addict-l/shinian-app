@@ -156,6 +156,7 @@ struct JournalChatView: View {
                         Color.clear.frame(height: 1).id("bottom")
                     }.padding(.horizontal, JournalTheme.gutter).padding(.top, 14).padding(.bottom, 16)
                 }.scrollIndicators(.hidden).scrollDismissesKeyboard(.interactively)
+                    .defaultScrollAnchor(.bottom)
                     .accessibilityIdentifier("chat.history")
                     .onChange(of: messages.last?.id) { _, _ in
                         if reduceMotion { reader.scrollTo("bottom", anchor: .bottom) }

@@ -1,4 +1,7 @@
-FROM python:3.12-slim
+FROM node:22-bookworm-slim AS interview_node
+FROM python:3.12-slim-bookworm
+
+COPY --from=interview_node /usr/local/bin/node /usr/local/bin/node
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1

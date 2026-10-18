@@ -1,0 +1,34 @@
+{
+  "passed": true,
+  "version": "full-interview-v1.29.1",
+  "settings": {
+    "model": "deepseek-v4-pro",
+    "thinking": "disabled",
+    "max_tokens": 16384
+  },
+  "calls": [
+    {
+      "stage": "extractor",
+      "seconds": 4.44,
+      "reasoning_tokens": 0,
+      "provider_settings": {
+        "model": "deepseek-v4-pro",
+        "thinking": "disabled",
+        "max_tokens": 16384
+      }
+    },
+    {
+      "stage": "reviewer",
+      "seconds": 3.33,
+      "reasoning_tokens": 0,
+      "provider_settings": {
+        "model": "deepseek-v4-pro",
+        "thinking": "disabled",
+        "max_tokens": 16384
+      }
+    }
+  ],
+  "seconds": 8.18,
+  "decision": "ask",
+  "formal_acceptance": false
+}

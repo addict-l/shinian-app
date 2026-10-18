@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "public_https": true,
+  "catalog_module_questions": 72,
+  "skeleton_questions": 11,
+  "skeleton_opt_outs": 11,
+  "refusal_after_substantive_answer": true,
+  "exact_ack_and_next_question": true,
+  "can_generate_after_refusal": false,
+  "generation_offer_after_refusal": null,
+  "same_request_replay_advanced_once": true,
+  "previous_answer_preserved": true,
+  "validation_person_id": "0431e17a-71a8-41b6-a6ac-c731041282c6",
+  "validation_session_id": "2d8ae92e-b6da-588a-9c0a-640bb3d47c5f",
+  "independent_validation_family": true,
+  "real_family_test_writes": false,
+  "saved_memories_created": 0
+}
