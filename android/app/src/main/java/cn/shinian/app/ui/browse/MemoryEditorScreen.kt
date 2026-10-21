@@ -166,9 +166,10 @@ private fun TimeCheckDialog(input:TimePreviewInput,care:Boolean,load:suspend()->
     var selected by remember{mutableStateOf(setOf<String>())}
     LaunchedEffect(retry){busy=true;error=null;preview=null;selected=emptySet()
         try{preview=load()}catch(e:CancellationException){throw e}catch(e:Exception){error=e.message}finally{busy=false}}
-    androidx.compose.ui.window.Dialog(onClose,androidx.compose.ui.window.DialogProperties(usePlatformDefaultWidth=false)) {
+    androidx.compose.ui.window.Dialog(onClose,androidx.compose.ui.window.DialogProperties(usePlatformDefaultWidth=false,decorFitsSystemWindows=false)) {
+        cn.shinian.app.ui.theme.ShinianImmersiveWindow()
         JournalBackdrop(Modifier.fillMaxSize()) {
-            Column(Modifier.fillMaxSize().systemBarsPadding()) {
+            Column(Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.displayCutout.only(WindowInsetsSides.Top + WindowInsetsSides.Horizontal)).systemBarsPadding()) {
                 Row(Modifier.fillMaxWidth(),verticalAlignment=Alignment.CenterVertically) {
                     TextButton(onClose){Text("返回编辑")};Text("核对时间文字",style=JournalTypography.body(if(care)22 else 17,true),modifier=Modifier.weight(1f))
                     TextButton({preview?.let{try{onApply(it,selected)}catch(e:Exception){error=e.message}}},enabled=!busy&&selected.isNotEmpty(),modifier=Modifier.testTag("time.apply")){Text("应用所选")}

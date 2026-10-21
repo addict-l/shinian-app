@@ -44,7 +44,7 @@
 
 ## 交付
 
-[更新 APK](../releases/拾年-Android-1.0.0-20261021-debug.apk)、[实际截图浏览页](../artifacts/android-20261021/wechat-picker-review.html)、[照片发送后截图](../artifacts/android-20261021/photo-ui-review.html)、[APK 校验信息](../releases/apk-metadata.json)。截图仅为独立测试家庭与本仓库示例素材，测试插入的媒体 URI 已清理。
+[更新 APK](../releases/拾年-Android-1.0.1-20261021-debug.apk)、[实际截图浏览页](../artifacts/android-20261021/wechat-picker-review.html)、[照片发送后截图](../artifacts/android-20261021/photo-ui-review.html)、[APK 校验信息](../releases/apk-metadata.json)。截图仅为独立测试家庭与本仓库示例素材，测试插入的媒体 URI 已清理。
 
 本轮通过 Gradle CLI 构建并安装到现有 API 36 模拟器，完成上述实际运行。尝试操作 Android Studio Run 时桌面返回 Mac 锁屏且无法自动解锁，因此未声称本次最终修正版已通过 IDE 按钮启动；Android Studio 工程与安装包均已更新，解锁后可直接 Run。上一轮整体移植的 IDE Run 验证记录仍保留在总记录中。
 

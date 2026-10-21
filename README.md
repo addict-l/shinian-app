@@ -43,7 +43,7 @@ open ios/AIMemoirs.xcodeproj
 2. 安装 Android SDK Platform 36 和 Build Tools 35.0.0，等待 Gradle 同步。
 3. 选择 `app` 和安卓模拟器／设备后运行。最低 Android 8.0（API 26）。
 
-命令行构建：`cd android && ./scripts/build.sh`。重新构建的 APK 输出在 `android/app/build/outputs/apk/debug/`；当前仅保留的[最新安装包](android/releases/拾年-Android-1.0.0-20261021-debug.apk)统一放在 `android/releases/`，截图与日志放在 `android/artifacts/`，均不提交 Git。
+命令行构建：`cd android && ./scripts/build.sh`。重新构建的 APK 输出在 `android/app/build/outputs/apk/debug/`；当前仅保留的[最新安装包](android/releases/拾年-Android-1.0.1-20261021-debug.apk)统一放在 `android/releases/`，截图与日志放在 `android/artifacts/`，均不提交 Git。
 
 详细步骤见 [Android 工程说明](android/README.md)，当前审核材料见 [Android 验收导航](android/docs/README.md)。
 

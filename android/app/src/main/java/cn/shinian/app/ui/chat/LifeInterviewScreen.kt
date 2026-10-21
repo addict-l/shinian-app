@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -155,7 +156,12 @@ internal fun LifeInterviewScreen(model: ChatController, care: Boolean, dictation
                 if (confirmed) model.chooseModule(selectedModule) else model.performLife("confirm")
             }
         } else {
-            LazyColumn(Modifier.weight(1f).padding(horizontal = 22.dp), verticalArrangement = Arrangement.spacedBy(18.dp)) {
+            val listState = rememberLazyListState()
+            val follow = rememberChatAutoFollow(listState, listOf(turns.lastOrNull()?.id, turns.lastOrNull()?.content,
+                turns.size, overview.number("version"), overview.text("question"), model.busy, model.progress, model.error, model.storageError))
+            Box(Modifier.weight(1f).fillMaxWidth()) {
+            LazyColumn(Modifier.fillMaxSize().padding(horizontal = 22.dp).testTag("life.history"), state = listState,
+                verticalArrangement = Arrangement.spacedBy(18.dp)) {
                 item {
                     Spacer(Modifier.height(16.dp))
                     Text(if (collecting) "01 / 了解人生骨架" else "先了解您大致经历过哪些日子", style = if (care) T.body(24, true) else T.story(24), color = C.Ink)
@@ -173,23 +179,26 @@ internal fun LifeInterviewScreen(model: ChatController, care: Boolean, dictation
                     TextButton({ onHistory(turns) }) { Text("前面聊过的", style = T.body(20)) }
                 }
                 if (collecting && !care) items(turns, key = { it.id }) { turn ->
-                    Column(Modifier.fillMaxWidth().padding(start = if (turn.role == "user") 35.dp else 0.dp)
+                    Column(Modifier.fillMaxWidth().testTag("life.message.${turn.id}").padding(start = if (turn.role == "user") 35.dp else 0.dp)
                         .then(if (turn.role == "user") Modifier.clip(RoundedCornerShape(22.dp)).background(C.Soft).padding(16.dp) else Modifier)) {
                         if (turn.role != "user") Text("AI 回忆助手", style = T.body(12), color = C.SecondaryInk)
                         Text(turn.content, style = T.story(17), color = C.Ink, lineHeight = 28.sp, modifier = Modifier.padding(top = 8.dp))
                     }
                 }
                 item { LifeFeedback(model, care); Spacer(Modifier.height(12.dp)) }
+                item(key = "life.bottom") { Spacer(Modifier.fillMaxWidth().height(8.dp).testTag("life.bottom")) }
+            }
+            ChatLatestButton(follow, listState, care, "life", Modifier.align(Alignment.BottomEnd).padding(12.dp))
             }
             if (collecting) {
                 Row(Modifier.fillMaxWidth().padding(horizontal = 22.dp), verticalAlignment = Alignment.CenterVertically) {
                     Text("人生骨架 ${overview.number("question_number", 1)} / ${overview.number("total_questions", 11)}", Modifier.weight(1f), style = T.body(if (care) 18 else 12), color = C.SecondaryInk)
-                    TextButton({ dictation.cancel(); model.performLife("answer", "跳过这题") }, Modifier.testTag("life.skip"), enabled = !model.busy && model.pendingLife == null && !dictation.busy) { Text(if (care) "记不清了，跳过" else "跳过", style = T.body(if (care) 20 else 14)) }
+                    TextButton({ follow.resume(); dictation.cancel(); model.performLife("answer", "跳过这题") }, Modifier.testTag("life.skip"), enabled = !model.busy && model.pendingLife == null && !dictation.busy) { Text(if (care) "记不清了，跳过" else "跳过", style = T.body(if (care) 20 else 14)) }
                 }
                 NarrationComposer(value = model.lifeInput, onValue = model::updateLifeInput, care = care,
                     enabled = !model.busy && model.pendingLife == null, sendEnabled = !model.busy && !dictation.busy && (model.pendingLife != null || model.lifeInput.isNotBlank()),
                     retrying = model.pendingLife != null, dictation = dictation, onMic = onMic,
-                    onSend = { dictation.cancel(); model.performLife("answer", model.lifeInput) }, tag = "life")
+                    onSend = { follow.resume(); dictation.cancel(); model.performLife("answer", model.lifeInput) }, tag = "life")
             }
         }
     }

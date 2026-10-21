@@ -68,8 +68,9 @@ internal fun MemoirCropDialog(
         val id=current.coverPhotos.firstOrNull{it.id==selected}?.id?:current.coverPhotos.firstOrNull()?.id?:return
         model.update(current.copy(coverPhotos=current.coverPhotos.map{if(it.id==id)transform(it)else it}))
     }
-    Dialog(onClose,DialogProperties(usePlatformDefaultWidth=false)) {
-        Column(Modifier.fillMaxSize().systemBarsPadding().background(JournalColors.Paper)) {
+    Dialog(onClose,DialogProperties(usePlatformDefaultWidth=false,decorFitsSystemWindows=false)) {
+        cn.shinian.app.ui.theme.ShinianImmersiveWindow()
+        Column(Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.displayCutout.only(WindowInsetsSides.Top + WindowInsetsSides.Horizontal)).systemBarsPadding().background(JournalColors.Paper)) {
             Row(Modifier.fillMaxWidth().heightIn(min=56.dp).padding(horizontal=16.dp),verticalAlignment=Alignment.CenterVertically) {
                 Text("调整照片取景",style=JournalTypography.body(if(care)24 else 18,true),modifier=Modifier.weight(1f))
                 TextButton(onClose,modifier=Modifier.testTag("memoir-crop-done")){Text("完成")}
@@ -127,8 +128,9 @@ internal fun MemoirConflictDialog(
     model:MemoirController,person:Person,local:MemoirSettings,localStories:List<Memory>,cloud:MemoirSnapshot,care:Boolean,
     onClose:()->Unit,onCloud:()->Unit,onLocal:()->Unit,onError:(String)->Unit,
 ) {
-    Dialog(onClose,DialogProperties(usePlatformDefaultWidth=false)) {
-        Column(Modifier.fillMaxSize().systemBarsPadding().background(JournalColors.Paper)) {
+    Dialog(onClose,DialogProperties(usePlatformDefaultWidth=false,decorFitsSystemWindows=false)) {
+        cn.shinian.app.ui.theme.ShinianImmersiveWindow()
+        Column(Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.displayCutout.only(WindowInsetsSides.Top + WindowInsetsSides.Horizontal)).systemBarsPadding().background(JournalColors.Paper)) {
             Row(Modifier.fillMaxWidth().heightIn(min=56.dp).padding(horizontal=16.dp),verticalAlignment=Alignment.CenterVertically) {
                 Text("核对制作设置",style=JournalTypography.body(if(care)24 else 18,true),modifier=Modifier.weight(1f))
                 TextButton(onClose){Text("完成")}

@@ -259,17 +259,7 @@ fun WechatPhotoPicker(
 
 @Composable
 private fun PickerSystemBars() {
-    val view = LocalView.current
-    DisposableEffect(view) {
-        val window = (view.parent as? DialogWindowProvider)?.window
-        window?.let {
-            WindowCompat.getInsetsController(it, view).apply {
-                isAppearanceLightStatusBars = false
-                isAppearanceLightNavigationBars = false
-            }
-        }
-        onDispose { }
-    }
+    cn.shinian.app.ui.theme.ShinianImmersiveWindow(darkBackground = true)
 }
 
 @Composable

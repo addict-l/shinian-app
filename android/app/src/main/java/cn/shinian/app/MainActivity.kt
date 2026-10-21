@@ -7,6 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.SystemBarStyle
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -49,8 +50,25 @@ class MainActivity : ComponentActivity() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent { ShinianTheme { ShinianApplication() } }
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.light(android.graphics.Color.TRANSPARENT, android.graphics.Color.TRANSPARENT),
+            navigationBarStyle = SystemBarStyle.light(android.graphics.Color.TRANSPARENT, android.graphics.Color.TRANSPARENT),
+        )
+        applyShinianWindowPolicy(window)
+        setContent {
+            ShinianTheme {
+                ShinianImmersiveWindow()
+                Box(Modifier.fillMaxSize().background(JournalColors.Paper)
+                    .windowInsetsPadding(WindowInsets.displayCutout.only(WindowInsetsSides.Top + WindowInsetsSides.Horizontal))) {
+                    ShinianApplication()
+                }
+            }
+        }
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus) applyShinianWindowPolicy(window)
     }
 }
 
@@ -121,7 +139,7 @@ private fun ShinianApplication(model: AppViewModel = viewModel()) {
         val showTabs = if (care) route.isEmpty() && tab != 1 else route.isEmpty() || route in listOf("person", "memories", "family-all")
         ProvideBrowseEnvironment(repository) {
         JournalBackdrop(Modifier.fillMaxSize()) {
-            Column(Modifier.fillMaxSize().statusBarsPadding()) {
+            Column(Modifier.fillMaxSize()) {
                 Box(Modifier.weight(1f).then(if (!showTabs && route !in listOf("chat", "memoir")) Modifier.navigationBarsPadding() else Modifier)) {
                     KeepBrowsePageState(pages, "$care.$tab.$route.${if (route in listOf("person", "memoir", "chat")) selectedPersonId else if (route in listOf("memory", "editor")) selectedMemoryId else ""}", route.isEmpty() || route in listOf("person", "family-all", "memories")) {
                     when (route) {

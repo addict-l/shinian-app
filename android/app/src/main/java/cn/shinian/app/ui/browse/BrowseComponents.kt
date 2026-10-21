@@ -245,8 +245,9 @@ fun MemoryPhoto(media: Media, modifier: Modifier=Modifier, fit:Boolean=false,rad
 internal fun PhotoViewer(media:List<Media>,initial:Int,onClose:()->Unit) {
     var index by remember{mutableIntStateOf(initial.coerceIn(0,media.lastIndex.coerceAtLeast(0)))}
     var zoom by remember(index){mutableFloatStateOf(1f)}
-    Dialog(onClose,DialogProperties(usePlatformDefaultWidth=false)) {
-        Column(Modifier.fillMaxSize().background(Color.Black).systemBarsPadding()) {
+    Dialog(onClose,DialogProperties(usePlatformDefaultWidth=false,decorFitsSystemWindows=false)) {
+        cn.shinian.app.ui.theme.ShinianImmersiveWindow(darkBackground = true)
+        Column(Modifier.fillMaxSize().background(Color.Black).windowInsetsPadding(WindowInsets.displayCutout.only(WindowInsetsSides.Top + WindowInsetsSides.Horizontal)).systemBarsPadding()) {
             Row(Modifier.fillMaxWidth(),verticalAlignment=Alignment.CenterVertically) {
                 Text("${index+1} / ${media.size}",color=Color.White,modifier=Modifier.weight(1f).padding(20.dp))
                 TextButton(onClose){Text("关闭",color=Color.White)}

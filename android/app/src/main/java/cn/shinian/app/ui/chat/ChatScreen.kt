@@ -226,10 +226,10 @@ fun ChatScreen(person: Person, repository: BackendRepository, care: Boolean, onB
                 Text("人生概览", style = T.body(if (care) 20 else 13), color = C.SecondaryInk)
             }
             val listState = rememberLazyListState()
-            LaunchedEffect(model.messages.lastOrNull()?.id, model.busy) {
-                if (listState.layoutInfo.totalItemsCount > 0) listState.scrollToItem(listState.layoutInfo.totalItemsCount - 1)
-            }
-            LazyColumn(Modifier.weight(1f).padding(horizontal = 22.dp).testTag("chat.history"), state = listState,
+            val follow = rememberChatAutoFollow(listState, listOf(model.messages.lastOrNull()?.id,
+                model.messages.lastOrNull()?.content, model.messages.size, model.busy, model.progress, model.error, model.storageError))
+            Box(Modifier.weight(1f).fillMaxWidth()) {
+            LazyColumn(Modifier.fillMaxSize().padding(horizontal = 22.dp).testTag("chat.history"), state = listState,
                 verticalArrangement = Arrangement.spacedBy(if (care) 20.dp else 14.dp)) {
                 item { Text(if (care) "正在记录${person.name}的故事" else openedAt, Modifier.fillMaxWidth().padding(top = 14.dp),
                     style = T.body(if (care) 18 else 12), color = C.Muted, textAlign = TextAlign.Center) }
@@ -255,7 +255,9 @@ fun ChatScreen(person: Person, repository: BackendRepository, care: Boolean, onB
                 } } }
                 model.storageError?.let { message -> item { ChatError(message, "重试本机保存", care, !model.busy, model::retryStorage) } }
                 if (model.completed) item { ChatButton("继续聊天", secondary = true, care = care, busy = model.busy, onClick = model::continueStory) }
-                item { Spacer(Modifier.height(8.dp)) }
+                item(key = "chat.bottom") { Spacer(Modifier.fillMaxWidth().height(8.dp).testTag("chat.bottom")) }
+            }
+            ChatLatestButton(follow, listState, care, "chat", Modifier.align(Alignment.BottomEnd).padding(12.dp))
             }
             Column(Modifier.fillMaxWidth().padding(top = 10.dp, bottom = 8.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 if (if (care) careGenerationReady && !careContinuing else model.generationOffered && !dictation.busy && !readingPhotos) {
@@ -288,7 +290,7 @@ fun ChatScreen(person: Person, repository: BackendRepository, care: Boolean, onB
                     enabled = !model.busy && !readingPhotos && model.pending == null && !model.completed,
                     sendEnabled = !model.busy && !readingPhotos && !dictation.busy && !model.completed && (model.pending != null || model.input.isNotBlank() || model.photos.isNotEmpty()),
                     retrying = model.pending != null, dictation = dictation, onMic = ::mic,
-                    onSend = { focus.clearFocus(); dictation.cancel(); model.send() }, onPhoto = ::pickPhoto,
+                    onSend = { follow.resume(); focus.clearFocus(); dictation.cancel(); model.send() }, onPhoto = ::pickPhoto,
                     photosEnabled = !model.busy && !readingPhotos && model.pending == null && !dictation.busy && model.photos.size < 9,
                     hasPhotos = model.photos.isNotEmpty(), selectedPhotos = selection)
                 else TextButton(::pickPhoto, enabled = !readingPhotos && model.photos.size < 9) { Text("添加照片", style = T.body(19)) }
@@ -322,8 +324,7 @@ internal fun NarrationComposer(value: String, onValue: (String) -> Unit, care: B
             .testTag("$tag.composer"), verticalArrangement = Arrangement.spacedBy(4.dp)) {
             selectedPhotos?.invoke()
             val input: @Composable (Modifier) -> Unit = { modifier ->
-                OutlinedTextField(value, onValue, modifier.testTag("$tag.input").semantics { contentDescription = if(tag == "life") "慢慢讲，我在听" else "讲述文字" }, enabled = enabled && !dictation.busy,
-                    label = if(tag == "life") { { Text("慢慢讲，我在听…", style = T.body(if (care) 21 else 14)) } } else null,
+                OutlinedTextField(value, onValue, modifier.testTag("$tag.input").semantics { contentDescription = "讲述文字" }, enabled = enabled && !dictation.busy,
                     placeholder = { Text(if(hasPhotos) "也可以写几句话…" else "继续讲讲那一天…", style = T.body(if (care) 21 else 15), color = C.Placeholder) },
                     textStyle = T.body(if (care) 23 else 15), minLines = 1, maxLines = if (care) 5 else 4, shape = RoundedCornerShape(22.dp),
                     colors = TextFieldDefaults.colors(focusedContainerColor = Color.Transparent, unfocusedContainerColor = Color.Transparent,
@@ -384,6 +385,7 @@ internal fun ChatPhotoSheet(title: String, closeLabel: String, onClose: () -> Un
     val actionWidth = maxOf(64.dp, (32 * LocalDensity.current.fontScale + 32).dp)
     ModalBottomSheet(onDismissRequest = onClose, sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
         modifier = Modifier.testTag("chat.photos.sheet"), containerColor = C.Paper, dragHandle = null) {
+        cn.shinian.app.ui.theme.ShinianImmersiveWindow()
         Column(Modifier.fillMaxWidth().fillMaxHeight(.92f)) {
             Row(Modifier.fillMaxWidth().heightIn(min = 56.dp).padding(horizontal = 8.dp), verticalAlignment = Alignment.CenterVertically) {
                 Spacer(Modifier.width(actionWidth))

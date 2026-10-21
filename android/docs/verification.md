@@ -2,11 +2,13 @@
 
 记录日期：2026-10-21（Asia/Shanghai）。复刻基线为同仓库 `ios/` 当前源码；Android 工程位于 [`android/`](../README.md)，使用原 HTTPS 家庭账号服务。本记录区分已通过的客户端验证、现有云端问题和仍需真机检查的项目。
 
+后续状态：初版 Android 已提交为 `4b26c1f`（开发完成安卓版本）。以下保留初版验收当时的记录与测试范围；当前下载入口指向 1.0.1，新增改动及本轮审核状态见 [聊天界面验证](chat-ui-verification.md)。
+
 本轮沿用用户最新确认：完整实现后进行一次整体人工审核。当前尚未完成整体审核，未正式 commit、未 push。工程、APK 和截图作为同一整体提交审核。
 
 整体审核期间追加的照片界面对齐已纳入同一安装包，详见 [照片界面补充验证](photo-ui-verification.md) 与 [实际照片流程截图](../artifacts/android-20261021/photo-ui-review.html)。选图预览、上传消息、网格与大图均以当前 iOS 为基准。
 
-随后已按用户的微信参考替换默认选图入口，见 [微信式选图验证](wechat-picker-verification.md)、[新安装包](../releases/拾年-Android-1.0.0-20261021-debug.apk) 和 [截图](../artifacts/android-20261021/wechat-picker-review.html)。发送后的应用内照片样式继续沿用 iOS 基准。
+随后已按用户的微信参考替换默认选图入口，见 [微信式选图验证](wechat-picker-verification.md)、[新安装包](../releases/拾年-Android-1.0.1-20261021-debug.apk) 和 [截图](../artifacts/android-20261021/wechat-picker-review.html)。发送后的应用内照片样式继续沿用 iOS 基准。
 
 ## 本地与模拟器验证
 
@@ -21,7 +23,7 @@
 | 横屏 | **2 项通过** | [运行日志](../artifacts/android-20261021/instrumentation-landscape.log)。2424×1080、420 dpi、字号 1.0；核对认证与关怀人物操作，不能据此推定全部页面均已通过横屏检查。 |
 | Android Studio 最终运行 | **成功构建、安装、启动 app** | Android Studio Rabbit 1、JDK 21、Shinian Pixel 9 API 36。IDE Run 显示 `Install successfully finished in 2 s 645 ms`，识别应用进程并启用 Apply Changes；随后同一 APK 完成设备回归。 |
 
-本地材料：[APK 安装包](../releases/拾年-Android-1.0.0-20261021-debug.apk)、[APK 校验信息](../releases/apk-metadata.json)、[18 个页面截图浏览页](../artifacts/android-20261021/review.html)、[主要页面截图目录](../artifacts/android-20261021/validation-screenshots/)、[响应式截图目录](../artifacts/android-20261021/responsive-screenshots/)、[PDF 渲染页目录](../artifacts/android-20261021/pdf-pages/)。主要页面目录含登录、注册、首页、人物选择/新增、家庭胶片、人物页、回忆详情、回忆录封面/故事/PDF、个人与设置、关怀模式及采访页。响应式截图已改为读取实际绘制的 Compose 根节点，已确认关怀人物页内容与按钮可见。
+本地材料：[APK 安装包](../releases/拾年-Android-1.0.1-20261021-debug.apk)、[APK 校验信息](../releases/apk-metadata.json)、[18 个页面截图浏览页](../artifacts/android-20261021/review.html)、[主要页面截图目录](../artifacts/android-20261021/validation-screenshots/)、[响应式截图目录](../artifacts/android-20261021/responsive-screenshots/)、[PDF 渲染页目录](../artifacts/android-20261021/pdf-pages/)。主要页面目录含登录、注册、首页、人物选择/新增、家庭胶片、人物页、回忆详情、回忆录封面/故事/PDF、个人与设置、关怀模式及采访页。响应式截图已改为读取实际绘制的 Compose 根节点，已确认关怀人物页内容与按钮可见。
 
 
 核心回归曾发现检查问题，保留原日志：[滚动修正前](../artifacts/android-20261021/instrumentation-core-before-scroll-fix.log)、[独立接收进程修正前](../artifacts/android-20261021/instrumentation-core-before-probe-fix.log)、[异步等待修正前](../artifacts/android-20261021/instrumentation-core-before-async-wait-fix.log)。最终修正了关怀保存结果页在小屏/大字下的可滚动性，PDF 手势测试等待实际页码变化，并将测试专用接收进程改用独立 Java 实现，避免依赖目标 APK 的 Kotlin 运行时；最终 17 项通过。另修正了异步编辑测试等待条件：等待 HTTP 编辑完成、返回可操作的预览页后，再核对编辑结果。保存 PDF 的目标已由系统新建时，若版本核对或写入失败，客户端会尝试删除本次失败目标，避免留下空 PDF。

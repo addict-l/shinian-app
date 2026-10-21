@@ -19,7 +19,7 @@ Android Studio 原生 Kotlin / Jetpack Compose 工程。复现基线为同仓库
 
 脚本优先使用兼容的完整 `JAVA_HOME`；需要包含 `javac` 和 `jlink`。本机已安装 Temurin JDK 21。SDK、机器路径和 IDE 设置不提交到 Git。
 
-最新安装包统一存放在 [`releases/拾年-Android-1.0.0-20261021-debug.apk`](releases/拾年-Android-1.0.0-20261021-debug.apk)，版本与校验信息在同目录。重新构建时，Gradle 会生成 `app/build/outputs/apk/debug/app-debug.apk`。正式分发版本需使用项目所有者的签名配置。
+最新安装包统一存放在 [`releases/拾年-Android-1.0.1-20261021-debug.apk`](releases/拾年-Android-1.0.1-20261021-debug.apk)，版本与校验信息在同目录。重新构建时，Gradle 会生成 `app/build/outputs/apk/debug/app-debug.apk`。正式分发版本需使用项目所有者的签名配置。
 
 ## 功能与数据
 
