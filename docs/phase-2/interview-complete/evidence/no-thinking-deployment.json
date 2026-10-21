@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "image": "sha256:23645d75d31592f1e90f9f92e65c6da96cb63aafa9d96c05335fa42d211517c0",
+  "health": {
+    "status": "ok",
+    "database": "ok",
+    "llm_configured": true
+  },
+  "runtime": {
+    "version": "full-interview-v1.29.1",
+    "settings": {
+      "model": "deepseek-v4-pro",
+      "thinking": "disabled",
+      "max_tokens": 16384
+    },
+    "pin": "7d7505774dc93d8434a6211fee1d02f021997bfe6bbc9b4c26a9319ec51d9969"
+  },
+  "release": "/opt/shinian-releases/interview-no-thinking-20261018",
+  "formal_acceptance": false,
+  "ports_volumes_and_other_env_preserved": true
+}

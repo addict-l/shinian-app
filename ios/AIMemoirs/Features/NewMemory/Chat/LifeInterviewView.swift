@@ -234,9 +234,9 @@ struct LifeInterviewView: View {
     private var composer: some View {
         VStack(spacing: 10) {
             HStack {
-                Text("人生骨架 \(overview?.question_number ?? 1) / 7 · 一次聊一个问题").font(JournalTheme.font(12)).accessibilityIdentifier("life.progress")
+                Text("人生骨架 \(overview?.question_number ?? 1) / \(overview?.total_questions ?? 6) · 一次聊一个问题").font(JournalTheme.font(12)).accessibilityIdentifier("life.progress")
                 Spacer()
-                Button("跳过") { Task { await perform("answer", text: "跳过") } }.frame(minWidth: 44, minHeight: 44).disabled(busy || pending != nil).accessibilityIdentifier("life.skip")
+                Button("跳过") { Task { await perform("answer", text: "跳过") } }.frame(minWidth: 44, minHeight: 44).disabled(busy).accessibilityIdentifier("life.skip")
             }.foregroundStyle(JournalTheme.userMessageInk)
             HStack(spacing: 10) {
                 TextField("慢慢讲，我在听…", text: $input, axis: .vertical).lineLimit(1...5).focused($focused).accessibilityIdentifier("life.input")
@@ -258,7 +258,7 @@ struct LifeInterviewView: View {
     private func perform(_ action: String, text: String = "", topic: String? = nil, command: LifeCommand? = nil) async {
         guard !busy else { return }
         let command = command ?? LifeCommand(action: action, expected_version: overview?.version ?? 0, client_request_id: UUID(), text: text, topic_id: topic)
-        if let pending, pending.client_request_id != command.client_request_id { error = "上次回答已保留，请先重试这次操作。"; return }
+        if let pending, pending.client_request_id != command.client_request_id, command.text != "跳过" { error = "上次回答已保留，请先重试这次操作。"; return }
         pending = command
         UserDefaults.standard.set(try? JSONEncoder().encode(command), forKey: commandKey)
         busy = true; error = nil

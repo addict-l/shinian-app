@@ -1,0 +1,77 @@
+test_a_value_mixing_current_and_future_is_still_unbound (tools.test_interview_current_stage_v26.CurrentStageTests) ... FAIL
+test_current_marker_after_past_or_future_resets_the_local_frame (tools.test_interview_current_stage_v26.CurrentStageTests) ... ok
+test_current_marker_elsewhere_does_not_promote_a_future_selected_act (tools.test_interview_current_stage_v26.CurrentStageTests) ... ok
+test_future_frame_cannot_be_hidden_by_quoting_just_the_last_clause (tools.test_interview_current_stage_v26.CurrentStageTests) ... FAIL
+test_mixed_question_cannot_supply_time_for_an_unmarked_short_answer (tools.test_interview_current_stage_v26.CurrentStageTests) ... FAIL
+test_recent_action_is_not_erased_by_unselected_future_evidence (tools.test_interview_current_stage_v26.CurrentStageTests) ... FAIL
+test_retirement_afterword_is_not_automatically_a_future_wish (tools.test_interview_current_stage_v26.CurrentStageTests) ... FAIL
+test_single_current_question_does_not_override_explicit_future_prefix (tools.test_interview_current_stage_v26.CurrentStageTests) ... FAIL
+test_unambiguous_actual_current_question_still_supports_an_elliptic_answer (tools.test_interview_current_stage_v26.CurrentStageTests) ... ok
+test_uncited_current_marker_does_not_become_silent_positive_evidence (tools.test_interview_current_stage_v26.CurrentStageTests) ... FAIL
+
+======================================================================
+FAIL: test_a_value_mixing_current_and_future_is_still_unbound (tools.test_interview_current_stage_v26.CurrentStageTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/student03/Documents/ChatGPT/ai memory/tools/test_interview_current_stage_v26.py", line 42, in test_a_value_mixing_current_and_future_is_still_unbound
+    self.assertNotEqual(probe(text,text,'您现在怎样生活？')['state'],'known')
+AssertionError: 'known' == 'known'
+
+======================================================================
+FAIL: test_future_frame_cannot_be_hidden_by_quoting_just_the_last_clause (tools.test_interview_current_stage_v26.CurrentStageTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/student03/Documents/ChatGPT/ai memory/tools/test_interview_current_stage_v26.py", line 26, in test_future_frame_cannot_be_hidden_by_quoting_just_the_last_clause
+    self.assertNotEqual(r['state'],'known')
+AssertionError: 'known' == 'known'
+
+======================================================================
+FAIL: test_mixed_question_cannot_supply_time_for_an_unmarked_short_answer (tools.test_interview_current_stage_v26.CurrentStageTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/student03/Documents/ChatGPT/ai memory/tools/test_interview_current_stage_v26.py", line 33, in test_mixed_question_cannot_supply_time_for_an_unmarked_short_answer
+    self.assertNotEqual(probe('每天练琴。','每天练琴。','您以前做什么，现在怎样生活？')['state'],'known')
+AssertionError: 'known' == 'known'
+
+======================================================================
+FAIL: test_recent_action_is_not_erased_by_unselected_future_evidence (tools.test_interview_current_stage_v26.CurrentStageTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/student03/Documents/ChatGPT/ai memory/tools/test_interview_current_stage_v26.py", line 22, in test_recent_action_is_not_erased_by_unselected_future_evidence
+    self.assertEqual(probe(text,'最近我在学木工。','您最近做什么，搬家以后打算怎样生活？')['state'],'known')
+AssertionError: 'ambiguous' != 'known'
+- ambiguous
++ known
+
+
+======================================================================
+FAIL: test_retirement_afterword_is_not_automatically_a_future_wish (tools.test_interview_current_stage_v26.CurrentStageTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/student03/Documents/ChatGPT/ai memory/tools/test_interview_current_stage_v26.py", line 31, in test_retirement_afterword_is_not_automatically_a_future_wish
+    self.assertEqual(probe('退休以后我每天读书。','我每天读书','您现在怎么安排日常？')['state'],'known')
+AssertionError: 'ambiguous' != 'known'
+- ambiguous
++ known
+
+
+======================================================================
+FAIL: test_single_current_question_does_not_override_explicit_future_prefix (tools.test_interview_current_stage_v26.CurrentStageTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/student03/Documents/ChatGPT/ai memory/tools/test_interview_current_stage_v26.py", line 29, in test_single_current_question_does_not_override_explicit_future_prefix
+    self.assertNotEqual(probe(text,'每天练琴','您现在怎么安排日常？','每天练琴')['state'],'known')
+AssertionError: 'known' == 'known'
+
+======================================================================
+FAIL: test_uncited_current_marker_does_not_become_silent_positive_evidence (tools.test_interview_current_stage_v26.CurrentStageTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/student03/Documents/ChatGPT/ai memory/tools/test_interview_current_stage_v26.py", line 47, in test_uncited_current_marker_does_not_become_silent_positive_evidence
+    self.assertNotEqual(probe(text,'学木工','您以前与现在都有哪些爱好？','学木工')['state'],'known')
+AssertionError: 'known' == 'known'
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.407s
+
+FAILED (failures=7)

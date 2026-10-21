@@ -1,0 +1,44 @@
+{
+  "deployment": {
+    "passed": true,
+    "release": "/opt/shinian-releases/interview-single-question-v2-20261018",
+    "health": {
+      "status": "ok",
+      "database": "ok",
+      "llm_configured": true
+    },
+    "runtime_version": "full-interview-v2.0.0",
+    "manifest_sha256": "d3bbba726e826e5bc84a038e55457077b9c706682e52f588264d1f0f7bc8a503",
+    "image": "sha256:77a8ab0c18ed507279abbec361a9307e178e90ff818759dc3969b14a70624a91",
+    "ports_volumes_other_environment_preserved": true,
+    "original_business_data_unchanged": true,
+    "business_counts": {
+      "families": 1,
+      "family_members": 3,
+      "chat_sessions": 50,
+      "chat_messages": 283,
+      "memories": 19,
+      "media_assets": 41
+    },
+    "formal_quality_acceptance": false
+  },
+  "smoke": {
+    "passed": true,
+    "runtime": "full-interview-v2.0.0",
+    "questions": 83,
+    "skeleton": 11,
+    "settings": {
+      "model": "deepseek-v4-pro",
+      "thinking": "disabled",
+      "max_tokens": 16384
+    },
+    "decision": "ready",
+    "persisted_business_data": false
+  },
+  "test_summary": [
+    "----------------------------------------------------------------------",
+    "Ran 29 tests in 12.673s",
+    "",
+    "OK (skipped=1)"
+  ]
+}

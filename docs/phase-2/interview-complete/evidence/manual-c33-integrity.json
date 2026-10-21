@@ -1,0 +1,25 @@
+{
+  "source_files_verified": 162,
+  "image_verified": true,
+  "original_runtime_environment_preserved": true,
+  "same_effective_llm_credentials_and_endpoint_as_real_ds_candidate": true,
+  "other_feature_model_routing_preserved": true,
+  "media_volume_and_port_preserved": true,
+  "business_manifest_unchanged_at_cutover": true,
+  "business_counts": {
+    "chat_messages": 254,
+    "chat_sessions": 44,
+    "families": 1,
+    "family_members": 4,
+    "media_assets": 41,
+    "media_cleanup_jobs": 0,
+    "memoir_settings": 1,
+    "memories": 14,
+    "memory_deletions": 2,
+    "memory_drafts": 16,
+    "memory_persons": 12
+  },
+  "media_files": 41,
+  "runtime_pin": "2d2a28c55724d426a9f32927da7e94f8f6a63b3d7d2c3eb3b183298a1ddb2686",
+  "formal_acceptance": false
+}

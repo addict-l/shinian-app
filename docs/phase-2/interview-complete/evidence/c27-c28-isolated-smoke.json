@@ -1,0 +1,1359 @@
+{
+  "purpose": "synthetic real-DS API integration; not the 55-person acceptance sample",
+  "tests": [
+    {
+      "label": "init",
+      "elapsed_seconds": 0,
+      "data": {
+        "family_id": "1b1fce29-69c7-43bf-8725-6e71ee185e00",
+        "people": {
+          "SK01完整答": {
+            "person_id": "100d5249-63dc-40ff-a642-bac547901b7e",
+            "session_id": "90127f7a-fd6c-53e8-8419-25ba35d42090"
+          },
+          "SK01未知时间": {
+            "person_id": "21b2bb56-1ab9-4028-8633-b9ebec350f6d",
+            "session_id": "79132352-0604-5b2b-be0d-8065decf39e9"
+          }
+        },
+        "module_counts": [
+          7,
+          7,
+          13,
+          7,
+          6,
+          16
+        ]
+      }
+    },
+    {
+      "label": "SK01完整答:answer",
+      "elapsed_seconds": 103.52,
+      "data": {
+        "question_id": "SK02",
+        "question": "您的名字有什么特殊寓意、家人赋予的期许吗？",
+        "version": 2,
+        "paused": false,
+        "fields": [
+          {
+            "topic_id": "SK01",
+            "status": "known",
+            "evidence": [
+              {
+                "message_id": "63597ee2-856f-4723-a101-4dff104710ed",
+                "quote": "我是1984年在江西宜春出生的。"
+              },
+              {
+                "message_id": "63597ee2-856f-4723-a101-4dff104710ed",
+                "quote": "小时候家乡是个很小的村子，家家户户都挨在一起。"
+              }
+            ]
+          },
+          {
+            "topic_id": "SK02",
+            "status": "pending",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK03",
+            "status": "pending",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK04",
+            "status": "pending",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK05",
+            "status": "pending",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK06",
+            "status": "pending",
+            "evidence": []
+          }
+        ],
+        "user_turns": 1
+      }
+    },
+    {
+      "label": "SK01完整答:answer",
+      "elapsed_seconds": 0.08,
+      "data": {
+        "question_id": "SK02",
+        "question": "您的名字有什么特殊寓意、家人赋予的期许吗？",
+        "version": 2,
+        "paused": false,
+        "fields": [
+          {
+            "topic_id": "SK01",
+            "status": "known",
+            "evidence": [
+              {
+                "message_id": "63597ee2-856f-4723-a101-4dff104710ed",
+                "quote": "我是1984年在江西宜春出生的。"
+              },
+              {
+                "message_id": "63597ee2-856f-4723-a101-4dff104710ed",
+                "quote": "小时候家乡是个很小的村子，家家户户都挨在一起。"
+              }
+            ]
+          },
+          {
+            "topic_id": "SK02",
+            "status": "pending",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK03",
+            "status": "pending",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK04",
+            "status": "pending",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK05",
+            "status": "pending",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK06",
+            "status": "pending",
+            "evidence": []
+          }
+        ],
+        "user_turns": 1
+      }
+    },
+    {
+      "label": "sk01-replay-identical",
+      "elapsed_seconds": 0,
+      "data": {
+        "equal": true
+      }
+    },
+    {
+      "label": "SK01完整答:pause",
+      "elapsed_seconds": 0.1,
+      "data": {
+        "question_id": "SK02",
+        "question": "您的名字有什么特殊寓意、家人赋予的期许吗？",
+        "version": 3,
+        "paused": true,
+        "fields": [
+          {
+            "topic_id": "SK01",
+            "status": "known",
+            "evidence": [
+              {
+                "message_id": "63597ee2-856f-4723-a101-4dff104710ed",
+                "quote": "我是1984年在江西宜春出生的。"
+              },
+              {
+                "message_id": "63597ee2-856f-4723-a101-4dff104710ed",
+                "quote": "小时候家乡是个很小的村子，家家户户都挨在一起。"
+              }
+            ]
+          },
+          {
+            "topic_id": "SK02",
+            "status": "pending",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK03",
+            "status": "pending",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK04",
+            "status": "pending",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK05",
+            "status": "pending",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK06",
+            "status": "pending",
+            "evidence": []
+          }
+        ],
+        "user_turns": 1
+      }
+    },
+    {
+      "label": "SK01完整答:resume",
+      "elapsed_seconds": 0.1,
+      "data": {
+        "question_id": "SK02",
+        "question": "您的名字有什么特殊寓意、家人赋予的期许吗？",
+        "version": 4,
+        "paused": false,
+        "fields": [
+          {
+            "topic_id": "SK01",
+            "status": "known",
+            "evidence": [
+              {
+                "message_id": "63597ee2-856f-4723-a101-4dff104710ed",
+                "quote": "我是1984年在江西宜春出生的。"
+              },
+              {
+                "message_id": "63597ee2-856f-4723-a101-4dff104710ed",
+                "quote": "小时候家乡是个很小的村子，家家户户都挨在一起。"
+              }
+            ]
+          },
+          {
+            "topic_id": "SK02",
+            "status": "pending",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK03",
+            "status": "pending",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK04",
+            "status": "pending",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK05",
+            "status": "pending",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK06",
+            "status": "pending",
+            "evidence": []
+          }
+        ],
+        "user_turns": 1
+      }
+    },
+    {
+      "label": "SK01未知时间:answer",
+      "elapsed_seconds": 84.08,
+      "data": {
+        "question_id": "SK02",
+        "question": "您的名字有什么特殊寓意、家人赋予的期许吗？",
+        "version": 2,
+        "paused": false,
+        "fields": [
+          {
+            "topic_id": "SK01",
+            "status": "unknown",
+            "evidence": [
+              {
+                "message_id": "b51eb5e5-15b2-4053-9681-df1e6783e1f9",
+                "quote": "出生时间我记不清了，地点是在江西宜春的小医院。"
+              },
+              {
+                "message_id": "b51eb5e5-15b2-4053-9681-df1e6783e1f9",
+                "quote": "小时候村子很小，家家户户都挨在一起。"
+              },
+              {
+                "message_id": "b51eb5e5-15b2-4053-9681-df1e6783e1f9",
+                "quote": "出生时间我记不清了，地点是在江西宜春的小医院。小时候村子很小，家家户户都挨在一起。"
+              }
+            ]
+          },
+          {
+            "topic_id": "SK02",
+            "status": "pending",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK03",
+            "status": "pending",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK04",
+            "status": "pending",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK05",
+            "status": "pending",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK06",
+            "status": "pending",
+            "evidence": []
+          }
+        ],
+        "user_turns": 1
+      }
+    },
+    {
+      "label": "flag-off-new-schema",
+      "elapsed_seconds": 0,
+      "data": {
+        "question_id": "home",
+        "guide_version": 2,
+        "total_questions": 7
+      }
+    },
+    {
+      "label": "SK01未知时间:pause",
+      "elapsed_seconds": 0.12,
+      "data": {
+        "question_id": "SK02",
+        "question": "您的名字有什么特殊寓意、家人赋予的期许吗？",
+        "version": 3,
+        "paused": true,
+        "fields": [
+          {
+            "topic_id": "SK01",
+            "status": "unknown",
+            "evidence": [
+              {
+                "message_id": "b51eb5e5-15b2-4053-9681-df1e6783e1f9",
+                "quote": "出生时间我记不清了，地点是在江西宜春的小医院。"
+              },
+              {
+                "message_id": "b51eb5e5-15b2-4053-9681-df1e6783e1f9",
+                "quote": "小时候村子很小，家家户户都挨在一起。"
+              },
+              {
+                "message_id": "b51eb5e5-15b2-4053-9681-df1e6783e1f9",
+                "quote": "出生时间我记不清了，地点是在江西宜春的小医院。小时候村子很小，家家户户都挨在一起。"
+              }
+            ]
+          },
+          {
+            "topic_id": "SK02",
+            "status": "pending",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK03",
+            "status": "pending",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK04",
+            "status": "pending",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK05",
+            "status": "pending",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK06",
+            "status": "pending",
+            "evidence": []
+          }
+        ],
+        "user_turns": 1
+      }
+    },
+    {
+      "label": "SK01未知时间:resume",
+      "elapsed_seconds": 0.08,
+      "data": {
+        "question_id": "SK02",
+        "question": "您的名字有什么特殊寓意、家人赋予的期许吗？",
+        "version": 4,
+        "paused": false,
+        "fields": [
+          {
+            "topic_id": "SK01",
+            "status": "unknown",
+            "evidence": [
+              {
+                "message_id": "b51eb5e5-15b2-4053-9681-df1e6783e1f9",
+                "quote": "出生时间我记不清了，地点是在江西宜春的小医院。"
+              },
+              {
+                "message_id": "b51eb5e5-15b2-4053-9681-df1e6783e1f9",
+                "quote": "小时候村子很小，家家户户都挨在一起。"
+              },
+              {
+                "message_id": "b51eb5e5-15b2-4053-9681-df1e6783e1f9",
+                "quote": "出生时间我记不清了，地点是在江西宜春的小医院。小时候村子很小，家家户户都挨在一起。"
+              }
+            ]
+          },
+          {
+            "topic_id": "SK02",
+            "status": "pending",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK03",
+            "status": "pending",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK04",
+            "status": "pending",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK05",
+            "status": "pending",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK06",
+            "status": "pending",
+            "evidence": []
+          }
+        ],
+        "user_turns": 1
+      }
+    },
+    {
+      "label": "flag-off-existing-v3",
+      "elapsed_seconds": 0,
+      "data": {
+        "guide_version": 3,
+        "question_id": null
+      }
+    },
+    {
+      "label": "SK01完整答:answer",
+      "elapsed_seconds": 0.14,
+      "data": {
+        "question_id": "SK03",
+        "question": "您的原生家庭基本情况（父母职业、家庭氛围、兄弟姐妹情况）？",
+        "version": 5,
+        "paused": false,
+        "fields": [
+          {
+            "topic_id": "SK01",
+            "status": "known",
+            "evidence": [
+              {
+                "message_id": "63597ee2-856f-4723-a101-4dff104710ed",
+                "quote": "我是1984年在江西宜春出生的。"
+              },
+              {
+                "message_id": "63597ee2-856f-4723-a101-4dff104710ed",
+                "quote": "小时候家乡是个很小的村子，家家户户都挨在一起。"
+              }
+            ]
+          },
+          {
+            "topic_id": "SK02",
+            "status": "skipped",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK03",
+            "status": "pending",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK04",
+            "status": "pending",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK05",
+            "status": "pending",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK06",
+            "status": "pending",
+            "evidence": []
+          }
+        ],
+        "user_turns": 2
+      }
+    },
+    {
+      "label": "SK01完整答:answer",
+      "elapsed_seconds": 0.13,
+      "data": {
+        "question_id": "SK04",
+        "question": "从小到大，您家人的教育方式是严厉、开明还是放养？对您性格有什么影响？",
+        "version": 6,
+        "paused": false,
+        "fields": [
+          {
+            "topic_id": "SK01",
+            "status": "known",
+            "evidence": [
+              {
+                "message_id": "63597ee2-856f-4723-a101-4dff104710ed",
+                "quote": "我是1984年在江西宜春出生的。"
+              },
+              {
+                "message_id": "63597ee2-856f-4723-a101-4dff104710ed",
+                "quote": "小时候家乡是个很小的村子，家家户户都挨在一起。"
+              }
+            ]
+          },
+          {
+            "topic_id": "SK02",
+            "status": "skipped",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK03",
+            "status": "skipped",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK04",
+            "status": "pending",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK05",
+            "status": "pending",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK06",
+            "status": "pending",
+            "evidence": []
+          }
+        ],
+        "user_turns": 3
+      }
+    },
+    {
+      "label": "SK01完整答:answer",
+      "elapsed_seconds": 0.36,
+      "data": {
+        "question_id": "SK05",
+        "question": "回望一生，您觉得自己的性格底色是什么？是内向、坚韧、乐观还是执着？",
+        "version": 7,
+        "paused": false,
+        "fields": [
+          {
+            "topic_id": "SK01",
+            "status": "known",
+            "evidence": [
+              {
+                "message_id": "63597ee2-856f-4723-a101-4dff104710ed",
+                "quote": "我是1984年在江西宜春出生的。"
+              },
+              {
+                "message_id": "63597ee2-856f-4723-a101-4dff104710ed",
+                "quote": "小时候家乡是个很小的村子，家家户户都挨在一起。"
+              }
+            ]
+          },
+          {
+            "topic_id": "SK02",
+            "status": "skipped",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK03",
+            "status": "skipped",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK04",
+            "status": "skipped",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK05",
+            "status": "pending",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK06",
+            "status": "pending",
+            "evidence": []
+          }
+        ],
+        "user_turns": 4
+      }
+    },
+    {
+      "label": "SK01完整答:answer",
+      "elapsed_seconds": 0.12,
+      "data": {
+        "question_id": "SK06",
+        "question": "如果用三个关键词概括您的一生，您会选择哪三个？为什么？",
+        "version": 8,
+        "paused": false,
+        "fields": [
+          {
+            "topic_id": "SK01",
+            "status": "known",
+            "evidence": [
+              {
+                "message_id": "63597ee2-856f-4723-a101-4dff104710ed",
+                "quote": "我是1984年在江西宜春出生的。"
+              },
+              {
+                "message_id": "63597ee2-856f-4723-a101-4dff104710ed",
+                "quote": "小时候家乡是个很小的村子，家家户户都挨在一起。"
+              }
+            ]
+          },
+          {
+            "topic_id": "SK02",
+            "status": "skipped",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK03",
+            "status": "skipped",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK04",
+            "status": "skipped",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK05",
+            "status": "skipped",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK06",
+            "status": "pending",
+            "evidence": []
+          }
+        ],
+        "user_turns": 5
+      }
+    },
+    {
+      "label": "SK01完整答:answer",
+      "elapsed_seconds": 0.14,
+      "data": {
+        "question_id": null,
+        "question": null,
+        "version": 9,
+        "paused": false,
+        "fields": [
+          {
+            "topic_id": "SK01",
+            "status": "known",
+            "evidence": [
+              {
+                "message_id": "63597ee2-856f-4723-a101-4dff104710ed",
+                "quote": "我是1984年在江西宜春出生的。"
+              },
+              {
+                "message_id": "63597ee2-856f-4723-a101-4dff104710ed",
+                "quote": "小时候家乡是个很小的村子，家家户户都挨在一起。"
+              }
+            ]
+          },
+          {
+            "topic_id": "SK02",
+            "status": "skipped",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK03",
+            "status": "skipped",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK04",
+            "status": "skipped",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK05",
+            "status": "skipped",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK06",
+            "status": "skipped",
+            "evidence": []
+          }
+        ],
+        "user_turns": 6
+      }
+    },
+    {
+      "label": "SK01完整答:confirm",
+      "elapsed_seconds": 0.11,
+      "data": {
+        "question_id": null,
+        "question": null,
+        "version": 10,
+        "paused": false,
+        "fields": [
+          {
+            "topic_id": "SK01",
+            "status": "known",
+            "evidence": [
+              {
+                "message_id": "63597ee2-856f-4723-a101-4dff104710ed",
+                "quote": "我是1984年在江西宜春出生的。"
+              },
+              {
+                "message_id": "63597ee2-856f-4723-a101-4dff104710ed",
+                "quote": "小时候家乡是个很小的村子，家家户户都挨在一起。"
+              }
+            ]
+          },
+          {
+            "topic_id": "SK02",
+            "status": "skipped",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK03",
+            "status": "skipped",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK04",
+            "status": "skipped",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK05",
+            "status": "skipped",
+            "evidence": []
+          },
+          {
+            "topic_id": "SK06",
+            "status": "skipped",
+            "evidence": []
+          }
+        ],
+        "user_turns": 6
+      }
+    },
+    {
+      "label": "SK01完整答:message",
+      "elapsed_seconds": 0.22,
+      "data": {
+        "text": "跳过",
+        "guide_version": 3,
+        "topic_index": 1,
+        "phase": "opening",
+        "reply": "刚组建家庭时，生活条件如何？夫妻二人是如何携手打拼的？",
+        "result": null,
+        "audit_entries": 0,
+        "sources_count": 0,
+        "calls": []
+      }
+    },
+    {
+      "label": "SK01完整答:message",
+      "elapsed_seconds": 0.17,
+      "data": {
+        "text": "跳过",
+        "guide_version": 3,
+        "topic_index": 2,
+        "phase": "opening",
+        "reply": "婚姻中有没有磨合、争执、难熬的时刻？你们是如何包容与相守的？",
+        "result": null,
+        "audit_entries": 0,
+        "sources_count": 0,
+        "calls": []
+      }
+    },
+    {
+      "label": "SK01完整答:message",
+      "elapsed_seconds": 66.05,
+      "data": {
+        "text": "婚后他总抱怨我回家晚。",
+        "guide_version": 3,
+        "topic_index": 2,
+        "phase": "exploring",
+        "reply": "面对那样的时刻，您们后来怎样相处、应对？",
+        "result": {
+          "active": [
+            "FM03-E1",
+            "FM03-E2"
+          ],
+          "errors": [],
+          "fields": {
+            "FM03-A1": {
+              "scope": {
+                "period": "as_stated",
+                "subject": "self",
+                "relation_evidence": [
+                  {
+                    "quote": "婚后他总抱怨我回家晚。",
+                    "source_id": "3bd6e7d5-6d6a-43c6-adc0-23e5511f4565"
+                  }
+                ]
+              },
+              "state": "known",
+              "value": "婚后他总抱怨我回家晚",
+              "evidence": [
+                {
+                  "quote": "婚后他总抱怨我回家晚。",
+                  "source_id": "3bd6e7d5-6d6a-43c6-adc0-23e5511f4565"
+                }
+              ]
+            },
+            "FM03-E1": {
+              "scope": {
+                "period": "adulthood",
+                "subject": "self",
+                "relation_evidence": [
+                  {
+                    "quote": "婚后他总抱怨我回家晚。",
+                    "source_id": "3bd6e7d5-6d6a-43c6-adc0-23e5511f4565"
+                  }
+                ]
+              },
+              "state": "known",
+              "value": "婚后他总抱怨我回家晚",
+              "evidence": [
+                {
+                  "quote": "婚后他总抱怨我回家晚。",
+                  "source_id": "3bd6e7d5-6d6a-43c6-adc0-23e5511f4565"
+                }
+              ]
+            },
+            "FM03-E2": {
+              "state": "missing",
+              "value": null,
+              "evidence": []
+            },
+            "FM03-O1": {
+              "state": "missing",
+              "value": null,
+              "evidence": []
+            }
+          },
+          "target": "FM03-E2",
+          "version": "full-interview-v1.24.0",
+          "decision": "ask",
+          "question": "面对那样的时刻，您们后来怎样相处、应对？",
+          "effective": {
+            "FM03-A1": "known",
+            "FM03-E1": "known",
+            "FM03-E2": "missing",
+            "FM03-O1": "missing"
+          },
+          "provenance": {},
+          "scope_notices": [
+            {
+              "rule": "expand_explicit_same_field_evidence_alias",
+              "field_id": "FM03-A1"
+            },
+            {
+              "rule": "expand_explicit_same_field_evidence_alias",
+              "field_id": "FM03-E1"
+            }
+          ],
+          "optional_errors": [],
+          "unbound_material": [],
+          "rejected_candidates": [],
+          "semantic_rejections": [],
+          "protocol_normalizations": [
+            {
+              "rule": "expand_control_evidence_units",
+              "selections": [
+                {
+                  "refs": [],
+                  "attribute": "evidence_unit_ids",
+                  "selected_ids": []
+                }
+              ],
+              "original_control": {
+                "action": "continue",
+                "evidence_unit_ids": []
+              }
+            },
+            {
+              "rule": "expand_selected_original_evidence_units",
+              "field_id": "FM03-A1",
+              "selections": [
+                {
+                  "refs": [
+                    {
+                      "quote": "婚后他总抱怨我回家晚。",
+                      "source_id": "3bd6e7d5-6d6a-43c6-adc0-23e5511f4565"
+                    }
+                  ],
+                  "attribute": "evidence_unit_ids",
+                  "selected_ids": [
+                    "S1.1"
+                  ]
+                },
+                {
+                  "alias": "same_as_evidence",
+                  "attribute": "relation_unit_ids"
+                }
+              ],
+              "original_candidate": {
+                "scope": {
+                  "period": "as_stated",
+                  "subject": "self",
+                  "relation_unit_ids": "same_as_evidence"
+                },
+                "state": "known",
+                "value": "婚后他总抱怨我回家晚",
+                "evidence_unit_ids": [
+                  "S1.1"
+                ]
+              }
+            },
+            {
+              "rule": "expand_explicit_same_field_evidence_alias",
+              "field_id": "FM03-A1",
+              "original_candidate": {
+                "scope": {
+                  "period": "as_stated",
+                  "subject": "self",
+                  "relation_evidence": "same_as_evidence"
+                },
+                "state": "known",
+                "value": "婚后他总抱怨我回家晚",
+                "evidence": [
+                  {
+                    "quote": "婚后他总抱怨我回家晚。",
+                    "source_id": "3bd6e7d5-6d6a-43c6-adc0-23e5511f4565"
+                  }
+                ]
+              }
+            },
+            {
+              "rule": "expand_selected_original_evidence_units",
+              "field_id": "FM03-E1",
+              "selections": [
+                {
+                  "refs": [
+                    {
+                      "quote": "婚后他总抱怨我回家晚。",
+                      "source_id": "3bd6e7d5-6d6a-43c6-adc0-23e5511f4565"
+                    }
+                  ],
+                  "attribute": "evidence_unit_ids",
+                  "selected_ids": [
+                    "S1.1"
+                  ]
+                },
+                {
+                  "alias": "same_as_evidence",
+                  "attribute": "relation_unit_ids"
+                }
+              ],
+              "original_candidate": {
+                "scope": {
+                  "period": "adulthood",
+                  "subject": "self",
+                  "relation_unit_ids": "same_as_evidence"
+                },
+                "state": "known",
+                "value": "婚后他总抱怨我回家晚",
+                "evidence_unit_ids": [
+                  "S1.1"
+                ]
+              }
+            },
+            {
+              "rule": "expand_explicit_same_field_evidence_alias",
+              "field_id": "FM03-E1",
+              "original_candidate": {
+                "scope": {
+                  "period": "adulthood",
+                  "subject": "self",
+                  "relation_evidence": "same_as_evidence"
+                },
+                "state": "known",
+                "value": "婚后他总抱怨我回家晚",
+                "evidence": [
+                  {
+                    "quote": "婚后他总抱怨我回家晚。",
+                    "source_id": "3bd6e7d5-6d6a-43c6-adc0-23e5511f4565"
+                  }
+                ]
+              }
+            },
+            {
+              "rule": "expand_selected_original_evidence_units",
+              "field_id": "FM03-E2",
+              "selections": [
+                {
+                  "refs": [],
+                  "attribute": "evidence_unit_ids",
+                  "selected_ids": []
+                }
+              ],
+              "original_candidate": {
+                "state": "missing",
+                "value": null,
+                "evidence_unit_ids": []
+              }
+            },
+            {
+              "rule": "canonical_empty_missing_before_citation_alias",
+              "field_id": "FM03-E2",
+              "original_candidate": {
+                "state": "missing",
+                "value": null,
+                "evidence": []
+              }
+            },
+            {
+              "rule": "expand_selected_original_evidence_units",
+              "field_id": "FM03-O1",
+              "selections": [
+                {
+                  "refs": [],
+                  "attribute": "evidence_unit_ids",
+                  "selected_ids": []
+                }
+              ],
+              "original_candidate": {
+                "state": "missing",
+                "value": null,
+                "evidence_unit_ids": []
+              }
+            },
+            {
+              "rule": "canonical_empty_missing_before_citation_alias",
+              "field_id": "FM03-O1",
+              "original_candidate": {
+                "state": "missing",
+                "value": null,
+                "evidence": []
+              }
+            }
+          ],
+          "inactive_conditional_errors": []
+        },
+        "audit_entries": 1,
+        "sources_count": 1,
+        "calls": [
+          [
+            "reviewer",
+            "extractor"
+          ]
+        ]
+      }
+    },
+    {
+      "label": "SK01完整答:message",
+      "elapsed_seconds": 82.59,
+      "data": {
+        "text": "我先生每次都骂我，要我关起来不要做。",
+        "guide_version": 3,
+        "topic_index": 2,
+        "phase": "exploring",
+        "reply": "面对那样的时刻，您们后来怎样相处、应对？",
+        "result": {
+          "active": [
+            "FM03-E1",
+            "FM03-E2"
+          ],
+          "errors": [],
+          "fields": {
+            "FM03-A1": {
+              "scope": {
+                "period": "as_stated",
+                "subject": "self",
+                "relation_evidence": [
+                  {
+                    "quote": "婚后他总抱怨我回家晚。",
+                    "source_id": "3bd6e7d5-6d6a-43c6-adc0-23e5511f4565"
+                  }
+                ]
+              },
+              "state": "known",
+              "value": "婚后他总抱怨我回家晚",
+              "history": [
+                {
+                  "scope": {
+                    "period": "as_stated",
+                    "subject": "self",
+                    "relation_evidence": [
+                      {
+                        "quote": "婚后他总抱怨我回家晚。",
+                        "source_id": "3bd6e7d5-6d6a-43c6-adc0-23e5511f4565"
+                      }
+                    ]
+                  },
+                  "state": "known",
+                  "value": "婚后他总抱怨我回家晚",
+                  "evidence": [
+                    {
+                      "quote": "婚后他总抱怨我回家晚。",
+                      "source_id": "3bd6e7d5-6d6a-43c6-adc0-23e5511f4565"
+                    }
+                  ]
+                }
+              ],
+              "evidence": [
+                {
+                  "quote": "婚后他总抱怨我回家晚。",
+                  "source_id": "3bd6e7d5-6d6a-43c6-adc0-23e5511f4565"
+                }
+              ]
+            },
+            "FM03-E1": {
+              "scope": {
+                "period": "adulthood",
+                "subject": "self",
+                "relation_evidence": [
+                  {
+                    "quote": "婚后他总抱怨我回家晚。",
+                    "source_id": "3bd6e7d5-6d6a-43c6-adc0-23e5511f4565"
+                  }
+                ]
+              },
+              "state": "known",
+              "value": "婚后他总抱怨我回家晚",
+              "history": [
+                {
+                  "scope": {
+                    "period": "adulthood",
+                    "subject": "self",
+                    "relation_evidence": [
+                      {
+                        "quote": "婚后他总抱怨我回家晚。",
+                        "source_id": "3bd6e7d5-6d6a-43c6-adc0-23e5511f4565"
+                      }
+                    ]
+                  },
+                  "state": "known",
+                  "value": "婚后他总抱怨我回家晚",
+                  "evidence": [
+                    {
+                      "quote": "婚后他总抱怨我回家晚。",
+                      "source_id": "3bd6e7d5-6d6a-43c6-adc0-23e5511f4565"
+                    }
+                  ]
+                }
+              ],
+              "evidence": [
+                {
+                  "quote": "婚后他总抱怨我回家晚。",
+                  "source_id": "3bd6e7d5-6d6a-43c6-adc0-23e5511f4565"
+                }
+              ]
+            },
+            "FM03-E2": {
+              "state": "missing",
+              "value": null,
+              "evidence": []
+            },
+            "FM03-O1": {
+              "state": "missing",
+              "value": null,
+              "evidence": []
+            }
+          },
+          "target": "FM03-E2",
+          "version": "full-interview-v1.24.0",
+          "decision": "ask",
+          "question": "面对那样的时刻，您们后来怎样相处、应对？",
+          "effective": {
+            "FM03-A1": "known",
+            "FM03-E1": "known",
+            "FM03-E2": "missing",
+            "FM03-O1": "missing"
+          },
+          "provenance": {
+            "FM03-E2": "reused_same_question",
+            "FM03-O1": "reused_same_question"
+          },
+          "scope_notices": [
+            {
+              "rule": "expand_explicit_same_field_evidence_alias",
+              "field_id": "FM03-A1"
+            },
+            {
+              "rule": "expand_explicit_same_field_evidence_alias",
+              "field_id": "FM03-E1"
+            }
+          ],
+          "optional_errors": [],
+          "unbound_material": [],
+          "rejected_candidates": [],
+          "semantic_rejections": [],
+          "protocol_normalizations": [
+            {
+              "rule": "expand_control_evidence_units",
+              "selections": [
+                {
+                  "refs": [],
+                  "attribute": "evidence_unit_ids",
+                  "selected_ids": []
+                }
+              ],
+              "original_control": {
+                "action": "continue",
+                "evidence_unit_ids": []
+              }
+            },
+            {
+              "rule": "expand_selected_original_evidence_units",
+              "field_id": "FM03-A1",
+              "selections": [
+                {
+                  "refs": [
+                    {
+                      "quote": "婚后他总抱怨我回家晚。",
+                      "source_id": "3bd6e7d5-6d6a-43c6-adc0-23e5511f4565"
+                    }
+                  ],
+                  "attribute": "evidence_unit_ids",
+                  "selected_ids": [
+                    "S1.1"
+                  ]
+                },
+                {
+                  "alias": "same_as_evidence",
+                  "attribute": "relation_unit_ids"
+                }
+              ],
+              "original_candidate": {
+                "scope": {
+                  "period": "as_stated",
+                  "subject": "self",
+                  "relation_unit_ids": "same_as_evidence"
+                },
+                "state": "known",
+                "value": "婚后他总抱怨我回家晚",
+                "evidence_unit_ids": [
+                  "S1.1"
+                ]
+              }
+            },
+            {
+              "rule": "expand_explicit_same_field_evidence_alias",
+              "field_id": "FM03-A1",
+              "original_candidate": {
+                "scope": {
+                  "period": "as_stated",
+                  "subject": "self",
+                  "relation_evidence": "same_as_evidence"
+                },
+                "state": "known",
+                "value": "婚后他总抱怨我回家晚",
+                "evidence": [
+                  {
+                    "quote": "婚后他总抱怨我回家晚。",
+                    "source_id": "3bd6e7d5-6d6a-43c6-adc0-23e5511f4565"
+                  }
+                ]
+              }
+            },
+            {
+              "rule": "expand_selected_original_evidence_units",
+              "field_id": "FM03-E1",
+              "selections": [
+                {
+                  "refs": [
+                    {
+                      "quote": "婚后他总抱怨我回家晚。",
+                      "source_id": "3bd6e7d5-6d6a-43c6-adc0-23e5511f4565"
+                    }
+                  ],
+                  "attribute": "evidence_unit_ids",
+                  "selected_ids": [
+                    "S1.1"
+                  ]
+                },
+                {
+                  "alias": "same_as_evidence",
+                  "attribute": "relation_unit_ids"
+                }
+              ],
+              "original_candidate": {
+                "scope": {
+                  "period": "adulthood",
+                  "subject": "self",
+                  "relation_unit_ids": "same_as_evidence"
+                },
+                "state": "known",
+                "value": "婚后他总抱怨我回家晚",
+                "evidence_unit_ids": [
+                  "S1.1"
+                ]
+              }
+            },
+            {
+              "rule": "expand_explicit_same_field_evidence_alias",
+              "field_id": "FM03-E1",
+              "original_candidate": {
+                "scope": {
+                  "period": "adulthood",
+                  "subject": "self",
+                  "relation_evidence": "same_as_evidence"
+                },
+                "state": "known",
+                "value": "婚后他总抱怨我回家晚",
+                "evidence": [
+                  {
+                    "quote": "婚后他总抱怨我回家晚。",
+                    "source_id": "3bd6e7d5-6d6a-43c6-adc0-23e5511f4565"
+                  }
+                ]
+              }
+            },
+            {
+              "rule": "canonical_empty_missing_before_citation_alias",
+              "field_id": "FM03-E2",
+              "original_candidate": {
+                "state": "missing",
+                "value": null
+              }
+            },
+            {
+              "rule": "canonical_empty_missing_before_citation_alias",
+              "field_id": "FM03-O1",
+              "original_candidate": {
+                "state": "missing",
+                "value": null
+              }
+            },
+            {
+              "rule": "canonical_empty_missing_before_citation_alias",
+              "field_id": "FM03-E2",
+              "original_candidate": {
+                "state": "missing",
+                "value": null,
+                "evidence": []
+              }
+            },
+            {
+              "rule": "canonical_empty_missing_before_citation_alias",
+              "field_id": "FM03-O1",
+              "original_candidate": {
+                "state": "missing",
+                "value": null,
+                "evidence": []
+              }
+            }
+          ],
+          "inactive_conditional_errors": []
+        },
+        "audit_entries": 2,
+        "sources_count": 2,
+        "calls": [
+          [
+            "reviewer",
+            "extractor"
+          ],
+          [
+            "reviewer",
+            "extractor"
+          ]
+        ]
+      }
+    }
+  ]
+}

@@ -59,7 +59,13 @@ struct APIClient {
         var components = URLComponents(url: baseURL.appendingPathComponent(path), resolvingAgainstBaseURL: false)!
         if !query.isEmpty { components.queryItems = query }
         guard let url = components.url else { throw APIError.insecureURL }
-        var request = URLRequest(url: url, timeoutInterval: timeoutInterval)
+        // The interview uses two sequential DS calls and, only on invalid
+        // structure, one bounded repair. Keep other requests at their normal
+        // limit; stable client IDs make an interrupted interview retry safe.
+        let interviewPath = path.hasPrefix("api/v1/chat/sessions/") &&
+            (path.hasSuffix("/messages") || path.hasSuffix("/life-overview/actions") || path.hasSuffix("/interview"))
+        let timeout = method == "POST" && interviewPath ? max(timeoutInterval, 450) : timeoutInterval
+        var request = URLRequest(url: url, timeoutInterval: timeout)
         request.cachePolicy = .reloadIgnoringLocalCacheData
         request.httpMethod = method
         request.httpBody = body

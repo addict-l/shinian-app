@@ -1,0 +1,662 @@
+{
+  "kind": "known_development_proposal_code_replay",
+  "version": "full-interview-v1.4.0-draft",
+  "limitations": "Same saved proposals and contexts; no new DeepSeek calls, no gold read or score. Semantic invalid states remain errors. Original runs are immutable.",
+  "records": [
+    {
+      "input": "docs/prototypes/full-interview-evaluation/run-v1.3.1-paired-array/cases/DEV-N-94f516068b-SK03-01/turn-000/engine-input-000-repair1.json",
+      "input_sha256": "a9abe73aa499df4fbe65d7ec3daa0d2cc4544f1d9f6892f935130a30744cb571",
+      "used_strict_transport_parse": false,
+      "old_decision": "ask",
+      "new_decision": "ask",
+      "old_errors": [],
+      "new_errors": [],
+      "target": "SK03-E1",
+      "unbound_material": [],
+      "notices": []
+    },
+    {
+      "input": "docs/prototypes/full-interview-evaluation/run-v1.3.1-paired-array/cases/DEV-N-94f516068b-SK03-01/turn-000/engine-input-000.json",
+      "input_sha256": "34f0799bf77d0343c376dda4524f913ca4f34c67d9783bbd886d7a83a8d91db6",
+      "used_strict_transport_parse": false,
+      "old_decision": "invalid",
+      "new_decision": "invalid",
+      "old_errors": [
+        "SK03-E1:family_identity_not_primary_caregiving"
+      ],
+      "new_errors": [
+        "SK03-E1:family_identity_not_primary_caregiving"
+      ],
+      "target": null,
+      "unbound_material": [],
+      "notices": []
+    },
+    {
+      "input": "docs/prototypes/full-interview-evaluation/run-v1.3.1-paired-array/cases/DEV-N-9c32d8b7c1-WK01-01/turn-000/engine-input-000-repair1.json",
+      "input_sha256": "9361d552c1d65d798122167af712d573456fb6573bc3dc7d733c1ecba08b66f4",
+      "used_strict_transport_parse": false,
+      "old_decision": "invalid",
+      "new_decision": "invalid",
+      "old_errors": [
+        "WK01-E1:relation_not_bound_to_field_evidence",
+        "WK01-E2:unbound_explanation_link",
+        "WK01-E2:reason_not_bound_to_same_selected_object"
+      ],
+      "new_errors": [
+        "WK01-E1:relation_not_bound_to_field_evidence",
+        "WK01-E2:unbound_explanation_link",
+        "WK01-E2:reason_not_bound_to_same_selected_object"
+      ],
+      "target": null,
+      "unbound_material": [],
+      "notices": []
+    },
+    {
+      "input": "docs/prototypes/full-interview-evaluation/run-v1.3.1-paired-array/cases/DEV-N-9c32d8b7c1-WK01-01/turn-000/engine-input-000.json",
+      "input_sha256": "9361d552c1d65d798122167af712d573456fb6573bc3dc7d733c1ecba08b66f4",
+      "used_strict_transport_parse": false,
+      "old_decision": "invalid",
+      "new_decision": "invalid",
+      "old_errors": [
+        "WK01-E1:relation_not_bound_to_field_evidence",
+        "WK01-E2:unbound_explanation_link",
+        "WK01-E2:reason_not_bound_to_same_selected_object"
+      ],
+      "new_errors": [
+        "WK01-E1:relation_not_bound_to_field_evidence",
+        "WK01-E2:unbound_explanation_link",
+        "WK01-E2:reason_not_bound_to_same_selected_object"
+      ],
+      "target": null,
+      "unbound_material": [],
+      "notices": []
+    },
+    {
+      "input": "docs/prototypes/full-interview-evaluation/run-v1.3.1-paired-array/cases/DEV-N-cd7326e590-SK01-01/turn-000/engine-input-000-repair1.json",
+      "input_sha256": "6279615c93e49abf426b38c99a7eb2ff0f388d52c1780f540af9ee0f7d7f31cc",
+      "used_strict_transport_parse": false,
+      "old_decision": "ask",
+      "new_decision": "invalid",
+      "old_errors": [],
+      "new_errors": [
+        "SK01-E3.period:period_requires_temporal_expression"
+      ],
+      "target": null,
+      "unbound_material": [],
+      "notices": []
+    },
+    {
+      "input": "docs/prototypes/full-interview-evaluation/run-v1.3.1-paired-array/cases/DEV-N-cd7326e590-SK01-01/turn-000/engine-input-000.json",
+      "input_sha256": "379eff78e3caf65e8e74f957738826f4e0f36ff2aff05123e72bd70af22500bf",
+      "used_strict_transport_parse": false,
+      "old_decision": "invalid",
+      "new_decision": "invalid",
+      "old_errors": [
+        "SK01-E2:location_role_not_birthplace"
+      ],
+      "new_errors": [
+        "SK01-E2:location_role_not_birthplace",
+        "SK01-E3.period:period_requires_temporal_expression"
+      ],
+      "target": null,
+      "unbound_material": [],
+      "notices": []
+    },
+    {
+      "input": "docs/prototypes/full-interview-evaluation/run-v1.3.1-paired-array/cases/DEV-SOURCES-N-ac3fdd1b55-SK06-01/turn-000/engine-input-000.json",
+      "input_sha256": "5ae12faef31731bc8a8d9afaf3ab756481435c1d3fe85d3c367985da4adc4a65",
+      "used_strict_transport_parse": false,
+      "old_decision": "ready",
+      "new_decision": "ready",
+      "old_errors": [],
+      "new_errors": [],
+      "target": null,
+      "unbound_material": [],
+      "notices": []
+    },
+    {
+      "input": "docs/prototypes/full-interview-evaluation/run-v1.3.1-paired-array/cases/DEV3-N-a06ea91a56-SK03-01/turn-000/engine-input-000-repair1.json",
+      "input_sha256": "9e111c8fe50f21cc57db8f108098f1fea0e20dd1adc838d893a89d528d291b12",
+      "used_strict_transport_parse": false,
+      "old_decision": "invalid",
+      "new_decision": "invalid",
+      "old_errors": [
+        "SK03-E1:family_identity_not_primary_caregiving",
+        "SK03-E3:terminal_not_bound_to_actual_target"
+      ],
+      "new_errors": [
+        "SK03-E1:family_identity_not_primary_caregiving",
+        "SK03-E4:lifelong_self_state_not_household_interaction"
+      ],
+      "target": null,
+      "unbound_material": [],
+      "notices": []
+    },
+    {
+      "input": "docs/prototypes/full-interview-evaluation/run-v1.3.1-paired-array/cases/DEV3-N-a06ea91a56-SK03-01/turn-000/engine-input-000.json",
+      "input_sha256": "9e111c8fe50f21cc57db8f108098f1fea0e20dd1adc838d893a89d528d291b12",
+      "used_strict_transport_parse": false,
+      "old_decision": "invalid",
+      "new_decision": "invalid",
+      "old_errors": [
+        "SK03-E1:family_identity_not_primary_caregiving",
+        "SK03-E3:terminal_not_bound_to_actual_target"
+      ],
+      "new_errors": [
+        "SK03-E1:family_identity_not_primary_caregiving",
+        "SK03-E4:lifelong_self_state_not_household_interaction"
+      ],
+      "target": null,
+      "unbound_material": [],
+      "notices": []
+    },
+    {
+      "input": "docs/prototypes/full-interview-evaluation/run-v1.3.1-paired-array/cases/DEV3-N-d3da9c100d-SK04-01/turn-000/engine-input-000.json",
+      "input_sha256": "5035da63fe1c075a7ec094c676d9f8c7a71d403dd2cd1c89827a8c410a58c1b9",
+      "used_strict_transport_parse": false,
+      "old_decision": "ready",
+      "new_decision": "ready",
+      "old_errors": [],
+      "new_errors": [],
+      "target": null,
+      "unbound_material": [],
+      "notices": []
+    },
+    {
+      "input": "docs/prototypes/full-interview-evaluation/run-v1.3.1-paired-array/cases/DEV3-N-df0eb596f5-LT01-01/turn-000/engine-input-000.json",
+      "input_sha256": "5333964c27e9de56db0d1a36320f7489b001341b9453d2df7103134ce14d506e",
+      "used_strict_transport_parse": false,
+      "old_decision": "ready",
+      "new_decision": "ask",
+      "old_errors": [],
+      "new_errors": [],
+      "target": "LT01-E2",
+      "unbound_material": [
+        {
+          "field_id": "LT01-E2",
+          "missing_relation": "now_stage"
+        }
+      ],
+      "notices": [
+        {
+          "field_id": "LT01-E2",
+          "rule": "retain_literal_material_and_clarify_required_stage"
+        }
+      ]
+    },
+    {
+      "input": "docs/prototypes/full-interview-evaluation/run-v1.3.1-paired-array/cases/DEV3-N-f522cea657-FM04-01/turn-000/engine-input-000.json",
+      "input_sha256": "319b36d564eb234ca6772777513c5e22d61a766a5e83743987ce5f8c90f40f32",
+      "used_strict_transport_parse": false,
+      "old_decision": "ask",
+      "new_decision": "ask",
+      "old_errors": [],
+      "new_errors": [],
+      "target": "FM04-E1",
+      "unbound_material": [],
+      "notices": []
+    },
+    {
+      "input": "docs/prototypes/full-interview-evaluation/run-v1.3.1-paired-alias/cases/DEV-N-94f516068b-SK03-01/turn-000/engine-input-000.json",
+      "input_sha256": "0382a3639266b5fe5ecf8853f1734bbc38498fc70eb63d49d3c51d1a15a3c4a4",
+      "used_strict_transport_parse": false,
+      "old_decision": "ask",
+      "new_decision": "ask",
+      "old_errors": [],
+      "new_errors": [],
+      "target": "SK03-E1",
+      "unbound_material": [],
+      "notices": [
+        {
+          "field_id": "SK03-E3",
+          "rule": "expand_explicit_same_field_evidence_alias"
+        }
+      ]
+    },
+    {
+      "input": "docs/prototypes/full-interview-evaluation/run-v1.3.1-paired-alias/cases/DEV-N-9c32d8b7c1-WK01-01/turn-000/engine-input-000-repair1.json",
+      "input_sha256": "e56a4f921299ba6c435f0a58af81a4f119e7ae5bea0dbe26123e16fab6667b49",
+      "used_strict_transport_parse": false,
+      "old_decision": "invalid",
+      "new_decision": "ready",
+      "old_errors": [
+        "WK01-E2:unbound_explanation_link"
+      ],
+      "new_errors": [],
+      "target": null,
+      "unbound_material": [],
+      "notices": [
+        {
+          "field_id": "WK01-E1",
+          "rule": "expand_explicit_same_field_evidence_alias"
+        },
+        {
+          "field_id": "WK01-E2",
+          "rule": "expand_explicit_same_field_evidence_alias"
+        },
+        {
+          "field_id": "WK01-E2",
+          "rule": "literal_object_subspan_resolves_same_selected_object"
+        }
+      ]
+    },
+    {
+      "input": "docs/prototypes/full-interview-evaluation/run-v1.3.1-paired-alias/cases/DEV-N-9c32d8b7c1-WK01-01/turn-000/engine-input-000.json",
+      "input_sha256": "e56a4f921299ba6c435f0a58af81a4f119e7ae5bea0dbe26123e16fab6667b49",
+      "used_strict_transport_parse": false,
+      "old_decision": "invalid",
+      "new_decision": "ready",
+      "old_errors": [
+        "WK01-E2:unbound_explanation_link"
+      ],
+      "new_errors": [],
+      "target": null,
+      "unbound_material": [],
+      "notices": [
+        {
+          "field_id": "WK01-E1",
+          "rule": "expand_explicit_same_field_evidence_alias"
+        },
+        {
+          "field_id": "WK01-E2",
+          "rule": "expand_explicit_same_field_evidence_alias"
+        },
+        {
+          "field_id": "WK01-E2",
+          "rule": "literal_object_subspan_resolves_same_selected_object"
+        }
+      ]
+    },
+    {
+      "input": "docs/prototypes/full-interview-evaluation/run-v1.3.1-paired-alias/cases/DEV-N-cd7326e590-SK01-01/turn-000/engine-input-000-repair1.json",
+      "input_sha256": "270e3cf572c7df12bc5069bcf94032a82478ed58fb8c837921c29dd850696e65",
+      "used_strict_transport_parse": false,
+      "old_decision": "ask",
+      "new_decision": "invalid",
+      "old_errors": [],
+      "new_errors": [
+        "SK01-E3.period:period_requires_temporal_expression"
+      ],
+      "target": null,
+      "unbound_material": [],
+      "notices": [
+        {
+          "field_id": "SK01-E1",
+          "rule": "expand_explicit_same_field_evidence_alias"
+        },
+        {
+          "field_id": "SK01-E4",
+          "rule": "expand_explicit_same_field_evidence_alias"
+        },
+        {
+          "field_id": "SK01-E3.place",
+          "rule": "expand_explicit_same_field_evidence_alias"
+        },
+        {
+          "field_id": "SK01-E3.period",
+          "rule": "expand_explicit_same_field_evidence_alias"
+        }
+      ]
+    },
+    {
+      "input": "docs/prototypes/full-interview-evaluation/run-v1.3.1-paired-alias/cases/DEV-N-cd7326e590-SK01-01/turn-000/engine-input-000.json",
+      "input_sha256": "df1600fcbba20e1c76cc4af373987eeee09090deeab68ef7b719183216ddb0e7",
+      "used_strict_transport_parse": false,
+      "old_decision": "invalid",
+      "new_decision": "invalid",
+      "old_errors": [
+        "SK01-E2:location_role_not_birthplace"
+      ],
+      "new_errors": [
+        "SK01-E2:location_role_not_birthplace",
+        "SK01-E3.period:period_requires_temporal_expression"
+      ],
+      "target": null,
+      "unbound_material": [],
+      "notices": [
+        {
+          "field_id": "SK01-E1",
+          "rule": "expand_explicit_same_field_evidence_alias"
+        },
+        {
+          "field_id": "SK01-E2",
+          "rule": "expand_explicit_same_field_evidence_alias"
+        },
+        {
+          "field_id": "SK01-E4",
+          "rule": "expand_explicit_same_field_evidence_alias"
+        },
+        {
+          "field_id": "SK01-E3.place",
+          "rule": "expand_explicit_same_field_evidence_alias"
+        },
+        {
+          "field_id": "SK01-E3.period",
+          "rule": "expand_explicit_same_field_evidence_alias"
+        }
+      ]
+    },
+    {
+      "input": "docs/prototypes/full-interview-evaluation/run-v1.3.1-paired-alias/cases/DEV-SOURCES-N-ac3fdd1b55-SK06-01/turn-000/engine-input-000.json",
+      "input_sha256": "d0f0dd8124824712dd8e6e97fc742cdb045bcef22220235ea974ca1948bbcf24",
+      "used_strict_transport_parse": false,
+      "old_decision": "ready",
+      "new_decision": "ready",
+      "old_errors": [],
+      "new_errors": [],
+      "target": null,
+      "unbound_material": [],
+      "notices": [
+        {
+          "field_id": "SK06-E1",
+          "rule": "expand_explicit_same_field_evidence_alias"
+        },
+        {
+          "field_id": "SK06-E2",
+          "rule": "expand_explicit_same_field_evidence_alias"
+        }
+      ]
+    },
+    {
+      "input": "docs/prototypes/full-interview-evaluation/run-v1.3.1-paired-alias/cases/DEV3-N-a06ea91a56-SK03-01/turn-000/engine-input-000-repair1.json",
+      "input_sha256": "eda91bdef659718f7801b4ec988a96c069c95a678eef15f907584502ae343e5c",
+      "used_strict_transport_parse": false,
+      "old_decision": "invalid",
+      "new_decision": "invalid",
+      "old_errors": [
+        "SK03-E1:family_identity_not_primary_caregiving",
+        "SK03-E3:terminal_not_bound_to_actual_target"
+      ],
+      "new_errors": [
+        "SK03-E1:family_identity_not_primary_caregiving",
+        "SK03-E4:lifelong_self_state_not_household_interaction"
+      ],
+      "target": null,
+      "unbound_material": [],
+      "notices": [
+        {
+          "field_id": "SK03-E1",
+          "rule": "expand_explicit_same_field_evidence_alias"
+        },
+        {
+          "field_id": "SK03-E2",
+          "rule": "expand_explicit_same_field_evidence_alias"
+        },
+        {
+          "field_id": "SK03-E3",
+          "rule": "expand_explicit_same_field_evidence_alias"
+        },
+        {
+          "field_id": "SK03-E4",
+          "rule": "expand_explicit_same_field_evidence_alias"
+        }
+      ]
+    },
+    {
+      "input": "docs/prototypes/full-interview-evaluation/run-v1.3.1-paired-alias/cases/DEV3-N-a06ea91a56-SK03-01/turn-000/engine-input-000.json",
+      "input_sha256": "eda91bdef659718f7801b4ec988a96c069c95a678eef15f907584502ae343e5c",
+      "used_strict_transport_parse": false,
+      "old_decision": "invalid",
+      "new_decision": "invalid",
+      "old_errors": [
+        "SK03-E1:family_identity_not_primary_caregiving",
+        "SK03-E3:terminal_not_bound_to_actual_target"
+      ],
+      "new_errors": [
+        "SK03-E1:family_identity_not_primary_caregiving",
+        "SK03-E4:lifelong_self_state_not_household_interaction"
+      ],
+      "target": null,
+      "unbound_material": [],
+      "notices": [
+        {
+          "field_id": "SK03-E1",
+          "rule": "expand_explicit_same_field_evidence_alias"
+        },
+        {
+          "field_id": "SK03-E2",
+          "rule": "expand_explicit_same_field_evidence_alias"
+        },
+        {
+          "field_id": "SK03-E3",
+          "rule": "expand_explicit_same_field_evidence_alias"
+        },
+        {
+          "field_id": "SK03-E4",
+          "rule": "expand_explicit_same_field_evidence_alias"
+        }
+      ]
+    },
+    {
+      "input": "docs/prototypes/full-interview-evaluation/run-v1.3.1-paired-alias/cases/DEV3-N-d3da9c100d-SK04-01/turn-000/engine-input-000-repair1.json",
+      "input_sha256": "39a3774ddfd52eb8ba534513891aad68b7c1bdf501a01b1d2575bdb306ec1737",
+      "used_strict_transport_parse": false,
+      "old_decision": "invalid",
+      "new_decision": "ready",
+      "old_errors": [
+        "SK04-E3:specific_advice_or_outcome_not_personality_effect"
+      ],
+      "new_errors": [],
+      "target": null,
+      "unbound_material": [],
+      "notices": [
+        {
+          "field_id": "SK04-E1",
+          "rule": "expand_explicit_same_field_evidence_alias"
+        },
+        {
+          "field_id": "SK04-E3",
+          "rule": "expand_explicit_same_field_evidence_alias"
+        }
+      ]
+    },
+    {
+      "input": "docs/prototypes/full-interview-evaluation/run-v1.3.1-paired-alias/cases/DEV3-N-d3da9c100d-SK04-01/turn-000/engine-input-000.json",
+      "input_sha256": "39a3774ddfd52eb8ba534513891aad68b7c1bdf501a01b1d2575bdb306ec1737",
+      "used_strict_transport_parse": false,
+      "old_decision": "invalid",
+      "new_decision": "ready",
+      "old_errors": [
+        "SK04-E3:specific_advice_or_outcome_not_personality_effect"
+      ],
+      "new_errors": [],
+      "target": null,
+      "unbound_material": [],
+      "notices": [
+        {
+          "field_id": "SK04-E1",
+          "rule": "expand_explicit_same_field_evidence_alias"
+        },
+        {
+          "field_id": "SK04-E3",
+          "rule": "expand_explicit_same_field_evidence_alias"
+        }
+      ]
+    },
+    {
+      "input": "docs/prototypes/full-interview-evaluation/run-v1.3.1-paired-alias/cases/DEV3-N-df0eb596f5-LT01-01/turn-000/engine-input-000.json",
+      "input_sha256": "e3a11487d51c63d554eb6c1c72b7fcd05b27e1849dd5424ffcec798bf942de18",
+      "used_strict_transport_parse": false,
+      "old_decision": "ready",
+      "new_decision": "ask",
+      "old_errors": [],
+      "new_errors": [],
+      "target": "LT01-E2",
+      "unbound_material": [
+        {
+          "field_id": "LT01-E2",
+          "missing_relation": "now_stage"
+        }
+      ],
+      "notices": [
+        {
+          "field_id": "LT01-E1",
+          "rule": "expand_explicit_same_field_evidence_alias"
+        },
+        {
+          "field_id": "LT01-E2",
+          "rule": "expand_explicit_same_field_evidence_alias"
+        },
+        {
+          "field_id": "LT01-E2",
+          "rule": "retain_literal_material_and_clarify_required_stage"
+        }
+      ]
+    },
+    {
+      "input": "docs/prototypes/full-interview-evaluation/run-v1.3.1-paired-alias/cases/DEV3-N-f522cea657-FM04-01/turn-000/engine-input-000.json",
+      "input_sha256": "9bc9e8968ee1650bda48eec67549ce5ae3783340b62f08370a88d335cea75b3c",
+      "used_strict_transport_parse": false,
+      "old_decision": "ask",
+      "new_decision": "ask",
+      "old_errors": [],
+      "new_errors": [],
+      "target": "FM04-E1",
+      "unbound_material": [],
+      "notices": [
+        {
+          "field_id": "FM04-A1",
+          "rule": "expand_explicit_same_field_evidence_alias"
+        },
+        {
+          "field_id": "FM04-E2",
+          "rule": "expand_explicit_same_field_evidence_alias"
+        }
+      ]
+    },
+    {
+      "input": "docs/prototypes/full-interview-evaluation/run-v1.3.1-stage-development/cases/DEV-STAGE-N-4b27613445-WK03-01/turn-000/engine-input-000.json",
+      "input_sha256": "b07cf6b51ec4c307aaf5d8c1ec838a56ef9143dcb2751f88485a5f89b6aab603",
+      "used_strict_transport_parse": false,
+      "old_decision": "ask",
+      "new_decision": "ask",
+      "old_errors": [],
+      "new_errors": [],
+      "target": "WK03-E1",
+      "unbound_material": [],
+      "notices": []
+    },
+    {
+      "input": "docs/prototypes/full-interview-evaluation/run-v1.3.1-stage-development/cases/DEV-STAGE-N-4b27613445-WK03-01/turn-001/engine-input-000.json",
+      "input_sha256": "48e4409209edf2047adebf6955c1af631c5fded007dcfe96d1619a2f1e7d346b",
+      "used_strict_transport_parse": false,
+      "old_decision": "ask",
+      "new_decision": "ask",
+      "old_errors": [],
+      "new_errors": [],
+      "target": "WK03-E1",
+      "unbound_material": [
+        {
+          "field_id": "WK03-E1",
+          "missing_relation": "youth_stage"
+        },
+        {
+          "field_id": "WK03-E2",
+          "missing_relation": "youth_stage"
+        }
+      ],
+      "notices": [
+        {
+          "field_id": "WK03-E1",
+          "rule": "retain_literal_material_and_clarify_required_stage"
+        },
+        {
+          "field_id": "WK03-E2",
+          "rule": "retain_literal_material_and_clarify_required_stage"
+        }
+      ]
+    },
+    {
+      "input": "docs/prototypes/full-interview-evaluation/run-v1.3.1-stage-development/cases/DEV-STAGE-N-4b27613445-WK05-01/turn-000/engine-input-000-repair1.json",
+      "input_sha256": "b432eb1ba684b46433731e1c8abfb7b3faafc5fd89bd4f739798f3334371425a",
+      "used_strict_transport_parse": false,
+      "old_decision": "invalid",
+      "new_decision": "invalid",
+      "old_errors": [
+        "invalid_proposal"
+      ],
+      "new_errors": [
+        "invalid_proposal"
+      ],
+      "target": null,
+      "unbound_material": [],
+      "notices": []
+    },
+    {
+      "input": "docs/prototypes/full-interview-evaluation/run-v1.3.1-stage-development/cases/DEV-STAGE-N-4b27613445-WK05-01/turn-000/engine-input-000.json",
+      "input_sha256": "b432eb1ba684b46433731e1c8abfb7b3faafc5fd89bd4f739798f3334371425a",
+      "used_strict_transport_parse": false,
+      "old_decision": "invalid",
+      "new_decision": "invalid",
+      "old_errors": [
+        "invalid_proposal"
+      ],
+      "new_errors": [
+        "invalid_proposal"
+      ],
+      "target": null,
+      "unbound_material": [],
+      "notices": []
+    },
+    {
+      "input": "docs/prototypes/full-interview-evaluation/run-v1.3.1-stage-development/cases/DEV-STAGE-N-63f4aa2206-WK03-01/turn-000/engine-input-000.json",
+      "input_sha256": "0085b0008e49d36195db1bbbe7c3557aa688f582fef87608346c9df4a5f360c0",
+      "used_strict_transport_parse": false,
+      "old_decision": "ask",
+      "new_decision": "ready",
+      "old_errors": [],
+      "new_errors": [],
+      "target": null,
+      "unbound_material": [],
+      "notices": []
+    },
+    {
+      "input": "docs/prototypes/full-interview-evaluation/run-v1.3.1-stage-development/cases/DEV-STAGE-N-63f4aa2206-WK05-01/turn-000/engine-input-000.json",
+      "input_sha256": "9f1a15b20a6c7aa785580f8800108175b929ed8eb8b2296300a8c904ec0d63a9",
+      "used_strict_transport_parse": false,
+      "old_decision": "ask",
+      "new_decision": "ready",
+      "old_errors": [],
+      "new_errors": [],
+      "target": null,
+      "unbound_material": [],
+      "notices": []
+    },
+    {
+      "input": "docs/prototypes/full-interview-evaluation/run-v1.3.1-stage-development/cases/DEV-STAGE-N-6eec6bf458-RV13-01/turn-000/engine-input-000.json",
+      "input_sha256": "4732c5ac34415f998726662e4c588d8250f1772ff702c73560a1a5d3fa4a8b10",
+      "used_strict_transport_parse": true,
+      "old_decision": "ready",
+      "new_decision": "ready",
+      "old_errors": [],
+      "new_errors": [],
+      "target": null,
+      "unbound_material": [],
+      "notices": []
+    },
+    {
+      "input": "docs/prototypes/full-interview-evaluation/run-v1.3.1-stage-development/cases/DEV-STAGE-N-9c32d8b7c1-WK05-01/turn-000/engine-input-000.json",
+      "input_sha256": "98be326e4d63e78e5566868fe8e8ee5362a5de4c192a0cd0c790a70e59f87260",
+      "used_strict_transport_parse": false,
+      "old_decision": "ready",
+      "new_decision": "ready",
+      "old_errors": [],
+      "new_errors": [],
+      "target": null,
+      "unbound_material": [],
+      "notices": []
+    },
+    {
+      "input": "docs/prototypes/full-interview-evaluation/run-v1.3.1-stage-development/cases/DEV-STAGE-N-9c32d8b7c1-WK05-01/turn-001/engine-input-000.json",
+      "input_sha256": "ce83a60bba7b7a133d6eec4ce645c2d6a9ae39d0ac0a1b859f044efb87fb9df6",
+      "used_strict_transport_parse": false,
+      "old_decision": "ready",
+      "new_decision": "ready",
+      "old_errors": [],
+      "new_errors": [],
+      "target": null,
+      "unbound_material": [],
+      "notices": []
+    }
+  ]
+}

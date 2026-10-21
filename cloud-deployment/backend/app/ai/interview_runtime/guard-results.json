@@ -1,0 +1,733 @@
+{
+  "kind": "synthetic_code_guard_regression",
+  "version": "full-interview-v1.34.0",
+  "tests": 181,
+  "passed": 181,
+  "failed": [],
+  "results": [
+    {
+      "name": "62 exact original questions and default order",
+      "pass": true
+    },
+    {
+      "name": "SK01 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "SK02 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "SK03 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "SK04 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "SK05 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "SK06 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "CH01 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "CH02 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "CH03 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "CH04 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "CH05 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "CH06 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "CH07 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "GR01 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "GR02 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "GR03 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "GR04 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "GR05 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "GR06 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "GR07 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "WK01 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "WK02 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "WK03 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "WK04 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "WK05 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "WK06 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "FM01 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "FM02 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "FM03 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "FM04 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "FM05 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "FM06 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "FM07 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "WK07 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "WK08 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "WK09 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "WK10 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "WK11 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "WK12 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "WK13 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "RV01 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "RV02 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "RV03 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "RV04 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "RV05 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "RV06 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "RV07 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "RV08 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "RV09 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "RV10 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "RV11 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "RV12 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "LT01 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "LT02 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "LT03 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "LT04 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "LT05 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "LT06 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "RV13 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "RV14 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "RV15 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "RV16 blank cannot complete and asks one target",
+      "pass": true
+    },
+    {
+      "name": "self trait short phrase enough",
+      "pass": true
+    },
+    {
+      "name": "one selected summary and linked explanation enough",
+      "pass": true
+    },
+    {
+      "name": "keywords alone asks explanation, never forces third",
+      "pass": true
+    },
+    {
+      "name": "unknown summary closes reason branch limited",
+      "pass": true
+    },
+    {
+      "name": "unknown one field leaves other required fields open",
+      "pass": true
+    },
+    {
+      "name": "actual directed place answer is accepted without redundant birth word",
+      "pass": true
+    },
+    {
+      "name": "hometown is not automatically birthplace",
+      "pass": true
+    },
+    {
+      "name": "known birth month retained and no completion from missing scene",
+      "pass": true
+    },
+    {
+      "name": "quote mismatch is internal failure with no user re-question",
+      "pass": true
+    },
+    {
+      "name": "forged relation citation cannot complete",
+      "pass": true
+    },
+    {
+      "name": "cross question source rejected",
+      "pass": true
+    },
+    {
+      "name": "cross question cache rejected",
+      "pass": true
+    },
+    {
+      "name": "same question known cache reused without re-extraction",
+      "pass": true
+    },
+    {
+      "name": "same question unknown persists instead of re-asking",
+      "pass": true
+    },
+    {
+      "name": "current pause dominates malformed extraction",
+      "pass": true
+    },
+    {
+      "name": "old pause cannot stop current turn",
+      "pass": true
+    },
+    {
+      "name": "recalled work stoppage is not interview pause",
+      "pass": true
+    },
+    {
+      "name": "two unanswered directed asks route consent, never automatic refusal",
+      "pass": true
+    },
+    {
+      "name": "reported trait alone asks self endorsement",
+      "pass": true
+    },
+    {
+      "name": "traditional explicit unknown and negative preserved",
+      "pass": true
+    },
+    {
+      "name": "traditional no schooling closes only own question and survives cache",
+      "pass": true
+    },
+    {
+      "name": "unmarried alone does not establish absence of partner",
+      "pass": true
+    },
+    {
+      "name": "wrong explicit stage is rejected",
+      "pass": true
+    },
+    {
+      "name": "unrelated long unknown cannot bind birth time by length",
+      "pass": true
+    },
+    {
+      "name": "not thought about it is unknown rather than none",
+      "pass": true
+    },
+    {
+      "name": "all field contracts carry auditable requirements and scope",
+      "pass": true
+    },
+    {
+      "name": "school process evaluation cannot substitute entry age or period",
+      "pass": true
+    },
+    {
+      "name": "birth identity after birth date still does not establish birthplace",
+      "pass": true
+    },
+    {
+      "name": "family living adequacy is not interpersonal atmosphere",
+      "pass": true
+    },
+    {
+      "name": "following one specific suggestion is not personality effect",
+      "pass": true
+    },
+    {
+      "name": "a concrete family teaching action is usable without a style label",
+      "pass": true
+    },
+    {
+      "name": "self naming cannot negate family expectations",
+      "pass": true
+    },
+    {
+      "name": "helping action alone is not narrator stated family meaning",
+      "pass": true
+    },
+    {
+      "name": "explicit sibling absence proposed as known becomes none with raw proof",
+      "pass": true
+    },
+    {
+      "name": "scope links are lifted losslessly and original protocol failure is auditable",
+      "pass": true
+    },
+    {
+      "name": "unrelated milestone cannot become family education period",
+      "pass": true
+    },
+    {
+      "name": "academic rank is not a personhood expectation",
+      "pass": true
+    },
+    {
+      "name": "parser may restore only a missing outer brace and preserves original raw failure",
+      "pass": true
+    },
+    {
+      "name": "parser refuses truncated values, inner objects, strings and token-limit output",
+      "pass": true
+    },
+    {
+      "name": "a lesson alone cannot certify whether the narrator let a misunderstanding go",
+      "pass": true
+    },
+    {
+      "name": "unclear hypothetical remains ambiguous without invented refusal or unknown",
+      "pass": true
+    },
+    {
+      "name": "explicit evidence alias expands only this fields verified references",
+      "pass": true
+    },
+    {
+      "name": "missing relation proof is not auto filled without an explicit alias",
+      "pass": true
+    },
+    {
+      "name": "evidence alias never makes a forged quote valid",
+      "pass": true
+    },
+    {
+      "name": "evidence alias never overrides a wrong subject",
+      "pass": true
+    },
+    {
+      "name": "evidence alias never converts hometown into birthplace",
+      "pass": true
+    },
+    {
+      "name": "literal era year supplies only missing precision without calendar conversion",
+      "pass": true
+    },
+    {
+      "name": "rejected optional quote is logged without invalidating a valid required trait",
+      "pass": true
+    },
+    {
+      "name": "attitude holder and parent target remain separate roles",
+      "pass": true
+    },
+    {
+      "name": "object label needs literal evidence rather than an unsupported tag",
+      "pass": true
+    },
+    {
+      "name": "unanchored marriage-era venture cannot inherit youth from the mapped question",
+      "pass": true
+    },
+    {
+      "name": "real stage-specific main question can bind an otherwise unambiguous reply",
+      "pass": true
+    },
+    {
+      "name": "family responsibility at a later actual stage remains applicable",
+      "pass": true
+    },
+    {
+      "name": "actual family activity is retained without inventing paid employment",
+      "pass": true
+    },
+    {
+      "name": "future activity does not become present preference even if value omits its qualifier",
+      "pass": true
+    },
+    {
+      "name": "same proven material stage unknown closes only the shared stage gap once",
+      "pass": true
+    },
+    {
+      "name": "same-material stage terminal survives later omission and repeat extraction",
+      "pass": true
+    },
+    {
+      "name": "another material is not closed by the first materials stage unknown",
+      "pass": true
+    },
+    {
+      "name": "a still missing other target is not filled by a stage terminal",
+      "pass": true
+    },
+    {
+      "name": "explicit only-child none binds the sibling field without repeating its label",
+      "pass": true
+    },
+    {
+      "name": "moving or fleeing alongside people does not establish a primary caregiver",
+      "pass": true
+    },
+    {
+      "name": "narrator attributed disposition change need not use the literal personality label",
+      "pass": true
+    },
+    {
+      "name": "same-object explanation may refer to a grounded continuous short form",
+      "pass": true
+    },
+    {
+      "name": "a shared occupational suffix cannot bind a different jobs reason",
+      "pass": true
+    },
+    {
+      "name": "selected summary words cannot use the object short-form exception",
+      "pass": true
+    },
+    {
+      "name": "a location does not become a period through the models scope tag",
+      "pass": true
+    },
+    {
+      "name": "a coarse but real life period remains sufficient",
+      "pass": true
+    },
+    {
+      "name": "lifelong solitary feeling does not describe household interaction",
+      "pass": true
+    },
+    {
+      "name": "a future subquestion cannot borrow now from a mixed actual question",
+      "pass": true
+    },
+    {
+      "name": "two periods inside one sentence are not proven same material",
+      "pass": true
+    },
+    {
+      "name": "an explicit late-life first job is not made youthful by generic first-job words",
+      "pass": true
+    },
+    {
+      "name": "a relatives young age cannot bind the narrators venture stage",
+      "pass": true
+    },
+    {
+      "name": "same experience may link a youthful arrival and a later directed hardship answer",
+      "pass": true
+    },
+    {
+      "name": "an unrelated older statement about youth cannot bind a new unlocated episode",
+      "pass": true
+    },
+    {
+      "name": "traditional stage and current words are normalized only for rule matching",
+      "pass": true
+    },
+    {
+      "name": "separate literal stage quotes can connect the same concrete arrival",
+      "pass": true
+    },
+    {
+      "name": "an experience value needs the actual matter rather than only its evaluation label",
+      "pass": true
+    },
+    {
+      "name": "gratitude to a named person is not itself the grateful event",
+      "pass": true
+    },
+    {
+      "name": "an omitted value on an explicitly empty missing field creates no fact",
+      "pass": true
+    },
+    {
+      "name": "missing cannot hide a real value or evidence",
+      "pass": true
+    },
+    {
+      "name": "a necessary activated scene period stays strict",
+      "pass": true
+    },
+    {
+      "name": "an actual misunderstanding makes its unresolved mood a strict active target",
+      "pass": true
+    },
+    {
+      "name": "a rejected inactive candidate cannot erase a previously validated same-question fact",
+      "pass": true
+    },
+    {
+      "name": "a real user correction cannot be hidden behind cached inactive information",
+      "pass": true
+    },
+    {
+      "name": "explicit empty missing normalizes before unused citation alias",
+      "pass": true
+    },
+    {
+      "name": "missing carrying real evidence stays invalid even with citation alias",
+      "pass": true
+    },
+    {
+      "name": "age is relative timing, not calendar year or duration exact",
+      "pass": true
+    },
+    {
+      "name": "literal family act explicitly moves narrator, object-first grammar",
+      "pass": true
+    },
+    {
+      "name": "relation shorthand binds only a uniquely witnessed own-source literal",
+      "pass": true
+    },
+    {
+      "name": "duplicated shorthand source remains ambiguous protocol, no guessed reference",
+      "pass": true
+    },
+    {
+      "name": "invented shorthand never receives an own-source ID",
+      "pass": true
+    },
+    {
+      "name": "literal co-residence includes a self-reported non-divided household sharing meals",
+      "pass": true
+    },
+    {
+      "name": "ancestral households still do not prove narrators own co-residence",
+      "pass": true
+    },
+    {
+      "name": "organization name with young does not establish narrators youth stage",
+      "pass": true
+    },
+    {
+      "name": "first work alone does not prove youth without an actual stage question",
+      "pass": true
+    },
+    {
+      "name": "unique simplified citation restores original exact traditional source with audit",
+      "pass": true
+    },
+    {
+      "name": "script restoration cannot invent a claim with different semantic characters",
+      "pass": true
+    },
+    {
+      "name": "canonical collision between two different original phrases is not guessed",
+      "pass": true
+    },
+    {
+      "name": "script anchoring keeps codepoint offsets after a non-BMP character",
+      "pass": true
+    },
+    {
+      "name": "a model cannot forge internal stage confirmation to bypass stage evidence",
+      "pass": true
+    },
+    {
+      "name": "model-supplied secondary statements cannot introduce unvalidated claims",
+      "pass": true
+    },
+    {
+      "name": "grounded required stage canonicalizes an as-stated period label",
+      "pass": true
+    },
+    {
+      "name": "a root link can be routed only to the unique declared explanation field",
+      "pass": true
+    },
+    {
+      "name": "conflicting root and field links remain strict protocol failure",
+      "pass": true
+    },
+    {
+      "name": "root links without an actual explanation candidate cannot create one",
+      "pass": true
+    },
+    {
+      "name": "a script variant link resolves only one accepted original selected word",
+      "pass": true
+    },
+    {
+      "name": "script-colliding selected words do not justify guessing the explanation link",
+      "pass": true
+    },
+    {
+      "name": "selected keyword link restoration does not substitute a lexical synonym",
+      "pass": true
+    },
+    {
+      "name": "selected original units expand before the same literal and role guards",
+      "pass": true
+    },
+    {
+      "name": "a unit cannot manufacture a value absent from the original text",
+      "pass": true
+    },
+    {
+      "name": "foreign or nonexistent unit IDs never receive fabricated evidence",
+      "pass": true
+    },
+    {
+      "name": "unit selections still cannot confuse another persons life stage with narrator",
+      "pass": true
+    },
+    {
+      "name": "current pause through a unit keeps pause priority and literal audit",
+      "pass": true
+    },
+    {
+      "name": "a singleton subject-array is losslessly normalized to its one explicit role",
+      "pass": true
+    },
+    {
+      "name": "multiple subject candidates get a precise internal type error, never guessed",
+      "pass": true
+    },
+    {
+      "name": "scene with no temporal words cannot create an ambiguous time answer",
+      "pass": true
+    },
+    {
+      "name": "an actual unresolved temporal expression remains ambiguous and preserved",
+      "pass": true
+    },
+    {
+      "name": "a short unclear answer to an actual time-target question is not discarded",
+      "pass": true
+    }
+  ]
+}

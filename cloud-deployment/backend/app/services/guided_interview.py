@@ -16,19 +16,21 @@ from app.services.interview_modules import (MODULE_NAMES, MODULE_TOPICS, PROFILE
 SESSION_TYPE = 'guided_interview'
 # Compatibility export for callers of the childhood pilot.
 TOPICS = tuple((topic.profile, topic.text) for topic in MODULE_TOPICS['childhood'])
-CONTROL = re.compile(r'^(?:没有(?:了|补充了)?|没有别的补充了|先保存|确认保存|保存吧|就这些|继续|继续聊|接着讲|先休息|先暂停|今天先不聊|暂时不想讲|跳过|跳过这题|略过|这题不适用|这段不想讲|我不想讲了)[。！!\s]*$')
+CONTROL = re.compile(r'^(?:没有(?:了|补充了)?|没有别的补充了|先保存|确认保存|保存吧|就这些|继续|继续聊|接着讲|先休息|先暂停|暂停|今天先不聊|暂时不想讲|跳过|跳过这题|略过|这题不适用|这段不想讲|我不想讲了)[。！!\s]*$')
 
 
 def current_sources(messages):
+    from app.services.interview_controls import skips_question
     return [{'message_id': str(m.id), 'content': m.content} for m in messages
             if m.role == 'user' and m.content.strip() and m.type not in ('notice', 'interview_control')
-            and not CONTROL.fullmatch(m.content.strip()) and requested_module(m.content.strip()) is None]
+            and not CONTROL.fullmatch(m.content.strip()) and not skips_question(m.content) and requested_module(m.content.strip()) is None]
 
 
 def opening_text(state):
     if not state.module_selected:
         return module_menu()
-    if state.topic_index >= 6:
+    from app.services.interview_modules import topic_count
+    if state.topic_index >= topic_count(state):
         return f'关于{MODULE_NAMES[state.module]}，您还有什么想留下来的？' + module_menu()
     return topic_for(state).text
 
@@ -121,6 +123,9 @@ def merge_assessment(state, assessment, latest_id):
 
 
 def coverage(state):
+    if state.version == 3:
+        from app.services.contract_guided_interview import coverage as contract_coverage
+        return contract_coverage(state)
     facts={f.key:f for f in state.facts}
     present=lambda key: key in facts and facts[key].status=='present'
     profile=topic_for(state).profile
@@ -149,6 +154,9 @@ def coverage(state):
 
 
 def readiness(state, messages, person_id, completed=False):
+    if state.version == 3:
+        from app.services.contract_guided_interview import readiness as contract_readiness
+        return contract_readiness(state, messages, person_id, completed)
     covered=coverage(state)
     conflicts=[f.key for f in state.facts if f.status=='conflict']
     has_text=bool(current_sources(messages)) and bool(state.facts or state.units)
@@ -224,6 +232,9 @@ def project_information(previous, state, sources):
 
 
 def turn(client, previous, messages):
+    if previous.guided_interview.version == 3:
+        from app.services.contract_guided_interview import turn as contract_turn
+        return contract_turn(client, previous, messages)
     state=previous.guided_interview.model_copy(deep=True)
     sources=current_sources(messages)
     latest_message=next(m for m in reversed(messages) if m.role=='user')
@@ -309,7 +320,20 @@ def turn(client, previous, messages):
 
 
 def following(previous):
-    state=GuidedInterviewState(module=previous.module,topic_index=min(previous.topic_index+1,6),
+    if previous.version == 3:
+        from app.services.contract_guided_interview import following as contract_following
+        return contract_following(previous)
+    from app.services.contract_interview_state import enabled, runtime
+    if enabled():
+        # Old and new question IDs overlap but represent different questions.
+        # Keep the complete old checkpoint and start the new catalog from its
+        # first independent question after the old segment has been saved.
+        return GuidedInterviewState(version=3, module=previous.module,
+            runtime_version=runtime().version,
+            module_checkpoints=dict(previous.module_checkpoints),
+            saved_memory_ids=list(previous.saved_memory_ids),
+            legacy_checkpoint=previous.model_dump(mode='json'))
+    state=GuidedInterviewState(version=previous.version,module=previous.module,topic_index=min(previous.topic_index+1,6),
         processed_topics=dict(previous.processed_topics),material_memory_ids=list(previous.material_memory_ids),
         completed_modules=list(previous.completed_modules),module_checkpoints=dict(previous.module_checkpoints),
         saved_memory_ids=list(previous.saved_memory_ids),qualified_memory_ids=list(previous.qualified_memory_ids),
@@ -323,6 +347,9 @@ def following(previous):
 
 
 def assess_module(client, state, memories):
+    if state.version == 3:
+        from app.services.contract_guided_interview import assess_module as contract_assess
+        return contract_assess(state)
     allowed={memory.id for memory in memories}
     texts={}
     memory_sources={}

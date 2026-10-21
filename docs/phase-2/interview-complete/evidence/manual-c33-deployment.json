@@ -1,0 +1,30 @@
+{
+  "release_id": "interview-manual-c33-20261018T055623Z",
+  "runtime_pin": "2d2a28c55724d426a9f32927da7e94f8f6a63b3d7d2c3eb3b183298a1ddb2686",
+  "runtime_version": "full-interview-v1.29.0",
+  "source_base": "11e4ed0eceaa0bb3270359f932ce8352b87c037e",
+  "archive_sha256": "3876ec4bed1a7d3bf78b10beedaae53c206ffae2bb2e1098c0a6bd8fdc66e442",
+  "manual_test_authorized": true,
+  "formal_acceptance": false,
+  "image": "sha256:44602262fe8cbfa64ddfb30dd8ce4c743529e7c033611ca97e68aac54a6b806a",
+  "old_image": "sha256:3b4ac31fab878e1da17514a9787e4fb084a1194ded75a8776f3a29ba5b0d0bef",
+  "release": "/opt/shinian-releases/interview-manual-c33-20261018T055623Z",
+  "status": "production_verified_manual_test",
+  "candidate_health": {
+    "status": "ok",
+    "database": "ok",
+    "llm_configured": true
+  },
+  "candidate_image": "sha256:44602262fe8cbfa64ddfb30dd8ce4c743529e7c033611ca97e68aac54a6b806a",
+  "candidate_verification": "/opt/shinian-releases/interview-manual-c33-20261018T055623Z/candidate-smoke-report.json",
+  "production_health": {
+    "status": "ok",
+    "database": "ok",
+    "llm_configured": true
+  },
+  "backup": "/opt/shinian-backups/interview-manual-c33-20261018T055623Z",
+  "business_manifest_unchanged": true,
+  "production_activated_at": "2026-10-18T06:04:11Z",
+  "production_integrity_verified": true,
+  "public_https_verified": true
+}

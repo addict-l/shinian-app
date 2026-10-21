@@ -81,8 +81,35 @@ PROFILE_FIELDS = {
 STORY_PROFILES = frozenset(('S', 'I', 'H', 'W', 'J'))
 
 
+LEGACY_MODULE_TOPICS = MODULE_TOPICS
+
+
+def _contract_topics():
+    from app.services.contract_interview_state import questions
+    return {module: tuple(Topic(q['id'], 'V', q['main_question']) for q in questions(module))
+            for module in MODULE_NAMES}
+
+
+from app.services.contract_interview_state import runtime_configured
+if runtime_configured():
+    MODULE_TOPICS = _contract_topics()
+
+
+def topic_count(state):
+    if state.version == 3:
+        from app.services.contract_interview_state import questions
+        return len(questions(state.module, state.runtime_version))
+    return len(MODULE_TOPICS[state.module] if state.version == 3 else LEGACY_MODULE_TOPICS[state.module])
+
+
 def topic_for(state):
-    return MODULE_TOPICS[state.module][min(state.topic_index, 5)]
+    if state.version == 3:
+        from app.services.contract_interview_state import questions
+        topics = questions(state.module, state.runtime_version)
+        q = topics[min(state.topic_index, len(topics) - 1)]
+        return Topic(q['id'], 'V', q['main_question'])
+    topics = MODULE_TOPICS[state.module] if state.version == 3 else LEGACY_MODULE_TOPICS[state.module]
+    return topics[min(state.topic_index, len(topics) - 1)]
 
 
 def module_menu():

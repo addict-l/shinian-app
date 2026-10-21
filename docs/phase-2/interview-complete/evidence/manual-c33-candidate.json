@@ -1,0 +1,49 @@
+{
+  "manual_test_release": true,
+  "formal_acceptance": false,
+  "tests": [
+    {
+      "name": "runtime-integrity",
+      "version": "full-interview-v1.29.0",
+      "pin": "2d2a28c55724d426a9f32927da7e94f8f6a63b3d7d2c3eb3b183298a1ddb2686",
+      "questions": 62,
+      "elements": 193,
+      "settings": {
+        "model": "deepseek-v4-pro",
+        "thinking": "enabled",
+        "reasoning_effort": "high",
+        "max_tokens": 16384
+      }
+    },
+    {
+      "name": "all-six-modules",
+      "counts": [
+        7,
+        7,
+        13,
+        7,
+        6,
+        16
+      ]
+    },
+    {
+      "name": "new-six-question-skeleton",
+      "question_id": "SK01",
+      "total": 6
+    },
+    {
+      "name": "real-ds-skeleton-and-idempotency",
+      "next_question": "SK02",
+      "replay_identical": true,
+      "seconds": 129.48
+    },
+    {
+      "name": "real-ds-complaint-not-handling",
+      "guide_version": 3,
+      "target": "FM03-E2",
+      "state": "missing",
+      "seconds": 78.76
+    }
+  ],
+  "passed": true
+}

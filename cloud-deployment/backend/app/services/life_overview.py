@@ -25,6 +25,10 @@ PROMPT = '''你只记录人生骨架，不采访具体故事，不生成回复�
 一次回答明确涉及后续话题时记录以免重复提问，但不能凭一般人生规律推算先后、日期、地点、关系或性格。early_work和later_work只在原文有相应阶段依据时分别记录；只有一个不带阶段的工作回答时只归当前被问的工作话题。不能把工作变化自动当作本人一直记得的生活转折。unknown和declined必须引用明确的记不清或不想讲。单独说“记不清”或“不想讲”只处理当前问题，其他六项仍为pending，不能扩展成拒绝全部话题。不能输出skipped。例如“年轻时给邻居修门，后来自己开了修理铺”同时明确覆盖early_work和later_work，两项分别引用原文；不能因为当前只问成长地点就漏记后续人生阶段。本人主动长讲完整原文已保留，只用原话摘录重要线索。语句不能回答当前问题时不冒充已答。'''
 
 def new_data(required=True):
+    from app.services.contract_interview_state import enabled
+    if enabled():
+        from app.services.contract_life_overview import new_data as contract_new
+        return contract_new(required)
     now=datetime.now(timezone.utc).isoformat()
     return {'version':1,'status':'collecting','required':required,'paused':False,
         'fields':[LifeField(topic_id=k).model_dump(mode='json') for k,_,_ in QUESTIONS],
@@ -32,6 +36,9 @@ def new_data(required=True):
         'requests':{},'pending':None,'confirmed_version':None}
 
 def view(data):
+    if data and data.get('schema_version') == 2:
+        from app.services.contract_life_overview import view as contract_view
+        return contract_view(data)
     if not data:return LifeOverview()
     fields=[LifeField.model_validate(f) for f in data['fields']]
     pending=next((i for i,f in enumerate(fields) if f.status=='pending'),None)
@@ -61,6 +68,9 @@ def background(person_id):
 
 def refresh_background(guide, person_id):
     """Checkpoint restoration must never revive a superseded outline quote."""
+    if guide.version == 3:
+        guide.background_sources = []
+        return guide
     overview=read(person_id)
     outline_ids={t.id for t in overview.turns if t.role=='user'}
     current=background(person_id)
@@ -78,6 +88,13 @@ def refresh_background(guide, person_id):
 
 def perform(person_id, action: LifeAction, client):
     """Caller holds the person lock. Save raw input before any fallible model request."""
+    with SessionLocal() as lookup:
+        person = lookup.get(FamilyMemberModel, str(person_id))
+        existing = person.life_interview if person else None
+    from app.services.contract_interview_state import enabled
+    if (existing and existing.get('schema_version') == 2) or (existing is None and enabled()):
+        from app.services.contract_life_overview import perform as contract_perform
+        return contract_perform(person_id, action, client)
     fingerprint=hashlib.sha256(action.model_dump_json().encode()).hexdigest()
     rid=str(action.client_request_id)
     with SessionLocal.begin() as db:

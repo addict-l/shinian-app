@@ -1,0 +1,33 @@
+{
+  "passed": true,
+  "public_https": "https://aimemory.47-82-83-74.nip.io",
+  "anonymous_business_status": 401,
+  "authenticated_family_read": true,
+  "family_members": 4,
+  "memories": 14,
+  "readable_memory_photos": 13,
+  "photo_bytes_checked": 8020371,
+  "module_question_counts": [
+    7,
+    7,
+    13,
+    7,
+    6,
+    16
+  ],
+  "skeleton_questions": 6,
+  "new_skeleton_first_question": "SK01",
+  "runtime_version": "full-interview-v1.29.0",
+  "runtime_pin": "2d2a28c55724d426a9f32927da7e94f8f6a63b3d7d2c3eb3b183298a1ddb2686",
+  "questions": 62,
+  "elements": 193,
+  "model_settings": {
+    "model": "deepseek-v4-pro",
+    "thinking": "enabled",
+    "reasoning_effort": "high",
+    "max_tokens": 16384
+  },
+  "business_writes": false,
+  "formal_acceptance": false,
+  "evidence_origin": "Captured stdout from first actual HTTPS verification; no repeat model or business requests."
+}
