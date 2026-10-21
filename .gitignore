@@ -17,6 +17,9 @@ docs/fullstack-baseline/
 # Local verification, build/export output and private deployment material
 artifacts/
 tests/
+# iOS regression sources belong to the platform project, not local test output.
+!ios/Tests/
+!ios/Tests/**
 .build/
 *.xcresult
 *.xcarchive
@@ -29,3 +32,4 @@ tests/
 *.sql
 *.sqlite
 *.sqlite3
+*.log

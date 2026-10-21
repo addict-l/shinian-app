@@ -25,7 +25,7 @@
 
 ## 部署与版本维护
 
-参考 [阿里云部署说明](DEPLOY_ALIYUN.md) 和 [部署记录](../../docs/cloud-deployment-record.md)。生产 `.env.production`、家庭认证文件及密钥只保存在服务器，不能加入 Git 或镜像。部署前备份数据库和照片；每次云端运行验证通过后，在服务器本地 Git 中提交，再提交与推送 Mac 工程。Git 回退代码不等于回退数据库或正在运行的镜像。
+参考 [阿里云部署说明](DEPLOY_ALIYUN.md)、[一期部署快照](../../docs/phase-1/records/cloud-deployment-record.md)与[二期部署记录](../../docs/phase-2/records/cloud-deployment-record.md)。生产 `.env.production`、家庭认证文件及密钥只保存在服务器，不能加入 Git 或镜像。部署前备份数据库和照片；每次云端运行验证通过后，在服务器本地 Git 中提交，再提交与推送 Mac 工程。Git 回退代码不等于回退数据库或正在运行的镜像。
 
 当前工作流依赖进程内会话锁，因此 API 固定 `--workers 1`。多进程或多实例需要先改用跨进程锁及对应验证。
 
@@ -37,7 +37,9 @@
 
 ## T07 交付版本
 
-GitHub 包含完整可构建后端、固定依赖、全部迁移及示例环境，业务 Python 源码与正式运行 API 逐项核对。实际镜像、迁移与组件源码哈希见 [交付版本清单](../../docs/delivery-manifest.json)。Nginx 配置示例位于 ../nginx/aimemory.conf.example；完整部署与备份步骤见 DEPLOY_ALIYUN.md。生产配置、家庭密码、证书私钥和数据库／媒体备份由维护者单独管理，老师运行现有云端不需要获得这些部署凭据。
+本节与交付清单是第一阶段 T07 时的快照，后续模型与业务变化见[第二阶段资料](../../docs/phase-2/README.md)。
+
+GitHub 包含完整可构建后端、固定依赖、全部迁移及示例环境，业务 Python 源码与正式运行 API 逐项核对。实际镜像、迁移与组件源码哈希见 [交付版本清单](../../docs/phase-1/t07/delivery-manifest.json)。Nginx 配置示例位于 ../nginx/aimemory.conf.example；完整部署与备份步骤见 DEPLOY_ALIYUN.md。生产配置、家庭密码、证书私钥和数据库／媒体备份由维护者单独管理，老师运行现有云端不需要获得这些部署凭据。
 
 ## 普通访谈的可选快速通道
 

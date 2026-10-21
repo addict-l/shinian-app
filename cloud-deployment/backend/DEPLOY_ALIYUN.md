@@ -64,7 +64,7 @@ curl --fail http://127.0.0.1:8000/health
 docker compose --project-name backend --env-file .env.production -f docker-compose.demo.yml exec -T api alembic current
 ```
 
-还需通过 HTTPS 家庭登录只读核对人物、聊天窗口、回忆、照片和回忆录快照；功能验收在隔离数据上完成。数据库迁移成功或健康通过不能代替整个流程。正式家庭库不执行测试清理，示例／测试数据不写入现有家庭。部署目录、Git 提交、运行镜像与源码哈希分别记录于 [部署记录](../../docs/cloud-deployment-record.md)。GitHub push 不会自动更新当前云服务器。
+还需通过 HTTPS 家庭登录只读核对人物、聊天窗口、回忆、照片和回忆录快照；功能验收在隔离数据上完成。数据库迁移成功或健康通过不能代替整个流程。正式家庭库不执行测试清理，示例／测试数据不写入现有家庭。部署目录、Git 提交、运行镜像与源码哈希按阶段记入[一期记录](../../docs/phase-1/records/cloud-deployment-record.md)或[二期记录](../../docs/phase-2/records/cloud-deployment-record.md)。GitHub push 不会自动更新当前云服务器。
 
 ## 回退
 
@@ -76,4 +76,4 @@ docker compose --project-name backend --env-file .env.production -f docker-compo
 
 ## 已执行与未执行
 
-现有 T06 迁移及镜像已经部署并验证。本次 T07 主要交付整理，后端业务源码没有变化，因此不为文档与示例配置重启正式 API或重复运行迁移。实际结果、当前运行镜像、验证范围和源文件映射见 [版本清单](../../docs/delivery-manifest.json) 和 [老师指南](../../docs/t07-delivery.md)。本页首次部署与数据恢复步骤是维护说明，不宣称本次重新部署新服务器或演练恢复。
+T07 时沿用已部署并验证的 T06 迁移及镜像；该次主要整理交付，未为文档与示例配置重启正式 API 或重复运行迁移。当时的结果、镜像、验证范围和源文件映射见 [T07 版本快照](../../docs/phase-1/t07/delivery-manifest.json) 和 [老师指南](../../docs/phase-1/t07/t07-delivery.md)；后续变化见[第二阶段资料](../../docs/phase-2/README.md)。本页首次部署与数据恢复步骤是维护说明，不宣称已经重新部署新服务器或演练恢复。

@@ -1,0 +1,193 @@
+{
+  "date": "2026-10-15",
+  "scope": "documentation paths; historical release manifests retain their original contents",
+  "moves": [
+    {
+      "old": "docs/phase-1-requirements.md",
+      "new": "docs/phase-1/phase-1-requirements.md"
+    },
+    {
+      "old": "docs/phase-1-tasks.md",
+      "new": "docs/phase-1/phase-1-tasks.md"
+    },
+    {
+      "old": "docs/phase-1-plan.md",
+      "new": "docs/phase-1/phase-1-plan.md"
+    },
+    {
+      "old": "docs/phase-2-b04-verification.md",
+      "new": "docs/phase-2/b04/phase-2-b04-verification.md"
+    },
+    {
+      "old": "docs/phase-2-b03-verification.md",
+      "new": "docs/phase-2/b03/phase-2-b03-verification.md"
+    },
+    {
+      "old": "docs/phase-2-b03-plan.md",
+      "new": "docs/phase-2/b03/phase-2-b03-plan.md"
+    },
+    {
+      "old": "docs/phase-2-design.md",
+      "new": "docs/phase-2/phase-2-design.md"
+    },
+    {
+      "old": "docs/phase-2-requirements.md",
+      "new": "docs/phase-2/phase-2-requirements.md"
+    },
+    {
+      "old": "docs/phase-2-model-research.md",
+      "new": "docs/phase-2/phase-2-model-research.md"
+    },
+    {
+      "old": "docs/phase-2-plan.md",
+      "new": "docs/phase-2/phase-2-plan.md"
+    },
+    {
+      "old": "docs/phase-2-b04-plan.md",
+      "new": "docs/phase-2/b04/phase-2-b04-plan.md"
+    },
+    {
+      "old": "docs/t05-deployment-plan.md",
+      "new": "docs/phase-1/t05/t05-deployment-plan.md"
+    },
+    {
+      "old": "docs/t06-deployment-plan.md",
+      "new": "docs/phase-1/t06/t06-deployment-plan.md"
+    },
+    {
+      "old": "docs/t06-requirements.md",
+      "new": "docs/phase-1/t06/t06-requirements.md"
+    },
+    {
+      "old": "docs/t07-delivery.md",
+      "new": "docs/phase-1/t07/t07-delivery.md"
+    },
+    {
+      "old": "docs/t07-requirements.md",
+      "new": "docs/phase-1/t07/t07-requirements.md"
+    },
+    {
+      "old": "docs/validation-record.md",
+      "new": "docs/phase-1/records/validation-record.md"
+    },
+    {
+      "old": "docs/cloud-deployment-record.md",
+      "new": "docs/phase-1/records/cloud-deployment-record.md"
+    },
+    {
+      "old": "docs/delivery-manifest.json",
+      "new": "docs/phase-1/t07/delivery-manifest.json"
+    },
+    {
+      "old": "cloud-deployment/阿里云部署操作记录.md",
+      "new": "docs/project/operations/initial-aliyun-setup.md"
+    },
+    {
+      "old": "docs/childhood-backend-dialogue.md",
+      "new": "docs/phase-2/childhood-pilot/examples/childhood-backend-dialogue.md"
+    },
+    {
+      "old": "docs/childhood-multi-M03-dialogue.md",
+      "new": "docs/phase-2/childhood-pilot/examples/childhood-multi-M03-dialogue.md"
+    },
+    {
+      "old": "docs/childhood-multi-test-report.md",
+      "new": "docs/phase-2/childhood-pilot/childhood-multi-test-report.md"
+    },
+    {
+      "old": "docs/childhood-multi-qa.md",
+      "new": "../shinian-validation/artifacts/archive/phase-2/childhood-pilot/raw-documents/childhood-multi-qa.md"
+    },
+    {
+      "old": "docs/childhood-backend-verification.md",
+      "new": "docs/phase-2/childhood-pilot/childhood-backend-verification.md"
+    },
+    {
+      "old": "docs/childhood-backend-http-qa.md",
+      "new": "../shinian-validation/artifacts/archive/phase-2/childhood-pilot/raw-documents/childhood-backend-http-qa.md"
+    },
+    {
+      "old": "docs/childhood-multi-drafts.md",
+      "new": "docs/phase-2/childhood-pilot/examples/childhood-multi-drafts.md"
+    },
+    {
+      "old": "docs/childhood-multi-M02-dialogue.md",
+      "new": "docs/phase-2/childhood-pilot/examples/childhood-multi-M02-dialogue.md"
+    },
+    {
+      "old": "docs/childhood-backend-drafts.md",
+      "new": "docs/phase-2/childhood-pilot/examples/childhood-backend-drafts.md"
+    },
+    {
+      "old": "docs/childhood-multi-M01-dialogue.md",
+      "new": "docs/phase-2/childhood-pilot/examples/childhood-multi-M01-dialogue.md"
+    },
+    {
+      "old": "docs/childhood-backend-pilot-plan.md",
+      "new": "docs/phase-2/childhood-pilot/childhood-backend-pilot-plan.md"
+    },
+    {
+      "old": "docs/childhood-multi-M04-dialogue.md",
+      "new": "docs/phase-2/childhood-pilot/examples/childhood-multi-M04-dialogue.md"
+    },
+    {
+      "old": "docs/ai-prompts/childhood-pilot/01-event-ai.txt",
+      "new": "docs/phase-2/childhood-pilot/prompts/01-event-ai.txt"
+    },
+    {
+      "old": "docs/ai-prompts/childhood-pilot/02-answer-ai.txt",
+      "new": "docs/phase-2/childhood-pilot/prompts/02-answer-ai.txt"
+    },
+    {
+      "old": "docs/ai-prompts/childhood-pilot/README.md",
+      "new": "docs/phase-2/childhood-pilot/prompts/README.md"
+    },
+    {
+      "old": "docs/ai-prompts/childhood-pilot/03-module-ai.txt",
+      "new": "docs/phase-2/childhood-pilot/prompts/03-module-ai.txt"
+    },
+    {
+      "old": "docs/ai-prompts/childhood-pilot/04-unified-guided-childhood.txt",
+      "new": "docs/phase-2/childhood-pilot/prompts/04-unified-guided-childhood.txt"
+    },
+    {
+      "old": "front-betterui/DesignVerification/README.md",
+      "new": "docs/phase-2/ui-baseline/design-verification.md"
+    },
+    {
+      "old": "front-betterui/DesignVerification/BackendVerification.md",
+      "new": "docs/phase-2/ui-baseline/backend-verification.md"
+    }
+  ],
+  "split_sections": [
+    {
+      "old": "docs/validation-record.md",
+      "new": "docs/phase-2/records/validation-record.md",
+      "section": "B01/B02"
+    },
+    {
+      "old": "docs/cloud-deployment-record.md",
+      "new": "docs/phase-2/records/cloud-deployment-record.md",
+      "section": "B01/B02"
+    }
+  ],
+  "local_backup": "../shinian-validation/artifacts/archive/document-cleanup-20261015/documents-before.tar.gz",
+  "platform_directory_moves_2026_10_21": [
+    {
+      "old": "front-betterui/",
+      "new": "ios/"
+    },
+    {
+      "old": "frontend/",
+      "new": "ios/legacy/"
+    },
+    {
+      "old": "docs/phase-3/android/",
+      "new": "android/docs/"
+    },
+    {
+      "old": "artifacts/",
+      "new": "android/artifacts/"
+    }
+  ]
+}
