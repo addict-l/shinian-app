@@ -15,7 +15,6 @@ struct JournalChatView: View {
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.journalCareMode) private var care
     private var messages: [ChatMessage] { model.messages }
     @State private var photoItems: [PhotosPickerItem] = []
@@ -30,6 +29,7 @@ struct JournalChatView: View {
     @State private var lifePresented = false
     @State private var careHistoryPresented = false
     @State private var careContinuing = false
+    @State private var autoFollow = JournalChatAutoFollow()
 
     init(person: FamilyMember, chatAPI: any ChatAPI, memoryAPI: any MemoryAPI, previewScreen: String?, resumedDraft: LocalChatDraft? = nil, onBack: @escaping () -> Void, onSaved: @escaping () async -> Void) {
         self.person = person; self.chatAPI = chatAPI; self.memoryAPI = memoryAPI; self.previewScreen = previewScreen; self.onBack = onBack; self.onSaved = onSaved
@@ -128,8 +128,7 @@ struct JournalChatView: View {
                     .frame(maxWidth: .infinity, minHeight: 44)
                     .accessibilityIdentifier("chat.lifeOverview")
             }
-            ScrollViewReader { reader in
-                ScrollView {
+            JournalChatHistory(follow: autoFollow, identifier: "chat.history", bottomAlignment: true) {
                     VStack(alignment: .leading, spacing: 14) {
                         if !messages.isEmpty {
                             Text(previewScreen == "chat" ? "10月12日 上午 8:20" : JournalFormat.chatDate(openedAt))
@@ -155,18 +154,9 @@ struct JournalChatView: View {
                         }
                         Color.clear.frame(height: 1).id("bottom")
                     }.padding(.horizontal, JournalTheme.gutter).padding(.top, 14).padding(.bottom, 16)
-                }.scrollIndicators(.hidden).scrollDismissesKeyboard(.interactively)
-                    .defaultScrollAnchor(.bottom)
-                    .accessibilityIdentifier("chat.history")
-                    .onChange(of: messages.last?.id) { _, _ in
-                        if reduceMotion { reader.scrollTo("bottom", anchor: .bottom) }
-                        else { withAnimation { reader.scrollTo("bottom", anchor: .bottom) } }
-                    }
-                    .safeAreaInset(edge: .bottom, spacing: 0) {
-                        composer.fixedSize(horizontal: false, vertical: true)
-                            .dynamicTypeSize(...(verticalSizeClass == .compact ? DynamicTypeSize.accessibility1 : DynamicTypeSize.accessibility5))
-                    }
             }
+            composer.fixedSize(horizontal: false, vertical: true)
+                .dynamicTypeSize(...(verticalSizeClass == .compact ? DynamicTypeSize.accessibility1 : DynamicTypeSize.accessibility5))
         }
         }
         }
@@ -432,6 +422,7 @@ struct JournalChatView: View {
         dictation.stop()
         let text = model.pendingText ?? model.inputText.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !readingPhotos, !model.isLoading, !text.isEmpty || !model.photos.isEmpty || model.hasPendingSend else { return }
+        if !care { autoFollow.resume() }
         inputFocused = false
         if await model.send(text: text, person: person) == nil && !model.hasPendingSend {
             // Validation/rejection returns editable text; transient failures keep

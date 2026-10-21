@@ -8,6 +8,7 @@
 | [AIMemoirs/](AIMemoirs/) | SwiftUI 源码、图片、字体与图标；[功能及开发说明](AIMemoirs/README.md) |
 | [Config/](Config/) | App 配置与后端地址 |
 | [Tests/](Tests/) | 主线单元测试与界面回归源码 |
+| [docs/](docs/chat-auto-scroll-verification.md) | 本轮聊天自动滚动的行为、验证与审核记录 |
 | [scripts/](scripts/) | 独立验证工程生成与设计截图脚本 |
 | [DesignVerification/](DesignVerification/) | 设计核对页面、截图与历史说明 |
 | [legacy/](legacy/) | 此前交付和后端联调客户端，供历史复核 |

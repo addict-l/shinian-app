@@ -17,12 +17,12 @@ struct LifeInterviewView: View {
     @State private var error: String?
     @State private var pending: LifeCommand?
     @State private var historyPresented = false
+    @State private var autoFollow = JournalChatAutoFollow()
     @StateObject private var dictation = JournalDictation()
     @Environment(\.dynamicTypeSize) private var typeSize
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(\.journalCareMode) private var care
     @Environment(\.scenePhase) private var scenePhase
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @FocusState private var focused: Bool
     private var overview: LifeOverview? { snapshot.lifeOverview }
     private var collecting: Bool { overview?.status == "collecting" }
@@ -47,8 +47,7 @@ struct LifeInterviewView: View {
                     onEnter: { Task { await choose() } },
                     feedback: { feedback })
             } else {
-            ScrollViewReader { reader in
-                ScrollView {
+            JournalChatHistory(follow: autoFollow, identifier: "life.history") {
                     VStack(alignment: .leading, spacing: 18) {
                         Text(collecting ? "01 / 了解人生骨架" : "02 / 核对脉络，选择板块")
                             .font(JournalTheme.font(12, medium: true)).foregroundStyle(JournalTheme.userMessageInk)
@@ -66,16 +65,12 @@ struct LifeInterviewView: View {
                                         .background(turn.role == "user" ? JournalTheme.soft : .clear, in: RoundedRectangle(cornerRadius: 22))
                                         .frame(maxWidth: .infinity, alignment: turn.role == "user" ? .trailing : .leading)
                                 }.padding(.leading, turn.role == "user" ? 35 : 0)
+                                    .accessibilityIdentifier("life.message.\(turn.id)")
                             }
                         }
                         feedback
                         Color.clear.frame(height: 1).id("life.bottom")
                     }.padding(22)
-                }.scrollDismissesKeyboard(.interactively)
-                    .onChange(of: overview?.turns.count) { _, _ in
-                        if reduceMotion { reader.scrollTo("life.bottom", anchor: .bottom) }
-                        else { withAnimation { reader.scrollTo("life.bottom", anchor: .bottom) } }
-                    }
             }
             if collecting { composer }
             }
@@ -259,6 +254,7 @@ struct LifeInterviewView: View {
         guard !busy else { return }
         let command = command ?? LifeCommand(action: action, expected_version: overview?.version ?? 0, client_request_id: UUID(), text: text, topic_id: topic)
         if let pending, pending.client_request_id != command.client_request_id, command.text != "跳过" { error = "上次回答已保留，请先重试这次操作。"; return }
+        if !care && (command.action == "answer" || command.action == "begin") { autoFollow.resume() }
         pending = command
         UserDefaults.standard.set(try? JSONEncoder().encode(command), forKey: commandKey)
         busy = true; error = nil

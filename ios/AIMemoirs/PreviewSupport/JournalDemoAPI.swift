@@ -13,6 +13,7 @@ import SwiftUI
     private let slowOpening: Bool
     private let emptyResume: Bool
     private let slowReply: Bool
+    private let scrollFixture: Bool
     private var people: [FamilyMember]
     private var events: [MemoryEvent]
     private var activePerson: FamilyMember?
@@ -34,6 +35,7 @@ import SwiftUI
         slowOpening = emptyState == "chat-opening"
         emptyResume = emptyState == "chat-empty-resume"
         slowReply = emptyState == "chat-slow"
+        scrollFixture = emptyState == "chat-scroll" || emptyState == "care-life-scroll"
         let values = [("陈建国", "爷爷", "1948-05-16", Gender.male), ("林秀兰", "奶奶", "1950-02-09", Gender.female), ("陈明远", "爸爸", "1976-09-22", Gender.male), ("周静", "妈妈", "1978-03-18", Gender.female)]
         people = values.enumerated().map { index, row in
             FamilyMember(id: UUID(uuidString: String(format: "00000000-0000-0000-0000-%012d", index + 1))!, name: row.0, gender: row.3,
@@ -69,6 +71,18 @@ import SwiftUI
         loadDesignMockup(screen: emptyState)
         if let screen = emptyState, screen.hasPrefix("care-life") {
             careLife = careLifeFixture(status: screen == "care-life-topics" ? "confirmed" : screen == "care-life-question" ? "collecting" : "review")
+        }
+        if scrollFixture {
+            conversation = (1...13).map { index in
+                ChatMessage(sender: index.isMultiple(of: 2) ? .user : .ai,
+                    text: "本地旧记录 \(index)：那年家门口有一棵树。我们在树下说话，记住了生活里的小事。")
+            }
+            if let previous = careLife {
+                careLife = LifeOverview(version: 1, status: "collecting", required: true, paused: false,
+                    fields: previous.fields, turns: conversation.map { LifeTurn(id: $0.id, role: $0.sender == .ai ? "assistant" : "user", content: $0.text) },
+                    question_id: "home", question: conversation.last?.text, question_number: 1, total_questions: 7,
+                    confirmed_version: nil, pending_request_id: nil, pending_action: nil)
+            }
         }
         if emptyState == "memoir-fixture" {
             for index in events.indices { events[index].primaryPersonID = events[index].personIDs.first }
@@ -215,6 +229,11 @@ import SwiftUI
         if conversation.contains(where: { $0.id == requestID }) { return try await state(sessionID: sessionID) }
         let attachments = attachmentIDs.enumerated().map { position, id in ChatAttachment(id: id, url: "/api/v1/media/\(id)", position: position) }
         conversation.append(ChatMessage(id: requestID, sender: .user, text: text, attachments: attachments))
+        if scrollFixture {
+            try await Task.sleep(for: .seconds(text == "history reply" ? 8 : 3))
+            conversation.append(ChatMessage(sender: .ai, text: scrollReply(to: text)))
+            return try await state(sessionID: sessionID)
+        }
         if pendingReply { throw APIError.timeout }
         if slowReply { try await Task.sleep(for: .seconds(8)) }
         offerMessageID = nil
@@ -244,7 +263,7 @@ import SwiftUI
     func state(sessionID: UUID) async throws -> ChatSnapshot {
         if recoveryOffline { throw APIError.network }
         let current = Array(conversation.dropFirst(segmentStart))
-        var snapshot = ChatSnapshot(lifeOverview: careLife, sessionID: session, messages: Array(conversation.suffix(20)), canGenerate: current.contains { $0.sender == .user && !$0.text.isEmpty }, generationOffer: offerMessageID.map { GenerationOffer(message_id: $0) }, currentMessageIDs: current.map(\.id))
+        var snapshot = ChatSnapshot(lifeOverview: careLife, sessionID: session, messages: Array(conversation.suffix(20)), canGenerate: !scrollFixture && current.contains { $0.sender == .user && !$0.text.isEmpty }, generationOffer: offerMessageID.map { GenerationOffer(message_id: $0) }, currentMessageIDs: current.map(\.id))
         if careLife != nil { snapshot.information.guided_interview = .init(module: careModule.isEmpty ? "childhood" : careModule, module_selected: !careModule.isEmpty, topic_index: 0, phase: "topic") }
         return snapshot
     }
@@ -264,6 +283,16 @@ import SwiftUI
         guard let previous = careLife else { throw APIError.contractUnavailable }
         if careCommands.contains(command.client_request_id) { return try await state(sessionID: sessionID) }
         guard command.expected_version == previous.version else { throw APIError.rejected(409, "经历已更新，请重新核对。") }
+        if scrollFixture && command.action == "answer" {
+            try await Task.sleep(for: .seconds(command.text == "history reply" ? 8 : 3))
+            let reply = scrollReply(to: command.text)
+            careLife = LifeOverview(version: previous.version + 1, status: "collecting", required: true, paused: false,
+                fields: previous.fields, turns: previous.turns + [LifeTurn(id: command.client_request_id, role: "user", content: command.text), LifeTurn(id: UUID(), role: "assistant", content: reply)],
+                question_id: "home", question: reply, question_number: 1, total_questions: 7,
+                confirmed_version: nil, pending_request_id: nil, pending_action: nil)
+            careCommands.insert(command.client_request_id)
+            return try await state(sessionID: sessionID)
+        }
         var status = previous.status; var fields = previous.fields; var turns = previous.turns
         var number = previous.question_number; var paused = previous.paused
         switch command.action {
@@ -292,6 +321,12 @@ import SwiftUI
         guard careLife?.status == "confirmed" else { throw APIError.contractUnavailable }
         careModule = module; conversation = [ChatMessage(sender: .ai, text: "说起这段日子，您最先想起的是哪一个画面？")]
         return try await state(sessionID: sessionID)
+    }
+    private func scrollReply(to text: String) -> String {
+        if text.contains("长回复") {
+            return (1...70).map { "长回复第 \($0) 行：这是完全本地的界面测试内容。" }.joined(separator: "\n") + "\n长回复已经结束。"
+        }
+        return "本地回复：\(text)"
     }
     func generate(sessionID: UUID) async throws -> GeneratedMemory {
         if ProcessInfo.processInfo.environment["AI_MEMORIES_PREVIEW_DELAY"] == "1" {
