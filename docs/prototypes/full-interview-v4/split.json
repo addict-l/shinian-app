@@ -1,0 +1,575 @@
+{
+ "seed": 20261022,
+ "rule": [
+  "",
+  "Split: people sorted by amount of material, cut into consecutive triples; Random(SEED) puts one of each",
+  "triple into the holdout group (15) and two into the iteration group (30). Session plan per person: the",
+  "4 consecutive questions of the frozen default order that contain the most questions the test set maps"
+ ],
+ "iteration": [
+  "N-47fee5f0c2",
+  "N-8e9398ae8b",
+  "N-82d14eeb63",
+  "N-e561eaa8b2",
+  "N-d3da9c100d",
+  "N-df0eb596f5",
+  "N-6bb5eed04e",
+  "N-3b7bd23f91",
+  "N-9ff0b2f16e",
+  "N-4ee8bdfbc8",
+  "N-3776254214",
+  "N-f3af6b6947",
+  "N-9c32d8b7c1",
+  "N-0b69690528",
+  "N-9d0bf22417",
+  "N-0391aab2a1",
+  "N-81acb2dd8d",
+  "N-8bb9f9537d",
+  "N-cd7326e590",
+  "N-99fb7cded5",
+  "N-6e4adb332f",
+  "N-a5c5b05f54",
+  "N-325226d20b",
+  "N-c076ca2fa5",
+  "N-6eec6bf458",
+  "N-53a0ccd987",
+  "N-a06ea91a56",
+  "N-63f4aa2206",
+  "N-4b27613445",
+  "N-756a382469"
+ ],
+ "holdout": [
+  "N-f522cea657",
+  "N-fe7c1686a2",
+  "N-c8625984e4",
+  "N-59e3bf0ed0",
+  "N-ac3fdd1b55",
+  "N-c5a5031a87",
+  "N-65804735e4",
+  "N-18def839e4",
+  "N-b432740bd8",
+  "N-94f516068b",
+  "N-568db56d4d",
+  "N-494e209cc7",
+  "N-2c2938c181",
+  "N-25486466f6",
+  "N-6733a23cd1"
+ ],
+ "iteration_run": [
+  "N-82d14eeb63",
+  "N-df0eb596f5",
+  "N-3b7bd23f91",
+  "N-f3af6b6947",
+  "N-8bb9f9537d",
+  "N-cd7326e590",
+  "N-53a0ccd987",
+  "N-756a382469"
+ ],
+ "holdout_run": [
+  "N-f522cea657",
+  "N-fe7c1686a2",
+  "N-ac3fdd1b55",
+  "N-c5a5031a87",
+  "N-b432740bd8",
+  "N-94f516068b",
+  "N-2c2938c181",
+  "N-25486466f6"
+ ],
+ "plans": {
+  "N-47fee5f0c2": {
+   "name": "陈国纲",
+   "chars": 65,
+   "questions": [
+    "WK11",
+    "WK11b",
+    "WK12",
+    "WK13"
+   ],
+   "mapped_in_window": 1
+  },
+  "N-8e9398ae8b": {
+   "name": "胡灵群",
+   "chars": 84,
+   "questions": [
+    "RV11",
+    "RV12",
+    "LT01",
+    "LT01b"
+   ],
+   "mapped_in_window": 2
+  },
+  "N-f522cea657": {
+   "name": "李金蕾",
+   "chars": 88,
+   "questions": [
+    "FM02",
+    "FM03",
+    "FM04",
+    "FM04b"
+   ],
+   "mapped_in_window": 2
+  },
+  "N-82d14eeb63": {
+   "name": "刘恒意",
+   "chars": 135,
+   "questions": [
+    "LT03",
+    "LT04",
+    "LT05",
+    "LT05b"
+   ],
+   "mapped_in_window": 3
+  },
+  "N-fe7c1686a2": {
+   "name": "周海峰",
+   "chars": 217,
+   "questions": [
+    "LT03",
+    "LT04",
+    "LT05",
+    "LT05b"
+   ],
+   "mapped_in_window": 2
+  },
+  "N-e561eaa8b2": {
+   "name": "苗宁",
+   "chars": 282,
+   "questions": [
+    "LT04",
+    "LT05",
+    "LT05b",
+    "LT06"
+   ],
+   "mapped_in_window": 3
+  },
+  "N-d3da9c100d": {
+   "name": "杨绛",
+   "chars": 330,
+   "questions": [
+    "WK06",
+    "WK06b",
+    "FM01",
+    "FM01b"
+   ],
+   "mapped_in_window": 2
+  },
+  "N-df0eb596f5": {
+   "name": "陆晓薇",
+   "chars": 337,
+   "questions": [
+    "RV11",
+    "RV12",
+    "LT01",
+    "LT01b"
+   ],
+   "mapped_in_window": 2
+  },
+  "N-c8625984e4": {
+   "name": "周少凤",
+   "chars": 347,
+   "questions": [
+    "FM03",
+    "FM04",
+    "FM04b",
+    "FM05"
+   ],
+   "mapped_in_window": 1
+  },
+  "N-6bb5eed04e": {
+   "name": "張秋香",
+   "chars": 414,
+   "questions": [
+    "RV13",
+    "RV14",
+    "RV15",
+    "RV16"
+   ],
+   "mapped_in_window": 1
+  },
+  "N-59e3bf0ed0": {
+   "name": "常沙娜",
+   "chars": 504,
+   "questions": [
+    "SK01",
+    "SK01b",
+    "SK01c",
+    "SK02"
+   ],
+   "mapped_in_window": 4
+  },
+  "N-3b7bd23f91": {
+   "name": "林恆富",
+   "chars": 553,
+   "questions": [
+    "FM02",
+    "FM03",
+    "FM04",
+    "FM04b"
+   ],
+   "mapped_in_window": 2
+  },
+  "N-ac3fdd1b55": {
+   "name": "刘道镛",
+   "chars": 829,
+   "questions": [
+    "SK03d",
+    "SK04",
+    "SK05",
+    "SK06"
+   ],
+   "mapped_in_window": 1
+  },
+  "N-9ff0b2f16e": {
+   "name": "金晓贵",
+   "chars": 910,
+   "questions": [
+    "GR04b",
+    "GR05",
+    "GR06",
+    "GR07"
+   ],
+   "mapped_in_window": 1
+  },
+  "N-4ee8bdfbc8": {
+   "name": "曾占湖",
+   "chars": 958,
+   "questions": [
+    "FM07",
+    "WK07",
+    "WK08",
+    "WK09"
+   ],
+   "mapped_in_window": 1
+  },
+  "N-c5a5031a87": {
+   "name": "楼燕勤",
+   "chars": 1251,
+   "questions": [
+    "LT04",
+    "LT05",
+    "LT05b",
+    "LT06"
+   ],
+   "mapped_in_window": 3
+  },
+  "N-3776254214": {
+   "name": "葉祖望",
+   "chars": 1309,
+   "questions": [
+    "FM04b",
+    "FM05",
+    "FM06",
+    "FM07"
+   ],
+   "mapped_in_window": 1
+  },
+  "N-f3af6b6947": {
+   "name": "侯鎮清",
+   "chars": 1380,
+   "questions": [
+    "SK03",
+    "SK03b",
+    "SK03c",
+    "SK03d"
+   ],
+   "mapped_in_window": 4
+  },
+  "N-65804735e4": {
+   "name": "王鼎钧",
+   "chars": 1603,
+   "questions": [
+    "FM04",
+    "FM04b",
+    "FM05",
+    "FM06"
+   ],
+   "mapped_in_window": 2
+  },
+  "N-9c32d8b7c1": {
+   "name": "陳信妹",
+   "chars": 1608,
+   "questions": [
+    "WK04",
+    "WK05",
+    "WK06",
+    "WK06b"
+   ],
+   "mapped_in_window": 3
+  },
+  "N-0b69690528": {
+   "name": "張程",
+   "chars": 2059,
+   "questions": [
+    "SK03b",
+    "SK03c",
+    "SK03d",
+    "SK04"
+   ],
+   "mapped_in_window": 1
+  },
+  "N-18def839e4": {
+   "name": "羅運良",
+   "chars": 2116,
+   "questions": [
+    "CH02b",
+    "CH03",
+    "CH03b",
+    "CH04"
+   ],
+   "mapped_in_window": 1
+  },
+  "N-9d0bf22417": {
+   "name": "潘海波",
+   "chars": 2190,
+   "questions": [
+    "WK06",
+    "WK06b",
+    "FM01",
+    "FM01b"
+   ],
+   "mapped_in_window": 2
+  },
+  "N-0391aab2a1": {
+   "name": "胡幼平",
+   "chars": 2236,
+   "questions": [
+    "SK03",
+    "SK03b",
+    "SK03c",
+    "SK03d"
+   ],
+   "mapped_in_window": 4
+  },
+  "N-b432740bd8": {
+   "name": "張希萍",
+   "chars": 2297,
+   "questions": [
+    "FM07",
+    "WK07",
+    "WK08",
+    "WK09"
+   ],
+   "mapped_in_window": 1
+  },
+  "N-81acb2dd8d": {
+   "name": "劉金標",
+   "chars": 2366,
+   "questions": [
+    "SK03",
+    "SK03b",
+    "SK03c",
+    "SK03d"
+   ],
+   "mapped_in_window": 4
+  },
+  "N-8bb9f9537d": {
+   "name": "陈美龄",
+   "chars": 2567,
+   "questions": [
+    "SK03b",
+    "SK03c",
+    "SK03d",
+    "SK04"
+   ],
+   "mapped_in_window": 1
+  },
+  "N-94f516068b": {
+   "name": "孫越",
+   "chars": 2778,
+   "questions": [
+    "SK03",
+    "SK03b",
+    "SK03c",
+    "SK03d"
+   ],
+   "mapped_in_window": 4
+  },
+  "N-cd7326e590": {
+   "name": "曹玉昌",
+   "chars": 2875,
+   "questions": [
+    "SK03",
+    "SK03b",
+    "SK03c",
+    "SK03d"
+   ],
+   "mapped_in_window": 4
+  },
+  "N-99fb7cded5": {
+   "name": "張復",
+   "chars": 3291,
+   "questions": [
+    "CH03",
+    "CH03b",
+    "CH04",
+    "CH05"
+   ],
+   "mapped_in_window": 2
+  },
+  "N-6e4adb332f": {
+   "name": "王成偉",
+   "chars": 3540,
+   "questions": [
+    "SK01",
+    "SK01b",
+    "SK01c",
+    "SK02"
+   ],
+   "mapped_in_window": 3
+  },
+  "N-a5c5b05f54": {
+   "name": "李昌明",
+   "chars": 4086,
+   "questions": [
+    "RV04",
+    "RV05",
+    "RV06",
+    "RV06b"
+   ],
+   "mapped_in_window": 2
+  },
+  "N-568db56d4d": {
+   "name": "易芳運",
+   "chars": 4145,
+   "questions": [
+    "SK06",
+    "CH01",
+    "CH02",
+    "CH02b"
+   ],
+   "mapped_in_window": 2
+  },
+  "N-325226d20b": {
+   "name": "張壯賜",
+   "chars": 4181,
+   "questions": [
+    "SK03b",
+    "SK03c",
+    "SK03d",
+    "SK04"
+   ],
+   "mapped_in_window": 1
+  },
+  "N-c076ca2fa5": {
+   "name": "劉柏考勤",
+   "chars": 4366,
+   "questions": [
+    "FM01",
+    "FM01b",
+    "FM02",
+    "FM03"
+   ],
+   "mapped_in_window": 2
+  },
+  "N-494e209cc7": {
+   "name": "黃樹華",
+   "chars": 4722,
+   "questions": [
+    "SK06",
+    "CH01",
+    "CH02",
+    "CH02b"
+   ],
+   "mapped_in_window": 2
+  },
+  "N-2c2938c181": {
+   "name": "张寿椿",
+   "chars": 4805,
+   "questions": [
+    "SK03",
+    "SK03b",
+    "SK03c",
+    "SK03d"
+   ],
+   "mapped_in_window": 4
+  },
+  "N-6eec6bf458": {
+   "name": "孫樸生",
+   "chars": 6191,
+   "questions": [
+    "RV08b",
+    "RV09",
+    "RV09b",
+    "RV09c"
+   ],
+   "mapped_in_window": 3
+  },
+  "N-53a0ccd987": {
+   "name": "佘幼芝",
+   "chars": 6490,
+   "questions": [
+    "RV06b",
+    "RV07",
+    "RV08",
+    "RV08b"
+   ],
+   "mapped_in_window": 2
+  },
+  "N-25486466f6": {
+   "name": "楊秀峰",
+   "chars": 6921,
+   "questions": [
+    "SK03",
+    "SK03b",
+    "SK03c",
+    "SK03d"
+   ],
+   "mapped_in_window": 4
+  },
+  "N-a06ea91a56": {
+   "name": "馬賽",
+   "chars": 7628,
+   "questions": [
+    "SK03",
+    "SK03b",
+    "SK03c",
+    "SK03d"
+   ],
+   "mapped_in_window": 4
+  },
+  "N-63f4aa2206": {
+   "name": "李福英",
+   "chars": 7968,
+   "questions": [
+    "SK03c",
+    "SK03d",
+    "SK04",
+    "SK05"
+   ],
+   "mapped_in_window": 2
+  },
+  "N-6733a23cd1": {
+   "name": "黄小荣",
+   "chars": 11552,
+   "questions": [
+    "SK03",
+    "SK03b",
+    "SK03c",
+    "SK03d"
+   ],
+   "mapped_in_window": 4
+  },
+  "N-4b27613445": {
+   "name": "蒋世昌",
+   "chars": 14290,
+   "questions": [
+    "WK02",
+    "WK03",
+    "WK04",
+    "WK05"
+   ],
+   "mapped_in_window": 3
+  },
+  "N-756a382469": {
+   "name": "余华",
+   "chars": 30103,
+   "questions": [
+    "RV08b",
+    "RV09",
+    "RV09b",
+    "RV09c"
+   ],
+   "mapped_in_window": 3
+  }
+ }
+}

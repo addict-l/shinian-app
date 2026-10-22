@@ -1,0 +1,18 @@
+{
+ "version": "v4e",
+ "model": {
+  "model": "deepseek-v4-pro",
+  "thinking": "disabled",
+  "max_tokens": 200,
+  "temperature": 0.3,
+  "json_mode": true
+ },
+ "followup_cap": 2,
+ "same_target_cap": 1,
+ "stop_after_unknown_once_asked": 1,
+ "baseline_supplement_cap": 2,
+ "note": "followup_cap: follow-up questions per question; same_target_cap: a target asked this many times and still open is not asked again; stop_after_unknown_once_asked: once the elder newly says 'can't remember / won't say' on an active target and at least this many follow-ups were asked, close instead of asking the next target. signal_close: when the elder's latest words literally say they won't talk about it / can't remember / are tired (interview.elder_signal), close instead of asking, whatever the engine decision ('ready' still closes as done; tired -> rest).",
+ "signal_close": true,
+ "rest_resume_by_speaker": true,
+ "note_rest_resume": "rest_resume_by_speaker: after the elder rests and taps 'continue', true = the speaking layer writes the line into the next question (v4e, untested); false = fixed '好，咱们接着聊。' + next entry (v4d)."
+}

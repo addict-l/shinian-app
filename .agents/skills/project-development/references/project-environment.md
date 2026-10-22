@@ -12,6 +12,7 @@
 - 后续开发基线：`main`。开始新任务时先查看工作区状态和当前分支，避免混入未完成改动。
 - 2026-10-21 核查，当前任务开始时 `main` 为 `d9a68f4`；此前 B03 为 `512915c`，后续基线以实际 Git 日志为准。
 - 用户已确定：每个提交块人工审核通过后，正式 commit 并直接推送主分支，不默认创建 PR。
+- 例外（用户 2026-10-22 确定）：采访链路优化的每个可提交版本推送到分支 `interview/question-optimization`，由用户审阅后再合并 `main`；版本台账见 `docs/phase-2/interview-optimization/README.md`。
 
 ## iOS 前端
 
