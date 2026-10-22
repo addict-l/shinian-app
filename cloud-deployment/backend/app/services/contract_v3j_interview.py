@@ -17,6 +17,9 @@ Replies keep the existing steps (decisions of 2026-10-22):
   layer acknowledges and moves to the next entry; failure falls back to
   SKIP_ACK + next entry. No save offer; the skip state logic is unchanged.
 - pause (engine paused, or the elder says he is tired): existing fixed text.
+
+The skeleton questions (life overview) use the same marker, judgment and
+speaking-layer pieces from contract_v3j_life_overview.
 """
 from copy import deepcopy
 
@@ -42,10 +45,15 @@ def question_flow(state):
     return 'v2'
 
 
+def marker(rt):
+    """Flow marker and speaking-layer counters saved in a question's own state when it starts in this flow."""
+    return {'pipeline': V3J_PIPELINE, 'pipeline_runtime': rt.runtime_version,
+            'pipeline_manifest_sha256': rt.manifest_sha256, 'followups': 0, 'asked_target': None}
+
+
 def fresh(qid, rt):
     local = fresh_question(qid)
-    local.update({'pipeline': V3J_PIPELINE, 'pipeline_runtime': rt.runtime_version,
-                  'pipeline_manifest_sha256': rt.manifest_sha256, 'followups': 0, 'asked_target': None})
+    local.update(marker(rt))
     return local
 
 
@@ -89,11 +97,15 @@ def asked_part(shown, state, entry):
 def dialogue_for(messages, local, latest, entry):
     """This question's dialogue as the speaking layer was evaluated with: the entry question, then each answer
     preceded by the full message the narrator answered."""
-    before = shown_before(messages)
-    texts = {s['id']: s['text'] for s in local['sources']}
-    asked = {s['id']: s.get('question') or '' for s in local['sources']}
-    if str(latest.id) not in texts:  # a control such as an explicit skip is the elder's last words here
-        texts[str(latest.id)] = latest.content
+    return dialogue_from(entry, local['sources'], shown_before(messages), latest.id, latest.content)
+
+
+def dialogue_from(entry, sources, before, latest_id, latest_text):
+    """``before`` maps each answer id to the full message shown before it (session messages or overview turns)."""
+    texts = {s['id']: s['text'] for s in sources}
+    asked = {s['id']: s.get('question') or '' for s in sources}
+    if str(latest_id) not in texts:  # a control such as an explicit skip is the elder's last words here
+        texts[str(latest_id)] = latest_text
     out = [('system', entry)]
     for k, identity in enumerate(texts):
         if k:

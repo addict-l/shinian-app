@@ -11,11 +11,14 @@ from app.db.database import SessionLocal
 from app.models.family_member import FamilyMemberModel
 from app.schemas.life_overview import LifeOverview, LifeField
 from app.services.contract_interview_state import (
-    runtime, questions, fresh_question, context_for, append_source, finish_question_turn,
+    runtime, questions, fresh_question, context_for, append_source, finish_question_turn, V3J_PIPELINE,
 )
 from app.services.interview_controls import skips_question, SKIP_ACK
 
 INTRO = '我们先聊几个简单的问题，了解您的人生。记不清或暂时不想讲的，可以先跳过。'
+PAUSE_TEXT = '好，先休息。您的回答和采访位置都已保留。'
+NOTED_TEXT = '我记下了。'
+REVIEW_TEXT = '这些是您提供的人生线索。请先核对，有需要更正的地方可以告诉我；确认后再选想聊的部分。'
 
 
 def now():
@@ -41,6 +44,12 @@ def active_id(data):
 def question_text(data, qid):
     if not qid:
         return None
+    if data['questions'][qid].get('pipeline') == V3J_PIPELINE:
+        # The question part last shown (the speaking layer's follow-up), else the entry question.
+        asked = data['questions'][qid].get('asked_question')
+        if asked is not None:
+            return asked
+        return runtime(data.get('runtime_version', 'full-interview-v1.29.1')).questions[qid]['main_question']
     latest = data['questions'][qid].get('last_result') or {}
     if latest.get('decision') in ('ask', 'ask_defer'):
         return latest['question']
@@ -151,9 +160,12 @@ def perform(person_id, action, client):
         data['pending'] = None
         data['requests'][rid] = fingerprint
         data['version'] += 1
-        _reply(data, rid, '好，先休息。您的回答和采访位置都已保留。' if pause else '好，我们接着聊。' + question_text(data, qid))
+        _reply(data, rid, PAUSE_TEXT if pause else '好，我们接着聊。' + question_text(data, qid))
         _save(person_id, data)
         return view(data)
+    from app.services.contract_v3j_life_overview import question_flow, turn
+    if question_flow(data, qid) == V3J_PIPELINE:
+        return turn(person_id, data, rid, fingerprint, client)
     skip = skips_question(text)
     if skip:
         # A user skip closes the question without inventing unavailable facts.
@@ -193,9 +205,9 @@ def perform(person_id, action, client):
     data['version'] += 1
     data['status'] = 'collecting' if active_id(data) else 'review'
     next_question = question_text(data, active_id(data))
-    reply = '好，先休息。您的回答和采访位置都已保留。' if data['paused'] else (
-        ((SKIP_ACK + '\n') if skip or local['status'] in ('skipped', 'declined') else '我记下了。' if local['status'] != 'pending' else '') + next_question if next_question else
-        '这些是您提供的人生线索。请先核对，有需要更正的地方可以告诉我；确认后再选想聊的部分。')
+    reply = PAUSE_TEXT if data['paused'] else (
+        ((SKIP_ACK + '\n') if skip or local['status'] in ('skipped', 'declined') else NOTED_TEXT if local['status'] != 'pending' else '') + next_question if next_question else
+        REVIEW_TEXT)
     _reply(data, rid, reply)
     _save(person_id, data)
     return view(data)

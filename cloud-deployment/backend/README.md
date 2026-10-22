@@ -43,7 +43,7 @@ GitHub 包含完整可构建后端、固定依赖、全部迁移及示例环境�
 
 ## 采访新流程（可选）
 
-`INTERVIEW_PIPELINE=v3j_v4d` 让访谈入口改用判定层 v3j（`app/ai/contract_interview_v3j.py`）和说话层 v4d（`app/ai/interview_speaker.py`），运行合同在 `app/ai/interview_runtime_v3j_v4d/`，流程在 `app/services/contract_v3j_interview.py`。默认 `v2` 即现网。按题标记流程，已开始的题不换流程。环境变量、启用与回退见[部署说明](DEPLOY_ALIYUN.md#采访新流程开关v3j--v4d)，业务差异与离线验证见[采访链路优化台账](../../docs/phase-2/interview-optimization/README.md#接入后端v3j--v4d)。
+`INTERVIEW_PIPELINE=v3j_v4d` 让访谈入口和人生骨架改用判定层 v3j（`app/ai/contract_interview_v3j.py`）和说话层 v4d（`app/ai/interview_speaker.py`），运行合同在 `app/ai/interview_runtime_v3j_v4d/`，流程在 `app/services/contract_v3j_interview.py`（访谈入口）和 `app/services/contract_v3j_life_overview.py`（人生骨架）。默认 `v2` 即现网。按题标记流程，已开始的题不换流程。环境变量、启用与回退见[部署说明](DEPLOY_ALIYUN.md#采访新流程开关v3j--v4d)，业务差异与离线验证见[采访链路优化台账](../../docs/phase-2/interview-optimization/README.md#接入后端v3j--v4d)。
 
 ## 普通访谈的可选快速通道
 
