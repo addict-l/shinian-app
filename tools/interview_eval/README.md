@@ -25,6 +25,7 @@ python3 tools/interview_eval/explain.py .runtime/interview-eval/runs/f45-check  
 
 打分沿用冻结的 `tools/run_full_interview_eval.py` 与金标准 `docs/prototypes/full-interview-evaluation/single-question-v2-gold.json`。改判定层后，离线回放 full45 须仍 ≥194/204。
 `pipelines/`：`v2_baseline.py`（现网流程）、`v3j.py`（当前候选），其余为开发历史。
+后端接入的一致性回放读同一缓存、0 token：`cloud-deployment/backend/tests/test_interview_v3j_full45_replay.py`（full45 须 197/204 且逐检查点同 `branch-check-v3j`）、`test_interview_v4d_sim_replay.py`（sim-hv4d 说话层输入逐字相同）。改 `v3j.py` 或 v4 提示后，后端副本（`app/ai/contract_interview_v3j.py`、`interview_speaker.py`、`interview_runtime_v3j_v4d/`）要同步，并重跑这两项。
 
 ## 模拟真实访谈（说话层）
 

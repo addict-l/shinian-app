@@ -66,6 +66,28 @@ docker compose --project-name backend --env-file .env.production -f docker-compo
 
 还需通过 HTTPS 家庭登录只读核对人物、聊天窗口、回忆、照片和回忆录快照；功能验收在隔离数据上完成。数据库迁移成功或健康通过不能代替整个流程。正式家庭库不执行测试清理，示例／测试数据不写入现有家庭。部署目录、Git 提交、运行镜像与源码哈希按阶段记入[一期记录](../../docs/phase-1/records/cloud-deployment-record.md)或[二期记录](../../docs/phase-2/records/cloud-deployment-record.md)。GitHub push 不会自动更新当前云服务器。
 
+## 采访新流程开关（v3j + v4d）
+
+访谈入口可以改用判定层 v3j + 说话层 v4d（业务说明见[采访链路优化台账](../../docs/phase-2/interview-optimization/README.md#接入后端v3j--v4d)）。默认关闭：不设下面的变量时与现网 v2 完全相同，无数据库迁移。人生骨架（人生概览）不受此开关影响。
+
+启用：在服务器 `.env.production` 增加三行（不含密钥；保留现有 `INTERVIEW_RUNTIME_DIR` 与 `INTERVIEW_RUNTIME_MANIFEST_SHA256`），再按实际使用的 Compose 文件（含受保护 override）重建 API 容器：
+
+```text
+INTERVIEW_PIPELINE=v3j_v4d
+INTERVIEW_V3J_RUNTIME_DIR=/app/app/ai/interview_runtime_v3j_v4d
+INTERVIEW_V3J_RUNTIME_MANIFEST_SHA256=<该目录 manifest.json 的 SHA-256>
+```
+
+```sh
+sha256sum app/ai/interview_runtime_v3j_v4d/manifest.json          # 即上面的 pin；在完整仓库中也可用 scripts/build_interview_v3j_runtime.py --check
+docker compose --project-name backend --env-file .env.production -f docker-compose.demo.yml up -d --no-build --force-recreate api
+curl --fail http://127.0.0.1:8000/health
+```
+
+API 启动时校验 pin、目录内每个文件的哈希（不允许未列出的文件）、模型参数（只有评测时的五项、thinking disabled；模型名 `deepseek-v4-pro` 随 manifest 固定）以及题库与现网运行合同一致；不通过则 API 不启动，按下文恢复备份的 `.env.production`。健康检查不能代替业务验收：启用前须在隔离候选环境用测试家庭走完追问、一题聊完（草稿步骤）、跳过、暂停与重试。新流程每轮通常 2 次模型调用（判定 + 说话层），出现否认词时多一次复核。
+
+回退：把 `INTERVIEW_PIPELINE` 改为 `v2`（或删掉这一行）后同样重建 API 容器。尚未开始的题立即回到 v2；已经在新流程中开始的题按题内标记用新流程答完，因此回退后先保留两个 `INTERVIEW_V3J_*` 变量，确认这些题都已结束（保存或跳过）后再删。不要只换回旧镜像来回退：旧代码不认识题内标记，会用 v2 重新判定进行中的新流程题。
+
 ## 回退
 
 应用回退先保留故障版本当前数据，再使用记录的旧镜像与配套源码／配置启动 API；不删除数据卷、不自动执行 alembic downgrade。现有迁移为兼容性增量，旧镜像能否读取新数据需根据对应发布记录核对。

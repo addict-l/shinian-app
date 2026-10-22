@@ -87,6 +87,9 @@ class GuidedInterviewState(BaseModel):
     last_topic_skipped: bool = False
     contract_state: dict = Field(default_factory=dict)
     contract_history: dict[str, dict] = Field(default_factory=dict)
+    # v3j_v4d only: the speaking layer's wording at the last topic close, so the
+    # next close is phrased differently. Absent in older states.
+    speaker_last_close: str | None = None
     legacy_checkpoint: dict | None = None
     phase: Literal['opening', 'exploring', 'supplement', 'review', 'paused', 'saved', 'module_review', 'finished'] = 'opening'
     resume_phase: str | None = None

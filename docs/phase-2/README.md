@@ -12,6 +12,6 @@
 | B04 制作与访谈界面 | [计划](b04/phase-2-b04-plan.md)、[验收材料](b04/phase-2-b04-verification.md)；当前工作尚待最终人工审查与正式提交 |
 | B05 PDF 精细排版 | 业务边界见总体计划；尚未开始业务实现 |
 | 童年三层采访候选 | [试点入口](childhood-pilot/README.md)；独立云端候选验证，尚未发布到正式家庭服务 |
-| 采访链路优化 | [版本台账与合并说明](interview-optimization/README.md)；分支 `interview/question-optimization`，离线候选，未接入后端 |
+| 采访链路优化 | [版本台账与合并说明](interview-optimization/README.md)；分支 `interview/question-optimization`；v3j + v4d 已接入后端，`INTERVIEW_PIPELINE` 默认关闭 |
 
 原始日志和 HTTP 状态放在[本地验证归档](../project/local-artifacts.md)，产品仓库保留可读验收材料。早期模型调研、设计样册和历史脚本记录只代表对应时间的依据；当前配置查项目环境与实际代码。

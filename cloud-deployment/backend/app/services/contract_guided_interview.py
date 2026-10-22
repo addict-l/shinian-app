@@ -8,7 +8,7 @@ from app.schemas.guided_interview import GuidedInterviewState, GuidedQuestion
 from app.schemas.story_guidance import ConversationReply, StoryReadiness
 from app.schemas.story_information import SourceQuote
 from app.services.contract_interview_state import (
-    runtime, questions, fresh_question, context_for, append_source, finish_question_turn,
+    runtime, questions, fresh_question, context_for, append_source, finish_question_turn, V3J_PIPELINE,
 )
 from app.services.interview_controls import skips_question, SKIP_ACK
 
@@ -79,7 +79,7 @@ def turn(client, previous, messages):
         state.phase = 'finished'
         return _project(previous, state, messages), ConversationReply(text='这部分的问题已经聊过了。' + module_menu())
     if skips_question(text):
-        return skip_topic(previous, state, messages)
+        return skip_topic(previous, state, messages, client)
     state.last_topic_skipped = False
     if state.phase in ('supplement', 'review') and re.fullmatch(
             r'(?:没有(?:了|补充了)?|没有别的补充了|先保存|确认保存|保存吧|就这些)[。！!\s]*', text):
@@ -87,6 +87,9 @@ def turn(client, previous, messages):
         state.pending_question = None
         return _project(previous, state, messages), ConversationReply(
             text='好，先核对这段草稿，您确认后再保存。', action='offer_generation')
+    from app.services.contract_v3j_interview import question_flow, question_turn
+    if question_flow(state) == V3J_PIPELINE:
+        return question_turn(client, previous, state, messages, latest)
     qid = topic_for(state).id
     if not state.contract_state:
         state.contract_state = fresh_question(qid)
@@ -146,16 +149,22 @@ def turn(client, previous, messages):
     return _project(previous, state, messages), reply
 
 
-def skip_topic(previous, state, messages):
+def skip_topic(previous, state, messages, client=None, text=None):
+    """Close the question as skipped. ``text`` is a reply already composed by the v3j_v4d flow; with a client,
+    an explicit skip in a question of that flow is acknowledged by its speaking layer first."""
     from app.services.guided_interview import opening_text
     from app.services.interview_modules import topic_for
+    if text is None and client is not None:
+        from app.services.contract_v3j_interview import question_flow, skip_turn
+        if question_flow(state) == V3J_PIPELINE:
+            return skip_turn(client, previous, state, messages)
     state.processed_topics[topic_for(state).id] = 'skipped'
     # following archives raw sources, provider failures and old fields intact.
     state = following(state)
     state.last_topic_skipped = True
     from app.services.interview_modules import module_menu
     next_text = module_menu() if state.phase == 'module_review' else opening_text(state)
-    return _project(previous, state, messages), ConversationReply(text=SKIP_ACK + '\n' + next_text)
+    return _project(previous, state, messages), ConversationReply(text=SKIP_ACK + '\n' + next_text if text is None else text)
 
 
 def following(previous):

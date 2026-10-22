@@ -90,9 +90,10 @@ def _contract_topics():
             for module in MODULE_NAMES}
 
 
-from app.services.contract_interview_state import runtime_configured
+from app.services.contract_interview_state import runtime_configured, validate_pipeline
 if runtime_configured():
     MODULE_TOPICS = _contract_topics()
+    validate_pipeline()
 
 
 def topic_count(state):

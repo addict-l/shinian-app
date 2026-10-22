@@ -41,6 +41,10 @@
 
 GitHub 包含完整可构建后端、固定依赖、全部迁移及示例环境，业务 Python 源码与正式运行 API 逐项核对。实际镜像、迁移与组件源码哈希见 [交付版本清单](../../docs/phase-1/t07/delivery-manifest.json)。Nginx 配置示例位于 ../nginx/aimemory.conf.example；完整部署与备份步骤见 DEPLOY_ALIYUN.md。生产配置、家庭密码、证书私钥和数据库／媒体备份由维护者单独管理，老师运行现有云端不需要获得这些部署凭据。
 
+## 采访新流程（可选）
+
+`INTERVIEW_PIPELINE=v3j_v4d` 让访谈入口改用判定层 v3j（`app/ai/contract_interview_v3j.py`）和说话层 v4d（`app/ai/interview_speaker.py`），运行合同在 `app/ai/interview_runtime_v3j_v4d/`，流程在 `app/services/contract_v3j_interview.py`。默认 `v2` 即现网。按题标记流程，已开始的题不换流程。环境变量、启用与回退见[部署说明](DEPLOY_ALIYUN.md#采访新流程开关v3j--v4d)，业务差异与离线验证见[采访链路优化台账](../../docs/phase-2/interview-optimization/README.md#接入后端v3j--v4d)。
+
 ## 普通访谈的可选快速通道
 
 `LLM_MODEL` 继续用于开场、草稿及其他既有职责。设置 `LLM_TURN_MODEL=qwen3.7-flash` 后，普通文字发送将原文信息分析和完整自然回复合并为一次非思考、严格结构化请求，保留完整原文及事实、策略校验；留空沿用原串行流程。所选模型必须支持百炼兼容接口的 `json_schema` 严格输出。

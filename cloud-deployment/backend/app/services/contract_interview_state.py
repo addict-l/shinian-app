@@ -29,6 +29,44 @@ def runtime(version=None):
     raise LLMConfigurationError('Unsupported saved interview runtime')
 
 
+V3J_PIPELINE = 'v3j_v4d'
+PIPELINES = ('v2', V3J_PIPELINE)
+
+
+def configured_pipeline():
+    """Flow for questions not yet started; started questions keep the flow saved with them."""
+    value = os.getenv('INTERVIEW_PIPELINE', '').strip() or 'v2'
+    if value not in PIPELINES:
+        from app.ai.llm_client import LLMConfigurationError
+        raise LLMConfigurationError('Unsupported interview pipeline')
+    return value
+
+
+@lru_cache(maxsize=4)
+def _v3j_runtime(directory, digest):
+    from app.ai.contract_interview_v3j import V3jRuntime
+    return V3jRuntime(directory, digest)
+
+
+def v3j_runtime():
+    return _v3j_runtime(os.getenv('INTERVIEW_V3J_RUNTIME_DIR', ''), os.getenv('INTERVIEW_V3J_RUNTIME_MANIFEST_SHA256', ''))
+
+
+def validate_pipeline():
+    """Fail at startup, like the main runtime pin, when the opted-in flow is not deployable.
+
+    The v3j bundle must carry exactly the configured catalog (same question IDs,
+    order and entry questions), so switching flows never moves a topic position.
+    """
+    if configured_pipeline() != V3J_PIPELINE:
+        return
+    bundle, current = v3j_runtime(), runtime()
+    if bundle.version != current.version or [(q['id'], q['main_question']) for q in bundle.contracts['questions']] != [
+            (q['id'], q['main_question']) for q in current.contracts['questions']]:
+        from app.ai.llm_client import LLMConfigurationError
+        raise LLMConfigurationError('Interview v3j catalog differs from the configured runtime')
+
+
 def questions(module, version=None):
     prefix = 'SK' if module == 'skeleton' else PREFIXES[module]
     return [q for q in runtime(version).questions.values() if q['id'].startswith(prefix)]

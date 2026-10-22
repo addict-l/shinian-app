@@ -1,0 +1,14 @@
+{
+  "upstream": "https://github.com/BYVoid/OpenCC",
+  "commit": "8cf737a4e193db27d675b2ce9867d84aace33745",
+  "source_path": "data/dictionary/TSCharacters.txt",
+  "license": "Apache-2.0",
+  "retrieved_at": "2026-10-17T09:30:26.778767+00:00",
+  "mapping_entries": 4148,
+  "transformation": "Each one-codepoint key selects first upstream candidate. Original dictionary/license retained unmodified. Only regex/rule matching; never rewrite source text, evidence or stored values. Not the full phrase-sensitive OpenCC converter.",
+  "files": {
+    "OpenCC-LICENSE.txt": "b534e465949558eec2597b04f5092b5e161236a68dfbfd04d547592ac3964308",
+    "OpenCC-TSCharacters.txt": "9ff46a7d30e5765375eb13d33f2b03a34d298913caf2b120380679f33ae1642d",
+    "opencc-ts-char-map.json": "085b059dbef2df6a3ad01a29cc17aa5585b09f10273993a3bc04808c83bc7a7d"
+  }
+}
