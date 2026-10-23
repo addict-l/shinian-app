@@ -38,12 +38,22 @@
 
 ### 模拟器实体键盘（用户固定约定）
 
-用户于 2026-10-21 明确要求：在 iOS 模拟器中使用运行它的 Mac 所连接的实体键盘输入，输入法固定为简体拼音。
+用户于 2026-10-21 确定实体键盘与简体拼音约定；2026-10-23 补充 Windows 经 ToDesk 操作 Mac 的固定方式，并明确要求“这个设置你记住，永远不能乱改”。本节为 Codex、Claude 及其他代理的唯一键盘规则来源。
 
-- Simulator 的 `I/O → Keyboard → Connect Hardware Keyboard` 和 `Use the Same Keyboard Language as macOS` 均保持开启。
-- Mac 输入源保持“简体拼音”；模拟器仅保留简体中文拼音。点击应用输入框后直接使用 Mac 的实体键盘，空格键选择汉字，无需点按屏幕键盘。
-- 后续开发、自动化、运行和验证均沿用此设置。用户已明确禁止更改，不能为了测试关闭硬件键盘、切换输入法或重置键盘配置；测试方案须适配此约定。
-- 这是代理操作的固定约束，不通过系统权限或设备管理策略封锁用户自行调整设置。
+| 项目 | 必须保持的状态 |
+| --- | --- |
+| Windows 主控端的 ToDesk 窗口 | 英文输入状态，只传递字母与按键；敲拼音后按空格选字 |
+| Mac 输入语言 | 简体拼音 |
+| 模拟器当前输入语言 | 简体拼音；中文由 Mac／模拟器处理 |
+| `I/O → Keyboard → Connect Hardware Keyboard` | 开启 |
+| `I/O → Keyboard → Use the Same Keyboard Language as macOS` | 开启 |
+| `I/O → Input → Send Keyboard Input to Device` | 关闭，保持普通文本输入路径，避免独占按键捕获 |
+
+点击 App 输入框后直接用当前电脑的实体键盘输入，无需点按屏幕键盘。2026-10-23 用户通过 Windows → ToDesk → Mac → 现有 iPhone 17 Pro，分别确认数字和中文均能输入；这是实际远程验证结果，不以代理在 Mac 本地的按键测试代替。
+
+**长期约束：**只有用户明确指示修改键盘设置或本规则时，代理才可变更。开发、构建、截图、UI 自动化、故障排查和重启应用均不构成变更授权；不得先改设置完成测试、再尝试恢复。测试方案适配上述状态，不关闭实体键盘、不启用独占捕获、不切换其他输入法、不重置键盘或输入法配置。
+
+操作前只读核对；发现偏离时先报告现状与恢复方案，等用户明确指示后再写入设置。交付时保持用户已确认的状态。本约束针对代理操作，不通过系统权限或设备管理策略限制用户自行调整。
 
 建议先从 Xcode 选择 `ios/AIMemoirs.xcodeproj`、`AIMemoirs` Scheme 和现有 iPhone 17 Pro 模拟器，再执行构建和运行。命令行构建可使用 `xcodebuild -project ios/AIMemoirs.xcodeproj -scheme AIMemoirs -configuration Debug -destination 'platform=iOS Simulator,id=8801F7F7-7154-4AEB-88F2-1E77A8393190' build`；具体签名与本机设备状态以 Xcode 实际结果为准。
 
