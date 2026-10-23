@@ -11,6 +11,7 @@ final class BetterUIFlowTests: XCTestCase {
         } else {
             app.launchEnvironment["AI_MEMORIES_API_URL"] = "https://aimemory.47-82-83-74.nip.io"
         }
+        app.launchArguments += ["-journal.careMode.enabled", "NO"]
         app.launch()
         return app
     }
@@ -60,7 +61,7 @@ final class BetterUIFlowTests: XCTestCase {
         }
         tap(app.buttons["tab.profile"])
         tap(app.buttons["设置"])
-        XCTAssertTrue(app.buttons["退出家庭账号"].exists)
+        XCTAssertTrue(app.buttons["退出家庭登录"].waitForExistence(timeout: 10))
         tap(app.buttons["返回"])
         tap(app.buttons["隐私与数据"])
         XCTAssertTrue(app.staticTexts["隐私与数据"].waitForExistence(timeout: 10))
