@@ -1,0 +1,28 @@
+{
+  "integration_sha": "a1ecee61eae633898f1ba3a7200a630ca66a32c2",
+  "all_required_gates_passed": true,
+  "local_suite": {
+    "run": 80,
+    "skipped": 1,
+    "failures": 0,
+    "errors": 0
+  },
+  "cloud_suite": {
+    "run": 80,
+    "skipped": 1,
+    "failures": 0,
+    "errors": 0
+  },
+  "candidate_sort_probe_passed": true,
+  "production_readonly_probe_passed": true,
+  "client_not_changed": true,
+  "keyboard_settings_untouched": true,
+  "evidence_sha256": {
+    "backend-all-tests.log": "948891eb6e87450abcda0436dbd974a48a7d6a17fb869e1122c63d3e91ee8451",
+    "cloud-all-tests.log": "50d051b73dd575cf24237127599ccac9943b864d6e44a96faa1bce2242e2ab1f",
+    "candidate-sort-verification.json": "bd9e829926e250dee483364aefd293723a29c57bfc5c78c19a6e67f5e8f773c9",
+    "production-readonly-candidate-probe.log": "ed30d61e2f5a08b3041565e9eedc0809541791ce6001108b4b84ad5d16e0a2cb",
+    "image-config-verification.json": "3703ce8101a0ecfdef9307c91bfe31310b16be5ed0a79a613dbd1535aa805177",
+    "activate_sort_release.py": "1f988823d55909984e8d93f12017b16f5edf50434430d6f0848b647e6d13f519"
+  }
+}

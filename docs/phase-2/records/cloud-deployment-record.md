@@ -16,3 +16,9 @@
 ## C01–C03 采访整合发布（2026-10-23）
 
 本轮按用户条件授权接收 Claude ece64ea、整合 main 246a2c4 后发布 `ed38ab2c4738874d01b4470a10a8826c1c3da90d`；实际镜像 `sha256:b33819f706e40bf46b23fcce5f3a88252d4cb0c9904698417232e99c60332fac`。pipeline 仍为 v3j_v4d，runtime pin 不变，保留完整 OSS/认证/媒体配置，切换前后全表及媒体指纹一致，备份校验通过，v2-only 兼容回退已准备。候选 MySQL HTTPS 15 场景/89 检查和发布后正式 HTTPS 独立测试家庭 9 场景/59 检查通过；未合并 main，正式三连轮质量门槛仍待办。固定版本、工具问题、真实原话、证据哈希与下一轮事项见 [C01–C03 回执](../interview-optimization/handoffs/2026-10-23-c01-c03-cloud-release.md)。
+
+## 采访入口会话排序修复（2026-10-23）
+
+用户明确批准“发布修复并恢复采访”后，将 `a1ecee61eae633898f1ba3a7200a630ca66a32c2` 发布到真实阿里云，同时推送 main 和共享分支。镜像 `sha256:d7b94334ac909feb59775a19b5b27fde48737153ff919bdf83eb2192f809b0d8`，release `/opt/shinian-releases/session-list-sort-a1ecee6-20261023`。仅修复会话列表完整 JSON 行排序导致的 MySQL 1038/采访入口 503；采访流程、模型、runtime pin 和 OSS 不变。
+
+本地/云端 Ran 80、skip 1、失败/错误 0；独立 MySQL/HTTPS 验证及原受影响家庭只读验证通过。备份校验与切换窗口全表/媒体指纹一致，v2-only fallback 已准备、未触发。发布后正式 HTTPS 业务列表 200、匿名认证 401；现有模拟器此前失败人物的 conversation POST/GET 200，显示人生骨架第一题，可继续用户测试。未改键盘设置，未代答或保存回忆。具体证据、工具和 Claude 下一轮继承要求见[最新修复回执](../interview-optimization/handoffs/2026-10-23-session-list-sort.md)。此前 C01–C03 后来已获授权合入 main；上述历史记录的“未合并”仅为当时发布状态。

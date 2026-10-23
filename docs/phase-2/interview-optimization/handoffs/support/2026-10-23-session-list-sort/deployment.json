@@ -1,0 +1,44 @@
+{
+  "activated": true,
+  "integration_sha": "a1ecee61eae633898f1ba3a7200a630ca66a32c2",
+  "image": "sha256:d7b94334ac909feb59775a19b5b27fde48737153ff919bdf83eb2192f809b0d8",
+  "pipeline": "v3j_v4d",
+  "runtime_pin": "8897f3c50690d70571e8b8bf2acf2176c80caf17c860ddf6f207c2470a3ba99f",
+  "release": "/opt/shinian-releases/session-list-sort-a1ecee6-20261023",
+  "health": {
+    "status": "ok",
+    "database": "ok",
+    "llm_configured": true
+  },
+  "https_health": {
+    "status": "ok",
+    "database": "ok",
+    "llm_configured": true
+  },
+  "business_data_unchanged_during_cutover": true,
+  "backup_verified": true,
+  "business_counts_at_cutover": {
+    "alembic_version": 1,
+    "auth_rate_limits": 12,
+    "chat_messages": 481,
+    "chat_sessions": 81,
+    "device_sessions": 25,
+    "families": 7,
+    "family_accounts": 7,
+    "family_members": 23,
+    "media_assets": 54,
+    "media_cleanup_jobs": 0,
+    "memoir_settings": 2,
+    "memories": 30,
+    "memory_deletions": 3,
+    "memory_drafts": 30,
+    "memory_persons": 21,
+    "media_files": 54
+  },
+  "ports_mounts_full_environment_preserved": true,
+  "oss_preserved": true,
+  "pending_speaker_calls_before_cutover": 0,
+  "fallback": "same new image and runtime settings; INTERVIEW_PIPELINE=v2",
+  "formal_three_round_quality_acceptance": false,
+  "production_postrelease_scenarios": "pending"
+}

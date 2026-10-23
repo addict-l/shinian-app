@@ -1,0 +1,15 @@
+{
+  "mysql_sort_buffer_size": 262144,
+  "legacy_query_error": 1038,
+  "new_query_passed": true,
+  "synthetic_large_histories": 8,
+  "each_audit_bytes": 1048576,
+  "family_sessions": 10,
+  "order_content_and_family_filter_passed": true,
+  "https_session_list_passed": true,
+  "https_person_conversation_passed": true,
+  "api_session_count": 10,
+  "passed": true,
+  "production_data_writes": false,
+  "provider_calls": 0
+}

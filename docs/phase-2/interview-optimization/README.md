@@ -5,9 +5,11 @@
 
 ## 当前协作与线上状态
 
-Claude 负责持续采访优化，Codex 负责整合、部署、云端测试和问题回传。下一轮先读取[双向交接 SOP](collaboration-sop.md)及[最新 C01–C03 回执](handoffs/2026-10-23-c01-c03-cloud-release.md)，从共享分支最新头继续；必须继承产品整合 `ed38ab2`、此前 `770f841` 题序修正及 main 的 OSS 整合。
+Claude 负责持续采访优化，Codex 负责整合、部署、云端测试和问题回传。下一轮先读取[双向交接 SOP](collaboration-sop.md)、[最新会话排序修复回执](handoffs/2026-10-23-session-list-sort.md)及 [C01–C03 业务回执](handoffs/2026-10-23-c01-c03-cloud-release.md)，从共享分支最新头继续；必须继承 `a1ecee6` 大 JSON 排序修复、产品整合 `ed38ab2`、此前 `770f841` 题序修正及 main 的 OSS 整合。
 
-**当前生产**：`ed38ab2c4738874d01b4470a10a8826c1c3da90d`，`v3j_v4d`，pin 不变。接收 Claude `ece64ea`（交接单 `50572cc`）后正常合并 main `246a2c4`；候选 15 场景/89 检查、生产正式 HTTPS 9 场景/59 检查通过，本地及云端均 Ran 79/skip 1。已发布、已推共享分支；用户于 2026-10-23 审阅后追加授权合入 `main`，以 `79426aedda487d2e7cdb9f39f377ed013a915332` 为合并入口快进同步，随后追加本次状态文档。合并后的后端文件与线上 `ed38ab2` 相同，未重复部署；正式连续三轮质量门槛仍未宣称通过。C02 原草稿固定问句及说话层实际回退原文保留在附件，完整范围见回执。
+**当前生产**：`a1ecee61eae633898f1ba3a7200a630ca66a32c2`，`v3j_v4d`，pin 不变。修复真实 App 采访入口的 MySQL 1038/HTTP 503；本地及云端均 Ran 80/skip 1，隔离 MySQL 8 份各 1 MiB 合成审计重现旧查询失败、新查询通过；正式 HTTPS、原受影响家庭只读查询及现有模拟器采访入口通过。用户明确授权后发布，代码已同步 main/共享分支，切换业务指纹一致；详见最新回执。
+
+C01–C03 业务结果仍为上一轮 `ed38ab2`：接收 Claude `ece64ea`（交接单 `50572cc`）并整合 main/OSS；候选 15 场景/89 检查、生产 9 场景/59 检查通过，之后已获授权合入 main。本次数据库修复没有重跑或冒充新的真实模型问答，正式连续三轮质量门槛仍未宣称通过。C02 原草稿固定问句及说话层实际回退原文继续保留，完整范围见业务回执。
 
 历史：[首次云端发布与问题回传](handoffs/2026-10-23-cloud-release.md)、[Claude C01–C03 候选交接单](handoffs/2026-10-23-ece64ea.md)。上轮 770f841 之后生产已先上线 OSS 649b5b9，本轮基于该实际运行代码整合，不能把历史版本表误读为当前整台后端版本。
 
@@ -15,6 +17,7 @@ Claude 负责持续采访优化，Codex 负责整合、部署、云端测试和�
 
 | 版本 | 层 | 结果 | 状态 | 位置 |
 | --- | --- | --- | --- | --- |
+| **会话大 JSON 排序修复已发布** | Codex 工程修正，采访规则不变 | 本地/云端 Ran 80 / skip 1；隔离 MySQL 旧 SQL 真实 1038、新查询通过；生产 HTTPS 与模拟器入口恢复 | `a1ecee6` 已部署、已推 main 与共享分支；无新增模型质量轮次 | [最新回执](handoffs/2026-10-23-session-list-sort.md) |
 | v2 对照流程 | 抽取 → 复核 → 至多一次修复 | full45 关键点约 70% | 保留的旧流程与默认代码路径（`cloud-deployment/backend/app/ai/interview_runtime`） | `docs/prototypes/full-interview-v2/single-question-v2/` |
 | **v3j** | 判定层：每个检查点一次判定调用，代码拼装与引擎校验 | full45 197/204 = **96.6%**；随机 10 人门槛缓存 42/43、关缓存真实调用 43/43 | 已随 v4d 上线，范围见最新回执 | `docs/prototypes/full-interview-v3j/` + `tools/interview_eval/pipelines/v3j.py` |
 | **v4d** | 说话层：只改怎么说（承接、追问、收尾转题），不改问什么 | 模拟访谈迭代组 8 人 × 4 题：自然 3.97、贴合 4.03、时机 4.69、语气 4.72，硬性违规 2.8%（现网固定话术 2.47 / 2.21 / 2.93 / 3.21，违规 44%） | 已随 v3j 上线，仍有流程待办 | `docs/prototypes/full-interview-v4/` + `tools/interview_eval/simulate/` |

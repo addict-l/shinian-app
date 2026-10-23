@@ -1,0 +1,38 @@
+{
+  "executed_postrelease_helper_sha256": "00b540324e59aef406368bd637b62c3cef658e7d2a85781412fb956eaa44d083",
+  "published_postrelease_helper": "only real family UUID replaced by required SHINIAN_PROBE_FAMILY_ID; modified copy not executed",
+  "code_sha": "a1ecee61eae633898f1ba3a7200a630ca66a32c2",
+  "backend_tree": "00e39593647f4e062fc08b179851254cf017a259",
+  "test_results": {
+    "local": {
+      "run": 80,
+      "skipped": 1,
+      "errors": 0,
+      "failures": 0
+    },
+    "cloud": {
+      "run": 80,
+      "skipped": 1,
+      "errors": 0,
+      "failures": 0
+    }
+  },
+  "keyboard_settings_written": false,
+  "app_gui": {
+    "device": "existing iPhone 17 Pro / iOS 26.0",
+    "old_conversation_get": 200,
+    "previously_failing_member_conversation_post": 200,
+    "first_question_visible": "您大概是什么时候出生的？",
+    "life_overview_progress": "1/11",
+    "typed_or_submitted_answers": false,
+    "generated_or_saved_memories": false
+  },
+  "log_sha256": {
+    "backend-all-tests.log": "948891eb6e87450abcda0436dbd974a48a7d6a17fb869e1122c63d3e91ee8451",
+    "cloud-all-tests.log": "50d051b73dd575cf24237127599ccac9943b864d6e44a96faa1bce2242e2ab1f",
+    "sort-regression-red.log": "b4334e176af118980416eb4244f80e59de0f7ce7e0813d813a50d31746b0bf8b",
+    "activation.log": "888ac7b236b5ab62d2800d6a07b5970bc9ea38d792e377f795c2914c0d4e49b2",
+    "production-postrelease.log": "3de721d9f108e4b05087cc7ac14b5743c767f5fad23967a79cf9791a8cb5638b",
+    "production-readonly-candidate-probe.log": "ed30d61e2f5a08b3041565e9eedc0809541791ce6001108b4b84ad5d16e0a2cb"
+  }
+}

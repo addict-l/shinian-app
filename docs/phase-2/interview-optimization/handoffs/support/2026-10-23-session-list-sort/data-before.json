@@ -1,0 +1,66 @@
+{
+  "alembic_version": {
+    "count": 1,
+    "sha256": "62c0d247704834a26608d774b20460a260583b81d6736f3b13fe93bbf191485a"
+  },
+  "auth_rate_limits": {
+    "count": 12,
+    "sha256": "80c937ff2a93cf4538bbac8c9d4f297d7fc992fe16ba90621432f26141210cca"
+  },
+  "chat_messages": {
+    "count": 481,
+    "sha256": "483b1bb7a1d6e594153f66915c5c524437be2f39971699b51adb02481a209e1b"
+  },
+  "chat_sessions": {
+    "count": 81,
+    "sha256": "e04d99dd49cd95c646bba8d0c7abd79d753dbf0532ce7f4f3dda145548504d73"
+  },
+  "device_sessions": {
+    "count": 25,
+    "sha256": "ec19edf6aa4b88c78b92b18974c285fa4ede5b0f3d742ca130486b09cc6d2b85"
+  },
+  "families": {
+    "count": 7,
+    "sha256": "1d6ff3295d89a659c7c93e3e5945bba62ac07585683528a0ef306c53994187ee"
+  },
+  "family_accounts": {
+    "count": 7,
+    "sha256": "f6a316d67f589e2974262c3ec6ccf78e9182f2a2575b6288ea5359a1e7383982"
+  },
+  "family_members": {
+    "count": 23,
+    "sha256": "d760343a8c841a5b5cb89927e8177f537e7f07130f1a1cbea07023d36b31adfc"
+  },
+  "media_assets": {
+    "count": 54,
+    "sha256": "9b2262d0793424c8c00cd048a14105f2fbbb2f99f1f28865ef31ff1cbe8bc73b"
+  },
+  "media_cleanup_jobs": {
+    "count": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "memoir_settings": {
+    "count": 2,
+    "sha256": "e5711958ff151e270cd21a4150b12b0c960088bd11237a5b6f97727bbf980ba0"
+  },
+  "memories": {
+    "count": 30,
+    "sha256": "9095a3a4aa3a5bd19efe25552eb90e9672b37aae2c50d8898412854f43dadc39"
+  },
+  "memory_deletions": {
+    "count": 3,
+    "sha256": "eaf16801915b4960c90058366614f869d633ecd29a02842c5ba2f6fb2fa1cf83"
+  },
+  "memory_drafts": {
+    "count": 30,
+    "sha256": "8192409a10f362a552595a43317267bcf27a8ff6ee534cdc290f780a54e1e526"
+  },
+  "memory_persons": {
+    "count": 21,
+    "sha256": "a3ac9c629d3907da119a95655ebba560585bb2ddc8fe28cd625ec1f2cef8d35f"
+  },
+  "media_files": {
+    "count": 54,
+    "sha256": "066220dfd658ab83df9f489e08b57dd7a4f79dad67e23a728b48368f8d2c5225"
+  }
+}

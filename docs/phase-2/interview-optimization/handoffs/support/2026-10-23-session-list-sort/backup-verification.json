@@ -1,0 +1,29 @@
+{
+  "readable": true,
+  "files": {
+    "database.sql.gz": {
+      "bytes": 595169,
+      "sha256": "277bc0559077e9fb44f15e53cf6ee2ac290d59147d8a1e999ef22d10032b7586"
+    },
+    "media.tar.gz": {
+      "bytes": 24912249,
+      "sha256": "5aa3e031ce05c8021179e1ece6cf526bfbf8b9f58fc07178e4e76d0eb8473d57"
+    },
+    "source-before.tar": {
+      "bytes": 4946944,
+      "sha256": "870a9e9b2ede255900640ca62f18f12b2a9951fe5803166ba2772adbf0585ce3"
+    },
+    "nginx-before.tar.gz": {
+      "bytes": 8021,
+      "sha256": "662025fec25e5e9b98532eb41e8762d2e3ee4e64fc046e02e8def2c2b8c32671"
+    },
+    "tls-before.tar.gz": {
+      "bytes": 7704,
+      "sha256": "41130201fa225b77a6ee1d985dbfba0afdd25035b5144ccca21ca85ae9089ae9"
+    },
+    "env.production.backup": {
+      "bytes": 982,
+      "sha256": "a503c41c29200d8bd612a028a180b3cda8e5cde087d5e6d00b64e1d6e908508d"
+    }
+  }
+}

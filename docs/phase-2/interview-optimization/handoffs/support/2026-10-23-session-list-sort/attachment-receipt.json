@@ -1,0 +1,11 @@
+{
+  "file": "采访入口修复证据.zip",
+  "bytes": 58211,
+  "sha256": "daeb2aa69a03e0007bbf1f53a8d5a112dae6252ea176efb8ec8dcba885159532",
+  "secret_scan": {
+    "archive_credentials_scan_passed": true,
+    "production_secret_values_checked": 7,
+    "private_auth_values_checked": 4,
+    "actual_secret_values_printed": false
+  }
+}
