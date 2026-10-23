@@ -107,6 +107,61 @@ class WorkflowTests(unittest.TestCase):
         self.assertEqual(result['status'], 'confirmed')
         self.assertTrue(all(field['status'] == 'skipped' for field in result['fields']))
 
+    def test_skeleton_catalog_order_survives_mysql_json_reordering(self):
+        from app.services import contract_life_overview as contract
+        for version in ('full-interview-v2.0.0', 'full-interview-v1.29.1'):
+            with self.subTest(version=version):
+                catalog = questions('skeleton', version)
+                with patch.object(contract, 'runtime', return_value=runtime(version)), patch.object(
+                        contract, 'questions', return_value=catalog):
+                    data = contract.new_data()
+                expected = [q['id'] for q in catalog]
+                with database.SessionLocal.begin() as db:
+                    db.get(FamilyMemberModel, str(self.person)).life_interview = data
+                for number, qid in enumerate(expected, 1):
+                    # MySQL JSON objects return keys by length, then binary order.
+                    with database.SessionLocal.begin() as db:
+                        person = db.get(FamilyMemberModel, str(self.person))
+                        data = deepcopy(person.life_interview)
+                        data['questions'] = dict(sorted(data['questions'].items(), key=lambda row: (len(row[0]), row[0])))
+                        person.life_interview = data
+                        from sqlalchemy.orm.attributes import flag_modified
+                        flag_modified(person, 'life_interview')
+                    before = self.web.get(f'/api/v1/chat/sessions/{self.session}/life-overview').json()
+                    self.assertEqual(before['question_id'], qid)
+                    self.assertEqual(before['question_number'], number)
+                    self.assertEqual(before['total_questions'], len(expected))
+                    self.assertEqual([field['topic_id'] for field in before['fields']], expected)
+                    self.assertEqual(self.post_life().status_code, 200)
+                done = self.web.get(f'/api/v1/chat/sessions/{self.session}/life-overview').json()
+                self.assertEqual(done['status'], 'review')
+                self.assertIsNone(done['question_id'])
+                self.assertEqual(done['question_number'], len(expected))
+
+    def test_existing_skeleton_progress_and_correction_keep_catalog_order(self):
+        from app.services import contract_life_overview as contract
+        data = contract.new_data()
+        data['questions']['SK01']['status'] = 'known'
+        data['questions']['SK03']['status'] = 'known'
+        data['questions']['SK01']['pipeline'] = 'v3j_v4d'
+        data['questions'] = dict(sorted(data['questions'].items(), key=lambda row: (len(row[0]), row[0])))
+        original = deepcopy(data)
+        self.assertEqual(contract.view(data).question_id, 'SK01b')
+        self.assertEqual(contract.view(data).question_number, 2)
+        self.assertEqual(data, original)
+        from app.services.contract_v3j_life_overview import next_question
+        self.assertEqual(next_question(data, 'SK01'), runtime().questions['SK01b']['main_question'])
+        data['pending'] = {'request_id': str(uuid4()), 'request': {'action': 'answer'}, 'question_id': 'SK02', 'asked_question': '此前已问的名字问题', 'calls': {'judge': {'cached': True}}}
+        pending = deepcopy(data['pending'])
+        self.assertEqual(contract.view(data).question_id, 'SK02')
+        self.assertEqual(data['pending'], pending)
+        data['pending'] = None
+        data['editing_question_id'] = 'SK03d'
+        self.assertEqual(contract.view(data).question_id, 'SK03d')
+        self.assertEqual(contract.view(data).question_number, 8)
+        data['editing_question_id'] = None
+        self.assertEqual(contract.view(data).question_id, 'SK01b')
+
     def test_skeleton_failure_preserves_raw_answer_and_reuses_a_on_retry(self):
         rid = uuid4()
         initial = self.web.get(f'/api/v1/chat/sessions/{self.session}/life-overview').json()['version']

@@ -78,8 +78,8 @@ def close_status(result, reason, skip):
 
 def next_question(data, qid):
     """The skeleton question shown after ``qid`` closes (the v2 path's active_id with this one no longer pending)."""
-    from app.services.contract_life_overview import question_text
-    following = next((k for k, q in data['questions'].items() if k != qid and q['status'] == 'pending'), None)
+    from app.services.contract_life_overview import question_ids, question_text
+    following = next((k for k in question_ids(data) if k != qid and data['questions'][k]['status'] == 'pending'), None)
     return question_text(data, following) if following else None
 
 

@@ -36,9 +36,15 @@ def new_data(required=True):
         'requests': {}, 'pending': None, 'confirmed_version': None, 'editing_question_id': None}
 
 
+def question_ids(data):
+    # MySQL JSON object order is not the frozen interview order.
+    return [q['id'] for q in questions('skeleton', data.get('runtime_version', 'full-interview-v1.29.1'))
+            if q['id'] in data['questions']]
+
+
 def active_id(data):
-    return data.get('editing_question_id') or next(
-        (qid for qid, q in data['questions'].items() if q['status'] == 'pending'), None)
+    return data.get('editing_question_id') or (data.get('pending') or {}).get('question_id') or next(
+        (qid for qid in question_ids(data) if data['questions'][qid]['status'] == 'pending'), None)
 
 
 def question_text(data, qid):
@@ -58,9 +64,10 @@ def question_text(data, qid):
 
 def view(data):
     qid = active_id(data)
-    keys = list(data['questions'])
+    keys = question_ids(data)
     projected = []
-    for key, item in data['questions'].items():
+    for key in keys:
+        item = data['questions'][key]
         refs = {}
         for field in item.get('fields', {}).values():
             for ref in field.get('evidence', []):
