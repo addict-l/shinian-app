@@ -85,4 +85,12 @@
 
 ## 2026-10-16 正式家庭账号服务更新
 
-用户已授权并完成正式发布，功能提交 `1f303b7`。现有域名、端口与数据卷不变；业务接口改用 Bearer 设备会话，注册／登录及 `/health` 不再受旧 Basic gate 保护，匿名业务请求仍为 401。正式迁移为 `h10100000001`，3 位家人、12 条回忆、40 份媒体保留。后续部署使用 `/opt/shinian-releases/auth-1f303b7/production-override.json`（含受保护运行配置，不得输出），详情见完整工程 `docs/phase-2/auth-service/deployment.md`。
+用户已授权并完成正式发布，功能提交 `1f303b7`。现有域名、端口与数据卷不变；业务接口改用 Bearer 设备会话，注册／登录及 `/health` 不再受旧 Basic gate 保护，匿名业务请求仍为 401。正式迁移为 `h10100000001`，3 位家人、12 条回忆、40 份媒体保留。该次历史配置为 `/opt/shinian-releases/auth-1f303b7/production-override.json`；当前维护使用下面 OSS 发布记录指向的最新 override。认证历史见完整工程 `docs/phase-2/auth-service/deployment.md`。
+
+
+## 当前正式后端（2026-10-23）
+
+- 当前运行 revision：`649b5b900244fd3742f3226f8e2b6d9d07387992`，已包含线上 `770f841` 的 v3j/v4d 采访流程及 OSS 接入，GitHub `main` 已同步。
+- 生产已启用私有 OSS；过渡期间保留本地原件与镜像。采访、模型、数据库、媒体卷及访问入口沿用原配置。
+- 重建或回退前读取 [OSS 正式发布记录](../../../../docs/project/oss-media-deployment-2026-10-23.md)，使用 `/opt/shinian-releases/oss-649b5b9-20261023/production-override.json`，保留其中完整受保护环境；该文件内容不输出或上传。
+- 权威源码：该 release 的 `source/backend/`。`/opt/ai-memories/backend/CLOUD_VERSION.md` 记录当前引用；历史部署目录的 Git HEAD 不代表正在运行的镜像。

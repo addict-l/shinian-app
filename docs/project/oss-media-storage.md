@@ -6,7 +6,7 @@
 
 本次配置使用 `shinian-media-prod-2026`，中国香港、标准存储、同城冗余 ZRS、私有权限、阻止公共访问和 OSS 托管 AES256 加密。RAM 用户 `shinian-media-backend` 仅具有这个 Bucket 的信息查询、文件列举、上传、读取和删除权限。
 
-本文说明代码与操作方式，**不表示已经发布正式服务或迁移真实家庭照片**。正式发布、生产配置切换和真实家庭迁移需单独获得授权，并遵循 [部署与回退说明](../../cloud-deployment/backend/DEPLOY_ALIYUN.md) 和 [家庭账号正式发布记录](../phase-2/auth-service/deployment.md)。保留现有 Compose project name、MySQL/照片数据卷和受保护部署 override。
+2026-10-23 已获授权正式发布 revision `649b5b9`，54 张旧照片已迁入 OSS，并逐张下载核对长度与 SHA-256；本地原件和新图镜像保留。实际运行配置、备份与回退入口见 [本次发布记录](oss-media-deployment-2026-10-23.md)。后续生产变更继续遵循 [部署与回退说明](../../cloud-deployment/backend/DEPLOY_ALIYUN.md)，沿用当前受保护 override、Compose project name、数据库和媒体卷。
 
 ## 后端配置
 
