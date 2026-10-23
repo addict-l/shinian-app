@@ -143,7 +143,7 @@ struct JournalChatView: View {
                     .frame(maxWidth: .infinity, minHeight: 44)
                     .accessibilityIdentifier("chat.lifeOverview")
             }
-            JournalChatHistory(follow: autoFollow, identifier: "chat.history", bottomAlignment: true) {
+            JournalChatHistory(follow: autoFollow, identifier: "chat.history") {
                     VStack(alignment: .leading, spacing: 14) {
                         if !messages.isEmpty {
                             Text(previewScreen == "chat" ? "10月12日 上午 8:20" : JournalFormat.chatDate(openedAt))
