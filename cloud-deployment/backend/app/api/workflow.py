@@ -2,7 +2,7 @@ from datetime import datetime, timezone
 from uuid import UUID, uuid5, NAMESPACE_URL
 from pathlib import Path
 from fastapi import APIRouter, File, UploadFile, HTTPException, Depends
-from fastapi.responses import FileResponse, Response
+from fastapi.responses import Response
 from sqlalchemy import select
 from app.db.database import SessionLocal, ROOT
 from app.models.family import FamilyModel
@@ -18,7 +18,7 @@ from app.services.workflow_service import WorkflowService, serialized
 router = APIRouter(prefix='/api/v1', tags=['workflow'])
 workflow = WorkflowService()
 from app.services import media_service
-from app.services.media_service import MEDIA_ROOT
+from app.services.media_storage import MediaNotFoundError
 LOCAL_FAMILY_ID = uuid5(NAMESPACE_URL, 'ai-memories:local-development-family')
 
 @router.post('/local/bootstrap', response_model=Family)
@@ -49,10 +49,11 @@ def get_media(media_id: UUID):
     with SessionLocal() as db:
         if db.get(MediaAssetModel, str(media_id)) is None:
             raise HTTPException(404, '图片不存在')
-    path = MEDIA_ROOT / (str(media_id) + '.jpg')
-    if not path.is_file():
-        raise HTTPException(404, '图片文件不存在')
-    return FileResponse(path, media_type='image/jpeg')
+    try:
+        data = media_service.storage().read(media_id)
+    except MediaNotFoundError:
+        raise HTTPException(404, '图片文件不存在') from None
+    return Response(content=data, media_type='image/jpeg')
 
 @router.get('/memory-drafts/{draft_id}', response_model=DraftResponse)
 def get_draft(draft_id: UUID):

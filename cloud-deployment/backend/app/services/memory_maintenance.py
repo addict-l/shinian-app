@@ -32,9 +32,9 @@ def queue(db, asset, family_id):
 
 
 def drain_cleanup(limit=100):
-    # Lock each row while unlinking. A crash between unlink and commit is safe:
-    # missing_ok makes the next worker's attempt idempotent.
-    from app.services.media_service import MEDIA_ROOT
+    # Keep jobs until both remote objects and active local copies are removed.
+    # Deletion is idempotent, including after a worker/process crash.
+    from app.services.media_service import storage
     with serialized('maintenance:cleanup'):
         with SessionLocal() as db:
             ids = list(db.scalars(select(MediaCleanupModel.id).order_by(MediaCleanupModel.attempts, MediaCleanupModel.created_at).limit(limit)))
@@ -48,11 +48,23 @@ def drain_cleanup(limit=100):
                     db.delete(job)
                     continue
                 try:
-                    (MEDIA_ROOT / (str(UUID(asset_id)) + '.jpg')).unlink(missing_ok=True)
+                    storage().delete(str(UUID(asset_id)))
                 except OSError:
                     job.attempts += 1
                 else:
                     db.delete(job)
+
+
+def cleanup_after_request():
+    # Preserve immediate local cleanup. Remote retries belong to the existing
+    # background worker, so a slow OSS request cannot stall a committed edit.
+    from app.services.media_service import storage
+    try:
+        if storage().backend != 'local':
+            return
+    except OSError:
+        return
+    drain_cleanup()
 
 
 def update(memory_id, body):
@@ -105,7 +117,7 @@ def update(memory_id, body):
                 # Memory photo order remains creation order for chat photos.
                 if asset.message_id is None:
                     asset.position = index
-    drain_cleanup()
+    cleanup_after_request()
     return MemoryRepository().get(memory_id)
 
 
@@ -148,7 +160,7 @@ def remove(memory_id, family_id, version):
                     db.execute(delete(ChatMessageModel).where(ChatMessageModel.session_id == source))
                     db.execute(delete(ChatSessionModel).where(ChatSessionModel.id == source))
                 db.add(MemoryDeletionModel(id=str(memory_id), family_id=str(family_id), version=version))
-    drain_cleanup()
+    cleanup_after_request()
     with SessionLocal() as db:
         pending = db.scalar(select(MediaCleanupModel.id).where(MediaCleanupModel.family_id == str(family_id)).limit(1)) is not None
     return MemoryDeletion(id=memory_id, cleanup_pending=pending)
@@ -163,7 +175,7 @@ def discard_photo(memory_id, family_id, media_id):
                 if asset.editing_memory_id != str(memory_id) or asset.memory_id is not None:
                     raise HTTPException(409, '只能丢弃这次编辑中新上传的照片')
                 queue(db, asset, family_id)
-    drain_cleanup()
+    cleanup_after_request()
 
 
 def preview_time(memory_id, body):
