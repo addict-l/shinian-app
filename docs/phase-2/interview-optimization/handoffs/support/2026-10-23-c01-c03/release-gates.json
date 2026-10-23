@@ -1,0 +1,29 @@
+{
+  "integration_sha": "ed38ab2c4738874d01b4470a10a8826c1c3da90d",
+  "all_required_gates_passed": true,
+  "local_suite": {
+    "run": 79,
+    "skipped": 1,
+    "failures": 0,
+    "errors": 0
+  },
+  "cloud_suite": {
+    "run": 79,
+    "skipped": 1,
+    "failures": 0,
+    "errors": 0
+  },
+  "candidate_scenarios": 15,
+  "candidate_checks": 89,
+  "independent_audit_passed": true,
+  "ios_display_passed": true,
+  "holdout_used_for_tuning": false,
+  "evidence_sha256": {
+    "backend-all-tests-with-replay.log": "ea0c9d8965ca17c6982e2af40f4719bcef7d5eb4ea6918b4f8da7eac33372629",
+    "cloud-tests-final.log": "416904126caaf8c11b28f1ead09689b680469c0560a2e1a970d6128c5b8a630e",
+    "candidate-https/summary.json": "09458d81c80e894d687e056c31eae7a596f2f09ab59fc29816410ffa280d984e",
+    "candidate-https/independent-audit.json": "769a2c7ffe0fc14c2cb1fdab05ed3c745ad6a1ee18c9c65543e370e981b83617",
+    "ios-display-probe/result.json": "ef289d3984c114de5e01f4f0a35c999f6e262502d18a7646eeb12b32d1eecddb",
+    "activate_release.py": "94bbc54c4156d40cc1e46187dfd7c6e6f6de7819598213ca135c40027b43fad8"
+  }
+}

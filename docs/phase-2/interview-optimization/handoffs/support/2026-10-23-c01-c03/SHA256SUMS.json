@@ -1,0 +1,18 @@
+{
+  "README.md": "fe4fc6d352b478dc85f5d904d2b62655dae4eddbe0551b8ee764e3e4a991cda5",
+  "activate_release.py": "94bbc54c4156d40cc1e46187dfd7c6e6f6de7819598213ca135c40027b43fad8",
+  "audit_live_records.py": "0b42314130cd5a5d41467facd83badf80b421788edf5c1b51be1238a459cb1b3",
+  "cloud_preflight.py": "f24bfc706f219c02679241fa9a9bcc6e22a1b33ec4db33b57b1b11b7f5d22e37",
+  "export_verbatim.py": "5b8951e6845f15340b1962dc194baf4ad4e2a0c0f8c48abb2b11975007493019",
+  "extract_test_family_records.py": "d88e75da5c370dff5b00ab3cc018cfeb17457d1024480171ae6f8b4cdbfab955",
+  "ios-display-probe/LifeOverview.swift": "20c48df238a23158de3f118edbc4e81c563b68ab99c5535a164629509fd87fd6",
+  "ios-display-probe/SummaryProjection.swift": "0b032fdda7033d7cfb82d76c425e623a7803d806dff3c242f5789cc425fcf5f7",
+  "ios-display-probe/main.swift": "0866811162a163edfb9e00d00de497d46021670940d84f8c28aa0a28b995780a",
+  "ios-display-probe/provenance.json": "4ccb603c3b9965091b69720dbad73244e5777f952b1eb1e5c318db486b99ba6b",
+  "legacy_setup.py": "d2b82a17134e501e02cbd96f172061d8b4bd77a94d6630e016a0e9e2ab5e2efb",
+  "prepare_candidate.py": "6503deb7b6832c043e1f59f8f0b3e7c43673d7015594f63609a6c9485b7cbbb3",
+  "release-gates.json": "4b91bab1473afc293c78a8ee282117e704edfd0ae3a239587fad872a7c1837c3",
+  "resume_candidate.py": "4565aba4f6ce0ecfbd71dde4308728a5d57f90e9693ac456294a3850013788c1",
+  "source-manifest.json": "e4c1edd35a1f031fefb47b6240018657d841fe9c338b5e74f44fe55ef954c533",
+  "verify_candidate_https.py": "cd80434bff44b81039d77470b4fae594ab8712abc89417a64a6b24079a43939e"
+}

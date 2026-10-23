@@ -1,0 +1,5 @@
+{
+  "model_source_sha256": "20c48df238a23158de3f118edbc4e81c563b68ab99c5535a164629509fd87fd6",
+  "care_source_sha256": "42e2ef6a1f9b88839bca0904d5012877b77f5b2588f16047c80987cbfd5b396d",
+  "scope": "original LifeOverview Codable and original CareLifeSummaryGroups text projection; CareTone case-only placeholder; no GUI rendering or product app installation"
+}

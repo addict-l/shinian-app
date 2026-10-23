@@ -11,3 +11,8 @@
 隔离随机数据库 273 项回归通过并在结束时清理；21 个合成 DeepSeek HTTP 场景全部通过，短请求上限 6 秒、长篇回应/草稿上限 10 秒，实测最慢分别为 2.283 秒和 2.114 秒。37 次候选模型调用均成功，合计 116,939 输入与 2,366 输出 tokens。线上健康检查、直接结构化 JSON API 冒烟及公网未认证 401 边界通过；正式迁移与只读健康检查未创建或修改人物、消息、回忆及照片。独立激活配置备份位于 `/opt/shinian-backups/deepseek-config-20261013-020414/`，并行策略回退备份位于 `/opt/shinian-backups/deepseek-parallel-20261013-020551/`。
 
 用户随后完成 B01/B02 合并检查并授权正式 commit，要求标注换模为 DeepSeek Flash（ds flash）。本次归档主工程、云端后端及独立验证目录，精确提交映射保存在独立验证目录 `artifacts/phase-2-b02/final-revisions.json`，不重新部署相同业务代码。前端、真机语音与真实家庭认证后的业务流程未在本次验证；隔离故事仅为合成内容。
+
+
+## C01–C03 采访整合发布（2026-10-23）
+
+本轮按用户条件授权接收 Claude ece64ea、整合 main 246a2c4 后发布 `ed38ab2c4738874d01b4470a10a8826c1c3da90d`；实际镜像 `sha256:b33819f706e40bf46b23fcce5f3a88252d4cb0c9904698417232e99c60332fac`。pipeline 仍为 v3j_v4d，runtime pin 不变，保留完整 OSS/认证/媒体配置，切换前后全表及媒体指纹一致，备份校验通过，v2-only 兼容回退已准备。候选 MySQL HTTPS 15 场景/89 检查和发布后正式 HTTPS 独立测试家庭 9 场景/59 检查通过；未合并 main，正式三连轮质量门槛仍待办。固定版本、工具问题、真实原话、证据哈希与下一轮事项见 [C01–C03 回执](../interview-optimization/handoffs/2026-10-23-c01-c03-cloud-release.md)。

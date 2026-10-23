@@ -99,7 +99,7 @@
 
 ## 当前正式后端（2026-10-23）
 
-- 当前运行 revision：`649b5b900244fd3742f3226f8e2b6d9d07387992`，已包含线上 `770f841` 的 v3j/v4d 采访流程及 OSS 接入，GitHub `main` 已同步。
+- 当前运行 revision：`ed38ab2c4738874d01b4470a10a8826c1c3da90d`，继承 `770f841`，整合 Claude 的 C01–C03 与 `main` 的 `246a2c4`（含 OSS）。已推共享分支 `interview/question-optimization`，本轮未合入 `main`。发布与验证见 [C01–C03 回执](../../../../docs/phase-2/interview-optimization/handoffs/2026-10-23-c01-c03-cloud-release.md)。
 - 生产已启用私有 OSS；过渡期间保留本地原件与镜像。采访、模型、数据库、媒体卷及访问入口沿用原配置。
-- 重建或回退前读取 [OSS 正式发布记录](../../../../docs/project/oss-media-deployment-2026-10-23.md)，使用 `/opt/shinian-releases/oss-649b5b9-20261023/production-override.json`，保留其中完整受保护环境；该文件内容不输出或上传。
-- 权威源码：该 release 的 `source/backend/`。`/opt/ai-memories/backend/CLOUD_VERSION.md` 记录当前引用；历史部署目录的 Git HEAD 不代表正在运行的镜像。
+- 重建前读取本轮回执及 [OSS 正式发布记录](../../../../docs/project/oss-media-deployment-2026-10-23.md)，使用 `/opt/shinian-releases/interview-c01-c03-ed38ab2-20261023/production-override.json`，完整保留受保护环境与 OSS 挂载；该文件内容不输出或上传。兼容回退使用同目录 `fallback-v2-override.json`，只切 `INTERVIEW_PIPELINE=v2`，保留新镜像和 runtime pin。
+- 权威源码：该 release 的 `source/cloud-deployment/backend/`，镜像 digest 为 `sha256:b33819f706e40bf46b23fcce5f3a88252d4cb0c9904698417232e99c60332fac`。`/opt/ai-memories/backend/CLOUD_VERSION.md` 记录当前引用；历史部署目录的 Git HEAD 不代表正在运行的镜像。
