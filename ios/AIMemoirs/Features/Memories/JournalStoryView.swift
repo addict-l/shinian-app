@@ -62,11 +62,11 @@ struct JournalStoryView: View {
     @ViewBuilder private var presentation: some View {
         if care {
             VStack(spacing: 0) {
-                CareToolbar(title: "回忆", onBack: { dismiss() })
-                CareStoryReading(memory: current, identity: identity, api: api)
-                Button("回忆操作") { showingActions = true }.font(CareTheme.font(20)).frame(minHeight: 48)
-                    .disabled(busy).accessibilityIdentifier("memory.actions")
-            }
+                CareStoryReading(memory: current, identity: identity, api: api, onBack: { dismiss() })
+            }.safeAreaInset(edge: .bottom, spacing: 0) {
+                CareButton(title: "回忆操作", symbol: "ellipsis", secondary: true, disabled: busy) { showingActions = true }
+                    .accessibilityIdentifier("memory.actions").careDock()
+            }.carePage()
         } else {
             JournalStoryContent(memory: current, identity: identity, person: person, photoAPI: api, topInset: 48)
             .overlay(alignment: .top) {

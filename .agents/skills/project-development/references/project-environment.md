@@ -25,6 +25,16 @@
 - 用户于 2026-10-15 明确指定当前打开的 iPhone 17 Pro / iOS 26.0，UDID `8801F7F7-7154-4AEB-88F2-1E77A8393190`，后续默认复用该设备。此前 Pro / iOS 26.5（`82915145-6254-4561-9028-8F8F8D636B89`）仅是历史设备记录。验证前运行 `xcrun simctl list devices available`，确认名称、系统和状态；使用当前可用 UDID，避免同名设备歧义。
 - 复用现有模拟器，不新建或重置模拟器。模拟器不可用时先诊断，确需更换设备时向用户说明。
 
+### iOS 界面方向（用户固定约定）
+
+用户于 2026-10-23 明确要求：后续 iOS UI 仅保证普通字号下的竖屏显示与交互，不再进行最大辅助字号或横屏的专项适配和验收，除非用户之后明确调整。保留字号功能与系统设置；此约定不要求锁定字号、屏幕旋转或更改工程支持方向。
+
+### 关怀模式预览与验证
+
+交付给用户交互检查的 iOS 预览进程不得携带 `-journal.careMode.enabled YES` 或 `-journal.careMode.enabled NO`；模式通过 App 的“设置 → 关怀模式”选择，避免启动参数覆盖设备偏好而导致切换失效。
+
+截图采集中可临时使用上述参数固定模式；结束后必须终止该进程，移除上述参数重新启动，再交付用户操作。模式切换和重启持久化验收也须使用无此参数的启动方式。
+
 建议先从 Xcode 选择 `ios/AIMemoirs.xcodeproj`、`AIMemoirs` Scheme 和现有 iPhone 17 Pro 模拟器，再执行构建和运行。命令行构建可使用 `xcodebuild -project ios/AIMemoirs.xcodeproj -scheme AIMemoirs -configuration Debug -destination 'platform=iOS Simulator,id=8801F7F7-7154-4AEB-88F2-1E77A8393190' build`；具体签名与本机设备状态以 Xcode 实际结果为准。
 
 ## Android 前端

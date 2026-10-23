@@ -77,7 +77,7 @@ final class CareModeFlowTests: XCTestCase {
         XCTAssertTrue(app.buttons["tab.compose"].waitForExistence(timeout: 15))
         shot("standard-mode-restored", app)
     }
-    @MainActor func testCareOverviewAndHistorySupportLargestTextAndLandscape() {
+    @MainActor func testCareOverviewAndHistorySupportLargestTextInPortrait() {
         let first = enableCare(); first.terminate()
         let app = launch("care-life-review", large: true)
         XCTAssertTrue(app.buttons["life.confirm"].waitForExistence(timeout: 25))
@@ -85,10 +85,8 @@ final class CareModeFlowTests: XCTestCase {
         tap(app.buttons["care.life.more"], app: app)
         tap(app.buttons["查看刚才问答"], app: app)
         tap(app.buttons["care.history.next"], app: app)
-        XCUIDevice.shared.orientation = .landscapeLeft
         XCTAssertTrue(app.buttons["care.history.next"].isHittable)
-        shot("care-largest-text-landscape", app)
-        XCUIDevice.shared.orientation = .portrait
+        shot("care-largest-text-history-portrait", app)
     }
     @MainActor func testLargestTextNarrationKeepsInputAndSendReachable() {
         let first = enableCare(); first.terminate()
