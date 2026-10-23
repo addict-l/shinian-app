@@ -1,19 +1,25 @@
 # 采访链路优化（分支 `interview/question-optimization`）
 
 2026-10-22 起，采访优化的每个**可提交版本**都推送到 GitHub 分支 `interview/question-optimization`，由用户审阅后合并到 `main`。
-离线候选与评测工具不改 `ios/`、`android/` 和线上运行合同。“接入后端”提交块在 `cloud-deployment/backend` 新增了新流程，但开关 `INTERVIEW_PIPELINE` 默认仍是现网 v2：合并、部署而不改配置时，App 与阿里云后端行为不变。启用属于发布，按[开发约定](../../../AGENTS.md)另行完成阿里云与模拟器验证、审核和授权。
+离线候选与评测工具不改 `ios/`、`android/` 和线上运行合同。“接入后端”提交块在 `cloud-deployment/backend` 新增了新流程，但代码中 `INTERVIEW_PIPELINE` 的默认值仍为 v2；生产当前取值与实际启用状态见下方最新回执。单纯推送提交不切换服务或运行配置。启用属于发布，按[开发约定](../../../AGENTS.md)另行完成阿里云与模拟器验证、审核和授权。
+
+## 当前协作与线上状态
+
+Claude 负责持续采访优化，Codex 负责整合、部署、云端测试和问题回传。开始下一轮前读取[双向交接 SOP](collaboration-sop.md)及[最新回执 2026-10-23](handoffs/2026-10-23-cloud-release.md)。下一轮共享基线应包含 Codex 的 `770f841` 题序修正。
+
+2026-10-23 正式云端已发布 `770f841`，实际开启 `v3j_v4d`。候选 MySQL 业务检查通过，正式 HTTPS 双层问答和 iPhone 独立工具只读检查已完成。生产部署完成，正式三连轮质量门槛未宣称通过；三个模块仍复现无补充后重复草稿提示。完整范围、原始问答与下一轮待办见回执。下文接入时的离线成绩保留原口径，不能替代本轮实际执行记录。
 
 ## 版本台账
 
 | 版本 | 层 | 结果 | 状态 | 位置 |
 | --- | --- | --- | --- | --- |
-| 现网 v2 | 抽取 → 复核 → 至多一次修复 | full45 关键点约 70% | 线上（`cloud-deployment/backend/app/ai/interview_runtime`） | `docs/prototypes/full-interview-v2/single-question-v2/` |
-| **v3j** | 判定层：每个检查点一次判定调用，代码拼装与引擎校验 | full45 197/204 = **96.6%**；随机 10 人门槛缓存 42/43、关缓存真实调用 43/43 | 离线候选，已测 | `docs/prototypes/full-interview-v3j/` + `tools/interview_eval/pipelines/v3j.py` |
-| **v4d** | 说话层：只改怎么说（承接、追问、收尾转题），不改问什么 | 模拟访谈迭代组 8 人 × 4 题：自然 3.97、贴合 4.03、时机 4.69、语气 4.72，硬性违规 2.8%（现网固定话术 2.47 / 2.21 / 2.93 / 3.21，违规 44%） | 离线候选，已测 | `docs/prototypes/full-interview-v4/` + `tools/interview_eval/simulate/` |
+| v2 对照流程 | 抽取 → 复核 → 至多一次修复 | full45 关键点约 70% | 保留的旧流程与默认代码路径（`cloud-deployment/backend/app/ai/interview_runtime`） | `docs/prototypes/full-interview-v2/single-question-v2/` |
+| **v3j** | 判定层：每个检查点一次判定调用，代码拼装与引擎校验 | full45 197/204 = **96.6%**；随机 10 人门槛缓存 42/43、关缓存真实调用 43/43 | 已随 v4d 上线，范围见最新回执 | `docs/prototypes/full-interview-v3j/` + `tools/interview_eval/pipelines/v3j.py` |
+| **v4d** | 说话层：只改怎么说（承接、追问、收尾转题），不改问什么 | 模拟访谈迭代组 8 人 × 4 题：自然 3.97、贴合 4.03、时机 4.69、语气 4.72，硬性违规 2.8%（现网固定话术 2.47 / 2.21 / 2.93 / 3.21，违规 44%） | 已随 v3j 上线，仍有流程待办 | `docs/prototypes/full-interview-v4/` + `tools/interview_eval/simulate/` |
 | v4e | 说话层：追问恢复“把老人刚讲的事放进问句”，转题不套模板 | 未测完 | 开发中，提示存于 `history/speaker-prompt.v4e-untested.txt` | 同上 |
-| **接入后端** | v3j 判定层 + v4d 说话层进入后端访谈入口和人生骨架，`INTERVIEW_PIPELINE=v3j_v4d` 启用 | 离线（0 token）：full45 后端回放 197/204，204 个检查点与 `branch-check-v3j` 逐个相同，其中 64 个 SK 检查点经骨架入口也逐个相同；sim-hv4d 的 35 次判定全部相同，31 次说话层输入与模拟器逐字相同（其余 2 次是骨架最后一题，后端按设计不调用） | 已接入，**默认关闭**；阿里云候选、iPhone 模拟器未验证 | `cloud-deployment/backend/app/ai/interview_runtime_v3j_v4d/`，见下文 |
+| **接入后端** | v3j 判定层 + v4d 说话层进入后端访谈入口和人生骨架，`INTERVIEW_PIPELINE=v3j_v4d` 启用 | 离线（0 token）：full45 后端回放 197/204，204 个检查点与 `branch-check-v3j` 逐个相同，其中 64 个 SK 检查点经骨架入口也逐个相同；sim-hv4d 的 35 次判定全部相同，31 次说话层输入与模拟器逐字相同（其余 2 次是骨架最后一题，后端按设计不调用） | 代码默认关闭；云端已启用，真实候选与 HTTPS 已验证，iPhone 已做独立只读检查 | `cloud-deployment/backend/app/ai/interview_runtime_v3j_v4d/`，见下文 |
 
-固定条件：模型 DeepSeek `deepseek-v4-pro`，**thinking disabled**；题库为冻结的 83 题 v2（[冻结清单](../../question-bank-freeze-v2.json)，不得修改）；模拟老人和量表打分由 Claude Haiku 担任，不用 DeepSeek。
+原离线评测的固定条件：模型 DeepSeek `deepseek-v4-pro`，**thinking disabled**；题库为冻结的 83 题 v2（[冻结清单](../../question-bank-freeze-v2.json)，不得修改）；模拟老人和量表打分由 Claude Haiku 担任，不用 DeepSeek。
 
 ## 接入后端（v3j + v4d）
 
@@ -21,7 +27,7 @@
 
 | 环境变量 | 取值 |
 | --- | --- |
-| `INTERVIEW_PIPELINE` | `v2`（默认，现网）或 `v3j_v4d` |
+| `INTERVIEW_PIPELINE` | `v2`（代码默认、旧流程）或 `v3j_v4d`（本轮云端启用） |
 | `INTERVIEW_V3J_RUNTIME_DIR` | 新运行合同目录，镜像内为 `/app/app/ai/interview_runtime_v3j_v4d` |
 | `INTERVIEW_V3J_RUNTIME_MANIFEST_SHA256` | 该目录 `manifest.json` 的 SHA-256，当前 `8897f3c50690d70571e8b8bf2acf2176c80caf17c860ddf6f207c2470a3ba99f` |
 
@@ -73,7 +79,7 @@
 
 默认 v2 时骨架走原代码，`life_interview` 的内容与改动前逐字节相同（见下文验证）。
 
-### 验证（全部离线，未花 DeepSeek token）
+### 原接入提交的离线验证记录
 
 在 `cloud-deployment/backend` 下运行（测试源码按仓库惯例在 Git 忽略的 `tests/` 里，提交时需 `git add -f`）：
 
@@ -93,7 +99,9 @@ python3 scripts/build_interview_v3j_runtime.py --check              # 运行合�
 - 单元与接口测试：`tests/test_interview_v3j_v4d.py` 18 项（访谈入口，见上一版）；`tests/test_interview_v3j_skeleton.py` 13 项（人生骨架）：默认 v2 不调新流程、不写任何新字段；v2 已开始的骨架题（含 502 后重试）开关打开后仍走 v2 并复用已存调用，下一道骨架题才换；v3j 骨架题回退后仍走 v3j；旧 6 题骨架不进新流程；追问由说话层写、下一段的原问是实际问句、失败退回引擎问句；聊完接下一道骨架题、“上次换话题”带上一句、校验不过或失败退回“我记下了。”+ 下一题；收尾规则替引擎结束时的状态；最后一题保持核对句并可确认；拒答（显式跳过、老人说不想讲）的说话层与 `SKIP_ACK` 回退；累了保持原暂停与“继续”；判定与说话层调用、显式跳过的说话层调用在中断后重试都不重复；概览投影与确认后的背景引文。
 - 默认 v2 逐字节：用改动前（8d8923b）的 `contract_life_overview.py` 与改动后各跑一遍同一段脚本化骨架采访（追问、502 后重试、暂停/继续、跳过、失败后跳过、确认、更正、resume），固定 ID 与时间后，存下的 `life_interview` 和每次接口返回的人生概览完全相同（一次性对照脚本，未入库）。
 
-### 尚未做
+### 原接入时未做与本轮补验
+
+以下两项是原候选交接时的缺口；2026-10-23 已补做真实候选、生产 HTTPS 和模拟器独立工具只读验证，具体范围以最新回执为准。产品 GUI 发言、草稿和保存端到端链路仍未完成，开发集与留出集边界继续保留。
 
 - 阿里云隔离候选环境验证、iPhone 17 模拟器联调：本环境做不了，启用前须按开发约定补做。
 - 真实 DeepSeek 调用：未做。后端真实的“下一题”“上次换话题”与模拟器不同的那些说话层输入（含骨架上面 5 处），以及模块题、骨架题在真实会话中的整体效果，都还没有真实回复；骨架 11 题里只有 SK03–SK04 的 5 题有模拟访谈数据。

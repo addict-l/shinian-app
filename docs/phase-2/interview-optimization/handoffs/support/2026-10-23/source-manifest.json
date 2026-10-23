@@ -1,0 +1,90 @@
+{
+  "commit": "770f8419c76e1edc7205c76e88c97100dbdf17b1",
+  "base": "ac9fd109430f746dcb9efa7800a0ba182941e57d",
+  "existing_changed": [
+    {
+      "path": "app/schemas/guided_interview.py",
+      "base_sha256": "887b0196960b1a471119ae7134a4d996b39039a034d73e05a33432cc8023d2aa",
+      "branch_sha256": "834839e977565961c4c86de53481ee0e9005f5b06178081859ed2f242815f996"
+    },
+    {
+      "path": "app/services/contract_guided_interview.py",
+      "base_sha256": "747959691aae2ff524e40a3f81c6538f6957714e24e653b38da335abc7d17fcb",
+      "branch_sha256": "a8b2d22eb19f42852de6cdeecea1621b22ba711d51e7673859168dc4e282d184"
+    },
+    {
+      "path": "app/services/contract_interview_state.py",
+      "base_sha256": "0174c3f9d86f0ba4b92c6b62a2f64b0d329534034e10cafa14567409c3bdf19a",
+      "branch_sha256": "197eda486f7b5f84bbd15e04f5e12290cf53d10513fe171c4e594f938bd0d873"
+    },
+    {
+      "path": "app/services/contract_life_overview.py",
+      "base_sha256": "d5124170c0f0caadc1e1a43b9f008d8ac086a2ef85bfe8085a0fd06cfb5d1dcc",
+      "branch_sha256": "59ec5e090ec3cf646afda11553b7961f3fec22b1a41744e8b26261d7f905a564"
+    },
+    {
+      "path": "app/services/interview_modules.py",
+      "base_sha256": "296d8ec25ead4ea782c12ac2ca6ea36271fda6fde719343b5d46b13cc4e11b71",
+      "branch_sha256": "313fcad720c836e79501b1a01611457ffeb7752b27387bf726ecedd1322a9ac0"
+    }
+  ],
+  "new_files": [
+    "app/ai/contract_interview_v3j.py",
+    "app/ai/contract_interview_v3j_bridge.js",
+    "app/ai/interview_runtime_v3j_v4d/OpenCC-LICENSE.txt",
+    "app/ai/interview_runtime_v3j_v4d/OpenCC-TSCharacters.txt",
+    "app/ai/interview_runtime_v3j_v4d/README.md",
+    "app/ai/interview_runtime_v3j_v4d/contracts.json",
+    "app/ai/interview_runtime_v3j_v4d/engine.js",
+    "app/ai/interview_runtime_v3j_v4d/evidence-units.js",
+    "app/ai/interview_runtime_v3j_v4d/field-review.js",
+    "app/ai/interview_runtime_v3j_v4d/field-steps.js",
+    "app/ai/interview_runtime_v3j_v4d/judge-prompt.txt",
+    "app/ai/interview_runtime_v3j_v4d/manifest.json",
+    "app/ai/interview_runtime_v3j_v4d/opencc-ts-char-map.json",
+    "app/ai/interview_runtime_v3j_v4d/proposal-parser.js",
+    "app/ai/interview_runtime_v3j_v4d/provider-settings.json",
+    "app/ai/interview_runtime_v3j_v4d/semantic-roles.json",
+    "app/ai/interview_runtime_v3j_v4d/semantic-targets.js",
+    "app/ai/interview_runtime_v3j_v4d/source-manifest.json",
+    "app/ai/interview_runtime_v3j_v4d/speaker-config.json",
+    "app/ai/interview_runtime_v3j_v4d/speaker-prompt.txt",
+    "app/ai/interview_runtime_v3j_v4d/stage-proof.js",
+    "app/ai/interview_runtime_v3j_v4d/verify-prompt.txt",
+    "app/ai/interview_speaker.py",
+    "app/services/contract_v3j_interview.py",
+    "app/services/contract_v3j_life_overview.py"
+  ],
+  "patch_sha256": {
+    "app/schemas/guided_interview.py": "834839e977565961c4c86de53481ee0e9005f5b06178081859ed2f242815f996",
+    "app/services/contract_guided_interview.py": "a8b2d22eb19f42852de6cdeecea1621b22ba711d51e7673859168dc4e282d184",
+    "app/services/contract_interview_state.py": "197eda486f7b5f84bbd15e04f5e12290cf53d10513fe171c4e594f938bd0d873",
+    "app/services/contract_life_overview.py": "59ec5e090ec3cf646afda11553b7961f3fec22b1a41744e8b26261d7f905a564",
+    "app/services/interview_modules.py": "313fcad720c836e79501b1a01611457ffeb7752b27387bf726ecedd1322a9ac0",
+    "app/ai/contract_interview_v3j.py": "cc6e488f63a51137ece5d1fd7195c9ec247aa8f47224993758950b4cbde24020",
+    "app/ai/contract_interview_v3j_bridge.js": "7d0fa32a025b9f750b94ec2100592a4f9e6b21ce2e8e633c88271d314a807290",
+    "app/ai/interview_runtime_v3j_v4d/OpenCC-LICENSE.txt": "b534e465949558eec2597b04f5092b5e161236a68dfbfd04d547592ac3964308",
+    "app/ai/interview_runtime_v3j_v4d/OpenCC-TSCharacters.txt": "9ff46a7d30e5765375eb13d33f2b03a34d298913caf2b120380679f33ae1642d",
+    "app/ai/interview_runtime_v3j_v4d/README.md": "836ac39433dcf9af510fa911821d6bb51ab5d3f89232e9aca584258fa4c3a63a",
+    "app/ai/interview_runtime_v3j_v4d/contracts.json": "86ac143abb0dfc41488b551b550cf3fe970ee6c604c67f9ad8cfa1489a548c8d",
+    "app/ai/interview_runtime_v3j_v4d/engine.js": "cb523bfd01e18014e8d243aa21d70e69bdbf3b3b531bba36109c1b09a9634ad5",
+    "app/ai/interview_runtime_v3j_v4d/evidence-units.js": "28c56f103d5ab0cc4426c9d67f228c1f520064a23f4b73a14f5e4f76a685c747",
+    "app/ai/interview_runtime_v3j_v4d/field-review.js": "80df4bcaca6ea6d50cb22dee2545f8c152510962fb328b45dab42e2bcb584664",
+    "app/ai/interview_runtime_v3j_v4d/field-steps.js": "16867d385e590f8192e3f71eb32d0f004e4de97759aa7bff73f191818157c06d",
+    "app/ai/interview_runtime_v3j_v4d/judge-prompt.txt": "2ff030f75278a73e5275bbabb8f86cbc5957ce00365d1d7b6dc6acd3547d4c29",
+    "app/ai/interview_runtime_v3j_v4d/manifest.json": "8897f3c50690d70571e8b8bf2acf2176c80caf17c860ddf6f207c2470a3ba99f",
+    "app/ai/interview_runtime_v3j_v4d/opencc-ts-char-map.json": "085b059dbef2df6a3ad01a29cc17aa5585b09f10273993a3bc04808c83bc7a7d",
+    "app/ai/interview_runtime_v3j_v4d/proposal-parser.js": "1dac61af982a15b7aed5d548ac0ed9cf9949aec2315e2dccfc197847ea734883",
+    "app/ai/interview_runtime_v3j_v4d/provider-settings.json": "e1461dbf05de36c8eb204c09c24db89a8897ffc8c9d4e79abb70ac5d22e795df",
+    "app/ai/interview_runtime_v3j_v4d/semantic-roles.json": "efe7599fd842456d071dc5bcfc0fb333a4913c315a43688143fe565c6557f1b7",
+    "app/ai/interview_runtime_v3j_v4d/semantic-targets.js": "60cfd20942324aae6e1c755668211b81e72ed8de725ac979dc3d4fe3b41985ad",
+    "app/ai/interview_runtime_v3j_v4d/source-manifest.json": "57533a09d055b6272b59d47d95a3a538c754a6e043559971a94f065ad7ab56a9",
+    "app/ai/interview_runtime_v3j_v4d/speaker-config.json": "1807402cc7f0b536d2eccbc4094acdffbfc313cd7a03611274041fdfb99f95a3",
+    "app/ai/interview_runtime_v3j_v4d/speaker-prompt.txt": "d1e88944a4c8696a6fc2fa8b26e1f2307ab084ba4a2768cf1ff4cd2885b1504a",
+    "app/ai/interview_runtime_v3j_v4d/stage-proof.js": "741f51fbfe91f2e8e9f489701015f052e138540a7171e9064db647d8cc09b3ce",
+    "app/ai/interview_runtime_v3j_v4d/verify-prompt.txt": "2ae583593d1f59efa81348d674cb9c870f6ceb29206a5f4d8295a2eda74d7245",
+    "app/ai/interview_speaker.py": "07725945546df44b206703ea3293d7017d338f3e57c2e8ee2e03e6e90aa7d16b",
+    "app/services/contract_v3j_interview.py": "9ea5f7186cf5d34b10f9a107c64b4cee081e4c8b8344eb8f94cfe33da63ab6d6",
+    "app/services/contract_v3j_life_overview.py": "d79759819f3318aafb88de723113de8e6b773b24fee49da8e801187eb6f0605e"
+  }
+}
