@@ -18,6 +18,20 @@ Replies keep the existing steps (decisions of 2026-10-22):
   SKIP_ACK + next entry. No save offer; the skip state logic is unchanged.
 - pause (engine paused, or the elder says he is tired): existing fixed text.
 
+Decisions of 2026-10-23 (C01-C03), this flow only:
+- the elder's signals are read for his own present intent (interview_speaker.elder_signal).
+- an answer followed by "这段我不想多讲" is not a refusal (C02, reason
+  'declined_partial'): no more follow-ups, the draft step as for a finished
+  question (also when the engine returns limited with a declined field next
+  to an answered one), with the speaking layer told '老人不想多说'. A decline
+  before any real answer is still a refusal.
+- after the draft offer (supplement step, C03): "没有了，就这些" and other
+  general wording that nothing more is to be added goes straight to the existing
+  review step, without a judgment call; a real addition is judged and recorded,
+  then answered by one acknowledgement and a short "anything else" question,
+  keeping the draft offer; an addition that also says it is all is recorded and
+  goes to the review step. No follow-ups are asked in the supplement step.
+
 The skeleton questions (life overview) use the same marker, judgment and
 speaking-layer pieces from contract_v3j_life_overview.
 """
@@ -33,6 +47,8 @@ from app.services.interview_controls import SKIP_ACK
 
 DRAFT_TEXT = '这段可以先整理成草稿了。您还有什么想补充的吗？'
 PAUSE_TEXT = '好，先休息。您的讲述和采访位置都已保留。'
+REVIEW_TEXT = '好，先核对这段草稿，您确认后再保存。'  # the existing review step (contract_guided_interview.turn)
+SUPPLEMENT_TEXT = '您还有别的想补充的吗？'  # after a recorded addition (C03); the draft sentence is not repeated
 
 
 def question_flow(state):
@@ -87,7 +103,7 @@ def asked_part(shown, state, entry):
     """The question part of what was last shown, which is what the judgment was evaluated with: a follow-up
     without its acknowledgement, a transition without its close, the draft sentence alone."""
     shown_norm = speaker._norm(shown)
-    candidates = ([state.pending_question.text] if state.pending_question else []) + [entry, DRAFT_TEXT]
+    candidates = ([state.pending_question.text] if state.pending_question else []) + [entry, DRAFT_TEXT, SUPPLEMENT_TEXT]
     for candidate in candidates:
         if speaker._norm(candidate) and shown_norm.endswith(speaker._norm(candidate)):
             return candidate
@@ -153,9 +169,10 @@ def _transition(rt, client, state, qid, dialogue, fields, reason, holder, sessio
                   'notes': notes, 'fallback': not ok, 'text': text, 'raw': row.get('content'), 'call': entry}
 
 
-def _draft_ack(rt, client, state, qid, dialogue, fields, reason, holder, session_id):
+def _draft_ack(rt, client, state, qid, dialogue, fields, reason, holder, session_id, closing=DRAFT_TEXT, step='draft'):
     # Same speaker input as a close into the next question (so the evaluated
-    # wording applies); only its acknowledgement is shown before the draft sentence.
+    # wording applies); only its acknowledgement is shown before the fixed
+    # sentence (the draft sentence, or the short supplement question).
     next_text, menu = upcoming(state)
     elder_words = ''.join(text for role, text in dialogue if role == 'elder')
     user = speaker.speaker_user(rt, qid, dialogue, fields, 'close', reason=reason, next_entry=next_text,
@@ -163,9 +180,20 @@ def _draft_ack(rt, client, state, qid, dialogue, fields, reason, holder, session
     row, entry = _speak(rt, client, user, holder, session_id, state)
     reply, _ = speaker.parse_speaker(row)
     ack = speaker.lead_ack(rt, reply, None if menu else next_text, elder_words)
-    text = speaker.join(ack, DRAFT_TEXT) if ack else DRAFT_TEXT
-    return ack, text, {'task': 'close', 'close_reason': reason, 'step': 'draft', 'ack': ack, 'fallback': not ack,
-                       'text': text, 'raw': row.get('content'), 'call': entry}
+    notes = []
+    if ack and step == 'supplement' and speaker._norm(ack) == speaker._norm(state.speaker_last_close):
+        ack, notes = '', ['repeat_ack']  # the same acknowledgement as last time is not said again
+    text = speaker.join(ack, closing) if ack else closing
+    return ack, text, {'task': 'close', 'close_reason': reason, 'step': step, 'ack': ack, 'fallback': not ack,
+                       'notes': notes, 'text': text, 'raw': row.get('content'), 'call': entry}
+
+
+def review_step(previous, state, messages):
+    """The existing review step: the elder has nothing more to add (no model call)."""
+    from app.services.contract_guided_interview import _project
+    state.phase = 'review'
+    state.pending_question = None
+    return _project(previous, state, messages), ConversationReply(text=REVIEW_TEXT, action='offer_generation')
 
 
 def finish(local, outcome, spoken, asked=None):
@@ -190,6 +218,14 @@ def question_turn(client, previous, state, messages, latest):
     rt = v3j_runtime()
     topic = topic_for(state)
     qid, entry = topic.id, topic.text
+    # After the draft offer: an answer that only says there is nothing more goes to the review step (C03).
+    supplementing = state.phase in ('supplement', 'review')
+    ending = speaker.supplement_end(latest.content) if supplementing else None
+    if ending == 'only':
+        if state.contract_state:
+            state.contract_state['audit'].append({'pipeline': 'v4d', 'kind': 'supplement_end', 'request_id': str(latest.id),
+                                                  'supplement_end': ending})
+        return review_step(previous, state, messages)
     if not state.contract_state:
         state.contract_state = fresh(qid, rt)
     local = state.contract_state
@@ -221,16 +257,35 @@ def question_turn(client, previous, state, messages, latest):
     st = {'followups': local.get('followups', 0), 'ask_counts': local.get('ask_counts', {}),
           'prev_eff': dict((local.get('last_result') or {}).get('effective') or {})}
     action, arg = speaker.decide(rt.speaker_config, result, st, latest.content)
-    decision = result['decision']
-    refused = arg in ('declined', 'deferred') or (decision == 'limited' and 'declined' in result.get('effective', {}).values())
+    # decide closes engine skipped / limited+declined as 'declined' unless the elder had already answered
+    # ('declined_partial', C02), so the reason alone tells a refusal.
+    refused = arg in ('declined', 'deferred')
     dialogue = dialogue_for(messages, local, latest, entry)
     fields = speaker.recorded_fields(rt, result)
     holder = local['pending']
     rule = {'action': action, 'reason': arg, 'signal': st['signal']}
+    if supplementing:
+        rule['supplement_end'] = ending
     # The speaking-layer call is persisted with the pending request; question
     # state that a retry recomputes from (pending question, sources) changes
     # only after it.
-    if action == 'ask':
+    if supplementing and action != 'rest' and not (refused and not speaker.has_content(result)):
+        # Supplement step (C03): the addition is recorded; no follow-up is asked and the draft offer stays.
+        # "That's all" with an addition, or not wanting to go on: recorded, then the review step.
+        if ending == 'with_content' or refused or arg == 'declined_partial' or st['signal'] == 'declined':
+            finish(local, outcome, {'task': 'review', 'step': 'review', **rule})
+            coverage(state)
+            return review_step(previous, state, messages)
+        reason = arg if action == 'close' else 'limited'
+        ack, text, spoken = _draft_ack(rt, client, state, qid, dialogue, fields, reason, holder, latest.session_id,
+                                       closing=SUPPLEMENT_TEXT, step='supplement')
+        finish(local, outcome, {**spoken, **rule})
+        state.pending_question = None
+        if ack:
+            state.speaker_last_close = ack
+        state.phase = 'supplement'
+        reply = ConversationReply(text=text, action='offer_generation')
+    elif action == 'ask':
         user = speaker.speaker_user(rt, qid, dialogue, fields, 'ask', arg, result.get('question'))
         row, entry_ = _speak(rt, client, user, holder, latest.session_id, state)
         text, question, spoken = speaker.compose_ask(rt, row, result, arg, [s['question'] for s in local['sources']],

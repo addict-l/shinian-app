@@ -220,6 +220,7 @@ class FlowTests(unittest.TestCase):
     def test_draft_acknowledgement_never_mentions_saving_and_falls_back(self):
         self.enter_module('family')
         for answer in ({'reply': '好，这段我帮您整理成草稿。那您和伴侣平时是怎样相伴生活的？'}, LLMServiceError('down'), {'reply': ''}):
+            self.move_to('FM01')  # a fresh question each time: a second answer would be a supplement (C03)
             provider = Provider(judge=[judged(**{'FM01-E1': stated('unknown')})], speaker=[answer])
             with patch.dict(os.environ, V3J), patch.object(V3jPipeline, '_call', side_effect=provider):
                 reply = self.say('记不清了。' + str(uuid4())[:4])
@@ -227,6 +228,7 @@ class FlowTests(unittest.TestCase):
             self.assertIsNotNone(reply['generation_offer'])
         self.assertIn('收尾原因：老人说记不清了', next(u for s, u in provider.seen if s == 'speaker'))
         # a transition clause is not shown before the draft sentence
+        self.move_to('FM01')
         provider = Provider(judge=[judged(**{'FM01-E1': stated('unknown')})],
                             speaker=[{'reply': '记不清也没关系。那咱们换个话题聊聊，您和伴侣平时是怎样相伴生活的？'}])
         with patch.dict(os.environ, V3J), patch.object(V3jPipeline, '_call', side_effect=provider):

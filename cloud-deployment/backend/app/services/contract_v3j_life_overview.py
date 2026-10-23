@@ -18,6 +18,12 @@ question in the same message (compose_close). Decisions of 2026-10-22:
 - explicit refusal (skip control, engine skipped/deferred/limited+declined, the
   v4d signal that the elder does not want to talk about it): the same close
   with reason declined/deferred; failure falls back to SKIP_ACK + next question.
+- an answer followed by "这段我不想多讲" (decision of 2026-10-23, C02, reason
+  'declined_partial', also for the engine's limited with a declined field next
+  to an answered one) is not a refusal: the question closes as answered
+  (status known, fallback "我记下了。" + next question); the
+  speaking layer is told '老人不想多说'. Signals count only as the elder's own
+  present intent (C01, interview_speaker.elder_signal).
 - after the last skeleton question: the existing review text, no speaker call.
 - pause (engine paused, or the elder says he is tired): the existing pause; the
   question stays open and resumes with its entry question.
@@ -63,6 +69,8 @@ def close_status(result, reason, skip):
     make on an engine follow-up keeps what the elder said: declined, cannot remember, or what is known."""
     if skip:
         return 'skipped'
+    if reason == 'declined_partial':  # answered, then did not want to go on (C02): not a refusal
+        return 'known'
     decision = result.get('decision')
     effective = result.get('effective') or {}
     if decision == 'ready':

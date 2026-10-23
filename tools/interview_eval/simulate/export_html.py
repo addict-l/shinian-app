@@ -24,7 +24,8 @@ F = {f['id']: f for q in C['questions'] for f in q['elements']}
 ST = {'known': '已回答', 'none': '明确没有', 'unknown': '记不清', 'declined': '不愿讲', 'deferred': '以后再讲', 'ambiguous': '说有但没说清', 'conflict': '前后矛盾'}
 KIND = {'entry': '入口问题', 'followup': '追问', 'supplement': '补充邀请', 'close': '收尾/转题', 'pause': '休息', 'resume': '继续'}
 BEH = {'normal': '', 'short': '短答', 'drift': '跑题', 'reluctant': '不想多说', 'rest': '想歇会儿'}
-REASON = {'done': '本题完成', 'limited': '信息有限', 'unknown': '老人记不清', 'declined': '老人不想讲', 'deferred': '以后再讲', 'cap': '追问已达上限',
+REASON = {'done': '本题完成', 'limited': '信息有限', 'unknown': '老人记不清', 'declined': '老人不想讲', 'declined_partial': '已答，老人不想展开',
+          'deferred': '以后再讲', 'cap': '追问已达上限',
           'asked_once': '同一点问过一次', 'max_turns': '轮数上限', 'rest': '老人要休息', 'error': '系统错误'}
 DZ = {'natural': '自然', 'grounded': '贴合', 'timing': '时机', 'single': '单一', 'tone': '语气'}
 VZ = {'multi_question': '一次多问', 'presupposition': '预设/编造', 'repeat_ask': '重复问', 'should_have_stopped': '该停不停'}
