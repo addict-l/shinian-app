@@ -39,12 +39,14 @@ struct JournalDraftPreviewView: View {
         if care && saved, let memory = saveModel.savedMemory {
             if readingSaved {
                 VStack(spacing: 0) {
-                    CareToolbar(title: "珍藏的回忆", onBack: { readingSaved = false })
-                    CareStoryReading(memory: memory, identity: identity, api: api)
-                    CareButton(title: "回到首页", secondary: true) { Task { await finishCare(home: true) } }.padding(20)
-                }.background(CareTheme.paper.ignoresSafeArea())
+                    CareStoryReading(memory: memory, identity: identity, api: api, onBack: { readingSaved = false })
+                }
+                .safeAreaInset(edge: .bottom, spacing: 0) {
+                    CareButton(title: "回到首页", symbol: "house", secondary: true) { Task { await finishCare(home: true) } }
+                        .accessibilityIdentifier("care.saved.home").careDock()
+                }.carePage()
             } else {
-                CareSavedMemoryView(memory: memory, onRead: { readingSaved = true },
+                CareSavedMemoryView(memory: memory, photoAPI: api, onRead: { readingSaved = true },
                     onHome: { Task { await finishCare(home: true) } },
                     onContinue: { Task { await finishCare(home: false) } })
             }
@@ -60,6 +62,11 @@ struct JournalDraftPreviewView: View {
                     saved = true
                 } else { await onSaved() }
             })
+            .onAppear {
+                if draft.hasNewNarration {
+                    saveModel.errorMessage = "手动修改的草稿已保留。聊天中还有新讲述，请先重新生成并核对，再确认保存。"
+                }
+            }
             .alert("重新生成草稿？", isPresented: $confirmRegeneration) {
                 Button("保留当前草稿", role: .cancel) {}
                 Button("确认重新生成", role: .destructive) { Task { await regenerate() } }

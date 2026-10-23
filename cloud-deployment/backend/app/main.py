@@ -17,6 +17,7 @@ from app.services.family_service import FamilyNotFoundError
 from app.services.family_member_service import FamilyMemberNotFoundError
 from app.services.memory_service import InvalidFamilyMemberError
 from app.schemas.workflow import HealthResponse
+from app.services.media_storage import MediaStorageError
 
 allowed_hosts = [
     host.strip()
@@ -84,6 +85,8 @@ def health():
     ))
 
 async def known_error(request: Request, error: Exception):
+    if isinstance(error, MediaStorageError):
+        return JSONResponse(status_code=503, content={'detail':'照片存储暂时不可用，请稍后重试'})
     if isinstance(error, (ChatSessionNotFoundError,FamilyNotFoundError,FamilyMemberNotFoundError)):
         return JSONResponse(status_code=404, content={'detail':str(error)})
     if isinstance(error, InvalidFamilyMemberError):
@@ -95,6 +98,6 @@ async def known_error(request: Request, error: Exception):
     logging.getLogger('aimemories').error('Database operation failed: %s',type(error).__name__)
     return JSONResponse(status_code=503, content={'detail':'数据库暂时不可用，请重试'})
 
-for error_type in [ChatSessionNotFoundError,FamilyNotFoundError,FamilyMemberNotFoundError,InvalidFamilyMemberError,
+for error_type in [MediaStorageError,ChatSessionNotFoundError,FamilyNotFoundError,FamilyMemberNotFoundError,InvalidFamilyMemberError,
                    LLMConfigurationError,LLMServiceError,LLMResponseFormatError,SQLAlchemyError]:
     app.add_exception_handler(error_type,known_error)

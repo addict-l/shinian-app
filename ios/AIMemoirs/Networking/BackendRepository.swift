@@ -18,12 +18,13 @@ private struct ChatDTO: Decodable {
     let messages: [MessageDTO]
     let can_generate: Bool
     var generation_offer: GenerationOffer?
+    var review_request: GenerationOffer?
     var current_message_ids: [UUID]?
     var readiness: StoryReadiness?
     var snapshot: ChatSnapshot {
         ChatSnapshot(lifeOverview: life_overview, sessionID: session.id, messages: messages.filter { ["user", "assistant"].contains($0.role) }
             .map { ChatMessage(id: $0.id, sender: $0.role == "user" ? .user : .ai, text: $0.content, attachments: $0.attachments ?? []) }, canGenerate: can_generate,
-            status: session.status ?? "active", version: session.version ?? 1, information: session.information ?? StoryInformation(), readiness: readiness, generationOffer: generation_offer, currentMessageIDs: current_message_ids)
+            status: session.status ?? "active", version: session.version ?? 1, information: session.information ?? StoryInformation(), readiness: readiness, generationOffer: generation_offer, currentMessageIDs: current_message_ids, reviewRequest: review_request)
     }
 }
 private struct MemoryDTO: Decodable {
@@ -42,7 +43,7 @@ private struct MemoryDTO: Decodable {
     var version: Int?
     var information: StoryInformation?
 }
-private struct DraftDTO: Decodable { let id: UUID; let revision: UUID; let memory: MemoryDTO; var manually_edited: Bool?; var time_review_from: InformationDimension? }
+private struct DraftDTO: Decodable { let id: UUID; let revision: UUID; let memory: MemoryDTO; var manually_edited: Bool?; var time_review_from: InformationDimension?; var has_new_narration: Bool? }
 
 enum APIDate {
     static func day(_ value: Date) -> String {
@@ -174,7 +175,7 @@ enum APIDate {
             preview: EventData(person: value.personName, date: value.dateLabel, title: value.title,
                                content: value.content, location: draft.memory.information?.place.value ?? draft.memory.location ?? "待补充",
                                participants: draft.memory.person_ids.compactMap { id in knownMembers.first { $0.id == id }?.name },
-                               emotion: draft.memory.information?.feeling.value ?? "待补充"), manuallyEdited: draft.manually_edited ?? false, timeReviewFrom: draft.time_review_from)
+                               emotion: draft.memory.information?.feeling.value ?? "待补充"), manuallyEdited: draft.manually_edited ?? false, timeReviewFrom: draft.time_review_from, hasNewNarration: draft.has_new_narration ?? false)
     }
     func upload(sessionID: UUID, image: Data?, requestID: UUID) async throws {
         guard let image else {

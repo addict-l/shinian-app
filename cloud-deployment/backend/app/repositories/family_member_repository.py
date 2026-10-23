@@ -140,6 +140,6 @@ class FamilyMemberRepository:
             session.flush()
             session.delete(model)
             session.commit()
-        from app.services.memory_maintenance import drain_cleanup
-        drain_cleanup()
+        from app.services.memory_maintenance import cleanup_after_request
+        cleanup_after_request()
         return True

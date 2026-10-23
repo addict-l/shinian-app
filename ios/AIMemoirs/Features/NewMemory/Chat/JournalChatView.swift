@@ -27,6 +27,7 @@ struct JournalChatView: View {
     @FocusState private var inputFocused: Bool
     @State private var openedAt = Date()
     @State private var lifePresented = false
+    @State private var openedReviewRequestID: UUID?
     @State private var careHistoryPresented = false
     @State private var careContinuing = false
     @State private var autoFollow = JournalChatAutoFollow()
@@ -69,6 +70,9 @@ struct JournalChatView: View {
                 model.pause()
             }
         }
+        .onChange(of: model.reviewRequestMessageID) { _, request in
+            if request != nil && !model.isLoading { Task { await openRequestedReview() } }
+        }
     }
 
     private var needsInitialLifeInterview: Bool {
@@ -76,7 +80,22 @@ struct JournalChatView: View {
             model.latestSnapshot?.information.guided_interview?.module_selected == false
     }
 
-    private var initialLoading: some View {
+    @ViewBuilder private var initialLoading: some View {
+        if care {
+            VStack(spacing: 0) {
+                CareToolbar(title: "慢慢讲述", backTitle: "暂停", backIdentifier: "newMemory.step.1", onBack: onBack)
+                if let error = model.storageError ?? model.errorMessage {
+                    Spacer(minLength: 16)
+                    CareError(message: error) { model.retryLocalSave(); Task { await start() } }.padding(20)
+                    Spacer(minLength: 16)
+                } else {
+                    CareBusyOverlay(text: "正在打开记录…").accessibilityIdentifier("chat.initialLoading")
+                }
+            }.carePage()
+        } else { standardInitialLoading }
+    }
+
+    private var standardInitialLoading: some View {
         VStack(spacing: 20) {
             HStack {
                 JournalRoundButton(icon: "back", label: "返回选择家人", action: onBack)
@@ -128,7 +147,7 @@ struct JournalChatView: View {
                     .frame(maxWidth: .infinity, minHeight: 44)
                     .accessibilityIdentifier("chat.lifeOverview")
             }
-            JournalChatHistory(follow: autoFollow, identifier: "chat.history", bottomAlignment: true) {
+            JournalChatHistory(follow: autoFollow, identifier: "chat.history") {
                     VStack(alignment: .leading, spacing: 14) {
                         if !messages.isEmpty {
                             Text(previewScreen == "chat" ? "10月12日 上午 8:20" : JournalFormat.chatDate(openedAt))
@@ -144,7 +163,7 @@ struct JournalChatView: View {
                                 Circle().fill(JournalTheme.accent.opacity(0.6)).frame(width: 6, height: 6)
                                 Circle().fill(JournalTheme.accent.opacity(0.3)).frame(width: 6, height: 6)
                                 Text(previewScreen == "chat" || model.progressText.isEmpty ? "正在倾听与整理…" : model.progressText)
-                            }.font(JournalTheme.font(12)).foregroundStyle(JournalTheme.muted).padding(.leading, 38).padding(.top, -2)
+                            }.font(JournalTheme.font(12)).foregroundStyle(JournalTheme.muted).padding(.leading, 0).padding(.top, 6)
                                 .accessibilityElement(children: .combine)
                         }
                         if let error = model.errorMessage { JournalError(message: error, retryTitle: model.hasPendingSend ? "重试这条讲述" : "重试") { Task { if model.hasPendingSend { await send() } else if model.latestSnapshot == nil || model.canGenerate == false { await start() } else if !model.inputText.isEmpty || !model.photos.isEmpty { await send() } else { await generate() } } } }
@@ -164,7 +183,7 @@ struct JournalChatView: View {
         .onChange(of: model.generationOfferMessageID) { _, _ in careContinuing = false }
         .onChange(of: messages.last?.id) { _, _ in if care { careContinuing = false } }
         .sheet(isPresented: $careHistoryPresented) {
-            CareDialogueHistory(entries: careHistory, photoAPI: chatAPI) { careHistoryPresented = false }
+            CareDialogueHistory(entries: careHistory, photoAPI: chatAPI, person: person) { careHistoryPresented = false }
         }
         .alert("语音输入", isPresented: Binding(get: { dictation.errorMessage != nil }, set: { if !$0 { dictation.errorMessage = nil } })) { Button("确定") { dictation.errorMessage = nil } } message: { Text(dictation.errorMessage ?? "") }
         .onChange(of: photoItems) { _, items in
@@ -219,60 +238,108 @@ struct JournalChatView: View {
         CareDialogueEntry.chat(messages)
     }
     private var careInlineInput: Bool { dynamicTypeSize.isAccessibilitySize || verticalSizeClass == .compact }
+    private var careQuestionIsCompact: Bool {
+        dictation.isBusy || !model.inputText.isEmpty || !model.photos.isEmpty || model.hasPendingSend
+    }
     private var careConversation: some View {
         VStack(spacing: 0) {
             CareToolbar(title: "慢慢讲述", backTitle: "暂停", step: "3 / 3", backIdentifier: "newMemory.step.1") {
                 dictation.cancel(); model.pause(); onBack()
-            }
+            }.disabled(model.isLoading || preparingDraft || readingPhotos)
             ScrollView {
-                VStack(spacing: 16) {
-                    Text("正在记录\(person.name)的故事").font(CareTheme.font(18)).foregroundStyle(JournalTheme.ink2)
-                    if let message = messages.last(where: { $0.sender == .ai }) {
-                        VStack(spacing: 12) {
-                            Text("回忆助手").font(CareTheme.font(18)).foregroundStyle(CareTheme.accent)
-                            Text(message.text).font(CareTheme.font(26, bold: true)).multilineTextAlignment(.center)
-                                .fixedSize(horizontal: false, vertical: true).frame(maxWidth: .infinity)
-                                .accessibilityIdentifier("care.chat.question")
-                        }.padding(20).background(JournalTheme.surface, in: RoundedRectangle(cornerRadius: 20))
+                VStack(alignment: .leading, spacing: 14) {
+                    if let guided = model.latestSnapshot?.information.guided_interview, guided.module_selected {
+                        let module = guided.module
+                        Label(careModuleName(module), systemImage: careModuleSymbol(module))
+                            .font(CareTheme.font(18, bold: true)).foregroundStyle(CareTheme.accent)
+                            .padding(.horizontal, 14).padding(.vertical, 9).background(CareTheme.faint, in: Capsule())
                     }
-                    Button("前面聊过的") { careHistoryPresented = true }.font(CareTheme.font(19)).frame(minHeight: 48)
-                        .accessibilityIdentifier("care.chat.history")
-                    if model.isLoading { ProgressView(model.progressText).font(CareTheme.font(20)).frame(maxWidth: .infinity) }
+                    CarePersonLine(person: person, text: "故事")
+                    if let message = messages.last(where: { $0.sender == .ai }) {
+                        CareQuestionCard(text: message.text, compact: careQuestionIsCompact)
+                            .accessibilityIdentifier("care.chat.question")
+                    }
+                    if careOffersGeneration && !careContinuing {
+                        CarePill(title: "前面聊过的", symbol: "bubble.left") { careHistoryPresented = true }
+                            .accessibilityIdentifier("care.chat.history").frame(maxWidth: .infinity)
+                        Label("先看草稿，您点“保存”才会存进回忆。", systemImage: "eye")
+                            .font(CareTheme.font(19)).foregroundStyle(CareTheme.sageInk)
+                            .padding(16).frame(maxWidth: .infinity, alignment: .leading)
+                            .background(CareTheme.sageSoft, in: RoundedRectangle(cornerRadius: 22))
+                    } else if !careQuestionIsCompact {
+                        ViewThatFits(in: .horizontal) {
+                            HStack(spacing: 10) { careHistoryButton; carePhotoPicker }
+                            VStack(alignment: .leading, spacing: 10) { careHistoryButton; carePhotoPicker }
+                        }
+                    }
                     if let error = model.errorMessage {
-                        CareError(message: error) { Task { if model.hasPendingSend { await send() } else { await start() } } }
+                        CareError(message: error, retry: model.hasPendingSend ? nil : { Task { await start() } })
                     }
                     if let error = model.storageError { CareError(message: error) { model.retryLocalSave() } }
                     if careInlineInput { careComposer }
-                }.padding(20)
+                }.padding(.horizontal, 20).padding(.top, 8).padding(.bottom, 20)
             }.scrollIndicators(.hidden).scrollDismissesKeyboard(.interactively)
                 .safeAreaInset(edge: .bottom, spacing: 0) {
-                    if !careInlineInput { careComposer }
+                    if !careInlineInput { careComposer.careDock() }
                 }
-        }.background(CareTheme.paper.ignoresSafeArea())
+        }.carePage()
+            .overlay { if model.isLoading || preparingDraft || readingPhotos {
+                CareBusyOverlay(text: readingPhotos ? "正在读取照片…" : preparingDraft ? "正在整理回忆草稿…" : model.progressText.isEmpty ? "正在倾听与整理…" : model.progressText)
+            } }
+    }
+    private var careHistoryButton: some View {
+        CarePill(title: "前面聊过的", symbol: "bubble.left", disabled: model.isLoading) { careHistoryPresented = true }
+            .accessibilityIdentifier("care.chat.history")
     }
     private var careComposer: some View {
-        VStack(spacing: 10) {
+        VStack(spacing: 12) {
             if careOffersGeneration && !careContinuing {
                 CareButton(title: "整理这段回忆", symbol: "book", loading: preparingDraft, disabled: model.isLoading) { Task { await generate() } }
                     .accessibilityIdentifier("chat.generate")
-                Text("先看草稿，您点保存才会存入回忆。").font(CareTheme.font(18)).foregroundStyle(JournalTheme.ink2).multilineTextAlignment(.center)
-                CareButton(title: "我还想补充", secondary: true) { careContinuing = true }
-            }
-            if !model.photos.isEmpty {
-                Button("管理已选照片（\(model.photos.count)/9）") { managingPhotos = true }
-                    .font(CareTheme.font(20)).frame(minHeight: 48).accessibilityIdentifier("chat.managePhotos")
-            }
-            if readingPhotos { ProgressView("正在读取照片…").font(CareTheme.font(18)) }
-            if !careOffersGeneration || careContinuing {
+                CareButton(title: "我还想补充", symbol: "mic", secondary: true) { careContinuing = true }
+            } else {
                 CareNarrationInput(text: $model.inputText, dictation: dictation,
-                    disabled: model.isLoading || preparingDraft || readingPhotos || model.isCompleted, retrying: model.hasPendingSend,
-                    permitsEmpty: !model.photos.isEmpty) { Task { await send() } }
+                    disabled: model.isLoading || preparingDraft || readingPhotos || model.isCompleted,
+                    retrying: model.hasPendingSend, permitsEmpty: !model.photos.isEmpty,
+                    pendingText: model.pendingText,
+                    photoContent: AnyView(careSelectedPhotos)) { Task { await send() } }
             }
-            PhotosPicker(selection: $photoItems, maxSelectionCount: max(1, 9 - model.photos.count), selectionBehavior: .ordered, matching: .images) {
-                Label("添加照片", systemImage: "photo").font(CareTheme.font(18)).frame(minHeight: 48)
-            }.disabled(model.photos.count >= 9 || readingPhotos || model.isLoading || model.hasPendingSend || dictation.isBusy)
-                .accessibilityIdentifier("chat.addPhotos")
-        }.padding(.horizontal, 20).padding(.vertical, 10).background(CareTheme.paper)
+        }
+    }
+    private var carePhotoPicker: some View {
+        PhotosPicker(selection: $photoItems, maxSelectionCount: max(1, 9 - model.photos.count), selectionBehavior: .ordered, matching: .images) {
+            CarePillLabel(title: "加照片", symbol: "photo")
+        }.buttonStyle(CarePressStyle())
+            .disabled(model.photos.count >= 9 || readingPhotos || model.isLoading || model.hasPendingSend || dictation.isBusy)
+            .accessibilityIdentifier("chat.addPhotos")
+            .accessibilityHint("每条消息最多九张照片，已选 \(model.photos.count) 张")
+    }
+    private var careSelectedPhotos: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            ScrollView(.horizontal) {
+                HStack(spacing: 10) {
+                    ForEach(model.photos) { photo in
+                        Button { managingPhotos = true } label: {
+                            if let image = UIImage(data: photo.data) {
+                                Image(uiImage: image).resizable().scaledToFill().frame(width: 76, height: 76)
+                                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                            }
+                        }.buttonStyle(CarePressStyle()).accessibilityLabel("管理已选照片")
+                    }
+                    if !model.hasPendingSend { carePhotoPicker }
+                }.padding(.vertical, 3)
+            }.scrollIndicators(.hidden)
+            if !model.photos.isEmpty {
+                CareMiniButton(title: "管理已选照片（\(model.photos.count)/9）", symbol: "photo.on.rectangle") { managingPhotos = true }
+                    .accessibilityIdentifier("chat.managePhotos")
+            }
+        }
+    }
+    private func careModuleName(_ module: String) -> String {
+        ["childhood": "成长的地方", "growth": "读书或学艺", "work": "工作与生活", "family": "重要家人", "later_life": "如今的生活", "reflection": "人生回望"][module] ?? "慢慢讲述"
+    }
+    private func careModuleSymbol(_ module: String) -> String {
+        ["childhood": "house", "growth": "book", "work": "briefcase", "family": "person.2", "later_life": "cup.and.saucer", "reflection": "sun.max"][module] ?? "bubble.left"
     }
     @ViewBuilder private func messageView(_ message: ChatMessage) -> some View {
         if message.sender == .user {
@@ -281,19 +348,17 @@ struct JournalChatView: View {
                 previewPhoto = $0
             }
         } else {
-            HStack(alignment: .top, spacing: 8) {
-                DesignIcon("spark", size: 16).foregroundStyle(JournalTheme.butterInk)
-                    .frame(width: 30, height: 30).background(JournalTheme.butterSoft, in: Circle()).accessibilityHidden(true)
-                Text(message.text).font(JournalTheme.story(14.5)).lineSpacing(4).foregroundStyle(JournalTheme.ink)
+            VStack(alignment: .leading, spacing: 10) {
+                HStack(spacing: 6) {
+                    DesignIcon("spark", size: 14).accessibilityHidden(true)
+                    Text("AI 回忆助手")
+                }.font(JournalTheme.font(12)).foregroundStyle(JournalTheme.ink2)
+                Text(message.text).font(JournalTheme.story(15.5)).lineSpacing(6).foregroundStyle(JournalTheme.ink)
                     .fixedSize(horizontal: false, vertical: true)
-                    .padding(.horizontal, 14).padding(.vertical, 12)
-                    .background(JournalTheme.surface, in: UnevenRoundedRectangle(topLeadingRadius: 4, bottomLeadingRadius: 20, bottomTrailingRadius: 20, topTrailingRadius: 20))
-                    .overlay { UnevenRoundedRectangle(topLeadingRadius: 4, bottomLeadingRadius: 20, bottomTrailingRadius: 20, topTrailingRadius: 20).stroke(JournalTheme.line, lineWidth: 1) }
-                    .frame(maxWidth: 272, alignment: .leading)
-                Spacer(minLength: 0)
-            }
-            .accessibilityElement(children: .combine)
-            .padding(.top, 0)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .accessibilityIdentifier("chat.message.text.\(message.id)")
+            }.frame(maxWidth: 640, alignment: .leading).padding(.vertical, 10).accessibilityElement(children: .contain)
+                .accessibilityIdentifier("chat.assistant.\(message.id)")
         }
     }
 
@@ -389,7 +454,7 @@ struct JournalChatView: View {
         .accessibilityLabel(dictation.isRecording ? "停止语音输入" : dictation.phase == .preparing ? "取消准备语音" : "语音输入").accessibilityIdentifier("chat.dictation")
     }
 
-    private var sendDisabled: Bool { model.isLoading || readingPhotos || dictation.isBusy || model.isCompleted }
+    private var sendDisabled: Bool { model.isLoading || preparingDraft || readingPhotos || dictation.isBusy || model.isCompleted }
     private var sendButton: some View {
         Button { Task { await send() } } label: {
             DesignIcon("up")
@@ -417,6 +482,7 @@ struct JournalChatView: View {
     private func start() async {
         _ = await model.start(person: person)
         if previewScreen == "review" { await generate() }
+        else { await openRequestedReview() }
     }
     private func send() async {
         dictation.stop()
@@ -424,11 +490,19 @@ struct JournalChatView: View {
         guard !readingPhotos, !model.isLoading, !text.isEmpty || !model.photos.isEmpty || model.hasPendingSend else { return }
         if !care { autoFollow.resume() }
         inputFocused = false
-        if await model.send(text: text, person: person) == nil && !model.hasPendingSend {
+        let snapshot = await model.send(text: text, person: person)
+        if snapshot == nil && !model.hasPendingSend {
             // Validation/rejection returns editable text; transient failures keep
             // the pending message in the conversation and retry its original ID.
             model.inputText = text
         }
+        if snapshot != nil { await openRequestedReview() }
+    }
+    private func openRequestedReview() async {
+        guard let requestID = model.reviewRequestMessageID,
+              requestID != openedReviewRequestID else { return }
+        await generate()
+        if draftPreview != nil { openedReviewRequestID = requestID }
     }
     private func generate() async {
         dictation.stop()

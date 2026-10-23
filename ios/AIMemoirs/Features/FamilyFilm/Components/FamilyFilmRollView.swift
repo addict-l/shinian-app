@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// 一位家人的完整胶卷：深棕片基、上下齿孔，画格可横向翻阅，末尾留一格“＋ 添一格”。
+/// 一位家人的完整胶卷：深棕片基、上下齿孔，画格可横向翻阅，人物行的小加号记录该人的下一段回忆。
 struct FamilyFilmRollView: View {
     let lane: FamilyFilmTimeline.Lane
     let portrait: UIImage?
@@ -35,29 +35,34 @@ struct FamilyFilmRollView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Button(action: onPerson) {
-                HStack(spacing: 10) {
-                    if let portrait {
-                        JournalAvatarFrame(size: 34) { Image(uiImage: portrait).resizable().scaledToFill() }
-                    } else {
-                        JournalAvatar(person: lane.person, size: 34)
+            HStack(spacing: 8) {
+                Button(action: onPerson) {
+                    HStack(spacing: 10) {
+                        if let portrait { JournalAvatarFrame(size: 38) { Image(uiImage: portrait).resizable().scaledToFill() } }
+                        else { JournalAvatar(person: lane.person, size: 38) }
+                        VStack(alignment: .leading, spacing: 3) {
+                            Text(lane.person.relationship.isEmpty ? lane.person.name : lane.person.relationship)
+                                .font(JournalTheme.font(15, medium: true)).foregroundStyle(JournalTheme.ink)
+                            if !lane.person.relationship.isEmpty {
+                                Text(lane.person.name).font(JournalTheme.font(12)).foregroundStyle(JournalTheme.ink2)
+                            }
+                        }
+                        Spacer(minLength: 4)
+                        Text("\(lane.moments.count) 段回忆").font(JournalTheme.font(12)).foregroundStyle(JournalTheme.ink2)
+                            .accessibilityIdentifier("film.count.\(lane.person.name)")
+                    }.frame(minHeight: 44).contentShape(Rectangle())
+                }.buttonStyle(.plain).accessibilityIdentifier("film.person.\(lane.person.name)")
+                    .contextMenu {
+                        Button("查看人物回忆", action: onPerson)
+                        Button("更换人物照片", systemImage: "photo", action: onPortrait)
                     }
-                    Text(lane.person.relationship.isEmpty ? lane.person.name : lane.person.relationship)
-                        .font(JournalTheme.font(15, medium: true)).foregroundStyle(JournalTheme.ink)
-                    if !lane.person.relationship.isEmpty {
-                        Text(lane.person.name).font(JournalTheme.font(12)).foregroundStyle(JournalTheme.muted)
-                    }
-                    Spacer()
-                    Text("\(lane.moments.count) 段回忆 ›").font(JournalTheme.font(12)).foregroundStyle(JournalTheme.muted)
-                        .accessibilityIdentifier("film.count.\(lane.person.name)")
-                }.contentShape(Rectangle())
-            }
-            .buttonStyle(.plain).accessibilityIdentifier("film.person.\(lane.person.name)")
-            .contextMenu {
-                Button("查看人物回忆", action: onPerson)
-                Button("更换人物照片", systemImage: "photo", action: onPortrait)
-            }
-            .padding(.horizontal, 6)
+                Button(action: onAdd) {
+                    DesignIcon("plus", size: 18).foregroundStyle(JournalTheme.accentDeep)
+                        .frame(width: 34, height: 34).background(JournalTheme.soft, in: Circle())
+                        .frame(width: 44, height: 44).contentShape(Rectangle())
+                }.buttonStyle(.plain).accessibilityLabel("记录关于\(lane.person.name)的回忆")
+                    .accessibilityIdentifier("film.add.\(lane.person.name)")
+            }.padding(.horizontal, 6)
 
             VStack(spacing: 0) {
                 perforations
@@ -70,20 +75,17 @@ struct FamilyFilmRollView: View {
                             FamilyFilmFrameView(moment: moment) { onMemory(moment.id) }
                                 .accessibilityIdentifier("film.frame.\(lane.id).\(moment.id)")
                         }
-                        Button(action: onAdd) {
-                            Text("＋ 添一格").font(JournalTheme.font(11.5)).foregroundStyle(Color(hex: 0xF8E3D5))
-                                .frame(width: lane.moments.isEmpty ? FamilyFilmFrameView.Layout.width : 70, height: frameHeight)
-                                .overlay { RoundedRectangle(cornerRadius: 5).strokeBorder(JournalTheme.paper.opacity(0.5), style: StrokeStyle(lineWidth: 1.5, dash: [4, 3])) }
-                                .contentShape(Rectangle())
-                        }
-                        .buttonStyle(.plain).accessibilityLabel("记录关于\(lane.person.name)的回忆")
-                        .accessibilityIdentifier(lane.moments.isEmpty ? "film.empty.\(lane.person.name)" : "film.add.\(lane.person.name)")
                         ForEach(moments.dropFirst(previewCount)) { moment in
                             FamilyFilmFrameView(moment: moment) { onMemory(moment.id) }
                         }
                         if lane.moments.isEmpty && !isLoading {
-                            Text("这一卷，等一个故事").font(JournalTheme.story(12)).foregroundStyle(Color(hex: 0xF8E3D5).opacity(0.8))
-                                .padding(.leading, 6)
+                            Button(action: onAdd) {
+                                VStack(alignment: .leading, spacing: 8) {
+                                    Text("这一卷，等一个故事").font(JournalTheme.story(14))
+                                    Text("记下你们的第一段回忆").font(JournalTheme.font(12))
+                                }.foregroundStyle(JournalTheme.paper).padding(16)
+                                    .frame(minWidth: 240, minHeight: frameHeight, alignment: .leading)
+                            }.buttonStyle(.plain).accessibilityIdentifier("film.empty.\(lane.person.name)")
                         }
                     }.padding(.horizontal, 8).padding(.vertical, 6)
                 }

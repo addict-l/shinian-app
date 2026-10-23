@@ -26,6 +26,25 @@
 - 用户于 2026-10-15 明确指定当前打开的 iPhone 17 Pro / iOS 26.0，UDID `8801F7F7-7154-4AEB-88F2-1E77A8393190`，后续默认复用该设备。此前 Pro / iOS 26.5（`82915145-6254-4561-9028-8F8F8D636B89`）仅是历史设备记录。验证前运行 `xcrun simctl list devices available`，确认名称、系统和状态；使用当前可用 UDID，避免同名设备歧义。
 - 复用现有模拟器，不新建或重置模拟器。模拟器不可用时先诊断，确需更换设备时向用户说明。
 
+### iOS 界面方向（用户固定约定）
+
+用户于 2026-10-23 明确要求：后续 iOS UI 仅保证普通字号下的竖屏显示与交互，不再进行最大辅助字号或横屏的专项适配和验收，除非用户之后明确调整。保留字号功能与系统设置；此约定不要求锁定字号、屏幕旋转或更改工程支持方向。
+
+### 关怀模式预览与验证
+
+交付给用户交互检查的 iOS 预览进程不得携带 `-journal.careMode.enabled YES` 或 `-journal.careMode.enabled NO`；模式通过 App 的“设置 → 关怀模式”选择，避免启动参数覆盖设备偏好而导致切换失效。
+
+截图采集中可临时使用上述参数固定模式；结束后必须终止该进程，移除上述参数重新启动，再交付用户操作。模式切换和重启持久化验收也须使用无此参数的启动方式。
+
+### 模拟器实体键盘（用户固定约定）
+
+用户于 2026-10-21 明确要求：在 iOS 模拟器中使用运行它的 Mac 所连接的实体键盘输入，输入法固定为简体拼音。
+
+- Simulator 的 `I/O → Keyboard → Connect Hardware Keyboard` 和 `Use the Same Keyboard Language as macOS` 均保持开启。
+- Mac 输入源保持“简体拼音”；模拟器仅保留简体中文拼音。点击应用输入框后直接使用 Mac 的实体键盘，空格键选择汉字，无需点按屏幕键盘。
+- 后续开发、自动化、运行和验证均沿用此设置。用户已明确禁止更改，不能为了测试关闭硬件键盘、切换输入法或重置键盘配置；测试方案须适配此约定。
+- 这是代理操作的固定约束，不通过系统权限或设备管理策略封锁用户自行调整设置。
+
 建议先从 Xcode 选择 `ios/AIMemoirs.xcodeproj`、`AIMemoirs` Scheme 和现有 iPhone 17 Pro 模拟器，再执行构建和运行。命令行构建可使用 `xcodebuild -project ios/AIMemoirs.xcodeproj -scheme AIMemoirs -configuration Debug -destination 'platform=iOS Simulator,id=8801F7F7-7154-4AEB-88F2-1E77A8393190' build`；具体签名与本机设备状态以 Xcode 实际结果为准。
 
 ## Android 前端
@@ -75,4 +94,12 @@
 
 ## 2026-10-16 正式家庭账号服务更新
 
-用户已授权并完成正式发布，功能提交 `1f303b7`。现有域名、端口与数据卷不变；业务接口改用 Bearer 设备会话，注册／登录及 `/health` 不再受旧 Basic gate 保护，匿名业务请求仍为 401。正式迁移为 `h10100000001`，3 位家人、12 条回忆、40 份媒体保留。后续部署使用 `/opt/shinian-releases/auth-1f303b7/production-override.json`（含受保护运行配置，不得输出），详情见完整工程 `docs/phase-2/auth-service/deployment.md`。
+用户已授权并完成正式发布，功能提交 `1f303b7`。现有域名、端口与数据卷不变；业务接口改用 Bearer 设备会话，注册／登录及 `/health` 不再受旧 Basic gate 保护，匿名业务请求仍为 401。正式迁移为 `h10100000001`，3 位家人、12 条回忆、40 份媒体保留。该次历史配置为 `/opt/shinian-releases/auth-1f303b7/production-override.json`；当前维护使用下面 OSS 发布记录指向的最新 override。认证历史见完整工程 `docs/phase-2/auth-service/deployment.md`。
+
+
+## 当前正式后端（2026-10-23）
+
+- 当前运行 revision：`649b5b900244fd3742f3226f8e2b6d9d07387992`，已包含线上 `770f841` 的 v3j/v4d 采访流程及 OSS 接入，GitHub `main` 已同步。
+- 生产已启用私有 OSS；过渡期间保留本地原件与镜像。采访、模型、数据库、媒体卷及访问入口沿用原配置。
+- 重建或回退前读取 [OSS 正式发布记录](../../../../docs/project/oss-media-deployment-2026-10-23.md)，使用 `/opt/shinian-releases/oss-649b5b9-20261023/production-override.json`，保留其中完整受保护环境；该文件内容不输出或上传。
+- 权威源码：该 release 的 `source/backend/`。`/opt/ai-memories/backend/CLOUD_VERSION.md` 记录当前引用；历史部署目录的 Git HEAD 不代表正在运行的镜像。

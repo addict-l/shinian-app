@@ -123,6 +123,13 @@ struct MessagePhoto: Identifiable {
         return Array((saved + [pendingUserMessage]).suffix(20))
     }
     var pendingText: String? { pendingMessage?.text }
+    var reviewRequestMessageID: UUID? {
+        guard !hasPendingSend, !isCompleted, canGenerate,
+              let snapshot = latestSnapshot, let request = snapshot.reviewRequest,
+              snapshot.messages.last?.sender == .ai,
+              snapshot.messages.last?.id == request.message_id else { return nil }
+        return request.message_id
+    }
 
     func reset() {
         pause(); localDraft = nil; preparedOpening = nil; inputText = ""; isCompleted = false

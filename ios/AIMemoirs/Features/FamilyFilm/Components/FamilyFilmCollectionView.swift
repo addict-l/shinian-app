@@ -70,9 +70,6 @@ struct FamilyFilmCollectionView: View {
                 if let error = members.errorMessage ?? memories.errorMessage {
                     JournalError(message: error) { Task { await reload() } }.padding(.horizontal, 24)
                 }
-                if !members.members.isEmpty && !showsAll {
-                    footer.padding(.horizontal, JournalTheme.gutter).padding(.top, -10)
-                }
             }.padding(.top, 6).padding(.bottom, 28)
         }
         .scrollIndicators(.hidden).scrollDismissesKeyboard(.interactively)
@@ -108,25 +105,25 @@ struct FamilyFilmCollectionView: View {
             JournalTitle(showsAll ? "家人的胶卷" : "我们的家庭").padding(.top, 8)
             JournalSubtitle(showsAll ? "一人一卷，慢慢翻阅。" : "把日子连起来，就成了我们的故事。").padding(.top, 2)
             if !members.members.isEmpty {
-                HStack(spacing: 12) {
-                    HStack(spacing: -10) {
-                        ForEach(members.members.prefix(4)) { person in JournalAvatar(person: person, size: 40) }
-                    }.accessibilityHidden(true)
-                    Text("\(members.members.count) 位家人 · \(memoryCount) 段回忆")
-                        .font(JournalTheme.font(13)).foregroundStyle(JournalTheme.ink2)
+                ViewThatFits(in: .horizontal) {
+                    HStack(spacing: 12) { familyStatistics; Spacer(minLength: 8); if !showsAll { directoryLink } }
+                    VStack(alignment: .leading, spacing: 8) { familyStatistics; if !showsAll { directoryLink } }
                 }.padding(.top, 14)
             }
         }
     }
 
-    private var footer: some View {
+    private var familyStatistics: some View {
+        Text("\(members.members.count) 位家人 · \(memoryCount) 段回忆")
+            .font(JournalTheme.font(13)).foregroundStyle(JournalTheme.ink2)
+            .fixedSize(horizontal: false, vertical: true)
+    }
+    private var directoryLink: some View {
         Button { navigation.path.append(.familyFilms) } label: {
-            Text("查看全部 \(timeline.lanes.count) 位家人的胶卷 ›").font(JournalTheme.font(14.5)).foregroundStyle(JournalTheme.accentDeep)
-                .frame(maxWidth: .infinity).frame(height: 48)
-                .background(JournalTheme.soft, in: Capsule()).contentShape(Capsule())
-        }
-        .buttonStyle(JournalActionButtonStyle())
-        .accessibilityIdentifier(timeline.lanes.count > 3 ? "film.moreFamily" : "film.allFamily")
+            HStack(spacing: 4) { Text("查看全部家人"); DesignIcon("chev", size: 14).accessibilityHidden(true) }
+                .font(JournalTheme.font(13)).foregroundStyle(JournalTheme.ink2).frame(minHeight: 44)
+        }.buttonStyle(.plain)
+            .accessibilityIdentifier(timeline.lanes.count > 3 ? "film.moreFamily" : "film.allFamily")
     }
 
     private func reload() async {

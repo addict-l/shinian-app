@@ -69,8 +69,20 @@ import SwiftUI
             events.removeAll { $0.personIDs.contains(people[0].id) }
         }
         loadDesignMockup(screen: emptyState)
+        if emptyState == "chat-short-photo",
+           let data = UIImage(named: "DesignPhoto-dinner")?.jpegData(compressionQuality: 0.85) {
+            let photoID = UUID(uuidString: "00000000-0000-0000-0000-000000009001")!
+            photos[photoID] = data
+            conversation = [
+                ChatMessage(sender: .user, text: "", attachments: [ChatAttachment(id: photoID, url: "/api/v1/media/\(photoID)")]),
+                ChatMessage(sender: .ai, text: "照片已保存，您可以继续讲讲与这些照片有关的故事。")
+            ]
+            careLife = careLifeFixture(status: "confirmed")
+        }
         if let screen = emptyState, screen.hasPrefix("care-life") {
-            careLife = careLifeFixture(status: screen == "care-life-topics" ? "confirmed" : screen == "care-life-question" ? "collecting" : "review")
+            if screen == "care-life-review-v2" { careLife = careSkeletonFixture() }
+            else if screen == "care-life-question-v2" { careLife = careSkeletonFixture(status: "collecting") }
+            else { careLife = careLifeFixture(status: screen == "care-life-topics" ? "confirmed" : screen == "care-life-question" ? "collecting" : "review") }
         }
         if scrollFixture {
             conversation = (1...13).map { index in
@@ -269,6 +281,28 @@ import SwiftUI
     }
     /// 只在显式 Debug 预览入口启用；正式启动仍使用 BackendRepository。
     private let careQuestions = ["您小时候，住在什么样的地方？", "后来在哪里读书或学手艺？", "年轻时做过哪些工作？", "后来工作和生活有哪些变化？", "您最想聊聊哪位家人？", "有没有一次生活变化，您一直记得？", "您现在的日子是怎样的？"]
+    private let careSkeletonQuestions = ["您大概是什么时候出生的？", "您出生在哪个地方？", "您记忆中的家乡是什么样子的？", "您知道自己的名字有什么来历吗？", "您小时候主要跟谁一起生活？", "小时候家里主要靠什么维持生活？", "您有兄弟姐妹吗？", "小时候家里人相处得怎么样？", "从小到大，家里人通常怎样教导您？", "您会怎样形容自己的性格？", "想到自己这一生，您会用什么词来概括？"]
+    private func careSkeletonFixture(status: String = "review") -> LifeOverview {
+        let ids = ["SK01", "SK01b", "SK01c", "SK02", "SK03", "SK03b", "SK03c", "SK03d", "SK04", "SK05", "SK06"]
+        if status == "collecting" {
+            return LifeOverview(version: 1, status: status, required: true, paused: false,
+                fields: ids.map { LifeField(topic_id: $0, status: "pending", evidence: []) },
+                turns: [LifeTurn(id: UUID(), role: "assistant", content: careSkeletonQuestions[0])],
+                question_id: ids[0], question: careSkeletonQuestions[0], question_number: 1, total_questions: ids.count,
+                confirmed_version: nil, pending_request_id: nil, pending_action: nil)
+        }
+        let answers = ["我是一九四八年出生的，属鼠。", "湖南湘潭乡下，一个叫石塘的村子。", "", "建国是家里长辈取的，盼着好日子。", "跟爸妈还有奶奶一起住。", "种田，农闲时我爹去镇上做木工。", "我是老大，下面两个弟弟一个妹妹。", "一家人有商有量，吃饭时最热闹。", "", "我这人慢热，认准的事会慢慢做到底。", ""]
+        let states = ["known", "known", "skipped", "known", "known", "known", "known", "known", "unknown", "known", "declined"]
+        let turns = ids.indices.flatMap { index in
+            [LifeTurn(id: UUID(), role: "assistant", content: careSkeletonQuestions[index]),
+             LifeTurn(id: UUID(), role: "user", content: answers[index].isEmpty ? ["skipped": "这题先跳过。", "unknown": "这个记不清了。", "declined": "这一项暂时不想讲。"][states[index]]! : answers[index])]
+        }
+        return LifeOverview(version: 1, status: "review", required: true, paused: false,
+            fields: ids.indices.map { index in
+                LifeField(topic_id: ids[index], status: states[index], evidence: answers[index].isEmpty ? [] : [LifeQuote(message_id: turns[index * 2 + 1].id, quote: answers[index])])
+            }, turns: turns, question_id: nil, question: nil, question_number: 11, total_questions: 11,
+            confirmed_version: nil, pending_request_id: nil, pending_action: nil)
+    }
     private func careLifeFixture(status: String) -> LifeOverview {
         let ids = ["home", "learning", "early_work", "later_work", "family", "changes", "present"]
         let answers = ["小时候住在乡下，和父母一起生活。", "在村里的学校读书。", "年轻时在镇上的工厂工作。", "后来仍在工厂做工。", "我最牵挂的是家人。", "后来搬到了镇上。", "现在喜欢散步、养花。"]
@@ -295,15 +329,16 @@ import SwiftUI
         }
         var status = previous.status; var fields = previous.fields; var turns = previous.turns
         var number = previous.question_number; var paused = previous.paused
+        let questions = fields.contains { $0.topic_id.hasPrefix("SK") } ? careSkeletonQuestions : careQuestions
         switch command.action {
         case "begin": status = "collecting"; number = 1
         case "confirm": status = "confirmed"
         case "pause": paused = true
         case "answer":
-            let index = min(6, max(0, number - 1)); let id = UUID()
+            let index = min(fields.count - 1, max(0, number - 1)); let id = UUID()
             turns.append(LifeTurn(id: id, role: "user", content: command.text))
             fields[index] = LifeField(topic_id: fields[index].topic_id, status: command.text == "跳过" ? "skipped" : "known", evidence: command.text == "跳过" ? [] : [LifeQuote(message_id: id, quote: command.text)])
-            if number == 7 { status = "review" } else { number += 1; turns.append(LifeTurn(id: UUID(), role: "assistant", content: careQuestions[number - 1])) }
+            if number == questions.count { status = "review" } else { number += 1; turns.append(LifeTurn(id: UUID(), role: "assistant", content: questions[number - 1])) }
         case "correct":
             if let index = fields.firstIndex(where: { $0.topic_id == command.topic_id }) {
                 let id = UUID(); turns.append(LifeTurn(id: id, role: "user", content: command.text))
@@ -313,8 +348,8 @@ import SwiftUI
         }
         careCommands.insert(command.client_request_id)
         careLife = LifeOverview(version: previous.version + 1, status: status, required: true, paused: paused, fields: fields, turns: turns,
-            question_id: status == "collecting" ? fields[number - 1].topic_id : nil, question: status == "collecting" ? careQuestions[number - 1] : nil,
-            question_number: number, total_questions: 7, confirmed_version: status == "confirmed" ? previous.version + 1 : nil, pending_request_id: nil, pending_action: nil)
+            question_id: status == "collecting" ? fields[number - 1].topic_id : nil, question: status == "collecting" ? questions[number - 1] : nil,
+            question_number: number, total_questions: previous.total_questions, confirmed_version: status == "confirmed" ? previous.version + 1 : nil, pending_request_id: nil, pending_action: nil)
         return try await state(sessionID: sessionID)
     }
     func selectInterview(sessionID: UUID, module: String, version: Int) async throws -> ChatSnapshot {
