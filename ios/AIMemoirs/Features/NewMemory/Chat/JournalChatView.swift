@@ -27,6 +27,7 @@ struct JournalChatView: View {
     @FocusState private var inputFocused: Bool
     @State private var openedAt = Date()
     @State private var lifePresented = false
+    @State private var openedReviewRequestID: UUID?
     @State private var careHistoryPresented = false
     @State private var careContinuing = false
     @State private var autoFollow = JournalChatAutoFollow()
@@ -68,6 +69,9 @@ struct JournalChatView: View {
                 if phase == .background || dictation.phase != .preparing { dictation.cancel() }
                 model.pause()
             }
+        }
+        .onChange(of: model.reviewRequestMessageID) { _, request in
+            if request != nil && !model.isLoading { Task { await openRequestedReview() } }
         }
     }
 
@@ -159,7 +163,7 @@ struct JournalChatView: View {
                                 Circle().fill(JournalTheme.accent.opacity(0.6)).frame(width: 6, height: 6)
                                 Circle().fill(JournalTheme.accent.opacity(0.3)).frame(width: 6, height: 6)
                                 Text(previewScreen == "chat" || model.progressText.isEmpty ? "正在倾听与整理…" : model.progressText)
-                            }.font(JournalTheme.font(12)).foregroundStyle(JournalTheme.muted).padding(.leading, 38).padding(.top, -2)
+                            }.font(JournalTheme.font(12)).foregroundStyle(JournalTheme.muted).padding(.leading, 0).padding(.top, 6)
                                 .accessibilityElement(children: .combine)
                         }
                         if let error = model.errorMessage { JournalError(message: error, retryTitle: model.hasPendingSend ? "重试这条讲述" : "重试") { Task { if model.hasPendingSend { await send() } else if model.latestSnapshot == nil || model.canGenerate == false { await start() } else if !model.inputText.isEmpty || !model.photos.isEmpty { await send() } else { await generate() } } } }
@@ -344,19 +348,17 @@ struct JournalChatView: View {
                 previewPhoto = $0
             }
         } else {
-            HStack(alignment: .top, spacing: 8) {
-                DesignIcon("spark", size: 16).foregroundStyle(JournalTheme.butterInk)
-                    .frame(width: 30, height: 30).background(JournalTheme.butterSoft, in: Circle()).accessibilityHidden(true)
-                Text(message.text).font(JournalTheme.story(14.5)).lineSpacing(4).foregroundStyle(JournalTheme.ink)
+            VStack(alignment: .leading, spacing: 10) {
+                HStack(spacing: 6) {
+                    DesignIcon("spark", size: 14).accessibilityHidden(true)
+                    Text("AI 回忆助手")
+                }.font(JournalTheme.font(12)).foregroundStyle(JournalTheme.ink2)
+                Text(message.text).font(JournalTheme.story(15.5)).lineSpacing(6).foregroundStyle(JournalTheme.ink)
                     .fixedSize(horizontal: false, vertical: true)
-                    .padding(.horizontal, 14).padding(.vertical, 12)
-                    .background(JournalTheme.surface, in: UnevenRoundedRectangle(topLeadingRadius: 4, bottomLeadingRadius: 20, bottomTrailingRadius: 20, topTrailingRadius: 20))
-                    .overlay { UnevenRoundedRectangle(topLeadingRadius: 4, bottomLeadingRadius: 20, bottomTrailingRadius: 20, topTrailingRadius: 20).stroke(JournalTheme.line, lineWidth: 1) }
-                    .frame(maxWidth: 272, alignment: .leading)
-                Spacer(minLength: 0)
-            }
-            .accessibilityElement(children: .combine)
-            .padding(.top, 0)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .accessibilityIdentifier("chat.message.text.\(message.id)")
+            }.frame(maxWidth: 640, alignment: .leading).padding(.vertical, 10).accessibilityElement(children: .contain)
+                .accessibilityIdentifier("chat.assistant.\(message.id)")
         }
     }
 
@@ -452,7 +454,7 @@ struct JournalChatView: View {
         .accessibilityLabel(dictation.isRecording ? "停止语音输入" : dictation.phase == .preparing ? "取消准备语音" : "语音输入").accessibilityIdentifier("chat.dictation")
     }
 
-    private var sendDisabled: Bool { model.isLoading || readingPhotos || dictation.isBusy || model.isCompleted }
+    private var sendDisabled: Bool { model.isLoading || preparingDraft || readingPhotos || dictation.isBusy || model.isCompleted }
     private var sendButton: some View {
         Button { Task { await send() } } label: {
             DesignIcon("up")
@@ -480,6 +482,7 @@ struct JournalChatView: View {
     private func start() async {
         _ = await model.start(person: person)
         if previewScreen == "review" { await generate() }
+        else { await openRequestedReview() }
     }
     private func send() async {
         dictation.stop()
@@ -487,11 +490,19 @@ struct JournalChatView: View {
         guard !readingPhotos, !model.isLoading, !text.isEmpty || !model.photos.isEmpty || model.hasPendingSend else { return }
         if !care { autoFollow.resume() }
         inputFocused = false
-        if await model.send(text: text, person: person) == nil && !model.hasPendingSend {
+        let snapshot = await model.send(text: text, person: person)
+        if snapshot == nil && !model.hasPendingSend {
             // Validation/rejection returns editable text; transient failures keep
             // the pending message in the conversation and retry its original ID.
             model.inputText = text
         }
+        if snapshot != nil { await openRequestedReview() }
+    }
+    private func openRequestedReview() async {
+        guard let requestID = model.reviewRequestMessageID,
+              requestID != openedReviewRequestID else { return }
+        await generate()
+        if draftPreview != nil { openedReviewRequestID = requestID }
     }
     private func generate() async {
         dictation.stop()

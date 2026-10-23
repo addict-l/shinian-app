@@ -7,6 +7,8 @@ struct JournalMemoirView: View {
     @State private var step = 0
     @Environment(\.dismiss) private var dismiss
     @State private var coverPicker = false
+    @State private var editorPanel: MemoirEditorPanel?
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @State private var adjustingCover = false
     @State private var cropID: UUID?
     @State private var photoStory: MemoryEvent?
@@ -23,27 +25,31 @@ struct JournalMemoirView: View {
         VStack(spacing: 0) {
             JournalNavBar(title: "制作回忆录") {
                 JournalRoundButton(icon: "x", label: "关闭回忆录") { dismiss() }
-            } trailing: { Color.clear.frame(width: 44, height: 44) }
+            } trailing: { syncStatus }
+                .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
             steps.padding(.horizontal, JournalTheme.gutter).padding(.top, 2).padding(.bottom, 14)
-            syncStatus
             if model.conflict != nil { conflictPanel }
             if let error = model.error {
                 Text(error).font(JournalTheme.font(13)).foregroundStyle(.red)
                     .frame(maxWidth: .infinity, alignment: .leading).padding(.horizontal, 24).padding(.bottom, 12)
                     .accessibilityIdentifier("memoir-error")
+                if model.conflict == nil {
+                    Button("重试同步") { Task { await model.load() } }.frame(minHeight: 44).accessibilityIdentifier("memoir-sync-retry")
+                }
             }
             Group {
                 if step == 0 { coverStep }
                 else if step == 1 { contentStep }
                 else { previewStep }
             }.frame(maxWidth: .infinity, maxHeight: .infinity)
-            if step > 0 { actions.padding(.horizontal, 24).padding(.vertical, 12).background(JournalTheme.paper) }
+            actions.padding(.horizontal, 24).padding(.vertical, 12).background(JournalTheme.paper)
         }
         .journalPage()
         .task { await model.load() }
+        .onChange(of: model.preview?.url) { _, _ in readingPage = 1 }
         .onChange(of: scenePhase) { _, phase in if phase == .active { Task { await model.load() } } }
         .sheet(isPresented: $coverPicker) { coverPhotos }
-        .sheet(isPresented: $adjustingCover) { coverCropEditor }
+        .sheet(item: $editorPanel) { panel in editor(panel) }
         .onChange(of: model.settings.coverTemplate) { _, _ in cropID = nil; adjustingCover = false }
         .onChange(of: model.activeCover.map(\.id)) { _, ids in
             if ids.isEmpty { adjustingCover = false }
@@ -62,81 +68,111 @@ struct JournalMemoirView: View {
         } message: { Text("故事或制作设置已变化。请查看重新生成的版本，再分享。当前预览仍保留。") }
     }
     private var steps: some View {
-        VStack(spacing: 8) {
-            HStack(spacing: 6) {
-                ForEach(0..<3) { index in Capsule().fill(index <= step ? JournalTheme.accent : JournalTheme.line).frame(height: 5) }
+        Group {
+            if dynamicTypeSize.isAccessibilitySize {
+                Text("第 \(step + 1) 步 · \(["封面", "故事与照片", "整本预览"][step])")
+                    .font(.headline).frame(maxWidth: .infinity, alignment: .leading)
+            } else {
+                HStack(spacing: 8) {
+                    ForEach(0..<3) { index in
+                        if index > 0 { Rectangle().fill(JournalTheme.line).frame(maxWidth: 24).frame(height: 1).accessibilityHidden(true) }
+                        HStack(spacing: 6) {
+                            Text(String(index + 1)).font(JournalTheme.font(11, medium: true))
+                                .frame(width: 23, height: 23)
+                                .foregroundStyle(index == step ? JournalTheme.surface : JournalTheme.ink2)
+                                .background(index == step ? JournalTheme.accentDeep : JournalTheme.paper, in: Circle())
+                                .overlay { Circle().stroke(index == step ? JournalTheme.accentDeep : JournalTheme.line, lineWidth: 1) }
+                            Text(["封面", "故事与照片", "整本预览"][index]).font(JournalTheme.font(12, medium: index == step))
+                                .foregroundStyle(index == step ? JournalTheme.accentDeep : JournalTheme.ink2)
+                        }.accessibilityElement(children: .combine).accessibilityAddTraits(index == step ? .isSelected : [])
+                    }
+                }.frame(maxWidth: .infinity).frame(minHeight: 44)
             }
-            HStack {
-                ForEach(Array(["① 封面", "② 故事与照片", "③ 整本预览"].enumerated()), id: \.offset) { index, title in
-                    if index > 0 { Spacer() }
-                    Text(title).font(JournalTheme.font(12)).foregroundStyle(index == step ? JournalTheme.accentDeep : JournalTheme.muted)
-                        .accessibilityAddTraits(index == step ? .isSelected : [])
-                }
-            }
-        }
+        }.accessibilityIdentifier("memoir-stepper")
     }
     private var coverStep: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 0) {
-                Text("为这些故事，做一本书").font(JournalTheme.story(22))
-                bookCover.frame(maxWidth: .infinity).padding(.top, 14)
-                Text("A5 竖版 · 电子阅读与打印")
-                    .font(JournalTheme.font(12)).foregroundStyle(JournalTheme.muted).frame(maxWidth: .infinity).padding(.top, 10)
-                if model.settings.coverTemplate != .text {
-                    HStack(spacing: 20) {
-                        Button(model.activeCover.isEmpty ? "选择封面照片" : "更换封面照片") { coverPicker = true }
-                            .accessibilityIdentifier("memoir-cover-photos")
-                        if !model.activeCover.isEmpty {
-                            Button("调整照片取景") { adjustingCover = true }
-                                .accessibilityIdentifier("memoir-cover-crop")
-                        }
-                    }.font(JournalTheme.font(13)).foregroundStyle(JournalTheme.accentDeep)
-                        .frame(maxWidth: .infinity).frame(minHeight: 44).padding(.top, 4)
-                    if model.invalidCover {
-                        Text("请选择可用的封面照片；原故事删除后需要重新选择。")
-                            .font(JournalTheme.font(12)).foregroundStyle(JournalTheme.muted).padding(.top, 4)
-                    }
+            VStack(spacing: 0) {
+                bookCover.padding(.top, 20)
+                Text(model.person.name + "的回忆录 · A5 竖版")
+                    .font(JournalTheme.font(12)).foregroundStyle(JournalTheme.ink2)
+                    .multilineTextAlignment(.center).padding(.top, 20).padding(.bottom, 30)
+                VStack(spacing: 0) {
+                    MemoirSettingRow(icon: "book", title: "封面样式", value: model.settings.coverTemplate.editorTitle) { editorPanel = .style }
+                        .accessibilityIdentifier("memoir-edit-style")
+                    rowDivider
+                    MemoirSettingRow(icon: "image", title: "封面照片", detail: model.settings.coverTemplate == .text ? "素雅封面使用纯文字" : "更换照片与调整取景") { coverPicker = true }
+                        .accessibilityIdentifier("memoir-cover-photos")
+                    rowDivider
+                    MemoirSettingRow(icon: "edit", title: "书名与副标题", detail: model.settings.title) { editorPanel = .name }
+                        .accessibilityIdentifier("memoir-edit-name")
+                }.background(JournalTheme.surface, in: RoundedRectangle(cornerRadius: 18))
+                    .overlay { RoundedRectangle(cornerRadius: 18).stroke(JournalTheme.line, lineWidth: 1) }
+                    .accessibilityElement(children: .contain).accessibilityIdentifier("memoir-editing-group")
+                if model.invalidCover {
+                    Text("请选择可用的封面照片，或改用素雅封面。")
+                        .font(.footnote).foregroundStyle(JournalTheme.ink2).padding(.top, 12)
                 }
-                Text("封面样式").font(JournalTheme.font(14, medium: true)).padding(.top, 14)
-                HStack(spacing: 10) {
-                    coverOption(.photo, title: "暖纸", fill: Color(hex: 0xF4E6D3), ink: JournalTheme.accentDeep)
-                    coverOption(.collage, title: "拼贴", fill: JournalTheme.sageSoft, ink: JournalTheme.sageInk)
-                    coverOption(.text, title: "素雅", fill: JournalTheme.ink, ink: Color(hex: 0xF4E6D3))
-                }.padding(.top, 8)
-                JournalFieldBox(label: "回忆录名称", vertical: 10) {
-                    TextField("回忆录名称", text: $model.settings.title).accessibilityIdentifier("memoir-title")
-                }.padding(.top, 12)
-                JournalFieldBox(label: "副标题（选填）", vertical: 10) {
-                    TextField("写一句想留在封面上的话", text: $model.settings.subtitle).font(JournalTheme.font(15))
-                }.padding(.top, 8)
-                JournalButton(title: "下一步：整理内容", disabled: model.busy || !model.settings.valid || model.invalidCover || model.stories.isEmpty || model.conflict != nil) { step = 1 }
-                    .padding(.top, 14).accessibilityIdentifier("memoir-next")
-            }.padding(.horizontal, JournalTheme.gutter).padding(.bottom, 24)
+                if model.stories.isEmpty && !model.busy {
+                    Text("先保存一段回忆，就可以制作这本书。")
+                        .font(.footnote).foregroundStyle(JournalTheme.ink2).padding(.top, 12)
+                }
+            }.padding(.horizontal, 24).padding(.bottom, 24)
         }.scrollIndicators(.hidden)
     }
-    private func coverOption(_ template: MemoirCover, title: String, fill: Color, ink: Color) -> some View {
-        Button { model.settings.coverTemplate = template } label: {
-            Text(title).font(JournalTheme.font(12.5)).foregroundStyle(ink).frame(maxWidth: .infinity).frame(height: 52)
-                .background(fill, in: RoundedRectangle(cornerRadius: 14))
-                .overlay { RoundedRectangle(cornerRadius: 14).stroke(model.settings.coverTemplate == template ? JournalTheme.accent : JournalTheme.line, lineWidth: model.settings.coverTemplate == template ? 2 : 1) }
-        }.buttonStyle(JournalActionButtonStyle())
-            .accessibilityIdentifier("memoir.template.\(template.rawValue)")
-            .accessibilityAddTraits(model.settings.coverTemplate == template ? .isSelected : [])
-    }
+    private var rowDivider: some View { JournalTheme.line.frame(height: 1).padding(.horizontal, 18) }
     private var syncStatus: some View {
-        HStack(spacing: 8) {
-            if model.busy { ProgressView().controlSize(.small) }
-            Text(model.syncLabel).accessibilityIdentifier("memoir-sync-status")
-            Spacer()
-            if model.error != nil && model.conflict == nil {
-                Button("重试同步") { Task { await model.load() } }.frame(minHeight: 44)
-                    .accessibilityIdentifier("memoir-sync-retry")
-            }
-        }.font(JournalTheme.font(12)).foregroundStyle(JournalTheme.muted)
-            .padding(.horizontal, JournalTheme.gutter).padding(.bottom, 6)
+        HStack(spacing: 4) {
+            if model.busy { ProgressView().controlSize(.mini) }
+            Text(model.syncLabel).lineLimit(1).minimumScaleFactor(0.8).accessibilityIdentifier("memoir-sync-status")
+        }.font(JournalTheme.font(11)).foregroundStyle(JournalTheme.ink2).frame(maxWidth: 92, alignment: .trailing)
     }
+    private func editor(_ panel: MemoirEditorPanel) -> some View {
+        NavigationStack {
+            Group {
+                switch panel {
+                case .style:
+                    ScrollView {
+                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 90), spacing: 16)], spacing: 20) {
+                            ForEach([MemoirCover.photo, .collage, .text], id: \.self) { template in
+                                Button { model.settings.coverTemplate = template } label: {
+                                    VStack(spacing: 12) {
+                                        Image(uiImage: MemoirPDFRenderer.coverImage(settings: templateSettings(template), personName: model.person.name, photos: model.thumbnails))
+                                            .resizable().aspectRatio(148 / 210, contentMode: .fit)
+                                            .overlay { RoundedRectangle(cornerRadius: 4).stroke(model.settings.coverTemplate == template ? JournalTheme.accentDeep : JournalTheme.line, lineWidth: 2) }
+                                        HStack(spacing: 4) {
+                                            Text(template.editorTitle)
+                                            if model.settings.coverTemplate == template { Image(systemName: "checkmark.circle.fill") }
+                                        }.font(.subheadline).foregroundStyle(JournalTheme.ink)
+                                    }.padding(6)
+                                }.buttonStyle(.plain).accessibilityIdentifier("memoir.template.\(template.rawValue)")
+                                    .accessibilityAddTraits(model.settings.coverTemplate == template ? .isSelected : [])
+                            }
+                        }.padding(24)
+                        Text("书名、照片和取景设置会保留。素雅封面使用纯文字。").font(.footnote).foregroundStyle(JournalTheme.ink2).padding(.horizontal, 24)
+                    }
+                case .name:
+                    Form {
+                        Section("书名") { TextField("回忆录名称", text: $model.settings.title).accessibilityIdentifier("memoir-title") }
+                        Section("副标题（选填）") { TextField("写一句想留在封面上的话", text: $model.settings.subtitle).accessibilityIdentifier("memoir-subtitle") }
+                        if !model.settings.valid { Section { Text("请填写书名（最多 200 字），副标题最多 300 字。").foregroundStyle(JournalTheme.danger) } }
+                    }.scrollDismissesKeyboard(.interactively).scrollContentBackground(.hidden)
+                case .reading:
+                    Form {
+                        Section("正文字号") {
+                            Picker("字号", selection: $model.settings.textSize) { Text("大字 · 16 pt").tag(16); Text("标准 · 14 pt").tag(14) }
+                                .accessibilityIdentifier("memoir-text-size")
+                            Text("字号调整后，需要重新生成整本预览。").font(.footnote).foregroundStyle(JournalTheme.ink2)
+                        }
+                    }.scrollContentBackground(.hidden)
+                }
+            }.background(JournalTheme.paper).navigationTitle(panel.title).navigationBarTitleDisplayMode(.inline)
+                .toolbar { ToolbarItem(placement: .confirmationAction) { Button("完成") { editorPanel = nil } } }
+        }
+    }
+    private func templateSettings(_ template: MemoirCover) -> MemoirSettings { var result = model.settings; result.coverTemplate = template; return result }
     private var bookCover: some View {
-        coverImage.frame(width: 176, height: 248)
+        coverImage.frame(width: 200, height: 200 * 210 / 148)
             .overlay(alignment: .trailing) { Color(hex: 0xE2CDB2).opacity(0.5).frame(width: 5) }
             .clipShape(UnevenRoundedRectangle(topLeadingRadius: 4, bottomLeadingRadius: 4, bottomTrailingRadius: 14, topTrailingRadius: 14))
             .shadow(color: Color(hex: 0x785028).opacity(0.25), radius: 15, x: 0, y: 18)
@@ -204,7 +240,7 @@ struct JournalMemoirView: View {
                     Button("移除") { model.settings.coverPhotos.remove(at: index); cropID = nil }.frame(minHeight: 44)
                 }.font(JournalTheme.font(13))
             }
-            Text("可在上方封面中拖动或双指缩放，也可使用滑块。故事中的照片不会被裁剪。").font(JournalTheme.font(12)).foregroundStyle(JournalTheme.muted)
+            Text("可在上方封面中拖动或双指缩放，也可使用滑块。故事中的照片不会被裁剪。").font(JournalTheme.font(12)).foregroundStyle(JournalTheme.ink2)
         }
     }
     private func cropSlider(_ title: String, value: Binding<Double>, range: ClosedRange<Double>) -> some View {
@@ -213,36 +249,61 @@ struct JournalMemoirView: View {
     private var contentStep: some View {
         List {
             Section {
-                Picker("正文字号", selection: $model.settings.textSize) {
-                    Text("大字 · 16 pt").tag(16); Text("标准 · 14 pt").tag(14)
+                VStack(alignment: .leading, spacing: 8) {
+                ViewThatFits(in: .horizontal) {
+                    HStack { Text("全部 \(model.stories.count) 篇回忆").font(JournalTheme.story(20)); Spacer(); readingSettingsButton }
+                    VStack(alignment: .leading, spacing: 8) { Text("全部 \(model.stories.count) 篇回忆").font(JournalTheme.story(20)); readingSettingsButton }
                 }
                 HStack {
                     Text(model.settings.ordering == "manual" ? "手动顺序" : "按故事时间排序")
-                    Spacer()
-                    Button("恢复时间排序") { resettingOrder = true }.disabled(model.settings.ordering == "time")
-                }.font(JournalTheme.font(13))
-                Text("全部 \(model.stories.count) 段已保存回忆都会收录。每篇另起页，照片跟在正文之后。")
-                    .font(JournalTheme.font(12)).foregroundStyle(JournalTheme.muted)
-            }
+                    Spacer(minLength: 8)
+                    Button("恢复时间排序") { resettingOrder = true }.buttonStyle(.borderless).frame(minHeight: 44).disabled(model.settings.ordering == "time").accessibilityIdentifier("memoir-restore-order")
+                }.font(.subheadline).foregroundStyle(JournalTheme.ink2)
+                Text("每篇回忆完整收录。可调整章节和照片的顺序。").font(.footnote).foregroundStyle(JournalTheme.ink2)
+                }.padding(.vertical, 8)
+            }.listRowBackground(Color.clear).listRowSeparator(.hidden)
             Section {
-                ForEach(model.stories) { story in
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text(story.title).font(JournalTheme.font(16, medium: true))
-                        Text(story.dateLabel).font(JournalTheme.font(12)).foregroundStyle(JournalTheme.muted)
-                        HStack {
-                            Button("照片 \(model.settings.selectedPhotos(story).count)/\(story.mediaAssets.count)") { photoStory = story }.frame(minHeight: 44)
-                            Spacer()
-                            Button { moveStory(story, offset: -1) } label: { Image(systemName: "arrow.up").frame(width: 44, height: 44) }
-                                .accessibilityLabel("上移\(story.title)").disabled(model.stories.first?.id == story.id)
-                            Button { moveStory(story, offset: 1) } label: { Image(systemName: "arrow.down").frame(width: 44, height: 44) }
-                                .accessibilityLabel("下移\(story.title)").disabled(model.stories.last?.id == story.id)
-                        }.buttonStyle(.borderless).font(JournalTheme.font(13))
-                    }.padding(.vertical, 8)
+                ForEach(Array(model.stories.enumerated()), id: \.element.id) { index, story in
+                    VStack(alignment: .leading, spacing: 12) {
+                        HStack(alignment: .top, spacing: 14) {
+                            Text(String(format: "%02d", index + 1)).font(JournalTheme.story(20)).foregroundStyle(JournalTheme.accentDeep).frame(minWidth: 28)
+                            VStack(alignment: .leading, spacing: 6) {
+                                Text(story.title).font(JournalTheme.story(18)).fixedSize(horizontal: false, vertical: true)
+                                Text(story.dateLabel).font(.footnote).foregroundStyle(JournalTheme.ink2)
+                            }.frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                        let photos = model.settings.selectedPhotos(story)
+                        if !photos.isEmpty {
+                            ScrollView(.horizontal) {
+                                HStack(spacing: 8) { ForEach(photos) { photo in thumbnail(photo.id).frame(width: 72, height: 56).background(JournalTheme.surface, in: RoundedRectangle(cornerRadius: 6)).clipped() } }
+                            }.scrollIndicators(.hidden).padding(.leading, 42)
+                        }
+                        ViewThatFits(in: .horizontal) {
+                            HStack { storyPhotosButton(story); Spacer(minLength: 0); storyMoveButtons(story) }
+                            VStack(alignment: .leading, spacing: 8) { storyPhotosButton(story); storyMoveButtons(story) }
+                        }.padding(.leading, 42)
+                    }.padding(.vertical, 16).accessibilityElement(children: .contain).accessibilityIdentifier("memoir.chapter.\(story.id)")
                 }.onMove { model.moveStory(from: $0, to: $1) }
-            } header: {
-                HStack { Text("故事与照片"); Spacer(); EditButton() }
-            }
-        }.listRowBackground(JournalTheme.surface).scrollContentBackground(.hidden).listStyle(.insetGrouped)
+            } header: { HStack { Text("章节顺序"); Spacer(); EditButton().accessibilityIdentifier("memoir-edit-order") } }
+                .listRowBackground(Color.clear)
+        }.scrollContentBackground(.hidden).listStyle(.plain).contentMargins(.horizontal, 24)
+    }
+    private var readingSettingsButton: some View {
+        Button("阅读设置 ›") { editorPanel = .reading }.buttonStyle(.borderless).font(.subheadline).frame(minHeight: 44).accessibilityIdentifier("memoir-reading-settings")
+    }
+    private func storyPhotosButton(_ story: MemoryEvent) -> some View {
+        Button { photoStory = story } label: {
+            Text(story.mediaAssets.isEmpty ? "没有照片 · 正文完整收录" : "\(model.settings.selectedPhotos(story).count) / \(story.mediaAssets.count) 张照片 · 选择与排序 ›")
+                .font(.footnote).foregroundStyle(JournalTheme.ink2).fixedSize(horizontal: false, vertical: true).frame(minHeight: 44)
+        }.buttonStyle(.borderless).accessibilityIdentifier("memoir-story-photos.\(story.id)")
+    }
+    private func storyMoveButtons(_ story: MemoryEvent) -> some View {
+        HStack(spacing: 4) {
+            Button { moveStory(story, offset: -1) } label: { Image(systemName: "arrow.up").frame(width: 44, height: 44) }
+                .accessibilityIdentifier("memoir.move-up.\(story.id)").accessibilityLabel("上移\(story.title)").disabled(model.stories.first?.id == story.id)
+            Button { moveStory(story, offset: 1) } label: { Image(systemName: "arrow.down").frame(width: 44, height: 44) }
+                .accessibilityIdentifier("memoir.move-down.\(story.id)").accessibilityLabel("下移\(story.title)").disabled(model.stories.last?.id == story.id)
+        }.buttonStyle(.borderless).foregroundStyle(JournalTheme.ink2)
     }
     private func moveStory(_ story: MemoryEvent, offset: Int) {
         guard let i = model.stories.firstIndex(where: { $0.id == story.id }) else { return }
@@ -251,13 +312,18 @@ struct JournalMemoirView: View {
     private var previewStep: some View {
         VStack(spacing: 12) {
             if let preview = model.preview {
-                HStack { Text("第 \(readingPage) / \(preview.pageCount) 页"); Spacer(); Text("双指可缩放") }
-                    .font(JournalTheme.font(12)).foregroundStyle(JournalTheme.muted).padding(.horizontal, 24)
+                HStack {
+                    Text("第 \(readingPage) / \(preview.pageCount) 页").accessibilityIdentifier("memoir-page-count")
+                    Spacer()
+                    Button("重新生成") { Task { await model.generatePreview() } }.frame(minHeight: 44).disabled(model.busy).accessibilityIdentifier("memoir-regenerate")
+                }
+                    .font(JournalTheme.font(12)).foregroundStyle(JournalTheme.ink2).padding(.horizontal, 24)
+                Text("上下翻阅 · 双指缩放").font(.footnote).foregroundStyle(JournalTheme.ink2)
                 MemoirPDFReader(url: preview.url, currentPage: $readingPage).accessibilityIdentifier("memoir-pdf")
             } else {
                 Spacer(); Image(systemName: "book.closed").font(.system(size: 40)).foregroundStyle(JournalTheme.accent)
                 Text(model.busy ? "正在准备照片与排版…" : "预览整本回忆录").font(JournalTheme.story(22))
-                Text("封面、目录、故事和照片会排成同一份 PDF。").font(JournalTheme.font(13)).foregroundStyle(JournalTheme.muted)
+                Text("封面、目录、故事和照片会排成同一份 PDF。").font(JournalTheme.font(13)).foregroundStyle(JournalTheme.ink2)
                 Spacer()
             }
             if !model.failures.isEmpty {
@@ -279,22 +345,29 @@ struct JournalMemoirView: View {
         }
     }
     private var actions: some View {
-        HStack(spacing: 12) {
-            if step > 0 { Button("上一步") { step -= 1 }.font(JournalTheme.font(14)).frame(minWidth: 64, minHeight: 54) }
-            if step < 2 {
-                JournalButton(title: step == 0 ? "下一步：整理内容" : "生成整本预览", loading: model.busy,
-                    disabled: !model.settings.valid || model.snapshot == nil || model.conflict != nil || model.stories.isEmpty) {
-                    if step == 0 { step = 1 } else { step = 2; Task { await model.generatePreview() } }
-                }
-            } else {
-                JournalButton(title: model.preview == nil || !model.failures.isEmpty ? "重试生成预览" : "重新生成", secondary: true, loading: model.busy) {
-                    Task { await model.generatePreview() }
-                }
-                if model.preview != nil {
-                    JournalButton(title: "分享／存到文件", loading: model.busy, disabled: model.conflict != nil) {
-                        Task { if let url = await model.verifiedShareURL() { share = MemoirShareFile(url: url) } }
-                    }.accessibilityIdentifier("memoir-share")
-                }
+        ViewThatFits(in: .horizontal) {
+            HStack(spacing: 12) { actionButtons }
+            VStack(spacing: 8) { actionButtons }
+        }
+    }
+    @ViewBuilder private var actionButtons: some View {
+        if step > 0 {
+            Button("上一步") { step -= 1 }.font(.subheadline).frame(minWidth: 64, minHeight: 44).accessibilityIdentifier("memoir-back")
+        }
+        if step < 2 {
+            MemoirActionButton(title: step == 0 ? "下一步：整理内容" : "生成整本预览", loading: model.busy,
+                disabled: !model.settings.valid || model.invalidCover || model.snapshot == nil || model.conflict != nil || model.stories.isEmpty) {
+                if step == 0 { step = 1 } else { step = 2; Task { await model.generatePreview() } }
+            }.accessibilityIdentifier(step == 0 ? "memoir-next" : "memoir-generate")
+        } else {
+            if model.preview == nil || !model.failures.isEmpty {
+                MemoirActionButton(title: "重试生成预览", secondary: true, loading: model.busy) { Task { await model.generatePreview() } }
+                    .accessibilityIdentifier("memoir-retry-preview")
+            }
+            if model.preview != nil {
+                MemoirActionButton(title: "分享／存到文件", loading: model.busy, disabled: model.conflict != nil) {
+                    Task { if let url = await model.verifiedShareURL() { share = MemoirShareFile(url: url) } }
+                }.accessibilityIdentifier("memoir-share")
             }
         }
     }
@@ -304,7 +377,7 @@ struct JournalMemoirView: View {
             if let remote = model.conflict {
                 Text("本机：\(model.settings.title) · \(model.settings.coverTemplate.title)\n云端：\(remote.settings.title) · \(remote.settings.coverTemplate.title)").font(JournalTheme.font(13))
                 Text("本机顺序：\(orderSummary(model.settings, stories: model.snapshot?.stories ?? []))\n云端顺序：\(orderSummary(remote.settings, stories: remote.stories))")
-                    .font(JournalTheme.font(12)).foregroundStyle(JournalTheme.muted)
+                    .font(JournalTheme.font(12)).foregroundStyle(JournalTheme.ink2)
                 Text("封面照片、取景、副标题和照片选择也会使用所选版本。").font(JournalTheme.font(12))
                 Button("查看完整差异") { comparingVersions = true; Task { await model.loadThumbnails() } }.frame(minHeight: 44)
             }
@@ -340,7 +413,7 @@ struct JournalMemoirView: View {
             }
             ForEach(settings.coverPhotos) { photo in
                 Text("封面第 \((settings.coverPhotos.firstIndex { $0.id == photo.id } ?? 0) + 1) 张：缩放 \(photo.zoom, specifier: "%.2f")，左右 \(photo.x, specifier: "%.2f")，上下 \(photo.y, specifier: "%.2f")")
-                    .font(JournalTheme.font(12)).foregroundStyle(JournalTheme.muted)
+                    .font(JournalTheme.font(12)).foregroundStyle(JournalTheme.ink2)
             }
         }
     }
@@ -350,15 +423,23 @@ struct JournalMemoirView: View {
     }
     @ViewBuilder private func thumbnail(_ id: UUID) -> some View {
         if let image = model.thumbnails[id] { Image(uiImage: image).resizable().scaledToFit() }
-        else { Image(systemName: "photo").foregroundStyle(JournalTheme.muted).frame(maxWidth: .infinity, maxHeight: .infinity).background(JournalTheme.soft) }
+        else { Image(systemName: "photo").foregroundStyle(JournalTheme.ink2).frame(maxWidth: .infinity, maxHeight: .infinity).background(JournalTheme.soft) }
     }
     private var coverPhotos: some View {
         NavigationStack {
             List {
                 Section {
+                    coverImage.frame(maxWidth: 170).frame(maxWidth: .infinity).padding(.vertical, 8)
+                    if !model.activeCover.isEmpty {
+                        Button("调整照片取景") { adjustingCover = true }.frame(minHeight: 44).accessibilityIdentifier("memoir-cover-crop")
+                    }
+                    if model.settings.coverTemplate == .text {
+                        Text("素雅封面使用纯文字。要加入照片，请在封面样式中选择暖纸或拼贴。")
+                            .font(.subheadline).foregroundStyle(JournalTheme.ink2)
+                    }
                     PhotosPicker(selection: $library, maxSelectionCount: model.settings.coverTemplate.limit, matching: .images) {
                         Label("从手机相册选择", systemImage: "photo.on.rectangle").frame(minHeight: 44)
-                    }.onChange(of: library) { _, items in
+                    }.disabled(model.settings.coverTemplate == .text).onChange(of: library) { _, items in
                         Task {
                             for item in items {
                                 do {
@@ -370,7 +451,7 @@ struct JournalMemoirView: View {
                         }
                     }
                     Text("相册封面照片独立保存，不会自动加入故事。拼贴最多三张。")
-                        .font(JournalTheme.font(12)).foregroundStyle(JournalTheme.muted)
+                        .font(JournalTheme.font(12)).foregroundStyle(JournalTheme.ink2)
                 }
                 ForEach(model.stories) { story in
                     Section(story.title) {
@@ -383,18 +464,19 @@ struct JournalMemoirView: View {
                                     if model.activeCover.contains(where: { $0.id == photo.id }) { Image(systemName: "checkmark.circle.fill") }
                                 }
                             }
+                            .disabled(model.settings.coverTemplate == .text)
                             .accessibilityLabel("选择这张照片")
                             .accessibilityIdentifier("memoir.coverPhoto.\(photo.id)")
                         }
                     }
                 }
-            }.navigationTitle("封面照片").toolbar { ToolbarItem(placement: .confirmationAction) { Button("完成") { coverPicker = false } } }
-        }
+            }.scrollContentBackground(.hidden).background(JournalTheme.paper).navigationTitle("封面照片").navigationBarTitleDisplayMode(.inline).toolbar { ToolbarItem(placement: .confirmationAction) { Button("完成") { coverPicker = false } } }
+        }.sheet(isPresented: $adjustingCover) { coverCropEditor }
     }
     private func photoOptions(_ story: MemoryEvent) -> some View {
         NavigationStack {
             List {
-                Section { Text("选中的照片排在这篇故事之后，保留完整画面。取消选择只影响回忆录。").font(JournalTheme.font(13)).foregroundStyle(JournalTheme.muted) }
+                Section { Text("选中的照片排在这篇故事之后，保留完整画面。取消选择只影响回忆录。").font(JournalTheme.font(13)).foregroundStyle(JournalTheme.ink2) }
                 ForEach(model.settings.photos(story)) { photo in
                     HStack {
                         thumbnail(photo.id).frame(width: 72, height: 72)
@@ -409,7 +491,7 @@ struct JournalMemoirView: View {
                     }
                 }.onMove { model.movePhoto(story: story, from: $0, to: $1) }
                 if story.mediaAssets.isEmpty { Text("这篇故事没有照片，正文仍会完整收录。") }
-            }.environment(\.editMode, .constant(.active))
+            }.scrollContentBackground(.hidden).background(JournalTheme.paper).environment(\.editMode, .constant(.active))
                 .navigationTitle("故事照片").toolbar { ToolbarItem(placement: .confirmationAction) { Button("完成") { photoStory = nil } } }
         }
     }

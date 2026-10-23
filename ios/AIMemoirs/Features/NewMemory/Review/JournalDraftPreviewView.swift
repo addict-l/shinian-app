@@ -62,6 +62,11 @@ struct JournalDraftPreviewView: View {
                     saved = true
                 } else { await onSaved() }
             })
+            .onAppear {
+                if draft.hasNewNarration {
+                    saveModel.errorMessage = "手动修改的草稿已保留。聊天中还有新讲述，请先重新生成并核对，再确认保存。"
+                }
+            }
             .alert("重新生成草稿？", isPresented: $confirmRegeneration) {
                 Button("保留当前草稿", role: .cancel) {}
                 Button("确认重新生成", role: .destructive) { Task { await regenerate() } }

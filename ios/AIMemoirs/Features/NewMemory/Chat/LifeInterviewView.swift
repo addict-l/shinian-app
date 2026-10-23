@@ -348,6 +348,7 @@ struct LifeInterviewView: View {
             let value = try await api.lifeAction(sessionID: snapshot.sessionID, command: command)
             update(value); pending = nil; UserDefaults.standard.removeObject(forKey: commandKey)
             if command.action == "answer" { input = "" }
+            if value.reviewRequest != nil { onEnter(value) }
         } catch {
             self.error = error.localizedDescription
             if isVersionConflict(error) { pending = nil; UserDefaults.standard.removeObject(forKey: commandKey) }

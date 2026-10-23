@@ -11,6 +11,7 @@ struct ChatSnapshot: Codable {
     var readiness: StoryReadiness? = nil
     var generationOffer: GenerationOffer? = nil
     var currentMessageIDs: [UUID]? = nil
+    var reviewRequest: GenerationOffer? = nil
 }
 struct GeneratedMemory {
     let draftID: UUID
@@ -19,6 +20,7 @@ struct GeneratedMemory {
     let preview: EventData
     var manuallyEdited = false
     var timeReviewFrom: InformationDimension? = nil
+    var hasNewNarration = false
 }
 @MainActor protocol FamilyAPI {
     func members() async throws -> [FamilyMember]

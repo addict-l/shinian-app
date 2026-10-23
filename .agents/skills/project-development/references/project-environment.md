@@ -36,6 +36,15 @@
 
 截图采集中可临时使用上述参数固定模式；结束后必须终止该进程，移除上述参数重新启动，再交付用户操作。模式切换和重启持久化验收也须使用无此参数的启动方式。
 
+### 模拟器实体键盘（用户固定约定）
+
+用户于 2026-10-21 明确要求：在 iOS 模拟器中使用运行它的 Mac 所连接的实体键盘输入，输入法固定为简体拼音。
+
+- Simulator 的 `I/O → Keyboard → Connect Hardware Keyboard` 和 `Use the Same Keyboard Language as macOS` 均保持开启。
+- Mac 输入源保持“简体拼音”；模拟器仅保留简体中文拼音。点击应用输入框后直接使用 Mac 的实体键盘，空格键选择汉字，无需点按屏幕键盘。
+- 后续开发、自动化、运行和验证均沿用此设置。用户已明确禁止更改，不能为了测试关闭硬件键盘、切换输入法或重置键盘配置；测试方案须适配此约定。
+- 这是代理操作的固定约束，不通过系统权限或设备管理策略封锁用户自行调整设置。
+
 建议先从 Xcode 选择 `ios/AIMemoirs.xcodeproj`、`AIMemoirs` Scheme 和现有 iPhone 17 Pro 模拟器，再执行构建和运行。命令行构建可使用 `xcodebuild -project ios/AIMemoirs.xcodeproj -scheme AIMemoirs -configuration Debug -destination 'platform=iOS Simulator,id=8801F7F7-7154-4AEB-88F2-1E77A8393190' build`；具体签名与本机设备状态以 Xcode 实际结果为准。
 
 ## Android 前端

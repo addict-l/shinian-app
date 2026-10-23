@@ -89,23 +89,31 @@ final class BetterUIFlowTests: XCTestCase {
     }
     @MainActor func testCoverCropAndCollageCanBeAdjustedWithoutBlockingPageScroll() {
         let app = launch("memoir")
+        tap(app.buttons["memoir-edit-style"]); tap(app.buttons["memoir.template.photo"]); tap(app.buttons["完成"])
+        tap(app.buttons["memoir-cover-photos"])
+        let photos = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'memoir.coverPhoto.'"))
+        scrollTo(photos.firstMatch, app: app); tap(photos.firstMatch)
+        screenshot("preview-memoir-cover-grouped", app: app)
+        tap(app.buttons["memoir-cover-photos"])
         let crop = app.buttons["memoir-cover-crop"]
         scrollTo(crop, app: app); tap(crop)
         XCTAssertTrue(app.descendants(matching: .any)["memoir-crop-preview"].waitForExistence(timeout: 10))
         let zoom = app.sliders["缩放"]
         XCTAssertTrue(zoom.exists); zoom.adjust(toNormalizedSliderPosition: 0.45)
         tap(app.buttons["memoir-crop-done"])
+        tap(app.buttons["完成"])
+        tap(app.buttons["memoir-edit-style"])
         let collage = app.buttons["memoir.template.collage"]
         scrollTo(collage, app: app); tap(collage)
+        tap(app.buttons["完成"])
         let picker = app.buttons["memoir-cover-photos"]
         scrollTo(picker, app: app); tap(picker)
-        let photos = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'memoir.coverPhoto.'"))
-        XCTAssertTrue(photos.firstMatch.waitForExistence(timeout: 10))
+        scrollTo(photos.firstMatch, app: app)
         photos.firstMatch.tap()
         tap(app.buttons["完成"])
         let next = app.buttons["memoir-next"]
         scrollTo(next, app: app); tap(next)
-        tap(app.buttons["生成整本预览"])
+        tap(app.buttons["memoir-generate"])
         XCTAssertTrue(app.buttons["memoir-share"].waitForExistence(timeout: 30))
         screenshot("preview-memoir-pdf", app: app)
         tap(app.buttons["memoir-share"])
