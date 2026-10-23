@@ -103,7 +103,7 @@ struct JournalAppView: View {
                 case "chat-offline": navigation.compose(with: members.members.first)
                 case "add": navigation.compose(step: .add)
                 case "select": navigation.compose(step: .select)
-                case "chat", "chat-scroll", "chat-slow", "chat-opening", "chat-empty-resume", "chat-pending", "review": navigation.compose(with: members.members.first)
+                case "chat", "chat-scroll", "chat-short-photo", "chat-slow", "chat-opening", "chat-empty-resume", "chat-pending", "review": navigation.compose(with: members.members.first)
                 case "memories": navigation.path = [.memories]
                 case "story", "story-actions": if let event = memories.memoryEvents.first { navigation.path = [.memory(event.id)] }
                 case "settings": navigation.tab = .profile; navigation.path = [.settings]

@@ -69,6 +69,16 @@ import SwiftUI
             events.removeAll { $0.personIDs.contains(people[0].id) }
         }
         loadDesignMockup(screen: emptyState)
+        if emptyState == "chat-short-photo",
+           let data = UIImage(named: "DesignPhoto-dinner")?.jpegData(compressionQuality: 0.85) {
+            let photoID = UUID(uuidString: "00000000-0000-0000-0000-000000009001")!
+            photos[photoID] = data
+            conversation = [
+                ChatMessage(sender: .user, text: "", attachments: [ChatAttachment(id: photoID, url: "/api/v1/media/\(photoID)")]),
+                ChatMessage(sender: .ai, text: "照片已保存，您可以继续讲讲与这些照片有关的故事。")
+            ]
+            careLife = careLifeFixture(status: "confirmed")
+        }
         if let screen = emptyState, screen.hasPrefix("care-life") {
             if screen == "care-life-review-v2" { careLife = careSkeletonFixture() }
             else if screen == "care-life-question-v2" { careLife = careSkeletonFixture(status: "collecting") }

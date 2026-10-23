@@ -33,7 +33,6 @@ private struct ChatViewport: Equatable {
 struct JournalChatHistory<Content: View>: View {
     let follow: JournalChatAutoFollow
     let identifier: String
-    var bottomAlignment = false
     @ViewBuilder var content: () -> Content
     @State private var position = ScrollPosition(edge: .bottom)
     @State private var phase = ScrollPhase.idle
@@ -50,7 +49,8 @@ struct JournalChatHistory<Content: View>: View {
         .scrollIndicators(.hidden)
         .scrollDismissesKeyboard(.interactively)
         .defaultScrollAnchor(.bottom, for: .initialOffset)
-        .defaultScrollAnchor(bottomAlignment ? .bottom : .top, for: .alignment)
+        // Following the newest message must not bottom-align a short conversation.
+        .defaultScrollAnchor(.top, for: .alignment)
         .scrollPosition($position)
         .accessibilityIdentifier(identifier)
         .accessibilityValue(follow.atBottom ? "最新消息" : "历史消息")

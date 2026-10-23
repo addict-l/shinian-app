@@ -2,6 +2,55 @@ import XCTest
 
 /// Explicit offline previews in a separate verification bundle; no family account is used.
 final class StandardChatAutoScrollUITests: XCTestCase {
+    @MainActor func testShortOpeningMessageHasNoLargeGapAboveMessages() {
+        continueAfterFailure = false
+        XCUIDevice.shared.orientation = .portrait
+        let app = XCUIApplication()
+        app.launchArguments = ["--design-screen", "chat-empty-resume", "-journal.careMode.enabled", "NO"]
+        app.launch()
+        defer { app.terminate() }
+        let opening = app.staticTexts.matching(NSPredicate(format:
+            "label == %@", "爷爷，您想从哪件记得的事慢慢讲起？")).firstMatch
+        XCTAssertTrue(opening.waitForExistence(timeout: 15))
+        let history = app.scrollViews["chat.history"]
+        wait { history.value as? String == "最新消息" }
+        // Allow the timestamp and an optional author label above the message text.
+        let topGap = opening.frame.minY - history.frame.minY
+        shot("chat-short-opening-layout", app)
+        XCTAssertLessThanOrEqual(topGap, 100, "Even one text message must stay near the history top. gap=\(topGap)")
+    }
+
+    @MainActor func testShortPhotoConversationHasNoLargeGapAboveMessages() {
+        continueAfterFailure = false
+        XCUIDevice.shared.orientation = .portrait
+        let app = XCUIApplication()
+        app.launchArguments = ["--design-screen", "chat-short-photo", "-journal.careMode.enabled", "NO"]
+        app.launch()
+        defer { app.terminate() }
+        let history = app.scrollViews["chat.history"]
+        let photo = app.descendants(matching: .any)
+            .matching(identifier: "chat.photo.00000000-0000-0000-0000-000000009001").firstMatch
+        XCTAssertTrue(photo.waitForExistence(timeout: 15))
+        wait { history.value as? String == "最新消息" }
+        let topGap = photo.frame.minY - history.frame.minY
+        shot("chat-short-photo-layout", app)
+        XCTAssertLessThan(topGap, 80, "A short photo conversation must start near the history top, not leave a viewport-sized blank area. gap=\(topGap)")
+    }
+
+    @MainActor func testLongStoryStillFollowsNewAndLongReplies() {
+        let app = launch(life: false)
+        defer { app.terminate() }
+        let history = app.scrollViews["chat.history"]
+        send("new reply", app, "chat")
+        wait { self.visibleText("本地回复：new reply", app) && history.value as? String == "最新消息" }
+        send("长回复", app, "chat")
+        let longReply = app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH '长回复第 1 行'")).firstMatch
+        XCTAssertTrue(longReply.waitForExistence(timeout: 10))
+        wait { history.value as? String == "最新消息" }
+        XCTAssertLessThanOrEqual(longReply.frame.maxY, history.frame.maxY + 3)
+        shot("chat-gap-long-content-still-follows", app)
+    }
+
     @MainActor private func launch(life: Bool) -> XCUIApplication {
         continueAfterFailure = false
         XCUIDevice.shared.orientation = .portrait
