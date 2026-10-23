@@ -89,6 +89,42 @@ class WorkflowTests(unittest.TestCase):
         self.assertEqual(result.status_code, 200, result.text)
         return result.json()
 
+    def test_session_list_orders_large_histories_without_sorting_json(self):
+        from datetime import timedelta
+        from sqlalchemy import event
+        from sqlalchemy.exc import OperationalError
+        from app.repositories.chat_session_repository import ChatSessionRepository
+        now = datetime.now(timezone.utc)
+        expected = []
+        with database.SessionLocal.begin() as db:
+            other = str(uuid4())
+            db.add(FamilyModel(id=other, name='另一隔离家庭'))
+            for index in range(3):
+                identity = str(uuid4())
+                expected.insert(0, identity)
+                info = StoryInformation(guided_interview=GuidedInterviewState()).model_dump(mode='json')
+                info['guided_interview']['contract_state'] = {'audit': ['x' * 524288]}
+                db.add(ChatSessionModel(id=identity, family_id=str(self.family), primary_person_id=str(self.person),
+                    title='大段审计测试', llm_model='test-only', information=info,
+                    created_at=now, updated_at=now + timedelta(days=index + 1)))
+            db.add(ChatSessionModel(family_id=other, title='不应跨家庭返回', llm_model='test-only',
+                created_at=now, updated_at=now + timedelta(days=10)))
+        def mysql_sort_limit(connection, cursor, statement, parameters, context, executemany):
+            projection = statement.lower().split('from', 1)[0]
+            if 'order by' in statement.lower() and 'chat_sessions.information' in projection:
+                raise OperationalError(statement, None, Exception(1038, 'Out of sort memory'))
+        event.listen(database.engine, 'before_cursor_execute', mysql_sort_limit)
+        try:
+            repository = ChatSessionRepository()
+            rows = repository.list(self.family)
+            self.assertEqual([str(row.id) for row in rows], expected + [str(self.session)])
+            self.assertTrue(all(row.information.guided_interview.contract_state['audit'] == ['x' * 524288]
+                for row in rows[:3]))
+            self.assertEqual(repository.list(uuid4()), [])
+            self.assertEqual(len(repository.list()), 5)
+        finally:
+            event.remove(database.engine, 'before_cursor_execute', mysql_sort_limit)
+
     def test_catalog_routes_contain_all_six_modules_and_72_questions(self):
         data = self.web.get('/api/v1/chat/interview-modules').json()
         self.assertEqual([len(row['baseline_questions']) for row in data], [10, 10, 15, 9, 8, 20])

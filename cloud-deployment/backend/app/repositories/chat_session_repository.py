@@ -113,21 +113,14 @@ class ChatSessionRepository:
 
         with SessionLocal() as session:
 
-            statement = select(ChatSessionModel)
-
+            # MySQL filesort can exceed sort_buffer_size on a single large JSON
+            # history. Sort only IDs, then load full records without SQL sorting.
+            statement = select(ChatSessionModel.id)
             if family_id is not None:
-                statement = statement.where(
-                    ChatSessionModel.family_id == str(family_id)
-                )
-
-            statement = statement.order_by(
-                ChatSessionModel.updated_at.desc()
-            )
-
-            models = session.scalars(statement).all()
-
-            result: list[ChatSession] = []
-            for model in models:
-                result.append(self._to_schema(model))
-
-            return result
+                statement = statement.where(ChatSessionModel.family_id == str(family_id))
+            identities = session.scalars(statement.order_by(ChatSessionModel.updated_at.desc())).all()
+            if not identities:
+                return []
+            models = session.scalars(select(ChatSessionModel).where(ChatSessionModel.id.in_(identities))).all()
+            by_id = {model.id: model for model in models}
+            return [self._to_schema(by_id[identity]) for identity in identities]
