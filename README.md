@@ -6,6 +6,12 @@
 
 文档从[总导航](docs/README.md)进入，按[整个项目的骨架](docs/project/README.md)、[第一次大提交 T01–T07](docs/phase-1/README.md)、[第二次大提交](docs/phase-2/README.md)分层。`ios/legacy/` 保留第一阶段交付工程，后续主线为 `ios/`。
 
+## 最近修复（2026-10-23）
+
+**已修复采访入口提示“数据库暂时不可用”、无法开始采访的问题。** 当家庭已有较大的采访记录时，原会话列表查询会对含大段 JSON 的完整记录排序，触发 MySQL 1038（排序内存不足），导致采访入口返回 HTTP 503。修复后先排序轻量 ID，再读取完整内容，保留原有家庭筛选和会话顺序。
+
+修复提交：[`a1ecee6`](https://github.com/addict-l/shinian-app/commit/a1ecee61eae633898f1ba3a7200a630ca66a32c2)，已发布到真实阿里云。本地及云端测试均 Ran 80、skip 1、失败/错误 0；正式 HTTPS 与现有模拟器已验证可进入采访第一题。业务数据、模型配置及固定键盘/输入法设置保持原样。详细根因、验证和 Claude 接续要求见[修复回传记录](docs/phase-2/interview-optimization/handoffs/2026-10-23-session-list-sort.md)。
+
 ## 下载最新版本
 
 在 GitHub 页面选择分支 **main → Code → Download ZIP**，解压后打开 `ios/AIMemoirs.xcodeproj`。已下载的 ZIP 不会自动更新，需要重新下载。
