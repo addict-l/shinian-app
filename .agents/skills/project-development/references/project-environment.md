@@ -63,7 +63,7 @@
 - 构建入口：`cd android && ./scripts/build.sh`；本机 JDK 21、SDK API 36，最低 API 26。
 - 最新 APK 在 `android/releases/`，截图、日志与受保护验证状态在 `android/artifacts/`（均由 Git 忽略）。
 - 现有模拟器：`Shinian_Pixel_9_API_36`，命令行设备以 `adb devices` 为准；复用已有设备。
-- 默认 API 与 iOS 相同；共用后端与契约留在 `cloud-deployment/`。
+- Android 1.0.2 默认 API：`https://api.xn--zbs33ddmy9oeqa.club`（`api.奶娃回忆录.club`）。iOS 当前仍沿用原域名；两个入口连接同一后端与家庭数据，共用后端与契约留在 `cloud-deployment/`。
 
 ## 阿里云演示环境
 
@@ -74,6 +74,7 @@
 - 操作系统：Ubuntu 24.04 LTS
 - 公网地址：`47.82.83.74`
 - HTTPS：`https://aimemory.47-82-83-74.nip.io`
+- 2026-10-24 已授权新增自有域名 HTTPS：`https://api.xn--zbs33ddmy9oeqa.club`；证书自动续期及新旧入口验证见[自有域名上线记录](../../../../docs/project/owned-domain-https-2026-10-24.md)。手机中国移动浏览器已确认新入口健康200且无证书警告，Android App 的实体机验收随1.0.2交付。
 - 服务结构：Nginx HTTPS → `127.0.0.1:8000` FastAPI 家庭 Bearer 会话认证 → Docker 内 MySQL 8
 - 部署目录：`/opt/ai-memories/backend`
 - Compose project name：`backend`

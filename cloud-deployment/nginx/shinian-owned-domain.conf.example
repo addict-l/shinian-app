@@ -1,0 +1,46 @@
+# Owned-domain ingress deployed on 2026-10-24; keep the existing shared shinian_auth zone.
+# shinian_auth is defined by the existing aimemory site in the shared http context.
+server {
+    listen 80;
+    listen [::]:80;
+    server_name api.xn--zbs33ddmy9oeqa.club;
+    if ($host != api.xn--zbs33ddmy9oeqa.club) { return 400; }
+    location ^~ /.well-known/acme-challenge/ {
+        root /var/www/html;
+        default_type text/plain;
+        try_files $uri =404;
+    }
+    location / { return 301 https://api.xn--zbs33ddmy9oeqa.club$request_uri; }
+}
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    server_name api.xn--zbs33ddmy9oeqa.club;
+    if ($host != api.xn--zbs33ddmy9oeqa.club) { return 400; }
+    ssl_certificate /etc/letsencrypt/live/shinian-api-idn/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/shinian-api-idn/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+    client_max_body_size 50M;
+
+    proxy_http_version 1.1;
+    # Validate the public hostname above, then use the API's existing canonical Host.
+    # Media URLs are relative; family authentication still uses the original Bearer header.
+    proxy_set_header Host aimemory.47-82-83-74.nip.io;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $remote_addr;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header Authorization $http_authorization;
+    proxy_connect_timeout 10s;
+    proxy_read_timeout 450s;
+    proxy_send_timeout 180s;
+
+    location ~ ^/api/v1/auth/(login|register)$ {
+        limit_req zone=shinian_auth burst=10 nodelay;
+        limit_req_status 429;
+        proxy_pass http://127.0.0.1:8000;
+    }
+    location / {
+        proxy_pass http://127.0.0.1:8000;
+    }
+}

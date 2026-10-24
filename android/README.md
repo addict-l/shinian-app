@@ -19,7 +19,7 @@ Android Studio 原生 Kotlin / Jetpack Compose 工程。复现基线为同仓库
 
 脚本优先使用兼容的完整 `JAVA_HOME`；需要包含 `javac` 和 `jlink`。本机已安装 Temurin JDK 21。SDK、机器路径和 IDE 设置不提交到 Git。
 
-最新安装包统一存放在 [`releases/拾年-Android-1.0.1-20261021-debug.apk`](releases/拾年-Android-1.0.1-20261021-debug.apk)，版本与校验信息在同目录。重新构建时，Gradle 会生成 `app/build/outputs/apk/debug/app-debug.apk`。正式分发版本需使用项目所有者的签名配置。
+最新安装包统一存放在 [`releases/拾年-Android-1.0.2-20261024-debug.apk`](releases/拾年-Android-1.0.2-20261024-debug.apk)，版本与校验信息在同目录。重新构建时，Gradle 会生成 `app/build/outputs/apk/debug/app-debug.apk`。正式分发版本需使用项目所有者的签名配置。
 
 ## 功能与数据
 
@@ -33,6 +33,8 @@ Android Studio 原生 Kotlin / Jetpack Compose 工程。复现基线为同仓库
 - 共用深色全屏照片选择器：四列网格、相册切换、有序勾选与完整预览；聊天和回忆支持多选，头像和封面使用单选。按授权范围访问图库，保留系统选图入口。
 
 API 默认值由 `app/build.gradle.kts` 中的 `API_BASE_URL` 提供。生产包只使用 HTTPS；图片通过带家庭 Bearer 会话的同源私有媒体接口读取。
+
+1.0.2 默认连接 `https://api.xn--zbs33ddmy9oeqa.club`（`api.奶娃回忆录.club`）。该入口沿用原后端和家庭数据，服务器配置与手机移动数据检查见[自有域名上线记录](../docs/project/owned-domain-https-2026-10-24.md)。旧版会话绑定原域名，覆盖升级后使用原家庭账号重新登录。
 
 采访规则由服务器返回。客户端不携带另一套题库，不更改线上采访策略。语音听写使用设备提供的中文识别服务；设备未安装服务或拒绝麦克风权限时，页面给出恢复提示并保留文字输入。
 

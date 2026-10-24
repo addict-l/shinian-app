@@ -12,10 +12,10 @@ android {
         applicationId = "cn.shinian.app"
         minSdk = 26
         targetSdk = 36
-        versionCode = 2
-        versionName = "1.0.1"
+        versionCode = 3
+        versionName = "1.0.2"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "API_BASE_URL", "\"https://aimemory.47-82-83-74.nip.io\"")
+        buildConfigField("String", "API_BASE_URL", "\"https://api.xn--zbs33ddmy9oeqa.club\"")
     }
     buildTypes {
         release {
