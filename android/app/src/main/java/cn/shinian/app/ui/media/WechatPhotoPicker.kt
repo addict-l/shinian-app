@@ -212,7 +212,8 @@ fun WechatPhotoPicker(
 
     Dialog(onDismissRequest = ::back, properties = DialogProperties(usePlatformDefaultWidth = false, decorFitsSystemWindows = false, dismissOnClickOutside = false)) {
         PickerSystemBars()
-        Column(Modifier.fillMaxSize().background(PickerColors.Background).windowInsetsPadding(WindowInsets.safeDrawing).testTag("picker.root")) {
+        Column(Modifier.fillMaxSize().background(PickerColors.Background)
+            .windowInsetsPadding(WindowInsets.safeDrawing).testTag("picker.root")) {
             if (previewKeys != null) {
                 PickerPreviewHeader(previewIndex, previewPhotos.size, currentPreview?.let { selected.indexOf(it.uri.toString()).takeIf { index -> index >= 0 } },
                     enabled = !loading && failure == null && currentPreview != null,

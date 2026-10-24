@@ -209,6 +209,29 @@ class WechatPhotoPickerTest {
         } }
         compose.waitUntil(15_000) { compose.onAllNodesWithTag("picker.album").fetchSemanticsNodes().isNotEmpty() }
         compose.onNodeWithTag("picker.permission").assertDoesNotExist()
+        if (Build.VERSION.SDK_INT >= 30) {
+            var safeTop = 0
+            compose.waitUntil(5_000) {
+                var ready = false
+                compose.runOnUiThread {
+                    val windows = android.view.inspector.WindowInspector.getGlobalWindowViews()
+                        .filter { it.isShown && it !== compose.activity.window.decorView }
+                    ready = windows.any { view ->
+                        val insets = androidx.core.view.ViewCompat.getRootWindowInsets(view)
+                        val appearance = view.windowInsetsController?.systemBarsAppearance
+                        if (insets?.isVisible(androidx.core.view.WindowInsetsCompat.Type.statusBars()) == true &&
+                            appearance != null && appearance and android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS == 0) {
+                            safeTop = insets.getInsets(androidx.core.view.WindowInsetsCompat.Type.statusBars() or
+                                androidx.core.view.WindowInsetsCompat.Type.displayCutout()).top
+                            true
+                        } else false
+                    }
+                }
+                ready
+            }
+            val album = compose.onNodeWithTag("picker.album").fetchSemanticsNode().boundsInRoot
+            assertTrue("Photo picker controls stay below the camera with light status icons", album.top >= safeTop)
+        }
     }
 
     private fun openAlbum(id: String, screenshotName: String? = null) {

@@ -247,7 +247,7 @@ internal fun PhotoViewer(media:List<Media>,initial:Int,onClose:()->Unit) {
     var zoom by remember(index){mutableFloatStateOf(1f)}
     Dialog(onClose,DialogProperties(usePlatformDefaultWidth=false,decorFitsSystemWindows=false)) {
         cn.shinian.app.ui.theme.ShinianImmersiveWindow(darkBackground = true)
-        Column(Modifier.fillMaxSize().background(Color.Black).windowInsetsPadding(WindowInsets.displayCutout.only(WindowInsetsSides.Top + WindowInsetsSides.Horizontal)).systemBarsPadding()) {
+        Column(Modifier.fillMaxSize().background(Color.Black).shinianContentInsets().systemBarsPadding()) {
             Row(Modifier.fillMaxWidth(),verticalAlignment=Alignment.CenterVertically) {
                 Text("${index+1} / ${media.size}",color=Color.White,modifier=Modifier.weight(1f).padding(20.dp))
                 TextButton(onClose){Text("关闭",color=Color.White)}

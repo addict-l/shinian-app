@@ -59,7 +59,7 @@ class MainActivity : ComponentActivity() {
             ShinianTheme {
                 ShinianImmersiveWindow()
                 Box(Modifier.fillMaxSize().background(JournalColors.Paper)
-                    .windowInsetsPadding(WindowInsets.displayCutout.only(WindowInsetsSides.Top + WindowInsetsSides.Horizontal))) {
+                    .shinianContentInsets()) {
                     ShinianApplication()
                 }
             }

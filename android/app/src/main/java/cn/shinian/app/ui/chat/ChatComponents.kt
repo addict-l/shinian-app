@@ -78,6 +78,7 @@ import androidx.compose.ui.window.DialogProperties
 import cn.shinian.app.data.BackendRepository
 import cn.shinian.app.data.ChatMessage
 import cn.shinian.app.data.Media
+import cn.shinian.app.ui.theme.shinianContentInsets
 import cn.shinian.app.ui.theme.JournalColors as C
 import cn.shinian.app.ui.theme.JournalTypography as T
 import kotlinx.coroutines.Dispatchers
@@ -304,7 +305,7 @@ internal fun ChatFullDialog(title: String, onClose: () -> Unit, content: @Compos
     Dialog(onDismissRequest = onClose, properties = DialogProperties(usePlatformDefaultWidth = false, decorFitsSystemWindows = false)) {
         cn.shinian.app.ui.theme.ShinianImmersiveWindow()
         Surface(Modifier.fillMaxSize(), color = C.Paper) {
-            Column(Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.displayCutout.only(WindowInsetsSides.Top + WindowInsetsSides.Horizontal)).systemBarsPadding().imePadding()) {
+            Column(Modifier.fillMaxSize().shinianContentInsets().systemBarsPadding().imePadding()) {
                 ChatHeader(title, onBack = onClose)
                 content()
             }

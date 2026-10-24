@@ -3,12 +3,16 @@ package cn.shinian.app.ui.chat
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
@@ -36,13 +40,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cn.shinian.app.data.ChatMessage
@@ -96,64 +103,80 @@ internal fun LifeInterviewScreen(model: ChatController, care: Boolean, dictation
                 modifier = Modifier.size(42.dp).clip(CircleShape).background(C.SageInk).padding(top = 7.dp), textAlign = TextAlign.Center)
         }
         if (showingOverview) {
-            Row(Modifier.fillMaxWidth().padding(horizontal = 24.dp, vertical = 16.dp), horizontalArrangement = Arrangement.spacedBy(14.dp)) {
-                Text(if (confirmed) "✓ 01 核对脉络" else "01 核对脉络 ●", style = T.body(if (care) 17 else 13, true), color = if (confirmed) C.SageInk else C.AccentDeep)
-                Text("—", color = C.Muted)
-                Text("02 选择板块", style = T.body(if (care) 17 else 13, confirmed), color = if (confirmed) C.AccentDeep else C.SecondaryInk)
-            }
-            Column(Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(horizontal = 22.dp), verticalArrangement = Arrangement.spacedBy(18.dp)) {
-                Text(if (confirmed) "从哪段日子开始？" else "先核对人生脉络", style = if (care) T.body(30, true) else T.story(30), color = C.Ink,
-                    modifier = Modifier.semantics { heading() })
-                Text(if (confirmed) "选一段最想聊的，按您的节奏来。" else "确认后，选一段想聊的回忆。", style = T.body(if (care) 21 else 16), color = C.SecondaryInk)
-                val summary = overview.objects("fields").flatMap { it.objects("evidence") }.mapNotNull { it.text("quote") }.joinToString("\n")
-                Column(Modifier.fillMaxWidth().clip(RoundedCornerShape(17.dp)).background(C.Surface)
-                    .border(1.dp, C.CardBorder, RoundedCornerShape(17.dp)).padding(18.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        JournalGlyph("book")
-                        Text(if (confirmed) "人生脉络" else "回忆线索", Modifier.weight(1f).padding(start = 10.dp), style = T.body(if (care) 22 else 18, true), color = C.Ink)
-                        Text(if (confirmed) "已核对" else "待核对", style = T.body(if (care) 18 else 13), color = if (confirmed) C.SageInk else C.AccentDeep)
-                    }
-                    if (summary.isBlank() && !confirmed) {
-                        Column(Modifier.fillMaxWidth().padding(vertical = 20.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                            JournalGlyph("book", size = 92.dp, tint = C.Muted)
-                            Text("还没有具体生活线索", Modifier.padding(top = 22.dp, bottom = 8.dp), style = T.body(if (care) 24 else 20, true), color = C.Ink)
-                            Text("之后可以随时补充，\n也可以先从熟悉的回忆开始。", style = T.body(if (care) 20 else 16), color = C.SecondaryInk, textAlign = TextAlign.Center)
-                        }
-                    } else Text(summary.ifBlank { "暂未提供具体线索，之后可以随时补充。" }, style = T.body(if (care) 21 else 15), color = C.SecondaryInk,
-                        lineHeight = if (care) 32.sp else 25.sp, maxLines = if (confirmed) 3 else Int.MAX_VALUE)
-                    HorizontalDivider(color = C.Line)
-                    TextButton({ details = true }, Modifier.fillMaxWidth().heightIn(min = 48.dp)) {
-                        Text("查看全部与更正", Modifier.weight(1f), style = T.body(if (care) 22 else 16), textAlign = TextAlign.Start)
-                        Text("›", style = T.body(24))
-                    }
+            if (confirmed && !care) {
+                LifeModuleSelection(
+                    summary = overview.objects("fields").flatMap { it.objects("evidence") }
+                        .mapNotNull { it.text("quote") }.joinToString("；"),
+                    selectedModule = selectedModule,
+                    enabled = !model.busy && model.pendingLife == null,
+                    busy = model.busy,
+                    modifier = Modifier.weight(1f),
+                    onSelect = { selectedModule = it },
+                    onDetails = { details = true },
+                    onEnter = { model.chooseModule(selectedModule) },
+                    feedback = { LifeFeedback(model, false) },
+                    hasFeedback = model.error != null || model.storageError != null,
+                )
+            } else {
+                Row(Modifier.fillMaxWidth().padding(horizontal = 24.dp, vertical = 16.dp), horizontalArrangement = Arrangement.spacedBy(14.dp)) {
+                    Text(if (confirmed) "✓ 01 核对脉络" else "01 核对脉络 ●", style = T.body(if (care) 17 else 13, true), color = if (confirmed) C.SageInk else C.AccentDeep)
+                    Text("—", color = C.Muted)
+                    Text("02 选择板块", style = T.body(if (care) 17 else 13, confirmed), color = if (confirmed) C.AccentDeep else C.SecondaryInk)
                 }
-                if (confirmed) {
-                    val columns = if (care || LocalDensity.current.fontScale > 1.3f) 1 else 2
-                    lifeModules.chunked(columns).forEach { row ->
-                        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                            row.forEach { module ->
-                                val selected = selectedModule == module.id
-                                Column(Modifier.weight(1f).clip(RoundedCornerShape(16.dp)).background(if (selected) C.Soft else C.Surface)
-                                    .border(if (selected) 1.5.dp else 1.dp, if (selected) C.AccentDeep else C.CardBorder, RoundedCornerShape(16.dp))
-                                    .clickable(enabled = !model.busy && model.pendingLife == null) { selectedModule = module.id }
-                                    .semantics { this.selected = selected }.testTag("life.module.${module.id}").padding(16.dp), verticalArrangement = Arrangement.spacedBy(7.dp)) {
-                                    Row(Modifier.fillMaxWidth()) {
-                                        JournalGlyph(module.glyph, tint = if (selected) C.AccentDeep else C.Ink)
-                                        Spacer(Modifier.weight(1f)); if (selected) JournalGlyph("check", size = 20.dp, tint = C.AccentDeep)
+                Column(Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(horizontal = 22.dp), verticalArrangement = Arrangement.spacedBy(18.dp)) {
+                    Text(if (confirmed) "从哪段日子开始？" else "先核对人生脉络", style = if (care) T.body(30, true) else T.story(30), color = C.Ink,
+                        modifier = Modifier.semantics { heading() })
+                    Text(if (confirmed) "选一段最想聊的，按您的节奏来。" else "确认后，选一段想聊的回忆。", style = T.body(if (care) 21 else 16), color = C.SecondaryInk)
+                    val summary = overview.objects("fields").flatMap { it.objects("evidence") }.mapNotNull { it.text("quote") }.joinToString("\n")
+                    Column(Modifier.fillMaxWidth().clip(RoundedCornerShape(17.dp)).background(C.Surface)
+                        .border(1.dp, C.CardBorder, RoundedCornerShape(17.dp)).padding(18.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            JournalGlyph("book")
+                            Text(if (confirmed) "人生脉络" else "回忆线索", Modifier.weight(1f).padding(start = 10.dp), style = T.body(if (care) 22 else 18, true), color = C.Ink)
+                            Text(if (confirmed) "已核对" else "待核对", style = T.body(if (care) 18 else 13), color = if (confirmed) C.SageInk else C.AccentDeep)
+                        }
+                        if (summary.isBlank() && !confirmed) {
+                            Column(Modifier.fillMaxWidth().padding(vertical = 20.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                                JournalGlyph("book", size = 92.dp, tint = C.Muted)
+                                Text("还没有具体生活线索", Modifier.padding(top = 22.dp, bottom = 8.dp), style = T.body(if (care) 24 else 20, true), color = C.Ink)
+                                Text("之后可以随时补充，\n也可以先从熟悉的回忆开始。", style = T.body(if (care) 20 else 16), color = C.SecondaryInk, textAlign = TextAlign.Center)
+                            }
+                        } else Text(summary.ifBlank { "暂未提供具体线索，之后可以随时补充。" }, style = T.body(if (care) 21 else 15), color = C.SecondaryInk,
+                            lineHeight = if (care) 32.sp else 25.sp, maxLines = if (confirmed) 3 else Int.MAX_VALUE)
+                        HorizontalDivider(color = C.Line)
+                        TextButton({ details = true }, Modifier.fillMaxWidth().heightIn(min = 48.dp)) {
+                            Text("查看全部与更正", Modifier.weight(1f), style = T.body(if (care) 22 else 16), textAlign = TextAlign.Start)
+                            Text("›", style = T.body(24))
+                        }
+                    }
+                    if (confirmed) {
+                        val columns = if (care || LocalDensity.current.fontScale > 1.3f) 1 else 2
+                        lifeModules.chunked(columns).forEach { row ->
+                            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                                row.forEach { module ->
+                                    val selected = selectedModule == module.id
+                                    Column(Modifier.weight(1f).clip(RoundedCornerShape(16.dp)).background(if (selected) C.Soft else C.Surface)
+                                        .border(if (selected) 1.5.dp else 1.dp, if (selected) C.AccentDeep else C.CardBorder, RoundedCornerShape(16.dp))
+                                        .clickable(enabled = !model.busy && model.pendingLife == null) { selectedModule = module.id }
+                                        .semantics { this.selected = selected }.testTag("life.module.${module.id}").padding(16.dp), verticalArrangement = Arrangement.spacedBy(7.dp)) {
+                                        Row(Modifier.fillMaxWidth()) {
+                                            JournalGlyph(module.glyph, tint = if (selected) C.AccentDeep else C.Ink)
+                                            Spacer(Modifier.weight(1f)); if (selected) JournalGlyph("check", size = 20.dp, tint = C.AccentDeep)
+                                        }
+                                        Text(module.title, style = T.body(if (care) 24 else 18, true), color = C.Ink)
+                                        Text(module.subtitle, style = T.body(if (care) 19 else 14), color = C.SecondaryInk)
                                     }
-                                    Text(module.title, style = T.body(if (care) 24 else 18, true), color = C.Ink)
-                                    Text(module.subtitle, style = T.body(if (care) 19 else 14), color = C.SecondaryInk)
                                 }
                             }
                         }
-                    }
-                } else Text("不必一次想全，回忆可以慢慢补充。", Modifier.fillMaxWidth().padding(vertical = 12.dp), style = T.body(if (care) 20 else 14), color = C.SecondaryInk, textAlign = TextAlign.Center)
-                LifeFeedback(model, care)
-                Spacer(Modifier.height(12.dp))
-            }
-            ChatButton(if (confirmed) "进入「${lifeModules.first { it.id == selectedModule }.title}」" else "确认这些脉络",
-                enabled = model.pendingLife == null, busy = model.busy, care = care, modifier = Modifier.padding(horizontal = 22.dp, vertical = 12.dp).testTag(if (confirmed) "life.enter" else "life.confirm")) {
-                if (confirmed) model.chooseModule(selectedModule) else model.performLife("confirm")
+                    } else Text("不必一次想全，回忆可以慢慢补充。", Modifier.fillMaxWidth().padding(vertical = 12.dp), style = T.body(if (care) 20 else 14), color = C.SecondaryInk, textAlign = TextAlign.Center)
+                    LifeFeedback(model, care)
+                    Spacer(Modifier.height(12.dp))
+                }
+                ChatButton(if (confirmed) "进入「${lifeModules.first { it.id == selectedModule }.title}」" else "确认这些脉络",
+                    enabled = model.pendingLife == null, busy = model.busy, care = care, modifier = Modifier.padding(horizontal = 22.dp, vertical = 12.dp).testTag(if (confirmed) "life.enter" else "life.confirm")) {
+                    if (confirmed) model.chooseModule(selectedModule) else model.performLife("confirm")
+                }
             }
         } else {
             val listState = rememberLazyListState()
@@ -227,6 +250,95 @@ internal fun LifeInterviewScreen(model: ChatController, care: Boolean, dictation
                 }
             }
             LifeFeedback(model, care)
+        }
+    }
+}
+
+/** Keep the six ordinary-mode choices and primary action in the same portrait viewport. */
+@Composable
+private fun LifeModuleSelection(
+    summary: String, selectedModule: String, enabled: Boolean, busy: Boolean, modifier: Modifier,
+    onSelect: (String) -> Unit, onDetails: () -> Unit, onEnter: () -> Unit,
+    hasFeedback: Boolean, feedback: @Composable () -> Unit,
+) {
+    val fontScale = LocalDensity.current.fontScale
+    BoxWithConstraints(modifier.fillMaxWidth()) {
+        val compact = maxHeight < 720.dp
+        // Preserve readable text and access to every choice in unusually small windows or large system text.
+        val columns = if (maxWidth < 340.dp || fontScale > 1.5f) 1 else 2
+        val scroll = maxHeight < (500 * fontScale).dp || columns == 1 || hasFeedback
+        val rows = lifeModules.chunked(columns)
+        val gap = if (compact) 10.dp else 14.dp
+        Column(Modifier.fillMaxSize().then(if (scroll) Modifier.verticalScroll(rememberScrollState()) else Modifier)
+            .padding(horizontal = 22.dp, vertical = 12.dp), verticalArrangement = Arrangement.spacedBy(gap)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
+                Text("✓ 01 核对脉络", style = T.body(12, true), color = C.SageInk)
+                Text("—", style = T.body(12), color = C.Muted)
+                Text("02 选择板块", style = T.body(12, true), color = C.AccentDeep)
+            }
+            Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                Text("从哪段日子开始？", style = T.story(if (compact) 26 else 30), color = C.Ink,
+                    modifier = Modifier.semantics { heading() })
+                Text("选一段最想聊的，按您的节奏来。", style = T.body(14), color = C.SecondaryInk)
+            }
+            Column(Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(C.Surface)
+                .border(1.dp, C.CardBorder, RoundedCornerShape(16.dp))
+                .clickable(onClick = onDetails).testTag("life.summary").padding(12.dp),
+                verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    JournalGlyph("book", size = 18.dp)
+                    Text("人生脉络", Modifier.weight(1f), style = T.body(16, true), color = C.Ink)
+                    Text("已核对", style = T.body(12), color = C.SageInk)
+                }
+                Text(summary.ifBlank { "暂未提供具体线索，之后可以随时补充。" }, style = T.body(14),
+                    color = C.SecondaryInk, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                    Text("查看全部与更正", style = T.body(13, true), color = C.AccentDeep, modifier = Modifier.weight(1f))
+                    JournalGlyph("back", Modifier.rotate(180f), size = 14.dp, tint = C.AccentDeep)
+                }
+            }
+            Column(Modifier.fillMaxWidth().selectableGroup().then(if (scroll)
+                Modifier.height((rows.size * 110 * fontScale).dp + gap * (rows.size - 1)) else Modifier.weight(1f)),
+                verticalArrangement = Arrangement.spacedBy(gap)) {
+                rows.forEach { row ->
+                    Row(Modifier.fillMaxWidth().weight(1f), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                        row.forEach { module ->
+                            val selected = selectedModule == module.id
+                            val shape = RoundedCornerShape(16.dp)
+                            Box(Modifier.weight(1f).fillMaxHeight().clip(shape)
+                                .background(if (selected) C.Soft else C.Surface)
+                                .border(if (selected) 1.5.dp else 1.dp, if (selected) C.AccentDeep else C.CardBorder, shape)
+                                .selectable(selected, enabled = enabled, role = Role.RadioButton, onClick = { onSelect(module.id) })
+                                .testTag("life.module.${module.id}").padding(horizontal = 12.dp, vertical = if (compact) 8.dp else 10.dp),
+                                contentAlignment = Alignment.CenterStart) {
+                                if (compact && fontScale <= 1.1f && !scroll) {
+                                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                        JournalGlyph(module.glyph, size = 20.dp, tint = if (selected) C.AccentDeep else C.Ink)
+                                        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(5.dp)) {
+                                            Text(module.title, style = T.body(17, true), color = C.Ink)
+                                            Text(module.subtitle, style = T.body(13), color = C.SecondaryInk)
+                                        }
+                                    }
+                                    if (selected) JournalGlyph("check", Modifier.align(Alignment.TopEnd), size = 12.dp, tint = C.AccentDeep)
+                                } else {
+                                    Column(verticalArrangement = Arrangement.spacedBy(if (compact) 3.dp else 5.dp)) {
+                                        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                                            JournalGlyph(module.glyph, size = if (compact) 18.dp else 21.dp, tint = if (selected) C.AccentDeep else C.Ink)
+                                            Spacer(Modifier.weight(1f))
+                                            if (selected) JournalGlyph("check", size = 18.dp, tint = C.AccentDeep)
+                                        }
+                                        Text(module.title, style = T.body(if (compact) 17 else 18, true), color = C.Ink)
+                                        Text(module.subtitle, style = T.body(if (compact) 13 else 14), color = C.SecondaryInk)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if (hasFeedback) feedback()
+            ChatButton("进入「${lifeModules.first { it.id == selectedModule }.title}」", enabled = enabled, busy = busy,
+                modifier = Modifier.testTag("life.enter"), onClick = onEnter)
         }
     }
 }

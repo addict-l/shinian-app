@@ -26,6 +26,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import cn.shinian.app.data.AuthSession
 import cn.shinian.app.data.BackendRepository
 import cn.shinian.app.data.Person
+import cn.shinian.app.ui.theme.shinianContentInsets
 import cn.shinian.app.ui.theme.ShinianTheme
 import cn.shinian.app.ui.theme.applyShinianWindowPolicy
 import java.io.File
@@ -76,7 +77,7 @@ class ChatViewportTest {
             if (fullscreen) applyShinianWindowPolicy(compose.activity.window)
         }
         compose.setContent { ShinianTheme { Box(Modifier.fillMaxSize().background(cn.shinian.app.ui.theme.JournalColors.Paper)
-            .windowInsetsPadding(WindowInsets.displayCutout.only(WindowInsetsSides.Top + WindowInsetsSides.Horizontal)).testTag("viewport.host")) {
+            .shinianContentInsets().testTag("viewport.host")) {
             ChatScreen(person, repository, false, {}, {}, {})
         } } }
         waitInput()
@@ -101,12 +102,12 @@ class ChatViewportTest {
         compose.runOnUiThread { value = ViewCompat.getRootWindowInsets(compose.activity.window.decorView)?.isVisible(WindowInsetsCompat.Type.ime()) == true }
         return value
     }
-    private fun assertBarsHidden() {
+    private fun assertStatusBarVisible() {
         compose.waitUntil(8_000) {
             var hidden = false
             compose.runOnUiThread {
                 val insets = ViewCompat.getRootWindowInsets(compose.activity.window.decorView)
-                hidden = insets != null && !insets.isVisible(WindowInsetsCompat.Type.statusBars()) &&
+                hidden = insets != null && insets.isVisible(WindowInsetsCompat.Type.statusBars()) &&
                     (insets.isVisible(WindowInsetsCompat.Type.ime()) || !insets.isVisible(WindowInsetsCompat.Type.navigationBars()))
             }
             hidden
@@ -125,8 +126,8 @@ class ChatViewportTest {
             nav = insets.isVisible(WindowInsetsCompat.Type.navigationBars())
             status = insets.isVisible(WindowInsetsCompat.Type.statusBars())
         }
-        assertTrue("Actual software keyboard supplies a positive inset", imeBottom > 0)
-        assertFalse("Status bar remains hidden while the keyboard is visible", status)
+        assertTrue("The current docked or floating input method is visible", imeVisible())
+        assertTrue("Status bar remains visible while the keyboard is visible", status)
         assertTrue("Composer stays above the actual keyboard", bottom <= height - imeBottom + 3f)
         File(context.getExternalFilesDir(null), "chat-viewport-screenshots/$tag-ime-insets.json").apply { parentFile?.mkdirs() }
             .writeText(JSONObject().put("ime_bottom", imeBottom).put("window_height", height).put("composer_bottom", bottom)
@@ -194,7 +195,7 @@ class ChatViewportTest {
         compose.onNodeWithTag("$tag.input").performClick()
         compose.waitUntil(8_000) { imeVisible() }
         waitBottom()
-        assertBarsHidden()
+        assertStatusBarVisible()
         assertComposerAboveIme()
         screenshot("$tag-keyboard-latest")
         send("这是完全本地的界面跟随验证讲述。")
@@ -206,7 +207,7 @@ class ChatViewportTest {
         if (imeVisible()) instrumentation.uiAutomation.performGlobalAction(android.accessibilityservice.AccessibilityService.GLOBAL_ACTION_BACK)
         compose.waitUntil(8_000) { !imeVisible() }
         waitBottom()
-        assertBarsHidden()
+        assertStatusBarVisible()
     }
 
     @Test fun baselineLifeHistoryDoesNotReachItsLatestQuestion() {
@@ -252,16 +253,16 @@ class ChatViewportTest {
     @Test fun lifeKeepsManualHistoryOnIncomingReplyButOwnSendReturnsToBottom() = exerciseManualHistory(true)
     @Test fun storyKeepsManualHistoryOnIncomingReplyButOwnSendReturnsToBottom() = exerciseManualHistory(false)
 
-    @Test fun productionWindowPolicyKeepsBarsHiddenAfterImeAndActivityReentry() {
-        start(life = false); waitBottom(); assertBarsHidden()
+    @Test fun productionWindowPolicyKeepsStatusBarVisibleAfterImeAndActivityReentry() {
+        start(life = false); waitBottom(); assertStatusBarVisible()
         compose.onNodeWithTag("chat.input").performClick()
-        compose.waitUntil(8_000) { imeVisible() }; assertBarsHidden(); waitBottom(); assertComposerAboveIme()
+        compose.waitUntil(8_000) { imeVisible() }; assertStatusBarVisible(); waitBottom(); assertComposerAboveIme()
         instrumentation.uiAutomation.performGlobalAction(android.accessibilityservice.AccessibilityService.GLOBAL_ACTION_BACK)
-        compose.waitUntil(8_000) { !imeVisible() }; assertBarsHidden(); waitBottom()
+        compose.waitUntil(8_000) { !imeVisible() }; assertStatusBarVisible(); waitBottom()
         compose.activityRule.scenario.moveToState(Lifecycle.State.STARTED)
         compose.activityRule.scenario.moveToState(Lifecycle.State.RESUMED)
         compose.runOnUiThread { applyShinianWindowPolicy(compose.activity.window) }
-        assertBarsHidden(); waitBottom(); screenshot("fullscreen-reentry-no-system-bars")
+        assertStatusBarVisible(); waitBottom(); screenshot("statusbar-reentry")
         compose.onNodeWithContentDescription("前面聊过的").performClick()
         compose.onNodeWithText("前面聊过的").assertIsDisplayed()
         if (android.os.Build.VERSION.SDK_INT >= 29) {
@@ -270,15 +271,15 @@ class ChatViewportTest {
                 compose.runOnUiThread {
                     val windows = android.view.inspector.WindowInspector.getGlobalWindowViews().filter { it.isShown }
                     hidden = windows.size >= 2 && windows.all { view ->
-                        ViewCompat.getRootWindowInsets(view)?.isVisible(WindowInsetsCompat.Type.statusBars()) == false
+                        ViewCompat.getRootWindowInsets(view)?.isVisible(WindowInsetsCompat.Type.statusBars()) == true
                     }
                 }
                 hidden
             }
         }
-        screenshot("fullscreen-history-dialog")
+        screenshot("statusbar-history-dialog")
         instrumentation.uiAutomation.performGlobalAction(android.accessibilityservice.AccessibilityService.GLOBAL_ACTION_BACK)
-        waitBottom(); assertBarsHidden()
+        waitBottom(); assertStatusBarVisible()
     }
 }
 

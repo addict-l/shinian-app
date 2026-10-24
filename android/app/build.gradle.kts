@@ -12,8 +12,8 @@ android {
         applicationId = "cn.shinian.app"
         minSdk = 26
         targetSdk = 36
-        versionCode = 3
-        versionName = "1.0.2"
+        versionCode = 5
+        versionName = "1.0.4"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "API_BASE_URL", "\"https://api.xn--zbs33ddmy9oeqa.club\"")
     }

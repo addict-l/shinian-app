@@ -163,6 +163,13 @@ fun JournalBackdrop(
                     center = Offset.Zero,
                 )
             }
+            // Meet the paper-colored status area without a hard boundary before the warm glow.
+            val blendHeight = 48.dp.toPx()
+            drawRect(Brush.verticalGradient(
+                0f to JournalColors.Paper,
+                1f to JournalColors.Paper.copy(alpha = 0f),
+                endY = blendHeight,
+            ), size = androidx.compose.ui.geometry.Size(size.width, blendHeight))
         }
         content()
     }
