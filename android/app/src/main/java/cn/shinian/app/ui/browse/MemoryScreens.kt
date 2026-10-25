@@ -34,6 +34,7 @@ import kotlinx.coroutines.launch
 fun MemoryDetailScreen(
     memory:Memory,people:List<Person>,repository:BackendRepository,care:Boolean=false,
     onBack:()->Unit={},onEdit:(Memory)->Unit={},onDeleted:()->Unit={},onHome:()->Unit={},
+    deleteMemory:suspend (Memory)->Unit={repository.deleteMemory(it)},
 ) {
     var current by remember(memory){mutableStateOf(memory)};var actions by remember{mutableStateOf(false)}
     var deleting by remember{mutableStateOf(false)};var busy by remember{mutableStateOf(false)}
@@ -101,7 +102,7 @@ fun MemoryDetailScreen(
     if(deleting)AlertDialog(onDismissRequest={deleting=false},title={Text("删除整段回忆？")},
         text={Text("“${current.title}”及其对应的讲述、AI 回复、草稿和照片会一并删除。AI 开场白和同一人物的其他回忆会保留，已导出到外部的 PDF 不受影响。此操作无法撤销。")},
         dismissButton={TextButton({deleting=false}){Text("保留回忆")}},confirmButton={TextButton({deleting=false;scope.launch{busy=true;error=null
-            try{repository.deleteMemory(current);onDeleted()}catch(e:CancellationException){throw e}catch(e:Exception){error=e.message;if((e as? AuthException)?.statusCode==409)latest=runCatching{repository.getMemory(current.id)}.getOrNull()}finally{busy=false}}}){Text("确认删除整段",color=JournalColors.Danger)}})
+            try{deleteMemory(current);onDeleted()}catch(e:CancellationException){throw e}catch(e:Exception){error=e.message;if((e as? AuthException)?.statusCode==409)latest=runCatching{repository.getMemory(current.id)}.getOrNull()}finally{busy=false}}}){Text("确认删除整段",color=JournalColors.Danger)}})
     photoIndex?.let{PhotoViewer(current.media,it){photoIndex=null}}
 }
 

@@ -13,6 +13,20 @@ final class FamilyMemberStore: ObservableObject {
 
     init(api: (any FamilyAPI)? = nil) { self.api = api ?? BackendRepository() }
 
+    /// The two stores consume one in-flight repository snapshot, without a time cache.
+    func load(with memories: MemoryListViewModel) async {
+        async let people: Void = load()
+        async let stories: Void = memories.load()
+        _ = await (people, stories)
+    }
+
+    func updateMemoryCounts(from memories: [MemoryEvent]) {
+        mutationVersion += 1
+        for index in members.indices {
+            members[index].memoryCount = memories.filter { $0.personIDs.contains(members[index].id) }.count
+        }
+    }
+
     /// Ignore an older load response when a newer add/delete operation has started.
     func load() async {
         guard !isLoading, !isSaving else { return }
@@ -23,7 +37,7 @@ final class FamilyMemberStore: ObservableObject {
             let loaded = try await api.members()
             if version == mutationVersion { members = loaded; hasLoaded = true; errorMessage = nil }
         } catch is CancellationError {
-        } catch { errorMessage = error.localizedDescription }
+        } catch { if version == mutationVersion { errorMessage = error.localizedDescription } }
     }
 
     @discardableResult
@@ -53,5 +67,13 @@ final class FamilyMemberStore: ObservableObject {
             errorMessage = nil
             return true
         } catch { errorMessage = error.localizedDescription; return false }
+    }
+
+    @discardableResult
+    func delete(_ member: FamilyMember, updating memories: MemoryListViewModel) async -> Bool {
+        guard await delete(member) else { return false }
+        memories.unlink(personID: member.id, remainingMembers: members)
+        updateMemoryCounts(from: memories.memoryEvents)
+        return true
     }
 }

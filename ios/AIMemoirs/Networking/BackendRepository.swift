@@ -44,6 +44,7 @@ private struct MemoryDTO: Decodable {
     var information: StoryInformation?
 }
 private struct DraftDTO: Decodable { let id: UUID; let revision: UUID; let memory: MemoryDTO; var manually_edited: Bool?; var time_review_from: InformationDimension?; var has_new_narration: Bool? }
+private struct FamilySnapshot { let members: [MemberDTO]; let memories: [MemoryDTO] }
 
 enum APIDate {
     static func day(_ value: Date) -> String {
@@ -77,6 +78,8 @@ enum APIDate {
     private let client: APIClient
     private var familyID: UUID?
     private var knownMembers: [MemberDTO] = []
+    private var snapshotTask: Task<FamilySnapshot, Error>?
+    private var snapshotVersion = 0
     init(client: APIClient = .local) { self.client = client }
     private func json(_ values: [String: Any]) throws -> Data { try JSONSerialization.data(withJSONObject: values) }
     private func bootstrap() async throws -> UUID {
@@ -84,6 +87,34 @@ enum APIDate {
         let family = try await client.send(path: "api/v1/auth/me", method: "GET", as: FamilyDTO.self)
         familyID = family.family_id
         return family.family_id
+    }
+    /// Share only an active read. Every later refresh starts a new server read.
+    private func familySnapshot() async throws -> FamilySnapshot {
+        let task: Task<FamilySnapshot, Error>
+        if let active = snapshotTask { task = active }
+        else {
+            snapshotVersion += 1
+            task = Task { @MainActor in
+                let id = try await self.bootstrap()
+                let query = [URLQueryItem(name: "family_id", value: id.uuidString)]
+                async let people = self.client.send(path: "api/v1/family-members/", method: "GET", query: query, as: [MemberDTO].self)
+                async let stories = self.client.send(path: "api/v1/memories/", method: "GET", query: query, as: [MemoryDTO].self)
+                return try await FamilySnapshot(members: people, memories: stories)
+            }
+            snapshotTask = task
+        }
+        let version = snapshotVersion
+        defer { if snapshotVersion == version { snapshotTask = nil } }
+        let value = try await task.value
+        try Task.checkCancellation()
+        guard snapshotVersion == version else { throw CancellationError() }
+        knownMembers = value.members
+        return value
+    }
+    private func invalidateFamilySnapshot() {
+        snapshotVersion += 1
+        snapshotTask?.cancel()
+        snapshotTask = nil
     }
     private func member(_ value: MemberDTO, count: Int = 0) -> FamilyMember {
         let date = APIDate.parseDay(value.birth_date)
@@ -103,19 +134,23 @@ enum APIDate {
                            dateDescription: value.information?.time.value, location: value.information?.place.value ?? value.location)
         result.primaryPersonID = value.primary_person_id; result.sourceSessionID = value.source_session_id; result.version = value.version ?? 1
         result.information = value.information ?? StoryInformation(); result.mediaAssets = value.media_assets ?? []
+        if result.mediaAssets.isEmpty {
+            result.mediaAssets = (value.media_urls ?? []).compactMap { path in
+                guard path.hasPrefix("/api/v1/media/"), let id = UUID(uuidString: String(path.dropFirst("/api/v1/media/".count))),
+                      path.lowercased() == "/api/v1/media/" + id.uuidString.lowercased() else { return nil }
+                return ChatAttachment(id: id, url: path)
+            }
+        }
         return result
     }
     func members() async throws -> [FamilyMember] {
-        let id = try await bootstrap()
-        knownMembers = try await client.send(path: "api/v1/family-members/", method: "GET",
-                                            query: [.init(name: "family_id", value: id.uuidString)], as: [MemberDTO].self)
-        let memories: [MemoryDTO] = try await client.send(path: "api/v1/memories/", method: "GET",
-            query: [.init(name: "family_id", value: id.uuidString)], as: [MemoryDTO].self)
-        return knownMembers.enumerated().map { index, value in
-            member(value, count: memories.filter { $0.person_ids.contains(value.id) }.count)
+        let snapshot = try await familySnapshot()
+        return snapshot.members.map { value in
+            member(value, count: snapshot.memories.filter { $0.person_ids.contains(value.id) }.count)
         }
     }
     func addMember(_ draft: FamilyMemberDraft) async throws -> FamilyMember {
+        invalidateFamilySnapshot()
         let family = try await bootstrap()
         guard draft.isValid(), let date = draft.birthDate else { throw APIError.server("请完整填写人物信息。") }
         let result = try await client.send(path: "api/v1/family-members/", method: "POST", body: json([
@@ -123,11 +158,14 @@ enum APIDate {
             "name": draft.realName.trimmingCharacters(in: .whitespacesAndNewlines),
             "relationship": draft.relationship.trimmingCharacters(in: .whitespacesAndNewlines), "birth_date": APIDate.day(date)
         ]), as: MemberDTO.self)
+        invalidateFamilySnapshot()
         knownMembers.removeAll { $0.id == result.id }; knownMembers.append(result)
         return member(result)
     }
     func deleteMember(id: UUID) async throws {
+        invalidateFamilySnapshot()
         _ = try await client.request(path: "api/v1/family-members/\(id.uuidString)", method: "DELETE")
+        invalidateFamilySnapshot()
         knownMembers.removeAll { $0.id == id }
     }
     func start(person: FamilyMember, requestID: UUID) async throws -> ChatSnapshot {
@@ -197,25 +235,12 @@ enum APIDate {
     func save(_ draft: GeneratedMemory) async throws -> MemoryEvent {
         let result = try await client.send(path: "api/v1/memory-drafts/\(draft.draftID)/confirm", method: "POST",
             body: json(["revision": draft.revision.uuidString]), as: MemoryDTO.self)
+        invalidateFamilySnapshot()
         return try memory(result)
     }
     func list() async throws -> [MemoryEvent] {
-        _ = try await members()
-        let id = try await bootstrap()
-        let values = try await client.send(path: "api/v1/memories/", method: "GET",
-            query: [.init(name: "family_id", value: id.uuidString)], as: [MemoryDTO].self)
-        var result: [MemoryEvent] = []
-        for value in values {
-            var image: Data?
-            if let path = value.media_urls?.first {
-                // Only server-relative media paths are accepted; no arbitrary remote fetches.
-                if path.hasPrefix("/api/v1/media/") {
-                    image = try? await client.request(path: String(path.dropFirst()), method: "GET")
-                }
-            }
-            result.append(try memory(value, image: image))
-        }
-        return result
+        let snapshot = try await familySnapshot()
+        return try snapshot.memories.map { try memory($0) }
     }
     func getMemory(id: UUID) async throws -> MemoryEvent {
         let value = try await client.send(path: "api/v1/memories/\(id)", method: "GET", as: MemoryDTO.self)
@@ -224,6 +249,7 @@ enum APIDate {
         return try memory(value, image: cover)
     }
     func updateMemory(_ memory: MemoryEvent, edit: MemoryEdit) async throws -> MemoryEvent {
+        invalidateFamilySnapshot()
         guard edit.isValid else { throw APIError.server("请检查标题、正文和信息说明。") }
         let family = try await bootstrap()
         func dimension(_ value: InformationDimension) throws -> Any {
@@ -236,14 +262,17 @@ enum APIDate {
             "time": try dimension(edit.time), "place": try dimension(edit.place), "feeling": try dimension(edit.feeling),
             "memory_date": exactDate.map(APIDate.day) as Any? ?? NSNull(), "media_ids": edit.mediaIDs.map(\.uuidString)
         ]), as: MemoryDTO.self)
+        invalidateFamilySnapshot()
         var cover: Data?
         if let attachment = result.media_assets?.first { cover = try? await loadPhoto(attachment) }
         return try self.memory(result, image: cover)
     }
     func deleteMemory(_ memory: MemoryEvent) async throws {
+        invalidateFamilySnapshot()
         let family = try await bootstrap()
         _ = try await client.request(path: "api/v1/memories/\(memory.id)", method: "DELETE", query: [
             .init(name: "family_id", value: family.uuidString), .init(name: "version", value: String(memory.version))])
+        invalidateFamilySnapshot()
     }
     func uploadMemoryPhoto(id: UUID, data: Data, requestID: UUID) async throws -> ChatAttachment {
         let family = try await bootstrap()

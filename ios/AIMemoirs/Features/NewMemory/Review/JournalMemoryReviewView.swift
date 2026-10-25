@@ -13,7 +13,7 @@ struct JournalMemoryReviewView: View {
     @Environment(\.journalCareMode) private var care
 
     private var memory: MemoryEvent { draft.memory.copy(imageData: imageData ?? draft.memory.imageData) }
-    private var hasPhoto: Bool { memory.imageData != nil || memory.imageName != nil }
+    private var hasPhoto: Bool { memory.hasPhoto }
     private var feeling: String? {
         [draft.memory.information.feeling.value, draft.preview.emotion].compactMap { $0 }.first { !$0.isEmpty && $0 != "未提及" }
     }

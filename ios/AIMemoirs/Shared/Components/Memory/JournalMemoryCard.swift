@@ -5,7 +5,7 @@ struct JournalMemoryCard: View {
     let memory: MemoryEvent
     let subtitle: String
     let action: () -> Void
-    private var hasPhoto: Bool { memory.imageData != nil || memory.imageName != nil }
+    private var hasPhoto: Bool { memory.hasPhoto }
     var body: some View {
         Button(action: action) {
             VStack(alignment: .leading, spacing: 0) {

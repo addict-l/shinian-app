@@ -88,22 +88,35 @@ struct JournalStoryView: View {
     private func remove() async {
         busy = true; error = nil; defer { busy = false }
         do {
-            try await api.deleteMemory(current)
-            needsCacheCleanup = true
-            await finishDeletion()
+            try await memories.delete(current) {
+                needsCacheCleanup = true
+                try clearDeletedHistory()
+            }
+            needsCacheCleanup = false
+            finishRemoval()
         } catch {
-            self.error = error.localizedDescription
-            if isVersionConflict(error) { latest = try? await api.getMemory(id: current.id) }
+            if needsCacheCleanup {
+                self.error = "服务器已删除回忆，本机聊天缓存待清理。未发送内容会保留，请重试。"
+            } else {
+                self.error = error.localizedDescription
+                if isVersionConflict(error) { latest = try? await api.getMemory(id: current.id) }
+            }
         }
+    }
+    private func clearDeletedHistory() throws {
+        let people = current.primaryPersonID.map { Set([$0]) } ?? Set(current.personIDs)
+        try ChatDraftStore.current(previewScreen: JournalDemo.screen)?.invalidateHistory(personIDs: people, deletedSessionID: current.sourceSessionID)
+    }
+    private func finishRemoval() {
+        if !navigation.path.isEmpty { navigation.path.removeLast() }
+        members.updateMemoryCounts(from: memories.memoryEvents)
     }
     private func finishDeletion() async {
         do {
-            let people = current.primaryPersonID.map { Set([$0]) } ?? Set(current.personIDs)
-            try ChatDraftStore.current(previewScreen: JournalDemo.screen)?.invalidateHistory(personIDs: people, deletedSessionID: current.sourceSessionID)
+            try clearDeletedHistory()
             needsCacheCleanup = false
-            if !navigation.path.isEmpty { navigation.path.removeLast() }
             memories.remove(id: current.id)
-            await members.load()
+            finishRemoval()
         } catch { self.error = "服务器已删除回忆，本机聊天缓存待清理。未发送内容会保留，请重试。" }
     }
 

@@ -19,7 +19,7 @@ Android Studio 原生 Kotlin / Jetpack Compose 工程。复现基线为同仓库
 
 脚本优先使用兼容的完整 `JAVA_HOME`；需要包含 `javac` 和 `jlink`。本机已安装 Temurin JDK 21。SDK、机器路径和 IDE 设置不提交到 Git。
 
-最新安装包统一存放在 [`releases/拾年-Android-1.0.2-20261024-debug.apk`](releases/拾年-Android-1.0.2-20261024-debug.apk)，版本与校验信息在同目录。重新构建时，Gradle 会生成 `app/build/outputs/apk/debug/app-debug.apk`。正式分发版本需使用项目所有者的签名配置。
+最新已审核安装包存放在 [`releases/拾年-Android-1.0.5-20261025-登录删除性能修复.apk`](releases/拾年-Android-1.0.5-20261025-登录删除性能修复.apk)，版本与校验信息在同目录。本次沿用 1.0.5 / versionCode 6，按文件名及 SHA-256 区分此前关怀版；[性能修复与同步核查](../docs/project/login-delete-performance-2026-10-25.md)记录了对应校验值。安装包与本机验证资料按仓库规则忽略，不进入 Git。重新构建时，Gradle 会生成 `app/build/outputs/apk/debug/app-debug.apk`。正式分发版本需使用项目所有者的签名配置。
 
 ## 功能与数据
 

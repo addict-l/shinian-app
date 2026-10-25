@@ -51,7 +51,7 @@ struct CareMemoryReview: View {
                     metaChip(place, symbol: "mappin.and.ellipse")
                 }
             }
-            if memory.imageData != nil || memory.imageName != nil {
+            if memory.hasPhoto {
                 JournalPhoto(memory: memory, height: 150, radius: 20)
             }
             Text(memory.content).font(JournalTheme.story(22)).foregroundStyle(CareTheme.ink)

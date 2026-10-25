@@ -10,8 +10,12 @@ import java.util.concurrent.TimeUnit
 import kotlin.coroutines.resumeWithException
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
@@ -37,10 +41,12 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 
+data class FamilyListing(val people: Result<List<Person>>, val memories: Result<List<Memory>>)
+
 /** One repository belongs to one immutable account session, including every image request. */
 class BackendRepository(
     val session: AuthSession,
-    httpClient: OkHttpClient = OkHttpClient(),
+    httpClient: OkHttpClient = BackendTransport.client,
     private val onUnauthorized: () -> Unit = {},
 ) {
     private val base: HttpUrl = validateBase(session.server)
@@ -57,6 +63,8 @@ class BackendRepository(
     @Volatile private var active = true
     @Volatile private var verifiedFamily: String? = null
     @Volatile private var knownMembers: List<Person> = emptyList()
+    @Volatile private var membersLoaded = false
+    private val identityLock = Mutex()
 
     fun invalidate() {
         active = false
@@ -66,13 +74,39 @@ class BackendRepository(
 
     private suspend fun family(): String {
         verifiedFamily?.let { return it }
-        val identity = objectResponse("api/v1/auth/me")
-        val family = identity.requiredText("family_id")
-        if (!family.equals(session.familyId, ignoreCase = true) ||
-            !identity.requiredText("account_id").equals(session.accountId, ignoreCase = true)
-        ) throw AuthException(AuthErrorKind.Authentication, "登录身份不匹配，请重新登录。")
-        return id(family).also { verifiedFamily = it }
+        return identityLock.withLock {
+            verifiedFamily?.let { return@withLock it }
+            val identity = objectResponse("api/v1/auth/me")
+            val family = identity.requiredText("family_id")
+            if (!family.equals(session.familyId, ignoreCase = true) ||
+                !identity.requiredText("account_id").equals(session.accountId, ignoreCase = true)
+            ) throw AuthException(AuthErrorKind.Authentication, "登录身份不匹配，请重新登录。")
+            id(family).also { verifiedFamily = it }
+        }
     }
+
+    /** One home refresh reads each list once; cards and member counts use the same memory snapshot. */
+    suspend fun familyListing(): FamilyListing = coroutineScope {
+        val familyId = family()
+        val peopleTask = async { loadResult {
+            arrayResponse("api/v1/family-members/", query = mapOf("family_id" to familyId)).map { person(it.jsonObject) }
+        } }
+        val memoriesTask = async { loadResult {
+            arrayResponse("api/v1/memories/", query = mapOf("family_id" to familyId))
+        } }
+        val memoryValues = memoriesTask.await()
+        val people = peopleTask.await().map { values ->
+            values.map { person -> person.copy(memoryCount = memoryValues.getOrNull()?.count {
+                person.id in it.jsonObject.strings("person_ids")
+            } ?: knownMembers.firstOrNull { it.id == person.id }?.memoryCount ?: 0) }
+        }
+        people.getOrNull()?.let { knownMembers = it; membersLoaded = true }
+        FamilyListing(people, memoryValues.mapCatching { values -> values.map { memory(it.jsonObject) } })
+    }
+
+    private suspend fun <T> loadResult(block: suspend () -> T): Result<T> = try { Result.success(block()) }
+    catch (cancelled: CancellationException) { throw cancelled }
+    catch (error: Exception) { Result.failure(error) }
 
     suspend fun members(): List<Person> {
         val familyId = family()
@@ -82,6 +116,7 @@ class BackendRepository(
         knownMembers = people.map { person ->
             person.copy(memoryCount = memories.count { person.id in it.jsonObject.strings("person_ids") })
         }
+        membersLoaded = true
         return knownMembers
     }
 
@@ -104,7 +139,7 @@ class BackendRepository(
     }
 
     suspend fun memories(): List<Memory> {
-        if (knownMembers.isEmpty()) members()
+        if (!membersLoaded) members()
         return arrayResponse("api/v1/memories/", query = mapOf("family_id" to family()))
             .map { memory(it.jsonObject) }
     }

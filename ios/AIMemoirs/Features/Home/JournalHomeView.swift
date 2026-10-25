@@ -45,18 +45,18 @@ struct JournalHomeView: View {
                     }
                 }
                 if let error = loadError {
-                    JournalError(message: error) { Task { await members.load(); await memories.load() } }.padding(.top, 16)
+                    JournalError(message: error) { Task { await members.load(with: memories) } }.padding(.top, 16)
                 }
                 Color.clear.frame(height: 24)
             }.padding(.horizontal, JournalTheme.gutter).padding(.top, 6)
         }
-        .scrollIndicators(.hidden).refreshable { await members.load(); await memories.load() }.journalPage()
+        .scrollIndicators(.hidden).refreshable { await members.load(with: memories) }.journalPage()
     }
 
     private func featured(_ memory: MemoryEvent) -> some View {
         Button { navigation.path.append(.memory(memory.id)) } label: {
             VStack(alignment: .leading, spacing: 0) {
-                if memory.imageData != nil || memory.imageName != nil { JournalPhoto(memory: memory, height: 150, radius: 16) }
+                if memory.hasPhoto { JournalPhoto(memory: memory, height: 150, radius: 16) }
                 VStack(alignment: .leading, spacing: 0) {
                     HStack(spacing: 8) {
                         JournalChip(text: memoryAbout(memory, members: members.members), style: .rose, compact: true)

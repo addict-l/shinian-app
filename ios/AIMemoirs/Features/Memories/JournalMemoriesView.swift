@@ -62,10 +62,10 @@ struct JournalMemoriesView: View {
     }
 
     @ViewBuilder private func groupBody(_ events: [MemoryEvent]) -> some View {
-        let photos = events.filter { $0.imageData != nil || $0.imageName != nil }
+        let photos = events.filter { $0.hasPhoto }
         let paired = photos.count >= 2 ? Array(photos.prefix(photos.count / 2 * 2)) : []
         let single = photos.filter { item in !paired.contains { $0.id == item.id } }
-        let quotes = events.filter { $0.imageData == nil && $0.imageName == nil }
+        let quotes = events.filter { !$0.hasPhoto }
         VStack(spacing: 10) {
             if !paired.isEmpty {
                 LazyVGrid(columns: [GridItem(.flexible(), spacing: 12), GridItem(.flexible(), spacing: 12)], spacing: 12) {

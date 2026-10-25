@@ -127,8 +127,7 @@ struct FamilyFilmCollectionView: View {
     }
 
     private func reload() async {
-        await members.load()
-        await memories.load()
+        await members.load(with: memories)
         portraits.load(members.members.map(\.id))
     }
 }

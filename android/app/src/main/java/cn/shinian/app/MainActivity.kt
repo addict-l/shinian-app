@@ -174,10 +174,11 @@ private fun ShinianApplication(model: AppViewModel = viewModel()) {
                         "family-all" -> FamilyFilmScreen(family.people, family.memories, family.loading, family.error, care, true, session.scopeKey,
                             onRefresh = model::refresh, onPerson = ::openPerson, onMemory = ::openMemory, onAdd = ::compose, onAllPeople = { route = "" })
                         "memory" -> if (memory != null) MemoryDetailScreen(memory, family.people, repository, care,
+                            deleteMemory = model::deleteMemory,
                             onBack = ::back, onHome = { route = ""; tab = 0 }, onEdit = { directMemory = it; route = "editor" }, onDeleted = {
                                 scope.launch {
                                     refreshChatCache(memory.sourceSessionId)
-                                    route = ""; directMemory = null; model.refresh()
+                                    route = ""; directMemory = null
                                 }
                             })
                             else MissingContent("回忆暂时无法读取", model::refresh, ::back)
@@ -202,7 +203,7 @@ private fun ShinianApplication(model: AppViewModel = viewModel()) {
                                     if (!actionBusy) {
                                         actionBusy = true; actionError = null
                                         scope.launch {
-                                            try { repository.deleteMember(value.id); model.refresh() }
+                                            try { model.deleteMember(value.id) }
                                             catch (e: Exception) { actionError = e.message }
                                             finally { actionBusy = false }
                                         }

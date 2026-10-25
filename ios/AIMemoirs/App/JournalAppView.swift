@@ -76,6 +76,7 @@ struct JournalAppView: View {
         }
         .background(JournalTheme.paper.ignoresSafeArea())
         .environmentObject(members).environmentObject(memories).environmentObject(navigation)
+        .environment(\.journalPhotoAPI, memoryAPI)
         .environment(\.journalCareMode, careEnabled)
         .environment(\.locale, Locale(identifier: "zh_CN"))
         .font(JournalTheme.font(careEnabled ? 22 : 15)).foregroundStyle(JournalTheme.ink)
@@ -84,7 +85,7 @@ struct JournalAppView: View {
             navigation.path.removeAll(); navigation.tab = .home; navigation.composeStep = .select
         }
         .task {
-            await members.load(); await memories.load()
+            await members.load(with: memories)
             guard !previewReady else { return }; previewReady = true
             if let previewScreen {
                 #if DEBUG

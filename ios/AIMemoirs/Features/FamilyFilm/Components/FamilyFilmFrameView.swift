@@ -11,7 +11,7 @@ struct FamilyFilmFrameView: View {
     let onOpen: () -> Void
     @ScaledMetric(relativeTo: .body) private var width = Layout.width
     @ScaledMetric(relativeTo: .body) private var height = Layout.height
-    private var hasPhoto: Bool { moment.memory.imageData != nil || moment.memory.imageName != nil }
+    private var hasPhoto: Bool { moment.memory.hasPhoto }
 
     var body: some View {
         Button(action: onOpen) {

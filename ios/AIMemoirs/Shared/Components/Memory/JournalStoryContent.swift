@@ -8,12 +8,12 @@ struct JournalStoryContent: View {
     var person: FamilyMember? = nil
     var photoAPI: (any MemoryAPI)? = nil
     var topInset: CGFloat = 0
-    private var hasPhoto: Bool { memory.imageData != nil || memory.imageName != nil }
+    private var hasPhoto: Bool { memory.hasPhoto }
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
                 if hasPhoto {
-                    JournalPhoto(memory: memory, height: 360, radius: 0)
+                    JournalPhoto(memory: memory, height: 360, radius: 0, api: photoAPI)
                         .overlay {
                             LinearGradient(stops: [.init(color: Color(red: 60 / 255, green: 40 / 255, blue: 25 / 255).opacity(0.25), location: 0),
                                                    .init(color: .clear, location: 0.3), .init(color: .clear, location: 0.7),

@@ -91,10 +91,10 @@ struct CareHomeView: View {
                         .fixedSize(horizontal: false, vertical: true).padding(20).frame(maxWidth: .infinity, alignment: .leading).journalCard(radius: 26)
                 }
                 if let error = members.errorMessage ?? memories.errorMessage {
-                    CareError(message: error) { Task { await members.load(); await memories.load() } }
+                    CareError(message: error) { Task { await members.load(with: memories) } }
                 }
             }.padding(.horizontal, 20).padding(.top, 12).padding(.bottom, 24)
-        }.scrollIndicators(.hidden).refreshable { await members.load(); await memories.load(); loadContinuation() }
+        }.scrollIndicators(.hidden).refreshable { await members.load(with: memories); loadContinuation() }
             .carePage().onAppear(perform: loadContinuation)
             .onChange(of: members.members.map(\.id)) { _, _ in loadContinuation() }
             .onChange(of: scenePhase) { _, phase in if phase == .active { loadContinuation() } }
@@ -143,7 +143,7 @@ struct CareMemoryCard: View {
     let onOpen: () -> Void
     @EnvironmentObject private var members: FamilyMemberStore
     private var person: FamilyMember? { carePerson(for: memory, members: members.members) }
-    private var hasPhoto: Bool { memory.imageData != nil || memory.imageName != nil }
+    private var hasPhoto: Bool { memory.hasPhoto }
     var body: some View {
         Button(action: onOpen) {
             Group {
@@ -233,7 +233,7 @@ struct CareMemoriesView: View {
                     if dictation.isBusy { Text(dictation.statusText).font(CareTheme.font(18)).foregroundStyle(CareTheme.accent) }
                     if memories.isLoading { ProgressView("正在打开回忆…").font(CareTheme.font(20)).frame(maxWidth: .infinity).padding(12) }
                     if let error = members.errorMessage ?? memories.errorMessage {
-                        CareError(message: error) { Task { await members.load(); await memories.load() } }
+                        CareError(message: error) { Task { await members.load(with: memories) } }
                     }
                     ForEach(Array(groups.enumerated()), id: \.offset) { _, group in
                         HStack(spacing: 12) {
@@ -248,7 +248,7 @@ struct CareMemoriesView: View {
                         if all.isEmpty { CareButton(title: "开始讲述", symbol: "mic") { navigation.compose(step: members.members.isEmpty ? .add : .select) } }
                     }
                 }.padding(20)
-            }.scrollIndicators(.hidden).refreshable { await members.load(); await memories.load() }
+            }.scrollIndicators(.hidden).refreshable { await members.load(with: memories) }
                 .scrollDismissesKeyboard(.interactively)
         }.carePage().onDisappear { dictation.cancel() }
             .onChange(of: scenePhase) { _, phase in if phase == .background { dictation.cancel() } }
@@ -440,7 +440,7 @@ struct CareStoryReading: View {
     @AppStorage("journal.care.readingScale") private var readingScale = 1.0
     @StateObject private var speech = CareStorySpeech()
     private var person: FamilyMember? { carePerson(for: memory, members: members.members) }
-    private var hasPhoto: Bool { memory.imageData != nil || memory.imageName != nil }
+    private var hasPhoto: Bool { memory.hasPhoto }
     private var hasRemoteCover: Bool { api != nil && !memory.mediaAssets.isEmpty }
     private var scrollsToolbar: Bool { typeSize.isAccessibilitySize && verticalSizeClass == .compact }
     private var metadata: [(label: String, value: String)] {

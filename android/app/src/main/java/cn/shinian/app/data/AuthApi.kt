@@ -32,7 +32,7 @@ import okhttp3.Response
 /** The same revocable device-session API used by the iOS application. */
 class AuthApi(
     baseUrl: String = BuildConfig.API_BASE_URL,
-    httpClient: OkHttpClient = OkHttpClient(),
+    httpClient: OkHttpClient = BackendTransport.client,
 ) : AuthService {
     private val base: HttpUrl = validatedBase(baseUrl)
     override val server: String = base.toString().trimEnd('/')

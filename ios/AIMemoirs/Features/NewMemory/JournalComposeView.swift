@@ -49,7 +49,7 @@ struct JournalComposeView: View {
                     JournalChatView(person: person, chatAPI: chatAPI, memoryAPI: memoryAPI, previewScreen: previewScreen, resumedDraft: resumedDraft) {
                         navigation.composeStep = .select
                     } onSaved: {
-                        await members.load(); await memories.load()
+                        await members.load(with: memories)
                         resumedDraft = nil
                     }.id(person.id.uuidString + ":" + chatIdentity.uuidString)
                 }
@@ -62,7 +62,7 @@ struct JournalComposeView: View {
                     name: person.name,
                     onConfirm: {
                         personPendingDelete = nil
-                        Task { if await members.delete(person) { await memories.load() } }
+                        Task { await members.delete(person, updating: memories) }
                     },
                     onCancel: { personPendingDelete = nil }
                 )
