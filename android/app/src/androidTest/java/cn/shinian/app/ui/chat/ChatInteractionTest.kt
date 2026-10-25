@@ -4,12 +4,18 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertTextContains
+import androidx.compose.ui.test.captureToImage
+import androidx.compose.ui.test.isRoot
+import androidx.compose.ui.test.isDialog
+import androidx.compose.ui.test.onRoot
+import androidx.compose.ui.test.onLast
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onAllNodesWithText
@@ -73,6 +79,14 @@ class ChatInteractionTest {
     }
     private fun waitText(text: String) = compose.waitUntil(15_000) { compose.onAllNodesWithText(text).fetchSemanticsNodes().isNotEmpty() }
 
+    private fun shot(name: String) {
+        compose.waitForIdle()
+        val folder = File(context.getExternalFilesDir(null), "care-sync-screenshots").apply { mkdirs() }
+        val target = if (compose.onAllNodes(isDialog()).fetchSemanticsNodes().isNotEmpty()) compose.onNode(isDialog()) else compose.onRoot()
+        val bitmap = target.captureToImage().asAndroidBitmap()
+        File(folder, "$name.png").outputStream().use { bitmap.compress(android.graphics.Bitmap.CompressFormat.PNG, 100, it) }
+    }
+
     @Test fun interruptedNarrationRetriesSameIdentityAndDraftNeedsExplicitSave() {
         var saved = 0
         backend.failFirstMessage = true
@@ -119,26 +133,64 @@ class ChatInteractionTest {
         var saved = 0
         var home = 0
         start(care = true, onHome = { home++ }, onSaved = { saved++ })
+        waitTag("chat.input.keyboard")
+        shot("11-care-chat")
+        compose.onNodeWithTag("chat.input.keyboard").assertIsDisplayed().performClick()
         waitTag("chat.input")
         compose.onNodeWithTag("chat.input").performTextInput("那年我第一次离开家乡去上班。")
-        compose.onNodeWithTag("chat.send").performClick()
+        compose.onNodeWithTag("chat.send").assertIsDisplayed().performClick()
         waitTag("chat.generate")
-        compose.onNodeWithTag("chat.generate").performClick()
+        compose.onNodeWithTag("chat.generate").assertIsDisplayed().performClick()
         waitTag("memory.save")
-        compose.onNodeWithTag("memory.save").performScrollTo().performClick()
-        waitText("这段故事，已经留下了")
+        assertEquals(0, backend.confirmations.get())
+        compose.onNodeWithTag("care.draft.edit").assertIsDisplayed().performClick()
+        waitTag("draft.title")
+        shot("12-care-draft-editor")
+        compose.onNodeWithTag("draft.title").performScrollTo().performTextReplacement("2008年第一次工作的记忆")
+        compose.runOnIdle { keyboard?.hide() }
+        compose.onNodeWithTag("draft.keepEdits").assertIsDisplayed().performClick()
+        compose.waitUntil(15_000) { backend.edits.size == 1 }
+        waitTag("memory.save")
+        assertEquals(0, backend.confirmations.get())
+        shot("12-care-draft")
+        compose.onNodeWithTag("memory.save").performClick()
+        waitText("这段回忆，保存好了")
+        shot("13-care-saved")
         assertEquals(1, backend.confirmations.get())
         assertEquals(0, backend.openedAfterSave.get())
         compose.runOnIdle { assertEquals(1, saved) }
-        compose.onNodeWithText("回到首页").performScrollTo().assertIsDisplayed().performClick()
+        compose.onNodeWithText("回到首页").assertIsDisplayed().performClick()
         compose.runOnIdle { assertEquals(1, home) }
-        compose.onNodeWithText("读读这段回忆").performClick()
-        compose.onNodeWithText("回到首页").performScrollTo().performClick()
-        compose.runOnIdle { assertEquals(2, home) }
-        compose.onNodeWithTag("chat.back").performClick()
-        compose.onNodeWithText("继续记录").performClick()
-        compose.waitUntil(15_000) { backend.openedAfterSave.get() == 1 && compose.onAllNodesWithTag("chat.input").fetchSemanticsNodes().isNotEmpty() }
+        compose.onNodeWithTag("care.saved.read").performClick()
+        compose.onNodeWithTag("care.story.body").assertIsDisplayed()
+        compose.onNodeWithTag("care.back").performClick()
+        compose.onNodeWithText("再讲一段").performClick()
+        compose.waitUntil(15_000) { backend.openedAfterSave.get() == 1 && compose.onAllNodesWithTag("chat.input.keyboard").fetchSemanticsNodes().isNotEmpty() }
         assertEquals(1, backend.confirmations.get())
+    }
+
+    @Test fun careLifeUsesSymmetricReviewAndDirectTopicEntry() {
+        start(life = true, care = true)
+        waitTag("life.begin")
+        compose.onNodeWithTag("life.begin").performScrollTo().performClick()
+        waitTag("life.skip")
+        compose.onNodeWithTag("life.skip").performScrollTo().performClick()
+        waitTag("life.confirm")
+        val edit = compose.onNodeWithTag("life.details").fetchSemanticsNode().boundsInRoot
+        val history = compose.onNodeWithTag("care.life.history").fetchSemanticsNode().boundsInRoot
+        assertEquals(edit.width, history.width, 1f); assertEquals(edit.height, history.height, 1f)
+        compose.onNodeWithTag("life.confirm").performClick()
+        waitTag("life.module.work")
+        compose.onNodeWithTag("life.module.work").performScrollTo().performClick()
+        waitTag("chat.input.keyboard")
+        assertEquals("work", backend.selectedModule)
+        compose.onNodeWithTag("chat.input.keyboard").assertIsDisplayed().performClick()
+        compose.onNodeWithTag("chat.input").performTextInput("这个故事还没有发出，请保留。")
+        compose.onNodeWithTag("chat.input.clear").assertIsDisplayed().performClick()
+        compose.onNodeWithTag("chat.input.keyboard").assertIsDisplayed().performClick()
+        compose.onNodeWithTag("chat.input").performTextInput("清空之后重新写下的故事。")
+        compose.onNodeWithTag("chat.input").assertTextContains("清空之后重新写下的故事。")
+        assertEquals(0, backend.confirmations.get())
     }
 
     @Test fun lifeOutlineSkipAndModuleUseServerStateAndInvalidationRetainsUnsentInput() {
@@ -152,7 +204,7 @@ class ChatInteractionTest {
         assertEquals("跳过这题", backend.lifeCommands.last().getString("text"))
         compose.onNodeWithTag("life.confirm").performClick()
         waitTag("life.module.work")
-        compose.onNodeWithTag("life.module.work").performScrollTo().performClick()
+        compose.onNodeWithTag("life.module.work").assertIsDisplayed().performClick()
         compose.onNodeWithTag("life.enter").performClick()
         waitTag("chat.input")
         assertEquals("work", backend.selectedModule)

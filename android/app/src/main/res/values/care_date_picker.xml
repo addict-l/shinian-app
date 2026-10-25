@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CareBirthdayPicker" parent="android:style/Theme.Material.Light">
+        <item name="android:datePickerStyle">@style/CareBirthdaySpinner</item>
+        <item name="android:colorAccent">#AD5634</item>
+        <item name="android:textColorPrimary">#3D2E24</item>
+        <item name="android:fontFamily">sans</item>
+    </style>
+    <style name="CareBirthdaySpinner" parent="android:style/Widget.Material.Light.DatePicker">
+        <item name="android:datePickerMode">spinner</item>
+        <item name="android:calendarViewShown">false</item>
+        <item name="android:spinnersShown">true</item>
+    </style>
+</resources>

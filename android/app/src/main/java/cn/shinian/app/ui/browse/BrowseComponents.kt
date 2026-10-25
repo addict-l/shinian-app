@@ -50,6 +50,7 @@ import androidx.exifinterface.media.ExifInterface
 import cn.shinian.app.R
 import cn.shinian.app.data.*
 import cn.shinian.app.ui.theme.*
+import cn.shinian.app.ui.care.*
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -82,6 +83,7 @@ fun JournalIcon(name: String, description: String? = null, modifier: Modifier = 
 
 @Composable
 internal fun PageTitle(title: String, subtitle: String? = null, care: Boolean = false,size:Int=30) {
+    if (care) { CareHeading(title, subtitle); return }
     Column(verticalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.fillMaxWidth()) {
         Text(title, style = if(care) JournalTypography.body(28, true) else JournalTypography.story(size),
             color = JournalColors.Ink, modifier = Modifier.semantics { heading() })
@@ -92,6 +94,7 @@ internal fun PageTitle(title: String, subtitle: String? = null, care: Boolean = 
 @Composable
 internal fun BrowseBar(title: String = "", care: Boolean = false, onBack: () -> Unit,
     trailing: @Composable RowScope.() -> Unit = {}) {
+    if (care) { CareToolbar(title, onBack); return }
     Row(Modifier.fillMaxWidth().heightIn(min = if(care) 64.dp else 48.dp).padding(horizontal = 12.dp),
         verticalAlignment = Alignment.CenterVertically) {
         IconButton(onClick = onBack, modifier = Modifier.size(48.dp).testTag("browse.back")) {
@@ -108,10 +111,10 @@ internal fun BrowseBar(title: String = "", care: Boolean = false, onBack: () -> 
 
 @Composable
 internal fun JournalCard(modifier: Modifier = Modifier, care: Boolean = false,contentPadding:PaddingValues=PaddingValues(if(care)18.dp else 16.dp), content: @Composable ColumnScope.() -> Unit) {
-    val shape = RoundedCornerShape(if(care) 18.dp else 22.dp)
+    val shape = RoundedCornerShape(if(care) 26.dp else 22.dp)
     Column(modifier.shadow(if(care) 0.dp else 4.dp, shape, ambientColor = JournalColors.Shadow.copy(alpha=.12f),
         spotColor = JournalColors.Shadow.copy(alpha=.12f)).background(JournalColors.Surface, shape)
-        .border(1.dp, if(care) Color(0xFFDFD3C3) else JournalColors.CardBorder, shape)
+        .border(1.dp, if(care) CareColors.Border else JournalColors.CardBorder, shape)
         .clip(shape).padding(contentPadding), content = content)
 }
 
@@ -132,6 +135,7 @@ internal fun JournalInput(label:String,value:String,onChange:(String)->Unit,plac
 @Composable
 internal fun JournalAction(title: String, care: Boolean = false, secondary: Boolean = false, enabled: Boolean = true,
     loading: Boolean = false, modifier: Modifier = Modifier, icon:String?=null,onClick: () -> Unit) {
+    if (care) { CareButton(title, modifier, icon, secondary, enabled, loading, onClick = onClick); return }
     Button(onClick, modifier.fillMaxWidth().heightIn(min = if(care) 64.dp else 54.dp),
         enabled = enabled && !loading, shape = if(care) RoundedCornerShape(16.dp) else CircleShape,
         colors = ButtonDefaults.buttonColors(containerColor = if(secondary) JournalColors.Surface else if(care) Color(0xFF9E4C2D) else JournalColors.Accent,
@@ -148,6 +152,7 @@ internal fun JournalAction(title: String, care: Boolean = false, secondary: Bool
 
 @Composable
 internal fun BrowseError(error: String?, care: Boolean = false, onRetry: () -> Unit) {
+    if (care) { if (error != null) CareError(error, onRetry); return }
     if(error != null) JournalCard(Modifier.fillMaxWidth(), care) {
         Text(error, style = JournalTypography.body(if(care) 20 else 13), color=JournalColors.Danger,
             modifier=Modifier.semantics { liveRegion = LiveRegionMode.Polite })
@@ -167,7 +172,7 @@ internal fun SearchBox(value: String, onChange: (String)->Unit, prompt: String, 
 
 @Composable
 internal fun LocalPortrait(id: String, person: Person? = null, scope: String = LocalBrowseStorageScope.current,
-    size: Dp = 52.dp, refresh: Int = 0, modifier: Modifier = Modifier) {
+    size: Dp = 52.dp, refresh: Int = 0, modifier: Modifier = Modifier, care: Boolean = false) {
     val context=LocalContext.current
     var bitmap by remember(id,scope,refresh) { mutableStateOf<ImageBitmap?>(null) }
     LaunchedEffect(id,scope,refresh) { bitmap=withContext(Dispatchers.IO) {
@@ -177,13 +182,14 @@ internal fun LocalPortrait(id: String, person: Person? = null, scope: String = L
     val index=runCatching{UUID.fromString(id).let{uuid->val first=((uuid.mostSignificantBits ushr 56)and 255).toInt();val last=(uuid.leastSignificantBits and 255).toInt();if(last==4)0 else(first xor last)%colors.size}}.getOrDefault(0)
     val color=if(person==null)JournalColors.Soft else colors[index]
     val border=if(size>=80.dp)4.dp else if(size<=26.dp)1.5.dp else if(size<=34.dp)2.dp else 2.5.dp
-    Box(modifier.size(size).shadow(5.dp,CircleShape,ambientColor=JournalColors.Shadow.copy(alpha=.15f),spotColor=JournalColors.Shadow.copy(alpha=.15f))
+    val portraitShadow = if (care) Modifier.careShadow(CircleShape, 5.dp, 3.dp, .15f, Color(0xFF8C5A32)) else Modifier.shadow(5.dp,CircleShape,ambientColor=JournalColors.Shadow.copy(alpha=.15f),spotColor=JournalColors.Shadow.copy(alpha=.15f))
+    Box(modifier.size(size).then(portraitShadow)
         .clip(CircleShape).background(color).border(border,Color.White,CircleShape),contentAlignment=Alignment.Center) {
         if(bitmap!=null) Image(bitmap!!,null,Modifier.fillMaxSize(),contentScale=ContentScale.Crop)
         else if(person==null)JournalIcon("person",modifier=Modifier.size(size*.46f),tint=JournalColors.Accent)
         else {
             val initial=when(person.relationship){"爸爸"->"父";"妈妈"->"母";else->person.relationship.ifBlank{person.name}.take(1)}
-            Text(initial,style=JournalTypography.story((size.value*.36).toInt()),color=Color.White)
+            Text(initial,style=if (care) CareTypography.story(size.value*.36f) else JournalTypography.story((size.value*.36).toInt()),color=Color.White)
         }
     }
 }
@@ -281,20 +287,21 @@ internal fun String.displayDay():String=runCatching{LocalDate.parse(take(10)).le
 @Composable
 internal fun JournalBottomSheet(title:String,message:String?=null,care:Boolean=false,onCancel:()->Unit,content:@Composable ColumnScope.()->Unit) {
     Dialog(onCancel,DialogProperties(usePlatformDefaultWidth=false,decorFitsSystemWindows=false)) {
+        if (care) ShinianImmersiveWindow()
         val dialogWindow=(LocalView.current.parent as? DialogWindowProvider)?.window
         SideEffect {dialogWindow?.setDimAmount(0f)}
         Box(Modifier.fillMaxSize()) {
             Box(Modifier.fillMaxSize().background(JournalColors.Ink.copy(alpha=.28f)).clickable(onClick=onCancel).clearAndSetSemantics{})
             Column(Modifier.align(Alignment.BottomCenter).fillMaxWidth().navigationBarsPadding().padding(horizontal=12.dp,vertical=4.dp),verticalArrangement=Arrangement.spacedBy(10.dp)) {
                 Column(Modifier.fillMaxWidth().background(JournalColors.Surface,RoundedCornerShape(26.dp)).padding(bottom=8.dp)) {
-                    Column(Modifier.fillMaxWidth().padding(horizontal=20.dp,vertical=16.dp),horizontalAlignment=Alignment.CenterHorizontally,verticalArrangement=Arrangement.spacedBy(6.dp)) {
-                        Text(title,style=JournalTypography.body(if(care)22 else if(message==null)12 else 15,message!=null),color=if(message==null)JournalColors.Muted else JournalColors.Ink,textAlign=TextAlign.Center)
-                        message?.let{Text(it,style=JournalTypography.body(if(care)19 else 12),color=JournalColors.SecondaryInk,textAlign=TextAlign.Center)}
+                    Column(Modifier.fillMaxWidth().padding(horizontal=20.dp).padding(top=16.dp,bottom=if(care)10.dp else 16.dp),horizontalAlignment=Alignment.CenterHorizontally,verticalArrangement=Arrangement.spacedBy(6.dp)) {
+                        Text(title,style=if(care)CareTypography.body(if(message==null)12 else 15,message!=null) else JournalTypography.body(if(message==null)12 else 15,message!=null),color=if(message==null)JournalColors.Muted else JournalColors.Ink,textAlign=TextAlign.Center)
+                        message?.let{Text(it,style=if(care)CareTypography.body(12) else JournalTypography.body(12),color=JournalColors.SecondaryInk,textAlign=TextAlign.Center)}
                     }
                     content()
                 }
-                TextButton(onCancel,modifier=Modifier.fillMaxWidth().heightIn(min=if(care)64.dp else 54.dp).background(JournalColors.Surface,RoundedCornerShape(22.dp))) {
-                    Text("取消",style=JournalTypography.body(if(care)22 else 16,true),color=JournalColors.AccentDeep)
+                TextButton(onCancel,modifier=Modifier.fillMaxWidth().heightIn(min=54.dp).background(JournalColors.Surface,RoundedCornerShape(22.dp))) {
+                    Text("取消",style=if(care)CareTypography.body(16,true) else JournalTypography.body(16,true),color=JournalColors.AccentDeep)
                 }
             }
         }
@@ -304,8 +311,8 @@ internal fun JournalBottomSheet(title:String,message:String?=null,care:Boolean=f
 @Composable
 internal fun JournalSheetAction(title:String,icon:String,destructive:Boolean=false,care:Boolean=false,onClick:()->Unit) {
     HorizontalDivider(color=JournalColors.Line)
-    Row(Modifier.fillMaxWidth().heightIn(min=if(care)64.dp else 52.dp).clickable(onClick=onClick).padding(horizontal=22.dp,vertical=12.dp),verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(12.dp)) {
+    Row(Modifier.fillMaxWidth().heightIn(min=52.dp).clickable(onClick=onClick).padding(horizontal=22.dp,vertical=12.dp),verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(12.dp)) {
         JournalIcon(icon,tint=if(destructive)JournalColors.Danger else JournalColors.Accent)
-        Text(title,style=JournalTypography.body(if(care)22 else 16),color=if(destructive)JournalColors.Danger else JournalColors.Ink)
+        Text(title,style=if(care)CareTypography.body(16) else JournalTypography.body(16),color=if(destructive)JournalColors.Danger else JournalColors.Ink)
     }
 }

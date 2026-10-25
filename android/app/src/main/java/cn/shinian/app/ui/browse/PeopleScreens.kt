@@ -38,6 +38,10 @@ fun PersonSelectionScreen(
     people:List<Person>,loading:Boolean=false,error:String?=null,care:Boolean=false,
     onSelect:(Person)->Unit={},onAdd:()->Unit={},onDelete:(Person)->Unit={},onRefresh:()->Unit={},onBack:()->Unit={},
 ) {
+    if (care) {
+        CarePersonSelectionScreen(people, loading, error, onSelect, onAdd, onRefresh, onBack)
+        return
+    }
     var search by rememberSaveable{mutableStateOf("")};var pendingDelete by remember{mutableStateOf<Person?>(null)}
     val matches=people.filter{search.isBlank()||"${it.name} ${it.relationship}".contains(search,true)}
     JournalBackdrop(Modifier.fillMaxSize()) {
@@ -98,6 +102,7 @@ fun PersonSelectionScreen(
 fun AddPersonScreen(
     loading:Boolean=false,error:String?=null,care:Boolean=false,onAdd:(String,String,String)->Unit={_,_,_->},onBack:()->Unit={},
 ) {
+    if (care) { CareAddPersonScreen(loading, error, onAdd, onBack); return }
     var name by rememberSaveable{mutableStateOf("")};var relationship by rememberSaveable{mutableStateOf("")}
     var birthday by rememberSaveable{mutableStateOf<String?>(null)};var picker by rememberSaveable{mutableStateOf(false)}
     val focus=LocalFocusManager.current
@@ -162,7 +167,9 @@ fun FamilyFilmScreen(
         if(uri!=null&&person!=null)scope.launch {try{savePortrait(context,actualScope,person.id,uri);portraitRevision++}catch(e:Exception){portraitError=e.message}}
     }
     val filtered=people.filter{search.isBlank()||"${it.name} ${it.relationship}".contains(search,true)}.let{if(allPeople)it else it.take(3)}
-    BrowseScroll(loading,onRefresh,care) {
+    if (care) CareFamilyFilmContent(people, memories, loading, error, allPeople, search, { search = it }, actualScope,
+        portraitRevision, onRefresh, onPerson, onMemory, onAdd, onAllPeople, { menuPerson = it })
+    else BrowseScroll(loading,onRefresh,care) {
         if(allPeople)BrowseBar("",care,onAllPeople)
         PageTitle(if(allPeople)"家人的胶卷"else"我们的家庭",if(allPeople)"一人一卷，慢慢翻阅。"else"把日子连起来，就成了我们的故事。",care)
         SectionHeading("${people.size} 位家人 · ${memories.map{it.id}.distinct().size} 段回忆",if(allPeople)""else"查看全部家人",care,onAllPeople)
@@ -229,6 +236,10 @@ private fun FilmFrame(memory:Memory,care:Boolean,onClick:()->Unit) {
 fun PersonDetailScreen(
     person:Person,memories:List<Memory>,care:Boolean=false,storageScope:String="",onBack:()->Unit={},onMemory:(Memory)->Unit={},onCompose:()->Unit={},onMemoir:()->Unit={},
 ) {
+    if (care) {
+        CarePersonDetailContent(person, memories, storageScope.ifBlank { LocalBrowseStorageScope.current }, onBack, onMemory, onCompose, onMemoir)
+        return
+    }
     val events=memories.filter{person.id in it.personIds}.sortedByDescending{it.createdAt}
     val ownStories=events.any{it.primaryPersonId==person.id}
     val actualScope=storageScope.ifBlank{LocalBrowseStorageScope.current}

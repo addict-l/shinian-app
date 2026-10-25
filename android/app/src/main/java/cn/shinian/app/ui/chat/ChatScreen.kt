@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.net.Uri
+import cn.shinian.app.ui.care.CarePage
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -75,9 +76,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import cn.shinian.app.data.BackendRepository
 import cn.shinian.app.data.ChatMessage
 import cn.shinian.app.data.Media
+import cn.shinian.app.data.Memory
 import cn.shinian.app.data.Person
 import cn.shinian.app.media.preparePhoto
 import cn.shinian.app.ui.media.rememberPhotoPicker
+import cn.shinian.app.ui.browse.CareStoryScreen
 import cn.shinian.app.ui.theme.JournalColors as C
 import cn.shinian.app.ui.theme.JournalTypography as T
 import java.text.SimpleDateFormat
@@ -88,7 +91,7 @@ import kotlinx.coroutines.CancellationException
 
 @Composable
 fun ChatScreen(person: Person, repository: BackendRepository, care: Boolean, onBack: () -> Unit, onSaved: () -> Unit,
-    onHome: () -> Unit = {}) {
+    onHome: () -> Unit = {}, familyMemories: List<Memory>? = null) {
     val context = LocalContext.current
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     val focus = LocalFocusManager.current
@@ -180,7 +183,14 @@ fun ChatScreen(person: Person, repository: BackendRepository, care: Boolean, onB
     } }
 
     when {
-        model.savedMemory != null -> ChatPage {
+        model.savedMemory != null -> if (care) {
+            if (readingSaved) CarePage { CareStoryScreen(model.savedMemory!!, listOf(person), onBack = { readingSaved = false }, onHome = onHome,
+                identityOverride = person.relationship.takeIf { it.isNotBlank() }?.let { "$it · ${person.name}" } ?: person.name) }
+            else CareSavedResult(model.savedMemory!!, person, model.busy, onRead = { readingSaved = true },
+                onContinue = { readingSaved = false; model.continueStory() }, onHome = onHome,
+                memoryCount = familyMemories?.let { values -> (values + model.savedMemory!!).distinctBy { it.id }
+                    .count { it.primaryPersonId?.let { id -> id == person.id } ?: (person.id in it.personIds) } })
+        } else ChatPage {
             ChatHeader(if (readingSaved) "珍藏的回忆" else "回忆已珍藏", care = care,
                 onBack = { if (readingSaved) readingSaved = false else onHome() },
                 backLabel = if (readingSaved) "返回保存结果" else "回到首页", trailing = { Spacer(Modifier.size(48.dp)) })
@@ -217,7 +227,9 @@ fun ChatScreen(person: Person, repository: BackendRepository, care: Boolean, onB
             }
         }
         model.needsLife || model.showLife -> LifeInterviewScreen(model, care, dictation, ::mic, ::leave) { history = it }
-        else -> ChatPage {
+        else -> if (care) CareStoryChatScreen(model, dictation, readingPhotos, careContinuing, { careContinuing = true },
+            ::mic, ::pickPhoto, { history = model.messages }, { managePhotos = true }, ::generateDraft, ::leave)
+        else ChatPage {
             ChatHeader(if (care) "慢慢讲述" else "关于${person.relationship.takeIf { it.isNotBlank() }?.let { "$it · " }.orEmpty()}${person.name}",
                 if (care) "3 / 3" else "AI 回忆助手", care, ::leave) {
                 IconButton({ history = model.messages }, modifier = Modifier.semantics { contentDescription = "前面聊过的" }) { JournalGlyph("history") }
@@ -299,7 +311,7 @@ fun ChatScreen(person: Person, repository: BackendRepository, care: Boolean, onB
     }
     dictation.error?.let { message -> AlertDialog(onDismissRequest = { dictation.error = null }, title = { Text("语音输入") }, text = { Text(message) }, confirmButton = { TextButton({ dictation.error = null }) { Text("确定") } }) }
     mediaError?.let { message -> AlertDialog(onDismissRequest = { mediaError = null }, title = { Text("照片读取失败") }, text = { Text(message) }, confirmButton = { TextButton({ mediaError = null }) { Text("确定") } }) }
-    history?.let { entries -> ChatHistoryDialog(entries, repository, care, onPhoto = { photoPreview = it }) { history = null } }
+    history?.let { entries -> ChatHistoryDialog(entries, repository, care, onPhoto = { photoPreview = it }, person = person) { history = null } }
     photoPreview?.let { media -> ChatPhotoSheet("讲述照片", "关闭", { photoPreview = null }) {
         BoxWithConstraints(Modifier.weight(1f).fillMaxWidth().padding(16.dp), contentAlignment = Alignment.Center) {
             RemoteChatPhoto(media, repository, Modifier.fillMaxWidth().height(minOf(400.dp, maxHeight)), fit = true)
@@ -317,6 +329,10 @@ internal fun NarrationComposer(value: String, onValue: (String) -> Unit, care: B
     sendEnabled: Boolean, retrying: Boolean, dictation: MandarinDictation, onMic: () -> Unit, onSend: () -> Unit,
     onPhoto: (() -> Unit)? = null, photosEnabled: Boolean = false, tag: String = "chat",
     hasPhotos: Boolean = false, selectedPhotos: (@Composable () -> Unit)? = null) {
+    if (care) {
+        CareNarrationComposer(value, onValue, enabled, sendEnabled, retrying, dictation, onMic, onSend, tag, hasPhotos, photoContent = selectedPhotos)
+        return
+    }
     val large = care || LocalDensity.current.fontScale > 1.3f
     Column(Modifier.fillMaxWidth().padding(horizontal = if (care) 20.dp else 16.dp, vertical = 4.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
         if (dictation.busy) Text(dictation.status, style = T.body(if (care) 19 else 13), color = C.AccentDeep)

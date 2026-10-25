@@ -34,13 +34,7 @@ fun ProfileScreen(
     }
     BrowseScroll(care=care) {
         if(care) {
-            PageTitle("更多","常用设置，都在这里。",true)
-            Spacer(Modifier.height(12.dp))
-            JournalAction("家人管理",true,secondary=true,modifier=Modifier.heightIn(min=84.dp),onClick=onFamily)
-            JournalAction("设置与账号",true,secondary=true,modifier=Modifier.heightIn(min=84.dp),onClick=onSettings)
-            JournalAction("隐私与数据",true,secondary=true,modifier=Modifier.heightIn(min=84.dp),onClick=onPrivacy)
-            JournalAction("切换普通模式",true,secondary=true,modifier=Modifier.heightIn(min=84.dp).testTag("care.switchStandard")){switchMode=true}
-            Text("当前使用：关怀模式",style=JournalTypography.body(18),color=JournalColors.SecondaryInk,modifier=Modifier.fillMaxWidth(),textAlign=TextAlign.Center)
+            CareMoreContent(people, memories, onFamily, onSettings, onPrivacy) { switchMode = true }
         } else {
             PageTitle("我的")
             Column(Modifier.fillMaxWidth().background(Brush.linearGradient(listOf(Color(0xFFE8EEDD),Color(0xFFF6EBD9))),RoundedCornerShape(28.dp)).padding(20.dp),verticalArrangement=Arrangement.spacedBy(18.dp)) {
@@ -103,6 +97,7 @@ fun SettingsScreen(
     displayName:String="回忆的收藏者",care:Boolean=false,loading:Boolean=false,error:String?=null,
     onDisplayNameChange:(String)->Unit={},onCareChange:(Boolean)->Unit={},onLogout:()->Unit={},onBack:()->Unit={},
 ) {
+    if (care) { CareSettingsContent(displayName, loading, error, onDisplayNameChange, onCareChange, onLogout, onBack); return }
     JournalBackdrop(Modifier.fillMaxSize()) {
         Column(Modifier.fillMaxSize().navigationBarsPadding().imePadding()) {
             BrowseBar("设置",care,onBack)
@@ -142,6 +137,7 @@ fun SettingsScreen(
 
 @Composable
 fun PrivacyScreen(care:Boolean=false,onBack:()->Unit={}) {
+    if (care) { CarePrivacyContent(onBack); return }
     JournalBackdrop(Modifier.fillMaxSize()) {
         Column(Modifier.fillMaxSize().navigationBarsPadding()) {
             BrowseBar("隐私与数据",care,onBack)

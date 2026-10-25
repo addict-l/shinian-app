@@ -11,6 +11,8 @@ import androidx.activity.SystemBarStyle
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -24,10 +26,12 @@ import androidx.compose.runtime.saveable.SaveableStateHolder
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -38,6 +42,7 @@ import cn.shinian.app.ui.chat.ChatScreen
 import cn.shinian.app.ui.chat.invalidateChatAfterMemoryChange
 import cn.shinian.app.ui.memoir.MemoirScreen
 import cn.shinian.app.ui.theme.*
+import cn.shinian.app.ui.care.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.CancellationException
 import java.util.UUID
@@ -138,12 +143,13 @@ private fun ShinianApplication(model: AppViewModel = viewModel()) {
         BackHandler(route.isEmpty() && tab != 0) { tab = 0 }
         val showTabs = if (care) route.isEmpty() && tab != 1 else route.isEmpty() || route in listOf("person", "memories", "family-all")
         ProvideBrowseEnvironment(repository) {
-        JournalBackdrop(Modifier.fillMaxSize()) {
+        CareModeBackdrop(care, Modifier.fillMaxSize()) {
             Column(Modifier.fillMaxSize()) {
                 Box(Modifier.weight(1f).then(if (!showTabs && route !in listOf("chat", "memoir")) Modifier.navigationBarsPadding() else Modifier)) {
                     KeepBrowsePageState(pages, "$care.$tab.$route.${if (route in listOf("person", "memoir", "chat")) selectedPersonId else if (route in listOf("memory", "editor")) selectedMemoryId else ""}", route.isEmpty() || route in listOf("person", "family-all", "memories")) {
                     when (route) {
-                        "chat" -> if (person != null) ChatScreen(person, repository, care, onBack = { route = "" }, onSaved = { model.refresh() }, onHome = { route = ""; tab = 0 })
+                        "chat" -> if (person != null) ChatScreen(person, repository, care, onBack = { route = "" }, onSaved = { model.refresh() }, onHome = { route = ""; tab = 0 },
+                            familyMemories = family.memories.takeIf { !family.loading && family.error == null })
                             else MissingContent("人物暂时无法读取", model::refresh) { route = "" }
                         "add" -> AddPersonScreen(actionBusy, actionError, care, onAdd = { name, relationship, birthDate ->
                             if (!actionBusy) {
@@ -190,7 +196,7 @@ private fun ShinianApplication(model: AppViewModel = viewModel()) {
                         "privacy" -> PrivacyScreen(care, onBack = { route = "" })
                         else -> when (tab) {
                             0 -> HomeScreen(family.people, family.memories, family.loading, family.error, care,
-                                onRefresh = model::refresh, onNewMemory = { compose() }, onAllMemories = { route = "memories" }, onMemory = ::openMemory, onProfile = { tab = 3 })
+                                onRefresh = model::refresh, onNewMemory = { compose() }, onAllMemories = { if (care) tab = 2 else route = "memories" }, onMemory = ::openMemory, onProfile = { tab = 3 }, onContinue = { compose(it) })
                             1 -> PersonSelectionScreen(family.people, family.loading || actionBusy, actionError ?: family.error, care,
                                 onSelect = { compose(it) }, onAdd = { route = "add" }, onDelete = { value ->
                                     if (!actionBusy) {
@@ -233,7 +239,24 @@ private fun MissingContent(message: String, onRetry: () -> Unit, onBack: () -> U
 }
 
 @Composable
-private fun JournalBottomBar(selected: Int, care: Boolean, onSelect: (Int) -> Unit) {
+internal fun JournalBottomBar(selected: Int, care: Boolean, onSelect: (Int) -> Unit) {
+    if (care) {
+        Surface(Modifier.navigationBarsPadding().fillMaxWidth().careShadow(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp), 18.dp, (-6).dp, .10f),
+            color = CareColors.Surface, shape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp)) {
+            Row(Modifier.fillMaxWidth().selectableGroup().padding(horizontal = 14.dp).padding(top = 10.dp, bottom = 4.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                listOf(Triple(0, "首页", "home"), Triple(2, "回忆", "book"), Triple(3, "更多", "grid")).forEach { (tab, title, icon) ->
+                    Column(Modifier.weight(1f).clip(RoundedCornerShape(22.dp)).background(if (selected == tab) CareColors.Soft else Color.Transparent)
+                        .selectable(selected == tab, role = Role.Tab, onClick = { onSelect(tab) }).heightIn(min = 86.dp).padding(vertical = 10.dp).testTag("tab.$tab"),
+                        horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(6.dp, Alignment.CenterVertically)) {
+                        val color = if (selected == tab) CareColors.Accent else CareColors.SecondaryInk
+                        CareIcon(icon, modifier = Modifier.size(if (tab == 3) 29.dp else 30.dp), tint = color)
+                        Text(title, style = CareTypography.body(20, selected == tab), color = color)
+                    }
+                }
+            }
+        }
+        return
+    }
     val tabs = if (care) listOf(0, 2, 3) else listOf(0, 1, 2, 3)
     val titles = if (care) listOf("首页", "回忆", "更多") else listOf("首页", "新的回忆", "家庭胶片", "我的")
     Surface(

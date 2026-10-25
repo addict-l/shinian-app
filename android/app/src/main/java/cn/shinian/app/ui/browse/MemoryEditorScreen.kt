@@ -80,7 +80,34 @@ fun MemoryEditorScreen(
             };pendingIds=pendingIds+id}}
             catch(e:CancellationException){throw e}catch(e:Exception){error=e.message}finally{busy=false}}
     }
-    JournalBackdrop(Modifier.fillMaxSize()) {
+    if (care) CareMemoryEditorContent(edit, latest, busy, error,
+        onEdit = { edit = it }, onBack = ::requestBack, onSave = ::save,
+        onTimePreview = { focus.clearFocus(); timeInput = TimePreviewInput(edit.title, edit.content, timeAnchor, edit.time) },
+        onReadLatest = { scope.launch { busy = true; try { latest = repository.getMemory(base.id) }
+            catch (e: Exception) { error = "读取最新版本失败；本机修改仍保留。${e.message.orEmpty()}" } finally { busy = false } } },
+        onResolve = { resolve = true }, onAddPhotos = { focus.clearFocus(); picker() }) {
+        val photos = (memory.media + base.media).distinctBy { it.id }.filter { it.id in edit.mediaIds }
+        photos.forEach { photo ->
+            Row(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                MemoryPhoto(photo, Modifier.size(80.dp)); Spacer(Modifier.weight(1f))
+                TextButton({ edit = edit.copy(mediaIds = edit.mediaIds - photo.id) }, enabled = !busy,
+                    modifier = Modifier.testTag("memory.removePhoto.${photo.id}")) {
+                    Text("移除", style = careNativeBody(22f), color = JournalColors.Danger)
+                }
+            }
+            CareFormDivider()
+        }
+        pendingIds.forEach { id ->
+            Row(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                LocalEditPhoto(File(directory, "$id.jpg")); Text("新照片", style = careNativeBody(22f), modifier = Modifier.weight(1f))
+                TextButton({ pendingIds = pendingIds - id; discardedIds = discardedIds + id }, enabled = !busy) {
+                    Text("移除", style = careNativeBody(22f), color = JournalColors.Danger)
+                }
+            }
+            CareFormDivider()
+        }
+    }
+    else JournalBackdrop(Modifier.fillMaxSize()) {
         Column(Modifier.fillMaxSize().navigationBarsPadding().imePadding()) {
             Row(Modifier.fillMaxWidth().heightIn(min=56.dp).padding(horizontal=12.dp),verticalAlignment=Alignment.CenterVertically) {
                 TextButton({requestBack()},enabled=!busy){Text("取消",style=JournalTypography.body(if(care)20 else 16))}

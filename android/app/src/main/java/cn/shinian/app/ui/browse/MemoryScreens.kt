@@ -43,7 +43,12 @@ fun MemoryDetailScreen(
     fun refresh(edit:Boolean=false) {if(busy)return;scope.launch {busy=true;error=null
         try {current=repository.getMemory(current.id);if(edit)onEdit(current)}
         catch(e:CancellationException){throw e}catch(e:Exception){error=e.message}finally{busy=false}}}
-    JournalBackdrop(Modifier.fillMaxSize()) {
+    cn.shinian.app.ui.care.CareModeBackdrop(care, Modifier.fillMaxSize()) {
+        if (care) CareStoryScreen(current, people, onBack, onActions = { actions = true }) {
+            BrowseError(error, true) { refresh() }
+            latest?.let { new -> JournalAction("读取最新回忆", true, secondary = true) { current = new; latest = null; error = null } }
+        }
+        else {
         Box(Modifier.fillMaxSize().navigationBarsPadding()) {
         Column(Modifier.fillMaxSize()) {
             Column(Modifier.weight(1f).verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(if(care)18.dp else 14.dp)) {
@@ -86,6 +91,7 @@ fun MemoryDetailScreen(
                 Text(if(care)"回忆"else"",style=JournalTypography.body(if(care)23 else 17,true),modifier=Modifier.weight(1f),textAlign=TextAlign.Center)
                 IconButton({actions=true},enabled=!busy,modifier=Modifier.testTag("memory.actions")){Box(Modifier.size(40.dp).background(JournalColors.Surface.copy(alpha=.85f),androidx.compose.foundation.shape.CircleShape),contentAlignment=Alignment.Center){JournalIcon("more","回忆操作")}}
             }
+        }
         }
     }
     if(actions)JournalBottomSheet("回忆操作",care=care,onCancel={actions=false}) {

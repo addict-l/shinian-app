@@ -66,7 +66,7 @@ private val lifeModules = listOf(
     LifeModule("reflection", "人生回望", "回忆与感悟", "history"),
 )
 
-private val fieldTitles = mapOf("home" to "成长的地方", "learning" to "读书或学艺", "early_work" to "年轻时的工作与生活",
+internal val fieldTitles = mapOf("home" to "成长的地方", "learning" to "读书或学艺", "early_work" to "年轻时的工作与生活",
     "later_work" to "后来的工作与生活", "family" to "重要家人", "changes" to "记得的生活变化", "present" to "如今的生活",
     "SK01" to "出生时间", "SK01b" to "出生地点", "SK01c" to "记忆中的家乡", "SK02" to "名字与期许",
     "SK03" to "小时候和谁生活", "SK03b" to "家庭生活来源", "SK03c" to "兄弟姐妹", "SK03d" to "家人的相处",
@@ -94,7 +94,8 @@ internal fun LifeInterviewScreen(model: ChatController, care: Boolean, dictation
             editingTopic = null; correctionSent = false
         }
     }
-    ChatPage {
+    if (care) CareLifeInterviewPresentation(model, dictation, turns, onMic, onBack, { onHistory(turns) }, { details = true }) { LifeFeedback(model, true) }
+    else ChatPage {
         ChatHeader(if (care) (if (showingOverview) if (confirmed) "选择话题" else "核对经历" else "慢慢讲述")
             else if (showingOverview) "人生概览" else "开始记录 · ${model.person.name}",
             if (care && showingOverview) if (confirmed) "2 / 3" else "1 / 3" else "AI 回忆助手", care,
@@ -225,9 +226,12 @@ internal fun LifeInterviewScreen(model: ChatController, care: Boolean, dictation
             }
         }
     }
-    if (details) ChatFullDialog(editingTopic?.let { fieldTitles[it] ?: it } ?: "核对人生脉络", onClose = {
+    if (details && care) CareLifeCorrectionDialog(model, editingTopic, correction, { correction = it }, { editingTopic = it; correction = "" }, {
+        correctionSent = true; model.performLife("correct", correction, editingTopic)
+    }) { if (!model.busy) { if (editingTopic != null) editingTopic = null else details = false } }
+    else if (details) ChatFullDialog(editingTopic?.let { fieldTitles[it] ?: it } ?: "核对人生脉络", onClose = {
         if (!model.busy) { if (editingTopic != null) editingTopic = null else details = false }
-    }) {
+    }, care = care) {
         Column(Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(22.dp), verticalArrangement = Arrangement.spacedBy(18.dp)) {
             if (editingTopic != null) {
                 Text("请写下这一项应保留的说法。原始讲述会保留，更正后需要重新核对概览。", style = T.body(if (care) 22 else 16), color = C.SecondaryInk)

@@ -25,9 +25,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.Dp
 import cn.shinian.app.R
 import cn.shinian.app.data.*
 import cn.shinian.app.ui.theme.*
+import cn.shinian.app.ui.care.*
 import java.time.LocalDate
 import java.time.format.TextStyle
 import java.util.Locale
@@ -35,21 +37,27 @@ import java.util.Locale
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun BrowseScroll(loading:Boolean=false,onRefresh:()->Unit={},care:Boolean=false,
-    modifier:Modifier=Modifier,content:@Composable ColumnScope.()->Unit) {
-    JournalBackdrop(modifier.fillMaxSize()) {
+    modifier:Modifier=Modifier,topPadding:Dp=if(care)20.dp else 6.dp,
+    spacing:Dp=if(care)18.dp else 14.dp,content:@Composable ColumnScope.()->Unit) {
+    val page: @Composable BoxScope.()->Unit = {
         PullToRefreshBox(loading,onRefresh,Modifier.fillMaxSize()) {
-            Column(Modifier.fillMaxSize().then(if(care)Modifier.background(Color(0xFFF8F3E9)) else Modifier)
+            Column(Modifier.fillMaxSize()
                 .verticalScroll(rememberScrollState()).padding(horizontal=if(care)20.dp else 22.dp)
-                .padding(top=6.dp,bottom=24.dp),verticalArrangement=Arrangement.spacedBy(if(care)16.dp else 14.dp),content=content)
+                .padding(top=topPadding,bottom=24.dp),verticalArrangement=Arrangement.spacedBy(spacing),content=content)
         }
     }
+    if(care) CareBackdrop(modifier.fillMaxSize(),content = page) else JournalBackdrop(modifier.fillMaxSize(),page)
 }
 
 @Composable
 fun HomeScreen(
     people:List<Person>,memories:List<Memory>,loading:Boolean=false,error:String?=null,care:Boolean=false,
-    onRefresh:()->Unit={},onNewMemory:()->Unit={},onAllMemories:()->Unit={},onMemory:(Memory)->Unit={},onProfile:()->Unit={},
+    onRefresh:()->Unit={},onNewMemory:()->Unit={},onAllMemories:()->Unit={},onMemory:(Memory)->Unit={},onProfile:()->Unit={},onContinue:(Person)->Unit={},
 ) {
+    if (care) {
+        CareHomeScreen(people, memories, loading, error, onRefresh, onNewMemory, onAllMemories, onMemory, onContinue)
+        return
+    }
     val events=memories.sortedByDescending{it.createdAt};val first=events.firstOrNull()
     BrowseScroll(loading,onRefresh,care) {
         if(care) {
@@ -117,6 +125,7 @@ internal fun SectionHeading(title:String,action:String,care:Boolean=false,onClic
 
 @Composable
 internal fun MemoryCard(memory:Memory,care:Boolean=false,featured:Boolean=false,modifier:Modifier=Modifier,grid:Boolean=false,showsPhoto:Boolean=true,onClick:()->Unit) {
+    if (care) { CareMemoryCard(memory, emptyList(), compact = !showsPhoto, modifier = modifier, onClick = onClick); return }
     JournalCard(modifier.fillMaxWidth().clickable(onClick=onClick).testTag("memory.card.${memory.id}"),care,
         contentPadding=PaddingValues(if(care)18.dp else if(featured)10.dp else if(grid)8.dp else 16.dp)) {
         if(showsPhoto&&memory.media.isNotEmpty()) {
@@ -154,6 +163,10 @@ fun MemoriesScreen(
     people:List<Person>,memories:List<Memory>,loading:Boolean=false,error:String?=null,care:Boolean=false,isRoot:Boolean=false,
     onBack:()->Unit={},onMemory:(Memory)->Unit={},onCompose:()->Unit={},onRefresh:()->Unit={},
 ) {
+    if (care) {
+        CareMemoriesScreen(people, memories, loading, error, isRoot, onBack, onMemory, onCompose, onRefresh)
+        return
+    }
     var search by rememberSaveable{mutableStateOf("")};var selected by rememberSaveable{mutableStateOf<String?>(null)}
     var searching by rememberSaveable{mutableStateOf(false)}
     val filtered=memories.filter{(care||selected==null||selected in it.personIds)&&

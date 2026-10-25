@@ -72,13 +72,13 @@ class BrowseInteractionTest {
         compose.runOnIdle{assertEquals(false,mode)}
     }
 
-    @Test fun careHomeOmitsRecentMemoryPhotoAndKeepsOpenActionReachable() {
+    @Test fun careHomeUsesCompactRecentMemoryCardAndKeepsOpenActionReachable() {
         val memory=Memory("recent-photo","和家人一起过年","一家人在小屋里包饺子。",personIds=listOf(grandpa.id),personName=grandpa.name,
             media=listOf(Media("family-photo","/api/v1/media/family-photo")))
         var opened:Memory?=null
         compose.setContent { ShinianTheme { HomeScreen(listOf(grandpa),listOf(memory),care=true,onMemory={opened=it}) } }
         compose.onNodeWithTag("memory.card.photo.${memory.id}").assertDoesNotExist()
-        compose.onNodeWithText("打开看看",substring=true).performScrollTo().assertIsDisplayed().performClick()
+        compose.onNodeWithTag("memory.card.${memory.id}").performScrollTo().assertIsDisplayed().performClick()
         compose.runOnIdle{assertEquals(memory,opened)}
     }
 }

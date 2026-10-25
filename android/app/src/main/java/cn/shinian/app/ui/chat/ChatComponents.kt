@@ -79,6 +79,7 @@ import cn.shinian.app.data.BackendRepository
 import cn.shinian.app.data.ChatMessage
 import cn.shinian.app.data.Media
 import cn.shinian.app.ui.theme.shinianContentInsets
+import cn.shinian.app.ui.care.*
 import cn.shinian.app.ui.theme.JournalColors as C
 import cn.shinian.app.ui.theme.JournalTypography as T
 import kotlinx.coroutines.Dispatchers
@@ -93,6 +94,7 @@ internal fun ChatPage(content: @Composable ColumnScope.() -> Unit) {
 @Composable
 internal fun ChatHeader(title: String, subtitle: String? = null, care: Boolean = false, onBack: () -> Unit,
     enabled: Boolean = true, backLabel: String = "暂停并返回", trailing: @Composable RowScope.() -> Unit = {}) {
+    if (care) { CareToolbar(title, onBack, backTitle = if (backLabel == "暂停并返回") "暂停" else "返回", step = subtitle?.takeIf { "/" in it }, enabled = enabled, backTag = "chat.back"); return }
     Row(Modifier.fillMaxWidth().heightIn(min = if (care) 68.dp else 58.dp).padding(horizontal = 14.dp),
         verticalAlignment = Alignment.CenterVertically) {
         IconButton(onClick = onBack, enabled = enabled, modifier = Modifier.testTag("chat.back").semantics { contentDescription = backLabel }) {
@@ -111,6 +113,7 @@ internal fun ChatHeader(title: String, subtitle: String? = null, care: Boolean =
 @Composable
 internal fun ChatButton(title: String, enabled: Boolean = true, busy: Boolean = false, secondary: Boolean = false,
     care: Boolean = false, modifier: Modifier = Modifier, onClick: () -> Unit) {
+    if (care) { CareButton(title, modifier, secondary = secondary, enabled = enabled, loading = busy, onClick = onClick); return }
     val content: @Composable RowScope.() -> Unit = {
         if (busy) CircularProgressIndicator(Modifier.size(20.dp).padding(end = 4.dp), color = if (secondary) C.AccentDeep else Color.White, strokeWidth = 2.dp)
         Text(title, style = T.body(if (care) 22 else 17, true), textAlign = TextAlign.Center)
@@ -301,12 +304,12 @@ internal fun ChatMessageView(message: ChatMessage, repository: BackendRepository
 }
 
 @Composable
-internal fun ChatFullDialog(title: String, onClose: () -> Unit, content: @Composable ColumnScope.() -> Unit) {
+internal fun ChatFullDialog(title: String, onClose: () -> Unit, care: Boolean = false, content: @Composable ColumnScope.() -> Unit) {
     Dialog(onDismissRequest = onClose, properties = DialogProperties(usePlatformDefaultWidth = false, decorFitsSystemWindows = false)) {
         cn.shinian.app.ui.theme.ShinianImmersiveWindow()
         Surface(Modifier.fillMaxSize(), color = C.Paper) {
             Column(Modifier.fillMaxSize().shinianContentInsets().systemBarsPadding().imePadding()) {
-                ChatHeader(title, onBack = onClose)
+                ChatHeader(title, care = care, onBack = onClose, backLabel = if (care) "返回" else "暂停并返回")
                 content()
             }
         }
@@ -315,7 +318,8 @@ internal fun ChatFullDialog(title: String, onClose: () -> Unit, content: @Compos
 
 @Composable
 internal fun ChatHistoryDialog(messages: List<ChatMessage>, repository: BackendRepository, care: Boolean,
-    onPhoto: (Media) -> Unit = {}, onClose: () -> Unit) {
+    onPhoto: (Media) -> Unit = {}, person: cn.shinian.app.data.Person? = null, onClose: () -> Unit) {
+    if (care) { CareHistoryDialog(messages, repository, onPhoto, onClose, person = person); return }
     ChatFullDialog("前面聊过的", onClose) {
         LazyColumn(Modifier.weight(1f).padding(horizontal = 22.dp), verticalArrangement = Arrangement.spacedBy(18.dp)) {
             if (messages.isEmpty()) item { Text("还没有聊过的内容。", Modifier.padding(vertical = 24.dp), style = T.body(if (care) 22 else 16), color = C.SecondaryInk) }
