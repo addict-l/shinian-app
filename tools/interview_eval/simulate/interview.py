@@ -61,8 +61,10 @@ class Setup:
         self.ctx = V3J.setup()
         self.sim_prompt = (V4 / 'simulator-prompt.txt').read_text(encoding='utf-8')
         self.sim_cfg = json.loads((V4 / 'sim-config.json').read_text(encoding='utf-8'))
-        self.speaker_prompt = Path(speaker_prompt or V4 / 'speaker-prompt.txt').read_text(encoding='utf-8')
         self.policy = json.loads(Path(policy or V4 / 'speaker-config.json').read_text(encoding='utf-8'))
+        # a policy may name its own speaker prompt (v5d); --speaker-prompt still wins; v4d policies have none
+        own = common.ROOT / self.policy['speaker_prompt'] if self.policy.get('speaker_prompt') else None
+        self.speaker_prompt = Path(speaker_prompt or own or V4 / 'speaker-prompt.txt').read_text(encoding='utf-8')
         self.Q = self.personas.Q
         self.F = self.ctx.F
         # v5 story deepening: only when the policy carries an enabled "deepen" block (v4d policies have none)
@@ -174,13 +176,15 @@ PRAISE = re.compile(r'太棒|真棒|了不起|非常精彩|谢谢您的分享|�
 FALLBACK_CLOSE = {'done': '好的。', 'limited': '好的。', 'unknown': '没关系，记不清就不勉强。', 'declined': '好，这个咱们就不多聊了。',
                   'declined_partial': '好，这个咱们就不多聊了。',
                   'deferred': '好，这个以后想聊再说。', 'cap': '好的。', 'asked_once': '好的。', 'error': '好的。', 'rest': '好，您先歇会儿。',
-                  'rest_resume': '好，咱们接着聊。'}
+                  'rest_resume': '好，咱们接着聊。', 'unknown_partial': '好的。'}
 # 'declined_partial' (C02) tells the speaking layer the same as a refusal; only what follows differs.
 CLOSE_REASON = {'done': '这个话题已经聊完', 'limited': '这个话题聊到这里就够了', 'unknown': '老人说记不清了', 'declined': '老人不想多说',
                 'declined_partial': '老人不想多说',
                 'deferred': '老人想以后再讲', 'cap': '这个话题已经追问过几次，不再追问', 'asked_once': '这一点刚才问过了，老人没接着讲，不再追问',
                 'error': '这个话题聊到这里就够了', 'rest': '老人累了想歇一会儿',
-                'rest_resume': '老人刚才说累了，歇了一会儿，刚点了“继续”；这个话题不再追问，接着聊下一题'}
+                'rest_resume': '老人刚才说累了，歇了一会儿，刚点了“继续”；这个话题不再追问，接着聊下一题',
+                # v5d signal scope: the elder could not remember one point and went on to tell more
+                'unknown_partial': '老人说有一点记不清，接着又讲了别的；记不清的那一点不再问，这个话题聊到这里'}
 
 
 def speaker_user(S, qid, dialogue, fields, task, target=None, engine_question=None, reason=None, next_entry=None, prev_close=None):
@@ -441,6 +445,60 @@ def elder_signal(text):
     return None
 
 
+# v5d signal scope (simulator only, policy "signal_scope"; elder_signal / v4_decide above stay as the backend has them):
+# an answer that says it cannot remember (or cannot think of) one point and then goes on to tell something new is a
+# partial "can't remember" — only that point is not pressed; the question does not end because of it. Read
+# literally and generally: the answer is cut into clauses; clauses carrying a stop signal or a hedge about memory
+# ("好多都模糊了") are the signal part; in the other clauses, content bigrams (scope_bigrams) that are neither in the
+# question just asked nor in the elder's earlier words of this question nor generic are new (a clause whose bigrams
+# are mostly not new is a retelling and adds none). Partial when there are at
+# least SCOPE_NEW_BIGRAMS new bigrams and the clauses carrying them hold at least ``min_chars`` characters. Only
+# 'unknown' is scoped:
+# "不想多讲" and "累了" are requests about the conversation itself and keep closing as before.
+SCOPE_HEDGE = re.compile(r'模糊|记性|年纪大了|人老了|太久了|时间久了|年头久了|那么久|这么久')
+SCOPE_GENERIC = None
+SCOPE_NEW_BIGRAMS = 4
+SCOPE_PARTICLE = re.compile(r'[嘛呀哎啊呢吧哦喔嗯哈啦咯呗]')  # a bigram with a sentence particle is not content
+# content characters for the scope test: lighter than persona.FUNC, which also drops 对 上 去 来 说 想 … ("反对", "北上")
+SCOPE_FUNC = set('的了是在我你您他她它们么这那就都也还又很吗呢吧啊着个一些其之和与及或把被得地')
+
+
+def scope_bigrams(text):
+    t = re.sub(r'[^一-鿿]', '', simp_text(text))
+    return {t[i:i + 2] for i in range(len(t) - 1) if t[i] not in SCOPE_FUNC and t[i + 1] not in SCOPE_FUNC}
+
+
+def _scope_generic():
+    global SCOPE_GENERIC
+    if SCOPE_GENERIC is None:
+        SCOPE_GENERIC = scope_bigrams('时候以后后来那时当时现在事情经历印象记得觉得一下一点一件这件那件这段那段日子生活好像大概反正就是这样'
+                                '具体详细情形情况样子清楚知道真的实在其实自己特别一样')
+    return SCOPE_GENERIC
+
+
+def signal_scope(text, question='', before='', min_chars=15, extra=False):
+    """For an answer whose literal signal is 'unknown' (or, with ``extra``, the v5c1 "想不出 / 说不出" wordings):
+    ('partial', rest_text, signal_text) when besides the signal it tells something new (rest_text = all clauses
+    outside the signal part), else ('whole', '', signal_text).
+    ``question``: the interviewer's words just answered; ``before``: the elder's earlier words in this question."""
+    seen = scope_bigrams(question) | scope_bigrams(before) | _scope_generic()
+    new, rest, sig, fresh = [], [], [], set()
+    for c in CLAUSE.findall(text or ''):
+        if SIG_UNKNOWN.search(c) or SIG_DECLINE.search(c) or SIG_REST.search(c) or SCOPE_HEDGE.search(c) or \
+                (extra and DEEPEN_UNKNOWN.search(c)):
+            sig.append(c)
+            continue
+        rest.append(c)
+        allb = {b for b in scope_bigrams(c) if not SCOPE_PARTICLE.search(b)}
+        f = allb - seen
+        if f and 2 * len(f) > len(allb):  # a clause at least half made of what was already said is a retelling, not new
+            new.append(c)
+            fresh |= f
+    if len(fresh) >= SCOPE_NEW_BIGRAMS and len(_norm(''.join(new))) >= min_chars:  # rest_text: every clause outside the signal
+        return 'partial', re.sub(r'[，,、；;]$', '。', ''.join(rest).strip()), ''.join(sig).strip()
+    return 'whole', '', ''.join(sig).strip()
+
+
 def has_content(result):
     """Whether this question already has a real answer (C02): an active field known or explicitly none (optional
     fields are not counted, so the backend and the simulator's judge summary read the same)."""
@@ -461,6 +519,12 @@ def v4_decide(S, result, st, text=''):
     active = result.get('active') or []
     sig = elder_signal(text) if cfg.get('signal_close') else None
     st['signal'] = sig
+    # v5d signal scope (policy signal_scope; off = the rules exactly as the backend has them)
+    partial = False
+    if cfg.get('signal_scope') and sig == 'unknown':
+        scope = signal_scope(text, st.get('asked', ''), st.get('before', ''), cfg.get('scope_min_chars', 15))
+        st['scope'] = scope
+        partial = scope[0] == 'partial'
     if d == 'paused' or sig == 'rest':
         return 'rest', None
     if d in ('skipped',) or (d == 'limited' and 'declined' in [eff.get(a) for a in active]):
@@ -472,19 +536,25 @@ def v4_decide(S, result, st, text=''):
     if d == 'ready':
         return 'close', 'declined_partial' if sig == 'declined' else 'done'
     if d == 'limited':
-        return 'close', 'unknown' if 'unknown' in [eff.get(a) for a in active] else 'limited'
+        if 'unknown' in [eff.get(a) for a in active]:
+            return 'close', 'unknown_partial' if partial else 'unknown'
+        return 'close', 'limited'
     target = result.get('target')
     if sig == 'declined':
         return 'close', 'declined_partial' if has_content(result) else 'declined'
     if sig == 'unknown':
-        return 'close', sig
+        if not partial:
+            return 'close', sig
+        # v5d: only the point just asked is not pressed; another open point the engine wants may still be asked
+        if not (target and st.get('last_target') and target != st['last_target']):
+            return 'close', 'unknown_partial'
     if st['followups'] >= cfg['followup_cap']:
         return 'close', 'cap'
     if st['ask_counts'].get(target, 0) >= cfg['same_target_cap']:
         return 'close', 'asked_once'
     newly = [a for a in active if eff.get(a) in ('unknown', 'declined') and st['prev_eff'].get(a) not in ('unknown', 'declined')]
     if newly and st['followups'] >= cfg.get('stop_after_unknown_once_asked', 1):
-        return 'close', 'unknown'
+        return 'close', 'unknown_partial' if partial else 'unknown'
     return 'ask', target
 
 
@@ -532,18 +602,32 @@ def deepen_gate(S, qid, reason, text, elder_words, dz, k):
     """Whether to ask one more detail question now. Returns (ok, reason, info)."""
     cfg = S.deepen
     info = {'last_chars': len(_norm(text)), 'chars': len(_norm(elder_words)), 'dims_told': story_dims(elder_words)}
-    if reason != 'done':
+    if reason != 'done' and not (reason == 'unknown_partial' and S.policy.get('signal_scope')):
         return False, ('answer_' if dz['asked'] else 'not_done_') + reason, info
     if dz['asked'] >= dz['cap']:
         return False, 'cap', info
     if k >= MAX_TURNS:
         return False, 'max_turns', info
-    if info['last_chars'] <= cfg['short_chars']:
+    # v5e short_chars_first: before any deepen a brief answer that still names someone or something may be asked
+    # about once; after a deepen question a brief answer keeps stopping (short_chars)
+    short = cfg['short_chars'] if dz['asked'] or 'short_chars_first' not in cfg else cfg['short_chars_first']
+    if info['last_chars'] <= short:
         return False, 'short', info
     sig = elder_signal(text)
+    extra = bool(cfg.get('extra_guards') and DEEPEN_UNKNOWN.search(text))
+    if S.policy.get('signal_scope'):
+        dz['partial'] = None
+    if S.policy.get('signal_scope') and (sig == 'unknown' or (extra and not sig)):
+        # v5d: "can't remember that, but ..." -> not pressed on that point; what he went on to tell may be followed
+        scope = signal_scope(text, dz.get('asked_text', ''), dz.get('before', ''), S.policy.get('scope_min_chars', 15), extra=True)
+        info['scope'] = scope[0]
+        if scope[0] == 'partial':
+            dz['partial'] = {'signal': scope[2], 'new': scope[1]}
+            info['partial'] = dz['partial']
+            sig, extra = None, False
     if sig:
         return False, 'signal_' + sig, info
-    if cfg.get('extra_guards') and DEEPEN_UNKNOWN.search(text):
+    if extra:
         return False, 'signal_unknown_extra', info
     if info['chars'] >= cfg['detailed_chars'] and len(info['dims_told']) >= cfg['detailed_dims']:
         return False, 'detailed', info
@@ -559,6 +643,9 @@ def deepen_user(S, qid, dialogue, dz):
     for role, text in dialogue:
         lines.append(('问：' if role == 'system' else '答：') + text)
     lines.append('已经深挖过：' + ('、'.join(dz['dims']) if dz['dims'] else '（无）'))
+    if dz.get('partial'):  # v5d signal scope
+        lines.append(f'老人刚说记不清的：{dz["partial"]["signal"]}（这一点不再问）')
+        lines.append(f'他接着讲的：{dz["partial"]["new"]}')
     lines.append('任务：deepen')
     return '\n'.join(lines)
 
@@ -586,8 +673,10 @@ def check_deepen(dim, ack, question, prior, dz):
     return errs
 
 
-def deepen_close(text, result, extra=False):
-    """After the elder answers a deepen question (no new judgment): how this question ends. Returns (action, reason)."""
+def deepen_close(text, result, extra=False, scope=None):
+    """After the elder answers a deepen question (no new judgment): how this question ends. Returns (action, reason).
+    ``scope`` (v5d signal_scope): (question, earlier words, min_chars); a partial "can't remember" -> 'unknown_partial'
+    (the deepen gate may then ask once more about what he went on to tell)."""
     if (result or {}).get('decision') == 'paused':
         return 'rest', None
     sig = elder_signal(text)
@@ -596,8 +685,77 @@ def deepen_close(text, result, extra=False):
     if sig == 'declined':
         return 'close', 'declined_partial'
     if sig == 'unknown' or (extra and DEEPEN_UNKNOWN.search(text or '')):
+        if scope and signal_scope(text, scope[0], scope[1], scope[2], extra=extra)[0] == 'partial':
+            return 'close', 'unknown_partial'
         return 'close', 'unknown'
     return 'close', 'done'
+
+
+# --------------------------------------------------------------------------- v5d wording guards
+# policy "echo_guard": an acknowledgement that mainly restates what the elder said in this question is dropped
+# (style.is_restate, the definition of the 复述率 metric, here against all his words of the question; a short sympathy
+# in the elder's own words about a hardship he told is kept). policy "template_guard": a stock move-on clause before the next entry (咱们再聊聊 / 换个话题 / 接着聊,
+# style.TEMPLATE) is dropped. Both only remove words; the question itself is never rewritten.
+def restates(ack, elder_said):
+    import style
+    if not ack or not style.is_restate(ack, elder_said)[0]:
+        return False
+    return not (len(style.cjk(ack)) <= 10 and HARDSHIP.search(simp_text(ack)) and HARDSHIP.search(simp_text(elder_said)))
+
+
+# a reaction that only makes sense after the clause before it (是可怕 / 也是 / 真是 …)
+ACK_DEPENDENT = re.compile(r'^(?:是|也是|就是|真是|都是|还是|确实|可不)')
+
+
+def guard_close(text, next_entry, elder_said, echo=True, template=True, echo_fragment=None):
+    """Close text with a restating acknowledgement and stock move-on clauses taken out. Returns (text, [repairs])."""
+    import style
+    clauses, core = style.split_turn(text, next_entry)
+    notes = []
+    ack = ''.join(c for k, c in clauses if k == 'ack')
+    if echo == 'clause':
+        # v5e: only the clauses that restate on their own go ("上大夜班回来还得走路，是辛苦。" keeps "是辛苦。");
+        # when only together they restate, the whole acknowledgement goes
+        kept = [(k, c) for k, c in clauses if not (k == 'ack' and restates(c, elder_said))]
+        if len(kept) == len(clauses) and restates(ack, elder_said):
+            kept = [(k, c) for k, c in clauses if k != 'ack']
+        left = ''.join(c for k, c in kept if k == 'ack').strip()
+        if echo_fragment is not None and left and ACK_DEPENDENT.match(left):
+            # v5e1: what is left leans on the clause that went ("那时候兵荒马乱的，是可怕。" -> "是可怕。"): a short
+            # reaction (<= echo_fragment characters) is kept whole, a longer one goes whole
+            import style
+            if len(style.cjk(ack)) <= echo_fragment:
+                kept = clauses
+            else:
+                kept = [(k, c) for k, c in clauses if k != 'ack']
+        if len(kept) < len(clauses):
+            notes.append('restate_dropped')
+        clauses = kept
+    elif echo and restates(ack, elder_said):
+        clauses = [(k, c) for k, c in clauses if k != 'ack']
+        notes.append('restate_dropped')
+    if template and next_entry:
+        kept = [(k, c) for k, c in clauses if not (k in ('transit', 'pointer') and style.TEMPLATE.search(c))]
+        if len(kept) < len(clauses):
+            notes.append('template_dropped')
+        clauses = kept
+    if not notes:
+        return text, []
+    lead = ''.join(c for _, c in clauses).strip()
+    lead = re.sub(r'^[，,。；;]+', '', lead)
+    if not style.cjk(lead):
+        lead = ''
+    if next_entry:
+        core = core or next_entry
+        if lead and not re.search(r'[。！？!?，,]$', lead):
+            lead += '。'
+        if lead.endswith(('，', ',')) and not style.cjk(lead.rstrip('，,')[-1:]):
+            lead = lead.rstrip('，,') + '。'
+        out = (lead + core) if lead else core
+        out = re.sub(r'^那[，,]\s*', '那', out)
+        return out, notes
+    lead = re.sub(r'[，,；;]$', '。', lead)
+    return lead or text, notes
 
 
 # --------------------------------------------------------------------------- session
@@ -714,17 +872,25 @@ def session(S, sid, nid, questions, mode):
                 prompt_for_sim, asked_part = BASE_DONE, BASE_DONE
                 continue
             # ---------------- v4: speaking layer + natural ending rules
+            before = ''.join(m['text'] for m in msgs[:-1] if m['role'] == 'elder' and not m.get('scripted'))
             if phase == 'deepen':
-                action, arg = deepen_close(text, result, S.deepen.get('extra_guards'))
+                scope = (asked_part, before, S.policy.get('scope_min_chars', 15)) if S.policy.get('signal_scope') else None
+                action, arg = deepen_close(text, result, S.deepen.get('extra_guards'), scope)
                 elder['signal'] = elder_signal(text)
+                if arg == 'unknown_partial':
+                    elder['scope'] = 'partial'
             else:
+                st['asked'], st['before'], st['last_target'] = asked_part, before, last_target  # read by signal_scope only
                 action, arg = v4_decide(S, result, st, text)
+                if st.get('scope'):
+                    elder['scope'] = st.pop('scope')[0]
                 st['prev_eff'] = dict(result.get('effective') or {})
                 elder['signal'] = st.get('signal')
             elder['v4_action'] = [action, arg]
             if deepening and action != 'ask':
                 # ---------------- v5: one more detail question before the close (story questions only)
                 elder_words = ''.join(m['text'] for m in msgs if m['role'] == 'elder' and not m.get('scripted'))
+                dz['asked_text'], dz['before'] = asked_part, before  # read by signal_scope only
                 ok, why, info = deepen_gate(S, qid, arg if action == 'close' else action, text, elder_words, dz, k)
                 entry_log = {'k': k, 'decision': 'skip' if not ok else 'asked', 'reason': why, **info}
                 if ok:
@@ -739,6 +905,8 @@ def session(S, sid, nid, questions, mode):
                     if S.deepen.get('drop_echo_ack'):
                         ack, echo = deepen_ack(ack, question)
                         ack_fix += echo
+                    if S.policy.get('echo_guard') and restates(ack, elder_words):  # v5d
+                        ack, ack_fix = '', ack_fix + ['restate_dropped']
                     if S.deepen.get('extra_guards') and DEEPEN_ACK_EVAL.search(ack):
                         ack, ack_fix = '', ack_fix + ['ack_eval']
                     errs = []
@@ -783,6 +951,8 @@ def session(S, sid, nid, questions, mode):
                 ack, question = parse_speaker(row)
                 elder_words = ''.join(m['text'] for m in msgs if m['role'] == 'elder' and not m.get('scripted'))
                 ack, ack_fix = clean_ack(ack, elder_words)
+                if S.policy.get('echo_guard') and restates(ack, elder_words):  # v5d
+                    ack, ack_fix = '', ack_fix + ['restate_dropped']
                 errs = check_ask(ack, question, prior)
                 if INFER.search(question):
                     errs.append('inference_in_question')
@@ -846,6 +1016,13 @@ def session(S, sid, nid, questions, mode):
             reply, _ = parse_speaker(row)
             elder_words = ''.join(m['text'] for m in msgs if m['role'] == 'elder' and not m.get('scripted'))
             text_out, ack, notes, ok = compose_close(reply, next_entry, elder_words)
+            if ok and (S.policy.get('echo_guard') or S.policy.get('template_guard')):  # v5d
+                echo = S.policy.get('echo_guard')
+                text_out, why = guard_close(text_out, next_entry, elder_words, 'clause' if echo == 'clause' else bool(echo),
+                                            bool(S.policy.get('template_guard')), S.policy.get('echo_fragment_chars'))
+                notes += why
+                if not text_out:
+                    ok = False
             if not ok:
                 ack = FALLBACK_CLOSE.get(reason_for_speaker, '好的。') if next_entry else '好的，今天就先聊到这儿，您辛苦了。'
                 text_out = join(ack, next_entry) if next_entry else ack
@@ -860,7 +1037,7 @@ def session(S, sid, nid, questions, mode):
                   'final': judge_summary(S, final, qid) if final else None,
                   'material_ids': [e['id'] for e in S.personas.material(nid, qid)]}
         if deepening:
-            record['deepen'] = dz
+            record['deepen'] = {k: v for k, v in dz.items() if k not in ('asked_text', 'before', 'partial')}
             record['deepen_sources'] = deepen_sources
         episodes.append(record)
     return {'session': sid, 'narrator_id': nid, 'name': S.personas.names[nid], 'mode': mode, 'questions': questions,

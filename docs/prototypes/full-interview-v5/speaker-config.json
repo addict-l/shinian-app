@@ -1,5 +1,5 @@
 {
- "version": "v5c1",
+ "version": "v5e1",
  "model": {
   "model": "deepseek-v4-pro",
   "thinking": "disabled",
@@ -22,6 +22,7 @@
   "max_per_question": 2,
   "max_per_sensitive": 1,
   "short_chars": 20,
+  "short_chars_first": 12,
   "detailed_chars": 300,
   "detailed_dims": 3,
   "rejudge_answers": false,
@@ -35,5 +36,14 @@
   "drop_echo_ack": true,
   "extra_guards": true
  },
- "note_deepen": "deepen (v5a): on a story question (story-questions.json), after the ending rules say done (engine ready) and before the close, ask at most max_per_question detail questions (max_per_sensitive on sensitive ones), written by a separate call with deepen-prompt.txt (the v4d speaker prompt is unchanged). Not asked when the elder's latest answer has <= short_chars characters, says he can't remember / won't talk / is tired (elder_signal), or the question already has >= detailed_chars characters from the elder with >= detailed_dims of the four kinds (scene, people, detail, feeling); a failed or invalid deepen call means no deepen (the normal close follows). Deepen answers are not judged again (rejudge_answers false): they are kept verbatim as sources of this question. Without the deepen key (or enabled false) the policy is exactly v4d. drop_echo_ack (v5c): an ack whose content bigrams all reappear in the question is dropped. extra_guards (v5c1): \"想不出 / 说不出 / 没什么特别\" also stop deepening (deepen only; the shared elder_signal is unchanged), and an ack with praise words (有意思 / 真好 / 难得 …) is dropped."
+ "note_deepen": "deepen (v5a): on a story question (story-questions.json), after the ending rules say done (engine ready) and before the close, ask at most max_per_question detail questions (max_per_sensitive on sensitive ones), written by a separate call with deepen-prompt.txt (the v4d speaker prompt is unchanged). Not asked when the elder's latest answer has <= short_chars characters, says he can't remember / won't talk / is tired (elder_signal), or the question already has >= detailed_chars characters from the elder with >= detailed_dims of the four kinds (scene, people, detail, feeling); a failed or invalid deepen call means no deepen (the normal close follows). Deepen answers are not judged again (rejudge_answers false): they are kept verbatim as sources of this question. Without the deepen key (or enabled false) the policy is exactly v4d. drop_echo_ack (v5c): an ack whose content bigrams all reappear in the question is dropped. short_chars_first (v5e): before the first deepen question the short limit is short_chars_first instead (a brief answer that names someone or something may be asked about once; after a deepen question short_chars applies). extra_guards (v5c1): \"想不出 / 说不出 / 没什么特别\" also stop deepening (deepen only; the shared elder_signal is unchanged), and an ack with praise words (有意思 / 真好 / 难得 …) is dropped.",
+ "speaker_prompt": "docs/prototypes/full-interview-v5/speaker-prompt.txt",
+ "note_speaker_prompt": "speaker_prompt (v5d): the speaking-layer prompt of this policy (follow-up + close); without it the v4d prompt of full-interview-v4 is used. The v4d file is not changed.",
+ "signal_scope": true,
+ "scope_min_chars": 15,
+ "note_signal_scope": "signal_scope (v5d): an answer whose literal signal is 'can't remember' (C01 elder_signal; for deepen also the v5c1 '想不出 / 说不出 / 没什么特别') and that goes on to tell something new (interview.signal_scope: >= scope_min_chars characters in clauses with >= 2 content bigrams not in the question just asked, the elder's earlier words of this question or a generic list) is partial: only that point is not pressed. Closing reason 'unknown_partial' instead of 'unknown'; on story questions the deepen step may follow what he went on to tell (still within its cap); an open point other than the one just asked may still be asked. Off: the C01 rules exactly as the backend has them.",
+ "echo_guard": "clause",
+ "template_guard": true,
+ "echo_fragment_chars": 14,
+ "note_guards": "echo_guard (v5d): an acknowledgement (follow-up, deepen, close) that mainly restates the elder's latest answer is dropped (style.is_restate, as the restate metric). template_guard (v5d): a stock move-on clause before the next entry (咱们再聊聊 / 换个话题 / 接着聊) is dropped. v5e: echo_guard \"clause\" drops only the acknowledgement clauses of a close that restate on their own (the whole acknowledgement when only together they do); true (v5d) drops the whole acknowledgement. echo_fragment_chars (v5e1): when what the clause guard leaves leans on the clause it dropped (starts with 是 / 也是 / 真是 …: \"是可怕。\"), an acknowledgement of at most this many characters is kept whole, a longer one goes whole."
 }

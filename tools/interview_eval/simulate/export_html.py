@@ -28,13 +28,14 @@ ST = {'known': '已回答', 'none': '明确没有', 'unknown': '记不清', 'dec
 KIND = {'entry': '入口问题', 'followup': '追问', 'supplement': '补充邀请', 'close': '收尾/转题', 'pause': '休息', 'resume': '继续',
         'deepen': '深挖'}
 BEH = {'normal': '', 'short': '短答', 'drift': '跑题', 'reluctant': '不想多说', 'rest': '想歇会儿'}
-REASON = {'done': '本题完成', 'limited': '信息有限', 'unknown': '老人记不清', 'declined': '老人不想讲', 'declined_partial': '已答，老人不想展开',
+REASON = {'done': '本题完成', 'limited': '信息有限', 'unknown': '老人记不清', 'unknown_partial': '有一点记不清、接着讲了别的', 'declined': '老人不想讲', 'declined_partial': '已答，老人不想展开',
           'deferred': '以后再讲', 'cap': '追问已达上限',
           'asked_once': '同一点问过一次', 'max_turns': '轮数上限', 'rest': '老人要休息', 'error': '系统错误'}
 DREASON = {'short': '老人上一句很短', 'cap': '已问到上限', 'detailed': '已讲得很详细', 'max_turns': '轮数上限', 'model_skip': '说话层判断不必再问',
            'invalid': '深挖问句校验未过', 'call_failed': '调用失败', 'signal_unknown': '老人说记不清', 'signal_declined': '老人不想多说',
            'answer_unknown': '深挖后老人说记不清', 'answer_declined_partial': '深挖后老人不想多说', 'answer_rest': '深挖后老人要休息',
-           'answer_skip_control': '深挖后老人说跳过', 'answer_done': '深挖后收尾'}
+           'answer_skip_control': '深挖后老人说跳过', 'answer_done': '深挖后收尾', 'signal_unknown_extra': '老人说想不出/没什么特别',
+           'answer_unknown_partial': '深挖后老人有一点记不清（已问满或不再问）'}
 
 
 def dreason(r):
@@ -60,7 +61,7 @@ h3{font-size:15px;margin:0 0 8px}.intro{color:var(--muted);max-width:820px}.cols
 .lo{color:var(--bad);font-weight:600}.vio{color:var(--bad);font-weight:600;font-size:12px}.ok{color:var(--good)}details{margin:4px 0;font-size:13px;color:var(--muted)}summary{cursor:pointer}
 table{border-collapse:collapse;font-size:13px;margin:8px 0;display:block;overflow-x:auto}td,th{border:1px solid var(--line);padding:4px 8px;text-align:left;white-space:nowrap}
 .rec{font-size:13px;margin:4px 0 0;padding-left:18px}.dp .b{box-shadow:inset 3px 0 0 var(--deep);background:var(--deepbg)}.dtag{color:var(--deep);font-weight:600}
-.dlog{font-size:12px;color:var(--muted);margin:2px 0 6px}h2.part{font-size:20px;border-top:3px solid var(--fg)}.mat{white-space:pre-wrap;font-size:12px;background:var(--chip);padding:8px;border-radius:8px}
+.rs{color:var(--bad);text-decoration:underline wavy}.dlog{font-size:12px;color:var(--muted);margin:2px 0 6px}h2.part{font-size:20px;border-top:3px solid var(--fg)}.mat{white-space:pre-wrap;font-size:12px;background:var(--chip);padding:8px;border-radius:8px}
 """
 
 
@@ -92,6 +93,24 @@ def chips(t):
     return out
 
 
+def marked_text(m, msgs, j):
+    """Interviewer text with the clauses that restate the elder (style.py, 复述) in red."""
+    import style
+    if m.get('kind') not in ('followup', 'close', 'deepen'):
+        return esc(m['text'])
+    st = style.turn_style(m['text'], m.get('entry_part') if m.get('kind') == 'close' else None, style.last_elder(msgs, j))
+    if not st['restate']:
+        return esc(m['text'])
+    out, rest = '', m['text']
+    for c in st['restate_clauses']:
+        k = rest.find(c)
+        if k < 0:
+            continue
+        out += esc(rest[:k]) + f"<span class='rs' title='复述老人刚说的话'>{esc(c)}</span>"
+        rest = rest[k + len(c):]
+    return out + esc(rest)
+
+
 def episode_html(ep, sc, show_entry):
     parts = [f"<div class='topic'>{esc(ep['qid'])}　{esc(ep['entry'])}</div>"]
     for label, m in label_messages(ep):
@@ -109,9 +128,10 @@ def episode_html(ep, sc, show_entry):
             if (m.get('speaker') or {}).get('fallback'):
                 meta += ' · 说话层校验未过，用固定句'
             cls = 'msg s dp' if m.get('kind') == 'deepen' else 'msg s'
-            parts.append(f"<div class='{cls}'><div class='b'>{esc(m['text'])}<div class='meta{' dtag' if m.get('kind') == 'deepen' else ''}'>{esc(meta)}</div><div>{chips(t)}</div></div></div>")
+            parts.append(f"<div class='{cls}'><div class='b'>{marked_text(m, ep['messages'], ep['messages'].index(m))}<div class='meta{' dtag' if m.get('kind') == 'deepen' else ''}'>{esc(meta)}</div><div>{chips(t)}</div></div></div>")
         else:
-            tag = '（点了“继续”）' if m.get('scripted') else ' · '.join(x for x in [BEH.get(m.get('behavior'), ''), '语音错字' if m.get('asr') else ''] if x)
+            tag = '（点了“继续”）' if m.get('scripted') else ' · '.join(x for x in [BEH.get(m.get('behavior'), ''), '语音错字' if m.get('asr') else '',
+                                                                                 '读作：有一点记不清、接着讲了别的' if m.get('scope') == 'partial' else ''] if x)
             judge = m.get('judge')
             inner = ''
             if judge:

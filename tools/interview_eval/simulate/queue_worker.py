@@ -111,6 +111,25 @@ def validate(req, out):
                 errs.append(f'"{key}" 必须是列表，每项是含 ' + '、'.join(f'"{k}"' for k in need) + ' 的对象（没有就给 []）')
         if not isinstance(out.get('note', ''), str):
             errs.append('"note" 必须是字符串')
+    elif spec.get('type') == 'material':  # v5d memoir-material rubric (material.py)
+        items = out.get('items')
+        kinds = spec.get('kinds') or []
+        if not isinstance(items, list):
+            errs.append('缺少列表字段 "items"（没有素材就给 []）')
+            items = []
+        for k, it in enumerate(items):
+            if not isinstance(it, dict) or not isinstance(it.get('text'), str) or not it.get('text').strip():
+                errs.append(f'items[{k}] 必须是含非空 "text" 的对象')
+            elif it.get('kind') not in kinds:
+                errs.append(f'items[{k}].kind 只能是 ' + '/'.join(kinds))
+        v = out.get('usable')
+        if not isinstance(v, int) or isinstance(v, bool) or not 1 <= v <= 5:
+            errs.append('"usable" 必须是 1 到 5 的整数')
+        extra = set(out) - {'items', 'usable', 'note'}
+        if extra:
+            errs.append('只允许字段 items、usable、note，多了：' + '、'.join(sorted(extra)))
+        if not isinstance(out.get('note', ''), str):
+            errs.append('"note" 必须是字符串')
     return errs
 
 
