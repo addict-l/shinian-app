@@ -1,0 +1,81 @@
+{
+  "provenance": "real DeepSeek response from isolated MySQL/HTTPS; respondent text synthetic; source identifiers are test-only",
+  "sources": [
+    {
+      "id": "4691183d-e6f7-4024-9a7f-7050cc986420",
+      "text": "因家穷才去粮站搬货。",
+      "speaker": "narrator",
+      "question": "您最初做的是什么工作？",
+      "question_id": "WK01"
+    }
+  ],
+  "judge_response": {
+    "ok": true,
+    "kind": "model_call",
+    "usage": {
+      "total_tokens": 2427,
+      "prompt_tokens": 2200,
+      "completion_tokens": 227,
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cached_tokens": 1792,
+        "cache_write_tokens": null
+      },
+      "prompt_cache_hit_tokens": 1792,
+      "prompt_cache_miss_tokens": 408,
+      "completion_tokens_details": null
+    },
+    "output": {
+      "control": {
+        "units": [],
+        "action": "continue"
+      },
+      "targets": {
+        "WK01-E1": {
+          "best": "S1.1",
+          "core": [
+            "S1.1"
+          ],
+          "kind": "content",
+          "about": "因家穷去粮站搬货",
+          "match": "本人能辨认的最初工作/劳动/事业",
+          "units": [
+            "S1.1"
+          ],
+          "concept": "same",
+          "subject": "self"
+        },
+        "WK01-E2": {
+          "best": "S1.1",
+          "core": [
+            "S1.1"
+          ],
+          "kind": "content",
+          "about": "因家穷去粮站搬货",
+          "match": "本人讲的原因、被安排/没有选择或现实条件均可",
+          "units": [
+            "S1.1"
+          ],
+          "concept": "same",
+          "subject": "self",
+          "link_word": "粮站搬货"
+        }
+      }
+    },
+    "params": {
+      "model": "deepseek-v4-pro",
+      "thinking": "disabled",
+      "json_mode": true,
+      "max_tokens": 1500,
+      "temperature": 0
+    },
+    "content": "{\n  \"control\": {\n    \"action\": \"continue\",\n    \"units\": []\n  },\n  \"targets\": {\n    \"WK01-E1\": {\n      \"best\": \"S1.1\",\n      \"about\": \"因家穷去粮站搬货\",\n      \"kind\": \"content\",\n      \"concept\": \"same\",\n      \"match\": \"本人能辨认的最初工作/劳动/事业\",\n      \"units\": [\"S1.1\"],\n      \"core\": [\"S1.1\"],\n      \"subject\": \"self\"\n    },\n    \"WK01-E2\": {\n      \"best\": \"S1.1\",\n      \"about\": \"因家穷去粮站搬货\",\n      \"kind\": \"content\",\n      \"concept\": \"same\",\n      \"match\": \"本人讲的原因、被安排/没有选择或现实条件均可\",\n      \"units\": [\"S1.1\"],\n      \"core\": [\"S1.1\"],\n      \"subject\": \"self\",\n      \"link_word\": \"粮站搬货\"\n    }\n  }\n}",
+    "seconds": 2.834138053935021,
+    "parse_error": null,
+    "response_id": "8423153b-38f6-4c48-910e-4e470846f6a5",
+    "finish_reason": "stop",
+    "response_model": "deepseek-v4-pro"
+  },
+  "observed_reply": "家穷去粮站搬货，是家里给找的，还是自己去的？",
+  "expected": "WK01-E2 should retain the explicit reason; do not ask it again"
+}

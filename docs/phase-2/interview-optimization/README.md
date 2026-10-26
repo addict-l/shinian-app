@@ -5,7 +5,9 @@
 
 ## 当前协作与线上状态
 
-Claude 负责持续采访优化，Codex 负责整合、部署、云端测试和问题回传。下一轮先读取[双向交接 SOP](collaboration-sop.md)、[最新会话排序修复回执](handoffs/2026-10-23-session-list-sort.md)及 [C01–C03 业务回执](handoffs/2026-10-23-c01-c03-cloud-release.md)，从共享分支最新头继续；必须继承 `a1ecee6` 大 JSON 排序修复、产品整合 `ed38ab2`、此前 `770f841` 题序修正及 main 的 OSS 整合。
+**最新回执（2026-10-27）**：[故事题深挖 v5f 候选验证](handoffs/2026-10-27-20013ab-cloud-validation.md)。接收 Claude `20013ab`（检出 `9915707`）；本地/最终云端 Ran 98 / skip 1，真实 MySQL + HTTPS 最终流程场景 26/27 通过，另有故障回退调用审计缺口。**候选未通过，未发布，未合入 main**：生产仍 `a1ecee6 / v3j_v4d`，镜像/env/挂载未变。共享分支本次只追加回执、验证工具与最小复现，未合入失败候选产品代码。Claude 下一轮先回应回执 S01–S03；S01 的明确因果证据误丢弃在原 v4d 引擎也能复现，不能误记为 v5f 新增回归。原样问答和完整附件 SHA-256 见回执。
+
+Claude 负责持续采访优化，Codex 负责整合、部署、云端测试和问题回传。下一轮先读取[双向交接 SOP](collaboration-sop.md)和[最新 v5f 候选回执](handoffs/2026-10-27-20013ab-cloud-validation.md)；历史工程基线见[会话排序修复回执](handoffs/2026-10-23-session-list-sort.md)及 [C01–C03 业务回执](handoffs/2026-10-23-c01-c03-cloud-release.md)。按最新回执接续共享文档与 Claude 候选代码，必须继承 `a1ecee6` 大 JSON 排序修复、产品整合 `ed38ab2`、此前 `770f841` 题序修正及 main 的 OSS 整合。
 
 **当前生产**：`a1ecee61eae633898f1ba3a7200a630ca66a32c2`，`v3j_v4d`，pin 不变。修复真实 App 采访入口的 MySQL 1038/HTTP 503；本地及云端均 Ran 80/skip 1，隔离 MySQL 8 份各 1 MiB 合成审计重现旧查询失败、新查询通过；正式 HTTPS、原受影响家庭只读查询及现有模拟器采访入口通过。用户明确授权后发布，代码已同步 main/共享分支，切换业务指纹一致；详见最新回执。
 
@@ -17,6 +19,7 @@ C01–C03 业务结果仍为上一轮 `ed38ab2`：接收 Claude `ece64ea`（交�
 
 | 版本 | 层 | 结果 | 状态 | 位置 |
 | --- | --- | --- | --- | --- |
+| **故事题深挖 v5f 候选未通过** | `20013ab` / `9915707`，故事题深挖与温暖说话层 | 本地/最终云端 Ran 98 / skip 1；真实流程 26/27、258/260；另有首答 deepen 失败调用审计条目缺失；未宣称质量通过 | **未发布、未合 main**；生产保留 `a1ecee6 / v3j_v4d`；共享只回传文档与工具 | [最新回执](handoffs/2026-10-27-20013ab-cloud-validation.md) |
 | **会话大 JSON 排序修复已发布** | Codex 工程修正，采访规则不变 | 本地/云端 Ran 80 / skip 1；隔离 MySQL 旧 SQL 真实 1038、新查询通过；生产 HTTPS 与模拟器入口恢复 | `a1ecee6` 已部署、已推 main 与共享分支；无新增模型质量轮次 | [最新回执](handoffs/2026-10-23-session-list-sort.md) |
 | v2 对照流程 | 抽取 → 复核 → 至多一次修复 | full45 关键点约 70% | 保留的旧流程与默认代码路径（`cloud-deployment/backend/app/ai/interview_runtime`） | `docs/prototypes/full-interview-v2/single-question-v2/` |
 | **v3j** | 判定层：每个检查点一次判定调用，代码拼装与引擎校验 | full45 197/204 = **96.6%**；随机 10 人门槛缓存 42/43、关缓存真实调用 43/43 | 已随 v4d 上线，范围见最新回执 | `docs/prototypes/full-interview-v3j/` + `tools/interview_eval/pipelines/v3j.py` |
