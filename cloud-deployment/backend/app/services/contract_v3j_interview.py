@@ -193,8 +193,10 @@ def _transition(rt, client, state, qid, dialogue, fields, reason, holder, sessio
         text, ack, notes, ok = speaker.compose_close(rt, reply, next_text, elder_words)
     if not ok:
         text = SKIP_ACK + '\n' + next_text
+    if rt.speaker_config.get('listen_first') and ack == speaker.LISTENING_FALLBACK and 'ack_fallback' not in notes:
+        notes.append('ack_fallback')
     return text, {'task': 'close', 'close_reason': reason, 'step': 'next_question', 'ack': ack if ok else '',
-                  'notes': notes, 'fallback': not ok, 'text': text, 'raw': row.get('content'), 'call': entry}
+                  'notes': notes, 'fallback': not ok or 'ack_fallback' in notes, 'text': text, 'raw': row.get('content'), 'call': entry}
 
 
 def _draft_ack(rt, client, state, qid, dialogue, fields, reason, holder, session_id, closing=DRAFT_TEXT, step='draft'):
@@ -214,8 +216,12 @@ def _draft_ack(rt, client, state, qid, dialogue, fields, reason, holder, session
     notes = []
     if ack and step == 'supplement' and speaker._norm(ack) == speaker._norm(state.speaker_last_close):
         ack, notes = '', ['repeat_ack']  # the same acknowledgement as last time is not said again
+    ack, why = speaker.listening_ack(rt, ack, elder_words)
+    notes += why
+    if rt.speaker_config.get('listen_first') and ack == speaker.LISTENING_FALLBACK and 'ack_fallback' not in notes:
+        notes.append('ack_fallback')
     text = speaker.join(ack, closing) if ack else closing
-    return ack, text, {'task': 'close', 'close_reason': reason, 'step': step, 'ack': ack, 'fallback': not ack,
+    return ack, text, {'task': 'close', 'close_reason': reason, 'step': step, 'ack': ack, 'fallback': not ack or 'ack_fallback' in notes,
                        'notes': notes, 'text': text, 'raw': row.get('content'), 'call': entry}
 
 
@@ -227,9 +233,15 @@ def review_step(previous, state, messages):
     return _project(previous, state, messages), ConversationReply(text=REVIEW_TEXT, action='offer_generation')
 
 
-def finish(local, outcome, spoken, asked=None):
+def finish(local, outcome, spoken, asked=None, *, calls=None):
     result = outcome['result']
-    outcome = {**outcome, 'speaker': spoken}
+    # A deepen call can finish without a question (failure, rejected output or
+    # model skip), so it is not necessarily attached to ``spoken``. Archive the
+    # whole request before clearing pending. Skeleton turns own their pending
+    # holder at overview level and pass it explicitly.
+    if calls is None:
+        calls = (local.get('pending') or {}).get('calls') or {}
+    outcome = {**outcome, 'speaker': spoken, 'calls': {**calls, **outcome['calls']}}
     if spoken and spoken.get('call'):
         outcome['calls'] = {**outcome['calls'], 'speaker': spoken.pop('call')}
     if spoken and spoken.get('deepen_call'):
@@ -382,7 +394,8 @@ def question_turn(client, previous, state, messages, latest):
     rt = flow_runtime(question_flow(state))
     # After the draft offer: an answer that only says there is nothing more goes to the review step (C03).
     supplementing = state.phase in ('supplement', 'review')
-    ending = speaker.supplement_end(latest.content) if supplementing else None
+    ending = (speaker.supplement_end(latest.content, listen_first=bool(rt.speaker_config.get('listen_first')))
+              if supplementing else None)
     if ending == 'only':
         if state.contract_state:
             state.contract_state['audit'].append({'pipeline': 'v4d', 'kind': 'supplement_end', 'request_id': str(latest.id),

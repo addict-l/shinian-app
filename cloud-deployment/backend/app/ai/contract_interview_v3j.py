@@ -274,7 +274,10 @@ class V3jPipeline:
                     # A speaking-layer failure falls back to fixed wording; it is
                     # recorded so that a retry gives the same reply without a call.
                     call = {'kind': 'model_call', 'ok': False, 'error': 'provider_request_failed', 'output': None}
-            entry = {'request_sha256': digest, 'payload': user, 'response': call}
+            # Failed calls have no successful response metadata; retain the
+            # actual request settings beside the response envelope as well.
+            entry = {'request_sha256': digest, 'runtime_manifest_sha256': self.runtime.manifest_sha256,
+                     'params': deepcopy(params), 'payload': user, 'response': call}
             calls[stage] = entry
             if save_call is not None and saved is None:
                 save_call(stage, deepcopy(entry))
@@ -428,6 +431,51 @@ def contiguous_value(ids, units):
     return [units[k]['id'] for k in range(min(same), max(same) + 1)]
 
 
+def first_work_cause_span(raw, word, rt):
+    """Select a literal cause from one explicit causal sentence, never infer one.
+
+    A sentence may be both the work answer and its explanation.  Copying that
+    whole sentence into both fields makes the engine's anti-repetition guard
+    reject an already stated reason.  Keep the original sentence as joint
+    evidence but select only its explicit cause as the explanation's value.
+    This is deliberately conservative: no temporal juxtaposition, later job,
+    other person's job, or negated causal/work claim is recovered here.
+    """
+    original = raw.strip()
+    view, selected = script_view(original, rt), script_view(word, rt)
+    if not selected:
+        return None
+    time = r'(?:当时|那时|那时候|最初|起初|最早)'
+    prefix = time + r'?(?:我|本人)?' + time + '?'
+    action = r'(?:(?:去|做|干|到|进|在|当|从事|开始)(?:了)?)'
+    own_work_prefix = prefix + r'(?:就|才|只好)?' + action
+    patterns = (
+        prefix + r'(?:因为|由于|因)(?P<cause>[^，,。！？；;\n]+?)(?:[，,](?:所以)?|所以|才|只好)(?P<work>[^。！？；;\n]+)[。！]?$',
+        r'(?P<work>[^，,。！？；;\n]+?)(?:[，,](?:是)?|是)(?:因为|由于)(?P<cause>[^，,。！？；;\n]+)[。！]?$',
+    )
+    for pattern in patterns:
+        match = re.fullmatch(pattern, view)
+        if not match:
+            continue
+        work, cause = match.group('work').strip(), match.group('cause').strip()
+        if selected not in work or not cause or selected in cause:
+            continue
+        if re.search(r'^(?:不是|并非)|什么|不清楚|不记得|不知道|记不清', cause):
+            continue
+        before_work = work[:work.index(selected)]
+        # Positive scope, not a list of other people's names: the selected
+        # work must immediately follow an affirmed self/omitted-self action.
+        # Do not recover causatives (让弟弟去...), names, plans, negations or
+        # later-work frames when the judge has mislabeled them as self.
+        if not re.match(own_work_prefix, work) or not re.fullmatch(
+                prefix + r'(?:就|才|只好)?' + action + r'{0,2}', before_work):
+            continue
+        # The character-map view is single-character only. Slice the untouched
+        # original, retaining traditional characters and exact source wording.
+        return original[match.start('cause'):match.end('cause')].strip()
+    return None
+
+
 def assemble(payload, output, rt, fids, subject_choice, value_override=None, wide=()):
     units = payload['evidence_units']
     index = {u['id']: i for i, u in enumerate(units)}
@@ -545,6 +593,19 @@ def assemble(payload, output, rt, fids, subject_choice, value_override=None, wid
         value = (exact or containing or pieces[:1] or [None])[0]
         if value:
             fields[fid]['links'] = [{'field_id': link['field_id'], 'value': value}]
+        # Only the new listening bundle opts in. The judge still has to have
+        # accepted the narrator's first-work cause; all engine scope, evidence,
+        # same-object and contradiction checks remain in place afterwards.
+        child = fields[fid]
+        child_units = child.get('value_unit_ids') or []
+        if rt.speaker_config.get('literal_cause_span') and fid == 'WK01-E2' and parent \
+                and child_units == parent.get('value_unit_ids') and len(child_units) == 1 \
+                and all((targets.get(key) or {}).get('subject') == 'self' for key in (fid, link['field_id'])):
+            cause = first_work_cause_span(text[child_units[0]], word, rt)
+            if cause is not None:
+                child.pop('value_unit_ids')
+                child['value'] = cause
+                notes[fid] = 'explicit_first_work_cause_literal_subspan'
     c = (output or {}).get('control') or {}
     action = c.get('action') if c.get('action') in CONTROL else 'continue'
     cids = [i for i in (c.get('units') or []) if i in index] if action != 'continue' else []

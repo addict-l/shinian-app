@@ -197,6 +197,9 @@ def compose_deepen(rt, row, dz, prior, elder_words):
         if errs and ack and not check_deepen(dim, '', question, prior, dz, cfg):
             ack_fix.append('ack_dropped:' + ','.join(errs))
             ack, errs = '', []
+    if not errs:
+        ack, why = speaker.listening_ack(rt, ack, elder_words)
+        ack_fix += why
     return dim, ack, question, errs, ack_fix
 
 
@@ -363,6 +366,25 @@ def guarded(rt, text, next_entry, elder_words, seen=()):
 def close_reply(rt, reply, next_entry, elder_words, seen=()):
     """compose_close + guards (the simulator's close). Returns (text, ack, notes, ok)."""
     text, ack, notes, ok = speaker.compose_close(rt, reply, next_entry, elder_words)
+    if rt.speaker_config.get('listen_first'):
+        # Validate the statement independently; a transition or entry alone is not
+        # an acknowledgement. Keep the engine's next entry exactly as before.
+        ack = speaker.lead_ack(rt, reply, next_entry, elder_words)
+        if next_entry and text:
+            # Providers sometimes join a factual acknowledgement with the next
+            # entry using commas. compose_close keeps it inside entry_q, whereas
+            # lead_ack only sees sentences before that question. Recover those
+            # literal lead clauses, dropping transition-only words, not content.
+            lead = lead_part(text, next_entry)
+            parts = [c for _, c in style.split_turn(lead)[0]
+                     if not speaker.TRANSITION.search(c) and not style.TEMPLATE.search(c)
+                     and not style.INTERJ.fullmatch(speaker._norm(c))]
+            combined = re.sub(r'[，,；;]$', '。', ''.join(parts).strip())
+            if combined:
+                ack = combined
+        ack, why = speaker.listening_ack(rt, ack, elder_words)
+        text = speaker.join(ack, next_entry) if next_entry else ack
+        return text, ack, notes + why, True
     if ok:
         text, why = guarded(rt, text, next_entry, elder_words, seen)
         notes = notes + why
@@ -397,7 +419,7 @@ def draft_ack(rt, reply, next_entry, elder_words, seen=()):
         kept.append(p)
     ack = re.sub(r'[，,；;]$', '。', ''.join(kept).strip())
     if not style.cjk(ack) or speaker.check_close(ack):
-        return ''
+        return speaker.listening_ack(rt, '', elder_words)[0]
     return ack
 
 

@@ -222,7 +222,8 @@ def turn(person_id, data, rid, fingerprint, client):
         if not ok:
             close_text = (SKIP_ACK + '\n' if status in ('skipped', 'declined') else NOTED_TEXT) + following
         spoken = {'task': 'close', 'close_reason': reason, 'step': 'next_question', 'ack': ack if ok else '',
-                  'notes': notes, 'fallback': not ok, 'text': close_text, 'raw': row.get('content'), 'call': call}
+                  'notes': notes, 'fallback': not ok or 'ack_fallback' in notes,
+                  'text': close_text, 'raw': row.get('content'), 'call': call}
     elif status != 'pending':
         # Last skeleton question (or a skip while paused): the existing reply, no speaking-layer call.
         spoken = {'task': 'close', 'close_reason': reason, 'step': 'review' if not following else 'paused', 'fallback': False}
@@ -238,7 +239,8 @@ def turn(person_id, data, rid, fingerprint, client):
                                'speaker': spoken, 'calls': deepcopy(pending['calls'])})
         local['asked_target'] = None
     else:
-        finish(local, outcome, {**(spoken or {}), **rule}, asked=reason if action == 'ask' else None)
+        finish(local, outcome, {**(spoken or {}), **rule}, asked=reason if action == 'ask' else None,
+               calls=pending['calls'])
     local['asked_question'] = question
     local['status'] = status
     if not skip:

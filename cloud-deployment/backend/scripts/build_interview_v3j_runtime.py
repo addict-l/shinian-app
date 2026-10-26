@@ -87,6 +87,18 @@ BUNDLES = {
             'pipeline': 'v3j_v5f', 'speaker': 'v5f'},
 }
 
+# A separate pinned candidate keeps the received v5f bundle replayable byte for byte.
+LISTENING = V5 + 'listening/'
+BUNDLES['v5f-listening'] = {
+    **BUNDLES['v5f'],
+    'target': BACKEND / 'app/ai/interview_runtime_v3j_v5f_listening',
+    'sources': {**V5F_SOURCES, **{name: LISTENING + name for name in
+                ('speaker-prompt.txt', 'speaker-config.json', 'deepen-prompt.txt')}},
+    'readme': '# v5f 承接修复候选（2026-10-27）\n\n由 --bundle v5f-listening 生成；pipeline 仍为 v3j_v5f，独立目录和 pin。\n保留原 v4d/v5f 包用于历史回放；本包通过新增回归和真实云端问答验证，不冒充旧缓存成绩。\n',
+    'version': 'interview-v3j-v5f-listening-20261027',
+    'speaker': 'v5f-listening',
+}
+
 
 def digest(data):
     return sha256(data).hexdigest()

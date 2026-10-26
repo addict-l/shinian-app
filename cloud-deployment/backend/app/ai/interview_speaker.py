@@ -92,6 +92,12 @@ EVAL = ('热闹', '踏实', '舒坦', '自在', '豁达', '清净', '了不起',
         '伤心', '委屈', '害怕', '孤单', '别扭')
 HARDSHIP = re.compile(r'苦|难|累|辛苦|艰|受罪|吃亏|不容易|穷|饿|病|死|走了|去世|过世|逃|躲')
 ACK_MAX = 36
+LISTENING_EVAL = re.compile(r'真仔细|真贴心|真细心|有深意|真用心|真懂事|真孝顺|真了不起|'
+                           r'真好|挺好|有意思|有趣|挺重要|很重要|真温暖|听着就实在')
+BARE_ACK = re.compile(r'^(?:嗯|噢|哦|喔|啊|唉|哎|呀|好|好的|对|是|行|原来)*$')
+LISTENING_FALLBACK = '嗯，这段我听到了。'
+LISTENING_QUESTION = re.compile(r'多大|几岁|怎样|怎么样|怎么|谁|什么|哪(?:年|天|里|儿|个|一|位)|'
+                               r'^(?:那)?(?:后来|以后|之后|当时|现在|您|他|她|师傅|父亲|母亲)呢[，,。！!；;]?$')
 
 
 def simp_text(rt, text):
@@ -108,8 +114,14 @@ def clean_ack(rt, text, elder_text=''):
         reason = None
         if INFER.search(p):
             reason = 'inference'
-        elif re.search(r'[？?]$', p) or re.search(r'(?:吧|吗|么|呢)[，,。！!；;]?$', p):
+        elif rt.speaker_config.get('listen_first') and LISTENING_QUESTION.search(p.strip()):
             reason = 'question_in_ack'
+        elif re.search(r'[？?]$', p) or re.search(
+                r'(?:吧|吗|么)[，,。！!；;]?$' if rt.speaker_config.get('listen_first')
+                else r'(?:吧|吗|么|呢)[，,。！!；;]?$', p):
+            reason = 'question_in_ack'
+        elif rt.speaker_config.get('listen_first') and LISTENING_EVAL.search(p):
+            reason = 'evaluation'
         else:
             for w in EVAL:
                 if w in p and w not in elder:
@@ -129,6 +141,22 @@ def clean_ack(rt, text, elder_text=''):
     out = ''.join(kept).strip()
     out = re.sub(r'[，,；;]$', '。', out)
     return out, why
+
+
+def listening_ack(rt, ack, elder_text=''):
+    """The listening candidate must not silently turn a removed ack into a bare question.
+
+    Short factual acknowledgements are intentional, even if their words overlap the
+    answer/question. The provider normally supplies them. An empty/unsafe response
+    gets a disclosed conservative fallback, never an invented fact or feeling.
+    Historical bundles do not opt in and retain their exact composition.
+    """
+    if not rt.speaker_config.get('listen_first'):
+        return ack, []
+    ack, notes = clean_ack(rt, ack, elder_text)
+    if ack and not BARE_ACK.fullmatch(_norm(ack)) and not check_close(ack):
+        return ack, notes
+    return LISTENING_FALLBACK, notes + ['ack_fallback']
 
 
 def compose_close(rt, reply, next_entry, elder_text=''):
@@ -269,7 +297,10 @@ def compose_ask(rt, row, result, target, prior, elder_text=''):
         question = result.get('question') or rt.F[target]['question']
         if check_close(ack):
             ack = ''
-    return join(ack, question), question, {'ack': ack, 'question': question, 'errors': errs, 'fallback': bool(errs),
+    ack, why = listening_ack(rt, ack, elder_text)
+    fixes += why
+    return join(ack, question), question, {'ack': ack, 'question': question, 'errors': errs,
+                                          'fallback': bool(errs) or 'ack_fallback' in fixes,
                                           'repairs': fixes}
 
 
@@ -526,9 +557,11 @@ SUPPLEMENT_MORE = re.compile(r'还(?:想|要)(?:再)?(?:说|讲|补充|聊)|再(
                              r'还有(?:一件|一点|个事|件事|几句|话)|(?:还)?没(?:说|讲)完')
 
 
-def supplement_end(text):
+def supplement_end(text, *, listen_first=False):
     """'only': the elder only says there is nothing more; 'with_content': something new and an ending in the same
     message; None: no ending. Clauses are compared without punctuation or spaces."""
+    if listen_first:
+        return _listening_supplement_end(text)
     if SUPPLEMENT_MORE.search(text or ''):
         return None
     ends = content = False
@@ -543,3 +576,43 @@ def supplement_end(text):
     if not ends:
         return None
     return 'with_content' if content else 'only'
+
+
+def _listening_supplement_end(text):
+    """Read a whole negative ending before its embedded words such as "要补充".
+
+    Only this candidate opts in. Do not remove topic fragments or possible facts:
+    anything outside the existing ending/neutral grammar remains content and is
+    recorded by the normal judgment path before review. Quoted or reported words
+    are content, not the elder's current instruction to end the supplement step.
+    """
+    def quoted_content(match):
+        # Mask only for intent reading, never the stored source. Preserve sentence
+        # boundaries so a current ending after a quotation can still be read.
+        return '引用内容' + (match.group()[-2] if SENTENCE_END.search(match.group()[-2:-1]) else '')
+
+    reading = re.sub(r'“[^”]*”|‘[^’]*’|「[^」]*」|"[^"]*"', quoted_content, text or '')
+    ends = content = reported = False
+    previous = ''
+    for clause in CLAUSE.findall(reading):
+        if SENTENCE_END.search(previous) or PRESENT.search(clause):
+            reported = False
+        past_report = PAST.search(clause) and re.search(r'(?:说|讲)\s*(?=[：:，,“"‘「]|没有|没了|就这些)', clause)
+        reported = reported or bool(REPORTED.search(clause) or past_report)
+        previous = clause
+        bare = re.sub(r'[\s，,。！!？?；;、…~—“”"‘’「」]', '', clause)
+        if not bare:
+            continue
+        if SUPPLEMENT_END.fullmatch(bare):
+            if reported:
+                content = True
+            else:
+                ends = True
+        else:
+            # "没有别的要补充了" was handled as a whole ending above;
+            # "没有，我还想说说我妈" still has an affirmative continuation.
+            if not reported and SUPPLEMENT_MORE.search(clause):
+                return None
+            if not SUPPLEMENT_NEUTRAL.fullmatch(bare):
+                content = True
+    return ('with_content' if content else 'only') if ends else None
