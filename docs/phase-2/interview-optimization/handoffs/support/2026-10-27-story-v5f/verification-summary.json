@@ -1,0 +1,64 @@
+{
+  "candidate_passed": false,
+  "production_switched": false,
+  "quality_acceptance_passed": false,
+  "candidate_code_sha": "20013ab6339b4f2c34205b3bcda5318bb4234631",
+  "checked_checkout_sha": "9915707504d3edc8e813961c0e958b14ea068313",
+  "captures": 30,
+  "final_cases": 27,
+  "final_cases_passed": 26,
+  "final_cases_failed": [
+    "v5f_WK01_short_ready"
+  ],
+  "retained_initial_harness_attempts": [
+    "v5f_FM01_provider_fail",
+    "v5f_WK01_short_first",
+    "v5f_full_skeleton"
+  ],
+  "final_checks": 260,
+  "final_failed_checks": 2,
+  "provider_audit": {
+    "passed": false,
+    "retained_calls_verified": true,
+    "full_call_trace_complete": false,
+    "missing_deepen_call_entries": [
+      {
+        "pipeline": "v3j_v5f",
+        "question_id": "FM01",
+        "source_id": "d86b5763-768c-480f-95d3-022ab06e5347",
+        "reason": "call_failed",
+        "raw_preserved": false,
+        "request_digest_and_response_envelope_missing": true
+      }
+    ],
+    "errors": [],
+    "unique_successful_response_ids": 104,
+    "successful_by_stage": {
+      "judge": 39,
+      "deepen": 23,
+      "speaker": 41,
+      "verify": 1
+    },
+    "successful_by_flow": {
+      "v3j_v5f": 102,
+      "v3j_v4d": 2
+    },
+    "unique_request_digests": 92,
+    "recorded_failed_provider_calls": []
+  },
+  "main_issue": "WK01-E2: repetition_is_not_explanation discards a sentence containing explicit cause and work; unnecessary follow-up",
+  "additional_issue": "first-answer deepen failure falls back correctly but drops saved deepen request/response envelope from the final audit",
+  "holdout_used_for_tuning": false,
+  "production": {
+    "checked_at": "2026-10-26T16:17:29.780360+00:00",
+    "production_switched": false,
+    "image": "sha256:d7b94334ac909feb59775a19b5b27fde48737153ff919bdf83eb2192f809b0d8",
+    "revision": "a1ecee61eae633898f1ba3a7200a630ca66a32c2",
+    "pipeline": "v3j_v4d",
+    "v4d_pin": "8897f3c50690d70571e8b8bf2acf2176c80caf17c860ddf6f207c2470a3ba99f",
+    "image_unchanged": true,
+    "environment_unchanged": true,
+    "mounts_unchanged": true,
+    "v5f_config_enabled": false
+  }
+}

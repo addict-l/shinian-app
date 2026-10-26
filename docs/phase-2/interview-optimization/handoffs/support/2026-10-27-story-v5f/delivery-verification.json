@@ -1,0 +1,46 @@
+{
+  "security_scan": {
+    "archive_sha256": "7bed29f3a2e276013b35ba63c8f44c5666159c2a42284a8c121633c60b2997e9",
+    "zip_integrity": true,
+    "files": 116,
+    "actual_secret_values_checked": 8,
+    "files_containing_actual_secret": [],
+    "passed": true
+  },
+  "cleanup_and_production": {
+    "candidate_container_stopped": true,
+    "candidate_data_and_image_retained": true,
+    "private_nginx_quit_requested": true,
+    "other_candidate_containers_touched": false,
+    "production_unchanged": true,
+    "production_image": "sha256:d7b94334ac909feb59775a19b5b27fde48737153ff919bdf83eb2192f809b0d8",
+    "https_checks": {
+      "aimemory.47-82-83-74.nip.io": {
+        "/health": {
+          "status": 200,
+          "body": {
+            "status": "ok",
+            "database": "ok",
+            "llm_configured": true
+          }
+        },
+        "/api/v1/chat/sessions": {
+          "status": 401
+        }
+      },
+      "api.xn--zbs33ddmy9oeqa.club": {
+        "/health": {
+          "status": 200,
+          "body": {
+            "status": "ok",
+            "database": "ok",
+            "llm_configured": true
+          }
+        },
+        "/api/v1/chat/sessions": {
+          "status": 401
+        }
+      }
+    }
+  }
+}

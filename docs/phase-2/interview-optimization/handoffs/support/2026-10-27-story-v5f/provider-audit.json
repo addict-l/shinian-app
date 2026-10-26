@@ -1,0 +1,29 @@
+{
+  "passed": false,
+  "retained_calls_verified": true,
+  "full_call_trace_complete": false,
+  "missing_deepen_call_entries": [
+    {
+      "pipeline": "v3j_v5f",
+      "question_id": "FM01",
+      "source_id": "d86b5763-768c-480f-95d3-022ab06e5347",
+      "reason": "call_failed",
+      "raw_preserved": false,
+      "request_digest_and_response_envelope_missing": true
+    }
+  ],
+  "errors": [],
+  "unique_successful_response_ids": 104,
+  "successful_by_stage": {
+    "judge": 39,
+    "deepen": 23,
+    "speaker": 41,
+    "verify": 1
+  },
+  "successful_by_flow": {
+    "v3j_v5f": 102,
+    "v3j_v4d": 2
+  },
+  "unique_request_digests": 92,
+  "recorded_failed_provider_calls": []
+}
