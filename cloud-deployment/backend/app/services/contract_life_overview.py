@@ -11,7 +11,7 @@ from app.db.database import SessionLocal
 from app.models.family_member import FamilyMemberModel
 from app.schemas.life_overview import LifeOverview, LifeField
 from app.services.contract_interview_state import (
-    runtime, questions, fresh_question, context_for, append_source, finish_question_turn, V3J_PIPELINE,
+    runtime, questions, fresh_question, context_for, append_source, finish_question_turn, V3J_FLOWS,
 )
 from app.services.interview_controls import skips_question, SKIP_ACK
 
@@ -50,7 +50,7 @@ def active_id(data):
 def question_text(data, qid):
     if not qid:
         return None
-    if data['questions'][qid].get('pipeline') == V3J_PIPELINE:
+    if data['questions'][qid].get('pipeline') in V3J_FLOWS:
         # The question part last shown (the speaking layer's follow-up), else the entry question.
         asked = data['questions'][qid].get('asked_question')
         if asked is not None:
@@ -171,7 +171,7 @@ def perform(person_id, action, client):
         _save(person_id, data)
         return view(data)
     from app.services.contract_v3j_life_overview import question_flow, turn
-    if question_flow(data, qid) == V3J_PIPELINE:
+    if question_flow(data, qid) in V3J_FLOWS:
         return turn(person_id, data, rid, fingerprint, client)
     skip = skips_question(text)
     if skip:

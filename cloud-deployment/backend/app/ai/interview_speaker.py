@@ -1,4 +1,4 @@
-"""Speaking layer v4d: how to say what the judgment layer decided, never what to ask.
+"""Speaking layer v4d (and the shared pieces of v5f): how to say what the judgment layer decided, never what to ask.
 
 Port of the parts of tools/interview_eval/simulate/interview.py that the tested
 v4d configuration uses: the speaker input (speaker_user), reply parsing,
@@ -12,8 +12,10 @@ steps where the simulator moved straight to the next question: ``lead_ack``
 keeps only the acknowledgement of a close (for the existing draft sentence and
 the module menu), and ``compose_ask`` bundles the simulator's follow-up branch.
 ``supplement_end`` (C03) reads the answers after the draft offer, a step the
-simulator does not have. elder_signal, has_content and decide are kept identical
-to the simulator's (C01, C02).
+simulator does not have. elder_signal, signal_scope, has_content and decide are kept identical
+to the simulator's (C01, C02, v5d signal scope); the v5 deepen step and wording guards are in interview_story.
+Every v5 rule is switched by a key of the bundle's speaker-config.json, so the v3j_v4d bundle (no such keys)
+behaves exactly as before.
 """
 import re
 
@@ -24,7 +26,9 @@ CLOSE_REASON = {'done': '这个话题已经聊完', 'limited': '这个话题聊�
                 'declined_partial': '老人不想多说',
                 'deferred': '老人想以后再讲', 'cap': '这个话题已经追问过几次，不再追问', 'asked_once': '这一点刚才问过了，老人没接着讲，不再追问',
                 'error': '这个话题聊到这里就够了', 'rest': '老人累了想歇一会儿',
-                'rest_resume': '老人刚才说累了，歇了一会儿，刚点了“继续”；这个话题不再追问，接着聊下一题'}
+                'rest_resume': '老人刚才说累了，歇了一会儿，刚点了“继续”；这个话题不再追问，接着聊下一题',
+                # v5d signal scope: the elder could not remember one point and went on to tell more
+                'unknown_partial': '老人说有一点记不清，接着又讲了别的；记不清的那一点不再问，这个话题聊到这里'}
 
 
 def recorded_fields(rt, result):
@@ -254,6 +258,10 @@ def compose_ask(rt, row, result, target, prior, elder_text=''):
     (a valid ack is kept, as in v4d). Returns (text, question_part, record)."""
     ack, question = parse_speaker(row)
     ack, fixes = clean_ack(rt, ack, elder_text)
+    if rt.speaker_config.get('echo_guard'):  # v5d-v5f (the v3j_v5f bundle): a restating acknowledgement is dropped
+        from app.ai.interview_story import restates
+        if restates(ack, elder_text, rt.speaker_config.get('echo_names')):
+            ack, fixes = '', fixes + ['restate_dropped']
     errs = check_ask(ack, question, prior)
     if INFER.search(question):
         errs.append('inference_in_question')
@@ -353,6 +361,78 @@ def elder_signal(text):
     return None
 
 
+# v5d signal scope (policy "signal_scope", the v3j_v5f bundle; without it the C01 rules exactly as before): an answer
+# that says it cannot remember (or cannot think of) one point and then goes on to tell something new is a partial
+# "can't remember" -- only that point is not pressed; the question does not end because of it. Read literally and
+# generally: the answer is cut into clauses; clauses carrying a stop signal or a hedge about memory ("好多都模糊了")
+# are the signal part; in the other clauses, content bigrams (scope_bigrams) that are neither in the question just
+# asked nor in the elder's earlier words of this question nor generic are new (a clause whose bigrams are mostly not
+# new is a retelling and adds none). Partial when there are at least SCOPE_NEW_BIGRAMS new bigrams and the clauses
+# carrying them hold at least ``min_chars`` characters. Only 'unknown' is scoped: "不想多讲" and "累了" are requests
+# about the conversation itself and keep closing as before. The block from SCOPE_HEDGE to has_content is the
+# simulator's text (tests/test_interview_c01_c03.py, tests/test_interview_v5f.py).
+_CHAR_MAP = None
+
+
+def _simp(text):
+    """Simplified characters by the OpenCC map of the pinned runtimes (the same file in every v3j bundle)."""
+    global _CHAR_MAP
+    if _CHAR_MAP is None:
+        import json
+        from pathlib import Path
+        _CHAR_MAP = json.loads((Path(__file__).resolve().parent / 'interview_runtime_v3j_v4d/opencc-ts-char-map.json')
+                               .read_text(encoding='utf-8'))
+    return ''.join(_CHAR_MAP.get(c, c) for c in str(text or ''))
+
+
+# v5c1: "can't think of one" wordings elder_signal does not cover (deepen only, and the scope test with extra)
+DEEPEN_UNKNOWN = re.compile(r'想不出|说不出|没(?:有)?(?:什么|啥)特别')
+
+
+SCOPE_HEDGE = re.compile(r'模糊|记性|年纪大了|人老了|太久了|时间久了|年头久了|那么久|这么久')
+SCOPE_GENERIC = None
+SCOPE_NEW_BIGRAMS = 4
+SCOPE_PARTICLE = re.compile(r'[嘛呀哎啊呢吧哦喔嗯哈啦咯呗]')  # a bigram with a sentence particle is not content
+# content characters for the scope test: lighter than persona.FUNC, which also drops 对 上 去 来 说 想 … ("反对", "北上")
+SCOPE_FUNC = set('的了是在我你您他她它们么这那就都也还又很吗呢吧啊着个一些其之和与及或把被得地')
+
+
+def scope_bigrams(text):
+    t = re.sub(r'[^一-鿿]', '', _simp(text))
+    return {t[i:i + 2] for i in range(len(t) - 1) if t[i] not in SCOPE_FUNC and t[i + 1] not in SCOPE_FUNC}
+
+
+def _scope_generic():
+    global SCOPE_GENERIC
+    if SCOPE_GENERIC is None:
+        SCOPE_GENERIC = scope_bigrams('时候以后后来那时当时现在事情经历印象记得觉得一下一点一件这件那件这段那段日子生活好像大概反正就是这样'
+                                '具体详细情形情况样子清楚知道真的实在其实自己特别一样')
+    return SCOPE_GENERIC
+
+
+def signal_scope(text, question='', before='', min_chars=15, extra=False):
+    """For an answer whose literal signal is 'unknown' (or, with ``extra``, the v5c1 "想不出 / 说不出" wordings):
+    ('partial', rest_text, signal_text) when besides the signal it tells something new (rest_text = all clauses
+    outside the signal part), else ('whole', '', signal_text).
+    ``question``: the interviewer's words just answered; ``before``: the elder's earlier words in this question."""
+    seen = scope_bigrams(question) | scope_bigrams(before) | _scope_generic()
+    new, rest, sig, fresh = [], [], [], set()
+    for c in CLAUSE.findall(text or ''):
+        if SIG_UNKNOWN.search(c) or SIG_DECLINE.search(c) or SIG_REST.search(c) or SCOPE_HEDGE.search(c) or \
+                (extra and DEEPEN_UNKNOWN.search(c)):
+            sig.append(c)
+            continue
+        rest.append(c)
+        allb = {b for b in scope_bigrams(c) if not SCOPE_PARTICLE.search(b)}
+        f = allb - seen
+        if f and 2 * len(f) > len(allb):  # a clause at least half made of what was already said is a retelling, not new
+            new.append(c)
+            fresh |= f
+    if len(fresh) >= SCOPE_NEW_BIGRAMS and len(_norm(''.join(new))) >= min_chars:  # rest_text: every clause outside the signal
+        return 'partial', re.sub(r'[，,、；;]$', '。', ''.join(rest).strip()), ''.join(sig).strip()
+    return 'whole', '', ''.join(sig).strip()
+
+
 def has_content(result):
     """Whether this question already has a real answer (C02): an active field known or explicitly none (optional
     fields are not counted, so the backend and the simulator's judge summary read the same)."""
@@ -369,12 +449,22 @@ def decide(cfg, result, st, text=''):
     go into it further (his own words, or the engine's limited with a declined field next to an answered one). Not
     a refusal: no more follow-ups, the question finishes as answered (draft step in the
     guided interview, the next skeleton question in the life overview); the speaking layer is told the same
-    close reason as a refusal ('老人不想多说'). A decline before any real answer stays a refusal ('declined')."""
+    close reason as a refusal ('老人不想多说'). A decline before any real answer stays a refusal ('declined').
+
+    v5d signal scope (cfg 'signal_scope', the v3j_v5f bundle): a 'can't remember' that goes on to tell something new
+    closes as 'unknown_partial' and only the point just asked is not pressed; ``st`` then also carries 'asked' (the
+    question part just answered), 'before' (the elder's earlier words of this question) and 'last_target'."""
     d = result.get('decision')
     eff = result.get('effective') or {}
     active = result.get('active') or []
     sig = elder_signal(text) if cfg.get('signal_close') else None
     st['signal'] = sig
+    # v5d signal scope (policy signal_scope; off = the rules exactly as the backend has them)
+    partial = False
+    if cfg.get('signal_scope') and sig == 'unknown':
+        scope = signal_scope(text, st.get('asked', ''), st.get('before', ''), cfg.get('scope_min_chars', 15))
+        st['scope'] = scope
+        partial = scope[0] == 'partial'
     if d == 'paused' or sig == 'rest':
         return 'rest', None
     if d in ('skipped',) or (d == 'limited' and 'declined' in [eff.get(a) for a in active]):
@@ -386,19 +476,25 @@ def decide(cfg, result, st, text=''):
     if d == 'ready':
         return 'close', 'declined_partial' if sig == 'declined' else 'done'
     if d == 'limited':
-        return 'close', 'unknown' if 'unknown' in [eff.get(a) for a in active] else 'limited'
+        if 'unknown' in [eff.get(a) for a in active]:
+            return 'close', 'unknown_partial' if partial else 'unknown'
+        return 'close', 'limited'
     target = result.get('target')
     if sig == 'declined':
         return 'close', 'declined_partial' if has_content(result) else 'declined'
     if sig == 'unknown':
-        return 'close', sig
+        if not partial:
+            return 'close', sig
+        # v5d: only the point just asked is not pressed; another open point the engine wants may still be asked
+        if not (target and st.get('last_target') and target != st['last_target']):
+            return 'close', 'unknown_partial'
     if st['followups'] >= cfg['followup_cap']:
         return 'close', 'cap'
     if st['ask_counts'].get(target, 0) >= cfg['same_target_cap']:
         return 'close', 'asked_once'
     newly = [a for a in active if eff.get(a) in ('unknown', 'declined') and st['prev_eff'].get(a) not in ('unknown', 'declined')]
     if newly and st['followups'] >= cfg.get('stop_after_unknown_once_asked', 1):
-        return 'close', 'unknown'
+        return 'close', 'unknown_partial' if partial else 'unknown'
     return 'ask', target
 
 

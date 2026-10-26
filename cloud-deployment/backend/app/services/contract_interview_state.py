@@ -30,7 +30,9 @@ def runtime(version=None):
 
 
 V3J_PIPELINE = 'v3j_v4d'
-PIPELINES = ('v2', V3J_PIPELINE)
+V5F_PIPELINE = 'v3j_v5f'  # v3j judgment + v5f speaking layer (story-question deepening), its own pinned bundle
+V3J_FLOWS = (V3J_PIPELINE, V5F_PIPELINE)
+PIPELINES = ('v2', V3J_PIPELINE, V5F_PIPELINE)
 
 
 def configured_pipeline():
@@ -43,13 +45,23 @@ def configured_pipeline():
 
 
 @lru_cache(maxsize=4)
-def _v3j_runtime(directory, digest):
+def _v3j_runtime(directory, digest, pipeline=V3J_PIPELINE):
     from app.ai.contract_interview_v3j import V3jRuntime
-    return V3jRuntime(directory, digest)
+    return V3jRuntime(directory, digest, pipeline)
 
 
 def v3j_runtime():
     return _v3j_runtime(os.getenv('INTERVIEW_V3J_RUNTIME_DIR', ''), os.getenv('INTERVIEW_V3J_RUNTIME_MANIFEST_SHA256', ''))
+
+
+def v5f_runtime():
+    return _v3j_runtime(os.getenv('INTERVIEW_V5F_RUNTIME_DIR', ''), os.getenv('INTERVIEW_V5F_RUNTIME_MANIFEST_SHA256', ''),
+                        V5F_PIPELINE)
+
+
+def flow_runtime(pipeline):
+    """The pinned bundle of a v3j flow: a question keeps the bundle of the flow it started with."""
+    return v5f_runtime() if pipeline == V5F_PIPELINE else v3j_runtime()
 
 
 def validate_pipeline():
@@ -58,9 +70,9 @@ def validate_pipeline():
     The v3j bundle must carry exactly the configured catalog (same question IDs,
     order and entry questions), so switching flows never moves a topic position.
     """
-    if configured_pipeline() != V3J_PIPELINE:
+    if configured_pipeline() not in V3J_FLOWS:
         return
-    bundle, current = v3j_runtime(), runtime()
+    bundle, current = flow_runtime(configured_pipeline()), runtime()
     if bundle.version != current.version or [(q['id'], q['main_question']) for q in bundle.contracts['questions']] != [
             (q['id'], q['main_question']) for q in current.contracts['questions']]:
         from app.ai.llm_client import LLMConfigurationError

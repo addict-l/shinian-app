@@ -8,7 +8,7 @@ from app.schemas.guided_interview import GuidedInterviewState, GuidedQuestion
 from app.schemas.story_guidance import ConversationReply, StoryReadiness
 from app.schemas.story_information import SourceQuote
 from app.services.contract_interview_state import (
-    runtime, questions, fresh_question, context_for, append_source, finish_question_turn, V3J_PIPELINE,
+    runtime, questions, fresh_question, context_for, append_source, finish_question_turn, V3J_FLOWS,
 )
 from app.services.interview_controls import skips_question, SKIP_ACK
 
@@ -88,7 +88,7 @@ def turn(client, previous, messages):
         return _project(previous, state, messages), ConversationReply(
             text='好，先核对这段草稿，您确认后再保存。', action='offer_generation')
     from app.services.contract_v3j_interview import question_flow, question_turn
-    if question_flow(state) == V3J_PIPELINE:
+    if question_flow(state) in V3J_FLOWS:
         return question_turn(client, previous, state, messages, latest)
     qid = topic_for(state).id
     if not state.contract_state:
@@ -150,13 +150,13 @@ def turn(client, previous, messages):
 
 
 def skip_topic(previous, state, messages, client=None, text=None):
-    """Close the question as skipped. ``text`` is a reply already composed by the v3j_v4d flow; with a client,
-    an explicit skip in a question of that flow is acknowledged by its speaking layer first."""
+    """Close the question as skipped. ``text`` is a reply already composed by a v3j flow (v3j_v4d / v3j_v5f); with
+    a client, an explicit skip in a question of such a flow is acknowledged by its speaking layer first."""
     from app.services.guided_interview import opening_text
     from app.services.interview_modules import topic_for
     if text is None and client is not None:
         from app.services.contract_v3j_interview import question_flow, skip_turn
-        if question_flow(state) == V3J_PIPELINE:
+        if question_flow(state) in V3J_FLOWS:
             return skip_turn(client, previous, state, messages)
     state.processed_topics[topic_for(state).id] = 'skipped'
     # following archives raw sources, provider failures and old fields intact.

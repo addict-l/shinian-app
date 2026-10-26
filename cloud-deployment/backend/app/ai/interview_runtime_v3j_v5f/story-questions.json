@@ -1,0 +1,478 @@
+{
+ "version": "v5a",
+ "source": "《故事题清单（待确认）》2026-10-26（用户认可方案，尚未逐项确认）",
+ "note": "只给冻结 83 题加深度标签，不改题库：入口问句、题序、要素与判定标准照冻结清单 docs/question-bank-freeze-v2.json。story = 要素齐后最多再问 2 次细节（sensitive 只问 1 次）；fact / reflection 照 v4d 不深挖。",
+ "counts": {
+  "story": 23,
+  "fact": 23,
+  "reflection": 37,
+  "total": 83
+ },
+ "frozen_bank": {
+  "path": "docs/question-bank-freeze-v2.json",
+  "entry_questions_sha256": "d58916e319899df96adc0fe28996fd6bf3c355b12626a691bb4c3c1907df4b3c"
+ },
+ "questions": [
+  {
+   "id": "SK01",
+   "depth": "fact",
+   "main_question": "您大概是什么时候出生的？"
+  },
+  {
+   "id": "SK01b",
+   "depth": "fact",
+   "main_question": "您出生在哪个地方？"
+  },
+  {
+   "id": "SK01c",
+   "depth": "story",
+   "main_question": "您记忆中的家乡是什么样子的？",
+   "deepen_direction": "一处具体的地方：村口、老屋、河边长什么样",
+   "sensitive": false
+  },
+  {
+   "id": "SK02",
+   "depth": "fact",
+   "main_question": "您知道自己的名字有什么来历吗？"
+  },
+  {
+   "id": "SK03",
+   "depth": "fact",
+   "main_question": "您小时候主要跟谁一起生活？"
+  },
+  {
+   "id": "SK03b",
+   "depth": "fact",
+   "main_question": "小时候家里主要靠什么维持生活？"
+  },
+  {
+   "id": "SK03c",
+   "depth": "fact",
+   "main_question": "您有兄弟姐妹吗？"
+  },
+  {
+   "id": "SK03d",
+   "depth": "fact",
+   "main_question": "小时候家里人相处得怎么样？"
+  },
+  {
+   "id": "SK04",
+   "depth": "fact",
+   "main_question": "从小到大，家里人通常怎样教导您？"
+  },
+  {
+   "id": "SK05",
+   "depth": "reflection",
+   "main_question": "您会怎样形容自己的性格？"
+  },
+  {
+   "id": "SK06",
+   "depth": "reflection",
+   "main_question": "想到自己这一生，您会用什么词来概括？"
+  },
+  {
+   "id": "CH01",
+   "depth": "story",
+   "main_question": "您最早记得的一件事是什么？",
+   "deepen_direction": "当时几岁、谁在旁边、为什么记到现在",
+   "sensitive": false
+  },
+  {
+   "id": "CH02",
+   "depth": "fact",
+   "main_question": "小时候家里的生活条件怎么样？"
+  },
+  {
+   "id": "CH02b",
+   "depth": "story",
+   "main_question": "小时候您平常一天是怎么过的？",
+   "deepen_direction": "一天里最记得的一个时刻：干的活、吃的饭、玩的东西",
+   "sensitive": false
+  },
+  {
+   "id": "CH03",
+   "depth": "story",
+   "main_question": "小时候哪位亲人最疼爱您？",
+   "deepen_direction": "一件体现疼爱的具体的事、他说过的一句话",
+   "sensitive": false
+  },
+  {
+   "id": "CH03b",
+   "depth": "reflection",
+   "main_question": "童年时哪位亲人对您的影响比较深？"
+  },
+  {
+   "id": "CH04",
+   "depth": "fact",
+   "main_question": "小时候有什么让您特别向往的活动或梦想？"
+  },
+  {
+   "id": "CH05",
+   "depth": "story",
+   "main_question": "童年有什么让您印象深刻的事？",
+   "deepen_direction": "当时的场景和在场的人、事情怎么收场",
+   "sensitive": false
+  },
+  {
+   "id": "CH06",
+   "depth": "fact",
+   "main_question": "小时候邻里或亲友之间相处得怎么样？"
+  },
+  {
+   "id": "CH06b",
+   "depth": "story",
+   "main_question": "童年时有没有一份人情温暖让您记到现在？",
+   "deepen_direction": "那人是谁、做了什么、后来有没有再见到",
+   "sensitive": false
+  },
+  {
+   "id": "CH07",
+   "depth": "reflection",
+   "main_question": "哪段童年经历影响了您后来的待人处事？"
+  },
+  {
+   "id": "GR01",
+   "depth": "fact",
+   "main_question": "您大概多大时开始上学的？"
+  },
+  {
+   "id": "GR01b",
+   "depth": "story",
+   "main_question": "您的求学过程是怎样的？",
+   "deepen_direction": "一次关口：考学、转学、辍学那一年的情形",
+   "sensitive": false
+  },
+  {
+   "id": "GR02",
+   "depth": "reflection",
+   "main_question": "学生时代您会怎样形容自己的性格？"
+  },
+  {
+   "id": "GR02b",
+   "depth": "fact",
+   "main_question": "学生时代您的成绩大致怎么样？"
+  },
+  {
+   "id": "GR03",
+   "depth": "story",
+   "main_question": "求学时有没有一位对您影响很大的老师或同学？",
+   "deepen_direction": "他做过的一件事、说过的一句话",
+   "sensitive": false
+  },
+  {
+   "id": "GR04",
+   "depth": "reflection",
+   "main_question": "少年时您最大的烦恼是什么？"
+  },
+  {
+   "id": "GR04b",
+   "depth": "story",
+   "main_question": "少年时什么事最让您快乐？",
+   "deepen_direction": "那一次具体是怎么回事、和谁一起",
+   "sensitive": false
+  },
+  {
+   "id": "GR05",
+   "depth": "fact",
+   "main_question": "求学时家里的条件怎么样？"
+  },
+  {
+   "id": "GR06",
+   "depth": "story",
+   "main_question": "青春期有没有一段让您感到迷茫或叛逆的日子？",
+   "deepen_direction": "那段日子里的一件事、后来怎么走出来",
+   "sensitive": false
+  },
+  {
+   "id": "GR07",
+   "depth": "reflection",
+   "main_question": "离开学校时您怎样设想以后的生活？"
+  },
+  {
+   "id": "WK01",
+   "depth": "story",
+   "main_question": "您最初做的是什么工作？",
+   "deepen_direction": "第一天的情形：在哪里、干什么、住在哪",
+   "sensitive": false
+  },
+  {
+   "id": "WK02",
+   "depth": "fact",
+   "main_question": "刚步入社会时您遇到过什么难题？"
+  },
+  {
+   "id": "WK03",
+   "depth": "reflection",
+   "main_question": "您觉得青年时打拼的日子辛苦吗？"
+  },
+  {
+   "id": "WK04",
+   "depth": "fact",
+   "main_question": "工作初期有什么小成就让您感到骄傲？"
+  },
+  {
+   "id": "WK05",
+   "depth": "story",
+   "main_question": "青年时有没有一个改变人生方向的选择？",
+   "deepen_direction": "当时是怎么定下来的、谁说了什么",
+   "sensitive": false
+  },
+  {
+   "id": "WK06",
+   "depth": "reflection",
+   "main_question": "青年时您待人交友有什么原则？"
+  },
+  {
+   "id": "WK06b",
+   "depth": "story",
+   "main_question": "青年时您收获过哪些珍贵的情谊？",
+   "deepen_direction": "和这位朋友之间的一件事",
+   "sensitive": false
+  },
+  {
+   "id": "FM01",
+   "depth": "story",
+   "main_question": "您和伴侣是怎样认识的？",
+   "deepen_direction": "第一次见面、对对方的第一印象",
+   "sensitive": false
+  },
+  {
+   "id": "FM01b",
+   "depth": "fact",
+   "main_question": "您和伴侣平时是怎样相伴生活的？"
+  },
+  {
+   "id": "FM02",
+   "depth": "story",
+   "main_question": "刚组建家庭时生活条件怎么样？",
+   "deepen_direction": "第一个家的样子、结婚时置办了什么",
+   "sensitive": false
+  },
+  {
+   "id": "FM03",
+   "depth": "story",
+   "main_question": "婚姻中有没有一段需要磨合的日子？",
+   "deepen_direction": "一次具体的分歧和后来怎么和好",
+   "sensitive": true
+  },
+  {
+   "id": "FM04",
+   "depth": "fact",
+   "main_question": "养育子女时什么让您觉得辛苦？"
+  },
+  {
+   "id": "FM04b",
+   "depth": "story",
+   "main_question": "养育子女时什么让您觉得欣慰？",
+   "deepen_direction": "孩子的一件具体的事、当时的情形",
+   "sensitive": false
+  },
+  {
+   "id": "FM05",
+   "depth": "reflection",
+   "main_question": "教育子女时您最看重什么？"
+  },
+  {
+   "id": "FM06",
+   "depth": "reflection",
+   "main_question": "您觉得维系家庭和睦最重要的是什么？"
+  },
+  {
+   "id": "FM07",
+   "depth": "reflection",
+   "main_question": "对您来说家人意味着什么？"
+  },
+  {
+   "id": "WK07",
+   "depth": "fact",
+   "main_question": "您怎样形容中年时的忙碌程度？"
+  },
+  {
+   "id": "WK08",
+   "depth": "fact",
+   "main_question": "这一生您最专注坚持的是哪份工作？"
+  },
+  {
+   "id": "WK09",
+   "depth": "story",
+   "main_question": "事业或生活中有没有一段您觉得处于低谷的经历？",
+   "deepen_direction": "最难的那一阵是什么样子",
+   "sensitive": true
+  },
+  {
+   "id": "WK10",
+   "depth": "reflection",
+   "main_question": "难熬的时候是什么支撑着您？"
+  },
+  {
+   "id": "WK11",
+   "depth": "reflection",
+   "main_question": "中年时您觉得自己最大的收获是什么？"
+  },
+  {
+   "id": "WK11b",
+   "depth": "reflection",
+   "main_question": "中年时您觉得自己发生了什么变化？"
+  },
+  {
+   "id": "WK12",
+   "depth": "fact",
+   "main_question": "您曾经需要承担哪些家庭责任？"
+  },
+  {
+   "id": "WK13",
+   "depth": "story",
+   "main_question": "这一生有什么工作成果让您引以为傲？",
+   "deepen_direction": "那件事是怎么做成的、谁知道了",
+   "sensitive": false
+  },
+  {
+   "id": "RV01",
+   "depth": "reflection",
+   "main_question": "回头看哪项人生选择让您觉得选对了？"
+  },
+  {
+   "id": "RV02",
+   "depth": "story",
+   "main_question": "这一生有没有让您放不下的遗憾？",
+   "deepen_direction": "遗憾背后的那件事",
+   "sensitive": true
+  },
+  {
+   "id": "RV03",
+   "depth": "reflection",
+   "main_question": "您有没有误会别人或被别人误会的经历？"
+  },
+  {
+   "id": "RV04",
+   "depth": "reflection",
+   "main_question": "人生路上有什么让您觉得吃过亏的经历？"
+  },
+  {
+   "id": "RV05",
+   "depth": "reflection",
+   "main_question": "您有没有放弃过的梦想或错过的机会？"
+  },
+  {
+   "id": "RV06",
+   "depth": "story",
+   "main_question": "一路走来您最想感谢谁？",
+   "deepen_direction": "这个人为您做过的一件事",
+   "sensitive": false
+  },
+  {
+   "id": "RV06b",
+   "depth": "reflection",
+   "main_question": "有没有谁让您觉得有所亏欠？"
+  },
+  {
+   "id": "RV07",
+   "depth": "reflection",
+   "main_question": "您觉得人这一生什么品质最重要？"
+  },
+  {
+   "id": "RV08",
+   "depth": "reflection",
+   "main_question": "您觉得什么样的朋友值得深交？"
+  },
+  {
+   "id": "RV08b",
+   "depth": "reflection",
+   "main_question": "在您看来什么样的事不必计较？"
+  },
+  {
+   "id": "RV09",
+   "depth": "reflection",
+   "main_question": "您怎样理解人生里的吃苦？"
+  },
+  {
+   "id": "RV09b",
+   "depth": "reflection",
+   "main_question": "您怎样理解人生里的努力？"
+  },
+  {
+   "id": "RV09c",
+   "depth": "reflection",
+   "main_question": "您怎样理解人生里的运气？"
+  },
+  {
+   "id": "RV10",
+   "depth": "reflection",
+   "main_question": "家庭幸福、事业成功、身体健康，您最看重什么？"
+  },
+  {
+   "id": "RV11",
+   "depth": "reflection",
+   "main_question": "走到今天您对人生最想明白的一点是什么？"
+  },
+  {
+   "id": "RV12",
+   "depth": "reflection",
+   "main_question": "您觉得人生最珍贵的财富是什么？"
+  },
+  {
+   "id": "LT01",
+   "depth": "fact",
+   "main_question": "您现在的日子大致是怎样过的？"
+  },
+  {
+   "id": "LT01b",
+   "depth": "fact",
+   "main_question": "现在您最喜欢怎样安排日常生活？"
+  },
+  {
+   "id": "LT02",
+   "depth": "reflection",
+   "main_question": "和以前忙碌的时候相比，您现在的心态有什么变化？"
+  },
+  {
+   "id": "LT03",
+   "depth": "reflection",
+   "main_question": "回头看您会怎样评价自己这一生？"
+  },
+  {
+   "id": "LT04",
+   "depth": "reflection",
+   "main_question": "您想给晚辈留下什么人生忠告？"
+  },
+  {
+   "id": "LT05",
+   "depth": "reflection",
+   "main_question": "您希望后人记住自己怎样的品格？"
+  },
+  {
+   "id": "LT05b",
+   "depth": "story",
+   "main_question": "您希望后人记住自己的哪件往事？",
+   "deepen_direction": "把那件事从头讲一遍",
+   "sensitive": false
+  },
+  {
+   "id": "LT06",
+   "depth": "reflection",
+   "main_question": "对于以后的日子您最盼望什么？"
+  },
+  {
+   "id": "RV13",
+   "depth": "story",
+   "main_question": "这一生您最想感恩的一件事是什么？",
+   "deepen_direction": "那件事发生时的情形",
+   "sensitive": false
+  },
+  {
+   "id": "RV14",
+   "depth": "reflection",
+   "main_question": "如果用一句话总结人生您会怎么说？"
+  },
+  {
+   "id": "RV15",
+   "depth": "reflection",
+   "main_question": "您觉得自己这一生活得值得吗？"
+  },
+  {
+   "id": "RV16",
+   "depth": "reflection",
+   "main_question": "还有什么您想留给后人的心里话？"
+  }
+ ]
+}

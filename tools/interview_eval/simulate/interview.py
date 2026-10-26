@@ -455,6 +455,10 @@ def elder_signal(text):
 # least SCOPE_NEW_BIGRAMS new bigrams and the clauses carrying them hold at least ``min_chars`` characters. Only
 # 'unknown' is scoped:
 # "不想多讲" and "累了" are requests about the conversation itself and keep closing as before.
+def _simp(text):  # the backend defines the same name over its runtime's OpenCC map
+    return simp_text(text)
+
+
 SCOPE_HEDGE = re.compile(r'模糊|记性|年纪大了|人老了|太久了|时间久了|年头久了|那么久|这么久')
 SCOPE_GENERIC = None
 SCOPE_NEW_BIGRAMS = 4
@@ -464,7 +468,7 @@ SCOPE_FUNC = set('的了是在我你您他她它们么这那就都也还又很�
 
 
 def scope_bigrams(text):
-    t = re.sub(r'[^一-鿿]', '', simp_text(text))
+    t = re.sub(r'[^一-鿿]', '', _simp(text))
     return {t[i:i + 2] for i in range(len(t) - 1) if t[i] not in SCOPE_FUNC and t[i + 1] not in SCOPE_FUNC}
 
 
@@ -656,8 +660,13 @@ def parse_deepen(row):
     return get('dimension'), get('ack'), get('question')
 
 
-def check_deepen(dim, ack, question, prior, dz):
+def check_deepen(dim, ack, question, prior, dz, cfg=None):
     errs = check_ask(ack, question, prior)
+    cfg = cfg or {}
+    if cfg.get('no_yes_no') and YES_NO.search(question):  # v5f: a yes/no question is not asked
+        errs.append('yes_no')
+    if cfg.get('no_repeat_last') and dz['asked'] and repeats_last(question, dz.get('last', ''), dz.get('before', '')):
+        errs.append('repeat_last')
     if INFER.search(question):
         errs.append('inference_in_question')
     if DEEPEN_BANNED.search(ack + question):
@@ -671,6 +680,30 @@ def check_deepen(dim, ack, question, prior, dz):
     elif dim in dz['dims']:
         errs.append('repeat_dimension')
     return errs
+
+
+# v5f deepen checks (deepen.no_yes_no, deepen.no_repeat_last)
+YES_NO = re.compile(r'[吗嘛][？?]\s*$')
+# a question about what came next, about who, or about what someone said asks for something new even when it names
+# what he just told
+NEXT_ASK = re.compile(r'后来|以后|之后|后面|接下来|结果|最后|怎么样|怎样了|谁|怎么(?:跟|对|和)?您?说|说了什么|说过什么')
+REPEAT_GENERIC = None
+
+
+def repeats_last(question, last, before):
+    """After the elder answered a deepen question: whether the next one only asks him to tell again what that answer
+    told. Not a question about what came next, who, or what someone said; and it names something first told in that
+    answer (a content bigram of the question, scope_bigrams, that is in the answer but not in his earlier words) or
+    shares two content bigrams with it. Generic words (时候 / 心里 / 情形 …) are not counted."""
+    global REPEAT_GENERIC
+    if REPEAT_GENERIC is None:
+        REPEAT_GENERIC = _scope_generic() | scope_bigrams('回想想起起来心里感觉滋味怎么什么那天那回那次这回这次当时那年时候'
+                                                          '情形样子印象具体当时最后一回哪一回')
+    if NEXT_ASK.search(question or ''):
+        return False
+    q = {b for b in scope_bigrams(question) if not SCOPE_PARTICLE.search(b)} - REPEAT_GENERIC
+    shared = q & scope_bigrams(last)
+    return bool(shared - scope_bigrams(before)) or len(shared) >= 2
 
 
 def deepen_close(text, result, extra=False, scope=None):
@@ -696,45 +729,105 @@ def deepen_close(text, result, extra=False, scope=None):
 # (style.is_restate, the definition of the 复述率 metric, here against all his words of the question; a short sympathy
 # in the elder's own words about a hardship he told is kept). policy "template_guard": a stock move-on clause before the next entry (咱们再聊聊 / 换个话题 / 接着聊,
 # style.TEMPLATE) is dropped. Both only remove words; the question itself is never rewritten.
-def restates(ack, elder_said):
+def restates(ack, elder_said, names=False):
     import style
+    if names and len(style.cjk(ack)) <= NAME_ACK_CHARS:  # v5f: a short reaction naming a person or place is pointing
+        ack, elder_said = mask_names(ack), mask_names(elder_said)
     if not ack or not style.is_restate(ack, elder_said)[0]:
         return False
     return not (len(style.cjk(ack)) <= 10 and HARDSHIP.search(simp_text(ack)) and HARDSHIP.search(simp_text(elder_said)))
+
+
+# v5f echo_names: names of people (one to three characters before a title: 蒋经国先生, 王老师) and proper place names (two
+# to four characters before a place word: 黄浦江, 民本电台) are masked on both sides before the restate test, so that
+# "噢，还见过蒋经国先生。" is a reaction that names someone, not a restatement. Kin words and generic places (哥哥, 学校,
+# 糖厂) are not masked. General wording, no list of real names.
+NAME_TITLE = r'(?:先生|太太|老师|师傅|同志|女士|小姐|校长|主任|经理|老板|司令|将军|主席|总统|委员长)'
+NAME_PLACE = r'(?:江|河|湖|海|山|岛|村|镇|县|市|省|街|港|码头|车站|电台|饭店|夜总会|中学|小学|大学|医院|大队)'
+NAMES = re.compile(rf'[一-鿿]{{1,3}}{NAME_TITLE}|[一-鿿]{{2,4}}{NAME_PLACE}')
+NAME_ACK_CHARS = 12  # only a short reaction (at most this many Chinese characters) is read with names masked
+
+
+def mask_names(text):
+    return NAMES.sub('□', simp_text(text or ''))
 
 
 # a reaction that only makes sense after the clause before it (是可怕 / 也是 / 真是 …)
 ACK_DEPENDENT = re.compile(r'^(?:是|也是|就是|真是|都是|还是|确实|可不)')
 
 
-def guard_close(text, next_entry, elder_said, echo=True, template=True, echo_fragment=None):
-    """Close text with a restating acknowledgement and stock move-on clauses taken out. Returns (text, [repairs])."""
+# v5f echo_fragment_bare: what is left is only an interjection ("噢，") or a scrap of at most one character
+ACK_BARE = re.compile(r'^(?:噢|哦|喔|嗯|啊|唉|哎|呀|哟|好|好的|对|是|行|那|原来|还|也|就)*$')
+
+
+def bare_fragment(text):
     import style
+    t = style.cjk(text)
+    return len(t) <= 1 or bool(ACK_BARE.match(t))
+
+
+def align_entry(text, next_entry):
+    """v5f: a lead-in glued to a reworded-punctuation entry ("那咱们再聊聊青年时，有没有……？" for "青年时有没有……？") is
+    split where the entry starts, and the entry follows as written after a comma."""
+    if not next_entry or not _norm(text).endswith(_norm(next_entry)) or text.rfind(next_entry.rstrip('？?')) >= 0:
+        return text
+    n, p = len(_norm(next_entry)), len(text)
+    while p > 0 and len(_norm(text[p - 1:])) <= n:
+        p -= 1
+    pre = text[:p].rstrip()
+    return pre + ('' if not pre or re.search(r'[。！？!?，,]$', pre) else '，') + next_entry
+
+
+def guard_close(text, next_entry, elder_said, echo=True, template=True, echo_fragment=None, v5f=None):
+    """Close text with a restating acknowledgement and stock move-on clauses taken out. Returns (text, [repairs]).
+    ``v5f`` (dict): ``names`` masks names before the restate test; ``bare`` treats an interjection left alone as a
+    fragment; ``seen`` = earlier closes of the session, for ``template == 'repeat'`` (a stock move-on phrase is dropped
+    only when one of them used it); the entry is aligned first (align_entry)."""
+    import style
+    names = bool((v5f or {}).get('names'))
+    bare = bool((v5f or {}).get('bare'))
+    seen = (v5f or {}).get('seen') or ()
+    if v5f is not None:
+        text = align_entry(text, next_entry)
     clauses, core = style.split_turn(text, next_entry)
     notes = []
     ack = ''.join(c for k, c in clauses if k == 'ack')
     if echo == 'clause':
         # v5e: only the clauses that restate on their own go ("上大夜班回来还得走路，是辛苦。" keeps "是辛苦。");
         # when only together they restate, the whole acknowledgement goes
-        kept = [(k, c) for k, c in clauses if not (k == 'ack' and restates(c, elder_said))]
-        if len(kept) == len(clauses) and restates(ack, elder_said):
-            kept = [(k, c) for k, c in clauses if k != 'ack']
+        kept = [(k, c) for k, c in clauses if not (k == 'ack' and restates(c, elder_said, names))]
+        if len(kept) == len(clauses) and restates(ack, elder_said, names):
+            # v5f: a clause that restates once names are read as words goes alone before the whole goes
+            alone = [(k, c) for k, c in clauses if not (k == 'ack' and restates(c, elder_said))] if names else kept
+            kept = alone if len(alone) < len(clauses) else [(k, c) for k, c in clauses if k != 'ack']
         left = ''.join(c for k, c in kept if k == 'ack').strip()
-        if echo_fragment is not None and left and ACK_DEPENDENT.match(left):
+        # v5f: an interjection the turn split reads as a move-on clause ("噢，") counts with what is left
+        lone = ''.join(c for k, c in kept if k == 'transit' and style.INTERJ.match(re.sub(r'[，,。！!；;\s]', '', c)))
+        if echo_fragment is not None and (left or lone) and (left and ACK_DEPENDENT.match(left) or (
+                bare and len(kept) < len(clauses) and bare_fragment(left + lone))):
             # v5e1: what is left leans on the clause that went ("那时候兵荒马乱的，是可怕。" -> "是可怕。"): a short
             # reaction (<= echo_fragment characters) is kept whole, a longer one goes whole
             import style
             if len(style.cjk(ack)) <= echo_fragment:
                 kept = clauses
-            else:
-                kept = [(k, c) for k, c in clauses if k != 'ack']
+            else:  # (v5f: with the lone interjection)
+                kept = [(k, c) for k, c in clauses if k != 'ack' and not (
+                    bare and k == 'transit' and style.INTERJ.match(re.sub(r'[，,。！!；;\s]', '', c)))]
         if len(kept) < len(clauses):
             notes.append('restate_dropped')
         clauses = kept
-    elif echo and restates(ack, elder_said):
+    elif echo and restates(ack, elder_said, names):
         clauses = [(k, c) for k, c in clauses if k != 'ack']
         notes.append('restate_dropped')
-    if template and next_entry:
+    if template == 'repeat' and next_entry:
+        # v5f: natural move-on phrases are allowed; the same one twice in a session is not
+        used = [_norm(x) for x in seen if x]
+        kept = [(k, c) for k, c in clauses if not (k in ('transit', 'pointer') and style.TEMPLATE.search(c)
+                                                    and any(_norm(style.TEMPLATE.search(c).group(0)) in u for u in used))]
+        if len(kept) < len(clauses):
+            notes.append('template_repeat_dropped')
+        clauses = kept
+    elif template and next_entry:
         kept = [(k, c) for k, c in clauses if not (k in ('transit', 'pointer') and style.TEMPLATE.search(c))]
         if len(kept) < len(clauses):
             notes.append('template_dropped')
@@ -748,11 +841,16 @@ def guard_close(text, next_entry, elder_said, echo=True, template=True, echo_fra
     if next_entry:
         core = core or next_entry
         if lead and not re.search(r'[。！？!?，,]$', lead):
-            lead += '。'
+            # v5f: a move-on clause or pointer kept from inside the entry's sentence stays joined to it
+            inside = v5f is not None and clauses and clauses[-1][0] in ('transit', 'pointer') and \
+                not re.search(r'[。！？!?]', text[:max(0, text.rfind(core))].rstrip()[-1:] or '。')
+            lead += '，' if inside else '。'
         if lead.endswith(('，', ',')) and not style.cjk(lead.rstrip('，,')[-1:]):
             lead = lead.rstrip('，,') + '。'
         out = (lead + core) if lead else core
         out = re.sub(r'^那[，,]\s*', '那', out)
+        if v5f is not None:  # "……报考，那，青年时……" -> "……报考，那青年时……"
+            out = re.sub(r'([，,。！!])那[，,。]\s*', r'\1那', out)
         return out, notes
     lead = re.sub(r'[，,；;]$', '。', lead)
     return lead or text, notes
@@ -767,6 +865,7 @@ def session(S, sid, nid, questions, mode):
     episodes = []
     entry_already_shown = False  # the previous close message already carried this question's entry
     prev_close = None            # the previous transition (the speaker is asked not to reuse its wording)
+    closes_seen = []             # every speaker-written close of the session (v5f template_guard "repeat")
     for qi, qid in enumerate(questions):
         entry = S.Q[qid]['main_question']
         next_entry = S.Q[questions[qi + 1]]['main_question'] if qi + 1 < len(questions) else None
@@ -890,7 +989,7 @@ def session(S, sid, nid, questions, mode):
             if deepening and action != 'ask':
                 # ---------------- v5: one more detail question before the close (story questions only)
                 elder_words = ''.join(m['text'] for m in msgs if m['role'] == 'elder' and not m.get('scripted'))
-                dz['asked_text'], dz['before'] = asked_part, before  # read by signal_scope only
+                dz['asked_text'], dz['before'], dz['last'] = asked_part, before, text  # read by signal_scope / check_deepen
                 ok, why, info = deepen_gate(S, qid, arg if action == 'close' else action, text, elder_words, dz, k)
                 entry_log = {'k': k, 'decision': 'skip' if not ok else 'asked', 'reason': why, **info}
                 if ok:
@@ -905,7 +1004,7 @@ def session(S, sid, nid, questions, mode):
                     if S.deepen.get('drop_echo_ack'):
                         ack, echo = deepen_ack(ack, question)
                         ack_fix += echo
-                    if S.policy.get('echo_guard') and restates(ack, elder_words):  # v5d
+                    if S.policy.get('echo_guard') and restates(ack, elder_words, S.policy.get('echo_names')):  # v5d
                         ack, ack_fix = '', ack_fix + ['restate_dropped']
                     if S.deepen.get('extra_guards') and DEEPEN_ACK_EVAL.search(ack):
                         ack, ack_fix = '', ack_fix + ['ack_eval']
@@ -915,8 +1014,8 @@ def session(S, sid, nid, questions, mode):
                     elif not question and not dim:
                         errs = ['model_skip']
                     else:
-                        errs = check_deepen(dim, ack, question, prior, dz)
-                        if errs and ack and not check_deepen(dim, '', question, prior, dz):
+                        errs = check_deepen(dim, ack, question, prior, dz, S.deepen)
+                        if errs and ack and not check_deepen(dim, '', question, prior, dz, S.deepen):
                             ack_fix.append('ack_dropped:' + ','.join(errs))
                             ack, errs = '', []
                     entry_log.update({'dimension': dim, 'ack': ack, 'question': question, 'errors': errs, 'repairs': ack_fix,
@@ -951,7 +1050,7 @@ def session(S, sid, nid, questions, mode):
                 ack, question = parse_speaker(row)
                 elder_words = ''.join(m['text'] for m in msgs if m['role'] == 'elder' and not m.get('scripted'))
                 ack, ack_fix = clean_ack(ack, elder_words)
-                if S.policy.get('echo_guard') and restates(ack, elder_words):  # v5d
+                if S.policy.get('echo_guard') and restates(ack, elder_words, S.policy.get('echo_names')):  # v5d
                     ack, ack_fix = '', ack_fix + ['restate_dropped']
                 errs = check_ask(ack, question, prior)
                 if INFER.search(question):
@@ -1017,9 +1116,11 @@ def session(S, sid, nid, questions, mode):
             elder_words = ''.join(m['text'] for m in msgs if m['role'] == 'elder' and not m.get('scripted'))
             text_out, ack, notes, ok = compose_close(reply, next_entry, elder_words)
             if ok and (S.policy.get('echo_guard') or S.policy.get('template_guard')):  # v5d
-                echo = S.policy.get('echo_guard')
+                echo, tg = S.policy.get('echo_guard'), S.policy.get('template_guard')
+                v5f = {'names': S.policy.get('echo_names'), 'bare': S.policy.get('echo_fragment_bare'),
+                       'seen': closes_seen} if tg == 'repeat' else None
                 text_out, why = guard_close(text_out, next_entry, elder_words, 'clause' if echo == 'clause' else bool(echo),
-                                            bool(S.policy.get('template_guard')), S.policy.get('echo_fragment_chars'))
+                                            tg if tg == 'repeat' else bool(tg), S.policy.get('echo_fragment_chars'), v5f)
                 notes += why
                 if not text_out:
                     ok = False
@@ -1032,12 +1133,13 @@ def session(S, sid, nid, questions, mode):
                                      'raw': row.get('content'), 'input': call['user']}})
             entry_already_shown = bool(next_entry)
             prev_close = text_out
+            closes_seen.append(text_out)
         record = {'qid': qid, 'entry': entry, 'messages': msgs, 'close_reason': reason,
                   'final_decision': (final or {}).get('decision'),
                   'final': judge_summary(S, final, qid) if final else None,
                   'material_ids': [e['id'] for e in S.personas.material(nid, qid)]}
         if deepening:
-            record['deepen'] = {k: v for k, v in dz.items() if k not in ('asked_text', 'before', 'partial')}
+            record['deepen'] = {k: v for k, v in dz.items() if k not in ('asked_text', 'before', 'partial', 'last')}
             record['deepen_sources'] = deepen_sources
         episodes.append(record)
     return {'session': sid, 'narrator_id': nid, 'name': S.personas.names[nid], 'mode': mode, 'questions': questions,

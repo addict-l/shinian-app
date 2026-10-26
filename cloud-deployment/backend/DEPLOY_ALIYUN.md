@@ -88,6 +88,20 @@ API 启动时校验 pin、目录内每个文件的哈希（不允许未列出的
 
 回退：把 `INTERVIEW_PIPELINE` 改为 `v2`（或删掉这一行）后同样重建 API 容器。尚未开始的题（含尚未开始的骨架题）立即回到 v2；已经在新流程中开始的题按题内标记用新流程答完（骨架题之后的更正也仍用新流程），因此回退后先保留两个 `INTERVIEW_V3J_*` 变量，确认这些题都已结束（保存或跳过）、不再需要更正骨架后再删。不要只换回旧镜像来回退：旧代码不认识题内标记，会用 v2 重新判定进行中的新流程题。
 
+### 故事题深挖流程（v3j + v5f，候选，未发布）
+
+`INTERVIEW_PIPELINE=v3j_v5f` 启用同一判定层 v3j 加说话层 v5f：23 道故事题在本题要素齐之后、草稿步骤（骨架 SK01c 为转下一道骨架题）之前最多再问 2 次细节（敏感题 WK09 FM03 RV02 只问 1 次），“记不清但接着讲”只不追那一点，承接与转题按 v5f 守卫。运行合同是单独的目录与 pin（判定层文件与 v4d 目录逐字节相同）：
+
+```text
+INTERVIEW_PIPELINE=v3j_v5f
+INTERVIEW_V5F_RUNTIME_DIR=/app/app/ai/interview_runtime_v3j_v5f
+INTERVIEW_V5F_RUNTIME_MANIFEST_SHA256=<该目录 manifest.json 的 SHA-256>
+INTERVIEW_V3J_RUNTIME_DIR=/app/app/ai/interview_runtime_v3j_v4d          # 保留：已在 v3j_v4d 开始的题仍用它答完
+INTERVIEW_V3J_RUNTIME_MANIFEST_SHA256=<v4d 目录的 pin，不变>
+```
+
+`scripts/build_interview_v3j_runtime.py --bundle v5f --check` 输出 v5f 的 pin。启动时另校验 `story-questions.json` 的题号、题序、入口问题与题库一致、深挖调用参数只有五项且 thinking disabled。每题按开始时的流程走完：切到 v5f 后，已在 v3j_v4d（或 v2）开始的题不被接管；回退到 `v3j_v4d` 或 `v2` 时同理，已在 v5f 开始的题用 v5f 答完，所以回退后先保留 `INTERVIEW_V5F_*` 两个变量。深挖每次多一次模型调用（深挖提示），深挖回答不调判定。
+
 ## 回退
 
 应用回退先保留故障版本当前数据，再使用记录的旧镜像与配套源码／配置启动 API；不删除数据卷、不自动执行 alembic downgrade。现有迁移为兼容性增量，旧镜像能否读取新数据需根据对应发布记录核对。

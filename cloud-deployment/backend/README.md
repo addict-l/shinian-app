@@ -45,6 +45,8 @@ GitHub 包含完整可构建后端、固定依赖、全部迁移及示例环境�
 
 `INTERVIEW_PIPELINE=v3j_v4d` 让访谈入口和人生骨架改用判定层 v3j（`app/ai/contract_interview_v3j.py`）和说话层 v4d（`app/ai/interview_speaker.py`），运行合同在 `app/ai/interview_runtime_v3j_v4d/`，流程在 `app/services/contract_v3j_interview.py`（访谈入口）和 `app/services/contract_v3j_life_overview.py`（人生骨架）。默认 `v2` 即现网。按题标记流程，已开始的题不换流程。环境变量、启用与回退见[部署说明](DEPLOY_ALIYUN.md#采访新流程开关v3j--v4d)，业务差异与离线验证见[采访链路优化台账](../../docs/phase-2/interview-optimization/README.md#接入后端v3j--v4d)。
 
+`INTERVIEW_PIPELINE=v3j_v5f`（候选，未发布）在同一判定层上改用说话层 v5f：23 道故事题要素齐后、收尾前最多再问 2 次细节（`app/ai/interview_story.py`，措辞度量 `app/ai/interview_style.py`），运行合同在 `app/ai/interview_runtime_v3j_v5f/`（`scripts/build_interview_v3j_runtime.py --bundle v5f`），变量见[部署说明](DEPLOY_ALIYUN.md#故事题深挖流程v3j--v5f候选未发布)。
+
 ## 普通访谈的可选快速通道
 
 `LLM_MODEL` 继续用于开场、草稿及其他既有职责。设置 `LLM_TURN_MODEL=qwen3.7-flash` 后，普通文字发送将原文信息分析和完整自然回复合并为一次非思考、严格结构化请求，保留完整原文及事实、策略校验；留空沿用原串行流程。所选模型必须支持百炼兼容接口的 `json_schema` 严格输出。

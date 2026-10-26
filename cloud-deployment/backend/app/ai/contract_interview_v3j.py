@@ -27,6 +27,9 @@ from time import monotonic
 from app.ai.llm_client import LLMConfigurationError, LLMResponseFormatError, LLMServiceError
 
 PIPELINE = 'v3j_v4d'
+V5F_PIPELINE = 'v3j_v5f'  # v3j judgment + v5f speaking layer with story-question deepening (same judgment files)
+BUNDLE_PIPELINES = (PIPELINE, V5F_PIPELINE)
+V5F_FILES = {'deepen-prompt.txt', 'story-questions.json'}
 PARAM_KEYS = {'model', 'thinking', 'max_tokens', 'temperature', 'json_mode'}
 REQUIRED_FILES = {'engine.js', 'contracts.json', 'judge-prompt.txt', 'verify-prompt.txt', 'speaker-prompt.txt',
                   'speaker-config.json', 'provider-settings.json', 'opencc-ts-char-map.json'}
@@ -52,9 +55,12 @@ def _params(value):
 class V3jRuntime:
     """An immutable deployment artifact; only its directory is configurable."""
 
-    def __init__(self, directory=None, expected_manifest_sha256=None):
-        location = directory or os.getenv('INTERVIEW_V3J_RUNTIME_DIR', '')
-        expected = expected_manifest_sha256 or os.getenv('INTERVIEW_V3J_RUNTIME_MANIFEST_SHA256', '')
+    def __init__(self, directory=None, expected_manifest_sha256=None, pipeline=PIPELINE):
+        if pipeline not in BUNDLE_PIPELINES:
+            raise LLMConfigurationError('Unsupported v3j interview pipeline')
+        env = 'INTERVIEW_V3J' if pipeline == PIPELINE else 'INTERVIEW_V5F'
+        location = directory or os.getenv(env + '_RUNTIME_DIR', '')
+        expected = expected_manifest_sha256 or os.getenv(env + '_RUNTIME_MANIFEST_SHA256', '')
         if not location or not expected:
             raise LLMConfigurationError('A pinned v3j interview runtime manifest is required')
         self.directory = Path(location).resolve()
@@ -67,14 +73,15 @@ class V3jRuntime:
                 target = (self.directory / name).resolve()
                 if not target.is_relative_to(self.directory) or sha256(target.read_bytes()).hexdigest() != digest:
                     raise ValueError('runtime_file_mismatch')
-            if not REQUIRED_FILES.issubset(manifest['files']):
+            if not (REQUIRED_FILES | (V5F_FILES if pipeline == V5F_PIPELINE else set())).issubset(manifest['files']):
                 raise ValueError('runtime_files_missing')
             # Node resolves require('./x') to an exact file before x.js, so an
             # unlisted file could shadow a verified module: none is allowed.
             if {p.name for p in self.directory.iterdir()} != set(manifest['files']) | {'manifest.json'}:
                 raise ValueError('runtime_unlisted_file')
-            if manifest.get('pipeline') != PIPELINE:
+            if manifest.get('pipeline') != pipeline:
                 raise ValueError('unsupported_runtime_pipeline')
+            self.pipeline = pipeline
             read = lambda name: (self.directory / name).read_text(encoding='utf-8')
             self.contracts = json.loads(read('contracts.json'))
             settings = json.loads(read('provider-settings.json'))
@@ -100,10 +107,32 @@ class V3jRuntime:
             self.manifest_sha256 = expected
             self.questions = {q['id']: q for q in self.contracts['questions']}
             self.F = {f['id']: f for q in self.contracts['questions'] for f in q['elements']}
+            self.story, self.deepen_prompt, self.deepen_params = {}, None, None
+            if pipeline == V5F_PIPELINE:
+                self._load_v5f(read)
         except (OSError, ValueError, KeyError, TypeError) as exc:
             raise LLMConfigurationError('Interview v3j runtime integrity check failed') from exc
         self._defs = None
         self._defs_lock = threading.Lock()
+
+    def _load_v5f(self, read):
+        """Story-question labels and the deepen step of the v5f speaking layer (docs/prototypes/full-interview-v5)."""
+        cfg = self.speaker_config.get('deepen')
+        if not isinstance(cfg, dict) or cfg.get('enabled') is not True or cfg.get('rejudge_answers') is not False:
+            raise ValueError('unsupported_speaker_configuration')
+        self.deepen_params = _params(cfg['model'])
+        for key in ('max_per_question', 'max_per_sensitive', 'short_chars', 'short_chars_first', 'detailed_chars', 'detailed_dims'):
+            if not isinstance(cfg[key], int):
+                raise ValueError('unsupported_speaker_configuration')
+        bank = json.loads(read('story-questions.json'))['questions']
+        # The labels sit beside the frozen catalog: every question once, the same ids and entry questions.
+        if [q['id'] for q in bank] != [q['id'] for q in self.contracts['questions']] or any(
+                q['main_question'] != self.questions[q['id']]['main_question'] for q in bank):
+            raise ValueError('story_questions_mismatch')
+        self.story = {q['id']: q for q in bank if q['depth'] == 'story'}
+        if not self.story or any(not isinstance(q.get('deepen_direction'), str) or not q['deepen_direction'] for q in self.story.values()):
+            raise ValueError('story_questions_mismatch')
+        self.deepen_prompt = read('deepen-prompt.txt')
 
     def engine(self):
         return EngineSession(self.directory)
@@ -278,6 +307,15 @@ class V3jPipeline:
         row = invoke('speaker', self.runtime.speaker_prompt, user, self.runtime.speaker_params,
                      timeout=SPEAKER_TIMEOUT, tolerate_failure=True)
         return row, calls['speaker']
+
+    def deepen(self, user, saved_calls=None, save_call=None):
+        """One v5f deepen call (stage 'deepen', its own prompt and parameters); a provider failure returns an
+        unsuccessful row (no deepening, the normal close follows) instead of raising."""
+        calls = {}
+        invoke = self._invoker(calls, saved_calls, save_call)
+        row = invoke('deepen', self.runtime.deepen_prompt, user, self.runtime.deepen_params,
+                     timeout=SPEAKER_TIMEOUT, tolerate_failure=True)
+        return row, calls['deepen']
 
 
 # --------------------------------------------------------------------------- judge phase (v3j.py)

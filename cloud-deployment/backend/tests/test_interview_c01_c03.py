@@ -135,8 +135,11 @@ class ReadingTests(unittest.TestCase):
             self.skipTest('tools/interview_eval is not part of this checkout')
         backend = (Path(speaker.__file__)).read_text(encoding='utf-8')
         simulator = sim.read_text(encoding='utf-8')
-        block = backend[backend.index('SIG_REST = '):backend.index('def decide(')]
-        self.assertIn(block, simulator)
+        # signals (C01) up to the end of elder_signal, then the v5d signal-scope block, then has_content: the same text
+        block = backend[backend.index('SIG_REST = '):backend.index('# v5d signal scope (policy "signal_scope"')]
+        self.assertIn(block.rstrip(), simulator)
+        scope = backend[backend.index('SCOPE_HEDGE = '):backend.index('def decide(')]
+        self.assertIn(scope, simulator)
         # decide and v4_decide: the same body after the docstring (the simulator reads its config from S.policy)
         body = lambda text, name: text[text.index("    d = result.get('decision')", text.index(name)):]  # noqa: E731
         rules = body(backend, 'def decide(')

@@ -2,18 +2,18 @@
 
 2026-10-26。用户要求：“先对故事题做一下测试，看看采访是不是自然的深挖。”成书需要更厚的素材，v4d 每题老人平均只讲约 47 字，要素齐了就收。
 本目录在 v4d 之上只加一步：**故事题在要素已齐之后、收尾之前，最多再问 2 次细节**（敏感题 1 次）。其余 60 题、判定层、v4d 说话层提示、量表都不变。
-方案出自《故事题清单（待确认）》；23 道题的选择、敏感题只问一次、20 字门槛与 2 次上限都按默认值执行，**用户尚未逐项确认**。
+方案出自《故事题清单》；23 道题的选择、敏感题只问一次、短答门槛与 2 次上限都按默认值执行，**用户已于 2026-10-26 确认**。后端候选见 `INTERVIEW_PIPELINE=v3j_v5f`（`cloud-deployment/backend/app/ai/interview_story.py`，交接单在 `docs/phase-2/interview-optimization/handoffs/`）。
 
 ## 文件
 
 | 文件 | 作用 |
 | --- | --- |
 | `story-questions.json` | 冻结 83 题的深度标签：故事 23（含深挖方向、敏感标记）、事实 23、感悟 37。题库本身不改 |
-| `deepen-prompt.txt` | 深挖问句的独立说话层提示，**当前为 v5e1（定版）**：以写回忆录为导向挑线头（优先有下文的人、事、转折）、部分记不清时顺着接着讲的问、一次只问一样、不预设、不复述 |
-| `speaker-prompt.txt` | v5 说话层提示（追问 + 收尾，**v5e1**）：不复述不总结、收尾一句短话接住一个具体的人或事、转题不用固定说法。v4d 的 `../full-interview-v4/speaker-prompt.txt` 不改 |
-| `speaker-config.json` | **v5e1（定版）**：v4d 配置 + `deepen` 块 + `speaker_prompt`、`signal_scope`（记不清但接着讲）、`echo_guard`/`template_guard`/`echo_fragment_chars`（去复述、去套路守卫）、`short_chars_first` |
+| `deepen-prompt.txt` | 深挖问句的独立说话层提示，**当前为 v5f**（v5e1 + ack 可带一句心疼的话）：以写回忆录为导向挑线头（优先有下文的人、事、转折）、部分记不清时顺着接着讲的问、一次只问一样、不预设、不复述 |
+| `speaker-prompt.txt` | v5 说话层提示（追问 + 收尾，**v5f**）：不复述不总结、收尾一句温和的短话接住一个具体的人或事（讲到苦处可以心疼一句）、转题可以用“那咱们再聊聊 / 说起……”但同一场谈话换着说。v4d 的 `../full-interview-v4/speaker-prompt.txt` 不改 |
+| `speaker-config.json` | **v5f**：v4d 配置 + `deepen` 块（含 v5f 的 `no_yes_no`、`no_repeat_last`）+ `speaker_prompt`、`signal_scope`（记不清但接着讲）、`echo_guard`/`template_guard: "repeat"`/`echo_fragment_chars`/`echo_names`/`echo_fragment_bare`（去复述、转题短语只限同会话重复）、`short_chars_first`。后端运行合同 `interview_runtime_v3j_v5f` 逐字节复制本目录的提示、配置与题标签 |
 | `material-prompt.txt` | 回忆录素材价值量表（Haiku，只看老人原话，`tools/interview_eval/simulate/material.py`） |
-| `history/` | v5a–v5e 各版提示与配置（迭代组运行用的就是这些文件） |
+| `history/` | v5a–v5e1 各版提示与配置（迭代组运行用的就是这些文件） |
 | `story-plan.json` | 故事题测试的会话计划（`tools/interview_eval/simulate/plan_story.py` 生成） |
 | `ITERATIONS.md` | 迭代记录与运行结果 |
 
@@ -42,6 +42,17 @@
 
 素材与去复述达到目标；贴合、时机、违规没有达到“不低于 A”（收尾承接与深挖第二问），留出组自然度也低于 A。详见 ITERATIONS 第 6 节。指标：`style.py`（复述率、套路率）、`material.py`（素材价值）、`scope_impact.py`（信号读法影响检查）。
 
+## 第七阶段结果（v5f 温暖，迭代组 5 人 15 道故事题，只调一轮）
+
+| 故事题 | A（v4d） | v5e | v5f |
+| --- | --- | --- | --- |
+| 自然 / 贴合 / 时机 ≥4 | 74% / 95% / 100% | 85% / 70% / 91% | 86% / 79% / 97% |
+| 硬性违规（轮） | 2/19 | 3/33 | 2/29 |
+| 复述率 | 60% | 32% | 23% |
+| 老人原话 字/题 · 素材条数/题 | 58.7 · 3.87 | 109.3 · 5.00 | 82.3 · 4.67 |
+
+自然、时机回到 A 的水平，复述仍远低于 A；贴合 79% 未到参考的 85%，字数与素材低于 v5e（深挖守卫拦下 3 次深挖），原因与逐条阅读见 ITERATIONS 第七阶段。
+
 v4d 的 `speaker-prompt.txt`、`simulator-prompt.txt`、`sim-config.json`、`scorer-prompt.txt`、`split.json` 仍在 `../full-interview-v4/`，本阶段原样使用。
 
 ## 深挖规则的实现（`tools/interview_eval/simulate/interview.py`）
@@ -54,6 +65,7 @@ v4d 的 `speaker-prompt.txt`、`simulator-prompt.txt`、`sim-config.json`、`sco
 6. **老人对深挖的回答**：不再调判定（`rejudge_answers: false`），原话记进本题的 `deepen_sources`（带问句与维度）。理由：本题要素已齐，深挖回答是写书用的细节，不是新要素；再判定一次约 2.2k token，且可能把已齐的要素改判成冲突或引出新的追问，与“问完细节就收”相悖；后端接入时这些原话作为本题来源进入草稿即可。
    回答里有“累了”或暂停 → 休息；“不想讲” → 按已答收尾（`declined_partial`）；“记不清” → 收尾时体谅一句（`unknown`）；“跳过” → 已答收尾；其余再过一遍第 2 条的门槛决定是否再问一次。
 7. **承接与守卫**（v5c / v5c1）：承接的实词全部又出现在问句里时去掉承接（`drop_echo_ack`）；一句里逗号分开的两段各带疑问词即判“一句两问”（`multi_part`）；老人说“想不出 / 说不出 / 没什么特别”也不再深挖、承接带“有意思 / 真好 / 难得”即去掉（`extra_guards`，只作用于深挖，v4d 与后端共用的 `elder_signal` / `clean_ack` 不改）。
+7b. **v5f**：深挖问句以“吗”结尾不问（`no_yes_no`）；答过一次深挖后，下一问若只是请老人把刚答的再讲一遍（不问下文 / 谁 / 谁说了什么，又点到刚答里新冒出的东西）不问（`no_repeat_last`，`interview.repeats_last`）；两者都按“校验不过”处理（不深挖，按原收尾）。
 8. **记录**：每题 `deepen.log` 记每次考虑的结果（问了 / 跳过及原因、上一句字数、本题字数、字面已有的维度、问句、校验错误），每条深挖发言带 `dimension`。
 9. **开关**：配置里没有 `deepen` 块时代码路径与 v4d 完全相同（离线回放 sim-hv4d 0 差异，见 ITERATIONS）。
 
@@ -85,4 +97,9 @@ python3 tools/interview_eval/simulate/story_metrics.py A=st5-a-it+st5-a-ho v5d=s
 python3 tools/interview_eval/simulate/style.py st5-a-it+st5-a-ho st6-b5e2-it+st6-b5e1-ho
 python3 tools/interview_eval/simulate/material.py st5-a-it+st5-a-ho st6-b5d-it st6-b5e2-it+st6-b5e1-ho --offline
 python3 tools/interview_eval/simulate/scope_impact.py
+# 第七阶段
+python3 tools/interview_eval/simulate/run_sim.py --mode v4 --plan $P/story-plan.json --group iteration --policy $P/speaker-config.json --name st7-b5f-it
+python3 tools/interview_eval/simulate/story_metrics.py A=st5-a-it v5e=st6-b5e2-it v5f=st7-b5f-it
+python3 tools/interview_eval/simulate/style.py A=st5-a-it v5e=st6-b5e2-it v5f=st7-b5f-it
+python3 tools/interview_eval/simulate/material.py A=st5-a-it v5e=st6-b5e2-it v5f=st7-b5f-it --offline
 ```

@@ -38,11 +38,13 @@ speaking-layer pieces from contract_v3j_life_overview.
 from copy import deepcopy
 
 from app.ai import interview_speaker as speaker
+from app.ai import interview_story as story
 from app.ai.contract_interview_v3j import V3jPipeline
 from app.ai.llm_client import LLMResponseFormatError
 from app.schemas.guided_interview import GuidedQuestion
 from app.schemas.story_guidance import ConversationReply
-from app.services.contract_interview_state import V3J_PIPELINE, configured_pipeline, fresh_question, v3j_runtime
+from app.services.contract_interview_state import (V3J_FLOWS, V5F_PIPELINE, configured_pipeline, flow_runtime,
+                                                   fresh_question)
 from app.services.interview_controls import SKIP_ACK
 
 DRAFT_TEXT = '这段可以先整理成草稿了。您还有什么想补充的吗？'
@@ -56,14 +58,16 @@ def question_flow(state):
     if local:
         return local.get('pipeline') or 'v2'
     # Only the catalog the bundle was evaluated on; older catalogs stay on v2.
-    if configured_pipeline() == V3J_PIPELINE and state.runtime_version == v3j_runtime().version:
-        return V3J_PIPELINE
+    configured = configured_pipeline()
+    if configured in V3J_FLOWS and state.runtime_version == flow_runtime(configured).version:
+        return configured
     return 'v2'
 
 
 def marker(rt):
-    """Flow marker and speaking-layer counters saved in a question's own state when it starts in this flow."""
-    return {'pipeline': V3J_PIPELINE, 'pipeline_runtime': rt.runtime_version,
+    """Flow marker and speaking-layer counters saved in a question's own state when it starts in this flow
+    (v3j_v4d or v3j_v5f: the bundle's own pipeline name, so the question keeps that bundle)."""
+    return {'pipeline': rt.pipeline, 'pipeline_runtime': rt.runtime_version,
             'pipeline_manifest_sha256': rt.manifest_sha256, 'followups': 0, 'asked_target': None}
 
 
@@ -112,8 +116,17 @@ def asked_part(shown, state, entry):
 
 def dialogue_for(messages, local, latest, entry):
     """This question's dialogue as the speaking layer was evaluated with: the entry question, then each answer
-    preceded by the full message the narrator answered."""
-    return dialogue_from(entry, local['sources'], shown_before(messages), latest.id, latest.content)
+    preceded by the full message the narrator answered (v5f: answers to detail questions included)."""
+    order = {str(m.id): k for k, m in enumerate(messages)}
+    return dialogue_from(entry, question_answers(local, order), shown_before(messages), latest.id, latest.content)
+
+
+def question_answers(local, order):
+    """Judged sources and (v5f) answers to detail questions, in the order they were given."""
+    extra = (local.get('deepen') or {}).get('sources') or []
+    if not extra:
+        return local['sources']
+    return sorted(local['sources'] + extra, key=lambda s: order.get(s['id'], len(order)))
 
 
 def dialogue_from(entry, sources, before, latest_id, latest_text):
@@ -150,6 +163,16 @@ def _speak(rt, client, user, holder, session_id, state):
     return row, entry
 
 
+def v5f(rt):
+    return rt.pipeline == V5F_PIPELINE
+
+
+def seen_closes(state):
+    """v5f template_guard "repeat": the closes already shown in this interview (earlier questions' audits)."""
+    records = [r for local in (state.contract_history or {}).values() for r in (local.get('audit') or [])]
+    return story.earlier_closes(records + list((state.contract_state or {}).get('audit') or []))
+
+
 def _transition(rt, client, state, qid, dialogue, fields, reason, holder, session_id):
     next_text, menu = upcoming(state)
     elder_words = ''.join(text for role, text in dialogue if role == 'elder')
@@ -159,8 +182,13 @@ def _transition(rt, client, state, qid, dialogue, fields, reason, holder, sessio
     reply, _ = speaker.parse_speaker(row)
     if menu:
         # The module menu is not a single question: keep the acknowledgement, then the menu as it is.
-        ack = speaker.lead_ack(rt, reply, None, elder_words, drop_transition=False)
+        if v5f(rt):
+            ack = story.draft_ack(rt, reply, None, elder_words, seen_closes(state))
+        else:
+            ack = speaker.lead_ack(rt, reply, None, elder_words, drop_transition=False)
         text, ok, notes = (speaker.join(ack, next_text), True, []) if ack else (None, False, ['empty'])
+    elif v5f(rt):
+        text, ack, notes, ok = story.close_reply(rt, reply, next_text, elder_words, seen_closes(state))
     else:
         text, ack, notes, ok = speaker.compose_close(rt, reply, next_text, elder_words)
     if not ok:
@@ -179,7 +207,10 @@ def _draft_ack(rt, client, state, qid, dialogue, fields, reason, holder, session
                                 prev_close=state.speaker_last_close)
     row, entry = _speak(rt, client, user, holder, session_id, state)
     reply, _ = speaker.parse_speaker(row)
-    ack = speaker.lead_ack(rt, reply, None if menu else next_text, elder_words)
+    if v5f(rt):  # the simulator's close with the v5f guards, then only its acknowledgement
+        ack = story.draft_ack(rt, reply, None if menu else next_text, elder_words, seen_closes(state))
+    else:
+        ack = speaker.lead_ack(rt, reply, None if menu else next_text, elder_words)
     notes = []
     if ack and step == 'supplement' and speaker._norm(ack) == speaker._norm(state.speaker_last_close):
         ack, notes = '', ['repeat_ack']  # the same acknowledgement as last time is not said again
@@ -201,6 +232,8 @@ def finish(local, outcome, spoken, asked=None):
     outcome = {**outcome, 'speaker': spoken}
     if spoken and spoken.get('call'):
         outcome['calls'] = {**outcome['calls'], 'speaker': spoken.pop('call')}
+    if spoken and spoken.get('deepen_call'):
+        outcome['calls'] = {**outcome['calls'], 'deepen': spoken.pop('deepen_call')}
     local['audit'].append(deepcopy(outcome))
     local['last_result'] = deepcopy(result)
     local['pending'] = None
@@ -212,12 +245,141 @@ def finish(local, outcome, spoken, asked=None):
     local['asked_target'] = asked
 
 
+# --------------------------------------------------------------------------- v5f story deepening
+DEEPEN_KEY = 'deepen'  # GuidedQuestion key/target of a detail question (not an element of the contract)
+
+
+def try_deepen(rt, client, local, qid, reason, text, dialogue, holder, save_call, asked_text, before):
+    """v5f: one more detail question on a story question, before the close (interview.session's deepen branch).
+    Returns (dimension, ack, question, record) when one is asked, else (None, None, None, record): the normal close
+    follows. The deepen call is saved with the pending request like every other call."""
+    if not v5f(rt) or qid not in rt.story:
+        return None, None, None, None
+    dz = local.setdefault('deepen', story.new_deepen(rt, qid))
+    elder_words = ''.join(t for role, t in dialogue if role == 'elder')
+    dz['asked_text'], dz['before'], dz['last'] = asked_text, before, text  # read by signal_scope / check_deepen
+    k = len(local['sources']) + len(dz.get('sources') or [])
+    if dz.get('stopped'):
+        ok, why, info = False, 'stopped_' + dz['stopped'], {}
+    else:
+        ok, why, info = story.deepen_gate(rt.speaker_config, reason, text, elder_words, dz, k)
+    log = {'k': k, 'decision': 'asked' if ok else 'skip', 'reason': why, **info}
+    if not ok:
+        return None, None, None, log
+    # the question parts asked so far in this question (the simulator's question_part of each system message)
+    prior = [s.get('question') for s in question_answers(local, {})]
+    user = story.deepen_user(rt, qid, dialogue, dz)
+    row, call = V3jPipeline(rt, client).deepen(user, saved_calls=holder['calls'], save_call=save_call)
+    dim, ack, question, errs, repairs = story.compose_deepen(rt, row, dz, prior, elder_words)
+    log.update({'dimension': dim, 'ack': ack, 'question': question, 'errors': errs, 'repairs': repairs,
+                'raw': row.get('content'), 'input': user, 'call': call})
+    if errs:
+        log['decision'] = 'skip'
+        log['reason'] = 'invalid' if errs[0] not in ('call_failed', 'model_skip') else errs[0]
+        return None, None, None, log
+    return dim, ack, question, log
+
+
+def saver(holder, session_id, state):
+    def save_call(stage, entry):
+        from app.services.contract_guided_interview import _persist_pending
+        holder['calls'][stage] = entry
+        _persist_pending(session_id, state)
+    return save_call
+
+
+def keep_log(dz, log):
+    if log is not None:
+        dz['log'].append({k: v for k, v in log.items() if k != 'call'})
+
+
+def ask_deepen(state, local, dim, ack, question):
+    """Show a detail question and wait for its answer (no judgment of that answer)."""
+    dz = local['deepen']
+    dz['asked'] += 1
+    dz['dims'].append(dim)
+    dz['awaiting'] = True
+    state.phase = 'exploring'
+    state.pending_question = GuidedQuestion(key=DEEPEN_KEY, target=DEEPEN_KEY, text=question,
+                                            accept_rule='细节问答，原话记入本题来源，不再判定。')
+    return ConversationReply(text=speaker.join(ack, question))
+
+
+def clean_dz(dz):
+    for key in ('asked_text', 'before', 'last', 'partial'):
+        dz.pop(key, None)
+
+
+def deepen_answer_turn(client, previous, state, messages, latest, rt, qid, entry):
+    """The elder answered a detail question: kept verbatim as a source of this question, not judged, no field
+    changes (deepen_close); then one more detail question or the question's normal close (draft step)."""
+    from app.services.contract_guided_interview import _persist_pending, _project, coverage
+    local = state.contract_state
+    dz = local['deepen']
+    if local.get('pending') is None:
+        local['pending'] = {'request_id': str(latest.id), 'calls': {}, 'kind': 'deepen_answer'}
+    if local['pending']['request_id'] != str(latest.id):
+        raise LLMResponseFormatError('Retry the retained pending answer first')
+    asked = asked_part(shown_before(messages).get(str(latest.id), ''), state, entry)
+    dz.setdefault('sources', [])
+    if not any(s['id'] == str(latest.id) for s in dz['sources']):
+        dz['sources'].append({'id': str(latest.id), 'text': latest.content, 'question_id': qid, 'speaker': 'narrator',
+                              'question': asked, 'dimension': dz['dims'][-1], 'deepen_answer': True})
+    _persist_pending(latest.session_id, state)
+    dialogue = dialogue_for(messages, local, latest, entry)
+    elder = [t for role, t in dialogue if role == 'elder']
+    before = ''.join(elder[:-1])
+    cfg = rt.speaker_config
+    scope = (asked, before, cfg.get('scope_min_chars', 15)) if cfg.get('signal_scope') else None
+    action, reason = story.deepen_close(latest.content, None, cfg['deepen'].get('extra_guards'), scope)
+    rule = {'action': action, 'reason': reason, 'signal': speaker.elder_signal(latest.content)}
+    holder = local['pending']
+    record = {'pipeline': 'v5f', 'kind': 'deepen_answer', 'request_id': str(latest.id), 'rule': rule}
+    # dz['awaiting'] stays set until this request ends: a retry after a saved call must come back here
+    if action == 'rest':
+        # The existing pause; detail questions stop here (on "继续" the question resumes at its entry question).
+        dz['stopped'], dz['awaiting'] = 'rest', False
+        clean_dz(dz)
+        record['calls'] = deepcopy(holder['calls'])
+        local['audit'].append(record)
+        local['pending'] = None
+        state.pending_question = None
+        state.resume_phase = state.phase
+        state.phase = 'paused'
+        return _project(previous, state, messages), ConversationReply(text=PAUSE_TEXT)
+    dim, ack, question, log = try_deepen(rt, client, local, qid, reason, latest.content, dialogue, holder,
+                                         saver(holder, latest.session_id, state), asked, before)
+    keep_log(dz, log)
+    if question:
+        record['deepen'] = {k: v for k, v in log.items() if k != 'call'}
+        record['calls'] = deepcopy(holder['calls'])
+        local['audit'].append(record)
+        local['pending'] = None
+        clean_dz(dz)
+        reply = ask_deepen(state, local, dim, ack, question)
+        return _project(previous, state, messages), reply
+    clean_dz(dz)
+    fields = speaker.recorded_fields(rt, local.get('last_result'))
+    ack, text, spoken = _draft_ack(rt, client, state, qid, dialogue, fields, reason, holder, latest.session_id)
+    dz['awaiting'] = False
+    spoken.pop('call', None)
+    record.update({'speaker': {**spoken, **rule}, 'calls': deepcopy(holder['calls'])})
+    local['audit'].append(record)
+    local['pending'] = None
+    state.pending_question = None
+    if ack:
+        state.speaker_last_close = ack
+    state.phase = 'supplement'
+    coverage(state)
+    return _project(previous, state, messages), ConversationReply(text=text, action='offer_generation')
+
+
 def question_turn(client, previous, state, messages, latest):
     from app.services.contract_guided_interview import _persist_pending, _project, coverage, skip_topic
     from app.services.interview_modules import topic_for
-    rt = v3j_runtime()
     topic = topic_for(state)
     qid, entry = topic.id, topic.text
+    rt = flow_runtime(question_flow(state))
     # After the draft offer: an answer that only says there is nothing more goes to the review step (C03).
     supplementing = state.phase in ('supplement', 'review')
     ending = speaker.supplement_end(latest.content) if supplementing else None
@@ -231,7 +393,10 @@ def question_turn(client, previous, state, messages, latest):
     local = state.contract_state
     if local['question_id'] != qid:
         raise LLMResponseFormatError('Interview checkpoint belongs to a different question')
-    append_source(local, latest.id, latest.content, asked_part(shown_before(messages).get(str(latest.id), ''), state, entry))
+    if (local.get('deepen') or {}).get('awaiting') and not supplementing:
+        return deepen_answer_turn(client, previous, state, messages, latest, rt, qid, entry)
+    asked_now = asked_part(shown_before(messages).get(str(latest.id), ''), state, entry)
+    append_source(local, latest.id, latest.content, asked_now)
     if local.get('pending') is None:
         local['pending'] = {'request_id': str(latest.id), 'calls': {}}
     if local['pending']['request_id'] != str(latest.id):
@@ -254,16 +419,21 @@ def question_turn(client, previous, state, messages, latest):
         local['pending']['calls'] = {}
         _persist_pending(latest.session_id, state)
         raise LLMResponseFormatError('Interview evidence remains invalid')
+    dialogue = dialogue_for(messages, local, latest, entry)
+    before = ''.join([t for role, t in dialogue if role == 'elder'][:-1])
     st = {'followups': local.get('followups', 0), 'ask_counts': local.get('ask_counts', {}),
           'prev_eff': dict((local.get('last_result') or {}).get('effective') or {})}
+    if rt.speaker_config.get('signal_scope'):  # read by signal_scope only (v5f)
+        st.update(asked=asked_now, before=before, last_target=local.get('asked_target'))
     action, arg = speaker.decide(rt.speaker_config, result, st, latest.content)
     # decide closes engine skipped / limited+declined as 'declined' unless the elder had already answered
     # ('declined_partial', C02), so the reason alone tells a refusal.
     refused = arg in ('declined', 'deferred')
-    dialogue = dialogue_for(messages, local, latest, entry)
     fields = speaker.recorded_fields(rt, result)
     holder = local['pending']
     rule = {'action': action, 'reason': arg, 'signal': st['signal']}
+    if st.get('scope'):
+        rule['scope'] = st['scope'][0]
     if supplementing:
         rule['supplement_end'] = ending
     # The speaking-layer call is persisted with the pending request; question
@@ -285,7 +455,23 @@ def question_turn(client, previous, state, messages, latest):
             state.speaker_last_close = ack
         state.phase = 'supplement'
         reply = ConversationReply(text=text, action='offer_generation')
-    elif action == 'ask':
+        coverage(state)
+        return _project(previous, state, messages), reply
+    if action == 'close' and not refused:
+        # v5f: a story question whose elements are complete may get a detail question before the draft step.
+        dim, ack, question, log = try_deepen(rt, client, local, qid, arg, latest.content, dialogue, holder,
+                                             save_call, asked_now, before)
+        if log is not None:
+            dz = local['deepen']
+            keep_log(dz, log)
+            clean_dz(dz)
+            if question:
+                finish(local, outcome, {'task': 'deepen', **{k: v for k, v in log.items() if k != 'call'},
+                                        'deepen_call': log.get('call'), **rule})
+                reply = ask_deepen(state, local, dim, ack, question)
+                coverage(state)
+                return _project(previous, state, messages), reply
+    if action == 'ask':
         user = speaker.speaker_user(rt, qid, dialogue, fields, 'ask', arg, result.get('question'))
         row, entry_ = _speak(rt, client, user, holder, latest.session_id, state)
         text, question, spoken = speaker.compose_ask(rt, row, result, arg, [s['question'] for s in local['sources']],
@@ -319,13 +505,15 @@ def question_turn(client, previous, state, messages, latest):
 
 
 def skip_turn(client, previous, state, messages):
-    """Explicit skip control in a v3j question: acknowledged by the speaking layer, then the existing skip."""
-    from app.services.contract_guided_interview import skip_topic
+    """Explicit skip control in a v3j question: acknowledged by the speaking layer, then the existing skip.
+    v5f: a skip while a detail question waits is not a refusal (the question was answered before it): the draft
+    step follows, as the simulator closes it ('declined_partial')."""
+    from app.services.contract_guided_interview import _project, coverage, skip_topic
     from app.services.interview_modules import topic_for
-    rt = v3j_runtime()
     latest = next(m for m in reversed(messages) if m.role == 'user')
     topic = topic_for(state)
     qid, entry = topic.id, topic.text
+    rt = flow_runtime(question_flow(state))
     if not state.contract_state:
         state.contract_state = fresh(qid, rt)
     local = state.contract_state
@@ -336,6 +524,22 @@ def skip_turn(client, previous, state, messages):
         local['skip'] = {'request_id': str(latest.id), 'calls': {}}
     holder = local['skip']
     fields = speaker.recorded_fields(rt, local.get('last_result'))
+    dz = local.get('deepen') or {}
+    if dz.get('awaiting') and state.phase not in ('supplement', 'review'):
+        ack, text, spoken = _draft_ack(rt, client, state, qid, dialogue_for(messages, local, latest, entry), fields,
+                                       'declined_partial', holder, latest.session_id)
+        spoken['call'] = None
+        dz['awaiting'] = False
+        dz['log'].append({'k': len(local['sources']) + len(dz.get('sources') or []) + 1, 'decision': 'stop',
+                          'reason': 'answer_skip_control'})
+        local['audit'].append({'pipeline': 'v5f', 'kind': 'skip_control', 'request_id': str(latest.id),
+                               'speaker': spoken, 'calls': deepcopy(holder['calls'])})
+        state.pending_question = None
+        if ack:
+            state.speaker_last_close = ack
+        state.phase = 'supplement'
+        coverage(state)
+        return _project(previous, state, messages), ConversationReply(text=text, action='offer_generation')
     text, spoken = _transition(rt, client, state, qid, dialogue_for(messages, local, latest, entry), fields, 'declined',
                                holder, latest.session_id)
     spoken['call'] = None
