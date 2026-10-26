@@ -5,13 +5,15 @@
 
 ## 当前协作与线上状态
 
+**2026-10-27 本地待审阅修复候选**：[先接住回答再追问](handoffs/2026-10-27-listening-iteration.md)。接续共享分支 `caad4c9` 的问题回传，在 Claude `20013ab` / 交接头 `9915707` 上修复明确原因证据、深挖调用审计和否定补充意图，新增独立 listening 运行包。先回应老人再问，允许简短借词确认，不以删除承接来降低复述率。本地及云端最终各 Ran 130 / skip 1；真实模型原样问答及未解决的选点/评价问题见回执。源码仍为未提交工作树快照，未推送、未合并 main、未发布生产，不能把历史缓存成绩视为新提示词质量成绩。
+
 Claude 负责持续采访优化，Codex 负责整合、部署、云端测试和问题回传。下一轮先读取[双向交接 SOP](collaboration-sop.md)、[最新会话排序修复回执](handoffs/2026-10-23-session-list-sort.md)及 [C01–C03 业务回执](handoffs/2026-10-23-c01-c03-cloud-release.md)，从共享分支最新头继续；必须继承 `a1ecee6` 大 JSON 排序修复、产品整合 `ed38ab2`、此前 `770f841` 题序修正及 main 的 OSS 整合。
 
 **当前生产**：`a1ecee61eae633898f1ba3a7200a630ca66a32c2`，`v3j_v4d`，pin 不变。修复真实 App 采访入口的 MySQL 1038/HTTP 503；本地及云端均 Ran 80/skip 1，隔离 MySQL 8 份各 1 MiB 合成审计重现旧查询失败、新查询通过；正式 HTTPS、原受影响家庭只读查询及现有模拟器采访入口通过。用户明确授权后发布，代码已同步 main/共享分支，切换业务指纹一致；详见最新回执。
 
 C01–C03 业务结果仍为上一轮 `ed38ab2`：接收 Claude `ece64ea`（交接单 `50572cc`）并整合 main/OSS；候选 15 场景/89 检查、生产 9 场景/59 检查通过，之后已获授权合入 main。本次数据库修复没有重跑或冒充新的真实模型问答，正式连续三轮质量门槛仍未宣称通过。C02 原草稿固定问句及说话层实际回退原文继续保留，完整范围见业务回执。
 
-**最新 Claude 候选（待整合）**：[2026-10-26 故事题深挖 v5f 交接单](handoffs/2026-10-26-20013ab.md)，候选 `20013ab6339b4f2c34205b3bcda5318bb4234631`（分支 `interview/claude-story-deepen`），以 `INTERVIEW_PIPELINE=v3j_v5f` 启用（代码默认仍为 v2），运行合同 `interview_runtime_v3j_v5f` pin `9b9d0d7b…6c231b`；未部署。
+**接收的 Claude 候选**：[2026-10-26 故事题深挖 v5f 交接单](handoffs/2026-10-26-20013ab.md)，候选 `20013ab6339b4f2c34205b3bcda5318bb4234631`（分支 `interview/claude-story-deepen`），以 `INTERVIEW_PIPELINE=v3j_v5f` 启用（代码默认仍为 v2），运行合同 `interview_runtime_v3j_v5f` pin `9b9d0d7b…6c231b`；云端候选测试发现问题，未发布生产。本轮修复使用新的 listening 包，原包保留。
 
 历史：[首次云端发布与问题回传](handoffs/2026-10-23-cloud-release.md)、[Claude C01–C03 候选交接单](handoffs/2026-10-23-ece64ea.md)。上轮 770f841 之后生产已先上线 OSS 649b5b9，本轮基于该实际运行代码整合，不能把历史版本表误读为当前整台后端版本。
 
@@ -19,6 +21,7 @@ C01–C03 业务结果仍为上一轮 `ed38ab2`：接收 Claude `ece64ea`（交�
 
 | 版本 | 层 | 结果 | 状态 | 位置 |
 | --- | --- | --- | --- | --- |
+| **v5f listening 修复候选** | 原因证据、深挖审计、先承接再追问、否定补充收尾 | 本地/云端各 Ran 130 / skip 1；完整骨架 25 检查、否定补充 18 检查、失败重试 5 检查通过；3 个实时老人子代理最终对话自然核对并保存 | 未提交快照；独立云端候选，生产仍 v4d；选点、主观评价仍待改善，不宣称正式质量验收通过 | [本轮回传草稿](handoffs/2026-10-27-listening-iteration.md) |
 | **会话大 JSON 排序修复已发布** | Codex 工程修正，采访规则不变 | 本地/云端 Ran 80 / skip 1；隔离 MySQL 旧 SQL 真实 1038、新查询通过；生产 HTTPS 与模拟器入口恢复 | `a1ecee6` 已部署、已推 main 与共享分支；无新增模型质量轮次 | [最新回执](handoffs/2026-10-23-session-list-sort.md) |
 | v2 对照流程 | 抽取 → 复核 → 至多一次修复 | full45 关键点约 70% | 保留的旧流程与默认代码路径（`cloud-deployment/backend/app/ai/interview_runtime`） | `docs/prototypes/full-interview-v2/single-question-v2/` |
 | **v3j** | 判定层：每个检查点一次判定调用，代码拼装与引擎校验 | full45 197/204 = **96.6%**；随机 10 人门槛缓存 42/43、关缓存真实调用 43/43 | 已随 v4d 上线，范围见最新回执 | `docs/prototypes/full-interview-v3j/` + `tools/interview_eval/pipelines/v3j.py` |

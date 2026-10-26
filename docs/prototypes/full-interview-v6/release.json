@@ -1,0 +1,14 @@
+{
+  "version": "V6",
+  "code_sha": "8799b52b4d7590ea522c6798c364fd2fa451226a",
+  "backend_git_tree": "6816639d2ccd0c24a6353373773aface724ec9ab",
+  "previous_tested_snapshot_manifest_sha256": "d05be2296520a43a2d90fe23dfc5a9a1b06c6ba28e678111e5ae4033a2fc9cc3",
+  "tested_backend_content_sha256": "de77f4d0398c27ee8206206925ce7ac71660eb149327f3048ce4f647aa154cca",
+  "runtime_pipeline": "v3j_v5f",
+  "runtime_directory": "cloud-deployment/backend/app/ai/interview_runtime_v3j_v5f_listening",
+  "runtime_manifest_sha256": "1062b6c2158fa8132c0a6ea9541a4dcdbec80f6dd32d21cfda0d816cd2a76487",
+  "model": "deepseek-v4-pro",
+  "thinking": "disabled",
+  "formal_quality_acceptance_passed": false,
+  "freeze_authorization": "2026-10-27 user explicitly approved freeze V6, production deployment, shared branch and main synchronization"
+}
