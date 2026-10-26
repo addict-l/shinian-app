@@ -8,6 +8,8 @@ via the relay), then score every question with the rubric (Claude Haiku via file
            --offline (caches only) --dry (plumbing, nothing sent) --no-score
            --speaker-prompt PATH --policy PATH (speaker-config.json variants)
            --rescore RUN (score the sessions of an earlier run again, no interview calls)
+           --plan PATH (session plans from a plan file instead of split.json: {group: {people, plans}}, e.g.
+                        docs/prototypes/full-interview-v5/story-plan.json with --group iteration)
 
 Scheduling: every session advances on its own. Elder requests go to <runs>/persona-queue as
 soon as a session needs one (Haiku workers answer them, see WORKER.md); DeepSeek calls of all sessions are
@@ -43,6 +45,8 @@ def dry_response(call):
         return interview.V3J.DRY_RESPONSE(call)
     if cid.endswith('-speak'):
         return json.dumps({'ack': '嗯，那时候不容易。', 'question': '那后来呢？'}, ensure_ascii=False)
+    if cid.endswith('-deepen'):
+        return json.dumps({'dimension': '场景', 'ack': '', 'question': '那地方当时是什么样子的？'}, ensure_ascii=False)
     return '{}'
 
 
@@ -258,6 +262,7 @@ def main():
     p.add_argument('--speaker-prompt')
     p.add_argument('--policy')
     p.add_argument('--rescore')
+    p.add_argument('--plan')
     p.add_argument('--batch-wait', type=float, default=12.0)
     p.add_argument('--ds-timeout', type=float, default=900.0)
     a = p.parse_args()
@@ -285,12 +290,20 @@ def main():
         return
     if not a.mode:
         p.error('--mode is required')
-    split = common.load(interview.V4 / 'split.json')
-    people = [x for x in a.only.split(',') if x] or split[a.group]
-    if a.people:
-        people = people[:a.people]
-    plans = {nid: split['plans'][nid]['questions'][:a.questions or None] for nid in people}
-    common.save(run_dir / 'plan.json', {'mode': a.mode, 'group': a.group, 'people': people, 'plans': plans,
+    if a.plan:  # explicit session plans (story-question test design)
+        group = common.load(Path(a.plan))[a.group]
+        people = [x for x in a.only.split(',') if x] or group['people']
+        if a.people:
+            people = people[:a.people]
+        plans = {nid: group['plans'][nid][:a.questions or None] for nid in people}
+    else:
+        split = common.load(interview.V4 / 'split.json')
+        people = [x for x in a.only.split(',') if x] or split[a.group]
+        if a.people:
+            people = people[:a.people]
+        plans = {nid: split['plans'][nid]['questions'][:a.questions or None] for nid in people}
+    common.save(run_dir / 'plan.json', {'mode': a.mode, 'group': a.group, **({'plan_file': a.plan} if a.plan else {}),
+                                        'people': people, 'plans': plans,
                                         'speaker_prompt': a.speaker_prompt, 'policy': S.policy, 'argv': sys.argv,
                                         'simulator': S.sim_cfg['model'], 'scorer': scoring.SCORER_PARAMS})
     print(json.dumps({'run': str(run_dir), 'mode': a.mode, 'people': [(n, S.personas.names[n]) for n in people]},

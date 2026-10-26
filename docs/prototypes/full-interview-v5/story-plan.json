@@ -1,0 +1,270 @@
+{
+ "seed": 20261026,
+ "rule": [
+  "  python3 tools/interview_eval/simulate/plan_story.py   # writes docs/prototypes/full-interview-v5/story-plan.json",
+  "",
+  "Per group of split.json (iteration / holdout), people whose material is question-specific (more than",
+  "SMALL_PERSON characters; smaller people remember everything for every question) are eligible when at least",
+  "WINDOW story questions have material: questions the test set maps an excerpt to, then questions whose best",
+  "related excerpt reaches LEXICAL_MIN on the simulator's own retrieval score (persona.Personas.material). A person's",
+  "plan is those WINDOW questions in frozen bank order. Eligible people are sorted by amount of material and a",
+  "stratified Random(SEED) subset is taken (token budget). Each group also gets one small-material person whose plan",
+  "is reused from an earlier v4d-era run, so the A side is mostly served from cache and the case \"the deepen question",
+  "asks for something the material does not have\" is covered on purpose."
+ ],
+ "iteration": {
+  "people": [
+   "N-9c32d8b7c1",
+   "N-6e4adb332f",
+   "N-6eec6bf458",
+   "N-63f4aa2206",
+   "N-3b7bd23f91"
+  ],
+  "plans": {
+   "N-9c32d8b7c1": [
+    "WK01",
+    "WK05",
+    "WK06b"
+   ],
+   "N-6e4adb332f": [
+    "SK01c",
+    "GR01b",
+    "WK05"
+   ],
+   "N-6eec6bf458": [
+    "CH03",
+    "RV06",
+    "RV13"
+   ],
+   "N-63f4aa2206": [
+    "CH05",
+    "WK05",
+    "RV02"
+   ],
+   "N-3b7bd23f91": [
+    "FM02",
+    "FM03",
+    "FM04",
+    "FM04b"
+   ]
+  },
+  "story_questions": 15,
+  "eligible": [
+   {
+    "nid": "N-9c32d8b7c1",
+    "name": "陳信妹",
+    "chars": 1608,
+    "questions": [
+     "WK01",
+     "WK05",
+     "WK06b"
+    ],
+    "mapped": [
+     "WK01",
+     "WK05",
+     "WK06b"
+    ],
+    "lexical": {}
+   },
+   {
+    "nid": "N-9d0bf22417",
+    "name": "潘海波",
+    "chars": 2190,
+    "questions": [
+     "CH05",
+     "FM01",
+     "RV02"
+    ],
+    "mapped": [
+     "FM01",
+     "RV02"
+    ],
+    "lexical": {
+     "CH05": 7.98
+    }
+   },
+   {
+    "nid": "N-cd7326e590",
+    "name": "曹玉昌",
+    "chars": 2875,
+    "questions": [
+     "SK01c",
+     "GR01b",
+     "WK09"
+    ],
+    "mapped": [
+     "SK01c",
+     "GR01b",
+     "WK09"
+    ],
+    "lexical": {}
+   },
+   {
+    "nid": "N-6e4adb332f",
+    "name": "王成偉",
+    "chars": 3540,
+    "questions": [
+     "SK01c",
+     "GR01b",
+     "WK05"
+    ],
+    "mapped": [
+     "SK01c",
+     "GR01b",
+     "WK05"
+    ],
+    "lexical": {}
+   },
+   {
+    "nid": "N-c076ca2fa5",
+    "name": "劉柏考勤",
+    "chars": 4366,
+    "questions": [
+     "FM02",
+     "FM03",
+     "WK09"
+    ],
+    "mapped": [
+     "FM02",
+     "FM03"
+    ],
+    "lexical": {
+     "WK09": 4.78
+    }
+   },
+   {
+    "nid": "N-6eec6bf458",
+    "name": "孫樸生",
+    "chars": 6191,
+    "questions": [
+     "CH03",
+     "RV06",
+     "RV13"
+    ],
+    "mapped": [
+     "CH03",
+     "RV06",
+     "RV13"
+    ],
+    "lexical": {}
+   },
+   {
+    "nid": "N-63f4aa2206",
+    "name": "李福英",
+    "chars": 7968,
+    "questions": [
+     "CH05",
+     "WK05",
+     "RV02"
+    ],
+    "mapped": [
+     "WK05",
+     "RV02"
+    ],
+    "lexical": {
+     "CH05": 7.09
+    }
+   },
+   {
+    "nid": "N-756a382469",
+    "name": "余华",
+    "chars": 30103,
+    "questions": [
+     "CH02b",
+     "CH05",
+     "WK01"
+    ],
+    "mapped": [
+     "CH05"
+    ],
+    "lexical": {
+     "WK01": 7.17,
+     "CH02b": 6.44
+    }
+   }
+  ],
+  "small_material": {
+   "nid": "N-3b7bd23f91",
+   "name": "林恆富",
+   "chars": 553
+  }
+ },
+ "holdout": {
+  "people": [
+   "N-25486466f6",
+   "N-f522cea657"
+  ],
+  "plans": {
+   "N-25486466f6": [
+    "CH05",
+    "CH06b",
+    "GR01b"
+   ],
+   "N-f522cea657": [
+    "FM02",
+    "FM03",
+    "FM04",
+    "FM04b"
+   ]
+  },
+  "story_questions": 6,
+  "eligible": [
+   {
+    "nid": "N-65804735e4",
+    "name": "王鼎钧",
+    "chars": 1603,
+    "questions": [
+     "FM02",
+     "FM03",
+     "RV02"
+    ],
+    "mapped": [
+     "RV02"
+    ],
+    "lexical": {
+     "FM02": 5.05,
+     "FM03": 4.0
+    }
+   },
+   {
+    "nid": "N-494e209cc7",
+    "name": "黃樹華",
+    "chars": 4722,
+    "questions": [
+     "CH02b",
+     "CH05",
+     "FM02"
+    ],
+    "mapped": [
+     "CH02b"
+    ],
+    "lexical": {
+     "CH05": 6.0,
+     "FM02": 4.34
+    }
+   },
+   {
+    "nid": "N-25486466f6",
+    "name": "楊秀峰",
+    "chars": 6921,
+    "questions": [
+     "CH05",
+     "CH06b",
+     "GR01b"
+    ],
+    "mapped": [
+     "CH06b",
+     "GR01b"
+    ],
+    "lexical": {
+     "CH05": 6.0
+    }
+   }
+  ],
+  "small_material": {
+   "nid": "N-f522cea657",
+   "name": "李金蕾",
+   "chars": 88
+  }
+ }
+}

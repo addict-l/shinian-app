@@ -39,3 +39,8 @@ python3 tools/interview_eval/simulate/export_html.py --out 对照.html --title .
 
 模拟老人与打分走文件队列（`<runs>/persona-queue`、`<runs>/scorer-queue`），由 Claude Haiku worker 按 `simulate/WORKER.md` 处理；DeepSeek 只负责采访一侧。
 老人行为按 `sha256(人物|题|轮次)` 固定抽样，与被测版本无关，改前改后遇到的是同一个“老人”。`tokens.py`、`simulate/stage_tokens.py` 记账。
+
+## 故事题深挖（v5，模拟器原型）
+
+`docs/prototypes/full-interview-v5/`：故事题标签、深挖提示与配置、会话计划与迭代记录。`run_sim.py --plan <计划文件> --group <组>` 用计划文件代替 split.json；`--policy` 指向带 `deepen` 块的配置即开启深挖，没有该块时与 v4d 逐项相同。
+`story_metrics.py`（故事题字数、深挖次数与原因、维度、老人对深挖的回答、量表，`RUN1+RUN2` 可合并）、`diff_runs.py`（两次运行除耗时与缓存标记外是否逐项相同）、`plan_story.py`（生成故事题计划）、`deepen_bench.py`（只重发深挖调用的对照台）；`export_html.py` 会标出深挖问句。

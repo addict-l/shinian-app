@@ -1,0 +1,37 @@
+{
+ "version": "v5b",
+ "model": {
+  "model": "deepseek-v4-pro",
+  "thinking": "disabled",
+  "max_tokens": 200,
+  "temperature": 0.3,
+  "json_mode": true
+ },
+ "followup_cap": 2,
+ "same_target_cap": 1,
+ "stop_after_unknown_once_asked": 1,
+ "baseline_supplement_cap": 2,
+ "note": "followup_cap: follow-up questions per question; same_target_cap: a target asked this many times and still open is not asked again; stop_after_unknown_once_asked: once the elder newly says 'can't remember / won't say' on an active target and at least this many follow-ups were asked, close instead of asking the next target. signal_close: when the elder's latest words literally say they won't talk about it / can't remember / are tired (interview.elder_signal), close instead of asking, whatever the engine decision ('ready' still closes as done; tired -> rest).",
+ "signal_close": true,
+ "rest_resume_by_speaker": false,
+ "note_rest_resume": "rest_resume_by_speaker: after the elder rests and taps 'continue', true = the speaking layer writes the line into the next question (v4e, untested); false = fixed '好，咱们接着聊。' + next entry (v4d).",
+ "deepen": {
+  "enabled": true,
+  "questions": "docs/prototypes/full-interview-v5/story-questions.json",
+  "prompt": "docs/prototypes/full-interview-v5/history/deepen-prompt.v5b.txt",
+  "max_per_question": 2,
+  "max_per_sensitive": 1,
+  "short_chars": 20,
+  "detailed_chars": 300,
+  "detailed_dims": 3,
+  "rejudge_answers": false,
+  "model": {
+   "model": "deepseek-v4-pro",
+   "thinking": "disabled",
+   "max_tokens": 200,
+   "temperature": 0.3,
+   "json_mode": true
+  }
+ },
+ "note_deepen": "deepen (v5a): on a story question (story-questions.json), after the ending rules say done (engine ready) and before the close, ask at most max_per_question detail questions (max_per_sensitive on sensitive ones), written by a separate call with deepen-prompt.txt (the v4d speaker prompt is unchanged). Not asked when the elder's latest answer has <= short_chars characters, says he can't remember / won't talk / is tired (elder_signal), or the question already has >= detailed_chars characters from the elder with >= detailed_dims of the four kinds (scene, people, detail, feeling); a failed or invalid deepen call means no deepen (the normal close follows). Deepen answers are not judged again (rejudge_answers false): they are kept verbatim as sources of this question. Without the deepen key (or enabled false) the policy is exactly v4d."
+}

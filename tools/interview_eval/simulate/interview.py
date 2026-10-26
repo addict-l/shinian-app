@@ -65,6 +65,18 @@ class Setup:
         self.policy = json.loads(Path(policy or V4 / 'speaker-config.json').read_text(encoding='utf-8'))
         self.Q = self.personas.Q
         self.F = self.ctx.F
+        # v5 story deepening: only when the policy carries an enabled "deepen" block (v4d policies have none)
+        dz = self.policy.get('deepen') or {}
+        self.deepen = dz if dz.get('enabled') else None
+        if self.deepen:
+            bank = json.loads((common.ROOT / dz['questions']).read_text(encoding='utf-8'))
+            for q in bank['questions']:  # the labels sit beside the frozen bank: same ids, same entry questions
+                if self.Q[q['id']]['main_question'] != q['main_question']:
+                    raise ValueError('story-questions.json does not match the frozen bank at ' + q['id'])
+            if len(bank['questions']) != len(self.Q):
+                raise ValueError('story-questions.json must label every question of the frozen bank')
+            self.story = {q['id']: q for q in bank['questions'] if q['depth'] == 'story'}
+            self.deepen_prompt = (common.ROOT / dz['prompt']).read_text(encoding='utf-8')
 
 
 # --------------------------------------------------------------------------- elder simulator
@@ -476,6 +488,118 @@ def v4_decide(S, result, st, text=''):
     return 'ask', target
 
 
+# --------------------------------------------------------------------------- v5 story deepening
+# On a story question, after the ending rules say 'done' and before the close, the interviewer may ask up to N
+# detail questions (one of scene / people / detail / feeling) drawn from what the elder just told. A separate
+# speaker call writes them (deepen-prompt.txt); the v4d speaker prompt and every other step are unchanged.
+DEEPEN_DIMS = ('场景', '人物', '细节', '感受')
+# rough literal markers of the four kinds in the elder's own words; only used for the "already told in full" gate
+DIM_MARKERS = {
+    '场景': re.compile(r'\d+\s*年|[一二三四五六七八九十几]+岁|\d+岁|民国|那年|那时|当时|那会|时候|年代|春天|夏天|秋天|冬天|过年|早上|晚上|夜里|白天|'
+                     r'村|镇|县|城|街|厂|学校|屋|院子|河|山|庙|车站|部队|公司|医院|农场|乡下|老家|家里|那里|那儿'),
+    '人物': re.compile(OTHER + r'|(?:说|讲|告诉|叫|问)(?:我|他|她|：|:|，|“)'),
+    '细节': re.compile(r'\d+|[一两二三四五六七八九十几半]+(?:个|块|斤|张|件|碗|间|只|条|把|毛|元|分|根|双|辆|袋|口|床|套|台|本|封)|'
+                     r'衣服|被子|房子|桌子|床|车|饭|馒头|米|面|钱|信|照片|书|手|脚|眼泪|哭|笑|跑|抱|拉着|背着|扛'),
+    '感受': re.compile(r'觉得|感觉|心里|想着|以为|高兴|开心|难过|伤心|害怕|怕|舒服|难受|委屈|感动|感激|感谢|后悔|遗憾|喜欢|想念|骄傲|自豪|欣慰|'
+                     r'满意|生气|着急|担心|紧张|佩服|心疼|舍不得|忘不了|不甘心'),
+}
+DEEPEN_BANNED = re.compile(r'细节|回忆录')
+# one question mark can still carry two asks ("在什么地方，周围是什么样子的？"): count clauses with an interrogative
+ASK_WORD = re.compile(r'什么|哪(?!怕)|怎么|怎样|谁|多大|几岁|[吗呢][？?]?$')
+
+
+# v5c1 guards (deepen only; the shared elder_signal / clean_ack of v4d and the backend stay as they are):
+# "can't think of one" wordings elder_signal does not cover, and praise words clean_ack's list does not have
+DEEPEN_UNKNOWN = re.compile(r'想不出|说不出|没(?:有)?(?:什么|啥)特别')
+DEEPEN_ACK_EVAL = re.compile(r'有意思|有趣|真好|难得|感人|了不起')
+
+
+def deepen_ack(ack, question):
+    """An ack that only says again what the question names right after ("变身的把戏。那会儿……把戏……？") is dropped
+    (v5c). Returns (ack, [repairs])."""
+    from persona import bigrams
+    a = bigrams(ack)
+    if ack and (not a or a <= bigrams(question)):
+        return '', ['ack_echo']
+    return ack, []
+
+
+def story_dims(text):
+    return [d for d in DEEPEN_DIMS if DIM_MARKERS[d].search(text or '')]
+
+
+def deepen_gate(S, qid, reason, text, elder_words, dz, k):
+    """Whether to ask one more detail question now. Returns (ok, reason, info)."""
+    cfg = S.deepen
+    info = {'last_chars': len(_norm(text)), 'chars': len(_norm(elder_words)), 'dims_told': story_dims(elder_words)}
+    if reason != 'done':
+        return False, ('answer_' if dz['asked'] else 'not_done_') + reason, info
+    if dz['asked'] >= dz['cap']:
+        return False, 'cap', info
+    if k >= MAX_TURNS:
+        return False, 'max_turns', info
+    if info['last_chars'] <= cfg['short_chars']:
+        return False, 'short', info
+    sig = elder_signal(text)
+    if sig:
+        return False, 'signal_' + sig, info
+    if cfg.get('extra_guards') and DEEPEN_UNKNOWN.search(text):
+        return False, 'signal_unknown_extra', info
+    if info['chars'] >= cfg['detailed_chars'] and len(info['dims_told']) >= cfg['detailed_dims']:
+        return False, 'detailed', info
+    return True, 'asked', info
+
+
+def deepen_user(S, qid, dialogue, dz):
+    item = S.story[qid]
+    lines = [f'当前话题：{S.Q[qid]["main_question"]}', f'深挖方向：{item["deepen_direction"]}']
+    if item.get('sensitive'):
+        lines.append('敏感：是（只轻轻问一句，老人不愿细说就不再问）')
+    lines.append('对话：')
+    for role, text in dialogue:
+        lines.append(('问：' if role == 'system' else '答：') + text)
+    lines.append('已经深挖过：' + ('、'.join(dz['dims']) if dz['dims'] else '（无）'))
+    lines.append('任务：deepen')
+    return '\n'.join(lines)
+
+
+def parse_deepen(row):
+    out = row.get('output') if isinstance(row.get('output'), dict) else {}
+    get = lambda k: out.get(k).strip() if isinstance(out.get(k), str) else ''
+    return get('dimension'), get('ack'), get('question')
+
+
+def check_deepen(dim, ack, question, prior, dz):
+    errs = check_ask(ack, question, prior)
+    if INFER.search(question):
+        errs.append('inference_in_question')
+    if DEEPEN_BANNED.search(ack + question):
+        errs.append('meta_words')
+    if re.search(r'还是', question):
+        errs.append('choice_question')
+    if sum(1 for c in re.split(r'[，,；;]', question) if ASK_WORD.search(c.strip())) >= 2:
+        errs.append('multi_part')
+    if dim not in DEEPEN_DIMS:
+        errs.append('bad_dimension')
+    elif dim in dz['dims']:
+        errs.append('repeat_dimension')
+    return errs
+
+
+def deepen_close(text, result, extra=False):
+    """After the elder answers a deepen question (no new judgment): how this question ends. Returns (action, reason)."""
+    if (result or {}).get('decision') == 'paused':
+        return 'rest', None
+    sig = elder_signal(text)
+    if sig == 'rest':
+        return 'rest', None
+    if sig == 'declined':
+        return 'close', 'declined_partial'
+    if sig == 'unknown' or (extra and DEEPEN_UNKNOWN.search(text or '')):
+        return 'close', 'unknown'
+    return 'close', 'done'
+
+
 # --------------------------------------------------------------------------- session
 ERROR_TEXT = '抱歉，刚才这段没处理好，咱们先往下聊。'
 
@@ -495,6 +619,13 @@ def session(S, sid, nid, questions, mode):
         st = {'followups': 0, 'ask_counts': ask_counts, 'prev_eff': {}, 'supplements': 0, 'pending': None}
         prompt_for_sim, asked_part = entry, entry
         phase, k, close, final = 'exploring', 0, None, None
+        deepening = bool(S.deepen) and mode != 'baseline' and qid in S.story
+        if deepening:
+            item = S.story[qid]
+            dz = {'story': True, 'sensitive': bool(item.get('sensitive')), 'direction': item['deepen_direction'],
+                  'cap': S.deepen['max_per_sensitive'] if item.get('sensitive') else S.deepen['max_per_question'],
+                  'asked': 0, 'dims': [], 'log': []}
+            deepen_sources = []
         while True:
             if k >= MAX_TURNS:
                 close = {'reason': 'max_turns'}
@@ -511,6 +642,10 @@ def session(S, sid, nid, questions, mode):
             sys_calls = []
             # ---------------- explicit controls (both policies, no model call)
             if CONTROLS.skips_question(text):
+                if phase == 'deepen':  # the question was already answered before the detail question
+                    dz['log'].append({'k': k, 'decision': 'stop', 'reason': 'answer_skip_control'})
+                    close = {'reason': 'declined_partial', 'control': 'skip'}
+                    break
                 close = {'reason': 'declined', 'control': 'skip'}
                 break
             if PAUSE_RE.fullmatch(text.strip()):
@@ -518,6 +653,12 @@ def session(S, sid, nid, questions, mode):
             elif mode == 'baseline' and phase == 'supplement' and len(text) <= 20 and NO_MORE.search(text):
                 close = {'reason': 'done', 'control': 'confirm_draft'}
                 break
+            elif phase == 'deepen':
+                # answer to a detail question: not judged again (the elements were complete); kept verbatim as a
+                # source of this question for the draft
+                deepen_sources.append({'id': f'{qid}-a{k}', 'text': text, 'question': asked_part, 'dimension': dz['dims'][-1]})
+                elder['deepen_answer'] = True
+                result = None
             else:
                 # ---------------- v3j judgment (unchanged pipeline, production multi-turn state)
                 source = {'id': f'{qid}-a{k}', 'text': text, 'question': asked_part}
@@ -531,7 +672,7 @@ def session(S, sid, nid, questions, mode):
                 elder['judge'] = judge_summary(S, result, qid)
                 final = result
             elder['calls_system'] = sys_calls
-            decision = result.get('decision')
+            decision = (result or {}).get('decision')
             # ---------------- baseline: production fixed texts
             if mode == 'baseline':
                 if decision == 'paused':
@@ -573,10 +714,64 @@ def session(S, sid, nid, questions, mode):
                 prompt_for_sim, asked_part = BASE_DONE, BASE_DONE
                 continue
             # ---------------- v4: speaking layer + natural ending rules
-            action, arg = v4_decide(S, result, st, text)
-            st['prev_eff'] = dict(result.get('effective') or {})
-            elder['signal'] = st.get('signal')
+            if phase == 'deepen':
+                action, arg = deepen_close(text, result, S.deepen.get('extra_guards'))
+                elder['signal'] = elder_signal(text)
+            else:
+                action, arg = v4_decide(S, result, st, text)
+                st['prev_eff'] = dict(result.get('effective') or {})
+                elder['signal'] = st.get('signal')
             elder['v4_action'] = [action, arg]
+            if deepening and action != 'ask':
+                # ---------------- v5: one more detail question before the close (story questions only)
+                elder_words = ''.join(m['text'] for m in msgs if m['role'] == 'elder' and not m.get('scripted'))
+                ok, why, info = deepen_gate(S, qid, arg if action == 'close' else action, text, elder_words, dz, k)
+                entry_log = {'k': k, 'decision': 'skip' if not ok else 'asked', 'reason': why, **info}
+                if ok:
+                    dialogue = [(m['role'], m['text']) for m in msgs if not m.get('scripted')]
+                    prior = [m.get('question_part') for m in msgs if m['role'] == 'system']
+                    call = {'id': f'{qid}-d{dz["asked"] + 1}-deepen', 'system': S.deepen_prompt, 'params': S.deepen['model'],
+                            'user': deepen_user(S, qid, dialogue, dz)}
+                    [row] = yield [call]
+                    sys_calls.append({**call_info(row), 'kind': 'deepen'})
+                    dim, ack, question = parse_deepen(row)
+                    ack, ack_fix = clean_ack(ack, elder_words)
+                    if S.deepen.get('drop_echo_ack'):
+                        ack, echo = deepen_ack(ack, question)
+                        ack_fix += echo
+                    if S.deepen.get('extra_guards') and DEEPEN_ACK_EVAL.search(ack):
+                        ack, ack_fix = '', ack_fix + ['ack_eval']
+                    errs = []
+                    if not row.get('ok') or not isinstance(row.get('output'), dict):
+                        errs = ['call_failed']
+                    elif not question and not dim:
+                        errs = ['model_skip']
+                    else:
+                        errs = check_deepen(dim, ack, question, prior, dz)
+                        if errs and ack and not check_deepen(dim, '', question, prior, dz):
+                            ack_fix.append('ack_dropped:' + ','.join(errs))
+                            ack, errs = '', []
+                    entry_log.update({'dimension': dim, 'ack': ack, 'question': question, 'errors': errs, 'repairs': ack_fix,
+                                      'raw': row.get('content')})
+                    if not errs:
+                        dz['asked'] += 1
+                        dz['dims'].append(dim)
+                        dz['log'].append(entry_log)
+                        text_out = join(ack, question)
+                        elder['deepen'] = 'asked'
+                        msgs.append({'role': 'system', 'text': text_out, 'kind': 'deepen', 'dimension': dim, 'question_part': question,
+                                     'deepen_n': dz['asked'],
+                                     'speaker': {'ack': ack, 'question': question, 'errors': [], 'repairs': ack_fix,
+                                                 'raw': row.get('content'), 'input': call['user']},
+                                     'calls': sys_calls})
+                        phase = 'deepen'
+                        prompt_for_sim, asked_part = text_out, question
+                        continue
+                    # failed or invalid: no deepen, the question closes as it would have (never a fixed question)
+                    entry_log['decision'] = 'skip'
+                    entry_log['reason'] = 'invalid' if errs[0] not in ('call_failed', 'model_skip') else errs[0]
+                elder['deepen'] = entry_log['reason']
+                dz['log'].append(entry_log)
             if action == 'ask':
                 dialogue = [(m['role'], m['text']) for m in msgs if not m.get('scripted')]
                 prior = [m.get('question_part') for m in msgs if m['role'] == 'system']
@@ -660,9 +855,13 @@ def session(S, sid, nid, questions, mode):
                                      'raw': row.get('content'), 'input': call['user']}})
             entry_already_shown = bool(next_entry)
             prev_close = text_out
-        episodes.append({'qid': qid, 'entry': entry, 'messages': msgs, 'close_reason': reason,
-                         'final_decision': (final or {}).get('decision'),
-                         'final': judge_summary(S, final, qid) if final else None,
-                         'material_ids': [e['id'] for e in S.personas.material(nid, qid)]})
+        record = {'qid': qid, 'entry': entry, 'messages': msgs, 'close_reason': reason,
+                  'final_decision': (final or {}).get('decision'),
+                  'final': judge_summary(S, final, qid) if final else None,
+                  'material_ids': [e['id'] for e in S.personas.material(nid, qid)]}
+        if deepening:
+            record['deepen'] = dz
+            record['deepen_sources'] = deepen_sources
+        episodes.append(record)
     return {'session': sid, 'narrator_id': nid, 'name': S.personas.names[nid], 'mode': mode, 'questions': questions,
             'episodes': episodes}
