@@ -265,4 +265,4 @@ v5b（`history/deepen-prompt.v5b.txt`、`history/speaker-config.v5b.json`）：�
 
 ## 7.3 后端候选（`INTERVIEW_PIPELINE=v3j_v5f`，0 token）
 
-见交接单 `docs/phase-2/interview-optimization/handoffs/2026-10-26-<候选短SHA>.md`。模拟器与后端逐字一致的验证：`tests/test_interview_v5f_sim_replay.py` 把 st7-b5f-it 全部 16 道题经后端访谈入口 / 骨架入口回放，判定 20/20、动作 20/20、深挖调用 15/15（含 5 次校验不过或模型不问的）、深挖问句 10/10、说话层输入 20/20 逐字相同，缓存 0 未命中；`tests/test_interview_v5f.py` 另把后端与模拟器的读法、守卫、校验函数放在已存运行的 234 段老人回答、92 条收尾原始输出、63 条深挖问句上逐一比对。
+候选 `20013ab`，交接单 [`docs/phase-2/interview-optimization/handoffs/2026-10-26-20013ab.md`](../../phase-2/interview-optimization/handoffs/2026-10-26-20013ab.md)。模拟器与后端逐字一致的验证：`tests/test_interview_v5f_sim_replay.py` 把 st7-b5f-it 全部 16 道题经后端访谈入口 / 骨架入口回放，判定 20/20、动作 20/20、深挖调用 15/15（含 5 次校验不过或模型不问的）、深挖问句 10/10、说话层输入 20/20 逐字相同，缓存 0 未命中；`tests/test_interview_v5f.py` 另把后端与模拟器的读法、守卫、校验函数放在已存运行的 234 段老人回答、92 条收尾原始输出、63 条深挖问句上逐一比对。

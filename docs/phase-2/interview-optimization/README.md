@@ -11,6 +11,8 @@ Claude 负责持续采访优化，Codex 负责整合、部署、云端测试和�
 
 C01–C03 业务结果仍为上一轮 `ed38ab2`：接收 Claude `ece64ea`（交接单 `50572cc`）并整合 main/OSS；候选 15 场景/89 检查、生产 9 场景/59 检查通过，之后已获授权合入 main。本次数据库修复没有重跑或冒充新的真实模型问答，正式连续三轮质量门槛仍未宣称通过。C02 原草稿固定问句及说话层实际回退原文继续保留，完整范围见业务回执。
 
+**最新 Claude 候选（待整合）**：[2026-10-26 故事题深挖 v5f 交接单](handoffs/2026-10-26-20013ab.md)，候选 `20013ab6339b4f2c34205b3bcda5318bb4234631`（分支 `interview/claude-story-deepen`），以 `INTERVIEW_PIPELINE=v3j_v5f` 启用（代码默认仍为 v2），运行合同 `interview_runtime_v3j_v5f` pin `9b9d0d7b…6c231b`；未部署。
+
 历史：[首次云端发布与问题回传](handoffs/2026-10-23-cloud-release.md)、[Claude C01–C03 候选交接单](handoffs/2026-10-23-ece64ea.md)。上轮 770f841 之后生产已先上线 OSS 649b5b9，本轮基于该实际运行代码整合，不能把历史版本表误读为当前整台后端版本。
 
 ## 版本台账
@@ -23,6 +25,7 @@ C01–C03 业务结果仍为上一轮 `ed38ab2`：接收 Claude `ece64ea`（交�
 | **v4d** | 说话层：只改怎么说（承接、追问、收尾转题），不改问什么 | 模拟访谈迭代组 8 人 × 4 题：自然 3.97、贴合 4.03、时机 4.69、语气 4.72，硬性违规 2.8%（现网固定话术 2.47 / 2.21 / 2.93 / 3.21，违规 44%） | 已随 v3j 上线，仍有流程待办 | `docs/prototypes/full-interview-v4/` + `tools/interview_eval/simulate/` |
 | **C01–C03 已发布** | 判定后收尾规则与补充阶段：信号只认本人当前意图；已答后“不想多讲”给草稿入口；“没有补充了”直接进核对 | 离线（0 token）：后端测试 Ran 79 / skip 1，full45 后端回放 197/204 不变，sim-hv4d 回放 0 变化；影响检查 463 段回答信号变化 0、收尾变化 6 | 整合 ed38ab2 已发布：候选 15/89、生产 9/59 场景/检查通过；质量门槛仍待办 | [Codex 回执](handoffs/2026-10-23-c01-c03-cloud-release.md)，共享分支 `interview/question-optimization` |
 | v4e | 说话层：追问恢复“把老人刚讲的事放进问句”，转题不套模板 | 未测完 | 开发中，提示存于 `history/speaker-prompt.v4e-untested.txt` | 同上 |
+| **v5f 故事题深挖（后端候选）** | 23 道故事题要素齐后、收尾前最多再问 2 次细节（敏感题 1 次）；部分记不清只不追那一点；温暖承接与转题，转题短语只限同会话重复；访谈入口在草稿步骤前、骨架 SK01c 在转下一题前 | 模拟迭代组 5 人 15 道故事题（对照 v4d）：自然 ≥4 74% → 86%、贴合 95% → 79%、时机 100% → 97%，违规 2/19 → 2/29，复述率 60% → 23%，原话 58.7 → 82.3 字/题、素材 3.87 → 4.67 条/题；离线（0 token）：后端测试 Ran 98 / skip 1，full45 197/204，v5f 模拟回放判定、深挖与说话层输入逐字相同 | 待整合，未部署；`INTERVIEW_PIPELINE=v3j_v5f` | [交接单](handoffs/2026-10-26-20013ab.md)，`cloud-deployment/backend/app/ai/interview_story.py`，`docs/prototypes/full-interview-v5/` |
 | v5c1 故事题深挖 | 说话层之上加一步：23 道故事题要素齐后最多再问 2 次细节（敏感题 1 次），不改题库、判定层和 v4d 提示 | 模拟访谈 7 人 21 道故事题（迭代 + 留出）：老人原话 54 → 68 字/题，自然 ≥4 76% → 82%，时机 ≥4 100% → 97%，违规 8% → 2.9% | 模拟器原型，未接入后端；故事题清单与门槛待用户确认 | `docs/prototypes/full-interview-v5/`，分支 `interview/claude-story-deepen` |
 | **接入后端** | v3j 判定层 + v4d 说话层进入后端访谈入口和人生骨架，`INTERVIEW_PIPELINE=v3j_v4d` 启用 | 离线（0 token）：full45 后端回放 197/204，204 个检查点与 `branch-check-v3j` 逐个相同，其中 64 个 SK 检查点经骨架入口也逐个相同；sim-hv4d 的 35 次判定全部相同，31 次说话层输入与模拟器逐字相同（其余 2 次是骨架最后一题，后端按设计不调用） | 代码默认关闭；云端已启用，真实候选与 HTTPS 已验证，iPhone 已做独立只读检查 | `cloud-deployment/backend/app/ai/interview_runtime_v3j_v4d/`，见下文 |
 
