@@ -108,9 +108,10 @@
 用户已授权并完成正式发布，功能提交 `1f303b7`。现有域名、端口与数据卷不变；业务接口改用 Bearer 设备会话，注册／登录及 `/health` 不再受旧 Basic gate 保护，匿名业务请求仍为 401。正式迁移为 `h10100000001`，3 位家人、12 条回忆、40 份媒体保留。该次历史配置为 `/opt/shinian-releases/auth-1f303b7/production-override.json`；当前维护使用下面 OSS 发布记录指向的最新 override。认证历史见完整工程 `docs/phase-2/auth-service/deployment.md`。
 
 
-## 当前正式后端（2026-10-23）
+## 当前正式后端（2026-10-27，V6）
 
-- 当前运行 revision：`a1ecee61eae633898f1ba3a7200a630ca66a32c2`，修复大段采访 JSON 导致会话列表排序报 MySQL 1038、采访入口 503。继承 Claude C01–C03、Codex `ed38ab2`、`770f841` 及 OSS。修复已同步 `main` 和 `interview/question-optimization`，用户明确授权后发布；实际模拟器入口已恢复。见[最新数据库排序修复回执](../../../../docs/phase-2/interview-optimization/handoffs/2026-10-23-session-list-sort.md)，采访业务质量仍见 [C01–C03 回执](../../../../docs/phase-2/interview-optimization/handoffs/2026-10-23-c01-c03-cloud-release.md)。
+- 用户批准将先承接再追问版冻结为 **V6** 并发布生产、同步 `main` 与 `interview/question-optimization`。生产产品 revision：`8799b52b4d7590ea522c6798c364fd2fa451226a`，继承 Claude `20013ab` 及此前 `a1ecee6` 排序、`ed38ab2` C01–C03、`770f841` 题序和 OSS。当前结果与已知问题见 [V6 发布回执](../../../../docs/phase-2/interview-optimization/handoffs/2026-10-27-v6-release.md)。
+- V6 是冻结发布名，内部 pipeline 为 `v3j_v5f`；运行包 `interview_runtime_v3j_v5f_listening` 的 pin 为 `1062b6c2158fa8132c0a6ea9541a4dcdbec80f6dd32d21cfda0d816cd2a76487`。DeepSeek v4-pro、thinking disabled。v4d/v2 旧题继续原流程；保留原 v4d pin `8897f3c50690d70571e8b8bf2acf2176c80caf17c860ddf6f207c2470a3ba99f`。正式连续三轮质量门槛未宣称通过。
 - 生产已启用私有 OSS；过渡期间保留本地原件与镜像。采访、模型、数据库、媒体卷及访问入口沿用原配置。
-- 重建前读取最新回执及 [OSS 正式发布记录](../../../../docs/project/oss-media-deployment-2026-10-23.md)，使用 `/opt/shinian-releases/session-list-sort-a1ecee6-20261023/production-override.json`，完整保留受保护环境与 OSS 挂载；该文件内容不输出或上传。兼容回退使用同目录 `fallback-v2-override.json`，只切 `INTERVIEW_PIPELINE=v2`，保留新镜像和 runtime pin。
-- 权威源码：该 release 的 `source/cloud-deployment/backend/`，镜像 digest 为 `sha256:d7b94334ac909feb59775a19b5b27fde48737153ff919bdf83eb2192f809b0d8`。`/opt/ai-memories/backend/CLOUD_VERSION.md` 记录当前引用；历史部署目录的 Git HEAD 不代表正在运行的镜像。
+- 重建前读取最新回执及 [OSS 正式发布记录](../../../../docs/project/oss-media-deployment-2026-10-23.md)，使用 `/opt/shinian-releases/interview-v6-8799b52-20261027/production-override.json`，完整保留受保护环境与 OSS 挂载；该文件内容不输出或上传。兼容回退使用同目录 `fallback-v4d-override.json`，只切 `INTERVIEW_PIPELINE=v3j_v4d`，保留 V6 新镜像及所有 runtime pin；已在 V6 开始的题继续 V6。
+- 权威源码：该 release 的 `source/cloud-deployment/backend/`，镜像 digest 为 `sha256:1d84622e63c4d31697b351c9ff59b7deda8b252a0f39d69fa14361dc902e68ae`。`/opt/ai-memories/backend/CLOUD_VERSION.md` 记录当前引用；历史部署目录的 Git HEAD 不代表正在运行的镜像。数据、媒体、实际执行源码、环境、Nginx/TLS 和 OSS 配置备份已在本 release 校验，未输出到仓库。

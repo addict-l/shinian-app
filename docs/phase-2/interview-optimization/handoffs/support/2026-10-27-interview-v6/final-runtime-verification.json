@@ -1,0 +1,25 @@
+{
+  "version": "V6",
+  "code_sha": "8799b52b4d7590ea522c6798c364fd2fa451226a",
+  "image": "sha256:1d84622e63c4d31697b351c9ff59b7deda8b252a0f39d69fa14361dc902e68ae",
+  "pipeline": "v3j_v5f",
+  "runtime_pin": "1062b6c2158fa8132c0a6ea9541a4dcdbec80f6dd32d21cfda0d816cd2a76487",
+  "v4d_pin": "8897f3c50690d70571e8b8bf2acf2176c80caf17c860ddf6f207c2470a3ba99f",
+  "mounts_unchanged": true,
+  "ports_unchanged": true,
+  "unrelated_environment_preserved": true,
+  "checks": [
+    {
+      "host": "api.xn--zbs33ddmy9oeqa.club",
+      "https_health_status": 200,
+      "database": "ok",
+      "unauthenticated_business_status": 401
+    },
+    {
+      "host": "aimemory.47-82-83-74.nip.io",
+      "https_health_status": 200,
+      "database": "ok",
+      "unauthenticated_business_status": 401
+    }
+  ]
+}

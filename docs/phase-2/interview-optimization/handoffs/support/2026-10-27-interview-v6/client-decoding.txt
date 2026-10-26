@@ -1,0 +1,1 @@
+iOS existing Codable models: states=37, life=37, guided=37, errors=0

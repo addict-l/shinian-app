@@ -1,0 +1,25 @@
+{
+  "integration_sha": "8799b52b4d7590ea522c6798c364fd2fa451226a",
+  "all_required_gates_passed": true,
+  "local_suite": {
+    "run": 130,
+    "skipped": 1,
+    "failures": 0,
+    "errors": 0
+  },
+  "cloud_suite": {
+    "run": 130,
+    "skipped": 1,
+    "failures": 0,
+    "errors": 0
+  },
+  "approved_candidate_backend_equivalent": true,
+  "image_files_verified": 316,
+  "candidate_focus_cases": 8,
+  "candidate_focus_checks": 51,
+  "provider_audit_passed": true,
+  "client_not_changed": true,
+  "keyboard_settings_untouched": true,
+  "known_quality_limitations_accepted_for_release": true,
+  "formal_quality_acceptance_passed": false
+}

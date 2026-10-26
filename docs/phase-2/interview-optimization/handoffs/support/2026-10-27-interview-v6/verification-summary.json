@@ -1,0 +1,316 @@
+{
+  "version": "V6",
+  "code_sha": "8799b52b4d7590ea522c6798c364fd2fa451226a",
+  "source_kind": "fixed_git_commit",
+  "production_switched": true,
+  "quality_acceptance_passed": false,
+  "final_cases": 14,
+  "final_cases_passed": 14,
+  "final_checks": 154,
+  "final_failed_checks": 0,
+  "production_verification": {
+    "environment": "official_production_https",
+    "version": "V6",
+    "passed": true,
+    "cases": 14,
+    "passed_cases": 14,
+    "checks": 154,
+    "failed_checks": 0,
+    "results": [
+      {
+        "case": "v5f_V6_PROD_short_cause",
+        "passed": true,
+        "error": null,
+        "checks": 8
+      },
+      {
+        "case": "v5f_V6_PROD_partial_memory",
+        "passed": true,
+        "error": null,
+        "checks": 23
+      },
+      {
+        "case": "v5f_V6_PROD_work_retry",
+        "passed": true,
+        "error": null,
+        "checks": 22
+      },
+      {
+        "case": "v5f_regression_C01_0",
+        "passed": true,
+        "error": null,
+        "checks": 5
+      },
+      {
+        "case": "v5f_regression_C01_1",
+        "passed": true,
+        "error": null,
+        "checks": 5
+      },
+      {
+        "case": "v5f_V6_PROD_sensitive",
+        "passed": true,
+        "error": null,
+        "checks": 17
+      },
+      {
+        "case": "v5f_regression_C01_2",
+        "passed": true,
+        "error": null,
+        "checks": 5
+      },
+      {
+        "case": "v5f_regression_C01_3",
+        "passed": true,
+        "error": null,
+        "checks": 5
+      },
+      {
+        "case": "v5f_regression_C02_partial",
+        "passed": true,
+        "error": null,
+        "checks": 5
+      },
+      {
+        "case": "v5f_regression_C02_empty",
+        "passed": true,
+        "error": null,
+        "checks": 4
+      },
+      {
+        "case": "v5f_V6_PROD_S04_only",
+        "passed": true,
+        "error": null,
+        "checks": 10
+      },
+      {
+        "case": "v5f_V6_PROD_S04_actor_phrase",
+        "passed": true,
+        "error": null,
+        "checks": 10
+      },
+      {
+        "case": "v5f_V6_PROD_S04_addition",
+        "passed": true,
+        "error": null,
+        "checks": 10
+      },
+      {
+        "case": "v5f_V6_PROD_full_skeleton",
+        "passed": true,
+        "error": null,
+        "checks": 25
+      }
+    ],
+    "database_seeding_used": false,
+    "existing_family_written": false,
+    "response_type": "fixed synthetic acceptance text",
+    "runtime_pin": "1062b6c2158fa8132c0a6ea9541a4dcdbec80f6dd32d21cfda0d816cd2a76487",
+    "initial_failed_attempts_retained": 1,
+    "total_case_captures_including_initial": 15,
+    "recovery": "same person and same API operation retried after MySQL deadlock; no source/runtime/config changes",
+    "concurrency_issue_fixed": false,
+    "draft_generated_and_confirmed_via_production_API": true,
+    "draft_confirmation_idempotent": true
+  },
+  "initial_failed_attempts_retained": 1,
+  "initial_failure": "parallel synthetic person opening caused MySQL deadlock; same request retried; concurrency defect not fixed",
+  "provider_audit": {
+    "passed": true,
+    "retained_calls_verified": true,
+    "full_call_trace_complete": true,
+    "missing_deepen_call_entries": [],
+    "errors": [],
+    "unique_successful_response_ids": 192,
+    "successful_by_stage": {
+      "judge": 28,
+      "speaker": 157,
+      "deepen": 7
+    },
+    "successful_by_flow": {
+      "v3j_v5f": 192
+    },
+    "unique_request_digests": 69,
+    "recorded_failed_provider_calls": []
+  },
+  "production": {
+    "version": "V6",
+    "code_sha": "8799b52b4d7590ea522c6798c364fd2fa451226a",
+    "image": "sha256:1d84622e63c4d31697b351c9ff59b7deda8b252a0f39d69fa14361dc902e68ae",
+    "pipeline": "v3j_v5f",
+    "runtime_pin": "1062b6c2158fa8132c0a6ea9541a4dcdbec80f6dd32d21cfda0d816cd2a76487",
+    "v4d_pin": "8897f3c50690d70571e8b8bf2acf2176c80caf17c860ddf6f207c2470a3ba99f",
+    "mounts_unchanged": true,
+    "ports_unchanged": true,
+    "unrelated_environment_preserved": true,
+    "checks": [
+      {
+        "host": "api.xn--zbs33ddmy9oeqa.club",
+        "https_health_status": 200,
+        "database": "ok",
+        "unauthenticated_business_status": 401
+      },
+      {
+        "host": "aimemory.47-82-83-74.nip.io",
+        "https_health_status": 200,
+        "database": "ok",
+        "unauthenticated_business_status": 401
+      }
+    ]
+  },
+  "deployment": {
+    "activated": true,
+    "integration_sha": "8799b52b4d7590ea522c6798c364fd2fa451226a",
+    "image": "sha256:1d84622e63c4d31697b351c9ff59b7deda8b252a0f39d69fa14361dc902e68ae",
+    "version": "V6",
+    "pipeline": "v3j_v5f",
+    "runtime_pin": "1062b6c2158fa8132c0a6ea9541a4dcdbec80f6dd32d21cfda0d816cd2a76487",
+    "release": "/opt/shinian-releases/interview-v6-8799b52-20261027",
+    "health": {
+      "status": "ok",
+      "database": "ok",
+      "llm_configured": true
+    },
+    "https_health": {
+      "status": "ok",
+      "database": "ok",
+      "llm_configured": true
+    },
+    "business_data_unchanged_during_cutover": true,
+    "backup_verified": true,
+    "business_counts_at_cutover": {
+      "alembic_version": 1,
+      "auth_rate_limits": 18,
+      "chat_messages": 496,
+      "chat_sessions": 86,
+      "device_sessions": 31,
+      "families": 9,
+      "family_accounts": 9,
+      "family_members": 21,
+      "media_assets": 55,
+      "media_cleanup_jobs": 0,
+      "memoir_settings": 1,
+      "memories": 32,
+      "memory_deletions": 3,
+      "memory_drafts": 33,
+      "memory_persons": 15,
+      "media_files": 55
+    },
+    "ports_mounts_full_environment_preserved": true,
+    "oss_preserved": true,
+    "pending_speaker_calls_before_cutover": 0,
+    "fallback": "same new image and runtime settings; INTERVIEW_PIPELINE=v3j_v4d",
+    "formal_three_round_quality_acceptance": false,
+    "production_postrelease_scenarios": {
+      "environment": "official_production_https",
+      "version": "V6",
+      "passed": true,
+      "cases": 14,
+      "passed_cases": 14,
+      "checks": 154,
+      "failed_checks": 0,
+      "results": [
+        {
+          "case": "v5f_V6_PROD_short_cause",
+          "passed": true,
+          "error": null,
+          "checks": 8
+        },
+        {
+          "case": "v5f_V6_PROD_partial_memory",
+          "passed": true,
+          "error": null,
+          "checks": 23
+        },
+        {
+          "case": "v5f_V6_PROD_work_retry",
+          "passed": true,
+          "error": null,
+          "checks": 22
+        },
+        {
+          "case": "v5f_regression_C01_0",
+          "passed": true,
+          "error": null,
+          "checks": 5
+        },
+        {
+          "case": "v5f_regression_C01_1",
+          "passed": true,
+          "error": null,
+          "checks": 5
+        },
+        {
+          "case": "v5f_V6_PROD_sensitive",
+          "passed": true,
+          "error": null,
+          "checks": 17
+        },
+        {
+          "case": "v5f_regression_C01_2",
+          "passed": true,
+          "error": null,
+          "checks": 5
+        },
+        {
+          "case": "v5f_regression_C01_3",
+          "passed": true,
+          "error": null,
+          "checks": 5
+        },
+        {
+          "case": "v5f_regression_C02_partial",
+          "passed": true,
+          "error": null,
+          "checks": 5
+        },
+        {
+          "case": "v5f_regression_C02_empty",
+          "passed": true,
+          "error": null,
+          "checks": 4
+        },
+        {
+          "case": "v5f_V6_PROD_S04_only",
+          "passed": true,
+          "error": null,
+          "checks": 10
+        },
+        {
+          "case": "v5f_V6_PROD_S04_actor_phrase",
+          "passed": true,
+          "error": null,
+          "checks": 10
+        },
+        {
+          "case": "v5f_V6_PROD_S04_addition",
+          "passed": true,
+          "error": null,
+          "checks": 10
+        },
+        {
+          "case": "v5f_V6_PROD_full_skeleton",
+          "passed": true,
+          "error": null,
+          "checks": 25
+        }
+      ],
+      "database_seeding_used": false,
+      "existing_family_written": false,
+      "response_type": "fixed synthetic acceptance text",
+      "runtime_pin": "1062b6c2158fa8132c0a6ea9541a4dcdbec80f6dd32d21cfda0d816cd2a76487",
+      "initial_failed_attempts_retained": 1,
+      "total_case_captures_including_initial": 15,
+      "recovery": "same person and same API operation retried after MySQL deadlock; no source/runtime/config changes",
+      "concurrency_issue_fixed": false,
+      "draft_generated_and_confirmed_via_production_API": true,
+      "draft_confirmation_idempotent": true
+    }
+  },
+  "holdout_used_for_tuning": false,
+  "live_actor_cases": 0,
+  "respondent": "fixed synthetic acceptance inputs; no real elder or live AI actor",
+  "candidate_dialogues_are_separate": true,
+  "all_final_functional_checks_passed": true,
+  "scope": "Official HTTPS, independent synthetic family, actual API setup, no production DB seeding; draft-generation calls are not included in this interview-provider audit"
+}

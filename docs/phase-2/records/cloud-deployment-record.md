@@ -22,3 +22,10 @@
 用户明确批准“发布修复并恢复采访”后，将 `a1ecee61eae633898f1ba3a7200a630ca66a32c2` 发布到真实阿里云，同时推送 main 和共享分支。镜像 `sha256:d7b94334ac909feb59775a19b5b27fde48737153ff919bdf83eb2192f809b0d8`，release `/opt/shinian-releases/session-list-sort-a1ecee6-20261023`。仅修复会话列表完整 JSON 行排序导致的 MySQL 1038/采访入口 503；采访流程、模型、runtime pin 和 OSS 不变。
 
 本地/云端 Ran 80、skip 1、失败/错误 0；独立 MySQL/HTTPS 验证及原受影响家庭只读验证通过。备份校验与切换窗口全表/媒体指纹一致，v2-only fallback 已准备、未触发。发布后正式 HTTPS 业务列表 200、匿名认证 401；现有模拟器此前失败人物的 conversation POST/GET 200，显示人生骨架第一题，可继续用户测试。未改键盘设置，未代答或保存回忆。具体证据、工具和 Claude 下一轮继承要求见[最新修复回执](../interview-optimization/handoffs/2026-10-23-session-list-sort.md)。此前 C01–C03 后来已获授权合入 main；上述历史记录的“未合并”仅为当时发布状态。
+
+
+## 采访 V6 冻结与真实云端发布（2026-10-27）
+
+用户明确批准V6冻结、真实阿里云发布及main/共享分支同步。产品8799b52，镜像1d84622e…902e68ae，pipeline v3j_v5f，listening pin1062b6c2…a76487；旧v4d pin和所有状态兼容保留。受控release `/opt/shinian-releases/interview-v6-8799b52-20261027`，当前production override与只切v4d的fallback均在其中。备份可读性/哈希、切换窗口全表及媒体指纹一致，OSS/挂载/端口/其他env保持。
+
+最终镜像Ran130/skip1，正式HTTPS独立合成家庭最终14场景/154检查通过；初次并发入口死锁503另保留，同请求重试恢复，并发根因未修复。192个成功采访调用模型/参数/请求摘要一致、thinking disabled。原始记录、工具、冻结版本、同步边界和下一轮责任见[V6回执](../interview-optimization/handoffs/2026-10-27-v6-release.md)。质量三连轮门槛仍未宣称通过，未改客户端代码或键盘设置。

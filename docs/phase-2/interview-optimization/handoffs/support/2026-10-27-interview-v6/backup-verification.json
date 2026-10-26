@@ -1,0 +1,33 @@
+{
+  "readable": true,
+  "files": {
+    "database.sql.gz": {
+      "bytes": 624408,
+      "sha256": "1d2dbbbaccc832ddeda0a0687217b00c6c8e2c24bb0751c3b3e67cd0acb042e9"
+    },
+    "media.tar.gz": {
+      "bytes": 25017201,
+      "sha256": "f0d0ca0721f705c7011f15273a2b1241ec5a8fb2d178426a4f7d06d212c9fdc4"
+    },
+    "source-before.tar": {
+      "bytes": 4949504,
+      "sha256": "c2da0a4e1aa28b9ae5a056283a9647d8733aaddd3fb024fea6802fb781987aaa"
+    },
+    "nginx-before.tar.gz": {
+      "bytes": 8425,
+      "sha256": "74804d9ee632d5655a4873a9c9b615d45479299223e6ab69cf2a1467bb5c633b"
+    },
+    "tls-before.tar.gz": {
+      "bytes": 10899,
+      "sha256": "e5e748dee4cd8960c049d5332b2cd519389e7302c68c9c1b37a9c7f35022e966"
+    },
+    "oss-config-before.tar.gz": {
+      "bytes": 331,
+      "sha256": "8fef5f09b7a4ee7849d320970f5f827a52d070e224f77846088f9b2e7bd3d389"
+    },
+    "env.production.backup": {
+      "bytes": 982,
+      "sha256": "a503c41c29200d8bd612a028a180b3cda8e5cde087d5e6d00b64e1d6e908508d"
+    }
+  }
+}

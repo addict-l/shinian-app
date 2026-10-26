@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "retained_calls_verified": true,
+  "full_call_trace_complete": true,
+  "missing_deepen_call_entries": [],
+  "errors": [],
+  "unique_successful_response_ids": 192,
+  "successful_by_stage": {
+    "judge": 28,
+    "speaker": 157,
+    "deepen": 7
+  },
+  "successful_by_flow": {
+    "v3j_v5f": 192
+  },
+  "unique_request_digests": 69,
+  "recorded_failed_provider_calls": []
+}

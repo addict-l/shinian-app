@@ -1,0 +1,105 @@
+{
+  "environment": "official_production_https",
+  "version": "V6",
+  "passed": true,
+  "cases": 14,
+  "passed_cases": 14,
+  "checks": 154,
+  "failed_checks": 0,
+  "results": [
+    {
+      "case": "v5f_V6_PROD_short_cause",
+      "passed": true,
+      "error": null,
+      "checks": 8
+    },
+    {
+      "case": "v5f_V6_PROD_partial_memory",
+      "passed": true,
+      "error": null,
+      "checks": 23
+    },
+    {
+      "case": "v5f_V6_PROD_work_retry",
+      "passed": true,
+      "error": null,
+      "checks": 22
+    },
+    {
+      "case": "v5f_regression_C01_0",
+      "passed": true,
+      "error": null,
+      "checks": 5
+    },
+    {
+      "case": "v5f_regression_C01_1",
+      "passed": true,
+      "error": null,
+      "checks": 5
+    },
+    {
+      "case": "v5f_V6_PROD_sensitive",
+      "passed": true,
+      "error": null,
+      "checks": 17
+    },
+    {
+      "case": "v5f_regression_C01_2",
+      "passed": true,
+      "error": null,
+      "checks": 5
+    },
+    {
+      "case": "v5f_regression_C01_3",
+      "passed": true,
+      "error": null,
+      "checks": 5
+    },
+    {
+      "case": "v5f_regression_C02_partial",
+      "passed": true,
+      "error": null,
+      "checks": 5
+    },
+    {
+      "case": "v5f_regression_C02_empty",
+      "passed": true,
+      "error": null,
+      "checks": 4
+    },
+    {
+      "case": "v5f_V6_PROD_S04_only",
+      "passed": true,
+      "error": null,
+      "checks": 10
+    },
+    {
+      "case": "v5f_V6_PROD_S04_actor_phrase",
+      "passed": true,
+      "error": null,
+      "checks": 10
+    },
+    {
+      "case": "v5f_V6_PROD_S04_addition",
+      "passed": true,
+      "error": null,
+      "checks": 10
+    },
+    {
+      "case": "v5f_V6_PROD_full_skeleton",
+      "passed": true,
+      "error": null,
+      "checks": 25
+    }
+  ],
+  "database_seeding_used": false,
+  "existing_family_written": false,
+  "response_type": "fixed synthetic acceptance text",
+  "runtime_pin": "1062b6c2158fa8132c0a6ea9541a4dcdbec80f6dd32d21cfda0d816cd2a76487",
+  "initial_failed_attempts_retained": 1,
+  "total_case_captures_including_initial": 15,
+  "recovery": "same person and same API operation retried after MySQL deadlock; no source/runtime/config changes",
+  "concurrency_issue_fixed": false,
+  "draft_generated_and_confirmed_via_production_API": true,
+  "draft_confirmation_idempotent": true
+}

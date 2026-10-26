@@ -1,0 +1,14 @@
+{
+  "checked_at": "2026-10-26T18:12:44.734583+00:00",
+  "deadlock_timestamp": [
+    "2026-10-26 18:09:57"
+  ],
+  "failed_operation_timestamp": "2026-10-26T18:09:57.278347+00:00",
+  "deadlock_mentions_test_person": true,
+  "deadlock_tables": [
+    "chat_sessions"
+  ],
+  "rolled_back": true,
+  "database_error_detail_logged_by_api": false,
+  "raw_deadlock_not_exported": true
+}

@@ -1,0 +1,26 @@
+{
+  "version": "V6",
+  "artifact_name": "shinian-interview-v6-production-20261027.zip",
+  "sha256": "853bc638769cc13fb8c0e72b07d75ae890d94df0b8e0cb867e99be2aa30fe820",
+  "bytes": 13289828,
+  "files": 89,
+  "security_scan": {
+    "archive_sha256": "853bc638769cc13fb8c0e72b07d75ae890d94df0b8e0cb867e99be2aa30fe820",
+    "zip_integrity": true,
+    "files_scanned_including_nested_source": 2619,
+    "actual_secret_values_checked": 8,
+    "files_containing_actual_secret": [],
+    "passed": true
+  },
+  "code_sha": "8799b52b4d7590ea522c6798c364fd2fa451226a",
+  "production_image": "sha256:1d84622e63c4d31697b351c9ff59b7deda8b252a0f39d69fa14361dc902e68ae",
+  "frozen_tag": "interview-v6",
+  "final_target_branches": [
+    "main",
+    "interview/question-optimization"
+  ],
+  "data_transfer": "User-downloadable attachment; user forwards to Claude. Access from Claude cloud not yet confirmed.",
+  "formal_quality_acceptance": false,
+  "initial_deadlock_failure_retained": true,
+  "concurrency_issue_fixed": false
+}

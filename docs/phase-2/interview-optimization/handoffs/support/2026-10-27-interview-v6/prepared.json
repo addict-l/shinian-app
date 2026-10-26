@@ -1,0 +1,11 @@
+{
+  "prepared": true,
+  "code_sha": "8799b52b4d7590ea522c6798c364fd2fa451226a",
+  "version": "V6",
+  "image": "sha256:1d84622e63c4d31697b351c9ff59b7deda8b252a0f39d69fa14361dc902e68ae",
+  "pipeline": "v3j_v5f",
+  "runtime_pin": "1062b6c2158fa8132c0a6ea9541a4dcdbec80f6dd32d21cfda0d816cd2a76487",
+  "backend_git_tree": "6816639d2ccd0c24a6353373773aface724ec9ab",
+  "backend_content_sha256": "de77f4d0398c27ee8206206925ce7ac71660eb149327f3048ce4f647aa154cca",
+  "image_files_verified": 316
+}
