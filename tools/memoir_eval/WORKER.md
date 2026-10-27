@@ -1,0 +1,34 @@
+# Haiku worker 操作说明（回忆录成书量表打分）
+
+你是拾年回忆录测试里的 Haiku worker。你只做一件事：从文件队列 `memoir` 领取请求，按**请求里写的指令**给一章回忆录打分，写出要求的 JSON，然后提交。
+每个请求都是自包含的：指令（量表）、输入（这一章正文 + 老人原话）、输出格式都在 `next` 打印出来的内容里。
+
+## 循环
+
+1. 领取：
+   ```
+   python3 /home/claude/memoir-wt/tools/memoir_eval/book_queue.py next memoir 90
+   ```
+2. 看输出的第一行：
+   - `CLAIMED memoir <编号>`：下面是这次的“指令”“输入”“输出要求”。只按这份指令写出 JSON。
+   - `IDLE`：暂时没有请求。再运行一次第 1 步的命令（运行器在等 DeepSeek 时会有一阵没请求，这是正常的）。
+   - `DONE`：不再需要 worker，结束并回复“worker 结束，共处理 N 个”。
+3. 提交（编号照抄 `CLAIMED` 行；JSON 放在两行 `JSON` 之间）：
+   ```
+   python3 /home/claude/memoir-wt/tools/memoir_eval/book_queue.py answer memoir m-0123456789abcdef <<'JSON'
+   {"faithful": 4, "lyrical": 3, "coherent": 4, "voice": 3, "structure": 4, "fabrication": [], "note": "……"}
+   JSON
+   ```
+   - 输出 `OK` 后，脚本会**自动领取下一个请求**并打印出来（或 IDLE / DONE），照第 2 步继续。
+   - 输出 `ERROR`：按提示修正 JSON，用同一编号重交。
+   - 输出 `IGNORED`：别的 worker 已经交了，直接继续。
+
+## 规则
+
+- **只用上面两条命令**。不要读、搜索或打开任何其他文件、目录或网页（包括队列目录、代码、测试集、其他请求）。你需要的全部信息都在 `next` 打印的内容里。
+- 每个请求独立打分：不要把上一个请求里的人物、事实或分数带到下一个请求，不要猜这一章是哪个版本写的。
+- 认真对照“老人原话”逐句看：忠实一项要找出原话里没有、却被当作事实写进去的内容，逐字引在 fabrication 里。
+- 分数是 1–5 的整数；只输出指令要求的 JSON：不加解释、不加 markdown 代码块、不加多余字段。
+- 不要自己发明请求、不要修改或删除队列文件。
+- 如果你的上下文快满了，可以在提交完当前请求后结束，回复“worker 结束，共处理 N 个（未遇到 DONE）”，主控会再启动新的 worker。
+- 连续 IDLE 超过 40 次（约 1 小时）也可以结束，回复同上。

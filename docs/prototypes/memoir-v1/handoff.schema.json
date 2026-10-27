@@ -1,0 +1,151 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "shinian.memoir-handoff/v1",
+  "title": "采访 → 成书层 交接数据（一位老人一份）",
+  "description": "成书层只读这份数据写书。字段来源与后端映射见 handoff.md。原话（turns[].text）是唯一的事实来源；如实草稿 draft 是老人已确认的事实整理，只帮助理解，不作为新增事实的依据。",
+  "type": "object",
+  "required": ["schema", "person", "material", "questions", "voice"],
+  "properties": {
+    "schema": {"const": "shinian.memoir-handoff/v1"},
+    "person": {
+      "type": "object",
+      "required": ["id", "name"],
+      "properties": {
+        "id": {"type": "string", "description": "family_members.id"},
+        "name": {"type": "string"},
+        "relationship": {"type": "string", "description": "family_members.relationship（与记录者的关系，写作时“我”始终指老人本人）"}
+      }
+    },
+    "material": {
+      "type": "object",
+      "description": "素材概况；kind=app 为真实 App 数据，rich/thin 为原型测试素材。",
+      "required": ["kind"],
+      "properties": {
+        "kind": {"enum": ["app", "rich", "thin"]},
+        "elder_chars": {"type": "integer", "description": "全部原话汉字数（决定篇幅档位与各章预算）"},
+        "questions": {"type": "integer"},
+        "turns": {"type": "integer"},
+        "snapshot_revision": {"type": "string", "description": "app：交接时的内容哈希（同 memoir snapshot 的 content_revision 思路），用于判断成书版本是否过期"}
+      }
+    },
+    "catalog": {
+      "type": "object",
+      "description": "题库版本：冻结 83 题 + 题目分类（story 23 / fact 23 / reflection 37）。",
+      "properties": {
+        "bank": {"type": "string"},
+        "runtime_version": {"type": "string", "description": "guided_interview.runtime_version，例如 full-interview-v2.0.0"},
+        "depth": {"type": "string"}
+      }
+    },
+    "skeleton": {
+      "type": "object",
+      "description": "开篇骨架 SK 11 题（序章素材）。题目本身也放在 questions 里（module=skeleton）。",
+      "properties": {
+        "question_ids": {"type": "array", "items": {"type": "string"}},
+        "status": {"enum": ["not_started", "collecting", "review", "confirmed"], "description": "life_interview.status"}
+      }
+    },
+    "questions": {
+      "type": "array",
+      "description": "按冻结题序排列；一题一项。没有回答的题不出现。",
+      "items": {"$ref": "#/$defs/question"}
+    },
+    "voice": {
+      "type": "object",
+      "description": "老人说话习惯，成书时由代码从原话提取（不需要后端存）；模型可再补口头语，但必须逐字出现在原话里。",
+      "properties": {
+        "kin_terms": {"type": "object", "additionalProperties": {"type": "integer"}, "description": "实际用的称呼及次数，如 {\"我爸\": 5, \"父亲\": 0}"},
+        "self_reference": {"type": "object", "additionalProperties": {"type": "integer"}},
+        "habits": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "excluded_values": {
+      "type": "array", "items": {"type": "string"},
+      "description": "老人更正后作废的旧说法（information.excluded_values 的并集），成书前从原话中剔除。"
+    },
+    "private_flags": {
+      "type": "array",
+      "description": "老人/家人标记“不写进书”的内容（后端需新增，见 handoff.md 缺口 G4）。",
+      "items": {"type": "object", "properties": {"source_id": {"type": "string"}, "quote": {"type": "string"}, "kind": {"type": "string"}}}
+    }
+  },
+  "$defs": {
+    "question": {
+      "type": "object",
+      "required": ["question_id", "module", "depth", "main_question", "status", "turns"],
+      "properties": {
+        "question_id": {"type": "string", "pattern": "^(SK|CH|GR|WK|FM|LT|RV)\\d{2}[a-d]?$"},
+        "module": {"enum": ["skeleton", "childhood", "growth", "work", "family", "later_life", "reflection"]},
+        "depth": {"enum": ["story", "fact", "reflection"]},
+        "sensitive": {"type": "boolean", "description": "题目分类里的 sensitive 标记（故事题深挖只问 1 次的题）"},
+        "title": {"type": "string", "description": "题目要点（contracts.json questions[].title）"},
+        "main_question": {"type": "string"},
+        "status": {"enum": ["saved", "skipped", "limited", "in_progress"], "description": "saved=已确认保存为回忆；skipped=老人跳过/拒绝；limited=部分记不清或不想讲但已保存；in_progress=未保存（成书默认不用）"},
+        "memory_id": {"type": ["string", "null"], "description": "memories.id（saved 才有）"},
+        "session_id": {"type": ["string", "null"], "description": "memories.source_session_id / chat_sessions.id"},
+        "memory_date": {"type": ["string", "null"], "description": "memories.memory_date（老人确认的确切日期，可空）"},
+        "location": {"type": ["string", "null"]},
+        "turns": {
+          "type": "array",
+          "description": "这一题里老人说的每一段话（原文全文），按时间顺序；asked 是 App 当时实际显示的问句（入口问句或追问）。",
+          "items": {
+            "type": "object",
+            "required": ["source_id", "text"],
+            "properties": {
+              "source_id": {"type": "string", "description": "成书层内的短编号 U01…（写作与核对用）"},
+              "origin_id": {"type": "string", "description": "app：chat_messages.id；测试：摘录 id 或模拟运行位置"},
+              "asked": {"type": "string"},
+              "text": {"type": "string"},
+              "created_at": {"type": "string"}
+            }
+          }
+        },
+        "fields": {
+          "type": "object",
+          "description": "判定层字段状态：contract_state.fields（或 last_result.fields），键为字段 id。",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "label": {"type": "string", "description": "contracts.json elements[].label"},
+              "state": {"enum": ["missing", "known", "none", "unknown", "declined", "deferred", "ambiguous", "conflict", "not_applicable"]},
+              "value": {"type": ["string", "null"], "description": "引擎校验过的原话片段"},
+              "evidence": {"type": "array", "items": {"type": "string"}}
+            }
+          }
+        },
+        "draft": {
+          "type": ["object", "null"],
+          "description": "老人确认保存的如实草稿：标题 + 段落（每段带原话来源）。manually_edited=true 时 paragraphs 只有正文、没有来源。",
+          "properties": {
+            "title": {"type": "string"},
+            "paragraphs": {"type": "array", "items": {"type": "object", "properties": {"text": {"type": "string"}, "source_ids": {"type": "array", "items": {"type": "string"}}}}},
+            "confirmed": {"type": "boolean"},
+            "manually_edited": {"type": "boolean"},
+            "memory_version": {"type": "integer", "description": "memories.version：保存后在回忆详情里又改过，以最新正文为准"}
+          }
+        },
+        "markers": {
+          "type": "object",
+          "description": "记不清 / 不愿讲：先取字段状态，再由代码从原话匹配（记不清、不记得、不想讲、不多讲…）。",
+          "properties": {
+            "unknown": {"type": "array", "items": {"$ref": "#/$defs/marker"}},
+            "declined": {"type": "array", "items": {"$ref": "#/$defs/marker"}}
+          }
+        },
+        "time_clues": {
+          "type": "array",
+          "description": "代码从原话提取的时间线索（年份、民国纪年、年代、岁数、小时候/后来…），用于章内排序。",
+          "items": {"type": "object", "properties": {"source_id": {"type": "string"}, "clues": {"type": "array", "items": {"type": "string"}}}}
+        }
+      }
+    },
+    "marker": {
+      "type": "object",
+      "properties": {
+        "source_id": {"type": "string"},
+        "field_id": {"type": "string"},
+        "quote": {"type": ["string", "null"]}
+      }
+    }
+  }
+}
