@@ -82,6 +82,11 @@ export_all() {
     [ -f "$RUNS/mb2-book-long/v1.1/books/$PID-full84.json" ] && extra+=(--book "$RUNS/mb2-book-long/v1.1/books/$PID-full84.json")
     $PY tools/memoir_eval/full84.py report mb2-full84-long $PID "$OUT/统计_${PID}_full84-long.md" "${extra[@]}" \
         --json "$OUT/统计_${PID}_full84-long.json"
+    local bl="$RUNS/mb2-book-long/v1.1/books/$PID-full84"
+    if [ -f "$bl.md" ]; then
+      cp "$bl.md" "$OUT/回忆录样书_${PID}_full84-long_v1.1.md"
+      cp "$bl.html" "$OUT/回忆录样书_${PID}_full84-long_v1.1.html"
+    fi
   fi
   ls -la "$OUT"
 }
