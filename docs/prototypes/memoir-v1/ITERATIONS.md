@@ -1,5 +1,5 @@
-RELAY_DONE 成书原型的 DeepSeek 调用全部完成（第 1–3 轮、v3b、留出组）
-WORKERS_DONE 成书量表盲评全部完成（队列 memoir 共 97 个）
+RELAY_DONE 中转已停（2026-10-27 05:00 用户决定）：mb2-full84 / mb2-full84-long 已交给 Codex 直连运行（SHINIAN_DS_MODE=direct，见 handoffs/2026-10-27-full84-codex.md）；停时已发 354 次 / 73.0 万 token，本机不再发任何中转作业
+WORKERS_DONE Haiku persona 队列已停：已缓存的 266 条 Haiku 老人回答随包交给 Codex 复用；余下的老人回答由 Codex/GPT 按 handoffs/PERSONA_WORKER.md（文件队列）或 OpenAI 后端扮演（已交给 Codex 直连运行）
 
 # 成书层 v1 迭代记录
 
@@ -110,3 +110,32 @@ SHINIAN_RELAY_OUT=/mnt/user-data/outputs/relay/jobs SHINIAN_RELAY_IN=/mnt/user-d
 - 逐本：杨秀峰（富）5 / 4 / 4 / 4.25 / 4，无编造；黄小荣 4 / 3.6 / 4 / 3.8 / 3.4，编造 3；张寿椿 4 / 3.5 / 3 / 4.5 / 3，编造 1；杨秀峰（薄）4 / 4 / 3.5 / 4 / 4，编造 2。
 - 结论：抒情、连贯、口吻、结构与迭代组持平或略高，说明 v3 的写法没有只对迭代组有效；**忠实在留出组掉到 4.31**（迭代组 4.77），6 处编造里 4 处是加写句或叙述里添的小画面（“我爸一个人扛着锄头在田里来来回回”“三十多口人凑在一张桌上”“一个锅里吃饭”“民师自己也没受过多少训练”），1 处确定化（原话对“1937 年是不是闹霍乱”答“可能是”，写成了确定），1 处替父亲下了动机结论。关思考 + 放宽后的 check-v2 没拦住这几处。按“忠实优先”，上线前要补：加写句里的具体画面（动作、器物、人数）也必须在原话里出现，核对改回更严的口径或只在核对这一步开思考（第 2 轮对比显示开思考核对多抓“确定化”），并保留老人逐句确认加写句这一道关。
 - 薄素材（606 字 → 520 字两章）：每句都有来源，但同一件事（三十多口人吃饭）在两章各写了一遍（素材分别答在骨架题和童年题里），序章里用“说到吃饭”硬接了马祖蒋经国的事。素材少时规划应先去重、并章到只剩一章。
+
+## v1.1：完整 84 题模拟采访（mb2-，2026-10-27，进行中，已交给 Codex 直连运行）
+
+### 模拟器对齐生产 V6（`simulate/v6flow.py`、`run_full.py`）
+
+- 判定直接用后端的 `V3jPipeline` + 固定的 V6 运行包 `interview_runtime_v3j_v5f_listening`（manifest 哈希钉住，含 `literal_cause_span` 组装）；说话层、故事深挖、收尾规则、“没有补充了”识别都调后端 `interview_speaker` / `interview_story` 的函数（参数取运行包里的 V6 speaker-config：listen_first、literal_cause_span、听写提示）。`app.ai.llm_client` 换成只定义三个异常类的桩，模型请求经中转/直连回答。
+- 逐行移植的编排：`contract_guided_interview.turn`、`contract_v3j_interview.question_turn / deepen_answer_turn / skip_turn / _draft_ack / _transition`（模块题）与 `contract_life_overview.perform` + `contract_v3j_life_overview.turn`（开篇骨架）：草稿→补充→核对、暂停/继续、跳过。题库实际为开篇骨架 11 题 + 六模块 72 题 = **83 题**（冻结题库与判定层未改）。
+- 模拟选择（非生产行为）：老人是 Haiku persona（行为抽样与种子规则不变，问题的第一次回答只看入口问题）；用户暂停后立刻点“继续”，按菜单顺序选模块；进入核对或补充阶段回答满 3 次即视为确认草稿；每题最多 12 次老人回答。题目彼此独立（question_context_mode=independent），跨题只有说话层的“上次换话题时你说的”（speaker_last_close）一条链。运行用 `--chains module`：每个模块一条链、模块首题不带上一句（近似“六个模块分次聊”，7 条链并行），不是生产里整场一条链。
+- `pipelines/v3j.py` 补了 V6 的 `first_work_cause_span`（逐行对后端），默认关，只在 `ctx.literal_cause_span` 打开时生效。
+- 0 token 对齐校验（本步重跑，结果相同）：`v6_replay.py st7`（旧模拟器 st7-b5f-it 的 30 个回答经 v6flow + v5f 包回放）0 未命中、0 差异，判定 20/20、深挖 10/10、追问 4/4、转题 2/2、草稿步说话层输入 14/14（草稿步文字是设计差异）；`v6_replay.py cause` 后端因果单元用例 28/28 一致；full45 离线回放 197/204、新发 0。
+
+### 停在哪（2026-10-27 05:00 主控结束两个运行进程）
+
+| 运行 | 设定 | 已完成题 | 已发中转作业 | 已发 DS 调用 / token | 未回包作业 | 已用老人回答（Haiku） |
+|---|---|---|---|---|---|---|
+| mb2-full84 | 原设定（sim-config v4） | 31 / 83（GR02 为旧链设定下的结果，续跑会重做） | p001–p035 | 196 次 / 401,653（输入 379,732，其中命中前缀缓存 325,376；输出 21,921） | p036（5 次） | 134 |
+| mb2-full84-long | 正常回答放长（sim-config-long） | 30 / 83 | p001–p018 | 158 次 / 328,457 | p019（6 次） | 132 |
+
+- 合计已发 354 次、730,110 token（采访，thinking disabled，deepseek-v4-pro）；成书侧（草稿、规划、写作、核对）尚未发。p036、p019 已写出但没回包：若用户电脑上的中转处理过，最多约 2 万 token 未记入。
+- 运行日志里 mb2-full84 有三段启动、mb2-full84-long 两段，最后一段都是 `--chains module --resume`（已完成部分从缓存回放）。GR02 的记录留自较早一段：它收到的“上一句”（“您父亲那几年真没少出力。”）和现在模块链上 GR01b 交下来的不同，续跑时它从缓存回放到收尾，从收尾那一步起重做（收尾调用及之后的补充回答，约 2–4 次调用）。
+- 0 token 自检（`v6_replay.py cache`，全程封网、无密钥，在只含打包内容的独立目录里也跑了一遍，结果逐字相同）：mb2-full84 31 题逐项相同、0 未命中、GR02 标为旧链结果；mb2-full84-long 30 题逐项相同、0 未命中。用到缓存 DeepSeek 381 次（去重 346 条）、老人回答 266 次（去重 241 条），全部 thinking disabled。直连模式首批请求（无密钥时 0 发送、退出码 3；对本地假服务器时）与未回包的 p036 逐字节相同。
+- 中间数字（只作参考，不是结论）：已完成部分记入回忆的原话——原设定 31 题 3,012 字（每题约 97 字；Haiku 的 normal 回答平均 68 字，低于设定的 80–250 字），放长变体 30 题 5,032 字（每题约 168 字，normal 平均 153 字）。照此外推全 83 题约 0.8 万 / 1.4 万字，按 0.7 成书约 0.6 万 / 1.0 万字，离标准本 4–5 万字差得很远；以跑完的实数为准。
+
+### 交给 Codex（用户决定 2026-10-27 05:00：中转太慢，导出给 GPT/Codex 在云端直连 DeepSeek）
+
+- `common.Relay` 加直连模式：`SHINIAN_DS_MODE=direct`，密钥只从 `DEEPSEEK_API_KEY` 读、不落盘（错误信息里也抹掉），`DEEPSEEK_BASE_URL`、`SHINIAN_DS_CONCURRENCY`、`SHINIAN_DS_TIMEOUT`、`SHINIAN_DS_MAX_CALLS`（调用上限）可配；请求体由中转同一个 `ds_relay.one_call` 生成，缓存键与缓存行与中转完全相同；任何调用失败即停（退出码 3，`--resume` 续跑），不让供应商故障变成采访结果；每批回包另记在 `<run>/ds-direct/`。
+- 老人后端可插拔（`simulate/persona_backend.py`，`run_full.py --persona queue|openai`）：文件队列（现状；Codex/GPT 代理按 `handoffs/PERSONA_WORKER.md` 回答，`SHINIAN_WORKER_MODEL` 记下扮演模型）或 OpenAI API（`OPENAI_API_KEY`、`OPENAI_PERSONA_MODEL`）。两者都先查同一缓存，已缓存的 Haiku 回答原样复用；每条回答记下扮演模型，统计里按模型、行为分列平均字数。**换了扮演模型，后 50 多题与前 30 题的老人不是同一个“演员”，原话字数与语气的可比性要打折**，交接单里写明。
+- 后续成书打包成 `tools/memoir_eval/full84_pipeline.sh interview|check|book|export|all`：v1.1 = v3b + `check-v3.txt`（加写句与事实句里的小画面报“画面”，保留并标出交老人逐句确认；新的人物、地点、时间、数字、事件照删/退回）+ `--short-merge 500`（不到约 500 字的章并入相邻章，作为带模块小标题的一节）；规划开思考，写作、核对关思考。`full84.py report` 出统计（原话按模块/题型、深挖、记不清/不愿讲、推算与 4–5 万字的差距、扮演模型）。在部分数据上用 `--offline` / `--dry` 走通了全流程（0 token）。
+

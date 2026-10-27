@@ -36,7 +36,8 @@ PLAN_PARAMS = {'model': 'deepseek-v4-pro', 'thinking': 'enabled', 'json_mode': T
 CHECK_PARAMS = {'model': 'deepseek-v4-pro', 'thinking': 'enabled', 'json_mode': True, 'max_tokens': 32000, 'timeout': 900}
 WRITE_BASE = {'model': 'deepseek-v4-pro', 'json_mode': True, 'temperature': 0.6}
 PART_CHARS = 6000
-ADD_TYPES = ('感受', '回望', '过渡', '意象', '呼应', '收束')
+ADD_TYPES = ('感受', '回望', '过渡', '意象', '呼应', '收束', '画面')  # 画面: v1.1, set by the check only
+SHORT_CHAPTER = 500  # v1.1 (user decision 4): a chapter shorter than this joins a neighbour as a section with its module heading
 FACT_ISSUES = ('无来源事实', '张冠李戴', '确定化', '不愿讲', '加写含事实')
 
 
@@ -211,6 +212,38 @@ def resolve_plan(handoff, units, row, edition, groups=None):
             'moves': out.get('moves') or [], 'log': log}
 
 
+def merge_short(chapters, chars_of, log, where, min_chars=SHORT_CHAPTER):
+    """v1.1 (user decision 4): a chapter (never the prologue) with fewer than ``min_chars`` characters -- its budget
+    after planning, its written text after writing -- joins the previous chapter (the next one when the previous
+    is the prologue or missing) as sections carrying their module heading. Returns the new chapter list."""
+    chapters = list(chapters)
+    while True:
+        body = [c for c in chapters if c['modules'][0] != 'skeleton']
+        short = [c for c in body if chars_of(c) < min_chars]
+        if not short or len(body) < 2:
+            return chapters
+        c = min(short, key=chars_of)
+        i = body.index(c)
+        into = body[i - 1] if i > 0 else body[i + 1]
+        heading = ' · '.join(mb.MODULE_NAME[m] for m in c['modules'])
+        moved = [dict(s, module_heading=s.get('module_heading') or heading) for s in c['sections']]
+        if c.get('closing_units'):
+            if moved:
+                moved[-1] = dict(moved[-1], units=list(moved[-1].get('units') or []) + c['closing_units'])
+            else:
+                moved = [{'title': heading, 'units': list(c['closing_units']), 'module_heading': heading}]
+        before = chapters.index(into) < chapters.index(c)
+        merged = dict(into)
+        merged['modules'] = into['modules'] + c['modules'] if before else c['modules'] + into['modules']
+        merged['sections'] = (into['sections'] + moved) if before else (moved + into['sections'])
+        for k in ('budget', 'elder_chars'):
+            if k in into:
+                merged[k] = into.get(k, 0) + c.get(k, 0)
+        log.append('short_merged_%s:%s(%d)->%s' % (where, '/'.join(c['modules']), chars_of(c), '/'.join(into['modules'])))
+        chapters[chapters.index(into)] = merged
+        chapters.remove(c)
+
+
 # --------------------------------------------------------------------------- write
 def drafts_by_question(handoff):
     return {q['question_id']: q.get('draft') for q in handoff['questions']}
@@ -246,6 +279,7 @@ def write_calls(key, handoff, units, plan, prompt_name, thinking, ratio=0.8):
                 s = ch['sections'][i]
                 qids = list(dict.fromkeys(units[u]['qid'] for u in s['units']))
                 secs.append({'title': s['title'], 'budget_chars': s['budget'],
+                             **({'module_heading': s['module_heading']} if s.get('module_heading') else {}),
                              'units': [{'id': u, 'asked': units[u]['asked'], 'text': units[u]['text']} for u in s['units'] if units[u]['text']],
                              'confirmed_drafts': [{'question': qid, 'title': (drafts.get(qid) or {}).get('title'),
                                                    'text': '\n'.join(p['text'] for p in (drafts.get(qid) or {}).get('paragraphs') or [])}
@@ -409,6 +443,9 @@ def apply_checks(ch, units, sections, row, drafts, all_text, stats, fallback_mod
                     stats['cross_cited'] += 1
                 types = [i.get('type') for i in issues.get(x.get('sid'), [])]
                 x['issues'] = issues.get(x.get('sid'), [])
+                if '画面' in types:  # v1.1: a small picture is kept and shown for the elder's confirmation
+                    x['picture'] = True
+                    stats['pictures'] += 1
                 if bad_any:
                     stats['code_flags'] += len(bad_any)
                 if x['add']:
@@ -423,6 +460,9 @@ def apply_checks(ch, units, sections, row, drafts, all_text, stats, fallback_mod
                 elif '未标加写' in types:
                     x['add'] = '感受'
                     stats['relabelled'] += 1
+                elif '画面' in types:  # v1.1: a factual sentence that only adds a small picture becomes an added one
+                    x['add'] = '画面'
+                    stats['relabelled_picture'] += 1
                 keep.append(x)
             if fall:
                 cited_units = [u for x in p['sentences'] for u in x['src']]
@@ -513,6 +553,10 @@ def main():
     ap.add_argument('--fallback', default='paragraph', choices=['paragraph', 'match'],
                     help='paragraph: whole draft paragraphs of the cited questions (v1); match: the most similar draft sentences')
     ap.add_argument('--ingest', default='', help='stage=job_name[,…]: cache answers of a sent job before running that stage')
+    ap.add_argument('--short-merge', type=int, default=0,
+                    help='v1.1: a chapter below this many characters (budget after planning, text after writing) joins a '
+                         'neighbour as a section with its module heading (user decision 4: 500)')
+    ap.add_argument('--prefix', default='mb1', help='relay job name prefix (mb2 for the v1.1 full-interview test)')
     a = ap.parse_args()
     if a.ratio:
         mb.EDITIONS[a.edition] = (a.ratio, mb.EDITIONS[a.edition][1])
@@ -525,10 +569,12 @@ def main():
         books[key] = {'handoff': h, 'units': units_of(h)}
         books[key]['groups'] = module_groups(books[key]['units']) if a.premerge else None
     tag = time.strftime('%H%M%S')  # job names must be unique; answers are cached by content anyway
-    rows = relay.run_batch('mb1-plan-%s-%s' % (a.run, tag), [plan_call(k, b['handoff'], b['units'], a.plan_prompt, b['groups'])
+    rows = relay.run_batch('%s-plan-%s-%s' % (a.prefix, a.run, tag), [plan_call(k, b['handoff'], b['units'], a.plan_prompt, b['groups'])
                                                                        for k, b in books.items()])
     for k, b in books.items():
         b['plan'] = resolve_plan(b['handoff'], b['units'], rows.get('plan-' + k), a.edition, b['groups'])
+        if a.short_merge:
+            b['plan']['chapters'] = merge_short(b['plan']['chapters'], lambda c: c['budget'], b['plan']['log'], 'plan', a.short_merge)
         mb.save(run_dir / 'plans' / (k + '.json'), b['plan'])
         print(json.dumps({'plan': k, 'chapters': [(c['title'], c['modules'], c['budget']) for c in b['plan']['chapters']],
                           'log': b['plan']['log']}, ensure_ascii=False), flush=True)
@@ -545,7 +591,7 @@ def main():
             cs = write_calls(vname + '-' + k, b['handoff'], b['units'], b['plan'], prompt_name, thinking, mb.EDITIONS[a.edition][0])
             owner[(vname, k)] = cs
             calls += cs
-    rows = relay.run_batch('mb1-write-%s-%s' % (a.run, tag), [{x: c[x] for x in ('id', 'system', 'user', 'params')} for c in calls])
+    rows = relay.run_batch('%s-write-%s-%s' % (a.prefix, a.run, tag), [{x: c[x] for x in ('id', 'system', 'user', 'params')} for c in calls])
     written = {}
     for (vname, k), cs in owner.items():
         b = books[k]
@@ -579,20 +625,24 @@ def main():
     ingest = dict(x.split('=') for x in a.ingest.split(',') if x)
     if 'check' in ingest:
         print(json.dumps({'ingested': mb.ingest_staged(relay, ingest['check'], kcalls), 'of': len(kcalls)}), flush=True)
-    rows = relay.run_batch('mb1-check-%s-%s' % (a.run, tag), kcalls)
+    rows = relay.run_batch('%s-check-%s-%s' % (a.prefix, a.run, tag), kcalls)
     summary = {}
     for (vname, k), w in written.items():
         b = books[k]
         all_text = '\n'.join(u['raw'] for u in b['units'].values())
         drafts = drafts_by_question(b['handoff'])
         stats = {'model_issues': Counter(), 'fallback_reasons': Counter(), 'check_failed': 0, 'cross_cited': 0, 'code_flags': 0,
-                 'dropped_added': 0, 'relabelled': 0, 'fallback_paragraphs': 0, 'fallback_empty': 0}
+                 'dropped_added': 0, 'relabelled': 0, 'fallback_paragraphs': 0, 'fallback_empty': 0, 'pictures': 0,
+                 'relabelled_picture': 0}
         chapters = []
         for ci, ch in enumerate(b['plan']['chapters']):
             secs = apply_checks(ch, b['units'], w['chapters'][ci], rows.get('k-%s-%s-c%d' % (vname, k, ci)), drafts, all_text, stats,
                                 a.fallback)
             chapters.append({'title': ch['title'], 'modules': ch['modules'], 'budget': ch['budget'], 'sections': secs,
                              'title_quote': ch.get('title_quote'), 'title_source': ch.get('title_source')})
+        if a.short_merge:
+            written_chars = lambda c: sum(mb.han_len(x['t']) for s2 in c['sections'] for p2 in s2['paragraphs'] for x in p2['sentences'])  # noqa: E731
+            chapters = merge_short(chapters, written_chars, w['log'], 'written', a.short_merge)
         book = {'person': b['handoff']['person'], 'material': b['handoff']['material'], 'variant': vname, 'edition': a.edition,
                 'chapters': chapters, 'motifs': b['plan']['motifs'],
                 'not_written': {'private': b['plan']['private'], 'unused': b['plan']['unused'],

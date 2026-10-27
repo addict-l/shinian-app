@@ -5,6 +5,7 @@
 - 交接规格：[handoff.md](handoff.md) + [handoff.schema.json](handoff.schema.json)
 - 题目分类：[question-depth.json](question-depth.json)（23 故事 / 23 事实 / 37 感悟）
 - 迭代记录：[ITERATIONS.md](ITERATIONS.md)
+- v1.1 完整 84 题模拟采访（进行中，已交给 Codex 直连运行）：[handoffs/2026-10-27-full84-codex.md](handoffs/2026-10-27-full84-codex.md)，老人 worker 说明 [handoffs/PERSONA_WORKER.md](handoffs/PERSONA_WORKER.md)
 - 代码：`tools/memoir_eval/`（inputs.py 输入构造、book.py 规划→写作→核对→组装、render.py 导出、score.py 量表、book_queue.py Haiku 队列、prompts/ 全部提示）
 
 ## 1. 两层：事实和文采分开
@@ -143,4 +144,14 @@ Haiku 盲评共 97 个请求（队列 memoir，未变的章命中缓存）。
 2. 核对要不要开思考：开了每章多约 0.6–1 万 token（一本 3–5 章约多 2–5 万）、多抓“确定化”；不开靠代码规则补。
 3. 标准本倍数：原型用 0.7 倍原话（测试素材原话 0.4–1.25 万字，成书约 0.35–1.15 万字），离“标准本 4–5 万字”很远——真实 App 素材量要先看采访那边一次完整访谈能出多少原话。
 4. 并章：一章最多两个模块（主控意见）后，素材少的模块会成为几百字的短章；可以接受，还是短于约 500 字的章并入相邻章作为一节（带模块小标题）？
+
+## 8. v1.1（进行中）
+
+用户决定（2026-10-27 00:21）落到成书层的部分已写好，等完整采访跑完再出书：
+
+- 核对 `prompts/check-v3.txt`：加写句里的小画面（动作、姿态、器物、场景细节）报“画面”，保留并标出（MD 标〔加写·画面〕，HTML 虚线），交老人逐句确认；事实句里只多了小画面的改标为加写“画面”。新的人物、地点、时间、数字、事件照删（加写句）或退回如实草稿（事实句）。
+- 思考：规划开思考，写作、核对关思考（同 v3b）。
+- 短章：`book.py --short-merge 500`，规划后（按预算）和写作后（按实际字数）不到约 500 字的章并入相邻章，作为带模块小标题的一节（序章不并）。
+- 素材：完整 83 题模拟采访（生产 V6 流程，`simulate/run_full.py`）→ `inputs.py --full` 按交接格式构造（每题照生产 GROUNDED_DRAFT_PROMPT 出如实草稿，视为老人已确认）。
+- 一键：`tools/memoir_eval/full84_pipeline.sh all`；统计 `full84.py report`。完整采访原话量结论与对 4–5 万字目标的建议，等跑完后补在这里（中间数字见 ITERATIONS.md）。
 

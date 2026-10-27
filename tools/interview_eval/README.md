@@ -13,6 +13,7 @@
 调用在自己电脑上执行，密钥不离开本机：把 `relay/` 复制到本机目录（如 `D:\shinian_evl`），运行 `import_key.py` 导入 key，双击 `start_relay.bat`。
 评测端把每批调用写成 `relay/jobs/*.request.json`，本机中转写回 `*.response.jsonl` 与 `*.done.json`；两端之间的搬运见 `shuttle.py`，补缓存用 `ingest.py`。
 相同的 system/user/参数自动命中缓存；只改代码时用 `--offline` 回放，0 token。`--fresh` 跳过缓存做真实重跑。
+不经中转的直连模式（云端运行用）：`SHINIAN_DS_MODE=direct`，密钥只从环境变量 `DEEPSEEK_API_KEY` 读（不落盘），`DEEPSEEK_BASE_URL`、`SHINIAN_DS_CONCURRENCY`、`SHINIAN_DS_TIMEOUT`、`SHINIAN_DS_MAX_CALLS` 可配；请求体由同一个 `relay/ds_relay.py` 的 `one_call` 生成，缓存与中转模式完全通用，任何调用失败即停（`SHINIAN_DS_STRICT=0` 关闭）。
 
 ## 判定层（关键点）
 
@@ -38,6 +39,7 @@ python3 tools/interview_eval/simulate/export_html.py --out 对照.html --title .
 ```
 
 模拟老人与打分走文件队列（`<runs>/persona-queue`、`<runs>/scorer-queue`），由 Claude Haiku worker 按 `simulate/WORKER.md` 处理；DeepSeek 只负责采访一侧。
+完整采访（生产 V6 流程）：`simulate/run_full.py`（`--persona queue|openai`，老人后端见 `simulate/persona_backend.py`；DeepSeek 不扮演老人），0 token 自检 `simulate/v6_replay.py cache <运行>`（部分完成的运行也可，封网回放、已完成题须逐项相同）。
 老人行为按 `sha256(人物|题|轮次)` 固定抽样，与被测版本无关，改前改后遇到的是同一个“老人”。`tokens.py`、`simulate/stage_tokens.py` 记账。
 
 ## 故事题深挖（v5，模拟器原型）

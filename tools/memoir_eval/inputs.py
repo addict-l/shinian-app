@@ -14,6 +14,10 @@ for the elder to confirm before saving. The test material has none, so the draft
 the production prompt (one call per question) and treated as confirmed.
 
   python3 tools/memoir_eval/inputs.py --people N-6733a23cd1,... [--thin N-25486466f6] --run mb1-inputs [--offline]
+(c) full84 (v1.1): one complete simulated interview in the production V6 flow (simulate/run_full.py): every
+    question's sources as production keeps them (judged answers incl. supplement additions, answers to detail
+    questions), the question part each answered, final field states and the close (saved / skipped).
+  python3 tools/memoir_eval/inputs.py --full mb2-full84:N-6733a23cd1 --run mb2-inputs --prefix mb2
 """
 from __future__ import annotations
 
@@ -119,6 +123,28 @@ def thin_question(qid, run, ep, cat, counter):
             'origin': {'run': run}}
 
 
+def full_questions(run, pid, cat):
+    """Questions of a run_full.py session (V6 flow) in interview order."""
+    sess = mb.load(mb.RUNS / run / 'sessions' / ('%s.json' % pid))
+    qs, n = [], 0
+    for rec in sess['questions']:
+        if rec.get('error'):
+            continue
+        q = cat[rec['qid']]
+        turns = []
+        for src in rec['sources']:
+            n += 1
+            turns.append({'source_id': 'U%03d' % n, 'origin_id': '%s:%s:%s' % (run, rec['qid'], src['id']),
+                          'asked': mb.clean(src.get('question') or q['main_question']), 'text': mb.clean(src['text']),
+                          **({'deepen': src.get('dimension') or True} if src.get('deepen_answer') else {})})
+        status = 'skipped' if rec['status'] == 'skipped' else 'saved' if turns else 'skipped'
+        fields = {fid: {'state': f.get('state'), 'value': f.get('value')} for fid, f in ((rec.get('final') or {}).get('fields') or {}).items()}
+        qs.append({'question_id': rec['qid'], 'module': q['module'], 'depth': q['depth'], 'main_question': q['main_question'],
+                   'title': q['title'], 'status': status, 'close_reason': rec.get('close_reason'), 'turns': turns, 'fields': fields,
+                   'origin': {'run': run, 'flow': 'v6', 'followups': rec.get('followups'), 'deepen_answers': rec.get('deepen_sources')}})
+    return mb.clean(sess['name']), qs
+
+
 def markers(question):
     """Unknown / declined markers: field states first, then the elder's own wording (code regex)."""
     unknown, declined = [], []
@@ -187,6 +213,8 @@ def main():
     ap.add_argument('--thin', default='')
     ap.add_argument('--run', default='mb1-inputs')
     ap.add_argument('--offline', action='store_true')
+    ap.add_argument('--full', default='', help='RUN:PERSON[,…] complete simulated interviews (simulate/run_full.py)')
+    ap.add_argument('--prefix', default='mb1')
     a = ap.parse_args()
     cat = mb.catalog()
     run_dir = mb.RUNS / a.run
@@ -194,7 +222,7 @@ def main():
     people = [p for p in a.people.split(',') if p]
     thin = [p for p in a.thin.split(',') if p]
     rich = {pid: rich_turns(pid) for pid in people}
-    cls = relay.run_batch('mb1-cls-%s' % mb.sha(','.join(people))[:8], [classify_call(pid, rich[pid][1], cat) for pid in people]) if people else {}
+    cls = relay.run_batch(a.prefix + '-cls-%s' % mb.sha(','.join(people))[:8], [classify_call(pid, rich[pid][1], cat) for pid in people]) if people else {}
     built = {}
     for pid in people:
         name, turns, dropped = rich[pid]
@@ -222,12 +250,19 @@ def main():
             qs.append(thin_question(qid, run, ep, cat, counter))
             runs[qid] = run
         built[pid + ':thin'] = (mb.clean(name), 'thin', qs, {'source': 'simulated interview runs', 'runs': runs})
+    for spec in [x for x in a.full.split(',') if x]:
+        run, pid = spec.split(':')
+        name, qs = full_questions(run, pid, cat)
+        built[pid + ':full84'] = (name, 'full84', qs, {'source': 'complete simulated interview (V6 production flow)', 'run': run,
+                                                      'drafts': 'GROUNDED_DRAFT_PROMPT per saved question, treated as confirmed; '
+                                                                'skeleton questions have no draft step in production, '
+                                                                'theirs are built only for the book layer fallback'})
     calls = []
     for key, (name, kind, qs, _) in built.items():
         for q in qs:
             if q['turns'] and q['status'] == 'saved':
                 calls.append(draft_call(key.replace(':', '-'), q, name))
-    drafts = relay.run_batch('mb1-drf-%s' % mb.sha(json.dumps([c['id'] for c in calls]))[:8], calls) if calls else {}
+    drafts = relay.run_batch(a.prefix + '-drf-%s' % mb.sha(json.dumps([c['id'] for c in calls]))[:8], calls) if calls else {}
     for key, (name, kind, qs, extra) in built.items():
         for q in qs:
             if q['turns'] and q['status'] == 'saved':

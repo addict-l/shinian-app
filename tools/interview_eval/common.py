@@ -3,6 +3,9 @@
 - Engine: persistent bridge to a runtime's engine.js (validation + follow-up decision).
 - Relay: ships model calls to the DeepSeek relay running on the user's computer
   (D:\\shinian_evl) via staged job files, with a content-addressed response cache.
+  Direct mode (SHINIAN_DS_MODE=direct; DEEPSEEK_API_KEY, DEEPSEEK_BASE_URL, SHINIAN_DS_CONCURRENCY,
+  SHINIAN_DS_TIMEOUT, SHINIAN_DS_MAX_CALLS, SHINIAN_DS_STRICT) sends the same request bodies straight to the
+  OpenAI-compatible DeepSeek API; cache keys and cached rows are identical in both modes.
 - Dataset sampling restricted to the user's 55-person test set (development people
   that have frozen gold), scoring through the frozen runner's scoring functions.
 """
@@ -187,6 +190,8 @@ class Relay:
             for call in todo:
                 out[call['id']] = {'id': call['id'], 'ok': False, 'error': 'offline_cache_miss'}
             return out
+        if DIRECT:
+            return self._direct_batch(job_name, todo, out)
         prompts, index = {}, {}
         for call in todo:
             h = sha(call['system'])[:16]
@@ -221,6 +226,12 @@ class Relay:
                 continue
             if row.get('id') is not None:
                 rows[row['id']] = row
+        self._store(todo, rows, out)
+        (self.run_dir / 'relay-awaiting.json').unlink(missing_ok=True)
+        return out
+
+    def _store(self, todo, rows, out):
+        """Parse, cache and account the provider rows of ``todo`` (same for relay and direct mode)."""
         for call in todo:
             row = rows.get(call['id']) or {'id': call['id'], 'ok': False, 'error': 'missing_from_relay_response'}
             if row.get('ok'):
@@ -238,8 +249,67 @@ class Relay:
                     self.usage[k] = self.usage.get(k, 0) + v
             out[call['id']] = row
             self.calls_sent += 1
-        (self.run_dir / 'relay-awaiting.json').unlink(missing_ok=True)
+
+    def _direct_batch(self, job_name, todo, out):
+        """Direct mode (SHINIAN_DS_MODE=direct): the same requests the relay would send (ds_relay.one_call builds the
+        body), straight to DEEPSEEK_BASE_URL with DEEPSEEK_API_KEY from the environment. The key is never written
+        anywhere; responses are cached exactly as relay responses, and logged per job in <run>/ds-direct/."""
+        import concurrent.futures
+        key = os.environ.get('DEEPSEEK_API_KEY', '').strip()
+        if not key:
+            raise RelayError('SHINIAN_DS_MODE=direct needs DEEPSEEK_API_KEY in the environment (%d uncached calls in %s)'
+                             % (len(todo), job_name))
+        cap = int(os.environ.get('SHINIAN_DS_MAX_CALLS', '0') or 0)
+        if cap and Relay.direct_sent + len(todo) > cap:
+            raise RelayError('SHINIAN_DS_MAX_CALLS=%d reached (%d sent in this process, %d more asked by %s)'
+                             % (cap, Relay.direct_sent, len(todo), job_name))
+        relay = ds_relay()
+        relay.BASE_URL = DIRECT_BASE_URL
+        defaults = {'timeout': float(os.environ['SHINIAN_DS_TIMEOUT'])} if os.environ.get('SHINIAN_DS_TIMEOUT') else {}
+        calls = [{'id': c['id'], 'system': c['system'], 'user': c['user'], 'params': c['params']} for c in todo]
+        print(json.dumps({'direct_job': job_name, 'calls': len(calls)}), flush=True)
+        with concurrent.futures.ThreadPoolExecutor(max(1, min(DIRECT_CONCURRENCY, len(calls)))) as pool:
+            got = list(pool.map(lambda c: relay.one_call(c, {}, defaults, key), calls))
+        Relay.direct_sent += len(got)
+        rows = {}
+        log = self.run_dir / 'ds-direct' / (job_name + '.response.jsonl')
+        log.parent.mkdir(parents=True, exist_ok=True)
+        if log.exists():
+            log = log.with_name('%s-%d.response.jsonl' % (job_name, time.time_ns()))
+        with log.open('w', encoding='utf-8') as f:
+            for row in got:
+                row = {k: (relay.redact(v, key) if isinstance(v, str) else v) for k, v in row.items()}
+                f.write(json.dumps(row, ensure_ascii=False) + '\n')
+                rows[row['id']] = row
+        self._store(todo, rows, out)
+        fatal = [r for r in got if r.get('fatal')]
+        failed = [r for r in got if not r.get('ok')]
+        if fatal or (failed and DIRECT_STRICT):
+            # never let a provider/infrastructure failure become an interview outcome: stop, rerun with --resume
+            r = (fatal or failed)[0]
+            raise RelayError('direct DeepSeek call failed in %s (%d of %d): %s %s' % (
+                job_name, len(failed), len(got), r.get('http_status') or r.get('error'), str(r.get('error_detail') or '')[:300]))
         return out
+
+
+Relay.direct_sent = 0  # direct calls sent by this process (SHINIAN_DS_MAX_CALLS guard)
+# DeepSeek without the relay: SHINIAN_DS_MODE=direct, key only from DEEPSEEK_API_KEY (never read from or written to a file).
+DIRECT = os.environ.get('SHINIAN_DS_MODE', 'relay').strip().lower() == 'direct'
+DIRECT_BASE_URL = os.environ.get('DEEPSEEK_BASE_URL', 'https://api.deepseek.com').rstrip('/')
+DIRECT_CONCURRENCY = int(os.environ.get('SHINIAN_DS_CONCURRENCY', '16') or 16)
+DIRECT_STRICT = os.environ.get('SHINIAN_DS_STRICT', '1') != '0'  # any failed call stops the run (default)
+_DS_RELAY = None
+
+
+def ds_relay():
+    """relay/ds_relay.py as a module: its one_call() builds the provider request body, so direct mode sends
+    byte-for-byte what the relay sends for the same cached call."""
+    global _DS_RELAY
+    if _DS_RELAY is None:
+        spec = importlib.util.spec_from_file_location('ds_relay', Path(__file__).with_name('relay') / 'ds_relay.py')
+        _DS_RELAY = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(_DS_RELAY)
+    return _DS_RELAY
 
 
 # --------------------------------------------------------------------------- dataset

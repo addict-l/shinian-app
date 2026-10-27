@@ -12,7 +12,13 @@ from pathlib import Path
 
 import mb
 
-NOTE = {'rich': '测试样书，素材来自公开访谈（模拟“老人确认过的回忆”）', 'thin': '测试样书，素材来自模拟访谈里模拟老人说的话'}
+NOTE = {'rich': '测试样书，素材来自公开访谈（模拟“老人确认过的回忆”）', 'thin': '测试样书，素材来自模拟访谈里模拟老人说的话',
+        'full84': '测试样书：模拟老人完整 84 题采访（生产题库实际为开篇骨架 11 题 + 六个模块 72 题，共 83 题），素材来自公开访谈改编'}
+
+
+def add_label(x):
+    """Type of an added sentence; v1.1 marks a small picture the check let through (画面)."""
+    return x['add'] + ('·画面' if x.get('picture') and x['add'] != '画面' else '')
 
 
 def chapter_label(i, c, has_prologue):
@@ -24,20 +30,22 @@ def chapter_label(i, c, has_prologue):
 
 def to_markdown(book):
     lines = ['# %s的回忆录' % book['person']['name'], '', '> %s。版本：%s（%s）。' % (NOTE[book['material']['kind']], book['variant'], book['edition']),
-             '> 斜体加〔加写〕的句子是写作者加的（感受、回望、过渡、意象、呼应、收束），需老人确认；〔如实草稿〕段落是核对未通过后退回的如实草稿。', '']
+             '> 斜体加〔加写〕的句子是写作者加的（感受、回望、过渡、意象、呼应、收束；标“画面”的是原话里没有的小画面），需老人逐句确认；〔如实草稿〕段落是核对未通过后退回的如实草稿。', '']
     has_pro = book['chapters'] and book['chapters'][0]['modules'][0] == 'skeleton'
     for i, c in enumerate(book['chapters']):
         lines += ['## %s　%s' % (chapter_label(i, c, has_pro), c['title']), '*%s*' % ' · '.join(mb.MODULE_NAME[m] for m in c['modules']), '']
         adds = []
         for s in c['sections']:
+            if s.get('module_heading'):
+                lines += ['*〔%s〕*' % s['module_heading'], '']
             if len(c['sections']) > 1 and s['title']:
                 lines += ['### %s' % s['title'], '']
             for p in s['paragraphs']:
                 out = []
                 for x in p['sentences']:
                     if x['add']:
-                        out.append('*%s*〔加写·%s〕' % (x['t'], x['add']))
-                        adds.append('（%s）%s' % (x['add'], x['t']))
+                        out.append('*%s*〔加写·%s〕' % (x['t'], add_label(x)))
+                        adds.append('（%s）%s' % (add_label(x), x['t']))
                     else:
                         out.append(x['t'])
                 lines += [('〔如实草稿〕' if p.get('fallback') else '') + ''.join(out), '']
@@ -70,6 +78,7 @@ details{margin:0 0 14px 2em;font-size:13px;color:var(--muted)}summary{cursor:poi
 .src{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:8px 10px;margin:6px 0;line-height:1.7}
 .src b{color:var(--ink)}.legend span{display:inline-block;margin-right:12px}
 .toc a{color:inherit}.adds{font-size:14px;color:var(--muted);border-left:3px solid var(--addline);padding-left:10px;margin:18px 0}
+.modh{margin:40px 0 -18px;font-size:13px;letter-spacing:.2em;color:var(--addline)}.add.pic{border-bottom-style:dashed}
 .metrics{font:13px/1.6 ui-monospace,Menlo,monospace;color:var(--muted);white-space:pre-wrap}
 '''
 
@@ -80,7 +89,7 @@ def to_html(book):
     out = ['<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">',
            '<title>%s回忆录样书</title><style>%s</style></head><body><main>' % (e(book['person']['name']), CSS),
            '<h1>%s的回忆录</h1>' % e(book['person']['name']),
-           '<p class="note">%s。版本 %s（%s）。<br><span class="legend"><span class="add">加写句</span>写作者加的感受、回望、过渡、意象、呼应、收束，需老人确认；'
+           '<p class="note">%s。版本 %s（%s）。<br><span class="legend"><span class="add">加写句</span>写作者加的感受、回望、过渡、意象、呼应、收束，需老人逐句确认（<span class="add pic">画面</span>是原话里没有的小画面，也要确认）；'
            '<span class="fb">如实草稿</span>核对未通过、退回的如实草稿段落；每段下方可展开看老人原话。</span></p>'
            % (e(NOTE[book['material']['kind']]), e(book['variant']), e(book['edition']))]
     out.append('<nav class="toc"><p>' + '<br>'.join('<a href="#c%d">%s　%s</a>' % (i, chapter_label(i, c, has_pro), e(c['title']))
@@ -90,14 +99,17 @@ def to_html(book):
                                                                      e(' · '.join(mb.MODULE_NAME[m] for m in c['modules']))))
         adds = []
         for s in c['sections']:
+            if s.get('module_heading'):
+                out.append('<p class="modh">%s</p>' % e(s['module_heading']))
             if len(c['sections']) > 1 and s['title']:
                 out.append('<h3>%s</h3>' % e(s['title']))
             for p in s['paragraphs']:
                 parts = []
                 for x in p['sentences']:
                     if x['add']:
-                        parts.append('<span class="add">%s</span><span class="tag">%s</span>' % (e(x['t']), e(x['add'])))
-                        adds.append((x['add'], x['t']))
+                        parts.append('<span class="add%s">%s</span><span class="tag">%s</span>' % (
+                            ' pic' if x.get('picture') or x['add'] == '画面' else '', e(x['t']), e(add_label(x))))
+                        adds.append((add_label(x), x['t']))
                     else:
                         parts.append(e(x['t']))
                 cls = 'p fb' if p.get('fallback') else 'p'
