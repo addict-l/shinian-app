@@ -363,13 +363,64 @@ def guarded(rt, text, next_entry, elder_words, seen=()):
     return (out or None), why
 
 
-def close_reply(rt, reply, next_entry, elder_words, seen=()):
+# Only these standalone lead-in clauses may be copied from a model reply.  A
+# model-supplied clause could otherwise introduce another question or new facts.
+WARM_TRANSITIONS = ('那咱们再来聊聊', '那我们再来聊聊', '那咱们再聊聊', '那我们再聊聊',
+                    '我还想听您讲讲', '再跟您打听一件事', '咱们说说别的', '接着聊聊')
+WARM_DECLINE_ACK = '好，这段咱们就不多说了。'
+WARM_TRANSITION_ONLY = re.compile(
+    r'^(?:那|好|嗯|我们|咱们|再|就|先|接下来|接着|继续|还|来)*'
+    r'(?:聊聊|说说|谈谈|聊点别的|说点别的|换个话题)$'
+)
+# These are subjective reactions, rather than facts stated by the elder.  The
+# V6.1 rule removes their clause without discarding separate factual clauses.
+WARM_SUBJECTIVE = re.compile(r'听着(?:就)?亲切|真勤快|这习惯(?:真|挺|很)?好|心里(?:很|就)?稳当')
+
+
+def warm_transition_clause(part):
+    """Return a safe transition only for a complete, recognised clause."""
+    text = _norm(part)
+    return text if text in WARM_TRANSITIONS else ''
+
+
+def warm_not_ack(part):
+    """A standalone move-on phrase is not a response to the elder."""
+    return bool(warm_transition_clause(part) or WARM_TRANSITION_ONLY.fullmatch(_norm(part)))
+
+
+def warm_clean_ack(ack):
+    """Remove ungrounded subjective and transition clauses, retaining facts."""
+    parts = style.split_turn(ack)[0]
+    kept = [part for _, part in parts if not warm_not_ack(part) and not WARM_SUBJECTIVE.search(part)]
+    return re.sub(r'[，,；;]$', '。', ''.join(kept).strip())
+
+
+def choose_warm_transition(lead, seen=()):
+    """Prefer an allowed model lead, avoiding the last two close phrases."""
+    recent = [_norm(text) for text in list(seen or ())[-2:] if text]
+    used = lambda phrase: any(phrase in old for old in recent)
+    for _, part in style.split_turn(lead)[0]:
+        phrase = warm_transition_clause(part)
+        if phrase and not used(phrase):
+            return phrase, []
+    return next((phrase for phrase in WARM_TRANSITIONS if not used(phrase)), WARM_TRANSITIONS[0]), ['transition_fallback']
+
+
+def seen_with_last(rt, seen, last):
+    """Preserve legacy history ordering, but use the actually displayed last close in V6.1."""
+    if rt.speaker_config.get('warm_transition') and last:
+        return list(seen) + [last]
+    return seen
+
+
+def close_reply(rt, reply, next_entry, elder_words, seen=(), reason=None):
     """compose_close + guards (the simulator's close). Returns (text, ack, notes, ok)."""
     text, ack, notes, ok = speaker.compose_close(rt, reply, next_entry, elder_words)
     if rt.speaker_config.get('listen_first'):
         # Validate the statement independently; a transition or entry alone is not
         # an acknowledgement. Keep the engine's next entry exactly as before.
         ack = speaker.lead_ack(rt, reply, next_entry, elder_words)
+        lead = ''
         if next_entry and text:
             # Providers sometimes join a factual acknowledgement with the next
             # entry using commas. compose_close keeps it inside entry_q, whereas
@@ -378,12 +429,24 @@ def close_reply(rt, reply, next_entry, elder_words, seen=()):
             lead = lead_part(text, next_entry)
             parts = [c for _, c in style.split_turn(lead)[0]
                      if not speaker.TRANSITION.search(c) and not style.TEMPLATE.search(c)
+                     and not (rt.speaker_config.get('warm_transition') and warm_not_ack(c))
                      and not style.INTERJ.fullmatch(speaker._norm(c))]
             combined = re.sub(r'[，,；;]$', '。', ''.join(parts).strip())
             if combined:
                 ack = combined
+        if rt.speaker_config.get('warm_transition'):
+            # A transition is not a response to what the elder said, even if
+            # the provider wrote it as a separate sentence.
+            ack = warm_clean_ack(ack)
         ack, why = speaker.listening_ack(rt, ack, elder_words)
-        text = speaker.join(ack, next_entry) if next_entry else ack
+        if rt.speaker_config.get('warm_transition') and 'ack_fallback' in why and reason in ('declined', 'declined_partial'):
+            ack = WARM_DECLINE_ACK
+        if next_entry and rt.speaker_config.get('warm_transition'):
+            transition, transition_notes = choose_warm_transition(lead, seen)
+            text = speaker.join(ack, transition + '，' + next_entry)
+            notes += transition_notes
+        else:
+            text = speaker.join(ack, next_entry) if next_entry else ack
         return text, ack, notes + why, True
     if ok:
         text, why = guarded(rt, text, next_entry, elder_words, seen)
@@ -404,21 +467,25 @@ def lead_part(text, next_entry):
     return text
 
 
-def draft_ack(rt, reply, next_entry, elder_words, seen=()):
+def draft_ack(rt, reply, next_entry, elder_words, seen=(), reason=None):
     """The acknowledgement of a guarded close, for a step where the backend's own fixed text follows instead of the
     next question (draft sentence, module menu): the simulator's close (compose_close + guards) without the next entry,
     move-on clauses removed as speaker.lead_ack does. Returns '' when nothing usable remains."""
-    text, _, _, ok = close_reply(rt, reply, next_entry, elder_words, seen)
+    text, _, _, ok = close_reply(rt, reply, next_entry, elder_words, seen, reason)
     ack = lead_part(text, next_entry) if ok else ''
     kept = []
     for p in [p for p in re.findall(r'[^，,。！!；;]*[，,。！!；;]?', ack) if p.strip()]:
-        if speaker.TRANSITION.search(p) or style.TEMPLATE.search(p) or re.fullmatch(r'\s*那[，,。]?\s*', p):
+        if (speaker.TRANSITION.search(p) or style.TEMPLATE.search(p) or
+                (rt.speaker_config.get('warm_transition') and warm_not_ack(p)) or
+                re.fullmatch(r'\s*那[，,。]?\s*', p)):
             if kept and re.search(r'[。！!；;]$', p):
                 kept[-1] = re.sub(r'[，,]$', '。', kept[-1])
             continue
         kept.append(p)
     ack = re.sub(r'[，,；;]$', '。', ''.join(kept).strip())
     if not style.cjk(ack) or speaker.check_close(ack):
+        if rt.speaker_config.get('warm_transition') and reason in ('declined', 'declined_partial'):
+            return WARM_DECLINE_ACK
         return speaker.listening_ack(rt, '', elder_words)[0]
     return ack
 

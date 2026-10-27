@@ -216,7 +216,8 @@ def turn(person_id, data, rid, fingerprint, client):
         row, call = V3jPipeline(rt, llm).speak(user, saved_calls=pending['calls'], save_call=save_call)
         said, _ = speaker.parse_speaker(row)
         if v5f(rt):
-            close_text, ack, notes, ok = story.close_reply(rt, said, following, elder_words, seen_closes(data))
+            close_text, ack, notes, ok = story.close_reply(rt, said, following, elder_words,
+                story.seen_with_last(rt, seen_closes(data), data.get('speaker_last_close')), reason)
         else:
             close_text, ack, notes, ok = speaker.compose_close(rt, said, following, elder_words)
         if not ok:

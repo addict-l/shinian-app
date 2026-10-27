@@ -856,6 +856,22 @@ def guard_close(text, next_entry, elder_said, echo=True, template=True, echo_fra
     return lead or text, notes
 
 
+def warm_transition_close(policy, reply, next_entry, elder_words, seen=(), reason=None):
+    """Use the production close composer for the explicitly enabled V6.1 policy.
+
+    The simulator and backend must choose and audit the same transition, including
+    safe fallbacks and repeated phrases. Older policies continue through the
+    historical simulator implementation without loading this adapter.
+    """
+    from types import SimpleNamespace
+    backend = str(common.ROOT / 'cloud-deployment/backend')
+    if backend not in sys.path:
+        sys.path.insert(0, backend)
+    from app.ai import interview_story  # imported lazily: historical runs stay independent
+    rt = SimpleNamespace(speaker_config=policy, char_map=V3J.CHAR_MAP)
+    return interview_story.close_reply(rt, reply, next_entry, elder_words, seen, reason=reason)
+
+
 # --------------------------------------------------------------------------- session
 ERROR_TEXT = '抱歉，刚才这段没处理好，咱们先往下聊。'
 
@@ -1114,8 +1130,13 @@ def session(S, sid, nid, questions, mode):
             calls = calls + [{**call_info(row), 'kind': 'speak'}]
             reply, _ = parse_speaker(row)
             elder_words = ''.join(m['text'] for m in msgs if m['role'] == 'elder' and not m.get('scripted'))
-            text_out, ack, notes, ok = compose_close(reply, next_entry, elder_words)
-            if ok and (S.policy.get('echo_guard') or S.policy.get('template_guard')):  # v5d
+            warm = bool(S.policy.get('listen_first') and S.policy.get('warm_transition'))
+            if warm:
+                text_out, ack, notes, ok = warm_transition_close(S.policy, reply, next_entry, elder_words, closes_seen,
+                                                               reason=reason_for_speaker)
+            else:
+                text_out, ack, notes, ok = compose_close(reply, next_entry, elder_words)
+            if not warm and ok and (S.policy.get('echo_guard') or S.policy.get('template_guard')):  # v5d
                 echo, tg = S.policy.get('echo_guard'), S.policy.get('template_guard')
                 v5f = {'names': S.policy.get('echo_names'), 'bare': S.policy.get('echo_fragment_bare'),
                        'seen': closes_seen} if tg == 'repeat' else None
@@ -1129,7 +1150,8 @@ def session(S, sid, nid, questions, mode):
                 text_out = join(ack, next_entry) if next_entry else ack
             msgs.append({'role': 'system', 'text': text_out, 'kind': 'close', 'reason': reason, 'control': close.get('control'), 'calls': calls,
                          'entry_part': next_entry,
-                         'speaker': {'ack': ack, 'errors': [] if ok else notes, 'repairs': notes if ok else [], 'fallback': not ok,
+                         'speaker': {'ack': ack, 'errors': [] if ok else notes, 'repairs': notes if ok else [],
+                                     'fallback': not ok or (warm and 'ack_fallback' in notes),
                                      'raw': row.get('content'), 'input': call['user']}})
             entry_already_shown = bool(next_entry)
             prev_close = text_out

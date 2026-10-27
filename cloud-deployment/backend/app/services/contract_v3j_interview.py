@@ -183,17 +183,20 @@ def _transition(rt, client, state, qid, dialogue, fields, reason, holder, sessio
     if menu:
         # The module menu is not a single question: keep the acknowledgement, then the menu as it is.
         if v5f(rt):
-            ack = story.draft_ack(rt, reply, None, elder_words, seen_closes(state))
+            ack = story.draft_ack(rt, reply, None, elder_words,
+                                  story.seen_with_last(rt, seen_closes(state), state.speaker_last_close), reason)
         else:
             ack = speaker.lead_ack(rt, reply, None, elder_words, drop_transition=False)
         text, ok, notes = (speaker.join(ack, next_text), True, []) if ack else (None, False, ['empty'])
     elif v5f(rt):
-        text, ack, notes, ok = story.close_reply(rt, reply, next_text, elder_words, seen_closes(state))
+        text, ack, notes, ok = story.close_reply(rt, reply, next_text, elder_words,
+            story.seen_with_last(rt, seen_closes(state), state.speaker_last_close), reason)
     else:
         text, ack, notes, ok = speaker.compose_close(rt, reply, next_text, elder_words)
     if not ok:
         text = SKIP_ACK + '\n' + next_text
-    if rt.speaker_config.get('listen_first') and ack == speaker.LISTENING_FALLBACK and 'ack_fallback' not in notes:
+    if rt.speaker_config.get('listen_first') and (ack == speaker.LISTENING_FALLBACK or
+            rt.speaker_config.get('warm_transition') and ack == story.WARM_DECLINE_ACK and ack not in reply) and 'ack_fallback' not in notes:
         notes.append('ack_fallback')
     return text, {'task': 'close', 'close_reason': reason, 'step': 'next_question', 'ack': ack if ok else '',
                   'notes': notes, 'fallback': not ok or 'ack_fallback' in notes, 'text': text, 'raw': row.get('content'), 'call': entry}
@@ -210,7 +213,8 @@ def _draft_ack(rt, client, state, qid, dialogue, fields, reason, holder, session
     row, entry = _speak(rt, client, user, holder, session_id, state)
     reply, _ = speaker.parse_speaker(row)
     if v5f(rt):  # the simulator's close with the v5f guards, then only its acknowledgement
-        ack = story.draft_ack(rt, reply, None if menu else next_text, elder_words, seen_closes(state))
+        ack = story.draft_ack(rt, reply, None if menu else next_text, elder_words,
+                              story.seen_with_last(rt, seen_closes(state), state.speaker_last_close), reason)
     else:
         ack = speaker.lead_ack(rt, reply, None if menu else next_text, elder_words)
     notes = []
@@ -218,7 +222,8 @@ def _draft_ack(rt, client, state, qid, dialogue, fields, reason, holder, session
         ack, notes = '', ['repeat_ack']  # the same acknowledgement as last time is not said again
     ack, why = speaker.listening_ack(rt, ack, elder_words)
     notes += why
-    if rt.speaker_config.get('listen_first') and ack == speaker.LISTENING_FALLBACK and 'ack_fallback' not in notes:
+    if rt.speaker_config.get('listen_first') and (ack == speaker.LISTENING_FALLBACK or
+            rt.speaker_config.get('warm_transition') and ack == story.WARM_DECLINE_ACK and ack not in reply) and 'ack_fallback' not in notes:
         notes.append('ack_fallback')
     text = speaker.join(ack, closing) if ack else closing
     return ack, text, {'task': 'close', 'close_reason': reason, 'step': step, 'ack': ack, 'fallback': not ack or 'ack_fallback' in notes,

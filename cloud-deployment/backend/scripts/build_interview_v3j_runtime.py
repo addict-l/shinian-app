@@ -99,6 +99,19 @@ BUNDLES['v5f-listening'] = {
     'speaker': 'v5f-listening',
 }
 
+# V6.1 is a new candidate: leave the V6 bundle and its manifest untouched.
+V61 = V5 + 'v6.1/'
+BUNDLES['v6.1'] = {
+    **BUNDLES['v5f-listening'],
+    'target': BACKEND / 'app/ai/interview_runtime_v3j_v61',
+    'sources': {**BUNDLES['v5f-listening']['sources'],
+                'speaker-prompt.txt': V61 + 'speaker-prompt.txt',
+                'speaker-config.json': V61 + 'speaker-config.json'},
+    'readme': '# V6.1 温暖转题候选\n\n由 --bundle v6.1 生成；沿用 v3j_v5f 和原判定、题库及深挖配置，使用独立目录和 pin。\n',
+    'version': 'interview-v6.1-warm-transition-20261027',
+    'speaker': 'v6.1-warm-transition',
+}
+
 
 def digest(data):
     return sha256(data).hexdigest()
