@@ -2,8 +2,10 @@
 # v1.1 full-interview test, end to end (docs/prototypes/memoir-v1/handoffs/2026-10-27-full84-codex.md):
 #   interview  finish mb2-full84 and mb2-full84-long (simulate/run_full.py --resume; finished work replays at 0 tokens)
 #   check      0-token cache check of both runs (all 83 questions must replay identically)
-#   book       grounded drafts (GROUNDED_DRAFT_PROMPT) -> book v1.1 (plan thinking on, write/check thinking off,
-#              small pictures kept and marked, new facts dropped, chapters under 500 chars become sections)
+#   book       grounded drafts (GROUNDED_DRAFT_PROMPT) -> book v2 (BRIEF10): prologue + one chapter per module, never
+#              merged; plan thinking on, write/expand/check thinking off; one fact layer (1.0 x the material left after
+#              removing retold sentences), then an expansion call per tier inserts marked added sentences (concise c ~0.8
+#              = recommended standard; delicate d ~1.5 for the long variant's comparison book); new facts dropped
 #   export     book .md/.html, interview record .html, statistics .md/.json into $OUT
 #   all        the four in order
 #
@@ -17,8 +19,10 @@ PID=N-6733a23cd1
 RUNS="${SHINIAN_EVAL_RUNS:-$SHINIAN_EVAL_HOME/runs}"
 OUT="${OUT:-$SHINIAN_EVAL_HOME/../outputs}"
 PY="${PYTHON:-python3}"
-BOOK_FLAGS=(--premerge --plan-prompt plan-v3.txt --simplify --ratio 0.7 --check-thinking disabled
-            --check-prompt check-v3.txt --fallback match --short-merge 500 --prefix mb2 --variants v1.1=write-v3.txt:disabled)
+BOOK_FLAGS=(--six --plan-prompt plan-v4.txt --simplify --check-thinking disabled --check-prompt check-v5.txt --fallback match
+            --prefix mb3 --backfill 30 --dedupe --novel-budget --novel-units --expand-prompt expand-v1.txt --part-sections 2)
+TIER_C=c=write-v6.txt:disabled:concise
+TIER_D=d=write-v6.txt:disabled:delicate
 
 interview() {
   # both runs at once: each sends one DeepSeek batch at a time; the elder backend serves both
@@ -57,36 +61,40 @@ need_finished() {
 
 book() {
   need_finished mb2-full84
-  $PY tools/memoir_eval/inputs.py --full mb2-full84:$PID --run mb2-inputs --prefix mb2
-  $PY tools/memoir_eval/book.py --inputs "$RUNS/mb2-inputs/$PID-full84.json" --run mb2-book "${BOOK_FLAGS[@]}"
+  $PY tools/memoir_eval/inputs.py --full mb2-full84:$PID --run mb3-inputs --prefix mb3
+  $PY tools/memoir_eval/book.py --inputs "$RUNS/mb3-inputs/$PID-full84.json" --run mb3-book-std "${BOOK_FLAGS[@]}" --variants $TIER_C
   if [ "${LONG_BOOK:-0}" = 1 ]; then
     need_finished mb2-full84-long
-    $PY tools/memoir_eval/inputs.py --full mb2-full84-long:$PID --run mb2-inputs-long --prefix mb2
-    $PY tools/memoir_eval/book.py --inputs "$RUNS/mb2-inputs-long/$PID-full84.json" --run mb2-book-long "${BOOK_FLAGS[@]}"
+    $PY tools/memoir_eval/inputs.py --full mb2-full84-long:$PID --run mb3-inputs-long --prefix mb3
+    $PY tools/memoir_eval/book.py --inputs "$RUNS/mb3-inputs-long/$PID-full84.json" --run mb3-book-long "${BOOK_FLAGS[@]}" \
+        --variants $TIER_C,$TIER_D
   fi
 }
 
 export_all() {
   need_finished mb2-full84
   mkdir -p "$OUT"
-  local b="$RUNS/mb2-book/v1.1/books/$PID-full84"
-  cp "$b.md" "$OUT/回忆录样书_${PID}_full84_v1.1.md"
-  cp "$b.html" "$OUT/回忆录样书_${PID}_full84_v1.1.html"
+  local b="$RUNS/mb3-book-std/c/books/$PID-full84"
+  cp "$b.md" "$OUT/回忆录样书_${PID}_full84_v2-简洁.md"
+  cp "$b.html" "$OUT/回忆录样书_${PID}_full84_v2-简洁.html"
   $PY tools/memoir_eval/full84.py html mb2-full84 $PID "$OUT/完整采访记录_${PID}_full84.html"
   $PY tools/memoir_eval/full84.py report mb2-full84 $PID "$OUT/统计_${PID}_full84.md" \
-      --handoff "$RUNS/mb2-inputs/$PID-full84.json" --book "$b.json" --json "$OUT/统计_${PID}_full84.json"
+      --handoff "$RUNS/mb3-inputs/$PID-full84.json" --book "$b.json" --json "$OUT/统计_${PID}_full84.json"
   if [ -f "$RUNS/mb2-full84-long/sessions/$PID.json" ]; then
     $PY tools/memoir_eval/full84.py html mb2-full84-long $PID "$OUT/完整采访记录_${PID}_full84-long.html"
     local extra=()
-    [ -f "$RUNS/mb2-inputs-long/$PID-full84.json" ] && extra+=(--handoff "$RUNS/mb2-inputs-long/$PID-full84.json")
-    [ -f "$RUNS/mb2-book-long/v1.1/books/$PID-full84.json" ] && extra+=(--book "$RUNS/mb2-book-long/v1.1/books/$PID-full84.json")
+    [ -f "$RUNS/mb3-inputs-long/$PID-full84.json" ] && extra+=(--handoff "$RUNS/mb3-inputs-long/$PID-full84.json")
+    [ -f "$RUNS/mb3-book-long/c/books/$PID-full84.json" ] && extra+=(--book "$RUNS/mb3-book-long/c/books/$PID-full84.json")
     $PY tools/memoir_eval/full84.py report mb2-full84-long $PID "$OUT/统计_${PID}_full84-long.md" "${extra[@]}" \
         --json "$OUT/统计_${PID}_full84-long.json"
-    local bl="$RUNS/mb2-book-long/v1.1/books/$PID-full84"
-    if [ -f "$bl.md" ]; then
-      cp "$bl.md" "$OUT/回忆录样书_${PID}_full84-long_v1.1.md"
-      cp "$bl.html" "$OUT/回忆录样书_${PID}_full84-long_v1.1.html"
-    fi
+    local v t
+    for v in c:简洁 d:细腻; do
+      t=${v#*:}; local bl="$RUNS/mb3-book-long/${v%%:*}/books/$PID-full84"
+      if [ -f "$bl.md" ]; then
+        cp "$bl.md" "$OUT/回忆录样书_${PID}_full84-long_v2-$t.md"
+        cp "$bl.html" "$OUT/回忆录样书_${PID}_full84-long_v2-$t.html"
+      fi
+    done
   fi
   ls -la "$OUT"
 }

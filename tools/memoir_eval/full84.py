@@ -97,7 +97,10 @@ def stats(run, pid, handoff=None, book=None):
                              'elder_chars_missing_at_0.7': max(0, int(t / 0.7) - total)} for t in (40000, 50000)}
     if book:
         b = mb.load(book)
-        out['book'] = {k: b['metrics'].get(k) for k in ('chars', 'elder_chars', 'ratio_to_elder', 'added_ratio', 'copy_ratio')}
+        out['book'] = {k: b['metrics'].get(k) for k in ('chars', 'elder_chars', 'ratio_to_elder', 'added_ratio', 'copy_ratio',
+                                                         'novel_chars', 'ratio_to_novel', 'added_char_ratio', 'added_sentences',
+                                                         'sentences', 'added_types', 'added_opening_repeat', 'cross_chapter_repeats')}
+        out['book']['tier'] = (b.get('tier') or {}).get('label')
         out['book']['chapters'] = [(c['title'], '/'.join(c['modules']), c['chars']) for c in b['metrics'].get('chapters') or []]
         out['book']['pictures'] = (b['metrics'].get('pipeline') or {}).get('pictures')
         ratio = b['metrics'].get('ratio_to_elder') or 0
@@ -141,6 +144,19 @@ def report(st):
             b['chars'] or 0, b['ratio_to_elder'] or 0, b.get('added_ratio'), b.get('copy_ratio'), b.get('pictures'),
             gap['book']['40000'], gap['book']['50000']), '', '| 章 | 模块 | 字数 |', '|---|---|---|']
         lines += ['| %s | %s | %d |' % c for c in b['chapters']]
+        if b.get('novel_chars'):  # v2 books: material after removing retold sentences, added share, sentences to confirm
+            nv = b['novel_chars']
+            lines += ['', '- v2 档位：%s；去掉复述后的新素材 **%d 字**（原话的 %.0f%%），成书/新素材 %.2f；加写字数占比 %.0f%%，'
+                      '加写句 %d / %d 句（都要老人逐句确认），类型 %s' % (
+                          b.get('tier') or '-', nv, 100.0 * nv / max(1, b['elder_chars'] or 1), b.get('ratio_to_novel') or 0,
+                          100 * (b.get('added_char_ratio') or 0), b.get('added_sentences') or 0, b.get('sentences') or 0,
+                          '、'.join('%s %d' % kv for kv in sorted((b.get('added_types') or {}).items(), key=lambda kv: -kv[1]))),
+                      '- 照这本书的写法（成书/新素材 %.2f、新素材占原话 %.0f%%），写到 4 万 / 5 万字需要不重复的新素材约 %d / %d 字，'
+                      '折合老人原话约 %d / %d 字' % (
+                          b.get('ratio_to_novel') or 0, 100.0 * nv / max(1, b['elder_chars'] or 1),
+                          int(40000 / (b.get('ratio_to_novel') or 1)), int(50000 / (b.get('ratio_to_novel') or 1)),
+                          int(40000 / (b.get('ratio_to_novel') or 1) / (nv / max(1, b['elder_chars'] or 1))),
+                          int(50000 / (b.get('ratio_to_novel') or 1) / (nv / max(1, b['elder_chars'] or 1))))]
     lines += ['', '注：原话字数按汉字计；模拟老人每次回答的长短由行为抽样决定（normal 约 80–250 字，long 变体放宽），'
               '所以总字数受模拟器设定的天花板限制，真实老人可能更长也可能更短。', '']
     return '\n'.join(lines)

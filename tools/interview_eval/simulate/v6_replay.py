@@ -30,6 +30,7 @@ pipelines/v3j.py with ctx.literal_cause_span (and off), against the backend V3jP
 from __future__ import annotations
 
 import json
+import os
 import sys
 from copy import deepcopy
 from hashlib import sha256
@@ -226,14 +227,26 @@ def _no_network():
     socket.getaddrinfo = refuse
 
 
-def _norm(obj):
+def _norm(obj, key=None):
     """A record without the per-run bookkeeping (cache flags, timings, token usage: a request sent twice keeps the
-    content of its answer but the cache keeps the usage of the last sending)."""
+    content of its answer but the cache keeps the usage of the last sending). Entries under ``calls`` are compared
+    without their ``id``: before common.Relay.run_batch answered cache hits under the request id, a hit first made by
+    another run kept that run's id (e.g. 's03-N-63f4aa2206::WK05-a1-t1-judge' for 'N-6733a23cd1:WK05::WK05-a2-judge-1'),
+    while the request, answer and order are what the replay checks."""
     if isinstance(obj, dict):
-        return {k: _norm(v) for k, v in obj.items() if k not in ('cached', 'seconds', 'usage')}
+        out = {k: _norm(v, k) for k, v in obj.items() if k not in ('cached', 'seconds', 'usage')}
+        return out
     if isinstance(obj, list):
+        if key == 'calls':
+            return [_call_id(_norm(v)) for v in obj]
         return [_norm(v) for v in obj]
     return obj
+
+
+def _call_id(entry):
+    if isinstance(entry, dict):
+        entry = {k: v for k, v in entry.items() if k != 'id'}
+    return entry
 
 
 def cache_replay(run, keys_out=None):
@@ -325,6 +338,10 @@ def cache_replay(run, keys_out=None):
                     out['stale_saved'][qid] = 'chain_in %r, predecessor now hands on %r' % (rec.get('chain_in'), now_in)
                 else:
                     out['differences'].append(qid)
+                    dump = os.environ.get('SHINIAN_REPLAY_DUMP')  # debugging: write both sides of a difference
+                    if dump:
+                        common.save(Path(dump) / f'{qid}.replayed.json', _norm(record))
+                        common.save(Path(dump) / f'{qid}.saved.json', _norm(rec))
             else:
                 if rec is not None and stale:
                     out['stale_saved'][qid] = 'chain_in %r, predecessor now hands on %r; stops at %s' % (

@@ -164,7 +164,8 @@ class Relay:
         for call in calls:
             path = CACHE / (self.key(call) + '.json')
             if path.exists() and not self.fresh:
-                out[call['id']] = {**load(path), 'cached': True}
+                # a hit may come from another run/person: answer under this request's id, not the stored one
+                out[call['id']] = {**load(path), 'cached': True, 'id': call['id']}
                 self.calls_cached += 1
             else:
                 todo.append(call)

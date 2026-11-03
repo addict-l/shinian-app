@@ -19,6 +19,7 @@
    {"faithful": 4, "lyrical": 3, "coherent": 4, "voice": 3, "structure": 4, "fabrication": [], "note": "……"}
    JSON
    ```
+   （rubric-v2 的请求多一项 `"padding"`（不注水，1–5）：以请求里“输出要求”列出的字段为准。）
    - 输出 `OK` 后，脚本会**自动领取下一个请求**并打印出来（或 IDLE / DONE），照第 2 步继续。
    - 输出 `ERROR`：按提示修正 JSON，用同一编号重交。
    - 输出 `IGNORED`：别的 worker 已经交了，直接继续。

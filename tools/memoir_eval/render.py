@@ -16,6 +16,18 @@ NOTE = {'rich': '测试样书，素材来自公开访谈（模拟“老人确认
         'full84': '测试样书：模拟老人完整 84 题采访（生产题库实际为开篇骨架 11 题 + 六个模块 72 题，共 83 题），素材来自公开访谈改编'}
 
 
+def edition_label(book):
+    """'v2-delicate（细腻档 · 约 1.5 倍）' for a v2 tier book, else the edition name."""
+    t = book.get('tier')
+    if not t:
+        return book['edition']
+    m = book.get('metrics') or {}
+    if m.get('ratio_to_novel') and m.get('ratio_to_elder'):  # v2: the tier ratio applies to the material left after retellings
+        return '%s档 · 目标约 %s 倍新素材（去掉复述后的原话）；实际成书 %d 字，为新素材的 %.2f 倍、全部原话的 %.2f 倍' % (
+            t['label'], t['ratio'], m.get('chars') or 0, m['ratio_to_novel'], m['ratio_to_elder'])
+    return '%s档 · 约 %s 倍原话' % (t['label'], t['ratio'])
+
+
 def add_label(x):
     """Type of an added sentence; v1.1 marks a small picture the check let through (画面)."""
     return x['add'] + ('·画面' if x.get('picture') and x['add'] != '画面' else '')
@@ -29,8 +41,9 @@ def chapter_label(i, c, has_prologue):
 
 
 def to_markdown(book):
-    lines = ['# %s的回忆录' % book['person']['name'], '', '> %s。版本：%s（%s）。' % (NOTE[book['material']['kind']], book['variant'], book['edition']),
-             '> 斜体加〔加写〕的句子是写作者加的（感受、回望、过渡、意象、呼应、收束；标“画面”的是原话里没有的小画面），需老人逐句确认；〔如实草稿〕段落是核对未通过后退回的如实草稿。', '']
+    lines = ['# %s的回忆录' % book['person']['name'], '', '> %s。版本：%s（%s）。' % (NOTE[book['material']['kind']], book['variant'], edition_label(book)),
+             '> 斜体加〔加写〕的句子是写作者加的（画面、感受、回望、氛围、意象、过渡、呼应、收束；“画面”是原话里没有的场景与感官细节），'
+             '不带新的人、地点、时间、数字、事件，但都需老人逐句确认；〔如实草稿〕段落是核对未通过后退回的如实草稿。', '']
     has_pro = book['chapters'] and book['chapters'][0]['modules'][0] == 'skeleton'
     for i, c in enumerate(book['chapters']):
         lines += ['## %s　%s' % (chapter_label(i, c, has_pro), c['title']), '*%s*' % ' · '.join(mb.MODULE_NAME[m] for m in c['modules']), '']
@@ -89,9 +102,9 @@ def to_html(book):
     out = ['<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">',
            '<title>%s回忆录样书</title><style>%s</style></head><body><main>' % (e(book['person']['name']), CSS),
            '<h1>%s的回忆录</h1>' % e(book['person']['name']),
-           '<p class="note">%s。版本 %s（%s）。<br><span class="legend"><span class="add">加写句</span>写作者加的感受、回望、过渡、意象、呼应、收束，需老人逐句确认（<span class="add pic">画面</span>是原话里没有的小画面，也要确认）；'
+           '<p class="note">%s。版本 %s（%s）。<br><span class="legend"><span class="add">加写句</span>写作者加的画面、感受、回望、氛围、意象、过渡、呼应、收束，需老人逐句确认（<span class="add pic">画面</span>是原话里没有的小画面，也要确认）；'
            '<span class="fb">如实草稿</span>核对未通过、退回的如实草稿段落；每段下方可展开看老人原话。</span></p>'
-           % (e(NOTE[book['material']['kind']]), e(book['variant']), e(book['edition']))]
+           % (e(NOTE[book['material']['kind']]), e(book['variant']), e(edition_label(book)))]
     out.append('<nav class="toc"><p>' + '<br>'.join('<a href="#c%d">%s　%s</a>' % (i, chapter_label(i, c, has_pro), e(c['title']))
                                                    for i, c in enumerate(book['chapters'])) + '</p></nav>')
     for i, c in enumerate(book['chapters']):
@@ -129,9 +142,11 @@ def to_html(book):
         out += ['<li>老人说不想讲：%s</li>' % e(d.get('quote') or '') for d in nw['declined']]
         out.append('</ul>')
     m = book.get('metrics') or {}
-    out.append('<h2>代码指标</h2><div class="metrics">成书 %s 字 / 原话 %s 字（%.2f 倍）；加写句占比 %s；来源中找不到的数字/地名/人名 %s 处；原话单元利用率 %s；'
+    out.append('<h2>代码指标</h2><div class="metrics">成书 %s 字 / 原话 %s 字（%.2f 倍）；加写 %s 句（句数占比 %s，字数占比 %s，'
+               '均待老人确认）；来源中找不到的数字/地名/人名 %s 处；原话单元利用率 %s；'
                '各章字数与预算平均偏差 %s；退回如实草稿 %s 段</div>' % (
-                   m.get('chars'), m.get('elder_chars'), m.get('ratio_to_elder') or 0, m.get('added_ratio'), m.get('unsupported_tokens'),
+                   m.get('chars'), m.get('elder_chars'), m.get('ratio_to_elder') or 0, m.get('added_sentences'), m.get('added_ratio'),
+                   m.get('added_char_ratio'), m.get('unsupported_tokens'),
                    m.get('unit_use'), m.get('mean_abs_deviation'), m.get('fallback_paragraphs')))
     out.append('</main></body></html>')
     return '\n'.join(out)
