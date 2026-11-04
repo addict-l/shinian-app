@@ -175,6 +175,38 @@ def contiguous_value(ids, units):
     return [units[k]['id'] for k in range(min(same), max(same) + 1)]
 
 
+def first_work_cause_span(raw, word):
+    """V6 (backend contract_interview_v3j.first_work_cause_span, line for line): the literal cause of one explicit
+    causal sentence that is both the first-work answer and its explanation; None when not that exact shape."""
+    original = raw.strip()
+    view, selected = script_view(original), script_view(word)
+    if not selected:
+        return None
+    time = r'(?:当时|那时|那时候|最初|起初|最早)'
+    prefix = time + r'?(?:我|本人)?' + time + '?'
+    action = r'(?:(?:去|做|干|到|进|在|当|从事|开始)(?:了)?)'
+    own_work_prefix = prefix + r'(?:就|才|只好)?' + action
+    patterns = (
+        prefix + r'(?:因为|由于|因)(?P<cause>[^，,。！？；;\n]+?)(?:[，,](?:所以)?|所以|才|只好)(?P<work>[^。！？；;\n]+)[。！]?$',
+        r'(?P<work>[^，,。！？；;\n]+?)(?:[，,](?:是)?|是)(?:因为|由于)(?P<cause>[^，,。！？；;\n]+)[。！]?$',
+    )
+    for pattern in patterns:
+        match = re.fullmatch(pattern, view)
+        if not match:
+            continue
+        work, cause = match.group('work').strip(), match.group('cause').strip()
+        if selected not in work or not cause or selected in cause:
+            continue
+        if re.search(r'^(?:不是|并非)|什么|不清楚|不记得|不知道|记不清', cause):
+            continue
+        before_work = work[:work.index(selected)]
+        if not re.match(own_work_prefix, work) or not re.fullmatch(
+                prefix + r'(?:就|才|只好)?' + action + r'{0,2}', before_work):
+            continue
+        return original[match.start('cause'):match.end('cause')].strip()
+    return None
+
+
 def assemble(payload, output, ctx, fids, subject_choice, value_override=None, wide=()):
     units = payload['evidence_units']
     index = {u['id']: i for i, u in enumerate(units)}
@@ -296,6 +328,18 @@ def assemble(payload, output, ctx, fids, subject_choice, value_override=None, wi
         value = (exact or containing or pieces[:1] or [None])[0]
         if value:
             fields[fid]['links'] = [{'field_id': link['field_id'], 'value': value}]
+        # V6 listening bundle (speaker-config literal_cause_span, backend assemble): when WK01-E2 and its parent share
+        # one explicit causal sentence, the explanation's value is that sentence's literal cause. Off by default.
+        child = fields[fid]
+        child_units = child.get('value_unit_ids') or []
+        if getattr(ctx, 'literal_cause_span', False) and fid == 'WK01-E2' and parent \
+                and child_units == parent.get('value_unit_ids') and len(child_units) == 1 \
+                and all((targets.get(key) or {}).get('subject') == 'self' for key in (fid, link['field_id'])):
+            cause = first_work_cause_span(text[child_units[0]], word)
+            if cause is not None:
+                child.pop('value_unit_ids')
+                child['value'] = cause
+                notes[fid] = 'explicit_first_work_cause_literal_subspan'
     c = (output or {}).get('control') or {}
     action = c.get('action') if c.get('action') in CONTROL else 'continue'
     cids = [i for i in (c.get('units') or []) if i in index] if action != 'continue' else []

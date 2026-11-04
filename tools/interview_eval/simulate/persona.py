@@ -46,10 +46,18 @@ def bigrams(text):
 
 STOP = bigrams('时间小时以后以前后来当时现在觉得自己生里')
 MIN_SCORE = 2.0
+# material_mode "rich" (BRIEF12 sensitivity check, "素材充足"): every question gets the person's most related excerpts up
+# to RICH_CAP characters whatever their score, so a question the lexical score does not match still sees several of
+# his stories instead of only the opening excerpt (the default falls back to that one excerpt).
+RICH_CAP = 2400
+RICH_EXCERPT_CAP = 600
 
 
 class Personas:
-    def __init__(self):
+    def __init__(self, material_mode=None):
+        if material_mode not in (None, 'default', 'rich'):
+            raise ValueError('unknown material_mode ' + str(material_mode))
+        self.material_mode = material_mode or 'default'
         self.contracts = json.loads(CONTRACTS.read_text(encoding='utf-8'))
         self.Q = {q['id']: q for q in self.contracts['questions']}
         data = json.loads(DATASET.read_text(encoding='utf-8'))
@@ -113,9 +121,19 @@ class Personas:
             score = 2.0 * len(terms & qb) + len(terms & tb) / math.sqrt(max(1, len(tb)) / 20)
             scored.append((score, self.order[nid][e['id']], e))
         scored.sort(key=lambda x: (-x[0], x[1]))
+        rich = self.material_mode == 'rich'
+        cap, piece = (RICH_CAP, RICH_EXCERPT_CAP) if rich else (MATERIAL_CAP, EXCERPT_CAP)
         for score, _, e in scored:
-            if used >= MATERIAL_CAP or score < MIN_SCORE:
+            if used >= cap or (score < MIN_SCORE and not rich):
                 break
+            if rich:
+                e = dict(e)
+                room = max(120, min(piece, cap - used))
+                if len(e['text']) > room:
+                    e['text'] = e['text'][:room] + '……'
+                chosen.append(e)
+                used += len(e['text'])
+                continue
             e = dict(e)
             room = max(120, min(EXCERPT_CAP, MATERIAL_CAP - used))
             if len(e['text']) > room:

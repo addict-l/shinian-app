@@ -1,0 +1,16 @@
+{
+ "judge": {
+  "model": "deepseek-v4-pro",
+  "thinking": "disabled",
+  "max_tokens": 1500,
+  "temperature": 0,
+  "json_mode": true
+ },
+ "verify": {
+  "model": "deepseek-v4-pro",
+  "thinking": "disabled",
+  "max_tokens": 900,
+  "temperature": 0,
+  "json_mode": true
+ }
+}

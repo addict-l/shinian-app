@@ -28,7 +28,9 @@ CLOSE_REASON = {'done': '这个话题已经聊完', 'limited': '这个话题聊�
                 'error': '这个话题聊到这里就够了', 'rest': '老人累了想歇一会儿',
                 'rest_resume': '老人刚才说累了，歇了一会儿，刚点了“继续”；这个话题不再追问，接着聊下一题',
                 # v5d signal scope: the elder could not remember one point and went on to tell more
-                'unknown_partial': '老人说有一点记不清，接着又讲了别的；记不清的那一点不再问，这个话题聊到这里'}
+                'unknown_partial': '老人说有一点记不清，接着又讲了别的；记不清的那一点不再问，这个话题聊到这里',
+                # V6.2 reflection_brief: a reflection question is not pressed once he has said his view
+                'enough': '老人已经说了自己的看法，这个话题聊到这里'}
 
 
 def recorded_fields(rt, result):
@@ -90,6 +92,14 @@ INFER = re.compile(r'一定|肯定|想必|准是|必定|必然|应该很|估计�
 EVAL = ('热闹', '踏实', '舒坦', '自在', '豁达', '清净', '了不起', '有分量', '开创', '难得', '不简单', '真足', '厉害', '自豪', '骄傲', '幸福',
         '温馨', '欣慰', '感动', '扎实', '乐观', '坚强', '勇敢', '能干', '懂事', '孝顺', '放心', '满足', '快乐', '开心', '高兴', '难过',
         '伤心', '委屈', '害怕', '孤单', '别扭')
+# V6.2 no_judgement: judgements of the elder or his family that only he may make ("真是一刻也不闲着", "这家人心齐");
+# dropped like EVAL when his own words in this topic lack them.
+EVAL_V62 = ('心齐', '齐心', '能干', '勤快', '要强', '闲不住', '不闲着', '闲不下来', '有主见', '有骨气', '有出息', '有本事',
+            '能吃苦', '肯吃苦', '吃得了苦', '厚道', '善良', '和睦', '团结', '有心', '用心', '周到', '体贴', '仗义', '顾家',
+            '本分', '争气', '有福', '福气', '明白人', '实在人', '爽快', '有远见', '有眼光', '了不得', '不得了', '好样的',
+            '真行', '真能', '真敢', '胆子真大', '情分', '情谊', '真不错', '挺不错', '难能可贵',
+            # V6.1 round-2 cloud turns: "这规矩很实在" "是盼着您有远见"
+            '很实在', '真实在', '挺实在', '实在话', '远见', '盼着', '有讲究', '有门道', '有分寸')
 HARDSHIP = re.compile(r'苦|难|累|辛苦|艰|受罪|吃亏|不容易|穷|饿|病|死|走了|去世|过世|逃|躲')
 ACK_MAX = 36
 LISTENING_EVAL = re.compile(r'真仔细|真贴心|真细心|有深意|真用心|真懂事|真孝顺|真了不起|'
@@ -123,7 +133,7 @@ def clean_ack(rt, text, elder_text=''):
         elif rt.speaker_config.get('listen_first') and LISTENING_EVAL.search(p):
             reason = 'evaluation'
         else:
-            for w in EVAL:
+            for w in EVAL + (EVAL_V62 if rt.speaker_config.get('no_judgement') else ()):
                 if w in p and w not in elder:
                     reason = 'evaluation'
                     break
@@ -156,6 +166,8 @@ def listening_ack(rt, ack, elder_text=''):
     ack, notes = clean_ack(rt, ack, elder_text)
     if ack and not BARE_ACK.fullmatch(_norm(ack)) and not check_close(ack):
         return ack, notes
+    if rt.speaker_config.get('ack_optional'):  # V6.2: no fixed fallback; the turn goes on without an acknowledgement
+        return '', notes + ['ack_empty']
     return LISTENING_FALLBACK, notes + ['ack_fallback']
 
 
@@ -290,9 +302,17 @@ def compose_ask(rt, row, result, target, prior, elder_text=''):
         from app.ai.interview_story import restates
         if restates(ack, elder_text, rt.speaker_config.get('echo_names')):
             ack, fixes = '', fixes + ['restate_dropped']
+    if rt.speaker_config.get('close_style') == 'v62':  # V6.2: no bare fragment echo before a follow-up
+        from app.ai.interview_story import drop_fragment_echo
+        ack, frag = drop_fragment_echo(rt, ack, elder_text)
+        fixes = fixes + frag
     errs = check_ask(ack, question, prior)
     if INFER.search(question):
         errs.append('inference_in_question')
+    if rt.speaker_config.get('no_third_party_ask'):  # V6.2: not how someone else talked to a third person
+        from app.ai.interview_story import third_party
+        if third_party(question):
+            errs.append('third_party')
     if errs:
         question = result.get('question') or rt.F[target]['question']
         if check_close(ack):
@@ -519,6 +539,11 @@ def decide(cfg, result, st, text=''):
         # v5d: only the point just asked is not pressed; another open point the engine wants may still be asked
         if not (target and st.get('last_target') and target != st['last_target']):
             return 'close', 'unknown_partial'
+    brief = cfg.get('reflection_brief')
+    if brief and st.get('depth') == 'reflection' and (
+            st['followups'] >= brief['followup_cap'] or st.get('elder_chars', 0) >= brief['enough_chars']):
+        # V6.2: a reflection question gets at most followup_cap follow-ups, none once he has said enough
+        return 'close', 'enough'
     if st['followups'] >= cfg['followup_cap']:
         return 'close', 'cap'
     if st['ask_counts'].get(target, 0) >= cfg['same_target_cap']:

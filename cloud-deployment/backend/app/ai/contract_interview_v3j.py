@@ -108,6 +108,7 @@ class V3jRuntime:
             self.questions = {q['id']: q for q in self.contracts['questions']}
             self.F = {f['id']: f for q in self.contracts['questions'] for f in q['elements']}
             self.story, self.deepen_prompt, self.deepen_params = {}, None, None
+            self.depth = {}
             if pipeline == V5F_PIPELINE:
                 self._load_v5f(read)
         except (OSError, ValueError, KeyError, TypeError) as exc:
@@ -130,6 +131,19 @@ class V3jRuntime:
                 q['main_question'] != self.questions[q['id']]['main_question'] for q in bank):
             raise ValueError('story_questions_mismatch')
         self.story = {q['id']: q for q in bank if q['depth'] == 'story'}
+        self.depth = {q['id']: q['depth'] for q in bank}
+        # V6.2 options (absent in the V6 / V6.1 bundles): shape checked here so a bad bundle never starts
+        memory = self.speaker_config.get('story_memory')
+        if memory is not None and (memory.get('enabled') is not True or any(
+                not isinstance(memory.get(k), (int, float)) or isinstance(memory.get(k), bool)
+                for k in ('sentence_share', 'min_retold_chars', 'min_share', 'clip_chars', 'max_items', 'redirect_cap')) or any(
+                not isinstance(memory.get(k), str) or not memory[k] for k in ('memory_heading', 'redirect_direction', 'redirect_note'))
+                or not isinstance(memory.get('redirect_depths'), list)):
+            raise ValueError('unsupported_speaker_configuration')
+        brief = self.speaker_config.get('reflection_brief')
+        if brief is not None and any(not isinstance(brief.get(k), int) or isinstance(brief.get(k), bool)
+                                     for k in ('followup_cap', 'enough_chars')):
+            raise ValueError('unsupported_speaker_configuration')
         if not self.story or any(not isinstance(q.get('deepen_direction'), str) or not q['deepen_direction'] for q in self.story.values()):
             raise ValueError('story_questions_mismatch')
         self.deepen_prompt = read('deepen-prompt.txt')

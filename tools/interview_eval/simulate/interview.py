@@ -552,6 +552,11 @@ def v4_decide(S, result, st, text=''):
         # v5d: only the point just asked is not pressed; another open point the engine wants may still be asked
         if not (target and st.get('last_target') and target != st['last_target']):
             return 'close', 'unknown_partial'
+    brief = cfg.get('reflection_brief')
+    if brief and st.get('depth') == 'reflection' and (
+            st['followups'] >= brief['followup_cap'] or st.get('elder_chars', 0) >= brief['enough_chars']):
+        # V6.2: a reflection question gets at most followup_cap follow-ups, none once he has said enough
+        return 'close', 'enough'
     if st['followups'] >= cfg['followup_cap']:
         return 'close', 'cap'
     if st['ask_counts'].get(target, 0) >= cfg['same_target_cap']:

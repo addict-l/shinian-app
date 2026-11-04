@@ -112,6 +112,22 @@ BUNDLES['v6.1'] = {
     'speaker': 'v6.1-warm-transition',
 }
 
+# V6.2 (BRIEF12): told-story memory, concrete deepening, brief reflection questions, no judgements of the elder.
+# A new pinned candidate beside V6.1; the V6 / V6.1 bundles stay byte for byte.
+V62 = V5 + 'v6.2/'
+BUNDLES['v6.2'] = {
+    **BUNDLES['v6.1'],
+    'target': BACKEND / 'app/ai/interview_runtime_v3j_v62',
+    'sources': {**BUNDLES['v6.1']['sources'],
+                'speaker-prompt.txt': V62 + 'speaker-prompt.txt',
+                'speaker-config.json': V62 + 'speaker-config.json',
+                'deepen-prompt.txt': V62 + 'deepen-prompt.txt'},
+    'readme': '# V6.2 已讲故事记忆候选\n\n由 --bundle v6.2 生成；沿用 v3j_v5f、原判定、冻结题库与深挖上限，使用独立目录和 pin。\n'
+              '说话层与深挖提示、配置取自 docs/prototypes/full-interview-v5/v6.2/（与模拟器测过的原件逐字节相同）。\n',
+    'version': 'interview-v6.2-story-memory-20261103',
+    'speaker': 'v6.2-story-memory',
+}
+
 
 def digest(data):
     return sha256(data).hexdigest()

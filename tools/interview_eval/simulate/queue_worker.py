@@ -238,7 +238,9 @@ def cmd_answer(name, rid, raw, auto_next=True, wait=90):
             if resp.exists():
                 print(f'IGNORED：{rid} 已有答案（别的 worker 先交了）。')
             else:
-                _write_atomic(resp, {'id': rid, 'output': out, 'answered_at': time.time(), 'model': MODEL_TAG})
+                # a non-Haiku worker (e.g. Codex / GPT, PERSONA_WORKER.md) names itself; the cache key stays the same
+                _write_atomic(resp, {'id': rid, 'output': out, 'answered_at': time.time(),
+                                     'model': os.environ.get('SHINIAN_WORKER_MODEL', '').strip() or MODEL_TAG})
                 print(f'OK：{name} {rid} 已提交。')
     if auto_next:
         print('\n—— 自动领取下一个 ——\n')
@@ -302,7 +304,7 @@ class HaikuQueue:
         if key is None and req_path.exists():
             key = _read(req_path)['key']
         out = {'id': rid, 'ok': True, 'output': row['output'], 'content': json.dumps(row['output'], ensure_ascii=False),
-               'model_requested': MODEL_TAG, 'answered_at': row.get('answered_at'),
+               'model_requested': row.get('model') or MODEL_TAG, 'answered_at': row.get('answered_at'),
                'seconds': round(row['answered_at'] - t0, 1) if t0 and row.get('answered_at') else None, 'usage': {}}
         if key:
             _write_atomic(self.cache / f'{key}.json', {k: v for k, v in out.items() if k != 'seconds'})

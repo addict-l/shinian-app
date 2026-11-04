@@ -1,0 +1,40 @@
+{
+ "model": {
+  "model": "claude-haiku-subagent",
+  "via": "file queue <runs>/persona-queue (tools/interview_eval/simulate/WORKER.md)"
+ },
+ "behaviors": {
+  "normal": "正常回答，像平时聊天那样讲，把资料里和这个问题相关的事讲开、讲细（约80到250字）。",
+  "short": "只说一两句很短的话（约8到25字），不主动展开。",
+  "drift": "先回应一句，然后讲着讲着转到资料里另一件事上去，也讲得细一点（共约80到200字）。",
+  "reluctant": "这个你不太想多说：含糊带过一句，或者直接说这个就不多讲了（不超过20字）。",
+  "rest": "你有点累了，说想先歇一会儿（不超过15字）。"
+ },
+ "asr_note": "另外，这段话是语音自动转写的，里面带一两处同音错字（比如把“部队”写成“不对”、“学校”写成“学笑”），其余照常。",
+ "probabilities": {
+  "first_answer": {
+   "normal": 0.58,
+   "short": 0.25,
+   "drift": 0.12,
+   "reluctant": 0.04,
+   "rest": 0.01
+  },
+  "later_answer": {
+   "normal": 0.5,
+   "short": 0.32,
+   "drift": 0.1,
+   "reluctant": 0.06,
+   "rest": 0.02
+  },
+  "asr_typos": 0.2
+ },
+ "note": "behaviour and typo flags are drawn with Random(sha256(person|question|turn)), independent of the system version, so every pipeline meets the same simulated person",
+ "model_void_deepseek_flash": {
+  "model": "deepseek-flash",
+  "thinking": "disabled",
+  "max_tokens": 300,
+  "temperature": 0.7,
+  "json_mode": true
+ },
+ "note_variant": "v1.1 上限参考（BRIEF9）：只把 normal / drift 的长度放宽，其余行为、概率与种子规则不变"
+}

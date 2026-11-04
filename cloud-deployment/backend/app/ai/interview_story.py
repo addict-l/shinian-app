@@ -107,8 +107,9 @@ def deepen_gate(policy, reason, text, elder_words, dz, k):
     return True, 'asked', info
 
 
-def deepen_user(rt, qid, dialogue, dz):
-    item = rt.story[qid]
+def deepen_user(rt, qid, dialogue, dz, view=None):
+    # V6.2: a redirect on a non-story question carries its direction in its own record
+    item = rt.story.get(qid) or {'deepen_direction': dz['direction']}
     lines = [f'当前话题：{rt.questions[qid]["main_question"]}', f'深挖方向：{item["deepen_direction"]}']
     if item.get('sensitive'):
         lines.append('敏感：是（只轻轻问一句，老人不愿细说就不再问）')
@@ -119,6 +120,11 @@ def deepen_user(rt, qid, dialogue, dz):
     if dz.get('partial'):  # v5d signal scope
         lines.append(f'老人刚说记不清的：{dz["partial"]["signal"]}（这一点不再问）')
         lines.append(f'他接着讲的：{dz["partial"]["new"]}')
+    memory = rt.speaker_config.get('story_memory')
+    if memory and view is not None:  # V6.2 told-story memory
+        lines += memory_lines(rt, view, memory)
+        if dz.get('redirect'):
+            lines.append(memory['redirect_note'])
     lines.append('任务：deepen')
     return '\n'.join(lines)
 
@@ -166,6 +172,10 @@ def check_deepen(dim, ack, question, prior, dz, cfg=None):
         errs.append('choice_question')
     if sum(1 for c in re.split(r'[，,；;]', question) if ASK_WORD.search(c.strip())) >= 2:
         errs.append('multi_part')
+    if cfg.get('no_third_party') and third_party(question):  # V6.2
+        errs.append('third_party')
+    if cfg.get('no_told_repeat') and dz.get('told') and repeats_last(question, dz['told'], ''):  # V6.2
+        errs.append('told_before')
     if dim not in DEEPEN_DIMS:
         errs.append('bad_dimension')
     elif dim in dz['dims']:
@@ -180,6 +190,12 @@ def compose_deepen(rt, row, dz, prior, elder_words):
     cfg = policy['deepen']
     dim, ack, question = parse_deepen(row)
     ack, ack_fix = speaker.clean_ack(rt, ack, elder_words)
+    if policy.get('close_style') == 'v62':  # V6.2: no bare fragment echo before a detail question either
+        ack, frag = drop_fragment_echo(rt, ack, elder_words)
+        ack_fix += frag
+    if cfg.get('repair_yes_no'):  # V6.2
+        question, fixed = repair_yes_no(question)
+        ack_fix += fixed
     if cfg.get('drop_echo_ack'):
         ack, echo = deepen_ack(ack, question)
         ack_fix += echo
@@ -377,33 +393,47 @@ WARM_TRANSITION_ONLY = re.compile(
 WARM_SUBJECTIVE = re.compile(r'听着(?:就)?亲切|真勤快|这习惯(?:真|挺|很)?好|心里(?:很|就)?稳当')
 
 
-def warm_transition_clause(part):
+# V6.2 (speaker_config transition_pool "v62"): fewer near-identical phrases, not repeated within the last
+# transition_window closes, and the fallback rotates through the pool instead of always starting at its head.
+WARM_TRANSITIONS_V62 = ('那咱们再来聊聊', '我还想听您讲讲', '再跟您打听一件事', '接着聊聊', '我再问问您',
+                        '还有件事想听您说说', '换个事儿问问您', '那咱们说说')
+
+
+def transition_pool(rt):
+    return WARM_TRANSITIONS_V62 if rt.speaker_config.get('transition_pool') == 'v62' else WARM_TRANSITIONS
+
+
+def warm_transition_clause(part, pool=WARM_TRANSITIONS):
     """Return a safe transition only for a complete, recognised clause."""
     text = _norm(part)
-    return text if text in WARM_TRANSITIONS else ''
+    return text if text in pool else ''
 
 
-def warm_not_ack(part):
+def warm_not_ack(part, pool=WARM_TRANSITIONS):
     """A standalone move-on phrase is not a response to the elder."""
-    return bool(warm_transition_clause(part) or WARM_TRANSITION_ONLY.fullmatch(_norm(part)))
+    return bool(warm_transition_clause(part, pool) or warm_transition_clause(part) or WARM_TRANSITION_ONLY.fullmatch(_norm(part)))
 
 
-def warm_clean_ack(ack):
+def warm_clean_ack(ack, pool=WARM_TRANSITIONS):
     """Remove ungrounded subjective and transition clauses, retaining facts."""
     parts = style.split_turn(ack)[0]
-    kept = [part for _, part in parts if not warm_not_ack(part) and not WARM_SUBJECTIVE.search(part)]
+    kept = [part for _, part in parts if not warm_not_ack(part, pool) and not WARM_SUBJECTIVE.search(part)]
     return re.sub(r'[，,；;]$', '。', ''.join(kept).strip())
 
 
-def choose_warm_transition(lead, seen=()):
-    """Prefer an allowed model lead, avoiding the last two close phrases."""
-    recent = [_norm(text) for text in list(seen or ())[-2:] if text]
+def choose_warm_transition(lead, seen=(), pool=WARM_TRANSITIONS, window=2, rotate=False):
+    """Prefer an allowed model lead, avoiding the phrases of the last ``window`` closes."""
+    recent = [_norm(text) for text in list(seen or ())[-window:] if text]
     used = lambda phrase: any(phrase in old for old in recent)
     for _, part in style.split_turn(lead)[0]:
-        phrase = warm_transition_clause(part)
+        phrase = warm_transition_clause(part, pool)
         if phrase and not used(phrase):
             return phrase, []
-    return next((phrase for phrase in WARM_TRANSITIONS if not used(phrase)), WARM_TRANSITIONS[0]), ['transition_fallback']
+    order = list(pool)
+    if rotate:  # V6.2: start where the number of closes so far points, so the fallbacks do not repeat one sequence
+        start = len(list(seen or ())) % len(order)
+        order = order[start:] + order[:start]
+    return next((phrase for phrase in order if not used(phrase)), order[0]), ['transition_fallback']
 
 
 def seen_with_last(rt, seen, last):
@@ -429,7 +459,7 @@ def close_reply(rt, reply, next_entry, elder_words, seen=(), reason=None):
             lead = lead_part(text, next_entry)
             parts = [c for _, c in style.split_turn(lead)[0]
                      if not speaker.TRANSITION.search(c) and not style.TEMPLATE.search(c)
-                     and not (rt.speaker_config.get('warm_transition') and warm_not_ack(c))
+                     and not (rt.speaker_config.get('warm_transition') and warm_not_ack(c, transition_pool(rt)))
                      and not style.INTERJ.fullmatch(speaker._norm(c))]
             combined = re.sub(r'[，,；;]$', '。', ''.join(parts).strip())
             if combined:
@@ -437,13 +467,26 @@ def close_reply(rt, reply, next_entry, elder_words, seen=(), reason=None):
         if rt.speaker_config.get('warm_transition'):
             # A transition is not a response to what the elder said, even if
             # the provider wrote it as a separate sentence.
-            ack = warm_clean_ack(ack)
+            ack = warm_clean_ack(ack, transition_pool(rt))
+        v62 = rt.speaker_config.get('close_style') == 'v62'
+        frag = []
+        if v62:  # V6.2: a bare fragment of his words is not a reaction
+            ack, frag = drop_fragment_echo(rt, ack, elder_words)
         ack, why = speaker.listening_ack(rt, ack, elder_words)
-        if rt.speaker_config.get('warm_transition') and 'ack_fallback' in why and reason in ('declined', 'declined_partial'):
-            ack = WARM_DECLINE_ACK
+        why = frag + why
+        if rt.speaker_config.get('warm_transition') and ('ack_fallback' in why or v62 and not ack) and \
+                reason in ('declined', 'declined_partial'):
+            ack = decline_ack(rt, seen)
         if next_entry and rt.speaker_config.get('warm_transition'):
-            transition, transition_notes = choose_warm_transition(lead, seen)
-            text = speaker.join(ack, transition + '，' + next_entry)
+            cfg = rt.speaker_config
+            if v62:
+                lead_in, transition_notes = choose_lead_v62(lead, seen, ack, next_entry, transition_pool(rt),
+                                                            cfg.get('transition_window', 2))
+                text = speaker.join(ack, lead_in + next_entry)
+            else:
+                transition, transition_notes = choose_warm_transition(lead, seen, transition_pool(rt),
+                                                                      cfg.get('transition_window', 2), bool(cfg.get('transition_rotate')))
+                text = speaker.join(ack, transition + '，' + next_entry)
             notes += transition_notes
         else:
             text = speaker.join(ack, next_entry) if next_entry else ack
@@ -476,7 +519,7 @@ def draft_ack(rt, reply, next_entry, elder_words, seen=(), reason=None):
     kept = []
     for p in [p for p in re.findall(r'[^，,。！!；;]*[，,。！!；;]?', ack) if p.strip()]:
         if (speaker.TRANSITION.search(p) or style.TEMPLATE.search(p) or
-                (rt.speaker_config.get('warm_transition') and warm_not_ack(p)) or
+                (rt.speaker_config.get('warm_transition') and warm_not_ack(p, transition_pool(rt))) or
                 re.fullmatch(r'\s*那[，,。]?\s*', p)):
             if kept and re.search(r'[。！!；;]$', p):
                 kept[-1] = re.sub(r'[，,]$', '。', kept[-1])
@@ -485,7 +528,7 @@ def draft_ack(rt, reply, next_entry, elder_words, seen=(), reason=None):
     ack = re.sub(r'[，,；;]$', '。', ''.join(kept).strip())
     if not style.cjk(ack) or speaker.check_close(ack):
         if rt.speaker_config.get('warm_transition') and reason in ('declined', 'declined_partial'):
-            return WARM_DECLINE_ACK
+            return decline_ack(rt, seen)
         return speaker.listening_ack(rt, '', elder_words)[0]
     return ack
 
@@ -498,3 +541,211 @@ def earlier_closes(records):
         if spoken.get('task') == 'close' and spoken.get('text'):
             out.append(spoken['text'])
     return out
+
+
+# --------------------------------------------------------------------------- V6.2 told-story memory and deepen checks
+# speaker_config "story_memory" (V6.2 bundle only): the interviewer knows what the elder already told in earlier
+# questions of this interview -- the elder's own answers kept in the question states, maintained by code, never by a
+# model. A sentence of this question that is mostly (sentence_share of its 4-grams) words of one earlier question is
+# "already told". The deepen step is told which ones (so it asks what was not told, or about other people and
+# events), its "told in full" test counts only what is new, a deepen question that only asks to retell them is not
+# asked, and a fact question whose answers are mostly retold may get one redirect question in the deepen step.
+TOLD_N = 4
+TOLD_SENT = re.compile(r'[^。！？!?；;…\n]+[。！？!?；;…]*')
+
+
+def _told_han(text):
+    return re.sub(r'[^一-鿿]', '', _simp(text or ''))
+
+
+def told_grams(text, n=TOLD_N):
+    t = _told_han(text)
+    return {t[i:i + n] for i in range(len(t) - n + 1)}
+
+
+def memory_items(locals_):
+    """[{'qid', 'text'}] of earlier question states in the given order: each question's judged answers, then its
+    answers to detail questions; questions without words are left out."""
+    out = []
+    for local in locals_:
+        sources = list(local.get('sources') or []) + list(((local.get('deepen') or {}).get('sources')) or [])
+        text = ''.join((s.get('text') or '').strip() for s in sources)
+        if local.get('question_id') and text:
+            out.append({'qid': local['question_id'], 'text': text})
+    return out
+
+
+def memory_view(memory, elder_words, cfg):
+    """Sentences of ``elder_words`` (this question) that retell an earlier question. Returns {'total', 'retold'
+    (Chinese characters), 'items': [(earlier qid, sentence)], 'novel': the sentences that are new}."""
+    grams = [(m['qid'], told_grams(m['text'])) for m in memory or ()]
+    every = set().union(*(g for _, g in grams)) if grams else set()
+    total = retold = 0
+    items, novel = [], []
+    for sent in TOLD_SENT.findall(elder_words or ''):
+        g, n = told_grams(sent), len(_told_han(sent))
+        total += n
+        if g and len(g & every) / len(g) >= cfg['sentence_share']:
+            retold += n
+            items.append((max(grams, key=lambda x: len(g & x[1]))[0], sent.strip()))
+        else:
+            novel.append(sent)
+    return {'total': total, 'retold': retold, 'items': items, 'novel': ''.join(novel)}
+
+
+def is_retell(view, cfg):
+    return bool(view) and view['retold'] >= cfg['min_retold_chars'] and view['retold'] >= cfg['min_share'] * view['total']
+
+
+def memory_lines(rt, view, cfg):
+    if not view or not view['items']:
+        return []
+    lines, shown = [cfg['memory_heading']], set()
+    for qid, sent in view['items']:
+        clip = sent if len(sent) <= cfg['clip_chars'] else sent[:cfg['clip_chars']] + '……'
+        if (qid, clip) in shown:
+            continue
+        shown.add((qid, clip))
+        lines.append(f'- 「{clip}」（聊“{rt.questions[qid]["main_question"]}”时讲过）')
+        if len(shown) >= cfg['max_items']:
+            break
+    return lines
+
+
+def new_redirect(rt, qid):
+    """V6.2: the deepening record of a redirect on a fact question (no story label; one question)."""
+    cfg = rt.speaker_config['story_memory']
+    return {'story': False, 'redirect': True, 'sensitive': False, 'direction': cfg['redirect_direction'],
+            'cap': cfg['redirect_cap'], 'asked': 0, 'dims': [], 'log': []}
+
+
+def memory_gate(policy, reason, text, elder_words, dz, k, view):
+    """V6.2 gate: story questions -- deepen_gate, its "told in full" test on what is new only; a redirect (fact
+    question) -- only after a done answer whose words are mostly retold. Returns (ok, reason, info)."""
+    cfg = policy['story_memory']
+    if not dz.get('redirect'):
+        words = view['novel'] if view and view['retold'] else elder_words
+        ok, why, info = deepen_gate(policy, reason, text, words, dz, k)
+        if view is not None:
+            info.update(retold=view['retold'], told_total=view['total'])
+        return ok, why, info
+    info = {'last_chars': len(_norm(text)), 'chars': len(_norm(elder_words)),
+            'retold': view['retold'] if view else 0, 'told_total': view['total'] if view else 0}
+    if reason != 'done':
+        return False, ('answer_' if dz['asked'] else 'not_done_') + str(reason), info
+    if dz['asked'] >= dz['cap']:
+        return False, 'cap', info
+    if k >= MAX_TURNS:
+        return False, 'max_turns', info
+    if info['last_chars'] <= policy['deepen']['short_chars']:
+        return False, 'short', info
+    sig = elder_signal(text)
+    if sig:
+        return False, 'signal_' + sig, info
+    if not is_retell(view, cfg):
+        return False, 'not_retold', info
+    return True, 'asked', info
+
+
+def told_text(view):
+    return ''.join(sent for _, sent in (view or {}).get('items') or ())
+
+
+# a question about how someone other than the elder talked to a third party: he usually did not witness it
+KIN = (r'(?:爸爸?|妈妈?|父亲|母亲|爹|娘|爷爷|奶奶|外公|外婆|姥姥|姥爷|哥哥?|姐姐?|弟弟?|妹妹?|叔叔?|伯伯?|舅舅?|姑姑?|姨|'
+       r'老伴|爱人|丈夫|妻子|老婆|孩子|儿子|女儿|师傅|老师|领导|家里人|家人|亲戚)')
+THIRD_TALK = re.compile(r'(?:跟|和|同|向|找|对)[^，,？?]{1,8}?(?:是)?(?:怎么|咋|如何)(?:说|讲|谈|商量|交涉|开口|求|要|讨)|'
+                        r'(?:怎么|咋|如何)(?:跟|和|同|向|找|对)[^，,？?]{1,8}?(?:说|讲|谈|商量|交涉|开口|求|要|讨)')
+
+
+def third_party(question):
+    for clause in re.split(r'[，,；;]', question or ''):
+        m = THIRD_TALK.search(clause)
+        if not m or re.search(r'[您你]', m.group(0)):
+            continue
+        prefix = re.sub(r'[您你]的?' + KIN, '', clause[:m.start()])
+        if not re.search(r'[您你]', prefix):
+            return True
+    return False
+
+
+YES_NO_REMEMBER = re.compile(r'^(?P<pre>.*?)(?:您|你)?还?记得(?P<body>[^，,？?]*?)吗[？?]\s*$')
+
+
+def repair_yes_no(question):
+    """"……，您还记得是什么情形吗？" -> "……，是什么情形？" (the open question inside a yes/no frame). Returns
+    (question, [repairs])."""
+    m = YES_NO_REMEMBER.match(question or '')
+    if not m or not ASK_WORD.search(m.group('body')):
+        return question, []
+    return m.group('pre') + m.group('body').strip() + '？', ['yes_no_repaired']
+
+
+# --------------------------------------------------------------------------- V6.2 wording (cloud evidence of V6.1, 2026-11-04)
+# speaker_config "close_style": "v62". The V6.1 round-2 cloud turns read like a template: "<a fragment of his words>。
+# 那咱们/那我们再来聊聊，<next question>" every time. V6.2 keeps the user-approved idea (a warm, concrete response, then
+# a lead into the question) and varies it: a bare fragment of his words is not said ("一九五二年。" "苏州的小村庄。"),
+# an empty acknowledgement is allowed (ack_optional) instead of the fixed fallback, and the transition phrase is used
+# only every other close -- in between a light "那 / 好，那 / 嗯，" or nothing -- with no phrase family repeated within
+# the window. A real reaction ("原来是舅舅带您去的。" "那可真不容易。") is kept.
+ECHO_REACTION = re.compile(r'原来|还|真|可|呀|啊|呢|哪|吧|噢|哦|喔|唉|哎|不容易|辛苦|难为|心疼|揪心|难怪|怪不得|一定')
+ECHO_MAX_CHARS = 14
+ECHO_SHARE = 0.75
+
+
+def fragment_echo(ack, elder_words):
+    """A short acknowledgement whose characters are (almost) all his own words, with no reaction of its own."""
+    a = _told_han(ack).replace('您', '我')
+    if not a or len(a) > ECHO_MAX_CHARS or ECHO_REACTION.search(_simp(ack or '')):
+        return False
+    told = set(_told_han(elder_words))
+    return sum(c in told for c in a) / len(a) >= ECHO_SHARE
+
+
+def drop_fragment_echo(rt, ack, elder_words):
+    if ack and fragment_echo(ack, elder_words):
+        return '', ['fragment_echo']
+    return ack, []
+
+
+DECLINE_ACKS_V62 = ('好，这段咱们就不多说了。', '不想说就不说，没关系。', '好，这个先放一放。')
+
+
+def decline_acks(rt):
+    return DECLINE_ACKS_V62 if rt.speaker_config.get('close_style') == 'v62' else (WARM_DECLINE_ACK,)
+
+
+def decline_ack(rt, seen=()):
+    """The respectful acknowledgement of a refusal; V6.2 rotates it and never repeats the last close's."""
+    if rt.speaker_config.get('close_style') != 'v62':
+        return WARM_DECLINE_ACK
+    seen = list(seen or ())
+    last = _norm(seen[-1]) if seen else ''
+    order = DECLINE_ACKS_V62[len(seen) % 3:] + DECLINE_ACKS_V62[:len(seen) % 3]
+    return next(a for a in order if _norm(a) not in last)
+
+
+LIGHT_LEADS = ('那', '好，那', '嗯，')
+
+
+def used_phrase(text, pool):
+    t = _norm(text)
+    return any(p in t for p in pool) or any(p in t for p in WARM_TRANSITIONS)
+
+
+def choose_lead_v62(model_lead, seen, ack, next_entry, pool, window):
+    """What goes between the acknowledgement and the next entry: a pool phrase only when the last close had none,
+    else a light lead ("那" after an acknowledgement; "那 / 好，那 / 嗯，" rotating when there is none). Returns
+    (lead text ending where the entry starts, [notes])."""
+    seen = list(seen or ())
+    last = seen[-1] if seen else ''
+    starts_na = next_entry.startswith('那')
+    if not used_phrase(last, pool):
+        phrase, notes = choose_warm_transition(model_lead, seen, pool, window, True)
+        return phrase + '，', notes
+    if ack:
+        return ('' if starts_na else '那'), ['no_transition']
+    light = [x for x in LIGHT_LEADS if not (starts_na and '那' in x)] or ['']
+    order = light[len(seen) % len(light):] + light[:len(seen) % len(light)]
+    pick = next((x for x in order if not _norm(last).startswith(_norm(x)) or not _norm(x)), order[0])
+    return pick, ['light_lead']

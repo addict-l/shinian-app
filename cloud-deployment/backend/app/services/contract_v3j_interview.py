@@ -196,7 +196,7 @@ def _transition(rt, client, state, qid, dialogue, fields, reason, holder, sessio
     if not ok:
         text = SKIP_ACK + '\n' + next_text
     if rt.speaker_config.get('listen_first') and (ack == speaker.LISTENING_FALLBACK or
-            rt.speaker_config.get('warm_transition') and ack == story.WARM_DECLINE_ACK and ack not in reply) and 'ack_fallback' not in notes:
+            rt.speaker_config.get('warm_transition') and ack in story.decline_acks(rt) and ack not in reply) and 'ack_fallback' not in notes:
         notes.append('ack_fallback')
     return text, {'task': 'close', 'close_reason': reason, 'step': 'next_question', 'ack': ack if ok else '',
                   'notes': notes, 'fallback': not ok or 'ack_fallback' in notes, 'text': text, 'raw': row.get('content'), 'call': entry}
@@ -218,12 +218,12 @@ def _draft_ack(rt, client, state, qid, dialogue, fields, reason, holder, session
     else:
         ack = speaker.lead_ack(rt, reply, None if menu else next_text, elder_words)
     notes = []
-    if ack and step == 'supplement' and speaker._norm(ack) == speaker._norm(state.speaker_last_close):
+    if ack and step in ('supplement', 'supplement_review') and speaker._norm(ack) == speaker._norm(state.speaker_last_close):
         ack, notes = '', ['repeat_ack']  # the same acknowledgement as last time is not said again
     ack, why = speaker.listening_ack(rt, ack, elder_words)
     notes += why
     if rt.speaker_config.get('listen_first') and (ack == speaker.LISTENING_FALLBACK or
-            rt.speaker_config.get('warm_transition') and ack == story.WARM_DECLINE_ACK and ack not in reply) and 'ack_fallback' not in notes:
+            rt.speaker_config.get('warm_transition') and ack in story.decline_acks(rt) and ack not in reply) and 'ack_fallback' not in notes:
         notes.append('ack_fallback')
     text = speaker.join(ack, closing) if ack else closing
     return ack, text, {'task': 'close', 'close_reason': reason, 'step': step, 'ack': ack, 'fallback': not ack or 'ack_fallback' in notes,
@@ -266,26 +266,58 @@ def finish(local, outcome, spoken, asked=None, *, calls=None):
 DEEPEN_KEY = 'deepen'  # GuidedQuestion key/target of a detail question (not an element of the contract)
 
 
-def try_deepen(rt, client, local, qid, reason, text, dialogue, holder, save_call, asked_text, before):
+MODULE_ORDER = ('childhood', 'growth', 'work', 'family', 'later_life', 'reflection')
+
+
+def told_memory(rt, state):
+    """V6.2 story_memory: what the elder told in earlier questions of this interview, from the durable guide state
+    only (other modules' checkpoints in menu order, then this module's finished questions)."""
+    if not v5f(rt) or not rt.speaker_config.get('story_memory'):
+        return None
+    locals_ = []
+    for module in MODULE_ORDER:
+        if module == state.module:
+            continue
+        checkpoint = (state.module_checkpoints or {}).get(module) or {}
+        history = checkpoint.get('contract_history') or {}
+        locals_ += list(history.values())
+        current = checkpoint.get('contract_state') or {}
+        if current.get('question_id') and current['question_id'] not in history:
+            locals_.append(current)
+    locals_ += list((state.contract_history or {}).values())
+    return story.memory_items(locals_)
+
+
+def try_deepen(rt, client, local, qid, reason, text, dialogue, holder, save_call, asked_text, before, memory=None):
     """v5f: one more detail question on a story question, before the close (interview.session's deepen branch).
     Returns (dimension, ack, question, record) when one is asked, else (None, None, None, record): the normal close
-    follows. The deepen call is saved with the pending request like every other call."""
-    if not v5f(rt) or qid not in rt.story:
+    follows. The deepen call is saved with the pending request like every other call.
+    V6.2 (``memory`` from told_memory): the gate and the deepen input know what he already told; a fact question
+    whose answers are mostly retold may get one redirect question through the same step."""
+    cfg = rt.speaker_config.get('story_memory') if memory is not None else None
+    redirect = bool(cfg) and qid not in rt.story and rt.depth.get(qid) in cfg['redirect_depths']
+    if not v5f(rt) or (qid not in rt.story and not redirect):
         return None, None, None, None
-    dz = local.setdefault('deepen', story.new_deepen(rt, qid))
     elder_words = ''.join(t for role, t in dialogue if role == 'elder')
+    view = story.memory_view(memory, elder_words, cfg) if cfg else None
+    dz = local.setdefault('deepen', story.new_deepen(rt, qid) if qid in rt.story else story.new_redirect(rt, qid))
     dz['asked_text'], dz['before'], dz['last'] = asked_text, before, text  # read by signal_scope / check_deepen
     k = len(local['sources']) + len(dz.get('sources') or [])
     if dz.get('stopped'):
         ok, why, info = False, 'stopped_' + dz['stopped'], {}
+    elif cfg:
+        ok, why, info = story.memory_gate(rt.speaker_config, reason, text, elder_words, dz, k, view)
     else:
         ok, why, info = story.deepen_gate(rt.speaker_config, reason, text, elder_words, dz, k)
     log = {'k': k, 'decision': 'asked' if ok else 'skip', 'reason': why, **info}
     if not ok:
         return None, None, None, log
+    if cfg:
+        dz['told'] = story.told_text(view)
+        log['told_items'] = [list(x) for x in view['items']]
     # the question parts asked so far in this question (the simulator's question_part of each system message)
     prior = [s.get('question') for s in question_answers(local, {})]
-    user = story.deepen_user(rt, qid, dialogue, dz)
+    user = story.deepen_user(rt, qid, dialogue, dz, view)
     row, call = V3jPipeline(rt, client).deepen(user, saved_calls=holder['calls'], save_call=save_call)
     dim, ack, question, errs, repairs = story.compose_deepen(rt, row, dz, prior, elder_words)
     log.update({'dimension': dim, 'ack': ack, 'question': question, 'errors': errs, 'repairs': repairs,
@@ -323,7 +355,7 @@ def ask_deepen(state, local, dim, ack, question):
 
 
 def clean_dz(dz):
-    for key in ('asked_text', 'before', 'last', 'partial'):
+    for key in ('asked_text', 'before', 'last', 'partial', 'told'):
         dz.pop(key, None)
 
 
@@ -365,7 +397,7 @@ def deepen_answer_turn(client, previous, state, messages, latest, rt, qid, entry
         state.phase = 'paused'
         return _project(previous, state, messages), ConversationReply(text=PAUSE_TEXT)
     dim, ack, question, log = try_deepen(rt, client, local, qid, reason, latest.content, dialogue, holder,
-                                         saver(holder, latest.session_id, state), asked, before)
+                                         saver(holder, latest.session_id, state), asked, before, told_memory(rt, state))
     keep_log(dz, log)
     if question:
         record['deepen'] = {k: v for k, v in log.items() if k != 'call'}
@@ -443,6 +475,8 @@ def question_turn(client, previous, state, messages, latest):
           'prev_eff': dict((local.get('last_result') or {}).get('effective') or {})}
     if rt.speaker_config.get('signal_scope'):  # read by signal_scope only (v5f)
         st.update(asked=asked_now, before=before, last_target=local.get('asked_target'))
+    if rt.speaker_config.get('reflection_brief'):  # V6.2: reflection questions are not pressed
+        st.update(depth=rt.depth.get(qid), elder_chars=len(speaker._norm(''.join(t for role, t in dialogue if role == 'elder'))))
     action, arg = speaker.decide(rt.speaker_config, result, st, latest.content)
     # decide closes engine skipped / limited+declined as 'declined' unless the elder had already answered
     # ('declined_partial', C02), so the reason alone tells a refusal.
@@ -465,6 +499,17 @@ def question_turn(client, previous, state, messages, latest):
             coverage(state)
             return review_step(previous, state, messages)
         reason = arg if action == 'close' else 'limited'
+        if (rt.speaker_config.get('reflection_brief') or {}).get('review_after_supplement') and rt.depth.get(qid) == 'reflection':
+            # V6.2: on a reflection question one recorded addition is acknowledged and the review step follows
+            ack, text, spoken = _draft_ack(rt, client, state, qid, dialogue, fields, reason, holder, latest.session_id,
+                                           closing=REVIEW_TEXT, step='supplement_review')
+            finish(local, outcome, {**spoken, **rule})
+            state.pending_question = None
+            if ack:
+                state.speaker_last_close = ack
+            state.phase = 'review'
+            coverage(state)
+            return _project(previous, state, messages), ConversationReply(text=text, action='offer_generation')
         ack, text, spoken = _draft_ack(rt, client, state, qid, dialogue, fields, reason, holder, latest.session_id,
                                        closing=SUPPLEMENT_TEXT, step='supplement')
         finish(local, outcome, {**spoken, **rule})
@@ -478,7 +523,7 @@ def question_turn(client, previous, state, messages, latest):
     if action == 'close' and not refused:
         # v5f: a story question whose elements are complete may get a detail question before the draft step.
         dim, ack, question, log = try_deepen(rt, client, local, qid, arg, latest.content, dialogue, holder,
-                                             save_call, asked_now, before)
+                                             save_call, asked_now, before, told_memory(rt, state))
         if log is not None:
             dz = local['deepen']
             keep_log(dz, log)
