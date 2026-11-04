@@ -60,7 +60,7 @@ def to_markdown(book):
                         out.append('*%s*〔加写·%s〕' % (x['t'], add_label(x)))
                         adds.append('（%s）%s' % (add_label(x), x['t']))
                     else:
-                        out.append(x['t'])
+                        out.append(('〔如实草稿〕' if x.get('fallback') and not p.get('fallback') else '') + x['t'])
                 lines += [('〔如实草稿〕' if p.get('fallback') else '') + ''.join(out), '']
         if adds:
             lines += ['> 本章加写句（待老人确认）：', ''] + ['> - %s' % a for a in adds] + ['']
@@ -123,6 +123,8 @@ def to_html(book):
                         parts.append('<span class="add%s">%s</span><span class="tag">%s</span>' % (
                             ' pic' if x.get('picture') or x['add'] == '画面' else '', e(x['t']), e(add_label(x))))
                         adds.append((add_label(x), x['t']))
+                    elif x.get('fallback') and not p.get('fallback'):  # v3: one sentence went back to its confirmed draft
+                        parts.append('<span class="fb" title="如实草稿句">%s</span>' % e(x['t']))
                     else:
                         parts.append(e(x['t']))
                 cls = 'p fb' if p.get('fallback') else 'p'
@@ -148,6 +150,13 @@ def to_html(book):
                    m.get('chars'), m.get('elder_chars'), m.get('ratio_to_elder') or 0, m.get('added_sentences'), m.get('added_ratio'),
                    m.get('added_char_ratio'), m.get('unsupported_tokens'),
                    m.get('unit_use'), m.get('mean_abs_deviation'), m.get('fallback_paragraphs')))
+    v3 = m.get('v3') or {}
+    if v3:
+        out.append('<div class="metrics">v3：故事 %s 个；跨章重复讲的故事 %s 个；原话细节利用率 %s；退回如实草稿句 %s；补写漏掉细节 %s 句；'
+                   '待确认加写 %s 句（其中画面 %s、呼应 %s）</div>' % (
+                       v3.get('stories', '—'), (v3.get('spread') or {}).get('stories_in_several_chapters', '—'), v3.get('detail_use'),
+                       v3.get('fallback_sentences'), v3.get('filled_sentences'), v3.get('added_sentences'), v3.get('picture_sentences'),
+                       v3.get('echo_sentences')))
     out.append('</main></body></html>')
     return '\n'.join(out)
 

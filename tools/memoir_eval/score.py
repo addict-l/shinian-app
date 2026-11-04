@@ -53,14 +53,38 @@ def sources_text(book, plan_ch, c=None):
     return '\n\n'.join(lines)
 
 
-def request_input(book, plan_ch, c):
+def story_sources(book, plan, c):
+    """v3 (BRIEF11, --story-sources): a story is written once in one chapter, so the scorer gets what this chapter was
+    given -- the sentences of its own stories, grouped by answer -- and a list of the stories other chapters tell (a
+    chapter that does not retell them is right, and a one-line echo of them has a source)."""
+    pch = next((x for x in plan['chapters'] if x['modules'] == c['modules']), None)
+    if not pch or not any(s.get('story_meta') for s in pch['sections']):
+        return None
+    lines, own = [], set()
+    for s in pch['sections']:
+        for m in s.get('story_meta') or []:
+            own.add(m['id'])
+            for t in m['tellings']:
+                lines.append('[%s] 问：%s\n答（与本章有关的句子）：%s' % (t['id'], t['asked'], t['text']))
+    other = ['%s（%s）' % (v['title'], mb.MODULE_NAME.get(v.get('chapter'), v.get('chapter')))
+             for k, v in (book.get('stories') or plan.get('stories') or {}).items() if k not in own and v.get('chapter')]
+    if other:
+        lines.append('（本书其他章另写的故事，本章不重讲是对的，最多一句带过：%s）' % '；'.join(other))
+    return '\n\n'.join(lines)
+
+
+def request_input(book, plan_ch, c, plan=None):
     n = sum(mb.han_len(x['t']) for s in c['sections'] for p in s['paragraphs'] for x in p['sentences'])
     if c.get('units'):
         m = sum(mb.han_len(book['units'][u]['text']) for u in c['units'])
     else:
         m = sum(mb.han_len(book['units'][u]['text']) for s in plan_ch['sections'] for u in s['units'])
+    src = story_sources(book, plan, c) if plan else None
+    if src is not None:
+        m = sum(mb.han_len(t['text']) for x in plan['chapters'] if x['modules'] == c['modules']
+                for s in x['sections'] for st in s.get('story_meta') or [] for t in st['tellings'])
     return ('===== 这一章（%d 字；老人这部分原话约 %d 字）=====\n%s\n\n===== 老人原话 =====\n%s'
-            % (n, m, chapter_text(c), sources_text(book, plan_ch, c)))
+            % (n, m, chapter_text(c), src if src is not None else sources_text(book, plan_ch, c)))
 
 
 def main():
@@ -71,6 +95,7 @@ def main():
     ap.add_argument('--wait', type=float, default=10800)
     ap.add_argument('--label', default='')
     ap.add_argument('--rubric', default='rubric-v1.txt')
+    ap.add_argument('--story-sources', action='store_true', help='v3: sources = the sentences of the chapter\'s own stories')
     a = ap.parse_args()
     run_dir = mb.RUNS / a.run
     q = qw.HaikuQueue('memoir')
@@ -92,7 +117,7 @@ def main():
                 if not c['sections']:
                     continue
                 pch = plan['chapters'][ci] if ci < len(plan['chapters']) and not c.get('units') else None
-                rid, hit = q.submit(instructions, request_input(book, pch, c), note, spec, meta={'run': a.run})
+                rid, hit = q.submit(instructions, request_input(book, pch, c, plan if a.story_sources else None), note, spec, meta={'run': a.run})
                 key = (v, k, ci)
                 if hit:
                     results[key] = hit['output']

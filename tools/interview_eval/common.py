@@ -201,13 +201,19 @@ class Relay:
                'defaults': {}, 'prompts': prompts,
                'calls': [{'id': c['id'], 'system_ref': sha(c['system'])[:16], 'user': c['user'], 'params': c['params']}
                          for c in todo]}
+        resumed = self._awaiting_same(job)
+        if resumed:  # the runner died while waiting: read the already-sent job back instead of resending it
+            job_name = resumed
         request_path = OUT_JOBS / (job_name + '.request.json')
-        if request_path.exists():
+        if resumed:
+            print(json.dumps({'relay_job_resumed': job_name, 'calls': len(todo)}), flush=True)
+        elif request_path.exists():
             raise RelayError('job name reused: ' + job_name)
-        save(request_path, job)
-        save(self.run_dir / 'relay-awaiting.json', {'job': job_name, 'calls': len(todo), 'since': time.time(),
-                                                    'device_path': DEVICE_JOBS + '\\' + job_name + '.request.json'})
-        print(json.dumps({'relay_job_written': job_name, 'calls': len(todo)}), flush=True)
+        if not resumed:
+            save(request_path, job)
+            save(self.run_dir / 'relay-awaiting.json', {'job': job_name, 'calls': len(todo), 'since': time.time(),
+                                                        'device_path': DEVICE_JOBS + '\\' + job_name + '.request.json'})
+            print(json.dumps({'relay_job_written': job_name, 'calls': len(todo)}), flush=True)
         deadline = time.time() + self.wait_seconds
         response_path = done_path = None
         while time.time() < deadline:
@@ -230,6 +236,21 @@ class Relay:
         self._store(todo, rows, out)
         (self.run_dir / 'relay-awaiting.json').unlink(missing_ok=True)
         return out
+
+    def _awaiting_same(self, job):
+        """Name of the job this run left awaiting (relay-awaiting.json) when its request file asks exactly the same
+        calls (ids, user text, params, system prompts) as ``job``; None otherwise."""
+        aw = self.run_dir / 'relay-awaiting.json'
+        if not aw.exists():
+            return None
+        try:
+            name = load(aw)['job']
+            old = load(OUT_JOBS / (name + '.request.json'))
+        except (OSError, ValueError, KeyError):
+            return None
+        def norm(j):
+            return sorted((c['id'], c['user'], json.dumps(c['params'], sort_keys=True), j['prompts'].get(c['system_ref'])) for c in j['calls'])
+        return name if norm(old) == norm(job) else None
 
     def _store(self, todo, rows, out):
         """Parse, cache and account the provider rows of ``todo`` (same for relay and direct mode)."""

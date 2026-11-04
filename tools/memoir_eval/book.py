@@ -32,8 +32,11 @@ from copy import deepcopy
 
 import mb
 import render
+import story
 
 PLAN_PARAMS = {'model': 'deepseek-v4-pro', 'thinking': 'enabled', 'json_mode': True, 'max_tokens': 32000, 'timeout': 900}
+# v3: the story plan assigns ~600 sentences; 32k tokens of thinking ran out before any output (mb4-it1, 2026-11-03)
+STORY_PLAN_PARAMS = dict(PLAN_PARAMS, max_tokens=64000, timeout=1800)
 CHECK_PARAMS = {'model': 'deepseek-v4-pro', 'thinking': 'enabled', 'json_mode': True, 'max_tokens': 32000, 'timeout': 900}
 WRITE_BASE = {'model': 'deepseek-v4-pro', 'json_mode': True, 'temperature': 0.6}
 PART_CHARS = 6000
@@ -41,7 +44,7 @@ ADD_TYPES = ('感受', '回望', '过渡', '意象', '呼应', '收束', '画面
 # v2 expansion tiers (user decision 2026-11-03: the book may be longer than the elder's words): name -> (ratio, label)
 TIERS = {'concise': (0.8, '简洁'), 'delicate': (1.5, '细腻'), 'rich': (2.0, '浓墨')}
 SHORT_CHAPTER = 500  # v1.1 (user decision 4): a chapter shorter than this joins a neighbour as a section with its module heading
-FACT_ISSUES = ('无来源事实', '张冠李戴', '确定化', '不愿讲', '加写含事实', '延伸事实')  # 延伸事实: check-v4
+FACT_ISSUES = ('无来源事实', '张冠李戴', '确定化', '不愿讲', '加写含事实', '延伸事实', '替人编')  # 延伸事实: check-v4; 替人编: check-v6
 
 
 def write_params(thinking, long_output=False):
@@ -503,7 +506,7 @@ def written_output(row):
 
 def parse_written(ch, units, rows, calls, log, simplify=False):
     """Chapter sections from the writer's parts; None for a part whose call failed or did not parse."""
-    allowed = {u for s in ch['sections'] for u in s['units']} | set(ch['closing_units'])
+    allowed = {u for s in ch['sections'] for u in s['units']} | set(ch['closing_units']) | set(ch.get('echo_units') or [])
     out = []
     for call in calls:
         row = rows.get(call['id']) or {}
@@ -598,12 +601,32 @@ def draft_matching(p, qids, drafts, used):
              'from_questions': list(dict.fromkeys(c[0][0] for c in order))}]
 
 
+def draft_sentence(x, units, drafts, used, chapter_grams):
+    """v3 fallback for one flagged fact sentence: the most similar unused sentence of the confirmed drafts of the
+    questions it cites (similarity >= 0.3), unless the chapter already tells it (4-gram cover >= 0.5) or it is a bare
+    'I don't remember' fragment (v2: '运到哪的，这个我记不清了' left in the prologue). None: the sentence is dropped."""
+    import difflib
+    best, score = None, 0.3
+    for qid in dict.fromkeys(units[u]['qid'] for u in x['src'] if u in units):
+        for k, dp in enumerate((drafts.get(qid) or {}).get('paragraphs') or []):
+            for j, t in enumerate(mb.sentences(dp['text'])):
+                if (qid, k, j) in used or (mb.UNKNOWN.search(t) and mb.han_len(t) <= 20):
+                    continue
+                r = difflib.SequenceMatcher(None, x['t'], t, autojunk=False).ratio()
+                if r >= score and cover(t, chapter_grams - _grams(x['t'])) < 0.5:
+                    best, score = ((qid, k, j), t, dp['source_ids']), r
+    if not best:
+        return None
+    used.add(best[0])
+    return {'t': best[1], 'src': best[2], 'add': None, 'fallback': True, 'from_questions': [best[0][0]]}
+
+
 NO_PROBLEM = re.compile(r'(无问题|没有问题|不算问题|此句无|句子一致|与原话一致|一致[。，]?$|没有新增事实[。，]?$)')
 
 
 def apply_checks(ch, units, sections, row, drafts, all_text, stats, fallback_mode='paragraph'):
     """Code + model checks; returns the final sections (with fallbacks)."""
-    issues = defaultdict(list)
+    issues, nouns = defaultdict(list), {}
     out = (row or {}).get('output') if (row or {}).get('ok') else None
     if isinstance(out, dict):
         for it in out.get('issues') or []:
@@ -613,11 +636,15 @@ def apply_checks(ch, units, sections, row, drafts, all_text, stats, fallback_mod
                     continue
                 issues[it['sid']].append(it)
                 stats['model_issues'][it.get('type') or '?'] += 1
+        for it in out.get('nouns') or []:  # v3 check-v6: concrete nouns of each added sentence (code checks them)
+            if isinstance(it, dict) and it.get('sid') and isinstance(it.get('nouns'), list):
+                nouns[it['sid']] = [n for n in it['nouns'] if isinstance(n, str)]
     else:
         stats['check_failed'] += 1
     chapter_text = '\n'.join(units[u]['raw'] for s in ch['sections'] for u in s['units']) + '\n' + \
         '\n'.join(units[u]['raw'] for u in ch['closing_units'])
     used, used_sents = set(), set()
+    chapter_grams = {g for s in sections for p in s['paragraphs'] for x in p['sentences'] for g in _grams(x['t'])}
     final = []
     for s in sections:
         paras = []
@@ -640,6 +667,8 @@ def apply_checks(ch, units, sections, row, drafts, all_text, stats, fallback_mod
                         its = [i for i in its if i not in soft]
                 types = [i.get('type') for i in its]
                 x['issues'] = its
+                if x.get('sid') in nouns:
+                    x['nouns'] = nouns[x['sid']]
                 if '画面' in types:  # v1.1: a small picture is kept and shown for the elder's confirmation
                     x['picture'] = True
                     stats['pictures'] += 1
@@ -655,8 +684,17 @@ def apply_checks(ch, units, sections, row, drafts, all_text, stats, fallback_mod
                     keep.append(x)
                     continue
                 if bad_any or any(t in FACT_ISSUES for t in types):
-                    fall = True
                     stats['fallback_reasons'].update(['code:' + b[0] for b in bad_any] + [t for t in types if t in FACT_ISSUES])
+                    if fallback_mode == 'sentence':  # v3: only this sentence goes back to its confirmed draft sentence
+                        repl = draft_sentence(x, units, drafts, used_sents, chapter_grams)
+                        stats['fallback_sentences'] = stats.get('fallback_sentences', 0) + 1
+                        if repl:
+                            keep.append(repl)
+                            chapter_grams |= _grams(repl['t'])
+                        else:
+                            stats['fallback_dropped'] = stats.get('fallback_dropped', 0) + 1
+                        continue
+                    fall = True
                 elif '未标加写' in types:
                     x['add'] = '感受'
                     stats['relabelled'] += 1
@@ -865,6 +903,30 @@ def metrics(book, units, plan):
 
 def dry_model(call):
     user = json.loads(call['user'])
+    if call['id'].startswith('plan-') and '〔1〕' in call['user']:  # v3 story plan: one story per question
+        chs, sts = [], []
+        for c in user['chapters']:
+            by_q = defaultdict(list)
+            for u in c['units']:
+                by_q[u['question']].append(u['id'])
+            secs = []
+            for q, ids in by_q.items():
+                sts.append({'id': 'S' + q, 'title': q, 'gist': '', 'kind': 'story', 'parts': [{'unit': x, 'sents': 'all'} for x in ids]})
+                secs.append({'title': q, 'stories': ['S' + q]})
+            first = c['units'][0]
+            t0 = re.sub(r'〔\d+〕', '', first['text'])[:4]
+            chs.append({'module': c['module'], 'title': t0, 'title_quote': t0, 'title_source': first['id'], 'sections': secs,
+                        'closing': [], 'echoes': [{'story': sts[0]['id']}]})
+        return json.dumps({'stories': sts, 'chapters': chs, 'motifs': [], 'private': [], 'unused': [], 'voice_habits': []}, ensure_ascii=False)
+    if call['id'].startswith('w-') and '"stories"' in call['user']:
+        secs = [{'title': s['title'], 'paragraphs': [[{'t': t, 'src': [tl['id']], 'add': None} for t in mb.sentences(tl['text'])]
+                                                     for st in s['stories'] for tl in st['tellings']]} for s in user['chapter']['sections']]
+        if secs and secs[-1]['paragraphs']:
+            secs[-1]['paragraphs'][-1].append({'t': '他天不亮就下地，扛着扁担去粮站。', 'src': [], 'add': '收束'})
+        return json.dumps({'sections': secs}, ensure_ascii=False)
+    if call['id'].startswith('f-'):
+        return json.dumps({'insert': [{'after': user['sentences'][0]['sid'], 't': user['missed'][0]['text'], 'src': [user['missed'][0]['unit']]}]},
+                          ensure_ascii=False)
     if call['id'].startswith('plan-'):
         chs = []
         for c in user['chapters']:
@@ -981,7 +1043,7 @@ def main():
     ap.add_argument('--simplify', action='store_true', help='traditional -> simplified on the written sentences')
     ap.add_argument('--check-thinking', default='enabled', choices=['enabled', 'disabled'])
     ap.add_argument('--check-prompt', default='check.txt')
-    ap.add_argument('--fallback', default='paragraph', choices=['paragraph', 'match'],
+    ap.add_argument('--fallback', default='paragraph', choices=['paragraph', 'match', 'sentence'],
                     help='paragraph: whole draft paragraphs of the cited questions (v1); match: the most similar draft sentences')
     ap.add_argument('--ingest', default='', help='stage=job_name[,…]: cache answers of a sent job before running that stage')
     ap.add_argument('--short-merge', type=int, default=0,
@@ -1000,7 +1062,15 @@ def main():
     ap.add_argument('--dedupe', action='store_true', help='v2: drop sentences repeating an earlier chapter / an earlier added sentence')
     ap.add_argument('--six', action='store_true', help='v2 (user decision 2026-11-03 06:42): prologue + one chapter per module, '
                                                        'never merged (no premerge, no thin/short-chapter merge); use plan-v4.txt')
+    ap.add_argument('--stories', action='store_true', help='v3 (BRIEF11): the planner groups every sentence into stories, each '
+                                                           'written once (plan-v5.txt, write-v7.txt); needs --six')
+    ap.add_argument('--fill-prompt', default='', help='v3: insert the details the fact layer dropped (fill-v1.txt)')
+    ap.add_argument('--guard', action='store_true', help='v3: code guards on added sentences (nouns, other people, stock closings, openings)')
+    ap.add_argument('--book-cap', type=int, default=story.BOOK_CAP, help='v3: book cap; chapter cap = module share x this')
+    ap.add_argument('--expand-k', type=float, default=None, help='v3: added chars = k x fact chars (default: EXPAND_K of the tier)')
     a = ap.parse_args()
+    if a.stories and not a.six:
+        raise SystemExit('--stories needs --six')
     if a.six and (a.premerge or a.short_merge):
         raise SystemExit('--six never merges chapters: drop --premerge / --short-merge')
     global PART_SECTIONS
@@ -1017,15 +1087,17 @@ def main():
         books[key]['groups'] = module_groups(books[key]['units']) if a.premerge else \
             six_groups(books[key]['units']) if a.six else None
     tag = time.strftime('%H%M%S')  # job names must be unique; answers are cached by content anyway
-    rows = relay.run_batch('%s-plan-%s-%s' % (a.prefix, a.run, tag), [plan_call(k, b['handoff'], b['units'], a.plan_prompt, b['groups'])
-                                                                       for k, b in books.items()])
+    rows = relay.run_batch('%s-plan-%s-%s' % (a.prefix, a.run, tag),
+                           [story.plan_call(k, b['handoff'], b['units'], a.plan_prompt, b['groups'], STORY_PLAN_PARAMS) if a.stories
+                            else plan_call(k, b['handoff'], b['units'], a.plan_prompt, b['groups']) for k, b in books.items()])
     # a transport failure (network, timeout) is not a planner answer: stop instead of writing from a fallback plan
     lost = [k for k in books if not (rows.get('plan-' + k) or {}).get('ok') and not a.dry]
     if lost and not a.offline:
         raise SystemExit('plan call failed (%s); rerun with the same arguments -- a new job name is used, answers are cached'
                          % ', '.join('%s:%s' % (k, (rows.get('plan-' + k) or {}).get('error')) for k in lost))
     for k, b in books.items():
-        b['plan'] = resolve_plan(b['handoff'], b['units'], rows.get('plan-' + k), a.edition, b['groups'])
+        b['plan'] = story.resolve(b['handoff'], b['units'], rows.get('plan-' + k), b['groups'], module_id, a.book_cap) if a.stories \
+            else resolve_plan(b['handoff'], b['units'], rows.get('plan-' + k), a.edition, b['groups'])
         b['plan_raw'] = deepcopy(b['plan'])  # before the short-chapter merge: v2 tiers rebudget and merge from here
         if a.short_merge:
             b['plan']['chapters'] = merge_short(b['plan']['chapters'], lambda c: c['budget'], b['plan']['log'], 'plan', a.short_merge)
@@ -1043,7 +1115,9 @@ def main():
     vplans = {}
     for vname, _, _, tier in variants:
         for k, b in books.items():
-            if tier is None:
+            if a.stories:  # v3: budgets come with the stories (1.0 x novel material, chapter cap = share x book cap)
+                vp = deepcopy(b['plan'])
+            elif tier is None:
                 vp = b['plan']
             else:  # v2: budgets = tier ratio x elder chars, then the short-chapter merge on those budgets
                 # module caps of the full edition: the standard caps (built for 0.7x) would clip a 2x prologue
@@ -1053,7 +1127,7 @@ def main():
                     vp['log'] = list(vp['log'])
                     vp['chapters'] = merge_short(vp['chapters'], lambda c: c['budget'], vp['log'], 'plan', a.short_merge)
             only = {ci for ci, c in enumerate(vp['chapters']) if not only_modules or set(c['modules']) & only_modules}
-            vp['novel_texts'] = novel_texts(vp, b['units']) if a.novel_units else None
+            vp['novel_texts'] = novel_texts(vp, b['units']) if a.novel_units and not a.stories else None
             vplans[(vname, k)] = (vp, only)
             mb.save(run_dir / vname / 'plans' / (k + '.json'), vp)
     calls, owner = [], {}
@@ -1061,8 +1135,10 @@ def main():
         for k, b in books.items():
             vp, only = vplans[(vname, k)]
             ratio = 1.0 if a.expand_prompt and tier else TIERS[tier][0] if tier else mb.EDITIONS[a.edition][0]
-            cs = write_calls(vname + '-' + k, b['handoff'], b['units'], vp, prompt_name, thinking, ratio,
-                             None if a.expand_prompt else tier, only, vp.get('novel_texts'))
+            cs = story.write_calls(vname + '-' + k, b['handoff'], b['units'], vp, prompt_name, write_params(thinking, True),
+                                   a.part_sections, only) if a.stories else \
+                write_calls(vname + '-' + k, b['handoff'], b['units'], vp, prompt_name, thinking, ratio,
+                            None if a.expand_prompt else tier, only, vp.get('novel_texts'))
             owner[(vname, k)] = cs
             calls += cs
     rows = run_unique(relay, '%s-write-%s-%s' % (a.prefix, a.run, tag), calls)
@@ -1093,6 +1169,31 @@ def main():
             chapters[ci] = secs
         written[(vname, k)] = {'chapters': chapters, 'log': log}
         mb.save(run_dir / vname / 'written' / (k + '.json'), {'chapters': [chapters.get(ci) for ci in range(len(vp['chapters']))], 'log': log})
+    if a.fill_prompt:  # v3: details of the tellings the fact layer dropped come back as inserted fact sentences
+        fcalls, fowner, fmeta = [], {}, {}
+        for (vname, k), w in written.items():
+            vp, _ = vplans[(vname, k)]
+            udf = story.unit_df(books[k]['units'])
+            for ci in sorted(w['chapters']):
+                w['chapters'][ci] = deepcopy(w['chapters'][ci])
+                c = story.fill_call(vname + '-' + k, ci, vp['chapters'][ci], w['chapters'][ci], a.fill_prompt, write_params('disabled'), udf)
+                if c:
+                    fcalls.append(c)
+                    fowner[c['id']] = (vname, k, ci)
+                    fmeta[(vname, k)] = fmeta.get((vname, k), 0) + c['meta']['missed']
+        frows = run_unique(relay, '%s-fill-%s-%s' % (a.prefix, a.run, tag), fcalls)
+        stop_on_lost(frows, 'fill', a)
+        fstats = defaultdict(dict)
+        for cid, (vname, k, ci) in fowner.items():
+            vp, _ = vplans[(vname, k)]
+            ch = vp['chapters'][ci]
+            allowed = {u for s0 in ch['sections'] for u in s0['units']}
+            w = written[(vname, k)]
+            w['chapters'][ci] = story.apply_inserts(w['chapters'][ci], written_output(frows.get(cid) or {}), allowed, a.simplify,
+                                                    fstats[(vname, k)], fact=True, key='fill')
+        for vk, st in fstats.items():
+            st['fill_missed'] = fmeta.get(vk, 0)
+            written[vk]['fill_stats'] = st
     if a.expand_prompt:  # v2 round 3: tiers differ only here
         xcalls, xowner = [], {}
         for vname, _, _, tier in variants:
@@ -1103,8 +1204,21 @@ def main():
                 w = written[(vname, k)]
                 titles = ['%s　%s' % ('序章' if c['modules'][0] == 'skeleton' else '第%d章' % i, c['title'])
                           for i, c in enumerate(vp['chapters'], 0 if vp['chapters'][0]['modules'][0] == 'skeleton' else 1)]
+                k_eff = a.expand_k if a.expand_k is not None else EXPAND_K[tier]
+                if a.stories:  # v3: the cap is on the book (about 15-20 thousand chars), not on each chapter
+                    facts_all = sum(mb.han_len(x['t']) for ci0 in w['chapters'] for s0 in (w['chapters'][ci0] or [])
+                                    for p0 in s0['paragraphs'] for x in p0['sentences'] if not x.get('add'))
+                    if facts_all and facts_all * (1 + k_eff) > a.book_cap:
+                        k_eff = max(0.0, a.book_cap / facts_all - 1)
                 for ci in sorted(w['chapters']):
                     w['chapters'][ci] = deepcopy(w['chapters'][ci])  # tiers share the written fact layer object
+                    if a.stories:
+                        c = story.expand_call(vname + '-' + k, ci, vp['chapters'][ci], w['chapters'][ci],
+                                              {'person': b['handoff']['person']['name'], 'motifs': vp.get('motifs') or []},
+                                              titles, tier, a.expand_prompt, write_params('disabled', True), k_eff)
+                        xcalls.append(c)
+                        xowner[c['id']] = (vname, k, ci)
+                        continue
                     c = expand_call(vname + '-' + k, ci, vp['chapters'][ci], w['chapters'][ci], b['units'], vp.get('novel_texts'),
                                     {'person': b['handoff']['person']['name'], 'motifs': vp.get('motifs') or b['plan']['motifs']},
                                     titles, tier, [], a.expand_prompt)
@@ -1118,6 +1232,11 @@ def main():
             ch = vp['chapters'][ci]
             allowed = {u for s0 in ch['sections'] for u in s0['units']} | set(ch['closing_units'])
             w = written[(vname, k)]
+            if a.stories:
+                allowed |= set(ch.get('echo_units') or [])
+                w['chapters'][ci] = story.apply_inserts(w['chapters'][ci], written_output(xrows.get(cid) or {}), allowed, a.simplify,
+                                                        xstats[(vname, k)])
+                continue
             w['chapters'][ci] = apply_expand(w['chapters'][ci], xrows.get(cid), allowed, a.simplify, xstats[(vname, k)])
         for (vname, k), st in xstats.items():
             written[(vname, k)]['expand_stats'] = st
@@ -1146,7 +1265,7 @@ def main():
         drafts = drafts_by_question(b['handoff'])
         stats = {'model_issues': Counter(), 'fallback_reasons': Counter(), 'check_failed': 0, 'cross_cited': 0, 'code_flags': 0,
                  'dropped_added': 0, 'relabelled': 0, 'fallback_paragraphs': 0, 'fallback_empty': 0, 'pictures': 0,
-                 'relabelled_picture': 0, **(w.get('expand_stats') or {})}
+                 'relabelled_picture': 0, **(w.get('expand_stats') or {}), **(w.get('fill_stats') or {})}
         chapters = []
         for ci, ch in enumerate(vp['chapters']):
             if ci not in only:
@@ -1159,9 +1278,14 @@ def main():
             chapters.append({'title': ch['title'], 'modules': ch['modules'], 'budget': ch['budget'], 'sections': secs,
                              'novel_chars': ch.get('novel_chars'),
                              'title_quote': ch.get('title_quote'), 'title_source': ch.get('title_source'),
-                             'units': [u for s in ch['sections'] for u in s['units']] + list(ch['closing_units'])})
+                             'units': list(dict.fromkeys([u for s in ch['sections'] for u in s['units']] + list(ch['closing_units'])
+                                                         + list(ch.get('echo_units') or [])))})
         if a.dedupe:
             chapters = dedupe(chapters, stats)
+        if a.stories:  # v3 it2: retellings in other words (content-bigram cover by one earlier sentence)
+            chapters = story.dedupe_bigrams(chapters, stats)
+        if a.guard:  # v3: code guards on the added sentences that survived the check
+            chapters = story.guard(chapters, b['units'], stats)
         for c0 in chapters:  # a renamed label section may take the title of an earlier section: it reads on under it
             titles0 = set()
             for s0 in c0['sections']:
@@ -1183,7 +1307,13 @@ def main():
                 'units': {u: {'qid': x['qid'], 'asked': x['asked'], 'text': x['raw']} for u, x in b['units'].items()},
                 'log': vp['log'] + w['log']}
         mplan = {'chapters': [c for ci, c in enumerate(vp['chapters']) if ci in only], 'novel_texts': vp.get('novel_texts')}
+        if a.stories:
+            book['stories'] = vp['stories']
         book['metrics'] = metrics(book, b['units'], mplan)
+        book['metrics']['v3'] = story.v3_metrics(book)
+        if a.stories:
+            book['metrics']['v3']['spread'] = story.story_spread(book, vp)
+            book['metrics']['v3']['stories'] = len(vp['stories'])
         book['metrics']['pipeline'] = {k2: (dict(v) if isinstance(v, Counter) else v) for k2, v in stats.items()}
         mb.save(run_dir / vname / 'books' / (k + '.json'), book)
         render.write_all(book, run_dir / vname / 'books' / k)
