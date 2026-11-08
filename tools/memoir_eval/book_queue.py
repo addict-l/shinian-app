@@ -38,12 +38,13 @@ def validate(req, out):
         v = out.get(d)
         if not isinstance(v, int) or isinstance(v, bool) or not 1 <= v <= 5:
             errs.append(f'"{d}" 必须是 1 到 5 的整数')
-    fab = out.get('fabrication')
+    lf = spec.get('list_field') or 'fabrication'  # rubric-v4 lists "new_events" instead
+    fab = out.get(lf)
     if not isinstance(fab, list) or any(not isinstance(x, dict) or 'quote' not in x or 'why' not in x for x in fab):
-        errs.append('"fabrication" 必须是列表，每项是含 "quote"、"why" 的对象（没有就给 []）')
+        errs.append('"%s" 必须是列表，每项是含 "quote"、"why" 的对象（没有就给 []）' % lf)
     if not isinstance(out.get('note', ''), str):
         errs.append('"note" 必须是字符串')
-    extra = set(out) - set(dims) - {'fabrication', 'note'}
+    extra = set(out) - set(dims) - {lf, 'note'}
     if extra:
         errs.append('多了字段：' + '、'.join(sorted(extra)))
     return errs

@@ -1,5 +1,5 @@
-RELAY_DONE BRIEF11 成书 v3：迭代 mb4-it1~it3 + 留出/交付 mb4-hold 全部回包（202 次 / 168.6 万 token），0 失败
-WORKERS_DONE BRIEF11 成书 v3 Haiku 量表 rubric-v2：迭代 28 + 留出 42 个请求全部回收，队列已空
+NEED_RELAY BRIEF13 成书 v4（样章）：DeepSeek 任务名前缀 mb5-，经中转 SHINIAN_RELAY_OUT=/mnt/user-data/outputs/relay/jobs；先试写 4 次 + 核对 4 次，随后样章 2 章写作/核对/修改约 10 次
+NEED_WORKERS BRIEF13 成书 v4 Haiku 量表 rubric-v4：队列 memoir（tools/memoir_eval/WORKER.md），试写 4 + 样章与 v3 对照 4 个请求
 
 # 成书层 v1 迭代记录
 
