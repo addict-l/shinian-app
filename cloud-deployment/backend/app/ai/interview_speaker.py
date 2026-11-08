@@ -493,50 +493,6 @@ def has_content(result):
     return any(eff.get(a) in ('known', 'none') for a in result.get('active') or [])
 
 
-# V6.2b guide_handle: "I don't know what to say" / "nothing much" with nothing told -- a gentle concrete handle
-NOTHING_SAY = re.compile(r'不知道(?:该|要)?(?:说|讲|聊)(?:点|些)?(?:什么|啥)|没(?:有)?(?:什么|啥)(?:好|可|能)?(?:说|讲|聊)的|'
-                         r'没(?:什么|啥)(?:特别|可说|印象)?的?(?:了|啊|呀)?$|没(?:有)?(?:什么|啥)(?:事|事情)(?:了|啊|呀)?$|说不出(?:什么|啥|来)')
-
-
-def guide_wanted(cfg, result, st, text, sig):
-    """V6.2b guide_handle: the elder says only that he cannot remember / has nothing to say, the question has no real
-    answer yet and no handle was given in it: one concrete, easy question (speaker task guide). ``st['guides']`` is
-    set only where a handle may be asked (not in the supplement step)."""
-    g = cfg.get('guide_handle') or {}
-    if not g.get('enabled') or 'guides' not in st or sig in ('declined', 'rest') or has_content(result):
-        return False
-    if st['guides'] >= g.get('max_per_question', 1) or result.get('decision') in ('ready', 'deferred', 'invalid', 'paused', 'skipped'):
-        return False
-    words = _norm(text)
-    return len(words) <= g.get('max_chars', 40) and (sig == 'unknown' or bool(NOTHING_SAY.search(words)))
-
-
-def compose_guide(rt, row, entry, prior):
-    """V6.2b: the reply of task guide -> (text, question, record); question None when the output is unusable (the
-    caller then closes as 'unknown')."""
-    g = rt.speaker_config.get('guide_handle') or {}
-    ack, question = parse_speaker(row)
-    ack, question = simp_text(rt, ack), simp_text(rt, question)
-    errs = []
-    if not question.endswith(('？', '?')) or question.count('？') + question.count('?') != 1 or len(_norm(question)) > 34:
-        errs.append('shape')
-    if BANNED.search(question) or PRAISE.search(question) or INFER.search(question):
-        errs.append('banned')
-    if re.search(r'(?:吗|吧)[？?]$', question) or re.search(r'还是[^，,]*[？?]$', question):
-        errs.append('yes_no')
-    if _norm(question) in {_norm(x) for x in [entry] + list(prior or []) if x}:
-        errs.append('repeat')
-    from app.ai.interview_story import third_party
-    if third_party(question, wide=True):
-        errs.append('third_party')
-    if ack and (len(ack) > 16 or re.search(r'[？?]', ack) or BANNED.search(ack) or PRAISE.search(ack) or INFER.search(ack)):
-        ack = g.get('fallback_ack', '')
-    if errs:
-        return None, None, {'task': 'guide', 'errors': errs, 'ack': ack, 'question': question}
-    text = join(ack, question) if ack else question
-    return text, question, {'task': 'guide', 'ack': ack, 'question': question, 'errors': []}
-
-
 def decide(cfg, result, st, text=''):
     """Natural-ending rules on top of the engine decision (interview.v4_decide). ``st`` holds this question's
     'followups', 'ask_counts' (targets actually asked) and 'prev_eff'; 'signal' is set as a side effect.
@@ -689,3 +645,47 @@ def _listening_supplement_end(text):
             if not SUPPLEMENT_NEUTRAL.fullmatch(bare):
                 content = True
     return ('with_content' if content else 'only') if ends else None
+
+
+# V6.2b guide_handle: "I don't know what to say" / "nothing much" with nothing told -- a gentle concrete handle
+NOTHING_SAY = re.compile(r'不知道(?:该|要)?(?:说|讲|聊)(?:点|些)?(?:什么|啥)|没(?:有)?(?:什么|啥)(?:好|可|能)?(?:说|讲|聊)的|'
+                         r'没(?:什么|啥)(?:特别|可说|印象)?的?(?:了|啊|呀)?$|没(?:有)?(?:什么|啥)(?:事|事情)(?:了|啊|呀)?$|说不出(?:什么|啥|来)')
+
+
+def guide_wanted(cfg, result, st, text, sig):
+    """V6.2b guide_handle: the elder says only that he cannot remember / has nothing to say, the question has no real
+    answer yet and no handle was given in it: one concrete, easy question (speaker task guide). ``st['guides']`` is
+    set only where a handle may be asked (not in the supplement step)."""
+    g = cfg.get('guide_handle') or {}
+    if not g.get('enabled') or 'guides' not in st or sig in ('declined', 'rest') or has_content(result):
+        return False
+    if st['guides'] >= g.get('max_per_question', 1) or result.get('decision') in ('ready', 'deferred', 'invalid', 'paused', 'skipped'):
+        return False
+    words = _norm(text)
+    return len(words) <= g.get('max_chars', 40) and (sig == 'unknown' or bool(NOTHING_SAY.search(words)))
+
+
+def compose_guide(rt, row, entry, prior):
+    """V6.2b: the reply of task guide -> (text, question, record); question None when the output is unusable (the
+    caller then closes as 'unknown')."""
+    g = rt.speaker_config.get('guide_handle') or {}
+    ack, question = parse_speaker(row)
+    ack, question = simp_text(rt, ack), simp_text(rt, question)
+    errs = []
+    if not question.endswith(('？', '?')) or question.count('？') + question.count('?') != 1 or len(_norm(question)) > 34:
+        errs.append('shape')
+    if BANNED.search(question) or PRAISE.search(question) or INFER.search(question):
+        errs.append('banned')
+    if re.search(r'(?:吗|吧)[？?]$', question) or re.search(r'还是[^，,]*[？?]$', question):
+        errs.append('yes_no')
+    if _norm(question) in {_norm(x) for x in [entry] + list(prior or []) if x}:
+        errs.append('repeat')
+    from app.ai.interview_story import third_party
+    if third_party(question, wide=True):
+        errs.append('third_party')
+    if ack and (len(ack) > 16 or re.search(r'[？?]', ack) or BANNED.search(ack) or PRAISE.search(ack) or INFER.search(ack)):
+        ack = g.get('fallback_ack', '')
+    if errs:
+        return None, None, {'task': 'guide', 'errors': errs, 'ack': ack, 'question': question}
+    text = join(ack, question) if ack else question
+    return text, question, {'task': 'guide', 'ack': ack, 'question': question, 'errors': []}

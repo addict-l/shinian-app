@@ -1,5 +1,5 @@
-NEED_RELAY 80 st9（BRIEF14 V6.2b 审核用问答）：黄小荣 N-6733a23cd1 素材充足设定 sim-config-rich，开篇骨架 11 题 + 工作与劳动 WK01–WK04（之后视预算续 WK05），V6.1 与 V6.2b 各一条链，四个运行器同时跑：st9-sk61 / st9-sk62b / st9-wk61 / st9-wk62b，作业名 st9-<运行>-p###；采访调用 thinking disabled，预计约 70–80 次 DeepSeek、约 15 万 token 以内
-NEED_WORKERS 2 队列 persona + scorer（cd /home/claude/v62-wt && SHINIAN_EVAL_HOME=/home/claude/addict-l/shinian-app/.runtime/interview-eval python3 tools/interview_eval/simulate/queue_worker.py next all 90；说明 tools/interview_eval/simulate/WORKER.md）st9：模拟老人约 60 次，之后量表打分约 40 次（含新“像真人采访者”量表）
+RELAY_DONE st9（2026-11-08 新会话改为直连 DeepSeek，四个运行已跑完）
+WORKERS_DONE st9（模拟老人 + 量表打分 30 个已完成）
 
 # 采访 V6.2 迭代记录（BRIEF12，2026-11-03）
 
@@ -44,3 +44,34 @@ NEED_WORKERS 2 队列 persona + scorer（cd /home/claude/v62-wt && SHINIAN_EVAL_
 ## 3. 验证（0 token）
 - 后端：本容器无 PyPI，不能装 sqlalchemy/httpx；用 httpx/openai 桩能跑的 9 个测试文件全部通过（含新增 tests/test_interview_v62b_humane.py 5 项、test_interview_v62_story_memory.py 22 项、各 sim_replay）；另 9 个依赖 sqlalchemy 的文件（c01_c03、v5f、v61_transition 等）未能在本容器运行，需在有依赖的环境复跑。
 - 模拟器 v6flow 同步移植 guide / empty_no_draft / texts（开场以 intro 消息显示，不进入模拟老人看到的问题）；dry 跑通。
+
+
+## 4. 审核用问答（st9，2026-11-08 新会话直连跑完）
+- 环境：会话接力到直连 DeepSeek 的云环境（SHINIAN_DS_MODE=direct，密钥由网络机密代理加上，DEEPSEEK_API_KEY 只放占位值），运行命令同上一会话，`--resume` 续跑，已缓存的调用 0 token 回放。
+- 数据：接力包里缺 `runs/datasets/full45.json`（模拟老人用来取人名与题目映射）。按 `testset/55人目录.csv` 建了只含人名、不含题目映射的替身（文件内 `standin` 字段注明）；黄小荣的老人回答缓存命中（WK 首答 4/4、SK 8 个）证明素材提示逐字相同。替身不可用于 full45 回放与影响检查。
+- 范围：黄小荣 N-6733a23cd1，sim-config-rich，开篇骨架 11 题 + 工作与劳动 WK01–WK04，V6.1（st9-sk61 + st9-wk61）对照 V6.2b（st9-sk62b + st9-wk62b）。只跑了 1 位人物（任务书建议 2–3 位），因预算已超，未加人、未续 WK05。
+- token：st9 新发 216,420（上一会话经中转 45,475 + 本会话直连 170,945；其中大部分命中前缀缓存），超过本任务 15 万的预算；采访侧累计约 723,451（st5–st7 347,490 + st8 159,541 + st9 216,420），在 100 万上限内。
+
+| 指标 | V6.1 | V6.2b |
+|---|---|---|
+| 问答题数 / 采访者发言 | 15 / 24 | 15 / 22 |
+| 碎片复述率 | 29% | 0% |
+| 收尾用过渡短语 | 62% | 33% |
+| 相邻收尾同一句式 / 同一短语族 | 79% / 64% | 38% / 0% |
+| 替老人评价 / 第三方追问（扩大口径） | 0 / 0 | 0 / 0 |
+| 空回答给草稿入口 | 0 | 0 |
+| 引导抓手（讲出内容/字数） | 0 | 1（1 / 55 字） |
+| 深挖次数 / 深挖回答字数 | 3 / 151 | 1 / 66 |
+| 老人原话 / 不重复新素材 | 1,352 / 1,275 | 1,397 / 1,271 |
+| Haiku 像真人采访者 均分 / ≥4 | 3.21 / 41% | 3.19 / 48% |
+| Haiku 自然 / 贴合 / 时机 / 语气 | 3.17 / 3.52 / 4.90 / 4.31 | 3.04 / 3.37 / 4.78 / 4.15 |
+| 硬性违规 | 0 | 0 |
+
+- 按发言类型的“像真人采访者”均分（V6.1 → V6.2b）：转题 2.90 → 2.56、追问 4.0 → 4.0、深挖 3.67 → 4.0、抓手 — → 5.0、草稿入口 3.75 → 3.75、补充 4.0 → 4.0、核对 2.0 → 2.2。
+- 读下来的结论：
+  1. 代码指标的目标都达到（碎片复述、同句式、同短语族明显下降，无评价、无第三方追问）。
+  2. 但 Haiku 量表没有变好：去掉碎片复述后，很多转题句只剩“好，那……/还有件事想听您说说……”，不回应老人刚讲的内容，评语多为“没有回应其内容，过渡生硬”；两版共用的固定句“这段可以先整理成草稿了”“好，先核对这段草稿，您确认后再保存”得分最低（约 2 分），读起来像系统提示而不是采访者。
+  3. 好的地方：开场白与骨架结束道谢、抓手（SK02“那您小时候，家里人都怎么叫您？”）、追问更具体（SK03d“那时候家里谁管您读书的事？”）、深挖问“头一天到九牧小学，是什么情形？”。
+  4. 差的地方：SK01b 追问“您是在大游村哪一片出生的？”太细、老人答不上；SK04 两版都问“这样的管教，对您后来的性格有什么影响吗？”（抽象、带结论）；V6.2b 的 SK01c 第二次回答判定层报 binding_belongs_to_another_statement，按无效结束，没有收尾语就进了下一题；深挖从 3 次降到 1 次。
+- 交付：/mnt/user-data/outputs/采访V6.2b_问答原文_对照V6.1.html、.txt。等用户审核，未改代码与提示。
+- 后端测试补跑（本会话可装依赖）：`python3 -m unittest discover -s tests -p 'test_interview*.py'` 起初 106 项 1 项失败（test_interview_c01_c03 “后端与模拟器规则同一段代码”）：V6.2b 把 guide_wanted / compose_guide 插在了后端那段须与旧模拟器逐字相同的代码中间，且 decide() 新增的抓手判断没同步到旧模拟器 interview.py 的 v4_decide。修正（行为不变）：后端这两个函数原样移到文件末尾；旧模拟器补上同样的 NOTHING_SAY / guide_wanted 与那两行判断（旧模拟器配置无 guide_handle，判断恒为否）。修正后 106 项通过（跳过 3），工具测试 5 项通过；对照共享基线 interview/question-optimization 该测试原本通过。

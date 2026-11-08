@@ -510,6 +510,24 @@ def has_content(result):
     return any(eff.get(a) in ('known', 'none') for a in result.get('active') or [])
 
 
+# V6.2b guide_handle: "I don't know what to say" / "nothing much" with nothing told -- a gentle concrete handle
+NOTHING_SAY = re.compile(r'不知道(?:该|要)?(?:说|讲|聊)(?:点|些)?(?:什么|啥)|没(?:有)?(?:什么|啥)(?:好|可|能)?(?:说|讲|聊)的|'
+                         r'没(?:什么|啥)(?:特别|可说|印象)?的?(?:了|啊|呀)?$|没(?:有)?(?:什么|啥)(?:事|事情)(?:了|啊|呀)?$|说不出(?:什么|啥|来)')
+
+
+def guide_wanted(cfg, result, st, text, sig):
+    """V6.2b guide_handle: the elder says only that he cannot remember / has nothing to say, the question has no real
+    answer yet and no handle was given in it: one concrete, easy question (speaker task guide). ``st['guides']`` is
+    set only where a handle may be asked (not in the supplement step)."""
+    g = cfg.get('guide_handle') or {}
+    if not g.get('enabled') or 'guides' not in st or sig in ('declined', 'rest') or has_content(result):
+        return False
+    if st['guides'] >= g.get('max_per_question', 1) or result.get('decision') in ('ready', 'deferred', 'invalid', 'paused', 'skipped'):
+        return False
+    words = _norm(text)
+    return len(words) <= g.get('max_chars', 40) and (sig == 'unknown' or bool(NOTHING_SAY.search(words)))
+
+
 def v4_decide(S, result, st, text=''):
     """Natural-ending rules on top of the engine decision. Returns (action, reason_or_target).
 
@@ -533,6 +551,8 @@ def v4_decide(S, result, st, text=''):
         return 'rest', None
     if d in ('skipped',) or (d == 'limited' and 'declined' in [eff.get(a) for a in active]):
         return 'close', 'declined_partial' if d == 'limited' and has_content(result) else 'declined'
+    if guide_wanted(cfg, result, st, text, sig):  # V6.2b
+        return 'guide', None
     if d == 'deferred':
         return 'close', 'deferred'
     if d == 'invalid':
