@@ -1,5 +1,5 @@
-NEED_RELAY 120 st8 第1轮：st8-b61-it 续跑（--resume）+ 骨架 11 题 V6.1/V6.2 对照 st8-b61-sk / st8-b62-sk（黄小荣，判定多数走缓存）+ V6.2 迭代组 st8-b62-it（家庭生活 6 题×2 人），四个运行器同时跑，采访调用 thinking disabled，预计约 120 次 DeepSeek、约 20 万 token；作业名 st8-b61-it-p0xx / st8-b6?-sk-p### / st8-b62-it-p###
-NEED_WORKERS 2 队列 persona + scorer（cd /home/claude/v62-wt && SHINIAN_EVAL_HOME=/home/claude/addict-l/shinian-app/.runtime/interview-eval python3 tools/interview_eval/simulate/queue_worker.py next all 90；说明 tools/interview_eval/simulate/WORKER.md）st8 第1轮模拟老人约 100 次，之后量表打分约 40 次、回忆录素材打分约 20 次
+NEED_RELAY 80 st9（BRIEF14 V6.2b 审核用问答）：黄小荣 N-6733a23cd1 素材充足设定 sim-config-rich，开篇骨架 11 题 + 工作与劳动 WK01–WK04（之后视预算续 WK05），V6.1 与 V6.2b 各一条链，四个运行器同时跑：st9-sk61 / st9-sk62b / st9-wk61 / st9-wk62b，作业名 st9-<运行>-p###；采访调用 thinking disabled，预计约 70–80 次 DeepSeek、约 15 万 token 以内
+NEED_WORKERS 2 队列 persona + scorer（cd /home/claude/v62-wt && SHINIAN_EVAL_HOME=/home/claude/addict-l/shinian-app/.runtime/interview-eval python3 tools/interview_eval/simulate/queue_worker.py next all 90；说明 tools/interview_eval/simulate/WORKER.md）st9：模拟老人约 60 次，之后量表打分约 40 次（含新“像真人采访者”量表）
 
 # 采访 V6.2 迭代记录（BRIEF12，2026-11-03）
 
@@ -21,3 +21,26 @@ NEED_WORKERS 2 队列 persona + scorer（cd /home/claude/v62-wt && SHINIAN_EVAL_
 - 留出组（只看不调）：易芳運 N-568db56d4d（留出分组）、黄小荣 N-6733a23cd1 健谈变体（sim-config-long；前面模块按 mb2-full84-long 的已讲内容作为跨题记忆种子，即重讲现象的原样本）。
 - 迭代轮次用基线对话上的单步对照（深挖/收尾调用），定版后迭代组+留出组各跑一次完整流程。
 - 敏感性检查（只用 Haiku）：同一人物“素材充足”设定（每题按相关度给满素材）下的首答跨题重讲率。
+
+# V6.2b 像真人采访者（BRIEF14，2026-11-08，审核用）
+
+用户 11-08 已审核同意 V6.2 方向，并同意两处修正（第三方扩大；空回答不给草稿入口）。目标：像真人一样有引导、温柔、尊敬地采访老人。本轮只跑“开篇骨架 + 一个模块”给用户读原文，用户同意后才继续调。记账前缀 st9-。
+
+## 1. 从真人采访者问话里归纳的要点（testset/excerpts.jsonl，644 条非空 interviewer_question，0 token）
+- 统计：含“您”336 条（52%）；“什么”170；“当时/那时”76；“后来”22；“记得”27；一问多件事（≥2 个问号）111 条（17%）；“吗”结尾是非问 166 条（26%）。
+- 取的：称呼“您”；顺着老人刚说的话头问（先用他的一两个词点明哪件事，再问那时候的一件具体事）；多问日子里摸得着的东西（住处、伙食、一天怎么过、手里的活、身边的人、第一次/头一天的印象）；用“那时候/当时/后来”带他回到那个时候。
+- 不取的：一次问几件事、是非问猜答案（“……很小吧？”）、替老人下结论（“可不可以说您……”）、记者式追问作品与观点。
+- 只写成说话层/深挖提示里的要求，示例全部自拟，不含测试集原句。
+
+## 2. 改动（V6.2 之上，开关都在 v6.2 运行包 speaker-config，V6.1/V6 不变）
+- 说话层/深挖提示：口述史采访者语气（温柔、尊敬、不急不催）、顺话头问、问摸得着的日子、一次一问、讲到伤心事先用他自己说出的感受接一句再轻轻问；没有下一题时道谢；新任务 guide（抓手）。
+- third_party_wide：第三方追问扩大到别人之间的恋爱/看对眼、商量、别人心里怎么想、别人的私事（例“他们是怎么看对眼的？”）；追问、深挖、抓手三处都查，违反时退回判定层原问法/不深挖/不用该抓手。
+- guide_handle：老人只说“记不清/不知道说什么/没什么”（≤40 字）且本题还没记下内容时，给一个具体、好回答的小问题当抓手（每题最多 1 次，单独 stage 'guide'）；拒答、累了、补充环节不给。
+- empty_no_draft：模块题到收尾仍什么都没讲出（收尾原因 unknown 且无内容）时，不给“这段可以先整理成草稿了”，用说话层温和转到下一题（按跳过记）。
+- texts：骨架开场换成温和的开场白；骨架核对前加一句道谢（固定文本，不调模型）。
+- 运行包 interview_runtime_v3j_v62 重建，version interview-v6.2b-humane-20261108，pin cba0a833fb44448f108c3e3c38e97e4817208e5035da9e1748d59e923311981a（候选，未审核）。
+- 冻结不动：83 题题库、题序、判定层 v3j、采访调用 thinking disabled。
+
+## 3. 验证（0 token）
+- 后端：本容器无 PyPI，不能装 sqlalchemy/httpx；用 httpx/openai 桩能跑的 9 个测试文件全部通过（含新增 tests/test_interview_v62b_humane.py 5 项、test_interview_v62_story_memory.py 22 项、各 sim_replay）；另 9 个依赖 sqlalchemy 的文件（c01_c03、v5f、v61_transition 等）未能在本容器运行，需在有依赖的环境复跑。
+- 模拟器 v6flow 同步移植 guide / empty_no_draft / texts（开场以 intro 消息显示，不进入模拟老人看到的问题）；dry 跑通。

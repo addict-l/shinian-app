@@ -264,6 +264,7 @@ def finish(local, outcome, spoken, asked=None, *, calls=None):
 
 # --------------------------------------------------------------------------- v5f story deepening
 DEEPEN_KEY = 'deepen'  # GuidedQuestion key/target of a detail question (not an element of the contract)
+GUIDE_KEY = 'guide'    # V6.2b: GuidedQuestion key/target of a handle question (answers are judged as usual)
 
 
 MODULE_ORDER = ('childhood', 'growth', 'work', 'family', 'later_life', 'reflection')
@@ -477,6 +478,8 @@ def question_turn(client, previous, state, messages, latest):
         st.update(asked=asked_now, before=before, last_target=local.get('asked_target'))
     if rt.speaker_config.get('reflection_brief'):  # V6.2: reflection questions are not pressed
         st.update(depth=rt.depth.get(qid), elder_chars=len(speaker._norm(''.join(t for role, t in dialogue if role == 'elder'))))
+    if rt.speaker_config.get('guide_handle') and not supplementing:  # V6.2b: a handle may be given in this question
+        st['guides'] = local.get('guides', 0)
     action, arg = speaker.decide(rt.speaker_config, result, st, latest.content)
     # decide closes engine skipped / limited+declined as 'declined' unless the elder had already answered
     # ('declined_partial', C02), so the reason alone tells a refusal.
@@ -520,6 +523,28 @@ def question_turn(client, previous, state, messages, latest):
         reply = ConversationReply(text=text, action='offer_generation')
         coverage(state)
         return _project(previous, state, messages), reply
+    if action == 'guide':
+        # V6.2b guide_handle: he only said he cannot remember / has nothing to say -- one concrete, easy question
+        user = speaker.speaker_user(rt, qid, dialogue, fields, 'guide')
+        from app.services.contract_guided_interview import _persist_pending
+
+        def save_guide(stage, entry_):
+            holder['calls'][stage] = entry_
+            _persist_pending(latest.session_id, state)
+        row, entry_ = V3jPipeline(rt, client).guide(user, saved_calls=holder['calls'], save_call=save_guide)
+        text, question, spoken = speaker.compose_guide(rt, row, entry, [s['question'] for s in local['sources']])
+        if question:
+            local['guides'] = local.get('guides', 0) + 1
+            finish(local, outcome, {**spoken, 'text': text, 'raw': row.get('content'), 'call': entry_, **rule})
+            state.phase = 'exploring'
+            state.pending_question = GuidedQuestion(key=GUIDE_KEY, target=GUIDE_KEY, text=question,
+                                                    accept_rule='按本题已冻结要素合同判断。')
+            coverage(state)
+            return _project(previous, state, messages), ConversationReply(text=text)
+        action, arg = 'close', 'unknown'  # an unusable handle: the question closes as "can't remember"
+        rule.update(action=action, reason=arg, guide=spoken)
+    empty = (rt.speaker_config.get('empty_no_draft') and action == 'close' and arg == 'unknown'
+             and not speaker.has_content(result))  # V6.2b: nothing told -> no draft offer, gently on to the next question
     if action == 'close' and not refused:
         # v5f: a story question whose elements are complete may get a detail question before the draft step.
         dim, ack, question, log = try_deepen(rt, client, local, qid, arg, latest.content, dialogue, holder,
@@ -549,8 +574,9 @@ def question_turn(client, previous, state, messages, latest):
         state.resume_phase = state.phase
         state.phase = 'paused'
         reply = ConversationReply(text=PAUSE_TEXT)
-    elif refused:
-        text, spoken = _transition(rt, client, state, qid, dialogue, fields, arg if arg in ('declined', 'deferred') else 'declined',
+    elif refused or empty:
+        text, spoken = _transition(rt, client, state, qid, dialogue, fields,
+                                   'unknown' if empty else arg if arg in ('declined', 'deferred') else 'declined',
                                    holder, latest.session_id)
         finish(local, outcome, {**spoken, **rule})
         state.speaker_last_close = text

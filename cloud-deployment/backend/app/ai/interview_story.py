@@ -172,7 +172,7 @@ def check_deepen(dim, ack, question, prior, dz, cfg=None):
         errs.append('choice_question')
     if sum(1 for c in re.split(r'[，,；;]', question) if ASK_WORD.search(c.strip())) >= 2:
         errs.append('multi_part')
-    if cfg.get('no_third_party') and third_party(question):  # V6.2
+    if cfg.get('no_third_party') and third_party(question, wide=bool(cfg.get('third_party_wide'))):  # V6.2 (V6.2b wide)
         errs.append('third_party')
     if cfg.get('no_told_repeat') and dz.get('told') and repeats_last(question, dz['told'], ''):  # V6.2
         errs.append('told_before')
@@ -658,8 +658,22 @@ THIRD_TALK = re.compile(r'(?:跟|和|同|向|找|对)[^，,？?]{1,8}?(?:是)?(?
                         r'(?:怎么|咋|如何)(?:跟|和|同|向|找|对)[^，,？?]{1,8}?(?:说|讲|谈|商量|交涉|开口|求|要|讨)')
 
 
-def third_party(question):
+# V6.2b third_party_wide (user decision 2026-11-08): also not how others courted or got on ("他们是怎么看对眼的？"),
+# how others discussed something among themselves, what someone else thought or felt, or someone else's private matters.
+OTHERS = KIN[:-1] + r'|他们|她们|他俩|她俩|俩人|两人|两个人|二老|老两口|他|她)'
+THIRD_WIDE = re.compile(
+    OTHERS + r'[^，,？?您你]{0,8}?(?:是)?(?:怎么|咋|如何|怎样)(?:就)?(?:看对眼|看上|好上|认识|处上|处对象|谈上|谈恋爱|恋爱|相中|相好|走到一起|成的亲|定的亲|结的婚)|'
+    + OTHERS + r'[^，,？?您你]{0,8}?(?:之间|俩|两个)?(?:是)?(?:怎么|咋|如何|怎样)(?:商量|合计|议|吵|和好|分的家)|'
+    + OTHERS + r'(?:当时|那时候?|那会儿?|心里|自己)?(?:心里)?(?:是)?(?:怎么想|怎么看|什么想法|想的是什么|想些什么|是什么心情|什么滋味|怎么打算)|'
+    + OTHERS + r'的?(?:私事|感情|恋爱|婚事|心事|秘密)')
+
+
+def third_party(question, wide=False):
     for clause in re.split(r'[，,；;]', question or ''):
+        if wide:
+            w = THIRD_WIDE.search(clause)  # someone else is the subject; "您爸妈" is still someone else
+            if w and not re.search(r'[您你]', re.sub(r'[您你]的?' + KIN, '', clause[:w.end()])):
+                return True
         m = THIRD_TALK.search(clause)
         if not m or re.search(r'[您你]', m.group(0)):
             continue

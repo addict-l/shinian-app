@@ -164,6 +164,8 @@ def turn(person_id, data, rid, fingerprint, client):
             words = [s['text'] for s in question_answers(local, order)]
             st.update(asked=pending['asked_question'] or entry, before=''.join(words[:-1]),
                       last_target=local.get('asked_target'))
+        if rt.speaker_config.get('guide_handle'):  # V6.2b: a handle may be given in this question
+            st['guides'] = local.get('guides', 0)
         action, reason = speaker.decide(rt.speaker_config, result, st, text)
         rule = {'action': action, 'reason': reason, 'signal': st['signal']}
         if st.get('scope'):
@@ -172,7 +174,7 @@ def turn(person_id, data, rid, fingerprint, client):
     if deepen_answer:
         status = 'pending' if action == 'rest' else dz.get('status') or 'known'
     else:
-        status = 'pending' if action in ('ask', 'rest') else close_status(result, reason, skip)
+        status = 'pending' if action in ('ask', 'rest', 'guide') else close_status(result, reason, skip)
     if status in ('skipped', 'declined') and reason not in ('declined', 'deferred'):
         reason = 'declined'  # a refusal is closed as one, as in the guided flow
     dialogue = dialogue_from(entry, question_answers(local, order), shown_before(data['turns']), rid, text)
@@ -200,6 +202,17 @@ def turn(person_id, data, rid, fingerprint, client):
                 question, status = deepen_q, 'pending'
                 spoken = {'task': 'deepen', **{k: v for k, v in deepen_log.items() if k != 'call'},
                           'text': speaker.join(ack, deepen_q), 'deepen_call': deepen_log.get('call')}
+    if action == 'guide':  # V6.2b guide_handle: one concrete, easy question when he only said he can't remember
+        user = speaker.speaker_user(rt, qid, dialogue, fields, 'guide')
+        row, call = V3jPipeline(rt, llm).guide(user, saved_calls=pending['calls'], save_call=save_call)
+        reply, guide_q, record = speaker.compose_guide(rt, row, entry, [s['question'] for s in local['sources']])
+        if guide_q:
+            question = guide_q
+            spoken = {**record, 'text': reply, 'raw': row.get('content'), 'call': call}
+        else:  # an unusable handle: the question closes as "can't remember"
+            action, reason = 'close', 'unknown'
+            rule.update(action=action, reason=reason, guide=record)
+            status = close_status(result, reason, skip)
     if deepen_answer and question is None:
         dz['awaiting'] = False  # set only now: a retry after a saved call must read the answer as a deepen answer
     following = next_question(data, qid) if status != 'pending' else None
@@ -242,6 +255,8 @@ def turn(person_id, data, rid, fingerprint, client):
     else:
         finish(local, outcome, {**(spoken or {}), **rule}, asked=reason if action == 'ask' else None,
                calls=pending['calls'])
+        if action == 'guide':
+            local['guides'] = local.get('guides', 0) + 1
     local['asked_question'] = question
     local['status'] = status
     if not skip:
@@ -259,7 +274,7 @@ def turn(person_id, data, rid, fingerprint, client):
     elif question is not None:
         reply = spoken['text']
     else:
-        reply = close_text or REVIEW_TEXT
+        reply = close_text or (rt.speaker_config.get('texts') or {}).get('life_review') or REVIEW_TEXT
     _reply(data, rid, reply)
     _save(person_id, data)
     return view(data)

@@ -1,5 +1,5 @@
 {
- "version": "v6.2-story-memory-20261103",
+ "version": "v6.2b-humane-20261108",
  "model": {
   "model": "deepseek-v4-pro",
   "thinking": "disabled",
@@ -39,7 +39,8 @@
   "no_repeat_last": true,
   "no_third_party": true,
   "no_told_repeat": true,
-  "repair_yes_no": true
+  "repair_yes_no": true,
+  "third_party_wide": true
  },
  "note_deepen": "deepen (v5a): on a story question (story-questions.json), after the ending rules say done (engine ready) and before the close, ask at most max_per_question detail questions (max_per_sensitive on sensitive ones), written by a separate call with deepen-prompt.txt (the v4d speaker prompt is unchanged). Not asked when the elder's latest answer has <= short_chars characters, says he can't remember / won't talk / is tired (elder_signal), or the question already has >= detailed_chars characters from the elder with >= detailed_dims of the four kinds (scene, people, detail, feeling); a failed or invalid deepen call means no deepen (the normal close follows). Deepen answers are not judged again (rejudge_answers false): they are kept verbatim as sources of this question. Without the deepen key (or enabled false) the policy is exactly v4d. drop_echo_ack (v5c): an ack whose content bigrams all reappear in the question is dropped. short_chars_first (v5e): before the first deepen question the short limit is short_chars_first instead (a brief answer that names someone or something may be asked about once; after a deepen question short_chars applies). extra_guards (v5c1): \"想不出 / 说不出 / 没什么特别\" also stop deepening (deepen only; the shared elder_signal is unchanged), and an ack with praise words (有意思 / 真好 / 难得 …) is dropped.",
  "speaker_prompt": "docs/prototypes/full-interview-v5/v6.2/speaker-prompt.txt",
@@ -86,5 +87,25 @@
  "close_style": "v62",
  "ack_optional": true,
  "no_third_party_ask": true,
- "note_v62_wording": "用户 2026-11-04（V6.1 第二轮云端问答，证据包 e46413df…）：close_style v62 -- 承接只是他几个字的碎片（interview_story.fragment_echo：不超过 14 字、四分之三以上的字是他本题原话、没有“原来/还/真/可/呀/不容易…”这类反应）时不说；ack_optional -- 没有可用承接时不再补固定兜底句，直接问或直接给草稿入口；下一题前的过渡短语只在上一次收尾没用过渡时才用（短语族在最近 transition_window 次内不重复），其余用“那 / 好，那 / 嗯，”轻接或不接；拒答承接轮换三种说法。no_third_party_ask：追问里问别人之间怎么说/商量/交涉的不问，换回判定层原问法。EVAL_V62 补“很实在/远见/盼着”等。"
+ "note_v62_wording": "用户 2026-11-04（V6.1 第二轮云端问答，证据包 e46413df…）：close_style v62 -- 承接只是他几个字的碎片（interview_story.fragment_echo：不超过 14 字、四分之三以上的字是他本题原话、没有“原来/还/真/可/呀/不容易…”这类反应）时不说；ack_optional -- 没有可用承接时不再补固定兜底句，直接问或直接给草稿入口；下一题前的过渡短语只在上一次收尾没用过渡时才用（短语族在最近 transition_window 次内不重复），其余用“那 / 好，那 / 嗯，”轻接或不接；拒答承接轮换三种说法。no_third_party_ask：追问里问别人之间怎么说/商量/交涉的不问，换回判定层原问法。EVAL_V62 补“很实在/远见/盼着”等。",
+ "third_party_wide": true,
+ "guide_handle": {
+  "enabled": true,
+  "max_per_question": 1,
+  "max_chars": 40,
+  "model": {
+   "model": "deepseek-v4-pro",
+   "thinking": "disabled",
+   "max_tokens": 200,
+   "temperature": 0.3,
+   "json_mode": true
+  },
+  "fallback_ack": "没关系，不着急。"
+ },
+ "empty_no_draft": true,
+ "texts": {
+  "life_intro": "您好，今天我陪您聊聊过去的事。咱们先从几个简单的问题聊起，慢慢来，不着急；记不清或者不想讲的，跟我说一声就跳过。",
+  "life_review": "谢谢您跟我讲了这么多。这些是您讲的人生线索，请您先看看，有需要更正的地方可以告诉我；确认后再选想聊的部分。"
+ },
+ "note_v62b": "V6.2b (BRIEF14, 2026-11-08): third_party_wide -- the third-party check also catches how others courted / got on / discussed / felt and their private matters; guide_handle -- when the elder only says he cannot remember / has nothing to say and nothing is recorded yet for the question, the speaking layer (task guide) gives one concrete, easy handle question (at most max_per_question per question); empty_no_draft -- a module question that ends with nothing told (only \"记不清 / 没印象\") gets no draft offer: it closes into the next question like a gentle skip; texts -- the warmer skeleton opening and the thanks before the skeleton review (fixed texts, no model call)."
 }

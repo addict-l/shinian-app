@@ -140,6 +140,14 @@ class V3jRuntime:
                 not isinstance(memory.get(k), str) or not memory[k] for k in ('memory_heading', 'redirect_direction', 'redirect_note'))
                 or not isinstance(memory.get('redirect_depths'), list)):
             raise ValueError('unsupported_speaker_configuration')
+        guide = self.speaker_config.get('guide_handle')  # V6.2b
+        if guide is not None and (guide.get('enabled') is not True or any(
+                not isinstance(guide.get(k), int) or isinstance(guide.get(k), bool) for k in ('max_per_question', 'max_chars'))
+                or not isinstance(guide.get('fallback_ack', ''), str)):
+            raise ValueError('unsupported_speaker_configuration')
+        texts = self.speaker_config.get('texts')
+        if texts is not None and (not isinstance(texts, dict) or any(not isinstance(v, str) or not v for v in texts.values())):
+            raise ValueError('unsupported_speaker_configuration')
         brief = self.speaker_config.get('reflection_brief')
         if brief is not None and any(not isinstance(brief.get(k), int) or isinstance(brief.get(k), bool)
                                      for k in ('followup_cap', 'enough_chars')):
@@ -324,6 +332,15 @@ class V3jPipeline:
         row = invoke('speaker', self.runtime.speaker_prompt, user, self.runtime.speaker_params,
                      timeout=SPEAKER_TIMEOUT, tolerate_failure=True)
         return row, calls['speaker']
+
+    def guide(self, user, saved_calls=None, save_call=None):
+        """V6.2b guide_handle: the speaking layer's task guide under its own stage, so a failed handle can still be
+        followed by the close call of the same answer; a provider failure returns an unsuccessful row."""
+        calls = {}
+        invoke = self._invoker(calls, saved_calls, save_call)
+        row = invoke('guide', self.runtime.speaker_prompt, user, self.runtime.speaker_params,
+                     timeout=SPEAKER_TIMEOUT, tolerate_failure=True)
+        return row, calls['guide']
 
     def deepen(self, user, saved_calls=None, save_call=None):
         """One v5f deepen call (stage 'deepen', its own prompt and parameters); a provider failure returns an

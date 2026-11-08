@@ -58,7 +58,7 @@ V6_PIN = '1062b6c2158fa8132c0a6ea9541a4dcdbec80f6dd32d21cfda0d816cd2a76487'
 PIPELINE = 'v3j_v5f'
 # Candidates on the same pipeline (BRIEF12): V6.1 warm transitions (d7e28b4) and V6.2 told-story memory.
 V61_PIN = '8b12cd70977951c3749d9b57008d12f7dc53a8bcce2a37dce9a9754344bbe787'
-V62_PIN = 'a078e88ff9bc92666f2cab1068df11821ba73cd4dbc34ac5234b44def6423760'
+V62_PIN = 'cba0a833fb44448f108c3e3c38e97e4817208e5035da9e1748d59e923311981a'
 VERSIONS = {'v6': (BUNDLE, V6_PIN), 'v6.1': (BACKEND / 'app/ai/interview_runtime_v3j_v61', V61_PIN),
             'v6.2': (BACKEND / 'app/ai/interview_runtime_v3j_v62', V62_PIN)}
 
@@ -70,6 +70,7 @@ SUPPLEMENT_TEXT = '您还有别的想补充的吗？'
 LIFE_PAUSE_TEXT = '好，先休息。您的回答和采访位置都已保留。'
 LIFE_RESUME = '好，我们接着聊。'
 NOTED_TEXT = '我记下了。'
+LIFE_INTRO_TEXT = '我们先聊几个简单的问题，了解您的人生。记不清或暂时不想讲的，可以先跳过。'
 LIFE_REVIEW_TEXT = '这些是您提供的人生线索。请先核对，有需要更正的地方可以告诉我；确认后再选想聊的部分。'
 MODULE_NAMES = {'childhood': '家乡与童年', 'growth': '求学与成长', 'work': '工作与劳动', 'family': '家庭生活',
                 'later_life': '后来的生活', 'reflection': '人生回望'}
@@ -181,6 +182,9 @@ class Setup:
             return self.rt.questions[qs[i + 1]]['main_question'], False
         return module_menu(), True
 
+    def life_first(self):
+        return next(q for q in self.plan() if q.startswith('SK'))
+
     def life_next(self, qid):
         i = self.skeleton.index(qid)
         return self.rt.questions[self.skeleton[i + 1]]['main_question'] if i + 1 < len(self.skeleton) else None
@@ -215,6 +219,11 @@ def judge(S, qid, sources, context, known, tag, log):
 
 def speak(S, user, known, tag, log):
     row, _ = yield from provider(S, lambda c: S.cij.V3jPipeline(S.rt, c).speak(user), known, tag + '-speak', log)
+    return row
+
+
+def guide_call(S, user, known, tag, log):  # V6.2b guide_handle (stage 'guide')
+    row, _ = yield from provider(S, lambda c: S.cij.V3jPipeline(S.rt, c).guide(user), known, tag + '-guide', log)
     return row
 
 
@@ -620,6 +629,8 @@ def guided_question(S, nid, qid, override=None):
             st.update(asked=asked_now, before=before, last_target=local.get('asked_target'))
         if cfg.get('reflection_brief'):  # V6.2
             st.update(depth=S.depth.get(qid), elder_chars=len(sp._norm(''.join(t for role, t in dialogue if role == 'elder'))))
+        if cfg.get('guide_handle') and not supplementing:  # V6.2b
+            st['guides'] = local.get('guides', 0)
         action, arg = sp.decide(cfg, result, st, latest['text'])
         refused = arg in ('declined', 'deferred')
         fields = sp.recorded_fields(rt, result)
@@ -656,6 +667,20 @@ def guided_question(S, nid, qid, override=None):
                 end('saved', 'confirmed_cap')
                 break
             continue
+        if action == 'guide':  # V6.2b guide_handle (contract_v3j_interview.question_turn)
+            user = sp.speaker_user(rt, qid, dialogue, fields, 'guide')
+            row = yield from guide_call(S, user, q.known, f'{qid}-g{len(q.messages)}', q.calls)
+            out, question, spoken = sp.compose_guide(rt, row, q.entry, [s['question'] for s in local['sources']])
+            if question:
+                local['guides'] = local.get('guides', 0) + 1
+                finish(local, outcome, {**spoken, 'text': out, **rule})
+                step.update(reply='guide', spoken={**spoken, 'raw': row.get('content'), 'input': user})
+                state['phase'], state['pending_question'] = 'exploring', question
+                q.sys(out, 'guide', question_part=question)
+                continue
+            action, arg = 'close', 'unknown'
+            rule.update(action=action, reason=arg, guide=spoken)
+        empty = cfg.get('empty_no_draft') and action == 'close' and arg == 'unknown' and not sp.has_content(result)
         if action == 'close' and not refused:
             dim, ack, question, log = yield from try_deepen(arg, latest['text'], dialogue, asked_now, before)
             if log is not None:
@@ -686,12 +711,12 @@ def guided_question(S, nid, qid, override=None):
             q.sys(PAUSE_TEXT, 'pause')
             yield from resume(q, state)
             continue
-        if refused:
-            out, spoken = yield from transition(dialogue, fields, arg)
+        if refused or empty:  # V6.2b empty_no_draft: nothing told -> on to the next question, no draft offer
+            out, spoken = yield from transition(dialogue, fields, 'unknown' if empty else arg)
             finish(local, outcome, {**spoken, **rule})
-            step.update(reply='skip', spoken=spoken)
+            step.update(reply='skip', spoken=spoken, **({'empty': True} if empty else {}))
             q.sys(out, 'transition')
-            end('skipped', arg)
+            end('skipped', 'unknown_empty' if empty else arg)
             break
         ack, out, spoken = yield from draft_ack(dialogue, fields, arg)
         finish(local, outcome, {**spoken, **rule})
@@ -721,6 +746,8 @@ def life_question(S, nid, qid, override=None):
     local = q.local
     local.update({'status': 'pending', 'asked_question': None})
     paused = False
+    if qid == S.life_first():  # contract_life_overview.new_data: the opening before the first question
+        q.sys((cfg.get('texts') or {}).get('life_intro') or LIFE_INTRO_TEXT, 'intro')
     q.sys(q.entry, 'entry')
 
     def question_text():
@@ -789,6 +816,8 @@ def life_question(S, nid, qid, override=None):
                 order = {m['id']: i for i, m in enumerate(q.messages)}
                 words = [s['text'] for s in question_answers(local, order)]
                 st.update(asked=asked_q or q.entry, before=''.join(words[:-1]), last_target=local.get('asked_target'))
+            if cfg.get('guide_handle'):  # V6.2b
+                st['guides'] = local.get('guides', 0)
             action, reason = sp.decide(cfg, result, st, latest['text'])
             rule = {'action': action, 'reason': reason, 'signal': st['signal']}
             if st.get('scope'):
@@ -798,7 +827,7 @@ def life_question(S, nid, qid, override=None):
         if deepen_answer:
             status = 'pending' if action == 'rest' else dz.get('status') or 'known'
         else:
-            status = 'pending' if action in ('ask', 'rest') else close_status(result, reason, skip)
+            status = 'pending' if action in ('ask', 'rest', 'guide') else close_status(result, reason, skip)
         if status in ('skipped', 'declined') and reason not in ('declined', 'deferred'):
             reason = 'declined'
         order = {m['id']: i for i, m in enumerate(q.messages)}
@@ -824,6 +853,17 @@ def life_question(S, nid, qid, override=None):
                     dz['status'] = status
                     question, status = deepen_q, 'pending'
                     spoken = {'task': 'deepen', 'text': sp.join(ack, deepen_q)}
+        if action == 'guide':  # V6.2b guide_handle (contract_v3j_life_overview.turn)
+            user = sp.speaker_user(rt, qid, dialogue, fields, 'guide')
+            row = yield from guide_call(S, user, q.known, f'{qid}-g{len(q.messages)}', q.calls)
+            reply, guide_q, rec = sp.compose_guide(rt, row, q.entry, [s['question'] for s in local['sources']])
+            if guide_q:
+                question = guide_q
+                spoken = {**rec, 'text': reply, 'raw': row.get('content'), 'input': user}
+            else:
+                action, reason = 'close', 'unknown'
+                rule.update(action=action, reason=reason, guide=rec)
+                status = close_status(result, reason, skip)
         if deepen_answer and question is None:
             dz['awaiting'] = False
         nxt = q.override['next'] if 'next' in q.override else S.life_next(qid)
@@ -856,6 +896,8 @@ def life_question(S, nid, qid, override=None):
             local['asked_target'] = None
         else:
             finish(local, outcome, {**(spoken or {}), **rule}, asked=reason if action == 'ask' else None)
+            if action == 'guide':
+                local['guides'] = local.get('guides', 0) + 1
         local['asked_question'] = question
         local['status'] = status
         if not skip:
@@ -871,9 +913,10 @@ def life_question(S, nid, qid, override=None):
             q.sys(LIFE_RESUME + question_text(), 'resume')
             continue
         if question is not None:
-            q.sys(spoken['text'], 'deepen' if spoken['task'] == 'deepen' else 'followup', question_part=question)
+            kind = {'deepen': 'deepen', 'guide': 'guide'}.get(spoken['task'], 'followup')
+            q.sys(spoken['text'], kind, question_part=question)
             continue
-        q.sys(close_text or LIFE_REVIEW_TEXT, 'transition' if close_text else 'review')
+        q.sys(close_text or (cfg.get('texts') or {}).get('life_review') or LIFE_REVIEW_TEXT, 'transition' if close_text else 'review')
         q.status = 'skipped' if status in ('skipped', 'declined') else 'saved'
         q.close_reason = reason
         break

@@ -95,7 +95,7 @@ def validate(req, out):
             if not isinstance(t, dict):
                 errs.append(f'"turns" 里缺少 "{label}"')
                 continue
-            for d in DIMS:
+            for d in tuple(DIMS) + tuple(spec.get('extra_dims') or ()):  # extra_dims: V6.2b humane item
                 v = t.get(d)
                 if not isinstance(v, int) or isinstance(v, bool) or not 1 <= v <= 5:
                     errs.append(f'{label}.{d} 必须是 1 到 5 的整数')

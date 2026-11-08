@@ -25,6 +25,18 @@ def now():
     return datetime.now(timezone.utc).isoformat()
 
 
+def intro_text():
+    """V6.2b texts.life_intro: a warmer opening when the runtime's speaker configuration has one (else INTRO)."""
+    from app.services.contract_interview_state import configured_pipeline, flow_runtime
+    try:
+        pipeline = configured_pipeline()
+        if pipeline in V3J_FLOWS:
+            return ((flow_runtime(pipeline).speaker_config or {}).get('texts') or {}).get('life_intro') or INTRO
+    except Exception:  # noqa: BLE001 -- the opening never fails because of an optional text
+        pass
+    return INTRO
+
+
 def new_data(required=True):
     catalog = questions('skeleton')
     return {'schema_version': 2, 'runtime_version': runtime().version,
@@ -32,7 +44,7 @@ def new_data(required=True):
         'version': 1, 'status': 'collecting', 'required': required, 'paused': False,
         'questions': {q['id']: {**fresh_question(q['id']), 'status': 'pending'} for q in catalog},
         'turns': [{'id': str(uuid4()), 'role': 'assistant',
-                   'content': INTRO + '\n' + catalog[0]['main_question'], 'created_at': now()}],
+                   'content': intro_text() + '\n' + catalog[0]['main_question'], 'created_at': now()}],
         'requests': {}, 'pending': None, 'confirmed_version': None, 'editing_question_id': None}
 
 

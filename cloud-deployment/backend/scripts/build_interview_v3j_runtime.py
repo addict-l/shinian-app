@@ -122,10 +122,10 @@ BUNDLES['v6.2'] = {
                 'speaker-prompt.txt': V62 + 'speaker-prompt.txt',
                 'speaker-config.json': V62 + 'speaker-config.json',
                 'deepen-prompt.txt': V62 + 'deepen-prompt.txt'},
-    'readme': '# V6.2 已讲故事记忆候选\n\n由 --bundle v6.2 生成；沿用 v3j_v5f、原判定、冻结题库与深挖上限，使用独立目录和 pin。\n'
+    'readme': '# V6.2b 候选（已讲故事记忆 + 像真人采访者：温柔、尊敬、有引导）\n\n由 --bundle v6.2 生成；沿用 v3j_v5f、原判定、冻结题库与深挖上限，使用独立目录和 pin。\n'
               '说话层与深挖提示、配置取自 docs/prototypes/full-interview-v5/v6.2/（与模拟器测过的原件逐字节相同）。\n',
-    'version': 'interview-v6.2-story-memory-20261103',
-    'speaker': 'v6.2-story-memory',
+    'version': 'interview-v6.2b-humane-20261108',
+    'speaker': 'v6.2b-humane',
 }
 
 
